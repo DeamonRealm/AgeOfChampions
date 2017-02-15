@@ -15,7 +15,7 @@
 #include "j1Fonts.h"
 #include "j1Gui.h"
 #include "j1Console.h"
-
+#include "j1Animator.h"
 #include "j1App.h"
 
 // Constructor
@@ -35,6 +35,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	font = new j1Fonts();
 	gui = new j1Gui();
 	console = new j1Console();
+	animator = new j1Animator();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -49,7 +50,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// scene last
 	AddModule(scene);
-	
+	AddModule(animator);
+
 	AddModule(console);
 
 	// render last to swap buffer
@@ -192,24 +194,18 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
-	j1PerfTimer time;
-
 	bool ret = true;
 	PrepareUpdate();
 
 	if(input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 
-	time.Start();
 	if(ret == true)
 		ret = PreUpdate();
-	//LOG("%f", time.ReadMs());
 
-	time.Start();
 	if(ret == true)
 		ret = DoUpdate();
 
-	//LOG("%f", time.ReadMs());
 	if(ret == true)
 		ret = PostUpdate();
 

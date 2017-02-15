@@ -19,6 +19,7 @@ class j1Fonts;
 class j1Gui;
 class j1Console;
 class j1Module;
+class j1Animator;
 
 struct Command;
 struct Cvar;
@@ -96,7 +97,7 @@ public:
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
 	j1Console*			console = NULL;
-
+	j1Animator*			animator = NULL;
 	
 	// Add a new module to handle
 	void		AddModule(j1Module* module);
