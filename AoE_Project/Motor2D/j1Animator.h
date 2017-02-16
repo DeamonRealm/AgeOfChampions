@@ -6,15 +6,16 @@
 #include "p2Point.h"
 
 struct SDL_Rect;
+struct SDL_Texture;
 
 enum UNIT_TYPE
 {
-	NO_UNIT,
+	NO_UNIT = 0,
 	MILITIA
 };
 enum ACTION_TYPE
 {
-	NO_ACTION,
+	NO_ACTION = 0,
 	ATTATCK,
 	DIE,
 	DISAPEAR,
@@ -23,8 +24,15 @@ enum ACTION_TYPE
 };
 enum DIRECTION_TYPE
 {
-	NO_DIRECTION,
-	NORTH
+	NO_DIRECTION = 0,
+	NORTH,
+	NORTH_EAST,
+	EAST,
+	SOUTH_EAST,
+	SOUTH,
+	SOUTH_WEST,
+	WEST,
+	NORTH_WEST
 };
 
 ///Animation Class ------------------------------
@@ -39,11 +47,16 @@ public:
 
 private:
 
+	//Vectors that storage the frames rect & pivot
 	std::vector<SDL_Rect>	frames;
 	std::vector<iPoint>		pivots;
+	//Id of the animation enum type
+	uint					enum_id = 0;
+	//Current frame calculated by the timer
 	float					current_frame = 0;
-	int						loops = 0;
 	bool					loop = true;
+	int						loops = 0;
+	//Animation update rate
 	uint					speed = 300;
 	j1Timer					timer;
 
@@ -52,11 +65,14 @@ public:
 	//Set Methods -----------
 	void	SetLoop(bool loop_state);
 	void	SetSpeed(uint new_speed);
+	void	SetId(uint id);
 
 	//Get Methods -----------
 	bool			GetLoop()const;
 	uint			GetSpeed()const;
 	const SDL_Rect&	GetCurrentFrame();
+	const iPoint&	GetCurrentPivot()const;
+	uint			GetId()const;
 
 	//Add New frame with pivot defined
 	void AddFrame(const SDL_Rect& rect, const iPoint& point);
@@ -66,27 +82,22 @@ public:
 
 /// Animation Block Class -----------------------
 //Block that contains a vector of animations 
-template<class ENUM>
 class Animation_Block
 {
 public:
 
 	Animation_Block();
 
-	Animation_Block(const ENUM& type);
-
 	~Animation_Block();
 
 private:
 
 	//Vector of other animation blocks
-	std::vector<Animation_Block*> childs;
-
-	//Enum of this block
-	ENUM				type;
-
-	//Vector of animations 
-	std::vector<Animation*>	animations;
+	std::vector<Animation_Block*>	childs;
+	//Enum id of this block
+	uint							enum_id = 0;
+	//Pointer to a vector of animations 
+	Animation*		animation;
 
 public:
 
@@ -94,19 +105,18 @@ public:
 	void	ClearAnimationBlocks();
 
 	//Set Methods -----------
-	bool	SetEnum(const ENUM& new_enum);
+	void	SetId(uint id);
 
 	//Get Methods -----------
-	ENUM    GetEnum()const;
-
+	uint				GetId()const;
+	Animation*			GetAnimation()const;
+	Animation_Block*	GetBlock(int index)const;
+	
 	//Add Methods -----------
-	void	AddAnimation(const Animation* new_animation);
+	void	SetAnimation(const Animation* new_animation);
 	void	AddAnimationBlock(Animation_Block* new_animation_block);
 
 };
-typedef Animation_Block<UNIT_TYPE> Unit_Animation_Block;
-typedef Animation_Block<ACTION_TYPE> Action_Animation_Block;
-typedef Animation_Block<DIRECTION_TYPE> Direction_Animation_Block;
 /// ---------------------------------------------
 
 
@@ -126,17 +136,32 @@ public:
 	// Called before the first frame
 	bool Start();
 
+	// Called each loop iteration
+	bool PostUpdate();
+
 	// Called before quitting
 	bool CleanUp();
 
 private:
 
-	std::vector<Unit_Animation_Block*> animation_blocks;
+	/// Just test
+	//Test Animation
+	Animation* test;
+	Animation* test_1;
+	Animation* test_2;
+	Animation* test_3;
+	Animation* test_4;
+
+	SDL_Texture* test_texture;
+	/// -----------
+
+
+	std::vector<Animation_Block*> animation_blocks;
 
 	//Methods that transform strings to enums (used when loading data from xml)
-	UNIT_TYPE		Str_to_UnitEnum(const char* str)const;
-	ACTION_TYPE		Str_to_ActionEnum(const char* str)const;
-	DIRECTION_TYPE	Str_to_DirectionEnum(const char* str)const;
+	UNIT_TYPE		Str_to_UnitEnum(const std::string* str)const;
+	ACTION_TYPE		Str_to_ActionEnum(const std::string* str)const;
+	DIRECTION_TYPE	Str_to_DirectionEnum(const std::string* str)const;
 
 public:
 
