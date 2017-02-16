@@ -114,6 +114,18 @@ ENUM Animation_Block<ENUM>::GetEnum() const
 {
 	return type;
 }
+
+template<class ENUM>
+void Animation_Block<ENUM>::AddAnimation(const Animation * new_animation)
+{
+	if(new_animation != nullptr)animations.push_back(new_animation);
+}
+
+template<class ENUM>
+void Animation_Block<ENUM>::AddAnimationBlock(Animation_Block* new_animation_block)
+{
+	if(new_animation_block != nullptr)animation_blocks.push_back(new_animation_block);
+}
 /// ---------------------------------------------
 
 
@@ -154,29 +166,43 @@ bool j1Animator::Awake(pugi::xml_node& config)
 	//Load Animations data
 	//Node focused at any unit node
 	pugi::xml_node unit_node = animations_data.child("TextureAtlas").child("unit");
+	std::string unit_enum = unit_node.attribute("enum").as_string();
+	Unit_Animation_Block*	unit_anim_block = nullptr;
 	//Node focused at any unit action node
-	pugi::xml_node action_node = unit_node.first_child();
+	pugi::xml_node action_node;
+	std::string action_enum = action_node.attribute("enum").as_string();
+	Action_Animation_Block*	action_anim_block = nullptr;
 	//Node focused at any actions sprite node
 	pugi::xml_node sprite;
+	Animation* animation = nullptr;
 
 	//Iterate all unit nodes
 	/*while (unit_node != NULL)
 	{
+		unit_anim_block = new Unit_Animation_Block();
+
 		//Iterate all unit action nodes
+		action_node = unit_node.first_child();
 		while (action_node != NULL)
 		{
+			action_anim_block = new Action_Animation_Block();
+
+			//Iterate all action sprite nodes
+			animation = new Animation();
+
 			sprite = action_node.first_child();
 			while (sprite != NULL)
 			{
-				//Iterate all action sprite nodes
-				sprite = sprite.next_sibling();
+				animation->AddFrame()
 
-				/*
-					TODO: Iterate all directions of actions (now are not defined in xml)
-				
+				sprite = sprite.next_sibling();
 			}
+
+			unit_anim_block->AddAnimationBlock((Unit_Animation_Block*)action_anim_block);
 			action_node = action_node.next_sibling();
 		}
+
+		animation_blocks.push_back(unit_anim_block);
 		unit_node = unit_node.next_sibling();
 		
 	}*/
@@ -203,4 +229,22 @@ bool j1Animator::CleanUp()
 	}
 
 	return true;
+}
+
+UNIT_TYPE j1Animator::Str_to_UnitEnum(const char * str) const
+{
+	if (str == "militia") return MILITIA;
+	return NO_UNIT;
+}
+
+ACTION_TYPE j1Animator::Str_to_ActionEnum(const char * str) const
+{
+	if (str == "attack")return ATTATCK;
+	return NO_ACTION;
+}
+
+DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const char * str) const
+{
+	if (str == "north")return NORTH;
+	return NO_DIRECTION;
 }

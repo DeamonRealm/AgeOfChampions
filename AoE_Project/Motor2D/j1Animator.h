@@ -9,10 +9,12 @@ struct SDL_Rect;
 
 enum UNIT_TYPE
 {
+	NO_UNIT,
 	MILITIA
 };
 enum ACTION_TYPE
 {
+	NO_ACTION,
 	ATTATCK,
 	DIE,
 	DISAPEAR,
@@ -21,6 +23,7 @@ enum ACTION_TYPE
 };
 enum DIRECTION_TYPE
 {
+	NO_DIRECTION,
 	NORTH
 };
 
@@ -95,6 +98,11 @@ public:
 
 	//Get Methods -----------
 	ENUM    GetEnum()const;
+
+	//Add Methods -----------
+	void	AddAnimation(const Animation* new_animation);
+	void	AddAnimationBlock(Animation_Block* new_animation_block);
+
 };
 typedef Animation_Block<UNIT_TYPE> Unit_Animation_Block;
 typedef Animation_Block<ACTION_TYPE> Action_Animation_Block;
