@@ -86,7 +86,7 @@ class Animation_Block
 {
 public:
 
-	Animation_Block();
+	Animation_Block(uint enum_id = 0);
 
 	~Animation_Block();
 

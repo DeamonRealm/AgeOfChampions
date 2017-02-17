@@ -88,7 +88,7 @@ void Animation::AddFrame(const SDL_Rect & rect, const iPoint & point)
 
 
 /// Animation Block Class -----------------------
-Animation_Block::Animation_Block()
+Animation_Block::Animation_Block(uint enum_id) :enum_id(enum_id)
 {
 
 }
@@ -185,13 +185,20 @@ bool j1Animator::Awake(pugi::xml_node& config)
 	pugi::xml_node action_node;
 	std::string action_enum;
 	Animation_Block* action_anim_block = nullptr;
-	//Node focused at any action direction node
-	pugi::xml_node direction_node;
+	//Animation blocks to allocate the action different directions
 	std::string direction_enum;
-	Animation_Block* direction_anim_block = nullptr;
-
+	Animation_Block* dir_0_anim_block = nullptr;
+	Animation_Block* dir_1_anim_block = nullptr;
+	Animation_Block* dir_2_anim_block = nullptr;
+	Animation_Block* dir_3_anim_block = nullptr;
+	Animation_Block* dir_4_anim_block = nullptr;
+	//Current sprite node 
 	pugi::xml_node sprite;
-	Animation* animation = nullptr;
+	Animation* dir_0_anim = nullptr;
+	Animation* dir_1_anim = nullptr;
+	Animation* dir_2_anim = nullptr;
+	Animation* dir_3_anim = nullptr;
+	Animation* dir_4_anim = nullptr;
 
 	//Iterate all unit nodes
 	while (unit_node != NULL)
@@ -212,41 +219,58 @@ bool j1Animator::Awake(pugi::xml_node& config)
 			action_enum = action_node.attribute("enum").as_string();
 			action_anim_block->SetId(Str_to_ActionEnum(&action_enum));
 
-			//Iterate all action direction nodes
-			direction_node = action_node.first_child();
-			while (direction_node != NULL)
+			//Build new action direction animation blocks
+			dir_0_anim_block = new Animation_Block(SOUTH);
+			dir_1_anim_block = new Animation_Block(SOUTH_WEST);
+			dir_2_anim_block = new Animation_Block(WEST);
+			dir_3_anim_block = new Animation_Block(NORTH_WEST);
+			dir_4_anim_block = new Animation_Block(NORTH);
+
+			//Iterate all direction sprite nodes
+			dir_0_anim = new Animation();
+			dir_1_anim = new Animation();
+			dir_2_anim = new Animation();
+			dir_3_anim = new Animation();
+			dir_4_anim = new Animation();
+			sprite = action_node.first_child();
+			
+			while (sprite != NULL)
 			{
-				//Build new action animation block
-				direction_anim_block = new Animation_Block();
-				//Get current action enum
-				direction_enum = direction_node.attribute("enum").as_string();
-				direction_anim_block->SetId(Str_to_DirectionEnum(&direction_enum));
-
-				//Iterate all direction sprite nodes
-				animation = new Animation();
-				sprite = direction_node.first_child();
-				while (sprite != NULL)
-				{
-					//Load sprite rect
-					SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
-					//Load sprite pivot
-					float pX = sprite.attribute("pX").as_float() * rect.w;
-					pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
-					float pY = sprite.attribute("pY").as_float() * rect.h;
-					pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+				//Load sprite rect
+				SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
+				//Load sprite pivot
+				float pX = sprite.attribute("pX").as_float() * rect.w;
+				pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+				float pY = sprite.attribute("pY").as_float() * rect.h;
+				pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
 					
-					//Add sprite at current animation
-					animation->AddFrame(rect, iPoint(pX,pY));
-
-					sprite = sprite.next_sibling();
+				//Get current action direction enum
+				direction_enum = sprite.attribute("direction").as_string();
+				//Add sprite at correct animation
+				switch (Str_to_DirectionEnum(&direction_enum))
+				{
+				case SOUTH:			dir_0_anim->AddFrame(rect, iPoint(pX, pY));		break;
+				case SOUTH_WEST:	dir_1_anim->AddFrame(rect, iPoint(pX, pY));		break;
+				case WEST:			dir_2_anim->AddFrame(rect, iPoint(pX, pY));		break;
+				case NORTH_WEST:	dir_3_anim->AddFrame(rect, iPoint(pX, pY));		break;
+				case NORTH:			dir_4_anim->AddFrame(rect, iPoint(pX, pY));		break;
 				}
-				//Add animation to direction block
-				direction_anim_block->SetAnimation(animation);
-				//Add direction block to action block
-				action_anim_block->AddAnimationBlock(direction_anim_block);
 
-				direction_node = direction_node.next_sibling();
+				sprite = sprite.next_sibling();
 			}
+			//Add animations to direction blocks
+			dir_0_anim_block->SetAnimation(dir_0_anim);
+			dir_1_anim_block->SetAnimation(dir_1_anim);
+			dir_2_anim_block->SetAnimation(dir_2_anim);
+			dir_3_anim_block->SetAnimation(dir_3_anim);
+			dir_4_anim_block->SetAnimation(dir_4_anim);
+			//Add direction blocks to action block
+			action_anim_block->AddAnimationBlock(dir_0_anim_block);
+			action_anim_block->AddAnimationBlock(dir_1_anim_block);
+			action_anim_block->AddAnimationBlock(dir_2_anim_block);
+			action_anim_block->AddAnimationBlock(dir_3_anim_block);
+			action_anim_block->AddAnimationBlock(dir_4_anim_block);
+
 			//Add action block to unit block
 			unit_anim_block->AddAnimationBlock(action_anim_block);
 
@@ -273,24 +297,19 @@ bool j1Animator::Start()
 
 	
 	Animation_Block* block = animation_blocks.at(0)->GetBlock(0);
-	block = block->GetBlock(0);
-	test = block->GetAnimation();
+	test = block->GetBlock(0)->GetAnimation();
 
 	block = animation_blocks.at(0)->GetBlock(1);
-	block = block->GetBlock(0);
-	test_1 = block->GetAnimation();
+	test_1 = block->GetBlock(1)->GetAnimation();
 
 	block = animation_blocks.at(0)->GetBlock(2);
-	block = block->GetBlock(0);
-	test_2 = block->GetAnimation();
+	test_2 = block->GetBlock(2)->GetAnimation();
 
 	block = animation_blocks.at(0)->GetBlock(3);
-	block = block->GetBlock(0);
-	test_3 = block->GetAnimation();
+	test_3 = block->GetBlock(3)->GetAnimation();
 
 	block = animation_blocks.at(0)->GetBlock(4);
-	block = block->GetBlock(0);
-	test_4 = block->GetAnimation();
+	test_4 = block->GetBlock(3)->GetAnimation();
 
 	return true;
 }
@@ -346,5 +365,12 @@ ACTION_TYPE j1Animator::Str_to_ActionEnum(const std::string* str) const
 DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const std::string* str) const
 {
 	if (*str == "north")return NORTH;
+	if (*str == "north-east")return NORTH_EAST;
+	if (*str == "south-east")return EAST;
+	if (*str == "east")return SOUTH_EAST;
+	if (*str == "south")return SOUTH;
+	if (*str == "south-west")return SOUTH_WEST;
+	if (*str == "west")return WEST;
+	if (*str == "north-west")return NORTH_WEST;
 	return NO_DIRECTION;
 }
