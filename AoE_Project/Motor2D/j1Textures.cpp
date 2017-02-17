@@ -65,6 +65,7 @@ SDL_Texture* const j1Textures::Load(const char* path)
 {
 	SDL_Texture* texture = NULL;
 	SDL_Surface* surface = IMG_Load_RW(App->fs->Load(path), 1);
+	
 
 	if(surface == NULL)
 	{
@@ -72,6 +73,7 @@ SDL_Texture* const j1Textures::Load(const char* path)
 	}
 	else
 	{
+		SDL_SetColorKey(surface, 1, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
 		texture = LoadSurface(surface);
 		SDL_FreeSurface(surface);
 	}

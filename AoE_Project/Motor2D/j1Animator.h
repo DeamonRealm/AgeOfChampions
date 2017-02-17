@@ -111,7 +111,9 @@ public:
 	uint				GetId()const;
 	Animation*			GetAnimation()const;
 	Animation_Block*	GetBlock(int index)const;
-	
+	uint				GetChildsNum()const;
+	Animation_Block*	SearchId(uint id)const;
+
 	//Add Methods -----------
 	void	SetAnimation(const Animation* new_animation);
 	void	AddAnimationBlock(Animation_Block* new_animation_block);
@@ -165,6 +167,6 @@ private:
 
 public:
 
-	//bool Play(/* Unit* */)const;
+	Animation* Play(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;
 };
 #endif // !_J1ANIMATOR_H_

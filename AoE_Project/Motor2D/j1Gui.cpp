@@ -41,9 +41,6 @@ bool j1Gui::Start()
 	//Load Atlas
 	atlas = App->tex->Load(atlas_file_name.c_str());
 
-	//Load other textures
-	ui_textures.push_back(App->tex->Load("gui/sf2.png"));
-
 	return true;
 }
 

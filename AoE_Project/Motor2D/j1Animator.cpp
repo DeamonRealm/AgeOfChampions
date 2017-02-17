@@ -49,7 +49,7 @@ const SDL_Rect& Animation::GetCurrentFrame()
 {
 	if (current_frame == -1)return frames[0];
 
-	current_frame = (int)floor(timer.Read() / speed);
+	current_frame = (float)floor(timer.Read() / speed);
 	if (current_frame >= frames.size())
 	{
 		if (loop)
@@ -128,6 +128,22 @@ Animation* Animation_Block::GetAnimation() const
 Animation_Block * Animation_Block::GetBlock(int index) const
 {
 	return childs.at(index);
+}
+
+uint Animation_Block::GetChildsNum() const
+{
+	return childs.size();
+}
+
+Animation_Block * Animation_Block::SearchId(uint id) const
+{
+	uint size = childs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		if (childs[k]->GetId() == id)return childs[k];
+	}
+
+	return nullptr;
 }
 
 void Animation_Block::SetAnimation(const Animation * new_animation)
@@ -311,6 +327,8 @@ bool j1Animator::Start()
 	block = animation_blocks.at(0)->GetBlock(4);
 	test_4 = block->GetBlock(3)->GetAnimation();
 
+	test = Play(MILITIA, WALK, NORTH);
+
 	return true;
 }
 
@@ -359,6 +377,10 @@ UNIT_TYPE j1Animator::Str_to_UnitEnum(const std::string* str) const
 ACTION_TYPE j1Animator::Str_to_ActionEnum(const std::string* str) const
 {
 	if (*str == "attack")return ATTATCK;
+	if (*str == "die")return DIE;
+	if (*str == "disapear")return DISAPEAR;
+	if (*str == "idle")return IDLE;
+	if (*str == "walk")return WALK;
 	return NO_ACTION;
 }
 
@@ -373,4 +395,30 @@ DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const std::string* str) const
 	if (*str == "west")return WEST;
 	if (*str == "north-west")return NORTH_WEST;
 	return NO_DIRECTION;
+}
+
+Animation * j1Animator::Play(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const
+{
+	Animation_Block* block = nullptr;
+
+	//Iterate all blocks of childs vector
+	uint size = animation_blocks.size();
+	for (uint k = 0; k < size; k++)
+	{
+		//Pointer to the current block
+		block = animation_blocks[k];
+
+		//Compare block unit id
+		if (block->GetId() == unit)
+		{
+			//Compare block action id
+			block = block->SearchId(action);
+			//If action block is found search the correct direction block
+			if (block != nullptr)block = block->SearchId(direction);
+			//If direction block is found returns the block animation
+			if (block != nullptr)return block->GetAnimation();
+		}
+	}
+	
+	return nullptr;
 }
