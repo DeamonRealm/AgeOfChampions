@@ -69,6 +69,9 @@
     <ClCompile Include="j1Animator.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="UI_Popup_Menu.cpp">
+      <Filter>UserInteraface\UI_Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -153,6 +156,9 @@
     <ClInclude Include="j1Module.h" />
     <ClInclude Include="j1Animator.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Popup_Menu.h">
+      <Filter>UserInteraface\UI_Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

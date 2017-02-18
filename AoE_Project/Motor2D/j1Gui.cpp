@@ -14,6 +14,7 @@
 #include "UI_Scroll.h"
 #include "UI_String.h"
 #include "UI_Text_Box.h"
+#include "UI_Popup_Menu.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -195,6 +196,10 @@ UI_Element* j1Gui::GenerateUI_Element(UI_TYPE element_type)
 
 	case SCROLL:
 		new_element = new UI_Scroll();
+		break;
+
+	case POPUP_MENU:
+		new_element = new UI_Popup_menu();
 		break;
 	}
 	

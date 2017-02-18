@@ -91,7 +91,7 @@ void UI_Element::DrawAt(int x, int y) const
 
 void UI_Element::DrawChilds(bool debug) const 
 {
-	for (std::list<UI_Element*>::const_iterator item = childs.begin(); item != childs.begin(); item++) 
+	for (std::list<UI_Element*>::const_iterator item = childs.begin(); item != childs.end(); item++) 
 	{
 		if (item._Ptr->_Myval->IsActive)
 			item._Ptr->_Myval->Draw(debug);

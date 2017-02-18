@@ -11,6 +11,7 @@ struct UI_Image;
 struct UI_Element;
 struct UI_Text_Box;
 struct UI_Scroll;
+struct UI_Popup_menu;
 
 class j1Scene : public j1Module
 {
@@ -54,6 +55,15 @@ private:
 	UI_Scroll*		lateral_scroll;
 	UI_Text_Box*	text_box;
 	UI_Button*		button;
+	
+	//pop_menu test
+	UI_String*		teutones;
+	UI_String*		ingleses;
+	UI_String*      japoneses;
+	UI_Popup_menu*  civilization_menu;
+	UI_Button*		civilization_button;
+	UI_String*		selected;
+	
 
 public:
 

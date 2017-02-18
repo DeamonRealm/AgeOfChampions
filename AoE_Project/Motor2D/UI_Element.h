@@ -14,7 +14,8 @@ enum UI_TYPE {
 	TEXT_BOX,
 	STRING,
 	IMG,
-	SCROLL
+	SCROLL,
+	POPUP_MENU
 
 };
 

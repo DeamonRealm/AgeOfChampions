@@ -8,12 +8,14 @@
 #include "j1Window.h"
 #include "j1Gui.h"
 #include "j1Map.h"
+#include "j1Console.h"
 
 //UI Elements
 #include "UI_Text_Box.h"
 #include "UI_Button.h"
 #include "UI_String.h"
 #include "UI_Scroll.h"
+#include "UI_Popup_Menu.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -43,21 +45,67 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	//Load textures
-	/*tex_goal = App->tex->Load("textures/goal_texture.png");
-	tex_path = App->tex->Load("textures/path_texture.png");*/
+	tex_goal = App->tex->Load("textures/goal_texture.png");
+	//tex_path = App->tex->Load("textures/path_texture.png");*/
 
 	//Load the map
 	Load_Current_Map();
 
-	/*App->gui->SetDefaultInputTarget(this);
+	App->gui->SetDefaultInputTarget(this);
 
 	//UI Scene build --------------------------------------
 	scene_1_screen = App->gui->GenerateUI_Element(UNDEFINED);
 	scene_1_screen->SetBox({ 0,0,App->win->screen_surface->w, App->win->screen_surface->h });
 	scene_1_screen->Activate();
 	scene_1_screen->SetInputTarget(this);
+	
+	civilization_menu = (UI_Popup_menu*)App->gui->GenerateUI_Element(POPUP_MENU);
+	civilization_menu->SetBox({ 200, 480, 150, 90 });
+	civilization_menu->SetTexMenu({ 0,0, 0, 0 });
+	civilization_menu->SetTexSelection({ 0,0, 0, 0 });
+	civilization_menu->Desactivate();
+	scene_1_screen->AddChild(civilization_menu);
+	
+	teutones = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	teutones->SetColor({255,255,255,255});
+	teutones->SetFont(NULL);
+	teutones->SetString("Teutones");
+	teutones->Activate();
+	civilization_menu->AddChild(teutones);
+	civilization_menu->AddOption(teutones);
 
-	//Players img build
+	ingleses = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	ingleses->SetColor({ 255,255,255,255 });
+	ingleses->SetFont(NULL);
+	ingleses->SetString("Ingleses");
+	ingleses->Activate();
+	civilization_menu->AddChild(ingleses);
+	civilization_menu->AddOption(ingleses);
+
+	japoneses = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	japoneses->SetColor({ 255,255,255,255 });
+	japoneses->SetFont(NULL);
+	japoneses->SetString("Japoneses");
+	japoneses->Activate();
+	civilization_menu->AddChild(japoneses);
+	civilization_menu->AddOption(japoneses);
+	
+	civilization_button = (UI_Button*)App->gui->GenerateUI_Element(BUTTON);
+	civilization_button->SetBox({ 160, 400,230,60 });
+	civilization_button->SetTexOFF({ 648,172,219,59 });
+	civilization_button->SetTexON({ 5,116,220,59 });
+	civilization_button->SetTexOVER({ 416,170,220,62 });
+	scene_1_screen->AddChild(civilization_button);
+	
+	selected = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	selected->SetColor({ 255,255,255,255 });
+	selected->SetFont(NULL);
+	selected->SetString(civilization_menu->GetOptionSelected());
+	selected->SetBox({ 210, 420, 50, 100 });
+	selected->Activate();
+	scene_1_screen->AddChild(selected);
+
+	/*//Players img build
 	player1_item = (UI_Image*)App->gui->GenerateUI_Element(IMG);
 	player1_item->ChangeTextureRect({ 1485, 110, 72, 109 });
 	player1_item->AdjustBox();
@@ -106,10 +154,10 @@ bool j1Scene::Start()
 	lateral_scroll->AddScrollItem(player1_item_2);
 	scene_1_screen->AddChild(lateral_scroll);
 
-
+	*/
 	App->gui->PushScreen(scene_1_screen);
 	// ----------------------------------------------------
-	*/
+	
 
 	return true;
 }
@@ -194,6 +242,7 @@ bool j1Scene::Update(float dt)
 		else LOG("Theres only one map data");
 	}*/
 
+
 	return true;
 }
 
@@ -201,6 +250,8 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
+	
+	scene_1_screen->Draw(false);
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
@@ -225,14 +276,35 @@ void j1Scene::GUI_Input(UI_Element* target, GUI_INPUT input)
 	switch (input)
 	{
 	case UP_ARROW:
+		if (target == civilization_menu)
+		{
+			selected->SetString(civilization_menu->GetOptionSelected());
+		}
 		break;
 	case DOWN_ARROW:
+		if (target == civilization_menu)
+		{
+			selected->SetString(civilization_menu->GetOptionSelected());
+		}
 		break;
 	case LEFT_ARROW:
 		break;
 	case RIGHT_ARROW:
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
+		if (target == civilization_menu)
+		{
+			selected->SetString(civilization_menu->GetOptionSelected());
+		}
+		if (target == civilization_button)
+		{
+			if (civilization_menu->GetActiveState()) civilization_menu->Desactivate();
+			else
+			{
+				civilization_menu->Activate();
+				App->gui->ItemSelected = civilization_menu;
+			}
+		}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		if (target == scroll)
@@ -265,6 +337,10 @@ void j1Scene::GUI_Input(UI_Element* target, GUI_INPUT input)
 	case MOUSE_OUT:
 		break;
 	case ENTER:
+		if (target == civilization_menu)
+		{
+			selected->SetString(civilization_menu->GetOptionSelected());
+		}
 		break;
 	}
 }
