@@ -72,6 +72,12 @@
     <ClCompile Include="UI_Popup_Menu.cpp">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClCompile>
+    <ClCompile Include="BaseEntities.cpp">
+      <Filter>Modules\EnititiesManager\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1EntitiesManager.cpp">
+      <Filter>Modules\EnititiesManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -160,6 +166,12 @@
     <ClInclude Include="UI_Popup_Menu.h">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClInclude>
+    <ClInclude Include="j1EntitiesManager.h">
+      <Filter>Modules\EnititiesManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntities.h">
+      <Filter>Modules\EnititiesManager\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -182,6 +194,12 @@
     </Filter>
     <Filter Include="UserInteraface\Console">
       <UniqueIdentifier>{c2b1b5cb-f746-4f36-ba24-80ebceee0eb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\EnititiesManager">
+      <UniqueIdentifier>{bfaf59a6-f2ed-48ce-a361-e3cf11d3c42b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\EnititiesManager\Entities">
+      <UniqueIdentifier>{f4dce75b-b01a-4ebe-9f7a-a30e952f130a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

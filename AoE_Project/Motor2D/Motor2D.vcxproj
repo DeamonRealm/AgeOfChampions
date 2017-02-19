@@ -75,8 +75,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseEntities.cpp" />
     <ClCompile Include="j1Animator.cpp" />
     <ClCompile Include="j1Console.cpp" />
+    <ClCompile Include="j1EntitiesManager.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Gui.cpp" />
@@ -104,6 +106,7 @@
   <ItemGroup>
     <ClInclude Include="Command.h" />
     <ClInclude Include="C_var.h" />
+    <ClInclude Include="BaseEntities.h" />
     <ClInclude Include="j1Animator.h" />
     <ClInclude Include="j1Console.h" />
     <ClInclude Include="j1FileSystem.h" />
@@ -115,6 +118,7 @@
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1Audio.h" />
     <ClInclude Include="j1Input.h" />
+    <ClInclude Include="j1EntitiesManager.h" />
     <ClInclude Include="p2Log.h" />
     <ClInclude Include="j1App.h" />
     <ClInclude Include="p2Defs.h" />

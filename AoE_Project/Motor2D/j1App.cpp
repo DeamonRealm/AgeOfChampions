@@ -16,6 +16,7 @@
 #include "j1Gui.h"
 #include "j1Console.h"
 #include "j1Animator.h"
+#include "j1EntitiesManager.h"
 #include "j1App.h"
 
 // Constructor
@@ -36,6 +37,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	gui = new j1Gui();
 	console = new j1Console();
 	animator = new j1Animator();
+	entities_manager = new j1EntitiesManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -50,6 +52,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// scene last
 	AddModule(scene);
+	AddModule(entities_manager);
 	AddModule(animator);
 
 	AddModule(console);
@@ -332,17 +335,17 @@ bool j1App::CleanUp()
 	PERF_START(ptimer);
 	bool ret = true;
 	std::list<j1Module*>::const_iterator item = modules.end();
+	item--;
 
-	while(item != modules.end() && ret == true)
+	while(item != modules.begin() && ret == true)
 	{
 		ret = item._Ptr->_Myval->CleanUp();
 		item--;
 	}
 
-	while (saved_games.size() > 0)
-	{
-		saved_games.pop_back();
-	}
+
+	saved_games.clear();
+	
 
 	PERF_PEEK(ptimer);
 	return ret;
@@ -607,7 +610,7 @@ void j1App::Console_Cvar_Input(Cvar * cvar, Command* command_type, std::string *
 			cvar->SetValue(input->c_str());
 
 			//Set new ms delay
-			capped_ms = 1000 / cvar->GetValueAsNum();
+			capped_ms = (int)(1000 / cvar->GetValueAsNum());
 
 		}
 		//Save_dir cvar

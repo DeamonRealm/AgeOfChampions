@@ -7,33 +7,9 @@
 
 struct SDL_Rect;
 struct SDL_Texture;
-
-enum UNIT_TYPE
-{
-	NO_UNIT = 0,
-	MILITIA
-};
-enum ACTION_TYPE
-{
-	NO_ACTION = 0,
-	ATTATCK,
-	DIE,
-	DISAPEAR,
-	IDLE,
-	WALK
-};
-enum DIRECTION_TYPE
-{
-	NO_DIRECTION = 0,
-	NORTH,
-	NORTH_EAST,
-	EAST,
-	SOUTH_EAST,
-	SOUTH,
-	SOUTH_WEST,
-	WEST,
-	NORTH_WEST
-};
+enum UNIT_TYPE;
+enum ACTION_TYPE;
+enum DIRECTION_TYPE;
 
 ///Animation Class ------------------------------
 //Class that contains the animation basic necessary data
@@ -62,6 +38,7 @@ private:
 
 public:
 
+	//Functionality -------------------
 	//Set Methods -----------
 	void	SetLoop(bool loop_state);
 	void	SetSpeed(uint new_speed);
@@ -101,6 +78,7 @@ private:
 
 public:
 
+	//Functionality -------------------
 	//Delete all contained blocks data
 	void	ClearAnimationBlocks();
 
@@ -167,6 +145,7 @@ private:
 
 public:
 
+	//Functionality -------------------
 	Animation* Play(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;
 };
 #endif // !_J1ANIMATOR_H_

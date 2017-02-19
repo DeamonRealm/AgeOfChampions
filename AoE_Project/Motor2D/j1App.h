@@ -20,9 +20,10 @@ class j1Gui;
 class j1Console;
 class j1Module;
 class j1Animator;
+class j1EntitiesManager;
 
-struct Command;
-struct Cvar;
+class Command;
+class Cvar;
 
 class j1App
 {
@@ -98,7 +99,8 @@ public:
 	j1Gui*				gui = NULL;
 	j1Console*			console = NULL;
 	j1Animator*			animator = NULL;
-	
+	j1EntitiesManager*	entities_manager = NULL;
+
 	// Add a new module to handle
 	void		AddModule(j1Module* module);
 	//Get Module pointer by name

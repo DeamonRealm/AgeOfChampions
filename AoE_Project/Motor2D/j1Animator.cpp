@@ -7,19 +7,23 @@
 
 #include "SDL/include/SDL_rect.h"
 #include "p2Log.h"
+#include "BaseEntities.h"
 
 ///Animation Class ------------------------------
+//Constructor =========================
 Animation::Animation()
 {
 
 }
 
+//Destructor ==========================
 Animation::~Animation()
 {
 	frames.clear();
 	pivots.clear();
 }
 
+//Functionality =======================
 void Animation::SetLoop(bool loop_state)
 {
 	loop = loop_state;
@@ -88,16 +92,19 @@ void Animation::AddFrame(const SDL_Rect & rect, const iPoint & point)
 
 
 /// Animation Block Class -----------------------
+//Constructor =========================
 Animation_Block::Animation_Block(uint enum_id) :enum_id(enum_id)
 {
 
 }
 
+//Destructor ==========================
 Animation_Block::~Animation_Block()
 {
 	ClearAnimationBlocks();
 }
 
+//Functionality =======================
 void Animation_Block::ClearAnimationBlocks()
 {
 	while (childs.size() > 0)
@@ -356,6 +363,7 @@ bool j1Animator::PostUpdate()
 
 	return true;
 }
+
 bool j1Animator::CleanUp()
 {
 	//Clean the block childs
@@ -368,6 +376,7 @@ bool j1Animator::CleanUp()
 	return true;
 }
 
+//Methods that transform strings to enums (used when loading data from xml)
 UNIT_TYPE j1Animator::Str_to_UnitEnum(const std::string* str) const
 {
 	if (*str == "militia") return MILITIA;
@@ -397,6 +406,7 @@ DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const std::string* str) const
 	return NO_DIRECTION;
 }
 
+//Functionality =======================
 Animation * j1Animator::Play(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const
 {
 	Animation_Block* block = nullptr;
