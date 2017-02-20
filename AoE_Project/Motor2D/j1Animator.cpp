@@ -204,7 +204,7 @@ bool j1Animator::Awake(pugi::xml_node& config)
 bool j1Animator::Start()
 {
 	int size = 0;
-	test_texture = App->tex->Load("animator/militia.png");
+	test_texture = App->tex->Load("animator/arbalest.png");
 
 	
 	Animation_Block* block = unit_blocks.at(0)->GetBlock(0);
@@ -222,8 +222,8 @@ bool j1Animator::Start()
 	block = unit_blocks.at(0)->GetBlock(4);
 	test_4 = block->GetBlock(3)->GetAnimation();
 
-	test = Play(MILITIA, WALK, NORTH);
-
+	test = Play(ARBALEST, WALK, NORTH);
+	
 	return true;
 }
 
@@ -270,6 +270,7 @@ bool j1Animator::CleanUp()
 UNIT_TYPE j1Animator::Str_to_UnitEnum(const std::string* str) const
 {
 	if (*str == "militia") return MILITIA;
+	if (*str == "arbalest") return ARBALEST;
 	return NO_UNIT;
 }
 
