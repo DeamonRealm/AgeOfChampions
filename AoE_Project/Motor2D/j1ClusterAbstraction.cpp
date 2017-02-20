@@ -30,7 +30,14 @@ void j1ClusterAbstraction::CreateClusters()
 			clusterH = MIN(clusterSize, height - i);
 			Cluster cluster(j, i, clusterW, clusterH, row, column, clusterID++);
 			AddCluster(cluster);
-
+			if (i > 0 && i < width) {
+				// (i = 0 clusterH-1 = 9 )== 10
+				//
+				CreateEntryHorizontal(j, j + clusterW -1, i - 1, row - 1, column);
+			}
+			if (j > 0 && j < height) {
+				CreateEntryVertical(i, i + clusterH -1, j - 1, row, column - 1);
+			}
 
 			column++;
 		}
@@ -50,4 +57,28 @@ void j1ClusterAbstraction::SetMap(uint width, uint height, uchar* data)
 void j1ClusterAbstraction::AddCluster(Cluster add)
 {
 	clusters.push_back(add);
+}
+
+bool j1ClusterAbstraction::IsWalkable(int x, int y) const
+{
+		bool ret = false;
+		uchar t = GetTileAt(pos);
+		if (t != INVALID_WALK_CODE && t > 0) {
+			
+				ret = true;
+			
+		}
+		return ret;
+	}
+
+
+void j1ClusterAbstraction::CreateEntryHorizontal(int start, int end, int y, int row, int column)
+{
+	for (int i = start; i < end; i++) {
+
+	}
+}
+
+void j1ClusterAbstraction::CreateEntryVertical(int start, int end, int x, int row, int column)
+{
 }
