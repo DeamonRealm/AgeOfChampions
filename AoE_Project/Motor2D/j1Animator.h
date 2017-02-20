@@ -136,7 +136,9 @@ private:
 	/// -----------
 
 
-	std::vector<Animation_Block*> animation_blocks;
+	std::vector<Animation_Block*> unit_blocks;
+	std::vector<Animation_Block*> building_blocks;
+	std::vector<Animation_Block*> resource_blocks;
 
 	//Methods that transform strings to enums (used when loading data from xml)
 	UNIT_TYPE		Str_to_UnitEnum(const std::string* str)const;
@@ -146,6 +148,12 @@ private:
 public:
 
 	//Functionality -------------------
+	//Blocks Load Methods ---
+	bool		LoadUnitBlock(std::string& folder);
+	bool		LoadBuildingBlock(std::string& folder);
+	bool		LoadResourceBlock(std::string& folder);
+
+	//Animations Methods ----
 	Animation* Play(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;
 };
 #endif // !_J1ANIMATOR_H_

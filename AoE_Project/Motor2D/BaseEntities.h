@@ -65,7 +65,7 @@ class Entity
 {
 public:
 
-	Entity(const std::string& name, const  fPoint& position = { 0,0 } , ENTITY_TYPE entity_type = NO_ENTITY, Animation* current_animation = nullptr);
+	Entity(const std::string& name, const  fPoint& position = { 0,0 } , ENTITY_TYPE entity_type = NO_ENTITY);
 	Entity(const Entity* copy);
 
 	~Entity();
@@ -75,7 +75,6 @@ protected:
 	std::string		name;
 	fPoint			position = { 0,0 };
 	ENTITY_TYPE		entity_type = NO_ENTITY;
-	Animation*		current_animation = nullptr;
 
 public:
 
@@ -83,13 +82,11 @@ public:
 	//Set Methods -----------
 	void		SetName(const char* name_str);
 	void		SetPosition(float x, float y);
-	void		SetAnimation(const Animation* anim);
 	void		SetEntityType(ENTITY_TYPE type);
 
 	//Get Methods -----------
 	const char*	GetName()const;
 	fPoint		GetPosition()const;
-	Animation*	GetAnimation()const;
 	ENTITY_TYPE	GetEntityType()const;
 
 };
@@ -110,6 +107,7 @@ protected:
 
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
+	Animation*		current_animation = nullptr;
 	//Life -------------
 	uint			max_life = 0;
 	float			life = 0;
@@ -143,6 +141,7 @@ public:
 	//Functionality
 	//Set Methods -----------
 	void	SetUnitType(UNIT_TYPE type);
+	void	SetAnimation(const Animation* anim);
 	void	SetFullLife(uint full_life_val);
 	void	SetLife(uint life_val);
 	void	SetViewArea(uint area_val);
@@ -168,6 +167,7 @@ public:
 
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
+	Animation*		GetAnimation()const;
 	uint			GetFullLife()const;
 	uint			GetLife()const;
 	uint			GetViewArea()const;

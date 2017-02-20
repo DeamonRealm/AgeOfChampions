@@ -180,13 +180,128 @@ j1Animator::~j1Animator()
 //Game Loop ===========================
 bool j1Animator::Awake(pugi::xml_node& config)
 {
-
 	//Load animations folder from config.xml
-	std::string anim_folder = config.child("folder").child_value();
-	std::string load_folder = name + "/" + anim_folder;
+	pugi::xml_node folder_node = config.first_child();
 
+	while (folder_node != NULL)
+	{
+		
+		std::string anim_folder = folder_node.child_value();
+		if (strcmp(folder_node.attribute("type").as_string(),"unit") == 0)
+		{
+			LoadUnitBlock(anim_folder);
+		}
+		folder_node = folder_node.next_sibling();
+
+	}
+	std::string anim_folder = config.child("folder").child_value();
+	
+	
+
+	return true;
+}
+
+bool j1Animator::Start()
+{
+	int size = 0;
+	test_texture = App->tex->Load("animator/militia.png");
+
+	
+	Animation_Block* block = unit_blocks.at(0)->GetBlock(0);
+	test = block->GetBlock(0)->GetAnimation();
+
+	block = unit_blocks.at(0)->GetBlock(1);
+	test_1 = block->GetBlock(1)->GetAnimation();
+
+	block = unit_blocks.at(0)->GetBlock(2);
+	test_2 = block->GetBlock(2)->GetAnimation();
+
+	block = unit_blocks.at(0)->GetBlock(3);
+	test_3 = block->GetBlock(3)->GetAnimation();
+
+	block = unit_blocks.at(0)->GetBlock(4);
+	test_4 = block->GetBlock(3)->GetAnimation();
+
+	test = Play(MILITIA, WALK, NORTH);
+
+	return true;
+}
+
+bool j1Animator::PostUpdate()
+{
+	SDL_Rect rect = test->GetCurrentFrame();
+	iPoint pivot = test->GetCurrentPivot();
+	App->render->Blit(test_texture, 50 - pivot.x, 350 - pivot.y, &rect);
+
+	rect = test_1->GetCurrentFrame();
+	pivot = test_1->GetCurrentPivot();
+	App->render->Blit(test_texture, 150 - pivot.x, 350 - pivot.y, &rect);
+
+	rect = test_2->GetCurrentFrame();
+	pivot = test_2->GetCurrentPivot();
+	App->render->Blit(test_texture, 250 - pivot.x, 350 - pivot.y, &rect);
+
+	rect = test_3->GetCurrentFrame();
+	pivot = test_3->GetCurrentPivot();
+	App->render->Blit(test_texture, 350 - pivot.x, 350 - pivot.y, &rect);
+
+	rect = test_4->GetCurrentFrame();
+	pivot = test_4->GetCurrentPivot();
+	App->render->Blit(test_texture, 450 - pivot.x, 350 - pivot.y, &rect);
+
+	return true;
+}
+
+bool j1Animator::CleanUp()
+{
+	//Clean the block childs
+	uint size = unit_blocks.size();
+
+	for (uint k = 0; k < size; k++)
+	{
+		unit_blocks[k]->ClearAnimationBlocks();
+	}
+	unit_blocks.clear();
+
+	return true;
+}
+
+//Methods that transform strings to enums (used when loading data from xml)
+UNIT_TYPE j1Animator::Str_to_UnitEnum(const std::string* str) const
+{
+	if (*str == "militia") return MILITIA;
+	return NO_UNIT;
+}
+
+ACTION_TYPE j1Animator::Str_to_ActionEnum(const std::string* str) const
+{
+	if (*str == "attack")return ATTATCK;
+	if (*str == "die")return DIE;
+	if (*str == "disapear")return DISAPEAR;
+	if (*str == "idle")return IDLE;
+	if (*str == "walk")return WALK;
+	return NO_ACTION;
+}
+
+DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const std::string* str) const
+{
+	if (*str == "north")return NORTH;
+	if (*str == "north-east")return NORTH_EAST;
+	if (*str == "south-east")return EAST;
+	if (*str == "east")return SOUTH_EAST;
+	if (*str == "south")return SOUTH;
+	if (*str == "south-west")return SOUTH_WEST;
+	if (*str == "west")return WEST;
+	if (*str == "north-west")return NORTH_WEST;
+	return NO_DIRECTION;
+}
+
+//Functionality =======================
+bool j1Animator::LoadUnitBlock(std::string& folder)
+{
 	//Load animations data from loaded folder
 	char* buffer = nullptr;
+	std::string load_folder = name + "/" + folder;
 	int size = App->fs->Load(load_folder.c_str(), &buffer);
 	pugi::xml_document animations_data;
 	pugi::xml_parse_result result = animations_data.load_buffer(buffer, size);
@@ -256,7 +371,7 @@ bool j1Animator::Awake(pugi::xml_node& config)
 			dir_3_anim = new Animation();
 			dir_4_anim = new Animation();
 			sprite = action_node.first_child();
-			
+
 			while (sprite != NULL)
 			{
 				//Load sprite rect
@@ -266,7 +381,7 @@ bool j1Animator::Awake(pugi::xml_node& config)
 				pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
 				float pY = sprite.attribute("pY").as_float() * rect.h;
 				pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
-					
+
 				//Get current action direction enum
 				direction_enum = sprite.attribute("direction").as_string();
 				//Add sprite at correct animation
@@ -301,122 +416,27 @@ bool j1Animator::Awake(pugi::xml_node& config)
 		}
 
 		//Add unit animation block to module vector
-		animation_blocks.push_back(unit_anim_block);
+		unit_blocks.push_back(unit_anim_block);
 
 		unit_node = unit_node.next_sibling();
-		
+
 	}
 
 	//Release load document data
 	animations_data.reset();
-
 	return true;
 }
 
-bool j1Animator::Start()
-{
-	int size = 0;
-	test_texture = App->tex->Load("animator/militia.png");
-
-	
-	Animation_Block* block = animation_blocks.at(0)->GetBlock(0);
-	test = block->GetBlock(0)->GetAnimation();
-
-	block = animation_blocks.at(0)->GetBlock(1);
-	test_1 = block->GetBlock(1)->GetAnimation();
-
-	block = animation_blocks.at(0)->GetBlock(2);
-	test_2 = block->GetBlock(2)->GetAnimation();
-
-	block = animation_blocks.at(0)->GetBlock(3);
-	test_3 = block->GetBlock(3)->GetAnimation();
-
-	block = animation_blocks.at(0)->GetBlock(4);
-	test_4 = block->GetBlock(3)->GetAnimation();
-
-	test = Play(MILITIA, WALK, NORTH);
-
-	return true;
-}
-
-bool j1Animator::PostUpdate()
-{
-	SDL_Rect rect = test->GetCurrentFrame();
-	iPoint pivot = test->GetCurrentPivot();
-	App->render->Blit(test_texture, 50 - pivot.x, 350 - pivot.y, &rect);
-
-	rect = test_1->GetCurrentFrame();
-	pivot = test_1->GetCurrentPivot();
-	App->render->Blit(test_texture, 150 - pivot.x, 350 - pivot.y, &rect);
-
-	rect = test_2->GetCurrentFrame();
-	pivot = test_2->GetCurrentPivot();
-	App->render->Blit(test_texture, 250 - pivot.x, 350 - pivot.y, &rect);
-
-	rect = test_3->GetCurrentFrame();
-	pivot = test_3->GetCurrentPivot();
-	App->render->Blit(test_texture, 350 - pivot.x, 350 - pivot.y, &rect);
-
-	rect = test_4->GetCurrentFrame();
-	pivot = test_4->GetCurrentPivot();
-	App->render->Blit(test_texture, 450 - pivot.x, 350 - pivot.y, &rect);
-
-	return true;
-}
-
-bool j1Animator::CleanUp()
-{
-	//Clean the block childs
-	while (animation_blocks.size() > 0)
-	{
-		animation_blocks.back()->ClearAnimationBlocks();
-		animation_blocks.pop_back();
-	}
-
-	return true;
-}
-
-//Methods that transform strings to enums (used when loading data from xml)
-UNIT_TYPE j1Animator::Str_to_UnitEnum(const std::string* str) const
-{
-	if (*str == "militia") return MILITIA;
-	return NO_UNIT;
-}
-
-ACTION_TYPE j1Animator::Str_to_ActionEnum(const std::string* str) const
-{
-	if (*str == "attack")return ATTATCK;
-	if (*str == "die")return DIE;
-	if (*str == "disapear")return DISAPEAR;
-	if (*str == "idle")return IDLE;
-	if (*str == "walk")return WALK;
-	return NO_ACTION;
-}
-
-DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const std::string* str) const
-{
-	if (*str == "north")return NORTH;
-	if (*str == "north-east")return NORTH_EAST;
-	if (*str == "south-east")return EAST;
-	if (*str == "east")return SOUTH_EAST;
-	if (*str == "south")return SOUTH;
-	if (*str == "south-west")return SOUTH_WEST;
-	if (*str == "west")return WEST;
-	if (*str == "north-west")return NORTH_WEST;
-	return NO_DIRECTION;
-}
-
-//Functionality =======================
 Animation * j1Animator::Play(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const
 {
 	Animation_Block* block = nullptr;
 
 	//Iterate all blocks of childs vector
-	uint size = animation_blocks.size();
+	uint size = unit_blocks.size();
 	for (uint k = 0; k < size; k++)
 	{
 		//Pointer to the current block
-		block = animation_blocks[k];
+		block = unit_blocks[k];
 
 		//Compare block unit id
 		if (block->GetId() == unit)

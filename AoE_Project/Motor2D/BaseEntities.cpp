@@ -2,12 +2,12 @@
 
 ///Class Entity ---------------------------------
 //Constructors ========================
-Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE entity_type, Animation* current_animation) : name(name), position(position), entity_type(entity_type), current_animation(current_animation)
+Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE entity_type) : name(name), position(position), entity_type(entity_type)
 {
 
 }
 
-Entity::Entity(const Entity* copy) :position(copy->position), entity_type(copy->entity_type), current_animation(copy->current_animation)
+Entity::Entity(const Entity* copy) :position(copy->position), entity_type(copy->entity_type)
 {
 
 }
@@ -32,11 +32,6 @@ void Entity::SetPosition(float x, float y)
 	position.y = y;
 }
 
-void Entity::SetAnimation(const Animation * anim)
-{
-	if(anim != nullptr)current_animation = (Animation*)anim;
-}
-
 void Entity::SetEntityType(ENTITY_TYPE type)
 {
 	entity_type = type;
@@ -52,11 +47,6 @@ fPoint Entity::GetPosition() const
 	return position;
 }
 
-Animation * Entity::GetAnimation() const
-{
-	return current_animation;
-}
-
 ENTITY_TYPE Entity::GetEntityType() const
 {
 	return entity_type;
@@ -69,7 +59,7 @@ Unit::Unit(const std::string& name): Entity(name)
 
 }
 
-Unit::Unit(const Unit * copy) :Entity(copy->name, copy->position, copy->entity_type, copy->current_animation), unit_type(unit_type), max_life(max_life), life(life), view_area(view_area),
+Unit::Unit(const Unit * copy) :Entity(copy->name, copy->position, copy->entity_type), unit_type(unit_type), max_life(max_life), life(life), view_area(view_area),
 speed(speed), action_type(action_type), direction_type(direction_type), attack_hitpoints(attack_hitpoints), attack_bonus(attack_bonus), siege_hitpoints(siege_hitpoints),
 attack_rate(attack_rate), attack_type(attack_type), attack_range(attack_range), defence(defence), defence_bonus(defence_bonus), armor(armor), armor_bonus(armor_bonus),
 food_cost(food_cost), wood_cost(wood_cost), coin_cost(coin_cost), poblation_cost(poblation_cost), train_time(train_time)
@@ -88,6 +78,11 @@ Unit::~Unit()
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
+}
+
+void Unit::SetAnimation(const Animation * anim)
+{
+	current_animation = (Animation*)anim;
 }
 
 void Unit::SetFullLife(uint full_life_val)
@@ -203,6 +198,11 @@ void Unit::SetExp(uint experience)
 UNIT_TYPE Unit::GetUnitType()const
 {
 	return unit_type;
+}
+
+Animation * Unit::GetAnimation() const
+{
+	return current_animation;
 }
 
 uint Unit::GetFullLife() const
@@ -323,7 +323,7 @@ Resource::Resource(const std::string & name):Entity(name)
 
 }
 
-Resource::Resource(const Resource * copy) : Entity(copy->name, copy->position, copy->entity_type, copy->current_animation), resource_type(resource_type), max_resources(max_resources), current_resources(current_resources)
+Resource::Resource(const Resource * copy) : Entity(copy->name, copy->position, copy->entity_type), resource_type(resource_type), max_resources(max_resources), current_resources(current_resources)
 {
 
 }
@@ -372,7 +372,7 @@ Building::Building(const std::string & name):Entity(name)
 
 }
 
-Building::Building(const Building* copy) : Entity(copy->name, copy->position, copy->entity_type, copy->current_animation), buiding_type(copy->buiding_type), max_life(copy->max_life), life(copy->life), units_capacity(units_capacity), current_units(copy->current_units)
+Building::Building(const Building* copy) : Entity(copy->name, copy->position, copy->entity_type), buiding_type(copy->buiding_type), max_life(copy->max_life), life(copy->life), units_capacity(units_capacity), current_units(copy->current_units)
 {
 
 }
