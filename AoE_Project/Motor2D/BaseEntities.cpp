@@ -1,5 +1,9 @@
 #include "BaseEntities.h"
 
+#include "j1App.h"
+#include "j1Render.h"
+#include "j1Animator.h"
+
 ///Class Entity ---------------------------------
 //Constructors ========================
 Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE entity_type) : name(name), position(position), entity_type(entity_type)
@@ -19,8 +23,15 @@ Entity::~Entity()
 }
 
 
-
 //Functionality =======================
+// Draw -----------
+bool Entity::Draw()
+{
+	SDL_Rect rect = current_animation->GetCurrentFrame();
+	iPoint pivot = current_animation->GetCurrentPivot();
+	return 	App->render->Blit(texture, (int)position.x - pivot.x, (int)position.y - pivot.y, &rect);
+}
+//Set Methods -----
 void Entity::SetName(const char * name_str)
 {
 	name = name_str;
@@ -37,6 +48,17 @@ void Entity::SetEntityType(ENTITY_TYPE type)
 	entity_type = type;
 }
 
+void Entity::SetTexture(SDL_Texture * tex)
+{
+	texture = tex;
+}
+
+void Entity::SetAnimation(const Animation * anim)
+{
+	current_animation = (Animation*)anim;
+}
+// ----------------
+//Get Methods -----
 const char* Entity::GetName() const
 {
 	return name.c_str();
@@ -52,6 +74,17 @@ ENTITY_TYPE Entity::GetEntityType() const
 	return entity_type;
 }
 
+SDL_Texture * Entity::GetTexture() const
+{
+	return texture;
+}
+
+Animation * Entity::GetAnimation() const
+{
+	return current_animation;
+}
+// ----------------
+///----------------------------------------------
 ///Class Unit -----------------------------------
 //Constructors ========================
 Unit::Unit(const std::string& name): Entity(name)
@@ -78,11 +111,6 @@ Unit::~Unit()
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
-}
-
-void Unit::SetAnimation(const Animation * anim)
-{
-	current_animation = (Animation*)anim;
 }
 
 void Unit::SetFullLife(uint full_life_val)
@@ -198,11 +226,6 @@ void Unit::SetExp(uint experience)
 UNIT_TYPE Unit::GetUnitType()const
 {
 	return unit_type;
-}
-
-Animation * Unit::GetAnimation() const
-{
-	return current_animation;
 }
 
 uint Unit::GetFullLife() const
@@ -394,6 +417,21 @@ Building::~Building()
 Unit * Building::GenerateUnit(UNIT_TYPE new_unit_type) const
 {
 	return nullptr;
+}
+
+//Draw ----------------------
+bool Building::Draw()
+{
+	const std::vector<SDL_Rect>*	sprites = current_animation->GetAllFrames();
+	const std::vector<iPoint>*		pivots = current_animation->GetAllPivots();
+
+	uint size = sprites->size();
+	for (uint k = 0; k < size; k++)
+	{
+		App->render->Blit(texture, (int)position.x - pivots->at(k).x, (int)position.y - pivots->at(k).y, &sprites->at(k));
+	}
+
+	return true;
 }
 
 //Set Methods ---------------

@@ -2,9 +2,7 @@
 #define _ENTITIES_MANAGER_
 
 #include "j1Module.h"
-class Unit;
-class Building;
-class Resource;
+#include "BaseEntities.h"
 
 class j1EntitiesManager : public j1Module
 {
@@ -21,6 +19,9 @@ public:
 	// Called before the first frame
 	bool Start();
 
+	// Called each loop iteration
+	bool Update(float dt);
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -35,6 +36,12 @@ private:
 	std::vector<Unit*>		units_defs;
 	std::vector<Resource*>	resoureces_defs;
 	std::vector<Building*>	buildings_defs;
+
+public:
+
+	//Functionality
+	Unit*		GenerateUnit(UNIT_TYPE type);
+	Building*	GenerateBuilding(BUILDING_TYPE type);
 
 };
 #endif // _ENTITIES_MANAGER_

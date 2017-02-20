@@ -73,9 +73,19 @@ const SDL_Rect& Animation::GetCurrentFrame()
 	return frames[(int)current_frame];
 }
 
+const std::vector<SDL_Rect>* Animation::GetAllFrames() const
+{
+	return &frames;
+}
+
 const iPoint& Animation::GetCurrentPivot() const
 {
 	return pivots.at((int)current_frame);
+}
+
+const std::vector<iPoint>* Animation::GetAllPivots() const
+{
+	return &pivots;
 }
 
 uint Animation::GetId() const
@@ -180,81 +190,31 @@ j1Animator::~j1Animator()
 //Game Loop ===========================
 bool j1Animator::Awake(pugi::xml_node& config)
 {
-	//Load animations folder from config.xml
+	//Load civilization folder from config.xml(this is temporal)
 	pugi::xml_node folder_node = config.first_child();
 
-	while (folder_node != NULL)
-	{
-		
-		std::string anim_folder = folder_node.child_value();
-		if (strcmp(folder_node.attribute("type").as_string(),"unit") == 0)
-		{
-			LoadUnitBlock(anim_folder);
-		}
-		folder_node = folder_node.next_sibling();
-
-	}
-	std::string anim_folder = config.child("folder").child_value();
-	
-	
+	//Load the focused civilization
+	//LoadCivilization(folder_node.attribute("folder").as_string());
 
 	return true;
 }
 
 bool j1Animator::Start()
 {
-	int size = 0;
-	test_texture = App->tex->Load("animator/arbalest.png");
+	//Load Civilization Test
+	bool ret = LoadCivilization("Teutones.xml");
 
-	
-	Animation_Block* block = unit_blocks.at(0)->GetBlock(0);
-	test = block->GetBlock(0)->GetAnimation();
-
-	block = unit_blocks.at(0)->GetBlock(1);
-	test_1 = block->GetBlock(1)->GetAnimation();
-
-	block = unit_blocks.at(0)->GetBlock(2);
-	test_2 = block->GetBlock(2)->GetAnimation();
-
-	block = unit_blocks.at(0)->GetBlock(3);
-	test_3 = block->GetBlock(3)->GetAnimation();
-
-	block = unit_blocks.at(0)->GetBlock(4);
-	test_4 = block->GetBlock(3)->GetAnimation();
-
-	test = Play(ARBALEST, WALK, NORTH);
-	
-	return true;
+	return ret;
 }
 
 bool j1Animator::PostUpdate()
 {
-	SDL_Rect rect = test->GetCurrentFrame();
-	iPoint pivot = test->GetCurrentPivot();
-	App->render->Blit(test_texture, 50 - pivot.x, 350 - pivot.y, &rect);
-
-	rect = test_1->GetCurrentFrame();
-	pivot = test_1->GetCurrentPivot();
-	App->render->Blit(test_texture, 150 - pivot.x, 350 - pivot.y, &rect);
-
-	rect = test_2->GetCurrentFrame();
-	pivot = test_2->GetCurrentPivot();
-	App->render->Blit(test_texture, 250 - pivot.x, 350 - pivot.y, &rect);
-
-	rect = test_3->GetCurrentFrame();
-	pivot = test_3->GetCurrentPivot();
-	App->render->Blit(test_texture, 350 - pivot.x, 350 - pivot.y, &rect);
-
-	rect = test_4->GetCurrentFrame();
-	pivot = test_4->GetCurrentPivot();
-	App->render->Blit(test_texture, 450 - pivot.x, 350 - pivot.y, &rect);
-
 	return true;
 }
 
 bool j1Animator::CleanUp()
 {
-	//Clean the block childs
+	//Clean the unit blocks
 	uint size = unit_blocks.size();
 
 	for (uint k = 0; k < size; k++)
@@ -262,45 +222,123 @@ bool j1Animator::CleanUp()
 		unit_blocks[k]->ClearAnimationBlocks();
 	}
 	unit_blocks.clear();
+	//Clean the building blocks
+	size = building_blocks.size();
 
+	for (uint k = 0; k < size; k++)
+	{
+		building_blocks[k]->ClearAnimationBlocks();
+	}
+	building_blocks.clear();
+	//Clean the building blocks
+	size = resource_blocks.size();
+
+	for (uint k = 0; k < size; k++)
+	{
+		resource_blocks[k]->ClearAnimationBlocks();
+	}
+	resource_blocks.clear();
+
+	//Just clear vector information of textures (module textures really unload the textures)
+	textures.clear();
 	return true;
 }
 
 //Methods that transform strings to enums (used when loading data from xml)
-UNIT_TYPE j1Animator::Str_to_UnitEnum(const std::string* str) const
+UNIT_TYPE j1Animator::Str_to_UnitEnum(const char* str) const
 {
-	if (*str == "militia") return MILITIA;
-	if (*str == "arbalest") return ARBALEST;
+	if (strcmp(str, "militia") == 0)	return MILITIA;
+	if (strcmp(str, "arbalest") == 0)	return ARBALEST;
 	return NO_UNIT;
 }
 
-ACTION_TYPE j1Animator::Str_to_ActionEnum(const std::string* str) const
+ACTION_TYPE j1Animator::Str_to_ActionEnum(const char* str) const
 {
-	if (*str == "attack")return ATTATCK;
-	if (*str == "die")return DIE;
-	if (*str == "disapear")return DISAPEAR;
-	if (*str == "idle")return IDLE;
-	if (*str == "walk")return WALK;
+	if (strcmp(str, "attack") == 0)		return ATTATCK;
+	if (strcmp(str, "die") == 0)		return DIE;
+	if (strcmp(str, "disapear") == 0)	return DISAPEAR;
+	if (strcmp(str, "idle") == 0)		return IDLE;
+	if (strcmp(str, "walk") == 0)		return WALK;
 	return NO_ACTION;
 }
 
-DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const std::string* str) const
+DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const char* str) const
 {
-	if (*str == "north")return NORTH;
-	if (*str == "north-east")return NORTH_EAST;
-	if (*str == "south-east")return EAST;
-	if (*str == "east")return SOUTH_EAST;
-	if (*str == "south")return SOUTH;
-	if (*str == "south-west")return SOUTH_WEST;
-	if (*str == "west")return WEST;
-	if (*str == "north-west")return NORTH_WEST;
+	if (strcmp(str, "north") == 0)			return NORTH;
+	if (strcmp(str, "north-east") == 0)		return NORTH_EAST;
+	if (strcmp(str, "south-east") == 0)		return EAST;
+	if (strcmp(str, "east") == 0)			return SOUTH_EAST;
+	if (strcmp(str, "south") == 0)			return SOUTH;
+	if (strcmp(str, "south-west") == 0)		return SOUTH_WEST;
+	if (strcmp(str, "west") == 0)			return WEST;
+	if (strcmp(str, "north-west") == 0)		return NORTH_WEST;
 	return NO_DIRECTION;
 }
 
+BUILDING_TYPE j1Animator::Str_to_BuildingEnum(const char* str) const
+{
+	if (strcmp(str, "town_center") == 0)	return TOWN_CENTER;
+	return NO_BUILDING;
+}
+
 //Functionality =======================
-bool j1Animator::LoadUnitBlock(std::string& folder)
+bool j1Animator::LoadCivilization(const char* folder)
+{
+	j1Timer time;
+	time.Start();
+	LOG("---- Loading %s...", folder);
+
+	//Load civilization data from loaded folder
+	char* buffer = nullptr;
+	std::string load_folder = name + "/" + folder;
+	int size = App->fs->Load(load_folder.c_str(), &buffer);
+	pugi::xml_document civilization_data;
+	pugi::xml_parse_result result = civilization_data.load_buffer(buffer, size);
+	RELEASE(buffer);
+
+	//Check result of the buffer loaded
+	if (result == NULL)
+	{
+		LOG("Error loading civilization data: %s", result.description());
+		return false;
+	}
+
+	//Boolean to check the correct file loads
+	bool ret = true;
+	std::string tex_folder;
+	std::string tex_file;
+	//Load civilization units list
+	pugi::xml_node unit_node = civilization_data.child("data").child("units").first_child();
+	while (unit_node != NULL)
+	{
+		if (!ret)break;
+		ret = LoadUnitBlock(unit_node.attribute("xml").as_string());
+		tex_file = unit_node.attribute("spritesheet").as_string();
+		tex_folder = name + "/" + tex_file;
+		textures.push_back(App->tex->Load(tex_folder.c_str()));
+		unit_node = unit_node.next_sibling();
+	}
+	//Load civilization buildings list
+	pugi::xml_node building_node = civilization_data.child("data").child("buildings").first_child();
+	while (building_node != NULL)
+	{
+		if (!ret)break;
+		ret = LoadBuildingBlock(building_node.attribute("xml").as_string());
+		tex_file = building_node.attribute("spritesheet").as_string();
+		tex_folder = name + "/" + tex_file;
+		textures.push_back(App->tex->Load(tex_folder.c_str()));
+		building_node = building_node.next_sibling();
+	}
+
+	LOG("---- %s loaded in %.3f", folder, time.ReadSec());
+
+	return ret;
+}
+
+bool j1Animator::LoadUnitBlock(const char* folder)
 {
 	//Load animations data from loaded folder
+	LOG("Loading: %s", folder);
 	char* buffer = nullptr;
 	std::string load_folder = name + "/" + folder;
 	int size = App->fs->Load(load_folder.c_str(), &buffer);
@@ -311,7 +349,7 @@ bool j1Animator::LoadUnitBlock(std::string& folder)
 	//Check result of the buffer loaded
 	if (result == NULL)
 	{
-		LOG("Error loading animator data: %s", result.description());
+		LOG("Error loading %s data: %s",folder, result.description());
 		return false;
 	}
 
@@ -325,7 +363,6 @@ bool j1Animator::LoadUnitBlock(std::string& folder)
 	std::string action_enum;
 	Animation_Block* action_anim_block = nullptr;
 	//Animation blocks to allocate the action different directions
-	std::string direction_enum;
 	Animation_Block* dir_0_anim_block = nullptr;
 	Animation_Block* dir_1_anim_block = nullptr;
 	Animation_Block* dir_2_anim_block = nullptr;
@@ -339,96 +376,173 @@ bool j1Animator::LoadUnitBlock(std::string& folder)
 	Animation* dir_3_anim = nullptr;
 	Animation* dir_4_anim = nullptr;
 
-	//Iterate all unit nodes
-	while (unit_node != NULL)
+	//Build new unit animation block
+	unit_anim_block = new Animation_Block();
+	//Get unit enum
+	unit_anim_block->SetId(Str_to_UnitEnum(unit_node.attribute("id").as_string()));
+
+	//Iterate all unit action nodes
+	action_node = unit_node.first_child();
+	while (action_node != NULL)
 	{
-		//Build new unit animation block
-		unit_anim_block = new Animation_Block();
-		//Get current unit enum
-		unit_enum = unit_node.attribute("id").as_string();
-		unit_anim_block->SetId(Str_to_UnitEnum(&unit_enum));
+		//Build new action animation block
+		action_anim_block = new Animation_Block();
+		//Get current action enum
+		action_anim_block->SetId(Str_to_ActionEnum(action_node.attribute("enum").as_string()));
+		//Get current action animation speed
+		uint speed = action_node.attribute("speed").as_uint();
 
-		//Iterate all unit action nodes
-		action_node = unit_node.first_child();
-		while (action_node != NULL)
+		//Build new action direction animation blocks
+		dir_0_anim_block = new Animation_Block(SOUTH);
+		dir_1_anim_block = new Animation_Block(SOUTH_WEST);
+		dir_2_anim_block = new Animation_Block(WEST);
+		dir_3_anim_block = new Animation_Block(NORTH_WEST);
+		dir_4_anim_block = new Animation_Block(NORTH);
+
+		//Iterate all direction sprite nodes
+		dir_0_anim = new Animation();
+		dir_0_anim->SetSpeed(speed);
+		dir_1_anim = new Animation();
+		dir_1_anim->SetSpeed(speed);
+		dir_2_anim = new Animation();
+		dir_2_anim->SetSpeed(speed);
+		dir_3_anim = new Animation();
+		dir_3_anim->SetSpeed(speed);
+		dir_4_anim = new Animation();
+		dir_4_anim->SetSpeed(speed);
+		sprite = action_node.first_child();
+
+		while (sprite != NULL)
 		{
-			//Build new action animation block
-			action_anim_block = new Animation_Block();
-			//Get current action enum
-			action_enum = action_node.attribute("enum").as_string();
-			action_anim_block->SetId(Str_to_ActionEnum(&action_enum));
+			//Load sprite rect
+			SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
+			//Load sprite pivot
+			float pX = sprite.attribute("pX").as_float() * rect.w;
+			pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+			float pY = sprite.attribute("pY").as_float() * rect.h;
+			pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
 
-			//Build new action direction animation blocks
-			dir_0_anim_block = new Animation_Block(SOUTH);
-			dir_1_anim_block = new Animation_Block(SOUTH_WEST);
-			dir_2_anim_block = new Animation_Block(WEST);
-			dir_3_anim_block = new Animation_Block(NORTH_WEST);
-			dir_4_anim_block = new Animation_Block(NORTH);
-
-			//Iterate all direction sprite nodes
-			dir_0_anim = new Animation();
-			dir_1_anim = new Animation();
-			dir_2_anim = new Animation();
-			dir_3_anim = new Animation();
-			dir_4_anim = new Animation();
-			sprite = action_node.first_child();
-
-			while (sprite != NULL)
+			//Add sprite at correct animation
+			switch (Str_to_DirectionEnum(sprite.attribute("direction").as_string()))
 			{
-				//Load sprite rect
-				SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
-				//Load sprite pivot
-				float pX = sprite.attribute("pX").as_float() * rect.w;
-				pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
-				float pY = sprite.attribute("pY").as_float() * rect.h;
-				pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
-
-				//Get current action direction enum
-				direction_enum = sprite.attribute("direction").as_string();
-				//Add sprite at correct animation
-				switch (Str_to_DirectionEnum(&direction_enum))
-				{
-				case SOUTH:			dir_0_anim->AddFrame(rect, iPoint(pX, pY));		break;
-				case SOUTH_WEST:	dir_1_anim->AddFrame(rect, iPoint(pX, pY));		break;
-				case WEST:			dir_2_anim->AddFrame(rect, iPoint(pX, pY));		break;
-				case NORTH_WEST:	dir_3_anim->AddFrame(rect, iPoint(pX, pY));		break;
-				case NORTH:			dir_4_anim->AddFrame(rect, iPoint(pX, pY));		break;
-				}
-
-				sprite = sprite.next_sibling();
+			case SOUTH:			dir_0_anim->AddFrame(rect, iPoint(pX, pY));		break;
+			case SOUTH_WEST:	dir_1_anim->AddFrame(rect, iPoint(pX, pY));		break;
+			case WEST:			dir_2_anim->AddFrame(rect, iPoint(pX, pY));		break;
+			case NORTH_WEST:	dir_3_anim->AddFrame(rect, iPoint(pX, pY));		break;
+			case NORTH:			dir_4_anim->AddFrame(rect, iPoint(pX, pY));		break;
 			}
-			//Add animations to direction blocks
-			dir_0_anim_block->SetAnimation(dir_0_anim);
-			dir_1_anim_block->SetAnimation(dir_1_anim);
-			dir_2_anim_block->SetAnimation(dir_2_anim);
-			dir_3_anim_block->SetAnimation(dir_3_anim);
-			dir_4_anim_block->SetAnimation(dir_4_anim);
-			//Add direction blocks to action block
-			action_anim_block->AddAnimationBlock(dir_0_anim_block);
-			action_anim_block->AddAnimationBlock(dir_1_anim_block);
-			action_anim_block->AddAnimationBlock(dir_2_anim_block);
-			action_anim_block->AddAnimationBlock(dir_3_anim_block);
-			action_anim_block->AddAnimationBlock(dir_4_anim_block);
 
-			//Add action block to unit block
-			unit_anim_block->AddAnimationBlock(action_anim_block);
-
-			action_node = action_node.next_sibling();
+			sprite = sprite.next_sibling();
 		}
+		//Add animations to direction blocks
+		dir_0_anim_block->SetAnimation(dir_0_anim);
+		dir_1_anim_block->SetAnimation(dir_1_anim);
+		dir_2_anim_block->SetAnimation(dir_2_anim);
+		dir_3_anim_block->SetAnimation(dir_3_anim);
+		dir_4_anim_block->SetAnimation(dir_4_anim);
+		//Add direction blocks to action block
+		action_anim_block->AddAnimationBlock(dir_0_anim_block);
+		action_anim_block->AddAnimationBlock(dir_1_anim_block);
+		action_anim_block->AddAnimationBlock(dir_2_anim_block);
+		action_anim_block->AddAnimationBlock(dir_3_anim_block);
+		action_anim_block->AddAnimationBlock(dir_4_anim_block);
 
-		//Add unit animation block to module vector
-		unit_blocks.push_back(unit_anim_block);
+		//Add action block to unit block
+		unit_anim_block->AddAnimationBlock(action_anim_block);
 
-		unit_node = unit_node.next_sibling();
-
+		action_node = action_node.next_sibling();
 	}
 
-	//Release load document data
+	//Add unit animation block to module vector
+	unit_blocks.push_back(unit_anim_block);
+
+	//Release loaded document data
 	animations_data.reset();
 	return true;
 }
 
-Animation * j1Animator::Play(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const
+bool j1Animator::LoadBuildingBlock(const char * folder)
+{
+	//Load animations data from loaded folder
+	LOG("Loading: %s", folder);
+	char* buffer = nullptr;
+	std::string load_folder = name + "/" + folder;
+	int size = App->fs->Load(load_folder.c_str(), &buffer);
+	pugi::xml_document build_anim_data;
+	pugi::xml_parse_result result = build_anim_data.load_buffer(buffer, size);
+	RELEASE(buffer);
+
+	//Check result of the buffer loaded
+	if (result == NULL)
+	{
+		LOG("Error loading %s data: %s", folder, result.description());
+		return false;
+	}
+
+	//Focus building id
+	pugi::xml_node build_node = build_anim_data.child("TextureAtlas").child("building");
+	
+	//Alloc building animation block data 
+	Animation_Block* building_block = new Animation_Block();
+	building_block->SetId((uint)Str_to_BuildingEnum(build_node.attribute("id").as_string()));
+
+	//Iterate all building actions
+	pugi::xml_node action_node = build_node.first_child();
+	while (action_node != NULL)
+	{
+		//Alloc action animation block data
+		Animation_Block* action_block = new Animation_Block();
+		action_block->SetId((uint)Str_to_ActionEnum(action_node.attribute("enum").as_string()));
+
+		//Build animation
+		Animation* anim = new Animation();
+		anim->SetSpeed(action_node.attribute("speed").as_uint());
+
+		//Iterate all action sprites
+		pugi::xml_node sprite = action_node.first_child();
+		while (sprite != NULL)
+		{
+			//Load sprite rect
+			SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
+			//Load sprite pivot
+			float pX = sprite.attribute("pX").as_float() * rect.w;
+			pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+			float pY = sprite.attribute("pY").as_float() * rect.h;
+			pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+
+			//Add sprite at animation
+			anim->AddFrame(rect, iPoint(pX, pY));
+
+			//Focus next animation sprite
+			sprite = sprite.next_sibling();
+		}
+
+		//Set animation of action block
+		action_block->SetAnimation(anim);
+
+		//Add buided action to building animation block
+		building_block->AddAnimationBlock(action_block);
+		
+		//Focus next action node
+		action_node = action_node.next_sibling();
+	}
+
+	//Add loaded building animation to buildings vector
+	building_blocks.push_back(building_block);
+
+	//Release loaded document data
+	build_anim_data.reset();
+
+	return true;
+}
+
+SDL_Texture * j1Animator::GetTextureAt(uint index) const
+{
+	if (index >= textures.size())return nullptr;
+	return textures.at(index);
+}
+
+Animation * j1Animator::UnitPlay(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const
 {
 	Animation_Block* block = nullptr;
 
@@ -451,5 +565,32 @@ Animation * j1Animator::Play(const UNIT_TYPE unit, const ACTION_TYPE action, con
 		}
 	}
 	
+	return nullptr;
+}
+
+Animation * j1Animator::BuildingPlay(const BUILDING_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const
+{
+	Animation_Block* block = nullptr;
+
+	//Iterate all blocks of childs vector
+	uint size = building_blocks.size();
+	for (uint k = 0; k < size; k++)
+	{
+		//Pointer to the current block
+		block = building_blocks[k];
+
+		//Compare block unit id
+		if (block->GetId() == unit)
+		{
+			//Compare block action id
+			block = block->SearchId(action);
+			//If action block is found search the correct direction block or return undirectional action
+			if (direction == NO_DIRECTION)return block->GetAnimation(); 
+			if (block != nullptr)block = block->SearchId(direction);
+			//If direction block is found returns the block animation
+			if (block != nullptr)return block->GetAnimation();
+		}
+	}
+
 	return nullptr;
 }

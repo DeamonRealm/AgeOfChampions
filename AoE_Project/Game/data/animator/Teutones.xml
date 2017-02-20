@@ -1,0 +1,9 @@
+<data>
+  <units>
+   <id xml = "arbalest.xml" spritesheet = "arbalest.png"/>
+   <id xml = "militia.xml" spritesheet = "militia.png"/>
+  </units>
+  <buildings>
+   <id xml = "TownCenterFeudal.xml" spritesheet = "TownCenterFeudal.png"/>
+  </buildings>
+</data>

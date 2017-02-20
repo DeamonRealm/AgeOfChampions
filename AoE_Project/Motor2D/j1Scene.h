@@ -12,6 +12,8 @@ struct UI_Element;
 struct UI_Text_Box;
 struct UI_Scroll;
 struct UI_Popup_menu;
+class  Unit;
+class  Building;
 
 class j1Scene : public j1Module
 {
@@ -45,16 +47,12 @@ public:
 
 private:
 
+	//Scene Test Entities
+	Unit*		arbalest = nullptr;
+	Building*	town_center = nullptr;
+
 	//Scene	UI
 	UI_Element* scene_1_screen;
-
-	//Scene UI Elements
-	UI_Image*		player1_item;
-	UI_Image*		player1_item_2;
-	UI_Scroll*		scroll;
-	UI_Scroll*		lateral_scroll;
-	UI_Text_Box*	text_box;
-	UI_Button*		button;
 	
 	//pop_menu test
 	UI_String*		teutones;
@@ -64,6 +62,7 @@ private:
 	UI_Button*		civilization_button;
 	UI_String*		selected;
 	
+
 
 public:
 
@@ -77,10 +76,6 @@ public:
 
 	//Load the choosed Map
 	bool Load_Current_Map();
-
-	//Textures data
-	SDL_Texture* tex_goal;
-	SDL_Texture* tex_path;
 
 };
 

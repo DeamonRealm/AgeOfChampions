@@ -19,7 +19,7 @@ j1FileSystem::j1FileSystem() : j1Module()
 
 	// By default we include executable's own directory
 	// without this we won't be able to find config.xml :-(
-	AddPath("data.zip");
+	AddPath("data");
 }
 
 // Destructor

@@ -1,6 +1,8 @@
 #include "j1EntitiesManager.h"
 
-#include "BaseEntities.h"
+#include "j1App.h"
+#include "j1Render.h"
+#include "j1Animator.h"
 
 //Constructors ========================
 j1EntitiesManager::j1EntitiesManager()
@@ -21,6 +23,17 @@ bool j1EntitiesManager::Awake(pugi::xml_node & config_node)
 
 bool j1EntitiesManager::Start()
 {
+	return true;
+}
+
+bool j1EntitiesManager::Update(float dt)
+{
+	std::list<Unit*>::const_iterator unit_item = units.begin();
+	while (unit_item != units.end())
+	{
+		
+		unit_item++;
+	}
 	return true;
 }
 
@@ -89,4 +102,62 @@ bool j1EntitiesManager::CleanUp()
 	}
 
 	return true;
+}
+
+//Functionality =======================
+Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
+{
+	Unit* new_unit = nullptr;
+
+	switch (type)
+	{
+	case NO_UNIT: new_unit = new Unit("undefined"); break;
+
+	case MILITIA:
+		new_unit = new Unit("Militia");
+		new_unit->SetUnitType(UNIT_TYPE::MILITIA);
+		new_unit->SetAction(ACTION_TYPE::IDLE);
+		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
+		new_unit->SetTexture(App->animator->GetTextureAt(1));
+		new_unit->SetAnimation(App->animator->UnitPlay(MILITIA, IDLE, WEST));
+	 break;
+
+	case ARBALEST:
+		new_unit = new Unit("Arbalest");
+		new_unit->SetUnitType(UNIT_TYPE::ARBALEST);
+		new_unit->SetAction(ACTION_TYPE::IDLE);
+		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
+		new_unit->SetTexture(App->animator->GetTextureAt(0));
+		new_unit->SetAnimation(App->animator->UnitPlay(ARBALEST, IDLE, WEST));
+	 break;
+	}
+
+	//Add new unit at the manager list
+	if(new_unit != nullptr)units.push_back(new_unit);
+	
+	//Return the generated unit
+	return new_unit;
+}
+
+Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
+{
+	Building* new_buidling = nullptr;
+
+	switch (type)
+	{
+	case NO_BUILDING:	new_buidling = new Building("undefined");		 break;
+	case FARM:
+		break;
+	case TOWN_CENTER:
+		new_buidling = new Building("Town Center");
+		new_buidling->SetTexture(App->animator->GetTextureAt(2));
+		new_buidling->SetAnimation(App->animator->BuildingPlay(TOWN_CENTER, IDLE, NO_DIRECTION));
+		break;
+	}
+
+	//Add new unit at the manager list
+	if (new_buidling != nullptr)buildings.push_back(new_buidling);
+
+	//Return the generated unit
+	return new_buidling;
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="TownCenterFeudal.png" width="487" height="330">
+  <!-- Define the building type-->
+    <building id ="town_center">
+      <action enum ="idle" speed="0">
+        <sprite n="000_TownCenterLeftPilonsFeudal.bmp" x="183" y="1" w="112" h="52" pX="1.36607" pY="0.961538"/>
+        <sprite n="000_TownCenterLeftPilonsFeudal2.bmp" x="40" y="1" w="27" h="45" pX="6.92593" pY="0.955556"/>
+        <sprite n="000_TownCenterLeftSideFeudal.bmp" x="146" y="55" w="145" h="141" pX="1.27586" pY="1.01418"/>
+        <sprite n="000_TownCenterRightPilonFeudal.bmp" x="297" y="1" w="118" h="43" pX="-0.305085" pY="0.976744"/>
+        <sprite n="000_TownCenterRightPilonFeudal2.bmp" x="1" y="1" w="10" h="35" pX="-17.5" pY="1"/>
+        <sprite n="000_TownCenterRightPilonsFeudal.bmp" x="69" y="1" w="112" h="51" pX="-0.410714" pY="1.01961"/>
+        <sprite n="000_TownCenterRightPilonsFeudal2.bmp" x="13" y="1" w="25" h="48" pX="-6.44" pY="0.875"/>
+        <sprite n="000_TownCenterRightSideFeudal.bmp" x="1" y="55" w="143" h="144" pX="-0.321678" pY="1"/>
+        <sprite n="000_TownCenterShadowFeudal.bmp" x="1" y="256" w="376" h="73" pX="0.526596" pY="0.410959"/>
+        <sprite n="000_TownCenterTopPieceFeudal.bmp" x="293" y="55" w="193" h="199" pX="0.481865" pY="0.768844"/>
+      </action>
+    </building>
+</TextureAtlas>

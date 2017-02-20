@@ -10,6 +10,7 @@ struct SDL_Texture;
 enum UNIT_TYPE;
 enum ACTION_TYPE;
 enum DIRECTION_TYPE;
+enum BUILDING_TYPE;
 
 ///Animation Class ------------------------------
 //Class that contains the animation basic necessary data
@@ -45,11 +46,13 @@ public:
 	void	SetId(uint id);
 
 	//Get Methods -----------
-	bool			GetLoop()const;
-	uint			GetSpeed()const;
-	const SDL_Rect&	GetCurrentFrame();
-	const iPoint&	GetCurrentPivot()const;
-	uint			GetId()const;
+	bool							GetLoop()const;
+	uint							GetSpeed()const;
+	const SDL_Rect&					GetCurrentFrame();
+	const std::vector<SDL_Rect>*	GetAllFrames()const;
+	const iPoint&					GetCurrentPivot()const;
+	const std::vector<iPoint>*		GetAllPivots()const;
+	uint							GetId()const;
 
 	//Add New frame with pivot defined
 	void AddFrame(const SDL_Rect& rect, const iPoint& point);
@@ -124,36 +127,35 @@ public:
 
 private:
 
-	/// Just test
-	//Test Animation
-	Animation* test;
-	Animation* test_1;
-	Animation* test_2;
-	Animation* test_3;
-	Animation* test_4;
-
-	SDL_Texture* test_texture;
-	/// -----------
-
-
+	//Vectors that define all the entities animations
 	std::vector<Animation_Block*> unit_blocks;
 	std::vector<Animation_Block*> building_blocks;
 	std::vector<Animation_Block*> resource_blocks;
+	
+	//Vector that contains all the entities textures
+	std::vector<SDL_Texture*> textures;
 
 	//Methods that transform strings to enums (used when loading data from xml)
-	UNIT_TYPE		Str_to_UnitEnum(const std::string* str)const;
-	ACTION_TYPE		Str_to_ActionEnum(const std::string* str)const;
-	DIRECTION_TYPE	Str_to_DirectionEnum(const std::string* str)const;
+	UNIT_TYPE		Str_to_UnitEnum(const char* str)const;
+	ACTION_TYPE		Str_to_ActionEnum(const char* str)const;
+	DIRECTION_TYPE	Str_to_DirectionEnum(const char* str)const;
+	BUILDING_TYPE	Str_to_BuildingEnum(const char* str)const;
 
 public:
 
 	//Functionality -------------------
+	//Load Civilization -----
+	bool		LoadCivilization(const char* folder);
 	//Blocks Load Methods ---
-	bool		LoadUnitBlock(std::string& folder);
-	bool		LoadBuildingBlock(std::string& folder);
-	bool		LoadResourceBlock(std::string& folder);
+	bool		LoadUnitBlock(const char* folder);
+	bool		LoadBuildingBlock(const char* folder);
+	bool		LoadResourceBlock(const char* folder);
+
+	//Textures List Methods -
+	SDL_Texture* GetTextureAt(uint index)const;
 
 	//Animations Methods ----
-	Animation* Play(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;
+	Animation* UnitPlay(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;
+	Animation* BuildingPlay(const BUILDING_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;
 };
 #endif // !_J1ANIMATOR_H_

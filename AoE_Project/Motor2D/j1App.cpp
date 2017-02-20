@@ -49,11 +49,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(font);
 	AddModule(gui);
+	AddModule(entities_manager);
+	AddModule(animator);
 
 	// scene last
 	AddModule(scene);
-	AddModule(entities_manager);
-	AddModule(animator);
+
 
 	AddModule(console);
 

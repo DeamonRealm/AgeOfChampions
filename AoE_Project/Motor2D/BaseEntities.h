@@ -4,7 +4,9 @@
 #include <list>
 #include "p2Defs.h"
 #include "p2Point.h"
+
 struct Animation;
+struct SDL_Texture;
 
 // ENTITIES ENUMS -----------
 enum ENTITY_TYPE
@@ -29,7 +31,7 @@ enum BUILDING_TYPE
 {
 	NO_BUILDING = 0,
 	FARM,
-	HALL
+	TOWN_CENTER
 };
 enum ACTION_TYPE
 {
@@ -76,20 +78,30 @@ protected:
 	std::string		name;
 	fPoint			position = { 0,0 };
 	ENTITY_TYPE		entity_type = NO_ENTITY;
+	SDL_Texture*	texture = nullptr;
+	Animation*		current_animation = nullptr;
 
 public:
 
+
+
 	//Functionality -------------------
+	//Draw ------------------
+	virtual bool	Draw();
+
 	//Set Methods -----------
-	void		SetName(const char* name_str);
-	void		SetPosition(float x, float y);
-	void		SetEntityType(ENTITY_TYPE type);
+	void			SetName(const char* name_str);
+	void			SetPosition(float x, float y);
+	void			SetEntityType(ENTITY_TYPE type);
+	void			SetTexture(SDL_Texture* tex);
+	void			SetAnimation(const Animation* anim);
 
 	//Get Methods -----------
-	const char*	GetName()const;
-	fPoint		GetPosition()const;
-	ENTITY_TYPE	GetEntityType()const;
-
+	const char*		GetName()const;
+	fPoint			GetPosition()const;
+	ENTITY_TYPE		GetEntityType()const;
+	SDL_Texture*	GetTexture()const;
+	Animation*		GetAnimation()const;
 };
 /// ---------------------------------------------
 
@@ -108,7 +120,6 @@ protected:
 
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
-	Animation*		current_animation = nullptr;
 	//Life -------------
 	uint			max_life = 0;
 	float			life = 0;
@@ -139,10 +150,9 @@ protected:
 
 public:
 
-	//Functionality
+	//Functionality -------------------
 	//Set Methods -----------
 	void	SetUnitType(UNIT_TYPE type);
-	void	SetAnimation(const Animation* anim);
 	void	SetFullLife(uint full_life_val);
 	void	SetLife(uint life_val);
 	void	SetViewArea(uint area_val);
@@ -168,7 +178,6 @@ public:
 
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
-	Animation*		GetAnimation()const;
 	uint			GetFullLife()const;
 	uint			GetLife()const;
 	uint			GetViewArea()const;
@@ -212,7 +221,7 @@ protected:
 
 public:
 
-	//Functionality
+	//Functionality -------------------
 	//Set Methods -----------
 	void	SetResourceType(RESOURCE_TYPE type);
 	void	SetMaxResources(uint max_res);
@@ -248,8 +257,12 @@ protected:
 
 public:
 
+	//Functionality -------------------
 	//Factory that generates any type of unit suported by the building
 	virtual Unit* GenerateUnit(UNIT_TYPE new_unit_type)const;
+
+	//Draw ------------------
+	bool	Draw();
 
 	//Set Methods -----------
 	void	SetBuildingType(BUILDING_TYPE type);
