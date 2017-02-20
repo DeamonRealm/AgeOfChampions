@@ -100,10 +100,10 @@ enum TERRAIN {
 // ----------------------------------------------------
 struct MapData
 {
-	int					width;
-	int					height;
-	int					tile_width;
-	int					tile_height;
+	uint				width;
+	uint				height;
+	uint				tile_width;
+	uint				tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
 	std::list<TileSet*>	tilesets;
@@ -155,7 +155,7 @@ public:
 	//Unload Current map
 	bool UnLoadMap();
 	//Generate walkability map from map tiles id
-	bool CreateWalkabilityMap(int& width, int & height, uchar** buffer);
+	bool CreateWalkabilityMap(uint& width, uint & height, uchar** buffer);
 	//Generate walkability cost map from map tiles id
 	bool CreateWalkCostMap(int& width, int& height, uchar** buffer)const;
 	//Get Movement cost from x y coordenates

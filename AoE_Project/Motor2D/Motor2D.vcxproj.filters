@@ -78,6 +78,9 @@
     <ClCompile Include="j1EntitiesManager.cpp">
       <Filter>Modules\EnititiesManager</Filter>
     </ClCompile>
+    <ClCompile Include="j1ClusterAbstraction.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -172,6 +175,9 @@
     <ClInclude Include="BaseEntities.h">
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="j1ClusterAbstraction.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -200,6 +206,9 @@
     </Filter>
     <Filter Include="Modules\EnititiesManager\Entities">
       <UniqueIdentifier>{f4dce75b-b01a-4ebe-9f7a-a30e952f130a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pathfinding">
+      <UniqueIdentifier>{ea379160-4af9-4193-a358-27e9a38147db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
