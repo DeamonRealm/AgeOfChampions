@@ -4,9 +4,11 @@
 #include "j1Render.h"
 #include "j1Animator.h"
 
+#include "Iso_Primitives.h"
+
 ///Class Entity ---------------------------------
 //Constructors ========================
-Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE entity_type) : name(name), position(position), entity_type(entity_type)
+Entity::Entity(const std::string& name, const iPoint& position, ENTITY_TYPE entity_type) : name(name), position(position), entity_type(entity_type)
 {
 
 }
@@ -27,9 +29,16 @@ Entity::~Entity()
 // Draw -----------
 bool Entity::Draw()
 {
+	bool ret = false;
+	//Draw Entity Mark
+	ret = mark->Draw();
+
+	//Draw Entity Current animation frame
 	SDL_Rect rect = current_animation->GetCurrentFrame();
 	iPoint pivot = current_animation->GetCurrentPivot();
-	return 	App->render->Blit(texture, (int)position.x - pivot.x, (int)position.y - pivot.y, &rect);
+	ret = App->render->Blit(texture, (int)position.x - pivot.x, (int)position.y - pivot.y, &rect);
+
+	return ret;
 }
 //Set Methods -----
 void Entity::SetName(const char * name_str)
@@ -37,15 +46,21 @@ void Entity::SetName(const char * name_str)
 	name = name_str;
 }
 
-void Entity::SetPosition(float x, float y)
+void Entity::SetPosition(int x, int y)
 {
 	position.x = x;
 	position.y = y;
+	mark->SetPosition(iPoint(x, y));
 }
 
 void Entity::SetEntityType(ENTITY_TYPE type)
 {
 	entity_type = type;
+}
+
+void Entity::SetDiplomacy(DIPLOMACY new_diplomacy)
+{
+	entity_diplomacy = new_diplomacy;
 }
 
 void Entity::SetTexture(SDL_Texture * tex)
@@ -57,9 +72,24 @@ void Entity::SetAnimation(const Animation * anim)
 {
 	current_animation = (Animation*)anim;
 }
-void Entity::SetDiplomacy(DIPLOMACY new_diplomacy)
+
+void Entity::GenerateMark()
 {
-	entity_diplomacy = new_diplomacy;
+	switch (entity_type)
+	{
+	case UNIT:
+		mark = new Circle(position, 20);
+		mark->SetColor({ 250,50,40,255 });
+		mark->SetXAngle(7);
+		break;
+	case RESOURCE:
+		break;
+	case BUILDING:
+		mark = new Rectng(iPoint(position.x,position.y - 25), 400);
+		mark->SetColor({ 150,250,40,255 });
+		mark->SetXAngle(7);
+		break;
+	}
 }
 // ----------------
 //Get Methods -----
@@ -68,7 +98,7 @@ const char* Entity::GetName() const
 	return name.c_str();
 }
 
-fPoint Entity::GetPosition() const
+iPoint Entity::GetPosition() const
 {
 	return position;
 }
@@ -83,14 +113,21 @@ SDL_Texture * Entity::GetTexture() const
 	return texture;
 }
 
-Animation * Entity::GetAnimation() const
-{
-	return current_animation;
-}
 DIPLOMACY Entity::GetDiplomacy() const
 {
 	return entity_diplomacy;
 }
+
+Animation * Entity::GetAnimation() const
+{
+	return current_animation;
+}
+
+Primitive * Entity::GetMark() const
+{
+	return mark;
+}
+
 // ----------------
 ///----------------------------------------------
 ///Class Unit -----------------------------------
@@ -430,16 +467,22 @@ Unit * Building::GenerateUnit(UNIT_TYPE new_unit_type) const
 //Draw ----------------------
 bool Building::Draw()
 {
+	bool ret = false;
+	ret = mark->Draw();
 	const std::vector<SDL_Rect>*	sprites = current_animation->GetAllFrames();
 	const std::vector<iPoint>*		pivots = current_animation->GetAllPivots();
 
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		App->render->Blit(texture, (int)position.x - pivots->at(k).x, (int)position.y - pivots->at(k).y, &sprites->at(k));
+		if (!App->render->Blit(texture, (int)position.x - pivots->at(k).x, (int)position.y - pivots->at(k).y, &sprites->at(k)))
+		{
+			ret = false;
+			break;
+		}
 	}
 
-	return true;
+	return ret;
 }
 
 //Set Methods ---------------

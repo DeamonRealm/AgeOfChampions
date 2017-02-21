@@ -28,13 +28,25 @@ bool j1EntitiesManager::Start()
 
 bool j1EntitiesManager::Update(float dt)
 {
+	bool ret = true;
+
+	//Draw all units
 	std::list<Unit*>::const_iterator unit_item = units.begin();
-	while (unit_item != units.end())
+	while (unit_item != units.end() && ret)
 	{
-		
+		ret = unit_item._Ptr->_Myval->Draw();
 		unit_item++;
 	}
-	return true;
+
+	//Draw all buildings
+	std::list<Building*>::const_iterator building_item = buildings.begin();
+	while (building_item != buildings.end() && ret)
+	{
+		ret = building_item._Ptr->_Myval->Draw();
+		building_item++;
+	}
+
+	return ret;
 }
 
 bool j1EntitiesManager::CleanUp()
@@ -115,20 +127,24 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 
 	case MILITIA:
 		new_unit = new Unit("Militia");
+		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
 		new_unit->SetUnitType(UNIT_TYPE::MILITIA);
 		new_unit->SetAction(ACTION_TYPE::IDLE);
 		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
 		new_unit->SetTexture(App->animator->GetTextureAt(1));
 		new_unit->SetAnimation(App->animator->UnitPlay(MILITIA, IDLE, WEST));
+		new_unit->GenerateMark();
 	 break;
 
 	case ARBALEST:
 		new_unit = new Unit("Arbalest");
+		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
 		new_unit->SetUnitType(UNIT_TYPE::ARBALEST);
 		new_unit->SetAction(ACTION_TYPE::IDLE);
 		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
 		new_unit->SetTexture(App->animator->GetTextureAt(0));
 		new_unit->SetAnimation(App->animator->UnitPlay(ARBALEST, IDLE, WEST));
+		new_unit->GenerateMark();
 	 break;
 
 
@@ -152,8 +168,10 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 		break;
 	case TOWN_CENTER:
 		new_buidling = new Building("Town Center");
+		new_buidling->SetEntityType(ENTITY_TYPE::BUILDING);
 		new_buidling->SetTexture(App->animator->GetTextureAt(4));
 		new_buidling->SetAnimation(App->animator->BuildingPlay(TOWN_CENTER, IDLE, NO_DIRECTION));
+		new_buidling->GenerateMark();
 		break;
 	}
 

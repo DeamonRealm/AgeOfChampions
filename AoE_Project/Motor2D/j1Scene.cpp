@@ -52,7 +52,7 @@ bool j1Scene::Start()
 
 	// Entities Build -------------------------------------
 	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::ARBALEST);
-	arbalest->SetPosition(250, 250);
+	arbalest->SetPosition(350, 280);
 	town_center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER);
 	town_center->SetPosition(550, 450);
 	// ----------------------------------------------------
@@ -150,9 +150,6 @@ bool j1Scene::Update(float dt)
 
 
 	App->map->Draw();
-
-	arbalest->Draw();
-	town_center->Draw();
 
 	return true;
 }

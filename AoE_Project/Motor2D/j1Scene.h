@@ -61,8 +61,6 @@ private:
 	UI_Popup_menu*  civilization_menu;
 	UI_Button*		civilization_button;
 	UI_String*		selected;
-	
-
 
 public:
 

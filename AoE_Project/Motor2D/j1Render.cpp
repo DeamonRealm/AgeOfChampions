@@ -233,7 +233,7 @@ bool j1Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 
 	return ret;
 }
 
-bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera) const
+bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a, float x_angle, bool use_camera) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -246,10 +246,23 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 
 	float factor = (float)M_PI / 180.0f;
 
-	for(uint i = 0; i < 360; ++i)
+	//In case that the circle is fixed at camera coordinates
+	if (!use_camera)
 	{
-		points[i].x = (int)(x + radius * cos(i * factor));
-		points[i].y = (int)(y + radius * sin(i * factor));
+		for (uint i = 0; i < 360; ++i)
+		{
+			points[i].x = (int)(x + radius * cos(i * factor));
+			points[i].y = (int)((y + radius * sin(i * factor) * sin(x_angle)));
+		}
+	}
+	//Else if the circle is not fixed
+	else
+	{
+		for (uint i = 0; i < 360; ++i)
+		{
+			points[i].x = (int)(x + radius * cos(i * factor)) + camera.x;
+			points[i].y = (int)((y + radius * sin(i * factor) * sin(x_angle))) + camera.y;
+		}
 	}
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);

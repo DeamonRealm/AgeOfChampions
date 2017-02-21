@@ -84,6 +84,9 @@
     <ClCompile Include="Villager.cpp">
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Iso_Primitives.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -183,6 +186,9 @@
     </ClInclude>
     <ClInclude Include="Villager.h">
       <Filter>Modules\EnititiesManager\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Iso_Primitives.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@
 
 struct Animation;
 struct SDL_Texture;
+struct Primitive;
 enum CURSOR_TARGET;
 
 // ENTITIES ENUMS -----------
@@ -77,7 +78,7 @@ class Entity
 {
 public:
 
-	Entity(const std::string& name, const  fPoint& position = { 0,0 } , ENTITY_TYPE entity_type = NO_ENTITY);
+	Entity(const std::string& name, const  iPoint& position = { 0,0 } , ENTITY_TYPE entity_type = NO_ENTITY);
 	Entity(const Entity* copy);
 
 	~Entity();
@@ -85,11 +86,12 @@ public:
 protected:
 
 	std::string		name;
-	fPoint			position = { 0,0 };
+	iPoint			position = { 0,0 };
 	ENTITY_TYPE		entity_type = NO_ENTITY;
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
 	SDL_Texture*	texture = nullptr;
 	Animation*		current_animation = nullptr;
+	Primitive*		mark = nullptr;
 
 public:
 
@@ -101,19 +103,21 @@ public:
 
 	//Set Methods -----------
 	void			SetName(const char* name_str);
-	void			SetPosition(float x, float y);
+	void			SetPosition(int x, int y);
 	void			SetEntityType(ENTITY_TYPE type);
+	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 	void			SetTexture(SDL_Texture* tex);
 	void			SetAnimation(const Animation* anim);
-	void			SetDiplomacy(DIPLOMACY new_diplomacy);
+	void			GenerateMark();
 
 	//Get Methods -----------
 	const char*		GetName()const;
-	fPoint			GetPosition()const;
+	iPoint			GetPosition()const;
 	ENTITY_TYPE		GetEntityType()const;
+	DIPLOMACY		GetDiplomacy()const;
 	SDL_Texture*	GetTexture()const;
 	Animation*		GetAnimation()const;
-	DIPLOMACY		GetDiplomacy()const;
+	Primitive*		GetMark()const;
 };
 /// ---------------------------------------------
 

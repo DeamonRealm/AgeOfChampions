@@ -13,10 +13,12 @@ enum Orientation {
 class Cluster
 {
 public:
+
 	Cluster(int posX,int posY,int width,int height,int row,int column,int id);
 	~Cluster();
 
 private:
+
 	int						posX;
 	int						posY;
 	int						width;
@@ -30,12 +32,14 @@ private:
 class Entry
 {
 public:
-	Entry(int row, int column,Orientation orientation);
-	~Entry();
+
+	/*Entry(int row, int column,Orientation orientation);
+	~Entry();*/
 
 	int						row;
 	int						column;
 	Orientation				orientatiton;
+
 private:
 
 };

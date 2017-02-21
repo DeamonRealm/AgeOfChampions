@@ -49,12 +49,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(font);
 	AddModule(gui);
-	AddModule(entities_manager);
+
 	AddModule(animator);
 
 	// scene last
 	AddModule(scene);
-
+	AddModule(entities_manager);
 
 	AddModule(console);
 
@@ -188,9 +188,8 @@ bool j1App::Start()
 	load_dir = App->console->AddCvar("load_dir", "Directory from app load data", "game_save.xml", C_VAR_TYPE::CHAR_VAR, nullptr, false);
 
 
-	//Desactivate Console and UI modules
-	/*console->active = false;
-	gui->active = false;*/
+	//Desactivate Console 
+	console->active = false;
 
 	return ret;
 }
