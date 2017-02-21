@@ -249,6 +249,8 @@ UNIT_TYPE j1Animator::Str_to_UnitEnum(const char* str) const
 {
 	if (strcmp(str, "militia") == 0)	return MILITIA;
 	if (strcmp(str, "arbalest") == 0)	return ARBALEST;
+	if (strcmp(str, "villager") == 0)	return VILLAGER;
+
 	return NO_UNIT;
 }
 
