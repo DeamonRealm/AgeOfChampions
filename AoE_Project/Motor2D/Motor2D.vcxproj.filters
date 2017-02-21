@@ -81,6 +81,9 @@
     <ClCompile Include="j1ClusterAbstraction.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="Villager.cpp">
+      <Filter>Modules\EnititiesManager\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -177,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="j1ClusterAbstraction.h">
       <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Villager.h">
+      <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

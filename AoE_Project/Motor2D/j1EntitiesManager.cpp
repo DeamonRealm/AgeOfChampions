@@ -130,6 +130,8 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 		new_unit->SetTexture(App->animator->GetTextureAt(0));
 		new_unit->SetAnimation(App->animator->UnitPlay(ARBALEST, IDLE, WEST));
 	 break;
+
+
 	}
 
 	//Add new unit at the manager list
@@ -150,7 +152,7 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 		break;
 	case TOWN_CENTER:
 		new_buidling = new Building("Town Center");
-		new_buidling->SetTexture(App->animator->GetTextureAt(2));
+		new_buidling->SetTexture(App->animator->GetTextureAt(4));
 		new_buidling->SetAnimation(App->animator->BuildingPlay(TOWN_CENTER, IDLE, NO_DIRECTION));
 		break;
 	}
