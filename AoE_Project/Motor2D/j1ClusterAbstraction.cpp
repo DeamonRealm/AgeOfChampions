@@ -91,8 +91,26 @@ uchar j1ClusterAbstraction::GetTileAt(const iPoint& pos) const
 
 void j1ClusterAbstraction::CreateEntryHorizontal(int start, int end, int y, int row, int column)
 {
+	int begin = 0;
 	for (int i = start; i < end; i++) {
+		while ((i <= end) && !IsWalkable(i,y) && !IsWalkable(i,y+1))
+		{
+			i++;
+		}
+		if (i > end)
+			return;
 
+		begin = i;
+		while ((i <= end) && IsWalkable(i, y) && IsWalkable(i, y + 1))
+		{
+			i++;
+		}
+		if ((i - begin) >= MAX_ENTRY_NUM){
+
+		}
+		else {
+
+		}
 	}
 }
 

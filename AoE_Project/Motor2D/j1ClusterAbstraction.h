@@ -3,6 +3,7 @@
 #define _J1CLUSTER_ABSTRACTION_H_
 #include <vector>
 #include "j1Map.h"
+#include "j1LogicMap.h"
 enum Orientation {
 	HORIZONTAL,
 	VERTICAL
@@ -16,22 +17,25 @@ public:
 	~Cluster();
 
 private:
-	int posX;
-	int posY;
-	int width;
-	int height;
-	int row;
-	int column;
-	int id;
-	std::vector<int> nodes;
+	int						posX;
+	int						posY;
+	int						width;
+	int						height;
+	int						row;
+	int						column;
+	int						id;
+	std::vector<int>		nodes;
 };
 
 class Entry
 {
 public:
-	Entry();
+	Entry(int row, int column,Orientation orientation);
 	~Entry();
 
+	int						row;
+	int						column;
+	Orientation				orientatiton;
 private:
 
 };
@@ -53,11 +57,11 @@ public:
 
 private:
 	// size of the map 
-	uint width;
-	uint height;
-	uint clusterSize;
-
-	std::vector<Cluster> clusters;
+	uint					width;
+	uint					height;
+	uint					clusterSize;
+	std::vector<Entry>		entrys;
+	std::vector<Cluster>	clusters;
 	//This only works with a single level of terrain in case we have more than one unit size we will have to add a vector map
 	uchar* map;
 
