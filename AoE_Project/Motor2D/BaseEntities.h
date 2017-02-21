@@ -7,6 +7,7 @@
 
 struct Animation;
 struct SDL_Texture;
+enum CURSOR_TARGET;
 
 // ENTITIES ENUMS -----------
 enum ENTITY_TYPE
@@ -61,6 +62,13 @@ enum DIRECTION_TYPE
 	WEST,
 	NORTH_WEST
 };
+
+enum DIPLOMACY
+{
+	NEUTRAL,
+	ALLY,
+	ENEMY
+};
 // --------------------------
 
 ///Class Entity ---------------------------------
@@ -79,6 +87,7 @@ protected:
 	std::string		name;
 	fPoint			position = { 0,0 };
 	ENTITY_TYPE		entity_type = NO_ENTITY;
+	DIPLOMACY		entity_diplomacy = NEUTRAL;
 	SDL_Texture*	texture = nullptr;
 	Animation*		current_animation = nullptr;
 
@@ -96,6 +105,7 @@ public:
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetTexture(SDL_Texture* tex);
 	void			SetAnimation(const Animation* anim);
+	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 
 	//Get Methods -----------
 	const char*		GetName()const;
@@ -103,6 +113,7 @@ public:
 	ENTITY_TYPE		GetEntityType()const;
 	SDL_Texture*	GetTexture()const;
 	Animation*		GetAnimation()const;
+	DIPLOMACY		GetDiplomacy()const;
 };
 /// ---------------------------------------------
 

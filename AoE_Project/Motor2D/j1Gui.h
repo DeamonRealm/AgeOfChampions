@@ -6,6 +6,10 @@
 struct UI_Element;
 struct SDL_Texture;
 enum UI_TYPE;
+enum UNIT_TYPE;
+enum RESOURCE_TYPE;
+enum BUILDING_TYPE;
+
 enum GUI_INPUT {
 
 	UP_ARROW,
@@ -23,6 +27,16 @@ enum GUI_INPUT {
 	ENTER,
 	TAB
 
+};
+
+enum CURSOR_TARGET
+{
+	UNKNOWN,
+	MENU,
+	HAND,
+	SWORD,
+	BUILD,
+	CHOOP
 };
 
 // ---------------------------------------------------
@@ -67,6 +81,9 @@ private:
 	//Target Module of gui input
 	j1Module*				default_input_target;
 
+	//Cursor type;
+	CURSOR_TARGET			cursor_type;
+
 public:
 
 	mutable UI_Element*			ItemSelected = nullptr;
@@ -87,6 +104,11 @@ public:
 
 	UI_Element*			GetActiveScreen();
 	uint				CalculateUpperElement(UI_Element* parent, uint layer = 0);
+
+	//mouse function
+	void				ChangeMouseTexture(UNIT_TYPE type);
+	void				ChangeMouseTexture(RESOURCE_TYPE type);
+	void				ChangeMouseTexture(BUILDING_TYPE type);
 
 	//Gui taget funtions
 	void				SetDefaultInputTarget(j1Module* target);

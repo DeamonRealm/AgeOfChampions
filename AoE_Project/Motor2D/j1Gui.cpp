@@ -16,6 +16,9 @@
 #include "UI_Text_Box.h"
 #include "UI_Popup_Menu.h"
 
+//InGame elements
+#include "BaseEntities.h"
+
 j1Gui::j1Gui() : j1Module()
 {
 	name = "gui";
@@ -79,6 +82,15 @@ bool j1Gui::PostUpdate()
 
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	{
+		SDL_ShowCursor(0);
+	}
+	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{ 
+		SDL_ShowCursor(1);
+	}
+
 	// Update & draw the UI screens
 	std::list<UI_Element*>::iterator item = screens.begin();
 	while (item != screens.end()) {
@@ -88,6 +100,9 @@ bool j1Gui::PostUpdate()
 
 		item++;
 	}
+
+	//draw cursor
+
 
 	return true;
 }
@@ -238,6 +253,18 @@ uint j1Gui::CalculateUpperElement(UI_Element* parent, uint layer)
 	upper_element = layer;
 
 	return uint(layer);
+}
+
+void j1Gui::ChangeMouseTexture(UNIT_TYPE type)
+{
+}
+
+void j1Gui::ChangeMouseTexture(RESOURCE_TYPE type)
+{
+}
+
+void j1Gui::ChangeMouseTexture(BUILDING_TYPE type)
+{
 }
 
 void j1Gui::SetDefaultInputTarget(j1Module * target)

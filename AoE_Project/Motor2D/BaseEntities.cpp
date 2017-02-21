@@ -57,6 +57,10 @@ void Entity::SetAnimation(const Animation * anim)
 {
 	current_animation = (Animation*)anim;
 }
+void Entity::SetDiplomacy(DIPLOMACY new_diplomacy)
+{
+	entity_diplomacy = new_diplomacy;
+}
 // ----------------
 //Get Methods -----
 const char* Entity::GetName() const
@@ -82,6 +86,10 @@ SDL_Texture * Entity::GetTexture() const
 Animation * Entity::GetAnimation() const
 {
 	return current_animation;
+}
+DIPLOMACY Entity::GetDiplomacy() const
+{
+	return entity_diplomacy;
 }
 // ----------------
 ///----------------------------------------------
