@@ -5,6 +5,54 @@
 #include "j1Window.h"
 #include "j1Console.h"
 
+///Class Blit_Call ------------------------------
+//Constructors ========================
+Blit_Call::Blit_Call()
+{
+
+}
+
+Blit_Call::Blit_Call(const iPoint & position, SDL_Texture * texture, const SDL_Rect& rect, uint priority) :position(position), texture(texture), rect(rect), priority(priority)
+{
+
+}
+
+//Destructors =========================
+Blit_Call::~Blit_Call()
+{
+
+}
+
+int Blit_Call::GetX() const
+{
+	return position.x;
+}
+
+int Blit_Call::GetY() const
+{
+	return position.y;
+}
+
+SDL_Texture * Blit_Call::GetTex() const
+{
+	return texture;
+}
+
+const SDL_Rect* Blit_Call::GetRect() const
+{
+	return &rect;
+}
+
+bool Blit_Call::operator<(const Blit_Call & target) const
+{
+	if (priority < target.priority)return true;
+	return false;
+}
+
+//Operator to compare blit calls in the priority queue
+
+/// ---------------------------------------------
+
 j1Render::j1Render() : j1Module()
 {
 	name = "renderer";
@@ -67,6 +115,18 @@ bool j1Render::PreUpdate()
 	return true;
 }
 
+bool j1Render::Update(float dt)
+{
+	uint size = blit_queue.size();
+	for (uint k = 0; k < size; k++)
+	{
+		const Blit_Call* blit = &blit_queue.top();
+		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect());
+		blit_queue.pop();
+	}
+	return true;
+}
+
 bool j1Render::PostUpdate()
 {
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
@@ -116,6 +176,14 @@ void j1Render::ChangeVSYNCstate(bool state)
 	//Generate renderer whit the new vsync state
 	SDL_DestroyRenderer(renderer);
 	renderer = SDL_CreateRenderer(App->win->window, -1, renderer_flag);
+}
+
+bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect* section, bool horizontal_flip, uint priority, float speed, double angle, int pivot_x, int pivot_y)
+{
+	bool ret = false;
+	if (texture != nullptr)ret = true;
+	blit_queue.emplace(iPoint(x, y), texture, *section, priority);
+	return true;
 }
 
 void j1Render::SetViewPort(const SDL_Rect& rect)
@@ -296,3 +364,4 @@ void j1Render::Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string
 		}
 	}
 }
+

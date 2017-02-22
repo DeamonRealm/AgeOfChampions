@@ -36,7 +36,7 @@ bool Entity::Draw()
 	//Draw Entity Current animation frame
 	SDL_Rect rect = current_animation->GetCurrentFrame();
 	iPoint pivot = current_animation->GetCurrentPivot();
-	ret = App->render->Blit(current_animation->GetTexture(), (int)position.x - pivot.x, (int)position.y - pivot.y, &rect);
+	ret = App->render->CallBlit(current_animation->GetTexture(), (int)position.x - pivot.x, (int)position.y - pivot.y, &rect,false,-position.y);
 
 	return ret;
 }
@@ -73,8 +73,8 @@ void Entity::GenerateMark()
 	switch (entity_type)
 	{
 	case UNIT:
-		mark = new Circle(position, 20);
-		mark->SetColor({ 250,50,40,255 });
+		mark = new Circle(position, 50);
+		mark->SetColor({ 150,50,40,255 });
 		mark->SetXAngle(7);
 		break;
 	case RESOURCE:
@@ -458,6 +458,7 @@ Unit * Building::GenerateUnit(UNIT_TYPE new_unit_type) const
 bool Building::Draw()
 {
 	bool ret = false;
+
 	ret = mark->Draw();
 	const std::vector<SDL_Rect>*	sprites = current_animation->GetAllFrames();
 	const std::vector<iPoint>*		pivots = current_animation->GetAllPivots();
@@ -465,7 +466,7 @@ bool Building::Draw()
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (!App->render->Blit(current_animation->GetTexture(), (int)position.x - pivots->at(k).x, (int)position.y - pivots->at(k).y, &sprites->at(k)))
+		if (!App->render->CallBlit(current_animation->GetTexture(), (int)position.x - pivots->at(k).x, (int)position.y - pivots->at(k).y, &sprites->at(k), false, -position.y ))
 		{
 			ret = false;
 			break;

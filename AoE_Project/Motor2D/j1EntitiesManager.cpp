@@ -167,6 +167,7 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 	case TOWN_CENTER:
 		new_buidling = new Building("Town Center");
 		new_buidling->SetEntityType(ENTITY_TYPE::BUILDING);
+		new_buidling->SetBuildingType(BUILDING_TYPE::TOWN_CENTER);
 		new_buidling->SetAnimation(App->animator->BuildingPlay(TOWN_CENTER, IDLE, NO_DIRECTION));
 		new_buidling->GenerateMark();
 		break;

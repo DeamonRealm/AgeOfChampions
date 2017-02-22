@@ -4,8 +4,40 @@
 #include "SDL/include/SDL.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include <queue>
 
 struct Cvar;
+
+///Class Blit_Call ------------------------------
+//Little class to save all blit calls and organize them in a priority queue
+class Blit_Call
+{
+public:
+
+	Blit_Call();
+	Blit_Call(const iPoint& position, SDL_Texture* texture, const SDL_Rect& rect, uint priority);
+	~Blit_Call();
+
+private:
+
+	iPoint			position = { 0,0 };
+	SDL_Texture*	texture = nullptr;
+	SDL_Rect		rect = { 0,0,0,0 };
+	uint			priority = 0;
+
+public:
+
+	//Get Methods -----------
+	int				GetX()const;
+	int				GetY()const;
+	SDL_Texture*	GetTex()const;
+	const SDL_Rect*	GetRect()const;
+
+	//Operator to compare blit calls in the priority queue
+	bool operator<(const Blit_Call& target) const;
+
+};
+/// ---------------------------------------------
 
 class j1Render : public j1Module
 {
@@ -24,6 +56,7 @@ public:
 
 	// Called each loop iteration
 	bool PreUpdate();
+	bool Update(float dt);
 	bool PostUpdate();
 
 	// Called before quitting
@@ -33,22 +66,13 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	// Utils
-	void	SetViewPort(const SDL_Rect& rect);
-	void	ResetViewPort();
-	iPoint	ScreenToWorld(int x, int y) const;
+	//Console Input method
+	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
 
-	// Draw & Blit
-	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, bool horizontal_flip = false, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
-	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true) const;
-	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
-	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, float x_angle = 0, bool use_camera = true) const;
+private:
 
-	// Set background color
-	void SetBackgroundColor(SDL_Color color);
-
-	//Active/Desactive vsync
-	void ChangeVSYNCstate(bool state);
+	//Priority queue to organize all the blits
+	std::priority_queue<Blit_Call> blit_queue;
 
 public:
 
@@ -59,7 +83,27 @@ public:
 
 public:
 
-	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
+	//Add blit call ---------
+	bool	CallBlit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, bool horizontal_flip = false, uint priority = 0, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
+	
+	//Viewport Methods ------
+	void	SetViewPort(const SDL_Rect& rect);
+	void	ResetViewPort();
+
+	//View frame change -----
+	iPoint	ScreenToWorld(int x, int y) const;
+
+	// Draw & Blit ----------
+	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, bool horizontal_flip = false, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
+	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true) const;
+	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
+	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, float x_angle = 0, bool use_camera = true) const;
+
+	// Set background color -
+	void SetBackgroundColor(SDL_Color color);
+
+	//Active/Desactive vsync
+	void ChangeVSYNCstate(bool state);
 
 };
 

@@ -164,6 +164,7 @@ void j1Map::Draw()
 			item++;
 			continue;
 		}
+
 		for (int y = 0; y < data.height; ++y)
 		{
 			for (int x = 0; x < data.width; ++x)
