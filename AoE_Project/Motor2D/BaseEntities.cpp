@@ -36,7 +36,7 @@ bool Entity::Draw()
 	//Draw Entity Current animation frame
 	SDL_Rect rect = current_animation->GetCurrentFrame();
 	iPoint pivot = current_animation->GetCurrentPivot();
-	ret = App->render->Blit(texture, (int)position.x - pivot.x, (int)position.y - pivot.y, &rect);
+	ret = App->render->Blit(current_animation->GetTexture(), (int)position.x - pivot.x, (int)position.y - pivot.y, &rect);
 
 	return ret;
 }
@@ -61,11 +61,6 @@ void Entity::SetEntityType(ENTITY_TYPE type)
 void Entity::SetDiplomacy(DIPLOMACY new_diplomacy)
 {
 	entity_diplomacy = new_diplomacy;
-}
-
-void Entity::SetTexture(SDL_Texture * tex)
-{
-	texture = tex;
 }
 
 void Entity::SetAnimation(const Animation * anim)
@@ -106,11 +101,6 @@ iPoint Entity::GetPosition() const
 ENTITY_TYPE Entity::GetEntityType() const
 {
 	return entity_type;
-}
-
-SDL_Texture * Entity::GetTexture() const
-{
-	return texture;
 }
 
 DIPLOMACY Entity::GetDiplomacy() const
@@ -475,7 +465,7 @@ bool Building::Draw()
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (!App->render->Blit(texture, (int)position.x - pivots->at(k).x, (int)position.y - pivots->at(k).y, &sprites->at(k)))
+		if (!App->render->Blit(current_animation->GetTexture(), (int)position.x - pivots->at(k).x, (int)position.y - pivots->at(k).y, &sprites->at(k)))
 		{
 			ret = false;
 			break;

@@ -119,9 +119,6 @@ bool Rectng::Draw()
 {
 	bool ret = false;
 
-	//This is temporal
-	this->x_angle += 0.001f;
-
 	//Calculate the diagonal distance from the center to the vertex
 	int diagonal_len = floor(sqrt(((width*0.5f)*(width*0.5f)) + ((height*0.5f)*(height*0.5f))));
 	

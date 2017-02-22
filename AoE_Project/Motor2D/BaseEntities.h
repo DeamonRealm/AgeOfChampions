@@ -89,7 +89,6 @@ protected:
 	iPoint			position = { 0,0 };
 	ENTITY_TYPE		entity_type = NO_ENTITY;
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
-	SDL_Texture*	texture = nullptr;
 	Animation*		current_animation = nullptr;
 	Primitive*		mark = nullptr;
 
@@ -106,7 +105,6 @@ public:
 	void			SetPosition(int x, int y);
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
-	void			SetTexture(SDL_Texture* tex);
 	void			SetAnimation(const Animation* anim);
 	void			GenerateMark();
 
@@ -115,7 +113,6 @@ public:
 	iPoint			GetPosition()const;
 	ENTITY_TYPE		GetEntityType()const;
 	DIPLOMACY		GetDiplomacy()const;
-	SDL_Texture*	GetTexture()const;
 	Animation*		GetAnimation()const;
 	Primitive*		GetMark()const;
 };

@@ -27,6 +27,8 @@ private:
 	//Vectors that storage the frames rect & pivot
 	std::vector<SDL_Rect>	frames;
 	std::vector<iPoint>		pivots;
+	//Pointer to the animation texture
+	SDL_Texture*			texture = nullptr;
 	//Id of the animation enum type
 	uint					enum_id = 0;
 	//Current frame calculated by the timer
@@ -41,11 +43,13 @@ public:
 
 	//Functionality -------------------
 	//Set Methods -----------
+	void	SetTexture(const SDL_Texture* tex);
 	void	SetLoop(bool loop_state);
 	void	SetSpeed(uint new_speed);
 	void	SetId(uint id);
 
 	//Get Methods -----------
+	SDL_Texture*					GetTexture()const;
 	bool							GetLoop()const;
 	uint							GetSpeed()const;
 	const SDL_Rect&					GetCurrentFrame();
@@ -131,9 +135,6 @@ private:
 	std::vector<Animation_Block*> unit_blocks;
 	std::vector<Animation_Block*> building_blocks;
 	std::vector<Animation_Block*> resource_blocks;
-	
-	//Vector that contains all the entities textures
-	std::vector<SDL_Texture*> textures;
 
 	//Methods that transform strings to enums (used when loading data from xml)
 	UNIT_TYPE		Str_to_UnitEnum(const char* str)const;
@@ -147,12 +148,9 @@ public:
 	//Load Civilization -----
 	bool		LoadCivilization(const char* folder);
 	//Blocks Load Methods ---
-	bool		LoadUnitBlock(const char* folder);
-	bool		LoadBuildingBlock(const char* folder);
+	bool		LoadUnitBlock(const char* xml_folder, const char* tex_folder);
+	bool		LoadBuildingBlock(const char* xml_folder, const char* tex_folder);
 	bool		LoadResourceBlock(const char* folder);
-
-	//Textures List Methods -
-	SDL_Texture* GetTextureAt(uint index)const;
 
 	//Animations Methods ----
 	Animation* UnitPlay(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;

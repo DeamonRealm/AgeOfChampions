@@ -109,7 +109,7 @@ bool j1Console::PostUpdate()
 	console_input_box->HandleInput();
 	console_labels_scroll->HandleInput();
 	
-	UpdateConsoleLabels();
+	//UpdateConsoleLabels();
 
 	//Draw Console Area
 	App->render->DrawQuad({ console_area.x - App->render->camera.x,console_area.y -App->render->camera.y,console_area.w,console_area.h }, console_color.r, console_color.g, console_color.b, console_color.a);
@@ -191,9 +191,9 @@ void j1Console::GUI_Input(UI_Element * target, GUI_INPUT input)
 			Command* command = GetCommandfromInput(console_input_box->GetText());
 
 			//Send command to each module or print error str
-			if (command == nullptr)
+			if (command == NULL)
 			{
-				App->console->GenerateConsoleLabel("Error Command Input: %s", console_input_box->GetText());
+				GenerateConsoleLabel("Error Command Input: %s", console_input_box->GetText());
 			}
 			else
 			{
@@ -437,7 +437,6 @@ char * j1Console::GenerateConsoleLabel(char * new_text,...)
 void j1Console::UpdateConsoleLabels()
 {
 	uint labels_num = console_labels.size();
-	if (labels_num)labels_num--;
 	uint scroll_labels_num = console_labels_scroll->GetScrollItemsNum();
 	if (scroll_labels_num)scroll_labels_num--;
 
@@ -522,22 +521,21 @@ Command* j1Console::GetCommandfromInput(char* input)const
 	const uint char_num = strlen(input);
 	char* command_type = new char[char_num];
 
-	for (uint k = 0; k < char_num; k++)
+	for (uint k = 0; k <= char_num; k++)
 	{
-		if (input[k] == '/')
+		if (input[k] == '/' || k == char_num)
 		{
 			command_type[k] = '\0';
 			break;
 		}
 		command_type[k] = input[k];
-
 	}
 	
 	//Search the commands in the array
 	uint command_num = commands.size();
 	for (uint k = 0; k < command_num; k++)
 	{
-		if (*commands[k]->GetCommandStr() == command_type)
+		if (strcmp(commands[k]->GetCommandStr()->c_str(),command_type) == 0)
 		{
 			delete command_type;
 			return commands[k];

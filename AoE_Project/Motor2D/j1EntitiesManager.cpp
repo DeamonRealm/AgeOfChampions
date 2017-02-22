@@ -131,7 +131,6 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 		new_unit->SetUnitType(UNIT_TYPE::MILITIA);
 		new_unit->SetAction(ACTION_TYPE::IDLE);
 		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetTexture(App->animator->GetTextureAt(1));
 		new_unit->SetAnimation(App->animator->UnitPlay(MILITIA, IDLE, WEST));
 		new_unit->GenerateMark();
 	 break;
@@ -142,7 +141,6 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 		new_unit->SetUnitType(UNIT_TYPE::ARBALEST);
 		new_unit->SetAction(ACTION_TYPE::IDLE);
 		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetTexture(App->animator->GetTextureAt(0));
 		new_unit->SetAnimation(App->animator->UnitPlay(ARBALEST, IDLE, WEST));
 		new_unit->GenerateMark();
 	 break;
@@ -169,7 +167,6 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 	case TOWN_CENTER:
 		new_buidling = new Building("Town Center");
 		new_buidling->SetEntityType(ENTITY_TYPE::BUILDING);
-		new_buidling->SetTexture(App->animator->GetTextureAt(4));
 		new_buidling->SetAnimation(App->animator->BuildingPlay(TOWN_CENTER, IDLE, NO_DIRECTION));
 		new_buidling->GenerateMark();
 		break;

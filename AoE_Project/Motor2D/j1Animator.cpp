@@ -23,6 +23,11 @@ Animation::~Animation()
 	pivots.clear();
 }
 
+void Animation::SetTexture(const SDL_Texture * tex)
+{
+	texture = (SDL_Texture*)tex;
+}
+
 //Functionality =======================
 void Animation::SetLoop(bool loop_state)
 {
@@ -37,6 +42,11 @@ void Animation::SetSpeed(uint new_speed)
 void Animation::SetId(uint id)
 {
 	enum_id = id;
+}
+
+SDL_Texture * Animation::GetTexture() const
+{
+	return texture;
 }
 
 bool Animation::GetLoop() const
@@ -190,12 +200,6 @@ j1Animator::~j1Animator()
 //Game Loop ===========================
 bool j1Animator::Awake(pugi::xml_node& config)
 {
-	//Load civilization folder from config.xml(this is temporal)
-	pugi::xml_node folder_node = config.first_child();
-
-	//Load the focused civilization
-	//LoadCivilization(folder_node.attribute("folder").as_string());
-
 	return true;
 }
 
@@ -239,8 +243,6 @@ bool j1Animator::CleanUp()
 	}
 	resource_blocks.clear();
 
-	//Just clear vector information of textures (module textures really unload the textures)
-	textures.clear();
 	return true;
 }
 
@@ -314,10 +316,7 @@ bool j1Animator::LoadCivilization(const char* folder)
 	while (unit_node != NULL)
 	{
 		if (!ret)break;
-		ret = LoadUnitBlock(unit_node.attribute("xml").as_string());
-		tex_file = unit_node.attribute("spritesheet").as_string();
-		tex_folder = name + "/" + tex_file;
-		textures.push_back(App->tex->Load(tex_folder.c_str()));
+		ret = LoadUnitBlock(unit_node.attribute("xml").as_string(), unit_node.attribute("spritesheet").as_string());
 		unit_node = unit_node.next_sibling();
 	}
 	//Load civilization buildings list
@@ -325,10 +324,7 @@ bool j1Animator::LoadCivilization(const char* folder)
 	while (building_node != NULL)
 	{
 		if (!ret)break;
-		ret = LoadBuildingBlock(building_node.attribute("xml").as_string());
-		tex_file = building_node.attribute("spritesheet").as_string();
-		tex_folder = name + "/" + tex_file;
-		textures.push_back(App->tex->Load(tex_folder.c_str()));
+		ret = LoadBuildingBlock(building_node.attribute("xml").as_string(), building_node.attribute("spritesheet").as_string());
 		building_node = building_node.next_sibling();
 	}
 
@@ -337,21 +333,25 @@ bool j1Animator::LoadCivilization(const char* folder)
 	return ret;
 }
 
-bool j1Animator::LoadUnitBlock(const char* folder)
+bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 {
-	//Load animations data from loaded folder
-	LOG("Loading: %s", folder);
+	//Load animations data from folders
+	//XML load
+	LOG("Loading: %s", xml_folder);
 	char* buffer = nullptr;
-	std::string load_folder = name + "/" + folder;
+	std::string load_folder = name + "/" + xml_folder;
 	int size = App->fs->Load(load_folder.c_str(), &buffer);
 	pugi::xml_document animations_data;
 	pugi::xml_parse_result result = animations_data.load_buffer(buffer, size);
 	RELEASE(buffer);
+	//Texture load
+	load_folder = name + "/" + tex_folder;
+	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
 
 	//Check result of the buffer loaded
-	if (result == NULL)
+	if (result == NULL || texture == nullptr)
 	{
-		LOG("Error loading %s data: %s",folder, result.description());
+		LOG("Error loading %s data: %s", xml_folder, result.description());
 		return false;
 	}
 
@@ -404,14 +404,19 @@ bool j1Animator::LoadUnitBlock(const char* folder)
 		//Iterate all direction sprite nodes
 		dir_0_anim = new Animation();
 		dir_0_anim->SetSpeed(speed);
+		dir_0_anim->SetTexture(texture);
 		dir_1_anim = new Animation();
 		dir_1_anim->SetSpeed(speed);
+		dir_1_anim->SetTexture(texture);
 		dir_2_anim = new Animation();
 		dir_2_anim->SetSpeed(speed);
+		dir_2_anim->SetTexture(texture);
 		dir_3_anim = new Animation();
 		dir_3_anim->SetSpeed(speed);
+		dir_3_anim->SetTexture(texture);
 		dir_4_anim = new Animation();
 		dir_4_anim->SetSpeed(speed);
+		dir_4_anim->SetTexture(texture);
 		sprite = action_node.first_child();
 
 		while (sprite != NULL)
@@ -463,21 +468,25 @@ bool j1Animator::LoadUnitBlock(const char* folder)
 	return true;
 }
 
-bool j1Animator::LoadBuildingBlock(const char * folder)
+bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folder)
 {
-	//Load animations data from loaded folder
-	LOG("Loading: %s", folder);
+	//Load animations data from folders
+	//XML load
+	LOG("Loading: %s", xml_folder);
 	char* buffer = nullptr;
-	std::string load_folder = name + "/" + folder;
+	std::string load_folder = name + "/" + xml_folder;
 	int size = App->fs->Load(load_folder.c_str(), &buffer);
 	pugi::xml_document build_anim_data;
 	pugi::xml_parse_result result = build_anim_data.load_buffer(buffer, size);
 	RELEASE(buffer);
+	//Texture load
+	load_folder = name + "/" + tex_folder;
+	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
 
 	//Check result of the buffer loaded
-	if (result == NULL)
+	if (result == NULL || texture == nullptr)
 	{
-		LOG("Error loading %s data: %s", folder, result.description());
+		LOG("Error loading %s data: %s", xml_folder, result.description());
 		return false;
 	}
 
@@ -499,6 +508,7 @@ bool j1Animator::LoadBuildingBlock(const char * folder)
 		//Build animation
 		Animation* anim = new Animation();
 		anim->SetSpeed(action_node.attribute("speed").as_uint());
+		anim->SetTexture(texture);
 
 		//Iterate all action sprites
 		pugi::xml_node sprite = action_node.first_child();
@@ -536,12 +546,6 @@ bool j1Animator::LoadBuildingBlock(const char * folder)
 	build_anim_data.reset();
 
 	return true;
-}
-
-SDL_Texture * j1Animator::GetTextureAt(uint index) const
-{
-	if (index >= textures.size())return nullptr;
-	return textures.at(index);
 }
 
 Animation * j1Animator::UnitPlay(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const
