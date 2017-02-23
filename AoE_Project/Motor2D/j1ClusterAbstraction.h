@@ -10,6 +10,44 @@ enum Orientation {
 };
 #define MAX_ENTRY_NUM 6
 #define INVALID_WALK_CODE 255
+
+class Cluster;
+
+class Edge
+{
+	Edge(int nodeNum1,int nodeNum2,int distance);
+	~Edge();
+public:
+private:
+	int distance;
+	int nodeNum1;
+	int nodeNum2;
+};
+struct Node
+{
+public:
+	int nodeNum;
+
+private:
+	Cluster* clusterID;
+	int posX;
+	int posY;
+};
+
+class Graph
+{
+public:
+	/*
+	Graph();
+	~Graph();
+	void AddEdge(Edge* edge);
+	*/
+	int AddNode(Node* edge);
+
+private:
+	std::vector<Node*> nodes;
+	std::vector<Edge*> edges;
+};
 class Cluster
 {
 public:
@@ -33,12 +71,17 @@ class Entry
 {
 public:
 
-	/*Entry(int row, int column,Orientation orientation);
-	~Entry();*/
-
+	Entry(int x,int y, int clusterID1,int clusterID2,int row, int column,int lenght,Orientation orientation);
+	~Entry();
+private:
+	int						posX;
+	int						posY;
+	int						clusterID1;
+	int						clusterID2;
+	int						lenght;
 	int						row;
 	int						column;
-	Orientation				orientatiton;
+	Orientation				orientation;
 
 private:
 

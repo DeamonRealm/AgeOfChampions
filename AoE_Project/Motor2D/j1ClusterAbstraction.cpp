@@ -106,14 +106,76 @@ void j1ClusterAbstraction::CreateEntryHorizontal(int start, int end, int y, int 
 			i++;
 		}
 		if ((i - begin) >= MAX_ENTRY_NUM){
+			Entry entry1(begin, y, -1, -1, row, column,1, HORIZONTAL);
+			entrys.push_back(entry1);
+			Entry entry2 (i-1, y, -1, -1, row, column,1, HORIZONTAL);
+			entrys.push_back(entry2);
 
 		}
 		else {
-
+			Entry entry(((i-1)+begin)*0.5, y, -1, -1, row, column, 1, HORIZONTAL);
+			entrys.push_back(entry);
 		}
 	}
 }
 
 void j1ClusterAbstraction::CreateEntryVertical(int start, int end, int x, int row, int column)
+{
+	int begin = 0;
+	for (int i = start; i < end; i++) {
+		while ((i <= end) && !IsWalkable(x,i) && !IsWalkable(x+1,i))
+		{
+			i++;
+		}
+		if (i > end)
+			return;
+
+		begin = i;
+		while ((i <= end) && IsWalkable(x, i) && IsWalkable(x + 1, i))
+		{
+			i++;
+		}
+		if ((i - begin) >= MAX_ENTRY_NUM) {
+			Entry entry1(x,begin, -1, -1, row, column, 1, VERTICAL);
+			entrys.push_back(entry1);
+			Entry entry2(x,i - 1, -1, -1, row, column, 1, VERTICAL);
+			entrys.push_back(entry2);
+
+		}
+		else {
+			Entry entry(x,((i - 1) + begin)*0.5, -1, -1, row, column, 1, VERTICAL);
+			entrys.push_back(entry);
+		}
+	}
+}
+
+int Graph::AddNode(Node * node)
+{
+	if (node) {
+		
+		nodes.push_back(node);
+		//pushback first because we can't get the size if the size is 0
+		node->nodeNum = nodes.size()-1;
+		return node->nodeNum;
+	}
+	//error
+	return -1;
+}
+
+Edge::Edge(int nodeNum1, int nodeNum2, int distance) : nodeNum1(nodeNum1),nodeNum2(nodeNum2),distance(distance)
+{
+
+}
+Edge::~Edge()
+{
+}
+
+
+
+Entry::Entry(int posX, int posY, int clusterID1, int clusterID2, int row, int column, int lenght, Orientation orientation): posX(posX),posY(posY),clusterID1(clusterID1),clusterID2(clusterID2),row(row),column(column),lenght(lenght),orientation(orientation)
+{
+}
+
+Entry::~Entry()
 {
 }
