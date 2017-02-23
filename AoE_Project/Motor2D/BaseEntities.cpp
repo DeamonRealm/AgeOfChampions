@@ -36,7 +36,7 @@ bool Entity::Draw()
 	//Draw Entity Current animation frame
 	SDL_Rect rect = current_animation->GetCurrentFrame();
 	iPoint pivot = current_animation->GetCurrentPivot();
-	ret = App->render->CallBlit(current_animation->GetTexture(), (int)position.x - pivot.x, (int)position.y - pivot.y, &rect,false,-position.y);
+	ret = App->render->CallBlit(current_animation->GetTexture(), (int)position.x - pivot.x, (int)position.y - pivot.y, &rect, flip_sprite, -position.y);
 
 	return ret;
 }
@@ -63,9 +63,14 @@ void Entity::SetDiplomacy(DIPLOMACY new_diplomacy)
 	entity_diplomacy = new_diplomacy;
 }
 
-void Entity::SetAnimation(const Animation * anim)
+void Entity::SetAnimation(Animation * anim)
 {
 	current_animation = (Animation*)anim;
+}
+
+void Entity::SetFlipSprite(bool flip)
+{
+	flip_sprite = flip;
 }
 
 void Entity::GenerateMark()
@@ -111,6 +116,11 @@ DIPLOMACY Entity::GetDiplomacy() const
 Animation * Entity::GetAnimation() const
 {
 	return current_animation;
+}
+
+bool Entity::GetFlipSprite() const
+{
+	return flip_sprite;
 }
 
 Primitive * Entity::GetMark() const

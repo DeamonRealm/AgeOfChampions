@@ -10,6 +10,7 @@
 #include "j1Map.h"
 #include "j1Console.h"
 #include "j1EntitiesManager.h"
+#include "j1Animator.h"
 
 //UI Elements
 #include "UI_Text_Box.h"
@@ -150,7 +151,68 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= SDL_ceil(500 * dt);
 
-
+	//Test unit movement animation --------------
+	iPoint pos = arbalest->GetPosition();
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+		arbalest->SetAction(ACTION_TYPE::WALK);
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			arbalest->SetPosition(pos.x + ceil(75 * dt), pos.y + floor(-75 * dt));
+			arbalest->SetDirection(DIRECTION_TYPE::NORTH_EAST);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			arbalest->SetPosition(pos.x + floor(-75 * dt), pos.y + floor(-75 * dt));
+			arbalest->SetDirection(DIRECTION_TYPE::NORTH_WEST);
+		}
+		else
+		{
+			arbalest->SetPosition(pos.x, pos.y + floor(-150 * dt));
+			arbalest->SetDirection(DIRECTION_TYPE::NORTH);
+		}
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		arbalest->SetAction(ACTION_TYPE::WALK);
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			arbalest->SetPosition(pos.x + ceil(75 * dt), pos.y + ceil(75 * dt));
+			arbalest->SetDirection(DIRECTION_TYPE::SOUTH_EAST);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			arbalest->SetPosition(pos.x + floor(-75 * dt), pos.y + ceil(75 * dt));
+			arbalest->SetDirection(DIRECTION_TYPE::SOUTH_WEST);
+		}
+		else
+		{
+			arbalest->SetPosition(pos.x, pos.y + ceil(150 * dt));
+			arbalest->SetDirection(DIRECTION_TYPE::SOUTH);
+		}
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		arbalest->SetPosition(pos.x + floor(-150 * dt), pos.y);
+		arbalest->SetAction(ACTION_TYPE::WALK);
+		arbalest->SetDirection(DIRECTION_TYPE::WEST);
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		arbalest->SetPosition(pos.x + ceil(150 * dt), pos.y );
+		arbalest->SetAction(ACTION_TYPE::WALK);
+		arbalest->SetDirection(DIRECTION_TYPE::EAST);
+		App->animator->UnitPlay(arbalest);
+	}
+	else
+	{
+		arbalest->SetAction(ACTION_TYPE::IDLE);
+		App->animator->UnitPlay(arbalest);
+	}
+	// ------------------------------------------
 	App->map->Draw();
 
 

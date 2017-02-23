@@ -548,8 +548,34 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 	return true;
 }
 
-Animation * j1Animator::UnitPlay(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const
+bool j1Animator::UnitPlay(Unit* target)
 {
+	DIRECTION_TYPE direction = target->GetDirection();
+	switch (direction)
+	{
+	case NORTH:	target->SetFlipSprite(false);	break;
+	
+	case NORTH_EAST:
+		direction = NORTH_WEST;
+		target->SetFlipSprite(true);
+		break;
+	
+	case EAST:
+		direction = WEST;
+		target->SetFlipSprite(true);
+		break;
+	
+	case SOUTH_EAST:
+		direction = SOUTH_WEST;
+		target->SetFlipSprite(true);
+		break;
+
+	case SOUTH:			target->SetFlipSprite(false);	break;
+	case SOUTH_WEST:	target->SetFlipSprite(false);	break;
+	case WEST:			target->SetFlipSprite(false);	break;
+	case NORTH_WEST:	target->SetFlipSprite(false);	break;
+
+	}
 	Animation_Block* block = nullptr;
 
 	//Iterate all blocks of childs vector
@@ -560,18 +586,22 @@ Animation * j1Animator::UnitPlay(const UNIT_TYPE unit, const ACTION_TYPE action,
 		block = unit_blocks[k];
 
 		//Compare block unit id
-		if (block->GetId() == unit)
+		if (block->GetId() == target->GetUnitType())
 		{
 			//Compare block action id
-			block = block->SearchId(action);
+			block = block->SearchId(target->GetAction());
 			//If action block is found search the correct direction block
 			if (block != nullptr)block = block->SearchId(direction);
 			//If direction block is found returns the block animation
-			if (block != nullptr)return block->GetAnimation();
+			if (block != nullptr)
+			{
+				target->SetAnimation(block->GetAnimation());
+				return true;
+			}
 		}
 	}
 	
-	return nullptr;
+	return false;
 }
 
 Animation * j1Animator::BuildingPlay(const BUILDING_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const

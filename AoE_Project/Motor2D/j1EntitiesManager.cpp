@@ -131,7 +131,7 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 		new_unit->SetUnitType(UNIT_TYPE::MILITIA);
 		new_unit->SetAction(ACTION_TYPE::IDLE);
 		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetAnimation(App->animator->UnitPlay(MILITIA, IDLE, WEST));
+		App->animator->UnitPlay(new_unit);
 		new_unit->GenerateMark();
 	 break;
 
@@ -141,7 +141,7 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 		new_unit->SetUnitType(UNIT_TYPE::ARBALEST);
 		new_unit->SetAction(ACTION_TYPE::IDLE);
 		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetAnimation(App->animator->UnitPlay(ARBALEST, IDLE, WEST));
+		App->animator->UnitPlay(new_unit);
 		new_unit->GenerateMark();
 	 break;
 

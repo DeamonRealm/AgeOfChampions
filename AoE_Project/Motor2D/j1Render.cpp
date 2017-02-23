@@ -12,7 +12,7 @@ Blit_Call::Blit_Call()
 
 }
 
-Blit_Call::Blit_Call(const iPoint & position, SDL_Texture * texture, const SDL_Rect& rect, uint priority) :position(position), texture(texture), rect(rect), priority(priority)
+Blit_Call::Blit_Call(const iPoint & position, SDL_Texture * texture, const SDL_Rect& rect, bool flip, uint priority) :position(position), texture(texture), rect(rect), flip(flip), priority(priority)
 {
 
 }
@@ -41,6 +41,11 @@ SDL_Texture * Blit_Call::GetTex() const
 const SDL_Rect* Blit_Call::GetRect() const
 {
 	return &rect;
+}
+
+bool Blit_Call::GetFlip() const
+{
+	return flip;
 }
 
 bool Blit_Call::operator<(const Blit_Call & target) const
@@ -121,7 +126,7 @@ bool j1Render::Update(float dt)
 	for (uint k = 0; k < size; k++)
 	{
 		const Blit_Call* blit = &blit_queue.top();
-		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect());
+		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect(), blit->GetFlip());
 		blit_queue.pop();
 	}
 	return true;
@@ -182,7 +187,7 @@ bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect* sec
 {
 	bool ret = false;
 	if (texture != nullptr)ret = true;
-	blit_queue.emplace(iPoint(x, y), texture, *section, priority);
+	blit_queue.emplace(iPoint(x, y), texture, *section, horizontal_flip, priority);
 	return true;
 }
 

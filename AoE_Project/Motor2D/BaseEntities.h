@@ -90,6 +90,7 @@ protected:
 	ENTITY_TYPE		entity_type = NO_ENTITY;
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
 	Animation*		current_animation = nullptr;
+	bool			flip_sprite = false;
 	Primitive*		mark = nullptr;
 
 public:
@@ -105,7 +106,8 @@ public:
 	void			SetPosition(int x, int y);
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
-	void			SetAnimation(const Animation* anim);
+	void			SetAnimation(Animation* anim);
+	void			SetFlipSprite(bool flip);
 	void			GenerateMark();
 
 	//Get Methods -----------
@@ -114,6 +116,7 @@ public:
 	ENTITY_TYPE		GetEntityType()const;
 	DIPLOMACY		GetDiplomacy()const;
 	Animation*		GetAnimation()const;
+	bool			GetFlipSprite()const;
 	Primitive*		GetMark()const;
 };
 /// ---------------------------------------------

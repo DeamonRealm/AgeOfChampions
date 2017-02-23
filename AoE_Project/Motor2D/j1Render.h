@@ -15,7 +15,7 @@ class Blit_Call
 public:
 
 	Blit_Call();
-	Blit_Call(const iPoint& position, SDL_Texture* texture, const SDL_Rect& rect, uint priority);
+	Blit_Call(const iPoint& position, SDL_Texture* texture, const SDL_Rect& rect, bool flip, uint priority);
 	~Blit_Call();
 
 private:
@@ -23,6 +23,7 @@ private:
 	iPoint			position = { 0,0 };
 	SDL_Texture*	texture = nullptr;
 	SDL_Rect		rect = { 0,0,0,0 };
+	bool			flip = false;
 	uint			priority = 0;
 
 public:
@@ -32,6 +33,7 @@ public:
 	int				GetY()const;
 	SDL_Texture*	GetTex()const;
 	const SDL_Rect*	GetRect()const;
+	bool			GetFlip()const;
 
 	//Operator to compare blit calls in the priority queue
 	bool operator<(const Blit_Call& target) const;

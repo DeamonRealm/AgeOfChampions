@@ -7,6 +7,7 @@
 
 struct SDL_Rect;
 struct SDL_Texture;
+struct Unit;
 enum UNIT_TYPE;
 enum ACTION_TYPE;
 enum DIRECTION_TYPE;
@@ -150,10 +151,10 @@ public:
 	//Blocks Load Methods ---
 	bool		LoadUnitBlock(const char* xml_folder, const char* tex_folder);
 	bool		LoadBuildingBlock(const char* xml_folder, const char* tex_folder);
-	bool		LoadResourceBlock(const char* folder);
+	//bool		LoadResourceBlock(const char* folder);
 
 	//Animations Methods ----
-	Animation* UnitPlay(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;
+	bool UnitPlay(Unit* target);
 	Animation* BuildingPlay(const BUILDING_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;
 };
 #endif // !_J1ANIMATOR_H_
