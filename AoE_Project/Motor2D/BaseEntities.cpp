@@ -8,7 +8,7 @@
 
 ///Class Entity ---------------------------------
 //Constructors ========================
-Entity::Entity(const std::string& name, const iPoint& position, ENTITY_TYPE entity_type) : name(name), position(position), entity_type(entity_type)
+Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE entity_type) : name(name), position(position), entity_type(entity_type)
 {
 
 }
@@ -45,7 +45,7 @@ void Entity::SetName(const char * name_str)
 	name = name_str;
 }
 
-void Entity::SetPosition(int x, int y)
+void Entity::SetPosition(float x, float y)
 {
 	position.x = x;
 	position.y = y;
@@ -77,7 +77,7 @@ void Entity::GenerateMark()
 	switch (entity_type)
 	{
 	case UNIT:
-		mark = new Circle(position, 50);
+		mark = new Circle(iPoint(position.x,position.y), 50);
 		mark->SetColor({ 150,50,40,255 });
 		mark->SetXAngle(7);
 		break;
@@ -97,7 +97,7 @@ const char* Entity::GetName() const
 	return name.c_str();
 }
 
-iPoint Entity::GetPosition() const
+const fPoint& Entity::GetPosition() const
 {
 	return position;
 }

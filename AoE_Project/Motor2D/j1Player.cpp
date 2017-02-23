@@ -101,7 +101,9 @@ void j1Player::Select_Entity()
 		rect_width = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->w;
 		rect_height = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->h;
 		
-		item_position = (iPoint) item._Ptr->_Myval->GetPosition();
+		fPoint pos = item._Ptr->_Myval->GetPosition();
+		
+		item_position = iPoint(pos.x, pos.y);
 		item_pivot = { item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot(),item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot() };
 		item_position -= item_pivot;
 

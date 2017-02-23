@@ -60,7 +60,7 @@ SDL_Color Primitive::GetColor() const
 
 ///Class Circle ---------------------------------
 //Constructors ==============
-Circle::Circle(iPoint position, uint rad) :Primitive(position), rad(rad)
+Circle::Circle(const iPoint& position, uint rad) :Primitive(position), rad(rad)
 {
 
 }
@@ -97,7 +97,7 @@ uint Circle::GetRad() const
 
 ///Class Rectangle ------------------------------
 //Constructors ==============
-Rectng::Rectng(iPoint position, uint width, uint height) :Primitive(position), width(width), height(height)
+Rectng::Rectng(const iPoint& position, uint width, uint height) :Primitive(position), width(width), height(height)
 {
 
 }
@@ -151,3 +151,46 @@ uint Rectng::GetHeight() const
 	return height;
 }
 /// ---------------------------------------------
+
+
+///Class Line -----------------------------------
+//Constructors ==============
+Line::Line(const iPoint & position, const iPoint & position_2, const SDL_Color& color) :Primitive(position,color), position_2(position_2)
+{
+
+}
+
+Line::Line(const Rectng & copy) : Primitive(position, color), position_2(position_2)
+{
+}
+
+//Destructors ===============
+Line::~Line()
+{
+}
+
+//Functionality =============
+bool Line::Draw()
+{
+	return App->render->DrawLine(position.x, position.y, position_2.x, position_2.y, color.r, color.g, color.b, color.a);
+}
+
+void Line::SetP1(const iPoint & p1)
+{
+	position = p1;
+}
+
+void Line::SetP2(const iPoint & p2)
+{
+	position_2 = p2;
+}
+
+const iPoint & Line::GetP1() const
+{
+	return position;
+}
+
+const iPoint & Line::GetP2() const
+{
+	return position_2;
+}

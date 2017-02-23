@@ -78,7 +78,7 @@ class Entity
 {
 public:
 
-	Entity(const std::string& name, const  iPoint& position = { 0,0 } , ENTITY_TYPE entity_type = NO_ENTITY);
+	Entity(const std::string& name, const  fPoint& position = { 0,0 } , ENTITY_TYPE entity_type = NO_ENTITY);
 	Entity(const Entity* copy);
 
 	~Entity();
@@ -86,7 +86,7 @@ public:
 protected:
 
 	std::string		name;
-	iPoint			position = { 0,0 };
+	fPoint			position = { 0,0 };
 	ENTITY_TYPE		entity_type = NO_ENTITY;
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
 	Animation*		current_animation = nullptr;
@@ -103,7 +103,7 @@ public:
 
 	//Set Methods -----------
 	void			SetName(const char* name_str);
-	void			SetPosition(int x, int y);
+	void			SetPosition(float x, float y);
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 	void			SetAnimation(Animation* anim);
@@ -112,7 +112,7 @@ public:
 
 	//Get Methods -----------
 	const char*		GetName()const;
-	iPoint			GetPosition()const;
+	const fPoint&	GetPosition()const;
 	ENTITY_TYPE		GetEntityType()const;
 	DIPLOMACY		GetDiplomacy()const;
 	Animation*		GetAnimation()const;

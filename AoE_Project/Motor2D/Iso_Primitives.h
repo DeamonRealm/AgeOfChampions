@@ -56,7 +56,7 @@ class Circle : public Primitive
 {
 public:
 
-	Circle(iPoint position = { 0,0 }, uint rad = 0);
+	Circle(const iPoint& position = { 0,0 }, uint rad = 0);
 	Circle(const Circle& copy);
 	~Circle();
 
@@ -83,7 +83,7 @@ class Rectng : public Primitive
 {
 public:
 
-	Rectng(iPoint position = {0,0},uint width = 0, uint height = 0);
+	Rectng(const iPoint& position = {0,0},uint width = 0, uint height = 0);
 	Rectng(const Rectng& copy);
 	~Rectng();
 
@@ -103,6 +103,34 @@ public:
 	//Get Methods
 	uint	GetWidth()const;
 	uint	GetHeight()const;
+};
+/// ---------------------------------------------
+
+///Class Line -----------------------------------
+//Rectangle isometric primitive
+class Line : public Primitive
+{
+public:
+
+	Line(const iPoint& position , const iPoint& position_2, const SDL_Color& color);
+	Line(const Rectng& copy);
+	~Line();
+
+private:
+
+	iPoint position_2 = { 0,0 };
+
+public:
+
+	//Functionality ---------
+	//Draw
+	bool	Draw();
+	//Set Methods
+	void			SetP1(const iPoint& p1);
+	void			SetP2(const iPoint& p2);
+	//Get Methods
+	const iPoint&	GetP1()const;
+	const iPoint& 	GetP2()const;
 };
 /// ---------------------------------------------
 #endif // _ISO_PRIMITVES_
