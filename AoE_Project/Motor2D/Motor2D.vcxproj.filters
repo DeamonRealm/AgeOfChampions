@@ -87,6 +87,9 @@
     <ClCompile Include="Iso_Primitives.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="j1Player.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -189,6 +192,9 @@
     </ClInclude>
     <ClInclude Include="Iso_Primitives.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Player.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

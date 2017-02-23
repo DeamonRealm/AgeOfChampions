@@ -21,6 +21,7 @@ class j1Console;
 class j1Module;
 class j1Animator;
 class j1EntitiesManager;
+class j1Player;
 
 class Command;
 class Cvar;
@@ -100,6 +101,7 @@ public:
 	j1Console*			console = NULL;
 	j1Animator*			animator = NULL;
 	j1EntitiesManager*	entities_manager = NULL;
+	j1Player*			player = NULL;
 
 	// Add a new module to handle
 	void		AddModule(j1Module* module);

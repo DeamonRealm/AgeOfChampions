@@ -18,6 +18,7 @@
 #include "j1Animator.h"
 #include "j1EntitiesManager.h"
 #include "j1App.h"
+#include "j1Player.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -38,6 +39,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	console = new j1Console();
 	animator = new j1Animator();
 	entities_manager = new j1EntitiesManager();
+	player = new j1Player();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -51,6 +53,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 
 	AddModule(animator);
+	AddModule(player);
 
 	// scene last
 	AddModule(scene);

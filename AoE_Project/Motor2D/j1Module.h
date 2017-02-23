@@ -23,9 +23,20 @@ public:
 	virtual ~j1Module()
 	{}
 
-	void Init()
+	virtual void Init()
 	{
 		active = true;
+	}
+
+	//Enable and disable modules
+	void Enable()
+	{
+		active = true;
+	}
+
+	void Disable()
+	{
+		active = false;
 	}
 
 	// Called before render is available

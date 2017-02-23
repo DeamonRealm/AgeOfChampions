@@ -95,7 +95,7 @@ bool j1Gui::PostUpdate()
 	std::list<UI_Element*>::iterator item = screens.begin();
 	while (item != screens.end()) {
 
-		if (item._Ptr->_Myval->GetActiveState())
+		if (item._Ptr->_Myval->GetActiveState() && item._Ptr->_Myval->GetInputTarget()->active)
 			item._Ptr->_Myval->Draw(debug);
 
 		item++;
