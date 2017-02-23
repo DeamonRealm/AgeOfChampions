@@ -4,10 +4,42 @@
 #include "j1FileSystem.h"
 #include "j1Render.h"
 #include "j1Textures.h"
-
 #include "SDL/include/SDL_rect.h"
 #include "p2Log.h"
 #include "BaseEntities.h"
+
+///Animation Sprite Class -----------------------
+//Constructor ===============
+Sprite::Sprite(const SDL_Rect & frame, const iPoint & pivot, uint z_cord) : frame(frame), pivot(pivot), z_cord(z_cord)
+{
+
+}
+
+//Destructor ================
+Sprite::~Sprite()
+{
+}
+
+//Functionality =============
+const SDL_Rect * Sprite::GetFrame() const
+{
+	return &frame;
+}
+int Sprite::GetXpivot() const
+{
+	return pivot.x;
+}
+int Sprite::GetYpivot() const
+{
+	return pivot.y;
+}
+uint Sprite::GetZ_cord() const
+{
+	return z_cord;
+}
+/// ---------------------------------------------
+
+
 
 ///Animation Class ------------------------------
 //Constructor =========================
@@ -19,8 +51,7 @@ Animation::Animation()
 //Destructor ==========================
 Animation::~Animation()
 {
-	frames.clear();
-	pivots.clear();
+	sprites.clear();
 }
 
 void Animation::SetTexture(const SDL_Texture * tex)
@@ -59,12 +90,12 @@ uint Animation::GetSpeed() const
 	return speed;
 }
 
-const SDL_Rect& Animation::GetCurrentFrame()
+const Sprite* Animation::GetCurrentSprite()
 {
-	if (current_frame == -1)return frames[0];
+	if (current_frame == -1)return &sprites[0];
 
 	current_frame = (float)floor(timer.Read() / speed);
-	if (current_frame >= frames.size())
+	if (current_frame >= sprites.size())
 	{
 		if (loop)
 		{
@@ -76,26 +107,16 @@ const SDL_Rect& Animation::GetCurrentFrame()
 		{
 			loops = 0;
 			current_frame = -1;
-			return frames[0];
+			return &sprites[0];
 		}
 	}
 
-	return frames[(int)current_frame];
+	return &sprites[(int)current_frame];
 }
 
-const std::vector<SDL_Rect>* Animation::GetAllFrames() const
+const std::vector<Sprite>* Animation::GetAllSprites() const
 {
-	return &frames;
-}
-
-const iPoint& Animation::GetCurrentPivot() const
-{
-	return pivots.at((int)current_frame);
-}
-
-const std::vector<iPoint>* Animation::GetAllPivots() const
-{
-	return &pivots;
+	return &sprites;
 }
 
 uint Animation::GetId() const
@@ -103,10 +124,9 @@ uint Animation::GetId() const
 	return enum_id;
 }
 
-void Animation::AddFrame(const SDL_Rect & rect, const iPoint & point)
+void Animation::AddSprite(const SDL_Rect & rect, const iPoint & point, const uint z)
 {
-	frames.push_back(rect);
-	pivots.push_back(point);
+	sprites.push_back(Sprite(rect, point, z));
 }
 /// ---------------------------------------------
 
@@ -432,11 +452,11 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 			//Add sprite at correct animation
 			switch (Str_to_DirectionEnum(sprite.attribute("direction").as_string()))
 			{
-			case SOUTH:			dir_0_anim->AddFrame(rect, iPoint(pX, pY));		break;
-			case SOUTH_WEST:	dir_1_anim->AddFrame(rect, iPoint(pX, pY));		break;
-			case WEST:			dir_2_anim->AddFrame(rect, iPoint(pX, pY));		break;
-			case NORTH_WEST:	dir_3_anim->AddFrame(rect, iPoint(pX, pY));		break;
-			case NORTH:			dir_4_anim->AddFrame(rect, iPoint(pX, pY));		break;
+			case SOUTH:			dir_0_anim->AddSprite(rect, iPoint(pX, pY));		break;
+			case SOUTH_WEST:	dir_1_anim->AddSprite(rect, iPoint(pX, pY));		break;
+			case WEST:			dir_2_anim->AddSprite(rect, iPoint(pX, pY));		break;
+			case NORTH_WEST:	dir_3_anim->AddSprite(rect, iPoint(pX, pY));		break;
+			case NORTH:			dir_4_anim->AddSprite(rect, iPoint(pX, pY));		break;
 			}
 
 			sprite = sprite.next_sibling();
@@ -523,7 +543,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 			pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
 
 			//Add sprite at animation
-			anim->AddFrame(rect, iPoint(pX, pY));
+			anim->AddSprite(rect, iPoint(pX, pY), sprite.attribute("z").as_int());
 
 			//Focus next animation sprite
 			sprite = sprite.next_sibling();

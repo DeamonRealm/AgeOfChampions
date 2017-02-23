@@ -153,22 +153,23 @@ bool j1Scene::Update(float dt)
 
 	//Test unit movement animation --------------
 	iPoint pos = arbalest->GetPosition();
+	int speed = 1;
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		arbalest->SetAction(ACTION_TYPE::WALK);
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			arbalest->SetPosition(pos.x + ceil(75 * dt), pos.y + floor(-75 * dt));
+			arbalest->SetPosition(pos.x + ceil(speed * 0.5 * dt), pos.y + floor(-speed * 0.5 * dt));
 			arbalest->SetDirection(DIRECTION_TYPE::NORTH_EAST);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			arbalest->SetPosition(pos.x + floor(-75 * dt), pos.y + floor(-75 * dt));
+			arbalest->SetPosition(pos.x + floor(-speed * 0.5 * dt), pos.y + floor(-speed * 0.5 * dt));
 			arbalest->SetDirection(DIRECTION_TYPE::NORTH_WEST);
 		}
 		else
 		{
-			arbalest->SetPosition(pos.x, pos.y + floor(-150 * dt));
+			arbalest->SetPosition(pos.x, pos.y + floor(-speed * dt));
 			arbalest->SetDirection(DIRECTION_TYPE::NORTH);
 		}
 		App->animator->UnitPlay(arbalest);
@@ -178,31 +179,31 @@ bool j1Scene::Update(float dt)
 		arbalest->SetAction(ACTION_TYPE::WALK);
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			arbalest->SetPosition(pos.x + ceil(75 * dt), pos.y + ceil(75 * dt));
+			arbalest->SetPosition(pos.x + ceil(speed * 0.5 * dt), pos.y + ceil(speed * 0.5 * dt));
 			arbalest->SetDirection(DIRECTION_TYPE::SOUTH_EAST);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			arbalest->SetPosition(pos.x + floor(-75 * dt), pos.y + ceil(75 * dt));
+			arbalest->SetPosition(pos.x + floor(-speed * 0.5 * dt), pos.y + ceil(speed * 0.5 * dt));
 			arbalest->SetDirection(DIRECTION_TYPE::SOUTH_WEST);
 		}
 		else
 		{
-			arbalest->SetPosition(pos.x, pos.y + ceil(150 * dt));
+			arbalest->SetPosition(pos.x, pos.y + ceil(speed * dt));
 			arbalest->SetDirection(DIRECTION_TYPE::SOUTH);
 		}
 		App->animator->UnitPlay(arbalest);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		arbalest->SetPosition(pos.x + floor(-150 * dt), pos.y);
+		arbalest->SetPosition(pos.x + floor(-speed * dt), pos.y);
 		arbalest->SetAction(ACTION_TYPE::WALK);
 		arbalest->SetDirection(DIRECTION_TYPE::WEST);
 		App->animator->UnitPlay(arbalest);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		arbalest->SetPosition(pos.x + ceil(150 * dt), pos.y );
+		arbalest->SetPosition(pos.x + ceil(speed * dt), pos.y );
 		arbalest->SetAction(ACTION_TYPE::WALK);
 		arbalest->SetDirection(DIRECTION_TYPE::EAST);
 		App->animator->UnitPlay(arbalest);

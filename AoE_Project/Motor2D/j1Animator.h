@@ -4,14 +4,38 @@
 #include "j1Module.h"
 #include "j1Timer.h"
 #include "p2Point.h"
-
-struct SDL_Rect;
+#include "SDL/include/SDL_rect.h"
 struct SDL_Texture;
 struct Unit;
 enum UNIT_TYPE;
 enum ACTION_TYPE;
 enum DIRECTION_TYPE;
 enum BUILDING_TYPE;
+
+///Animation Sprite Class -----------------------
+class Sprite
+{
+public:
+
+	Sprite(const SDL_Rect& frame, const iPoint& pivot, uint z_cord = 0);
+	~Sprite();
+
+private:
+
+	SDL_Rect		frame = { 0,0,0,0 };
+	iPoint			pivot = { 0,0 };
+	uint			z_cord = 0;
+
+public:
+
+	//Functionality
+	//Get Methods
+	const SDL_Rect*		GetFrame()const;
+	int					GetXpivot()const;
+	int					GetYpivot()const;
+	uint				GetZ_cord()const;
+};
+/// ---------------------------------------------
 
 ///Animation Class ------------------------------
 //Class that contains the animation basic necessary data
@@ -25,9 +49,8 @@ public:
 
 private:
 
-	//Vectors that storage the frames rect & pivot
-	std::vector<SDL_Rect>	frames;
-	std::vector<iPoint>		pivots;
+	//Vector that storage the frames rect & pivot & z dimension
+	std::vector<Sprite>		sprites;
 	//Pointer to the animation texture
 	SDL_Texture*			texture = nullptr;
 	//Id of the animation enum type
@@ -53,14 +76,12 @@ public:
 	SDL_Texture*					GetTexture()const;
 	bool							GetLoop()const;
 	uint							GetSpeed()const;
-	const SDL_Rect&					GetCurrentFrame();
-	const std::vector<SDL_Rect>*	GetAllFrames()const;
-	const iPoint&					GetCurrentPivot()const;
-	const std::vector<iPoint>*		GetAllPivots()const;
+	const Sprite*					GetCurrentSprite();
+	const std::vector<Sprite>*		GetAllSprites()const;
 	uint							GetId()const;
 
-	//Add New frame with pivot defined
-	void AddFrame(const SDL_Rect& rect, const iPoint& point);
+	//Add New sprite
+	void AddSprite(const SDL_Rect& rect, const iPoint& point, const uint z = 0);
 
 };
 /// ---------------------------------------------

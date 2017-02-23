@@ -34,9 +34,8 @@ bool Entity::Draw()
 	ret = mark->Draw();
 
 	//Draw Entity Current animation frame
-	SDL_Rect rect = current_animation->GetCurrentFrame();
-	iPoint pivot = current_animation->GetCurrentPivot();
-	ret = App->render->CallBlit(current_animation->GetTexture(), (int)position.x - pivot.x, (int)position.y - pivot.y, &rect, flip_sprite, -position.y);
+	const Sprite* sprite = current_animation->GetCurrentSprite();
+	ret = App->render->CallBlit(current_animation->GetTexture(), (int)position.x - sprite->GetXpivot(), (int)position.y - sprite->GetYpivot(), sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord());
 
 	return ret;
 }
@@ -470,13 +469,12 @@ bool Building::Draw()
 	bool ret = false;
 
 	ret = mark->Draw();
-	const std::vector<SDL_Rect>*	sprites = current_animation->GetAllFrames();
-	const std::vector<iPoint>*		pivots = current_animation->GetAllPivots();
+	const std::vector<Sprite>*	sprites = current_animation->GetAllSprites();
 
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (!App->render->CallBlit(current_animation->GetTexture(), (int)position.x - pivots->at(k).x, (int)position.y - pivots->at(k).y, &sprites->at(k), false, -position.y ))
+		if (!App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord()))
 		{
 			ret = false;
 			break;
