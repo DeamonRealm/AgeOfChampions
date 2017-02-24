@@ -4,9 +4,9 @@
 #include <vector>
 #include "j1Map.h"
 #include "j1LogicMap.h"
-enum Orientation {
-	HORIZONTAL,
-	VERTICAL
+enum ClusterOrientation {
+	CLUSTER_HORIZONTAL,
+	CLUSTER_VERTICAL
 };
 #define MAX_ENTRY_NUM 6
 #define INVALID_WALK_CODE 255
@@ -71,8 +71,17 @@ class Entry
 {
 public:
 
-	Entry(int x,int y, int clusterID1,int clusterID2,int row, int column,int lenght,Orientation orientation);
+	Entry(int x,int y, int clusterID1,int clusterID2,int row, int column,int lenght, ClusterOrientation orientation);
 	~Entry();
+	int GetPosX();
+	int GetPosY();
+	int GetRow();
+	int GetColumn();
+	ClusterOrientation GetOrientation();
+
+	void SetClusterID1(int clusterID1);
+	void SetClusterID2(int clusterID2);
+
 private:
 	int						posX;
 	int						posY;
@@ -81,7 +90,7 @@ private:
 	int						lenght;
 	int						row;
 	int						column;
-	Orientation				orientation;
+	ClusterOrientation				orientation;
 
 private:
 
@@ -92,16 +101,20 @@ class j1ClusterAbstraction
 public:
 	j1ClusterAbstraction(j1Map* map, uint clusterSize);
 	~j1ClusterAbstraction();
-	void CreateClusters();
+	//Map extraction
 	void SetMap(uint width, uint height, uchar* data);
-	void AddCluster(Cluster add);
 	bool IsWalkable(int x, int y) const;
 	bool CheckBoundaries(const iPoint& pos) const;
 	uchar GetTileAt(const iPoint& pos) const;
-
+	//Cluster Functions
+	void CreateClusters();
+	void AddCluster(Cluster add);
+	Cluster& GetCluster(int at);
+	int  GetClusterID(int clusterRow, int clusterColumn);
 	void CreateEntryHorizontal(int start, int end, int x, int row, int column);
 	void CreateEntryVertical(int start, int end, int x, int row, int column);
 
+	void ConectEntryAndCluster();
 private:
 	// size of the map 
 	uint					width;
@@ -111,7 +124,8 @@ private:
 	std::vector<Cluster>	clusters;
 	//This only works with a single level of terrain in case we have more than one unit size we will have to add a vector map
 	uchar* map;
-
+	int maxColumn;
+	int maxRow;
 };
 
 

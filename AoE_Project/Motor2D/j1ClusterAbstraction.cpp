@@ -13,6 +13,7 @@ j1ClusterAbstraction::j1ClusterAbstraction(j1Map * m, uint clusterSize):clusterS
 	if (m->CreateWalkabilityMap(width, height, &map))
 		SetMap(width, height, map);
 	CreateClusters();
+	ConectEntryAndCluster();
 }
 
 j1ClusterAbstraction::~j1ClusterAbstraction()
@@ -43,6 +44,8 @@ void j1ClusterAbstraction::CreateClusters()
 		}
 		row++;
 	}
+	maxColumn = column;
+	maxRow = row;
 }
 void j1ClusterAbstraction::SetMap(uint width, uint height, uchar* data)
 {
@@ -57,6 +60,19 @@ void j1ClusterAbstraction::SetMap(uint width, uint height, uchar* data)
 void j1ClusterAbstraction::AddCluster(Cluster add)
 {
 	clusters.push_back(add);
+}
+
+Cluster & j1ClusterAbstraction::GetCluster(int at)
+{
+	if (at <= 0 && at > (int)clusters.size()) {
+		return clusters[at];
+	}
+}
+
+int j1ClusterAbstraction::GetClusterID(int clusterRow, int clusterColumn)
+{
+
+	return (clusterRow*maxColumn+clusterColumn);
 }
 
 bool j1ClusterAbstraction::IsWalkable(int x, int y) const
@@ -92,37 +108,40 @@ uchar j1ClusterAbstraction::GetTileAt(const iPoint& pos) const
 void j1ClusterAbstraction::CreateEntryHorizontal(int start, int end, int y, int row, int column)
 {
 	int begin = 0;
-	for (int i = start; i < end; i++) {
+	for (int i = start; i <= end; i++) {
 		while ((i <= end) && !IsWalkable(i,y) && !IsWalkable(i,y+1))
 		{
 			i++;
 		}
+
 		if (i > end)
 			return;
 
 		begin = i;
+		i++;
 		while ((i <= end) && IsWalkable(i, y) && IsWalkable(i, y + 1))
 		{
 			i++;
 		}
 		if ((i - begin) >= MAX_ENTRY_NUM){
-			Entry entry1(begin, y, -1, -1, row, column,1, HORIZONTAL);
+			Entry entry1(begin, y, -1, -1, row, column,1, CLUSTER_HORIZONTAL);
 			entrys.push_back(entry1);
-			Entry entry2 (i-1, y, -1, -1, row, column,1, HORIZONTAL);
+			Entry entry2 (i-1, y, -1, -1, row, column,1, CLUSTER_HORIZONTAL);
 			entrys.push_back(entry2);
 
 		}
 		else {
-			Entry entry(((i-1)+begin)*0.5, y, -1, -1, row, column, 1, HORIZONTAL);
+			Entry entry(((i-1)+begin)*0.5, y, -1, -1, row, column, 1, CLUSTER_HORIZONTAL);
 			entrys.push_back(entry);
 		}
+		i--;
 	}
 }
 
 void j1ClusterAbstraction::CreateEntryVertical(int start, int end, int x, int row, int column)
 {
 	int begin = 0;
-	for (int i = start; i < end; i++) {
+	for (int i = start; i <= end; i++) {
 		while ((i <= end) && !IsWalkable(x,i) && !IsWalkable(x+1,i))
 		{
 			i++;
@@ -131,21 +150,56 @@ void j1ClusterAbstraction::CreateEntryVertical(int start, int end, int x, int ro
 			return;
 
 		begin = i;
+		i++;
 		while ((i <= end) && IsWalkable(x, i) && IsWalkable(x + 1, i))
 		{
 			i++;
 		}
 		if ((i - begin) >= MAX_ENTRY_NUM) {
-			Entry entry1(x,begin, -1, -1, row, column, 1, VERTICAL);
+			Entry entry1(x,begin, -1, -1, row, column, 1, CLUSTER_VERTICAL);
 			entrys.push_back(entry1);
-			Entry entry2(x,i - 1, -1, -1, row, column, 1, VERTICAL);
+			Entry entry2(x,i - 1, -1, -1, row, column, 1, CLUSTER_VERTICAL);
 			entrys.push_back(entry2);
 
 		}
 		else {
-			Entry entry(x,((i - 1) + begin)*0.5, -1, -1, row, column, 1, VERTICAL);
+			Entry entry(x,((i - 1) + begin)*0.5, -1, -1, row, column, 1, CLUSTER_VERTICAL);
 			entrys.push_back(entry);
 		}
+		i--;
+	}
+}
+
+void j1ClusterAbstraction::ConectEntryAndCluster()
+{
+
+	int clusterID1;
+	int clusterID2;
+	for (int i = 0; i < entrys.size(); i++) {
+		Entry &item = entrys[i];
+		switch (item.GetOrientation())
+		{
+		case CLUSTER_HORIZONTAL:
+			//Get Top
+			clusterID1 = GetClusterID(item.GetRow(), item.GetColumn());
+			item.SetClusterID1(clusterID1);
+			//Get Bottom
+			clusterID2 = GetClusterID(item.GetRow()+1, item.GetColumn());
+			item.SetClusterID2(clusterID2);
+		case CLUSTER_VERTICAL:
+			//Get Left
+			clusterID1 = GetClusterID(item.GetRow(), item.GetColumn());
+			item.SetClusterID1(clusterID1);
+
+			//Get Right
+			clusterID2 = GetClusterID(item.GetRow(), item.GetColumn()+1);
+			item.SetClusterID2(clusterID2);
+
+		default:
+			break;
+		}
+		
+
 	}
 }
 
@@ -172,10 +226,45 @@ Edge::~Edge()
 
 
 
-Entry::Entry(int posX, int posY, int clusterID1, int clusterID2, int row, int column, int lenght, Orientation orientation): posX(posX),posY(posY),clusterID1(clusterID1),clusterID2(clusterID2),row(row),column(column),lenght(lenght),orientation(orientation)
+Entry::Entry(int posX, int posY, int clusterID1, int clusterID2, int row, int column, int lenght, ClusterOrientation orientation): posX(posX),posY(posY),clusterID1(clusterID1),clusterID2(clusterID2),row(row),column(column),lenght(lenght),orientation(orientation)
 {
 }
 
 Entry::~Entry()
 {
+}
+
+int Entry::GetPosX()
+{
+	return posX;
+}
+
+int Entry::GetPosY()
+{
+	return posY;
+}
+
+int Entry::GetRow()
+{
+	return row;
+}
+
+int Entry::GetColumn()
+{
+	return column;
+}
+
+ClusterOrientation Entry::GetOrientation()
+{
+	return orientation;
+}
+
+void Entry::SetClusterID1(int clustID1)
+{
+	clusterID1 = clustID1;
+}
+
+void Entry::SetClusterID2(int clustID2)
+{
+	clusterID2 = clustID2;
 }
