@@ -118,7 +118,7 @@ bool j1Scene::Start()
 	App->gui->PushScreen(scene_1_screen);
 	// ----------------------------------------------------
 	
-	j1ClusterAbstraction YOLO = j1ClusterAbstraction(App->map, 5);
+	j1ClusterAbstraction YOLO = j1ClusterAbstraction(App->map, 10);
 	return true;
 }
 

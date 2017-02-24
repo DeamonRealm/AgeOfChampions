@@ -7,7 +7,13 @@ Cluster::Cluster(int posX, int posY, int width, int height, int row, int column,
 Cluster::~Cluster()
 {
 }
+int Cluster::GetPosisitionX() {
+	return posX;
+}
+int Cluster::GetPosisitionY() {
+	return posY;
 
+}
 j1ClusterAbstraction::j1ClusterAbstraction(j1Map * m, uint clusterSize):clusterSize(clusterSize)
 {
 	if (m->CreateWalkabilityMap(width, height, &map))
@@ -211,25 +217,70 @@ void j1ClusterAbstraction::CreateGraph()
 
 void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 {
-	int node1 = -1;
-	int node2 = -1;
+	int numNode1 = -1;
+	int numNode2 = -1;
+	int clusterID1 = 0;
+	int clusterID2 = 0;
 	for (int i = 0; i < entrys.size(); i++) {
-	
 		Entry& item = entrys[i];
-		
+		clusterID1 = item.GetClusterID1();
+		clusterID2 = item.GetClusterID2();
 		switch (item.GetOrientation())
 		{
 		case CLUSTER_HORIZONTAL:
+		{
+			Cluster& cluster1 = GetCluster(clusterID1);
+			Node* node1 = new Node();
+			numNode1 = graph->AddNode(node1);
+			node1->SetPosition(cluster1.GetPosisitionX(), cluster1.GetPosisitionY());
+			node1->SetClusterID(clusterID1);
+
+
+
+			Cluster& cluster2 = GetCluster(clusterID2);
+			Node* node2 = new Node();
+			node2->SetPosition(cluster2.GetPosisitionX(), cluster2.GetPosisitionY()+1);
+			numNode2 = graph->AddNode(node2);
+			node2->SetClusterID(clusterID2);
+
+
+			graph->AddEdge(new Edge(numNode1,numNode2,1));
+		}
 
 			break;
 		case CLUSTER_VERTICAL:
+		{
+			Cluster& cluster1 = GetCluster(clusterID1);
+			Node* node1 = new Node();
+			numNode1 = graph->AddNode(node1);
+			node1->SetPosition(cluster1.GetPosisitionX(), cluster1.GetPosisitionY());
+			node1->SetClusterID(clusterID1);
 
+
+
+
+			Cluster& cluster2 = GetCluster(clusterID2);
+			Node* node2 = new Node();
+			node2->SetPosition(cluster2.GetPosisitionX()+1, cluster2.GetPosisitionY());
+			numNode2 = graph->AddNode(node2);
+			node2->SetClusterID(clusterID2);
+
+
+			graph->AddEdge(new Edge(numNode1, numNode2, 1));
+
+		}
 			break;
 		default:
 			break;
 		}
 	}
 }
+void Graph::AddEdge(Edge* edge) {
+	if (edge) {
+		edges.push_back(edge);
+	}
+}
+
 
 int Graph::AddNode(Node * node)
 {
@@ -252,6 +303,13 @@ Edge::~Edge()
 {
 }
 
+void Node::SetPosition(int x, int y) {
+	posX = x;
+	posY = y;
+}
+void Node::SetClusterID(int id) {
+	clusterID = id;
+}
 
 
 Entry::Entry(int posX, int posY, int clusterID1, int clusterID2, int row, int column, int lenght, ClusterOrientation orientation): posX(posX),posY(posY),clusterID1(clusterID1),clusterID2(clusterID2),row(row),column(column),lenght(lenght),orientation(orientation)
@@ -261,7 +319,6 @@ Entry::Entry(int posX, int posY, int clusterID1, int clusterID2, int row, int co
 Entry::~Entry()
 {
 }
-
 int Entry::GetPosX()
 {
 	return posX;
@@ -281,7 +338,13 @@ int Entry::GetColumn()
 {
 	return column;
 }
-
+int Entry::GetClusterID1()
+{
+	return clusterID1;
+}int Entry::GetClusterID2()
+{
+	return clusterID2;
+}
 ClusterOrientation Entry::GetOrientation()
 {
 	return orientation;

@@ -15,9 +15,10 @@ class Cluster;
 
 class Edge
 {
+public:
+
 	Edge(int nodeNum1,int nodeNum2,int distance);
 	~Edge();
-public:
 private:
 	int distance;
 	int nodeNum1;
@@ -26,10 +27,12 @@ private:
 struct Node
 {
 public:
+	void SetPosition(int posX, int posY);
+	void SetClusterID(int id);
 	int nodeNum;
-
+	
 private:
-	Cluster* clusterID;
+	int clusterID;
 	int posX;
 	int posY;
 };
@@ -40,8 +43,9 @@ public:
 	/*
 	Graph();
 	~Graph();
-	void AddEdge(Edge* edge);
 	*/
+	void AddEdge(Edge* edge);
+	
 	int AddNode(Node* edge);
 
 private:
@@ -54,6 +58,8 @@ public:
 
 	Cluster(int posX,int posY,int width,int height,int row,int column,int id);
 	~Cluster();
+	int GetPosisitionX();
+	int GetPosisitionY();
 
 private:
 
@@ -77,6 +83,8 @@ public:
 	int GetPosY();
 	int GetRow();
 	int GetColumn();
+	int GetClusterID1();
+	int GetClusterID2();
 	ClusterOrientation GetOrientation();
 
 	void SetClusterID1(int clusterID1);
