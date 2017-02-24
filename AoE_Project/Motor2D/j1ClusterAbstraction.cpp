@@ -1,4 +1,5 @@
 #include "j1ClusterAbstraction.h"
+#include "p2Log.h"
 
 Cluster::Cluster(int posX, int posY, int width, int height, int row, int column, int id):posX(posX),posY(posY),width(width), height(height),row(row),column(column),id(id)
 {
@@ -7,6 +8,12 @@ Cluster::Cluster(int posX, int posY, int width, int height, int row, int column,
 Cluster::~Cluster()
 {
 }
+int Cluster::NodeSize() {
+	return nodes.size();
+}
+int Cluster::GetNodeNumberAt(int i) {
+	return nodes[i];
+}
 int Cluster::GetPosisitionX() {
 	return posX;
 }
@@ -14,12 +21,17 @@ int Cluster::GetPosisitionY() {
 	return posY;
 
 }
+void Cluster::AddNode(int get) 
+{
+	nodes.push_back(get);
+}
 j1ClusterAbstraction::j1ClusterAbstraction(j1Map * m, uint clusterSize):clusterSize(clusterSize)
 {
 	if (m->CreateWalkabilityMap(width, height, &map))
 		SetMap(width, height, map);
 	CreateClusters();
 	SetEntryClusterID();
+	SetNodesOnClusters(&graph);
 }
 
 j1ClusterAbstraction::~j1ClusterAbstraction()
@@ -70,7 +82,7 @@ void j1ClusterAbstraction::AddCluster(Cluster add)
 
 Cluster & j1ClusterAbstraction::GetCluster(int at)
 {
-	if (at <= 0 && at > (int)clusters.size()) {
+	if (at >= 0 && at < (int)clusters.size()) {
 		return clusters[at];
 	}
 }
@@ -175,7 +187,18 @@ void j1ClusterAbstraction::CreateEntryVertical(int start, int end, int x, int ro
 		i--;
 	}
 }
+int j1ClusterAbstraction::NodeExist(Cluster& cluster, int posX, int posY, Graph* graph) {
+	int ret = -1;
+	for (int i = 0; i < cluster.NodeSize(); i++) {
+		ret = cluster.GetNodeNumberAt(i);
+		Node* node = graph->GetNode(i);
+		if (node->GetPositionX() == posX && node->GetPositionY() == posY) {
+			return ret;
+		}
+	}
+	return -1;
 
+}
 void j1ClusterAbstraction::SetEntryClusterID()
 {
 
@@ -211,12 +234,12 @@ void j1ClusterAbstraction::SetEntryClusterID()
 
 void j1ClusterAbstraction::CreateGraph()
 {
-	Graph* g = new Graph();
-	SetNodesOnClusters(g);
+	SetNodesOnClusters(&graph);
 }
 
 void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 {
+	int checkNum = -1;
 	int numNode1 = -1;
 	int numNode2 = -1;
 	int clusterID1 = 0;
@@ -230,50 +253,87 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 		case CLUSTER_HORIZONTAL:
 		{
 			Cluster& cluster1 = GetCluster(clusterID1);
-			Node* node1 = new Node();
-			numNode1 = graph->AddNode(node1);
-			node1->SetPosition(cluster1.GetPosisitionX(), cluster1.GetPosisitionY());
-			node1->SetClusterID(clusterID1);
+			checkNum = NodeExist(cluster1, cluster1.GetPosisitionX(), cluster1.GetPosisitionY(), graph);
+			if (checkNum == -1) {
+				Node* node1 = new Node();
+				numNode1 = graph->AddNode(node1);
+				node1->SetPosition(cluster1.GetPosisitionX(), cluster1.GetPosisitionY());
+				node1->SetClusterID(clusterID1);
+				cluster1.AddNode(numNode1);
+				LOG("Node %i Generated x = %i, y = %i", numNode1,node1->GetPositionX(), node1->GetPositionY() );
 
-
+			}
+			else {
+				numNode1 = checkNum;
+			}
 
 			Cluster& cluster2 = GetCluster(clusterID2);
-			Node* node2 = new Node();
-			node2->SetPosition(cluster2.GetPosisitionX(), cluster2.GetPosisitionY()+1);
-			numNode2 = graph->AddNode(node2);
-			node2->SetClusterID(clusterID2);
+			checkNum = NodeExist(cluster2, cluster2.GetPosisitionX(), cluster2.GetPosisitionY(), graph);
+			if (checkNum == -1) {
+				Node* node2 = new Node();
+				node2->SetPosition(cluster2.GetPosisitionX(), cluster2.GetPosisitionY() + 1);
+				numNode2 = graph->AddNode(node2);
+				node2->SetClusterID(clusterID2);
+				cluster2.AddNode(numNode2);
+				LOG("Node %i Generated x = %i, y = %i", numNode2, node2->GetPositionX(), node2->GetPositionY());
 
+			}
+			else {
+				numNode2 = checkNum;
+			}
 
-			graph->AddEdge(new Edge(numNode1,numNode2,1));
+			graph->AddEdge(new Edge(numNode1, numNode2, 1));
+			LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
 
-			break;
+		break;
 		case CLUSTER_VERTICAL:
 		{
 			Cluster& cluster1 = GetCluster(clusterID1);
-			Node* node1 = new Node();
-			numNode1 = graph->AddNode(node1);
-			node1->SetPosition(cluster1.GetPosisitionX(), cluster1.GetPosisitionY());
-			node1->SetClusterID(clusterID1);
+			checkNum = NodeExist(cluster1, cluster1.GetPosisitionX(), cluster1.GetPosisitionY(), graph);
 
+			if (checkNum == -1) {
+				Node* node1 = new Node();
+				numNode1 = graph->AddNode(node1);
+				node1->SetPosition(cluster1.GetPosisitionX(), cluster1.GetPosisitionY());
+				node1->SetClusterID(clusterID1);
+				cluster1.AddNode(numNode1);
+				LOG("Node %i Generated x = %i, y = %i", numNode1, node1->GetPositionX(), node1->GetPositionY());
 
-
+			}
+			else {
+				numNode1 = checkNum;
+			}
 
 			Cluster& cluster2 = GetCluster(clusterID2);
-			Node* node2 = new Node();
-			node2->SetPosition(cluster2.GetPosisitionX()+1, cluster2.GetPosisitionY());
-			numNode2 = graph->AddNode(node2);
-			node2->SetClusterID(clusterID2);
+			checkNum = NodeExist(cluster2, cluster2.GetPosisitionX(), cluster2.GetPosisitionY(), graph);
+			if (checkNum == -1) {
+				Node* node2 = new Node();
+				node2->SetPosition(cluster2.GetPosisitionX() + 1, cluster2.GetPosisitionY());
+				numNode2 = graph->AddNode(node2);
+				node2->SetClusterID(clusterID2);
+				cluster2.AddNode(numNode2);
+				LOG("Node %i Generated x = %i, y = %i", numNode2,node2->GetPositionX(), node2->GetPositionY());
 
+			}
+			else {
+				numNode2 = checkNum;
+			}
 
 			graph->AddEdge(new Edge(numNode1, numNode2, 1));
-
+			LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
-			break;
+		break;
 		default:
 			break;
 		}
 	}
+}
+Node* Graph::GetNode(int i) {
+	if (i >= 0 && i < nodes.size()) {
+		return nodes[i];
+	}
+	return 0;
 }
 void Graph::AddEdge(Edge* edge) {
 	if (edge) {
@@ -310,7 +370,13 @@ void Node::SetPosition(int x, int y) {
 void Node::SetClusterID(int id) {
 	clusterID = id;
 }
+int  Node::GetPositionX() {
+	return posX;
+}
+int  Node::GetPositionY() {
+	return posY;
 
+}
 
 Entry::Entry(int posX, int posY, int clusterID1, int clusterID2, int row, int column, int lenght, ClusterOrientation orientation): posX(posX),posY(posY),clusterID1(clusterID1),clusterID2(clusterID2),row(row),column(column),lenght(lenght),orientation(orientation)
 {

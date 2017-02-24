@@ -29,6 +29,9 @@ struct Node
 public:
 	void SetPosition(int posX, int posY);
 	void SetClusterID(int id);
+
+	int GetPositionX();
+	int GetPositionY();
 	int nodeNum;
 	
 private:
@@ -44,6 +47,7 @@ public:
 	Graph();
 	~Graph();
 	*/
+	Node* GetNode(int i);
 	void AddEdge(Edge* edge);
 	
 	int AddNode(Node* edge);
@@ -58,9 +62,11 @@ public:
 
 	Cluster(int posX,int posY,int width,int height,int row,int column,int id);
 	~Cluster();
+	int NodeSize();
+	int GetNodeNumberAt(int i);
 	int GetPosisitionX();
 	int GetPosisitionY();
-
+	void AddNode(int get);
 private:
 
 	int						posX;
@@ -123,6 +129,8 @@ public:
 	void CreateEntryHorizontal(int start, int end, int x, int row, int column);
 	void CreateEntryVertical(int start, int end, int x, int row, int column);
 
+	int NodeExist(Cluster& cluster,int posX,int posY, Graph* graph);
+
 	void SetEntryClusterID();
 	void CreateGraph();
 	void SetNodesOnClusters(Graph* graph);
@@ -132,6 +140,7 @@ private:
 	uint					width;
 	uint					height;
 	uint					clusterSize;
+	Graph					graph;
 	std::vector<Entry>		entrys;
 	std::vector<Cluster>	clusters;
 	//This only works with a single level of terrain in case we have more than one unit size we will have to add a vector map
