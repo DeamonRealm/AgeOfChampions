@@ -11,7 +11,7 @@
 #include "j1Console.h"
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
-
+#include "j1ClusterAbstraction.h"
 //UI Elements
 #include "UI_Text_Box.h"
 #include "UI_Button.h"
@@ -118,7 +118,7 @@ bool j1Scene::Start()
 	App->gui->PushScreen(scene_1_screen);
 	// ----------------------------------------------------
 	
-
+	j1ClusterAbstraction YOLO = j1ClusterAbstraction(App->map, 5);
 	return true;
 }
 

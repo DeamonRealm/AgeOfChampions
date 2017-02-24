@@ -90,7 +90,7 @@ private:
 	int						lenght;
 	int						row;
 	int						column;
-	ClusterOrientation				orientation;
+	ClusterOrientation		orientation;
 
 private:
 
@@ -111,10 +111,14 @@ public:
 	void AddCluster(Cluster add);
 	Cluster& GetCluster(int at);
 	int  GetClusterID(int clusterRow, int clusterColumn);
+	//
 	void CreateEntryHorizontal(int start, int end, int x, int row, int column);
 	void CreateEntryVertical(int start, int end, int x, int row, int column);
 
-	void ConectEntryAndCluster();
+	void SetEntryClusterID();
+	void CreateGraph();
+	void SetNodesOnClusters(Graph* graph);
+
 private:
 	// size of the map 
 	uint					width;

@@ -52,7 +52,7 @@
   </map>
 
   <scene>
-  	<map_folder>iso.tmx</map_folder>
+  	<map_folder>init_portals_map.tmx</map_folder>
   </scene>
 
   <animator>

@@ -13,7 +13,7 @@ j1ClusterAbstraction::j1ClusterAbstraction(j1Map * m, uint clusterSize):clusterS
 	if (m->CreateWalkabilityMap(width, height, &map))
 		SetMap(width, height, map);
 	CreateClusters();
-	ConectEntryAndCluster();
+	SetEntryClusterID();
 }
 
 j1ClusterAbstraction::~j1ClusterAbstraction()
@@ -170,7 +170,7 @@ void j1ClusterAbstraction::CreateEntryVertical(int start, int end, int x, int ro
 	}
 }
 
-void j1ClusterAbstraction::ConectEntryAndCluster()
+void j1ClusterAbstraction::SetEntryClusterID()
 {
 
 	int clusterID1;
@@ -186,20 +186,48 @@ void j1ClusterAbstraction::ConectEntryAndCluster()
 			//Get Bottom
 			clusterID2 = GetClusterID(item.GetRow()+1, item.GetColumn());
 			item.SetClusterID2(clusterID2);
+			break;
 		case CLUSTER_VERTICAL:
 			//Get Left
 			clusterID1 = GetClusterID(item.GetRow(), item.GetColumn());
 			item.SetClusterID1(clusterID1);
-
 			//Get Right
 			clusterID2 = GetClusterID(item.GetRow(), item.GetColumn()+1);
 			item.SetClusterID2(clusterID2);
-
+			break;
 		default:
 			break;
 		}
 		
 
+	}
+}
+
+void j1ClusterAbstraction::CreateGraph()
+{
+	Graph* g = new Graph();
+	SetNodesOnClusters(g);
+}
+
+void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
+{
+	int node1 = -1;
+	int node2 = -1;
+	for (int i = 0; i < entrys.size(); i++) {
+	
+		Entry& item = entrys[i];
+		
+		switch (item.GetOrientation())
+		{
+		case CLUSTER_HORIZONTAL:
+
+			break;
+		case CLUSTER_VERTICAL:
+
+			break;
+		default:
+			break;
+		}
 	}
 }
 
