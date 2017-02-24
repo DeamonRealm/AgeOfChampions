@@ -12,7 +12,7 @@ Blit_Call::Blit_Call()
 
 }
 
-Blit_Call::Blit_Call(const iPoint & position, SDL_Texture * texture, const SDL_Rect& rect, bool flip, uint priority) :position(position), texture(texture), rect(rect), flip(flip), priority(priority)
+Blit_Call::Blit_Call(const iPoint & position, const iPoint& pivot, SDL_Texture * texture, const SDL_Rect& rect, bool flip, int priority) :position(position),pivot(pivot), texture(texture), rect(rect), flip(flip), priority(priority)
 {
 
 }
@@ -31,6 +31,16 @@ int Blit_Call::GetX() const
 int Blit_Call::GetY() const
 {
 	return position.y;
+}
+
+float Blit_Call::GetXPivot() const
+{
+	return pivot.x;
+}
+
+float Blit_Call::GetYPivot() const
+{
+	return pivot.y;
 }
 
 SDL_Texture * Blit_Call::GetTex() const
@@ -126,7 +136,7 @@ bool j1Render::Update(float dt)
 	for (uint k = 0; k < size; k++)
 	{
 		const Blit_Call* blit = &blit_queue.top();
-		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect(), blit->GetFlip());
+		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect(), blit->GetFlip(), blit->GetXPivot(), blit->GetYPivot());
 		blit_queue.pop();
 	}
 	return true;
@@ -183,11 +193,11 @@ void j1Render::ChangeVSYNCstate(bool state)
 	renderer = SDL_CreateRenderer(App->win->window, -1, renderer_flag);
 }
 
-bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect* section, bool horizontal_flip, uint priority, float speed, double angle, int pivot_x, int pivot_y)
+bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect* section, bool horizontal_flip, int priority, int pivot_x, int pivot_y, float speed, double angle)
 {
 	bool ret = false;
 	if (texture != nullptr)ret = true;
-	blit_queue.emplace(iPoint(x, y), texture, *section, horizontal_flip, priority);
+	blit_queue.emplace(iPoint(x, y), iPoint(pivot_x, pivot_y) , texture, *section, horizontal_flip, priority);
 	return true;
 }
 
@@ -213,7 +223,7 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 }
 
 // Blit to screen
-bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool horizontal_flip, float speed, double angle, int pivot_x, int pivot_y) const
+bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool horizontal_flip, int pivot_x, int pivot_y, float speed, double angle) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -232,13 +242,24 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
+	if (!horizontal_flip)
+	{
+		rect.x -= pivot_x;
+		rect.y -= pivot_y;
+	}
+	else
+	{
+		rect.x -= (rect.w-pivot_x);
+		rect.y -= pivot_y;
+	}
+
 	rect.w *= scale;
 	rect.h *= scale;
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
 
-	if(pivot_x != INT_MAX && pivot_y != INT_MAX)
+	if(pivot_x != 0 && pivot_y != 0)
 	{
 		pivot.x = pivot_x;
 		pivot.y = pivot_y;

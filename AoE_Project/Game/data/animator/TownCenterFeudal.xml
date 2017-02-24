@@ -29,8 +29,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
         <sprite n="000_TownCenterRightPilonsFeudal2.bmp" x="1" y="144" w="25" h="48" pX="-6.44" pY="0.875"/>
         <sprite n="000_TownCenterRightSideFeudal.bmp" x="28" y="144" z="50" w="143" h="144" pX="-0.321678" pY="0.7"/>
         <sprite n="000_TownCenterLeftSideFeudal.bmp" x="144" y="1" z="50" w="145" h="141" pX="1.27586" pY="0.7"/>
-        <sprite n="000_TownCenterShadowFeudal.bmp" x="173" y="144" z ="-100" w="376" h="73" pX="0.526596" pY="0.410959"/>
-        <sprite n="000_TownCenterTopPieceFeudal.bmp" x="1" y="290" z ="55" w="193" h="199" pX="0.481865" pY="0.768844"/>-->
+        <sprite n="000_TownCenterShadowFeudal.bmp" x="173" y="144" z ="-30" w="376" h="73" pX="0.526596" pY="0.410959"/>
+        <sprite n="000_TownCenterTopPieceFeudal.bmp" x="1" y="290" z ="55" w="193" h="199" pX="0.481865" pY="0.768844"/>
       </action>
     </building>
 </TextureAtlas>

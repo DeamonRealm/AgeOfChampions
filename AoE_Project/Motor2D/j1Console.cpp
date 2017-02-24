@@ -88,7 +88,7 @@ bool j1Console::Awake(pugi::xml_node& config)
 
 bool j1Console::Start()
 {
-	//Now is able to generate texture for console scrolllabels
+	//Now is able to generate texture for console scroll labels
 	can_texturize_strings = true;
 	UpdateConsoleLabels();
 
@@ -248,7 +248,7 @@ void j1Console::GoScrollBottom()
 
 bool j1Console::AutoCompleteInputBox(char* input)
 {
-	//Get imput str len
+	//Get input str length
 	uint char_num = strlen(input);
 	if (char_num > 17)return false;
 	uint input_step = 1;
@@ -299,7 +299,7 @@ bool j1Console::AutoCompleteInputBox(char* input)
 	std::string str = temp;
 	delete temp;
 	if (strlen(str.c_str()) > 7)return false;
-	//Try to autocomplete the step
+	//Try to auto complete the step
 	uint elements_num = 0;
 	uint equal_chars = 0;
 	uint perf_index = 0;
@@ -308,7 +308,7 @@ bool j1Console::AutoCompleteInputBox(char* input)
 	switch (input_step)
 	{
 	case 1:
-		//Check command autocomplete
+		//Check command auto complete
 		elements_num = commands.size();
 		for (uint k = 0; k < elements_num; k++)
 		{
@@ -331,7 +331,7 @@ bool j1Console::AutoCompleteInputBox(char* input)
 
 	case 2:
 		
-		//Check module autocomplete
+		//Check module auto complete
 		elements_num = App->GetModulesNum();
 		for (uint k = 0; k < elements_num; k++)
 		{
@@ -365,7 +365,7 @@ bool j1Console::AutoCompleteInputBox(char* input)
 		break;
 
 	case 3:
-		//Check cvar autocomplete
+		//Check cvar auto complete
 		bool find;
 		j1Module* cvar_module;
 		cvar_module = GetModulefromInput(input, find);
@@ -392,7 +392,7 @@ bool j1Console::AutoCompleteInputBox(char* input)
 		break;
 
 	case 4:
-		//Check input type autocomplete
+		//Check input type auto complete
 		break;
 
 	}
@@ -618,7 +618,7 @@ char * j1Console::CvarTypetoString(C_VAR_TYPE cvar_type) const
 {
 	switch (cvar_type)
 	{
-	case INT_VAR:		return "integrer";	break;
+	case INT_VAR:		return "integer";	break;
 	case FLOAT_VAR:		return "float";		break;
 	case CHAR_VAR:		return "character";	break;
 	case BOOLEAN_VAR:	return "boolean";	break;
@@ -628,7 +628,7 @@ char * j1Console::CvarTypetoString(C_VAR_TYPE cvar_type) const
 
 C_VAR_TYPE j1Console::StringtoCvarType(const std::string* string) const
 {
-	if			(*string == "integrer")			return INT_VAR;
+	if			(*string == "integer")			return INT_VAR;
 	else if		(*string == "float")			return FLOAT_VAR;
 	else if		(*string == "character")		return CHAR_VAR;
 	else if		(*string == "boolean")			return BOOLEAN_VAR;
@@ -748,7 +748,7 @@ void j1Console::Console_Command_Input(Command * command, Cvar * cvar, std::strin
 			else only_read = "mutable";
 
 			//Show cvar data on console scroll
-			//name | module | description | type | value | editstate 
+			//name | module | description | type | value | edit state 
 			GenerateConsoleLabel("-- %s -- | -- %s -- | -- %s -- | -- %s -- | -- %s -- | -- %s -- ",
 				console_variables[k]->GetCvarName()->c_str(), module.c_str(), console_variables[k]->GetCvarDescription()->c_str(),
 				CvarTypetoString(console_variables[k]->GetCvarType()), console_variables[k]->GetValueString()->c_str(),only_read.c_str());

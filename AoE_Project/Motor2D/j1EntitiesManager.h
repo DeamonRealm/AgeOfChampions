@@ -37,6 +37,9 @@ private:
 	std::vector<Resource*>	resoureces_defs;
 	std::vector<Building*>	buildings_defs;
 
+	//Boolean that defines the debug mode state
+	bool debug = false;
+
 public:
 
 	//Functionality

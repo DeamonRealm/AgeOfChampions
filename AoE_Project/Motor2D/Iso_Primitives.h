@@ -18,11 +18,12 @@ enum COLLIDER_TYPE
 };
 
 ///Class Primitive ------------------------------
-//Balse primitive class
+//Base primitive class
 class Primitive
 {
 public:
 
+	Primitive();
 	Primitive(const iPoint& position, const SDL_Color& color = {});
 	Primitive(const Primitive& copy);
 	~Primitive();

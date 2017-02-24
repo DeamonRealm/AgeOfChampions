@@ -4,10 +4,11 @@
 #include <list>
 #include "p2Defs.h"
 #include "p2Point.h"
+#include "Iso_Primitives.h"
+#include"SDL/include/SDL_rect.h"
 
 struct Animation;
 struct SDL_Texture;
-struct Primitive;
 enum CURSOR_TARGET;
 
 // ENTITIES ENUMS -----------
@@ -99,7 +100,7 @@ public:
 
 	//Functionality -------------------
 	//Draw ------------------
-	virtual bool	Draw();
+	virtual bool	Draw(bool debug);
 
 	//Set Methods -----------
 	void			SetName(const char* name_str);
@@ -136,6 +137,7 @@ protected:
 
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
+	SDL_Rect		selection_rect = { 0,0,0,0 };
 	//Life -------------
 	uint			max_life = 0;
 	float			life = 0;
@@ -151,7 +153,7 @@ protected:
 	float			attack_rate = 0;
 	ATTACK_TYPE		attack_type = NO_ATTACK;
 	float			attack_range = 0;
-	//Defence/Armor ----
+	//Defense/Armor ----
 	uint			defence = 0;
 	uint			defence_bonus = 0;
 	uint			armor = 0;
@@ -167,8 +169,12 @@ protected:
 public:
 
 	//Functionality -------------------
+	//Draw ------------------
+	bool	Draw(bool debug);
+
 	//Set Methods -----------
 	void	SetUnitType(UNIT_TYPE type);
+	void	SetSelectionRect(const SDL_Rect& rect);
 	void	SetFullLife(uint full_life_val);
 	void	SetLife(uint life_val);
 	void	SetViewArea(uint area_val);
@@ -194,6 +200,7 @@ public:
 
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
+	const SDL_Rect*	GetSelectionRect()const;
 	uint			GetFullLife()const;
 	uint			GetLife()const;
 	uint			GetViewArea()const;
@@ -268,17 +275,17 @@ protected:
 	uint			units_capacity = 0;
 	uint			current_units = 0;
 
-	//List of the units placed inside the buiding
+	//List of the units placed inside the building
 	std::list<Unit*>	units_in;
 
 public:
 
 	//Functionality -------------------
-	//Factory that generates any type of unit suported by the building
+	//Factory that generates any type of unit supported by the building
 	virtual Unit* GenerateUnit(UNIT_TYPE new_unit_type)const;
 
 	//Draw ------------------
-	bool	Draw();
+	bool	Draw(bool debug);
 
 	//Set Methods -----------
 	void	SetBuildingType(BUILDING_TYPE type);

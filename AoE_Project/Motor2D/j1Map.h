@@ -149,7 +149,7 @@ private:
 
 public:
 
-	//Class that alloc all the map data
+	//Class that allocate all the map data
 	MapData data;
 
 	//Unload Current map
@@ -158,13 +158,13 @@ public:
 	bool CreateWalkabilityMap(uint& width, uint & height, uchar** buffer);
 	//Generate walkability cost map from map tiles id
 	bool CreateWalkCostMap(int& width, int& height, uchar** buffer)const;
-	//Get Movement cost from x y coordenates
+	//Get Movement cost from x y coordinates
 	int MovementCost(int x, int y) const;
 	//Get Tileset from tile id
 	TileSet* GetTilesetFromTileId(int id) const;
-	//Transform map coordenates to world coordenates
+	//Transform map coordinates to world coordinates
 	iPoint MapToWorld(int x, int y) const;
-	//Transform world coordenates to map coordenates
+	//Transform world coordinates to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 	//Get Collide Layer
 	void CollideLayer();

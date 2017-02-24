@@ -4,8 +4,6 @@
 #include "j1Render.h"
 #include "j1Animator.h"
 
-#include "Iso_Primitives.h"
-
 ///Class Entity ---------------------------------
 //Constructors ========================
 Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE entity_type) : name(name), position(position), entity_type(entity_type)
@@ -21,21 +19,21 @@ Entity::Entity(const Entity* copy) :position(copy->position), entity_type(copy->
 //Destructors =========================
 Entity::~Entity()
 {
-
+	delete mark;
 }
 
 
 //Functionality =======================
 // Draw -----------
-bool Entity::Draw()
+bool Entity::Draw(bool debug)
 {
 	bool ret = false;
 	//Draw Entity Mark
-	ret = mark->Draw();
+	if(debug)ret = mark->Draw();
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation->GetTexture(), (int)position.x - sprite->GetXpivot(), (int)position.y - sprite->GetYpivot(), sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord());
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetXpivot(), sprite->GetYpivot());
 
 	return ret;
 }
@@ -122,9 +120,9 @@ bool Entity::GetFlipSprite() const
 	return flip_sprite;
 }
 
-Primitive * Entity::GetMark() const
+Primitive* Entity::GetMark() const
 {
-	return mark;
+	return (Primitive*)&mark;
 }
 
 // ----------------
@@ -151,10 +149,49 @@ Unit::~Unit()
 }
 
 //Functionality =======================
+//Draw ------------
+bool Unit::Draw(bool debug)
+{
+	bool ret = false;
+
+	if (debug) {
+		//Draw Entity Mark
+		ret = mark->Draw();
+
+		//Draw Entity Selection Rect
+		App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
+
+		//Draw axis lines to check the center of the unit (tool used during the sprites allocation)
+		int length = 55;
+		iPoint p1 = { (int)position.x, (int)position.y - length };
+		iPoint p2 = { (int)position.x, (int)position.y + length };
+		SDL_Color color = { 50,255,200,255 };
+		Line y_axis(p1, p2, color);
+		p1.x -= length;
+		p1.y += length;
+		p2.x += length;
+		p2.y -= length;
+		Line x_axis(p1, p2, color);
+		y_axis.Draw();
+		x_axis.Draw();
+	}
+	
+	//Draw Entity Current animation frame
+	const Sprite* sprite = current_animation->GetCurrentSprite();
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetXpivot(), sprite->GetYpivot());
+
+	return ret;
+}
+
 //Set Methods -----
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
+}
+
+void Unit::SetSelectionRect(const SDL_Rect & rect)
+{
+	selection_rect = rect;
 }
 
 void Unit::SetFullLife(uint full_life_val)
@@ -270,6 +307,11 @@ void Unit::SetExp(uint experience)
 UNIT_TYPE Unit::GetUnitType()const
 {
 	return unit_type;
+}
+
+const SDL_Rect * Unit::GetSelectionRect() const
+{
+	return &selection_rect;
 }
 
 uint Unit::GetFullLife() const
@@ -464,21 +506,21 @@ Unit * Building::GenerateUnit(UNIT_TYPE new_unit_type) const
 }
 
 //Draw ----------------------
-bool Building::Draw()
+bool Building::Draw(bool debug)
 {
 	bool ret = false;
 
-	ret = mark->Draw();
+	//Debug Draw
+	if(debug)ret = mark->Draw();
+
+	//Get all sprites of the current animation
 	const std::vector<Sprite>*	sprites = current_animation->GetAllSprites();
 
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (!App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord()))
-		{
-			ret = false;
-			break;
-		}
+		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord());
+		if(!ret)break;
 	}
 
 	return ret;

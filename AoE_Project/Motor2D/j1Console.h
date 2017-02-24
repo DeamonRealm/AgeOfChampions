@@ -45,22 +45,22 @@ private:
 
 public:
 
-	// Recieve UI input and work with it
+	// Receive UI input and work with it
 	void	GUI_Input(UI_Element* target, GUI_INPUT input);
 
-	//Active / Desactive the Console
+	//Active / Deactivate the Console
 	void	ChangeConsoleState();
 
 	//Console UI interaction --------------------
 	//Set Console Scroll at bottom to see the last label
 	void	GoScrollBottom();
-	//Autocomplete input string checking cvars & commands
+	//Auto complete input string checking cvars & commands
 	bool	AutoCompleteInputBox(char* input);
 
 	//Console Output ----------------------------
 	//Add a text at text list of scroll
 	void		AddConsoleText(char* new_text);
-	//Generate log text widouth send it to the debug output
+	//Generate log text without send it to the debug output
 	char*		GenerateConsoleLabel(char* new_text,...);
 	//Texturize the console labels and push it to the scroll
 	void		UpdateConsoleLabels();

@@ -3,6 +3,9 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Animator.h"
+#include "j1Input.h"
+
+#include "p2Log.h"
 
 //Constructors ========================
 j1EntitiesManager::j1EntitiesManager()
@@ -29,12 +32,14 @@ bool j1EntitiesManager::Start()
 bool j1EntitiesManager::Update(float dt)
 {
 	bool ret = true;
+	//Activate / Deactivate debug mode 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) debug = !debug;
 
 	//Draw all units
 	std::list<Unit*>::const_iterator unit_item = units.begin();
 	while (unit_item != units.end() && ret)
 	{
-		ret = unit_item._Ptr->_Myval->Draw();
+		ret = unit_item._Ptr->_Myval->Draw(debug);
 		unit_item++;
 	}
 
@@ -42,7 +47,7 @@ bool j1EntitiesManager::Update(float dt)
 	std::list<Building*>::const_iterator building_item = buildings.begin();
 	while (building_item != buildings.end() && ret)
 	{
-		ret = building_item._Ptr->_Myval->Draw();
+		ret = building_item._Ptr->_Myval->Draw(debug);
 		building_item++;
 	}
 
@@ -131,6 +136,7 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 		new_unit->SetUnitType(UNIT_TYPE::MILITIA);
 		new_unit->SetAction(ACTION_TYPE::IDLE);
 		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
+		new_unit->SetSelectionRect({ 0,0,30,40 });
 		App->animator->UnitPlay(new_unit);
 		new_unit->GenerateMark();
 	 break;
@@ -141,6 +147,7 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 		new_unit->SetUnitType(UNIT_TYPE::ARBALEST);
 		new_unit->SetAction(ACTION_TYPE::IDLE);
 		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
+		new_unit->SetSelectionRect({ 0,0,35,45 });
 		App->animator->UnitPlay(new_unit);
 		new_unit->GenerateMark();
 	 break;

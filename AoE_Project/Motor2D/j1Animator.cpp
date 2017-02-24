@@ -10,7 +10,7 @@
 
 ///Animation Sprite Class -----------------------
 //Constructor ===============
-Sprite::Sprite(const SDL_Rect & frame, const iPoint & pivot, uint z_cord) : frame(frame), pivot(pivot), z_cord(z_cord)
+Sprite::Sprite(const SDL_Rect & frame, const iPoint & pivot, int z_cord) : frame(frame), pivot(pivot), z_cord(z_cord)
 {
 
 }
@@ -33,7 +33,7 @@ int Sprite::GetYpivot() const
 {
 	return pivot.y;
 }
-uint Sprite::GetZ_cord() const
+int Sprite::GetZ_cord() const
 {
 	return z_cord;
 }
@@ -124,7 +124,7 @@ uint Animation::GetId() const
 	return enum_id;
 }
 
-void Animation::AddSprite(const SDL_Rect & rect, const iPoint & point, const uint z)
+void Animation::AddSprite(const SDL_Rect & rect, const iPoint & point, const int z)
 {
 	sprites.push_back(Sprite(rect, point, z));
 }
@@ -280,7 +280,7 @@ ACTION_TYPE j1Animator::Str_to_ActionEnum(const char* str) const
 {
 	if (strcmp(str, "attack") == 0)		return ATTATCK;
 	if (strcmp(str, "die") == 0)		return DIE;
-	if (strcmp(str, "disapear") == 0)	return DISAPEAR;
+	if (strcmp(str, "disappear") == 0)	return DISAPEAR;
 	if (strcmp(str, "idle") == 0)		return IDLE;
 	if (strcmp(str, "walk") == 0)		return WALK;
 	return NO_ACTION;
@@ -513,7 +513,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 	//Focus building id
 	pugi::xml_node build_node = build_anim_data.child("TextureAtlas").child("building");
 	
-	//Alloc building animation block data 
+	//Allocate building animation block data 
 	Animation_Block* building_block = new Animation_Block();
 	building_block->SetId((uint)Str_to_BuildingEnum(build_node.attribute("id").as_string()));
 
@@ -521,7 +521,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 	pugi::xml_node action_node = build_node.first_child();
 	while (action_node != NULL)
 	{
-		//Alloc action animation block data
+		//Allocate action animation block data
 		Animation_Block* action_block = new Animation_Block();
 		action_block->SetId((uint)Str_to_ActionEnum(action_node.attribute("enum").as_string()));
 
@@ -552,7 +552,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 		//Set animation of action block
 		action_block->SetAnimation(anim);
 
-		//Add buided action to building animation block
+		//Add build action to building animation block
 		building_block->AddAnimationBlock(action_block);
 		
 		//Focus next action node
@@ -640,7 +640,7 @@ Animation * j1Animator::BuildingPlay(const BUILDING_TYPE unit, const ACTION_TYPE
 		{
 			//Compare block action id
 			block = block->SearchId(action);
-			//If action block is found search the correct direction block or return undirectional action
+			//If action block is found search the correct direction block or return unidirectional action
 			if (direction == NO_DIRECTION)return block->GetAnimation(); 
 			if (block != nullptr)block = block->SearchId(direction);
 			//If direction block is found returns the block animation

@@ -6,6 +6,11 @@
 
 ///Class Primitive ------------------------------
 //Constructors ==============
+Primitive::Primitive()
+{
+
+}
+
 Primitive::Primitive(const iPoint& position, const SDL_Color& color) :position(position), color(color)
 {
 
