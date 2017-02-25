@@ -280,7 +280,7 @@ ACTION_TYPE j1Animator::Str_to_ActionEnum(const char* str) const
 {
 	if (strcmp(str, "attack") == 0)		return ATTATCK;
 	if (strcmp(str, "die") == 0)		return DIE;
-	if (strcmp(str, "disappear") == 0)	return DISAPEAR;
+	if (strcmp(str, "disappear") == 0)	return DISAPPEAR;
 	if (strcmp(str, "idle") == 0)		return IDLE;
 	if (strcmp(str, "walk") == 0)		return WALK;
 	return NO_ACTION;
@@ -378,25 +378,13 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 	//Load Animations data
 	//Node focused at any unit node
 	pugi::xml_node unit_node = animations_data.child("TextureAtlas").child("unit");
-	std::string unit_enum;
 	Animation_Block* unit_anim_block = nullptr;
 	//Node focused at any unit action node
 	pugi::xml_node action_node;
-	std::string action_enum;
-	Animation_Block* action_anim_block = nullptr;
-	//Animation blocks to allocate the action different directions
-	Animation_Block* dir_0_anim_block = nullptr;
-	Animation_Block* dir_1_anim_block = nullptr;
-	Animation_Block* dir_2_anim_block = nullptr;
-	Animation_Block* dir_3_anim_block = nullptr;
-	Animation_Block* dir_4_anim_block = nullptr;
+	//Node focused at any direction action node
+	pugi::xml_node direction_node;
 	//Current sprite node 
 	pugi::xml_node sprite;
-	Animation* dir_0_anim = nullptr;
-	Animation* dir_1_anim = nullptr;
-	Animation* dir_2_anim = nullptr;
-	Animation* dir_3_anim = nullptr;
-	Animation* dir_4_anim = nullptr;
 
 	//Build new unit animation block
 	unit_anim_block = new Animation_Block();
@@ -408,76 +396,65 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 	while (action_node != NULL)
 	{
 		//Build new action animation block
-		action_anim_block = new Animation_Block();
+		Animation_Block* action_anim_block = new Animation_Block();
 		//Get current action enum
 		action_anim_block->SetId(Str_to_ActionEnum(action_node.attribute("enum").as_string()));
 		//Get current action animation speed
 		uint speed = action_node.attribute("speed").as_uint();
 
-		//Build new action direction animation blocks
-		dir_0_anim_block = new Animation_Block(SOUTH);
-		dir_1_anim_block = new Animation_Block(SOUTH_WEST);
-		dir_2_anim_block = new Animation_Block(WEST);
-		dir_3_anim_block = new Animation_Block(NORTH_WEST);
-		dir_4_anim_block = new Animation_Block(NORTH);
+		//Focus direction of the current action
+		direction_node = action_node.first_child();
 
-		//Iterate all direction sprite nodes
-		dir_0_anim = new Animation();
-		dir_0_anim->SetSpeed(speed);
-		dir_0_anim->SetTexture(texture);
-		dir_1_anim = new Animation();
-		dir_1_anim->SetSpeed(speed);
-		dir_1_anim->SetTexture(texture);
-		dir_2_anim = new Animation();
-		dir_2_anim->SetSpeed(speed);
-		dir_2_anim->SetTexture(texture);
-		dir_3_anim = new Animation();
-		dir_3_anim->SetSpeed(speed);
-		dir_3_anim->SetTexture(texture);
-		dir_4_anim = new Animation();
-		dir_4_anim->SetSpeed(speed);
-		dir_4_anim->SetTexture(texture);
-		sprite = action_node.first_child();
+		while (direction_node != NULL) {
+			
+			//Build new direction animation block
+			Animation_Block* direction_anim_block = new Animation_Block();
+			//Get direction block direction enum
+			direction_anim_block->SetId(Str_to_DirectionEnum(direction_node.attribute("enum").as_string()));
 
-		while (sprite != NULL)
-		{
-			//Load sprite rect
-			SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
-			//Load sprite pivot
-			float pX = sprite.attribute("pX").as_float() * rect.w;
-			pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
-			float pY = sprite.attribute("pY").as_float() * rect.h;
-			pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+			//Build direction block animation
+			Animation* animation = new Animation();
+			//Set animation speed
+			animation->SetSpeed(speed);
+			//Set animation texture
+			animation->SetTexture(texture);
 
-			//Add sprite at correct animation
-			switch (Str_to_DirectionEnum(sprite.attribute("direction").as_string()))
+			//Focus sprite node at first sprite of direction node
+			sprite = direction_node.first_child();
+
+			while (sprite != NULL)
 			{
-			case SOUTH:			dir_0_anim->AddSprite(rect, iPoint(pX, pY));		break;
-			case SOUTH_WEST:	dir_1_anim->AddSprite(rect, iPoint(pX, pY));		break;
-			case WEST:			dir_2_anim->AddSprite(rect, iPoint(pX, pY));		break;
-			case NORTH_WEST:	dir_3_anim->AddSprite(rect, iPoint(pX, pY));		break;
-			case NORTH:			dir_4_anim->AddSprite(rect, iPoint(pX, pY));		break;
+				//Load sprite rect
+				SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
+				//Load sprite pivot
+				float pX = sprite.attribute("pX").as_float() * rect.w;
+				pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+				float pY = sprite.attribute("pY").as_float() * rect.h;
+				pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+
+				//Add built sprite at the current animation
+				animation->AddSprite(rect, iPoint((int)pX, (int)pY));
+
+				//Get next sprite node
+				sprite = sprite.next_sibling();
 			}
 
-			sprite = sprite.next_sibling();
-		}
-		//Add animations to direction blocks
-		dir_0_anim_block->SetAnimation(dir_0_anim);
-		dir_1_anim_block->SetAnimation(dir_1_anim);
-		dir_2_anim_block->SetAnimation(dir_2_anim);
-		dir_3_anim_block->SetAnimation(dir_3_anim);
-		dir_4_anim_block->SetAnimation(dir_4_anim);
-		//Add direction blocks to action block
-		action_anim_block->AddAnimationBlock(dir_0_anim_block);
-		action_anim_block->AddAnimationBlock(dir_1_anim_block);
-		action_anim_block->AddAnimationBlock(dir_2_anim_block);
-		action_anim_block->AddAnimationBlock(dir_3_anim_block);
-		action_anim_block->AddAnimationBlock(dir_4_anim_block);
+			//Add built animation to the direction block
+			direction_anim_block->SetAnimation(animation);
 
-		//Add action block to unit block
+			//Add built direction block to the action block
+			action_anim_block->AddAnimationBlock(direction_anim_block);
+
+			//Get next direction node
+			direction_node = direction_node.next_sibling();
+		}
+
+		//Add action block at the unit block
 		unit_anim_block->AddAnimationBlock(action_anim_block);
 
+		//Get action next node
 		action_node = action_node.next_sibling();
+
 	}
 
 	//Add unit animation block to module vector
@@ -485,6 +462,7 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 
 	//Release loaded document data
 	animations_data.reset();
+
 	return true;
 }
 

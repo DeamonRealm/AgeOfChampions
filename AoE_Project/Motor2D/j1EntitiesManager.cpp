@@ -130,6 +130,17 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 	{
 	case NO_UNIT: new_unit = new Unit("undefined"); break;
 
+	case VILLAGER:
+		new_unit = new Unit("Villager");
+		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
+		new_unit->SetUnitType(UNIT_TYPE::VILLAGER);
+		new_unit->SetAction(ACTION_TYPE::IDLE);
+		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
+		new_unit->SetSelectionRect({ 0,0,30,40 });
+		App->animator->UnitPlay(new_unit);
+		new_unit->GenerateMark();
+		break;
+
 	case MILITIA:
 		new_unit = new Unit("Militia");
 		new_unit->SetEntityType(ENTITY_TYPE::UNIT);

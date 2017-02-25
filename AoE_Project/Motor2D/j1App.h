@@ -34,7 +34,7 @@ public:
 	j1App(int argc, char* args[]);
 
 	// Destructor
-	virtual ~j1App();
+	~j1App();
 
 	// Called before render is available
 	bool Awake();

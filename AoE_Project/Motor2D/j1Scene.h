@@ -42,7 +42,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Recieve UI input and work with it
+	// Receive UI input and work with it
 	void GUI_Input(UI_Element* target, GUI_INPUT input);
 
 private:
@@ -72,7 +72,7 @@ public:
 	//Change the current map
 	void Change_Map();
 
-	//Load the choosed Map
+	//Load the selected Map
 	bool Load_Current_Map();
 
 };

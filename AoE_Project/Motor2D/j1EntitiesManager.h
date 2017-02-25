@@ -32,7 +32,7 @@ private:
 	std::list<Resource*>	resources;
 	std::list<Building*>	buildings;
 
-	//Vector of pre-defined units
+	//Vector of predefined units
 	std::vector<Unit*>		units_defs;
 	std::vector<Resource*>	resoureces_defs;
 	std::vector<Building*>	buildings_defs;
