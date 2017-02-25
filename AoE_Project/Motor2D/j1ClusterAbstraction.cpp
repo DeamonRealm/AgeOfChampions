@@ -191,7 +191,7 @@ int j1ClusterAbstraction::NodeExist(Cluster& cluster, int posX, int posY, Graph*
 	int ret = -1;
 	for (int i = 0; i < cluster.NodeSize(); i++) {
 		ret = cluster.GetNodeNumberAt(i);
-		Node* node = graph->GetNode(i);
+		Node* node = graph->GetNode(ret);
 		if (node->GetPositionX() == posX && node->GetPositionY() == posY) {
 			return ret;
 		}
@@ -246,6 +246,7 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 	int clusterID2 = 0;
 	for (int i = 0; i < entrys.size(); i++) {
 		Entry& item = entrys[i];
+		
 		clusterID1 = item.GetClusterID1();
 		clusterID2 = item.GetClusterID2();
 		switch (item.GetOrientation())
@@ -268,7 +269,7 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 			}
 
 			Cluster& cluster2 = GetCluster(clusterID2);
-			checkNum = NodeExist(cluster2, cluster2.GetPosisitionX(), cluster2.GetPosisitionY(), graph);
+			checkNum = NodeExist(cluster2, cluster2.GetPosisitionX(), cluster2.GetPosisitionY()+1, graph);
 			if (checkNum == -1) {
 				Node* node2 = new Node();
 				node2->SetPosition(cluster2.GetPosisitionX(), cluster2.GetPosisitionY() + 1);
@@ -306,7 +307,7 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 			}
 
 			Cluster& cluster2 = GetCluster(clusterID2);
-			checkNum = NodeExist(cluster2, cluster2.GetPosisitionX(), cluster2.GetPosisitionY(), graph);
+			checkNum = NodeExist(cluster2, cluster2.GetPosisitionX()+1, cluster2.GetPosisitionY(), graph);
 			if (checkNum == -1) {
 				Node* node2 = new Node();
 				node2->SetPosition(cluster2.GetPosisitionX() + 1, cluster2.GetPosisitionY());
