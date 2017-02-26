@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:06db661dfe71badd3c7260e318a11538:f82fe5051851049c1319d4a9da88330e:7603e8e0d138f819d6a678a43aac4b9e$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="villager_carry.png" width="723" height="723">
+  <unit id="villager_carry">
+
+    <!--WalkFish Action-->
+    <action enum ="walk_fish" speed="200">
+      <direction enum="south">
+        <sprite n="aldeano_walk_fish/000_mVillager_walk_fish.bmp" x="1" y="1" w="29" h="42" pX="0.448276" pY="0.857143"/>
+        <sprite n="aldeano_walk_fish/001_mVillager_walk_fish.bmp" x="32" y="1" w="27" h="42" pX="0.444444" pY="0.857143"/>
+        <sprite n="aldeano_walk_fish/002_mVillager_walk_fish.bmp" x="61" y="1" w="27" h="42" pX="0.481481" pY="0.857143"/>
+        <sprite n="aldeano_walk_fish/003_mVillager_walk_fish.bmp" x="90" y="1" w="26" h="43" pX="0.5" pY="0.860465"/>
+        <sprite n="aldeano_walk_fish/004_mVillager_walk_fish.bmp" x="118" y="1" w="26" h="43" pX="0.5" pY="0.860465"/>
+        <sprite n="aldeano_walk_fish/005_mVillager_walk_fish.bmp" x="146" y="1" w="26" h="43" pX="0.5" pY="0.860465"/>
+        <sprite n="aldeano_walk_fish/006_mVillager_walk_fish.bmp" x="174" y="1" w="25" h="41" pX="0.48" pY="0.878049"/>
+        <sprite n="aldeano_walk_fish/007_mVillager_walk_fish.bmp" x="201" y="1" w="25" h="40" pX="0.48" pY="0.875"/>
+        <sprite n="aldeano_walk_fish/008_mVillager_walk_fish.bmp" x="228" y="1" w="25" h="41" pX="0.48" pY="0.853659"/>
+        <sprite n="aldeano_walk_fish/009_mVillager_walk_fish.bmp" x="255" y="1" w="25" h="40" pX="0.52" pY="0.875"/>
+        <sprite n="aldeano_walk_fish/010_mVillager_walk_fish.bmp" x="282" y="1" w="25" h="41" pX="0.52" pY="0.878049"/>
+        <sprite n="aldeano_walk_fish/011_mVillager_walk_fish.bmp" x="309" y="1" w="25" h="42" pX="0.52" pY="0.857143"/>
+        <sprite n="aldeano_walk_fish/012_mVillager_walk_fish.bmp" x="336" y="1" w="26" h="43" pX="0.538462" pY="0.860465"/>
+        <sprite n="aldeano_walk_fish/013_mVillager_walk_fish.bmp" x="364" y="1" w="26" h="43" pX="0.5" pY="0.860465"/>
+        <sprite n="aldeano_walk_fish/014_mVillager_walk_fish.bmp" x="392" y="1" w="27" h="42" pX="0.481481" pY="0.857143"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="aldeano_walk_fish/015_mVillager_walk_fish.bmp" x="421" y="1" w="22" h="45" pX="0.5" pY="0.8"/>
+        <sprite n="aldeano_walk_fish/016_mVillager_walk_fish.bmp" x="445" y="1" w="23" h="45" pX="0.478261" pY="0.8"/>
+        <sprite n="aldeano_walk_fish/017_mVillager_walk_fish.bmp" x="470" y="1" w="22" h="44" pX="0.5" pY="0.818182"/>
+        <sprite n="aldeano_walk_fish/018_mVillager_walk_fish.bmp" x="494" y="1" w="20" h="45" pX="0.55" pY="0.822222"/>
+        <sprite n="aldeano_walk_fish/019_mVillager_walk_fish.bmp" x="516" y="1" w="19" h="45" pX="0.578947" pY="0.822222"/>
+        <sprite n="aldeano_walk_fish/020_mVillager_walk_fish.bmp" x="537" y="1" w="21" h="44" pX="0.571429" pY="0.840909"/>
+        <sprite n="aldeano_walk_fish/021_mVillager_walk_fish.bmp" x="560" y="1" w="21" h="43" pX="0.571429" pY="0.837209"/>
+        <sprite n="aldeano_walk_fish/022_mVillager_walk_fish.bmp" x="583" y="1" w="21" h="42" pX="0.571429" pY="0.833333"/>
+        <sprite n="aldeano_walk_fish/023_mVillager_walk_fish.bmp" x="606" y="1" w="22" h="41" pX="0.545455" pY="0.829268"/>
+        <sprite n="aldeano_walk_fish/024_mVillager_walk_fish.bmp" x="630" y="1" w="22" h="42" pX="0.545455" pY="0.833333"/>
+        <sprite n="aldeano_walk_fish/025_mVillager_walk_fish.bmp" x="654" y="1" w="20" h="44" pX="0.6" pY="0.818182"/>
+        <sprite n="aldeano_walk_fish/026_mVillager_walk_fish.bmp" x="676" y="1" w="18" h="45" pX="0.611111" pY="0.822222"/>
+        <sprite n="aldeano_walk_fish/027_mVillager_walk_fish.bmp" x="696" y="1" w="20" h="45" pX="0.55" pY="0.822222"/>
+        <sprite n="aldeano_walk_fish/028_mVillager_walk_fish.bmp" x="1" y="48" w="20" h="45" pX="0.55" pY="0.822222"/>
+        <sprite n="aldeano_walk_fish/029_mVillager_walk_fish.bmp" x="23" y="48" w="21" h="44" pX="0.52381" pY="0.818182"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="aldeano_walk_fish/030_mVillager_walk_fish.bmp" x="46" y="48" w="28" h="44" pX="0.535714" pY="0.818182"/>
+        <sprite n="aldeano_walk_fish/031_mVillager_walk_fish.bmp" x="76" y="48" w="30" h="44" pX="0.5" pY="0.818182"/>
+        <sprite n="aldeano_walk_fish/032_mVillager_walk_fish.bmp" x="108" y="48" w="28" h="44" pX="0.535714" pY="0.840909"/>
+        <sprite n="aldeano_walk_fish/033_mVillager_walk_fish.bmp" x="138" y="48" w="23" h="45" pX="0.565217" pY="0.844444"/>
+        <sprite n="aldeano_walk_fish/034_mVillager_walk_fish.bmp" x="163" y="48" w="20" h="45" pX="0.65" pY="0.844444"/>
+        <sprite n="aldeano_walk_fish/035_mVillager_walk_fish.bmp" x="185" y="48" w="19" h="44" pX="0.631579" pY="0.840909"/>
+        <sprite n="aldeano_walk_fish/036_mVillager_walk_fish.bmp" x="206" y="48" w="20" h="43" pX="0.55" pY="0.837209"/>
+        <sprite n="aldeano_walk_fish/037_mVillager_walk_fish.bmp" x="228" y="48" w="23" h="42" pX="0.521739" pY="0.833333"/>
+        <sprite n="aldeano_walk_fish/038_mVillager_walk_fish.bmp" x="253" y="48" w="25" h="42" pX="0.44" pY="0.833333"/>
+        <sprite n="aldeano_walk_fish/039_mVillager_walk_fish.bmp" x="280" y="48" w="26" h="42" pX="0.461538" pY="0.857143"/>
+        <sprite n="aldeano_walk_fish/040_mVillager_walk_fish.bmp" x="308" y="48" w="24" h="44" pX="0.541667" pY="0.840909"/>
+        <sprite n="aldeano_walk_fish/041_mVillager_walk_fish.bmp" x="334" y="48" w="22" h="44" pX="0.590909" pY="0.863636"/>
+        <sprite n="aldeano_walk_fish/042_mVillager_walk_fish.bmp" x="358" y="48" w="22" h="45" pX="0.590909" pY="0.844444"/>
+        <sprite n="aldeano_walk_fish/043_mVillager_walk_fish.bmp" x="382" y="48" w="22" h="44" pX="0.590909" pY="0.840909"/>
+        <sprite n="aldeano_walk_fish/044_mVillager_walk_fish.bmp" x="406" y="48" w="24" h="44" pX="0.541667" pY="0.840909"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="aldeano_walk_fish/045_mVillager_walk_fish.bmp" x="432" y="48" w="32" h="43" pX="0.65625" pY="0.860465"/>
+        <sprite n="aldeano_walk_fish/046_mVillager_walk_fish.bmp" x="466" y="48" w="32" h="44" pX="0.65625" pY="0.840909"/>
+        <sprite n="aldeano_walk_fish/047_mVillager_walk_fish.bmp" x="500" y="48" w="30" h="44" pX="0.633333" pY="0.863636"/>
+        <sprite n="aldeano_walk_fish/048_mVillager_walk_fish.bmp" x="532" y="48" w="27" h="43" pX="0.62963" pY="0.906977"/>
+        <sprite n="aldeano_walk_fish/049_mVillager_walk_fish.bmp" x="561" y="48" w="27" h="43" pX="0.62963" pY="0.930233"/>
+        <sprite n="aldeano_walk_fish/050_mVillager_walk_fish.bmp" x="590" y="48" w="27" h="43" pX="0.62963" pY="0.906977"/>
+        <sprite n="aldeano_walk_fish/051_mVillager_walk_fish.bmp" x="619" y="48" w="26" h="42" pX="0.615385" pY="0.904762"/>
+        <sprite n="aldeano_walk_fish/052_mVillager_walk_fish.bmp" x="647" y="48" w="24" h="41" pX="0.625" pY="0.902439"/>
+        <sprite n="aldeano_walk_fish/053_mVillager_walk_fish.bmp" x="673" y="48" w="26" h="42" pX="0.576923" pY="0.880952"/>
+        <sprite n="aldeano_walk_fish/054_mVillager_walk_fish.bmp" x="1" y="95" w="27" h="42" pX="0.592593" pY="0.880952"/>
+        <sprite n="aldeano_walk_fish/055_mVillager_walk_fish.bmp" x="30" y="95" w="27" h="43" pX="0.62963" pY="0.883721"/>
+        <sprite n="aldeano_walk_fish/056_mVillager_walk_fish.bmp" x="59" y="95" w="28" h="44" pX="0.607143" pY="0.909091"/>
+        <sprite n="aldeano_walk_fish/057_mVillager_walk_fish.bmp" x="89" y="95" w="29" h="45" pX="0.586207" pY="0.888889"/>
+        <sprite n="aldeano_walk_fish/058_mVillager_walk_fish.bmp" x="120" y="95" w="29" h="43" pX="0.586207" pY="0.883721"/>
+        <sprite n="aldeano_walk_fish/059_mVillager_walk_fish.bmp" x="151" y="95" w="29" h="44" pX="0.62069" pY="0.863636"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="aldeano_walk_fish/060_mVillager_walk_fish.bmp" x="182" y="95" w="27" h="44" pX="0.592593" pY="0.863636"/>
+        <sprite n="aldeano_walk_fish/061_mVillager_walk_fish.bmp" x="211" y="95" w="26" h="45" pX="0.576923" pY="0.844444"/>
+        <sprite n="aldeano_walk_fish/062_mVillager_walk_fish.bmp" x="239" y="95" w="26" h="45" pX="0.576923" pY="0.866667"/>
+        <sprite n="aldeano_walk_fish/063_mVillager_walk_fish.bmp" x="267" y="95" w="26" h="43" pX="0.576923" pY="0.930233"/>
+        <sprite n="aldeano_walk_fish/064_mVillager_walk_fish.bmp" x="295" y="95" w="26" h="43" pX="0.576923" pY="0.930233"/>
+        <sprite n="aldeano_walk_fish/065_mVillager_walk_fish.bmp" x="323" y="95" w="26" h="44" pX="0.576923" pY="0.909091"/>
+        <sprite n="aldeano_walk_fish/066_mVillager_walk_fish.bmp" x="351" y="95" w="26" h="45" pX="0.576923" pY="0.888889"/>
+        <sprite n="aldeano_walk_fish/067_mVillager_walk_fish.bmp" x="379" y="95" w="26" h="45" pX="0.576923" pY="0.866667"/>
+        <sprite n="aldeano_walk_fish/068_mVillager_walk_fish.bmp" x="407" y="95" w="25" h="46" pX="0.6" pY="0.847826"/>
+        <sprite n="aldeano_walk_fish/069_mVillager_walk_fish.bmp" x="434" y="95" w="25" h="46" pX="0.56" pY="0.847826"/>
+        <sprite n="aldeano_walk_fish/070_mVillager_walk_fish.bmp" x="461" y="95" w="25" h="46" pX="0.56" pY="0.869565"/>
+        <sprite n="aldeano_walk_fish/071_mVillager_walk_fish.bmp" x="488" y="95" w="25" h="45" pX="0.56" pY="0.888889"/>
+        <sprite n="aldeano_walk_fish/072_mVillager_walk_fish.bmp" x="515" y="95" w="25" h="45" pX="0.56" pY="0.888889"/>
+        <sprite n="aldeano_walk_fish/073_mVillager_walk_fish.bmp" x="542" y="95" w="25" h="45" pX="0.56" pY="0.888889"/>
+        <sprite n="aldeano_walk_fish/074_mVillager_walk_fish.bmp" x="569" y="95" w="26" h="45" pX="0.576923" pY="0.866667"/>
+      </direction>
+    </action>
+
+
+    <!--WalkGold Action-->
+    <action enum ="walk_gold" speed="200">
+      <direction enum="south">
+        <sprite n="aldeano_walk_gold/000_mVillager_walk_gold.bmp" x="597" y="95" w="19" h="45" pX="0.578947" pY="0.822222"/>
+        <sprite n="aldeano_walk_gold/001_mVillager_walk_gold.bmp" x="618" y="95" w="19" h="43" pX="0.578947" pY="0.860465"/>
+        <sprite n="aldeano_walk_gold/002_mVillager_walk_gold.bmp" x="639" y="95" w="19" h="43" pX="0.578947" pY="0.883721"/>
+        <sprite n="aldeano_walk_gold/003_mVillager_walk_gold.bmp" x="660" y="95" w="18" h="43" pX="0.555556" pY="0.906977"/>
+        <sprite n="aldeano_walk_gold/004_mVillager_walk_gold.bmp" x="680" y="95" w="19" h="43" pX="0.526316" pY="0.906977"/>
+        <sprite n="aldeano_walk_gold/005_mVillager_walk_gold.bmp" x="701" y="95" w="19" h="43" pX="0.526316" pY="0.883721"/>
+        <sprite n="aldeano_walk_gold/006_mVillager_walk_gold.bmp" x="1" y="143" w="19" h="44" pX="0.526316" pY="0.840909"/>
+        <sprite n="aldeano_walk_gold/007_mVillager_walk_gold.bmp" x="22" y="143" w="19" h="45" pX="0.526316" pY="0.822222"/>
+        <sprite n="aldeano_walk_gold/008_mVillager_walk_gold.bmp" x="43" y="143" w="19" h="45" pX="0.526316" pY="0.822222"/>
+        <sprite n="aldeano_walk_gold/009_mVillager_walk_gold.bmp" x="64" y="143" w="19" h="45" pX="0.526316" pY="0.844444"/>
+        <sprite n="aldeano_walk_gold/010_mVillager_walk_gold.bmp" x="85" y="143" w="19" h="45" pX="0.526316" pY="0.866667"/>
+        <sprite n="aldeano_walk_gold/011_mVillager_walk_gold.bmp" x="106" y="143" w="19" h="44" pX="0.526316" pY="0.886364"/>
+        <sprite n="aldeano_walk_gold/012_mVillager_walk_gold.bmp" x="127" y="143" w="19" h="43" pX="0.578947" pY="0.906977"/>
+        <sprite n="aldeano_walk_gold/013_mVillager_walk_gold.bmp" x="148" y="143" w="19" h="43" pX="0.578947" pY="0.883721"/>
+        <sprite n="aldeano_walk_gold/014_mVillager_walk_gold.bmp" x="169" y="143" w="19" h="44" pX="0.578947" pY="0.840909"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="aldeano_walk_gold/015_mVillager_walk_gold.bmp" x="190" y="143" w="25" h="40" pX="0.52" pY="0.875"/>
+        <sprite n="aldeano_walk_gold/016_mVillager_walk_gold.bmp" x="217" y="143" w="23" h="40" pX="0.478261" pY="0.9"/>
+        <sprite n="aldeano_walk_gold/017_mVillager_walk_gold.bmp" x="242" y="143" w="23" h="41" pX="0.478261" pY="0.902439"/>
+        <sprite n="aldeano_walk_gold/018_mVillager_walk_gold.bmp" x="267" y="143" w="24" h="42" pX="0.5" pY="0.904762"/>
+        <sprite n="aldeano_walk_gold/019_mVillager_walk_gold.bmp" x="293" y="143" w="23" h="43" pX="0.478261" pY="0.883721"/>
+        <sprite n="aldeano_walk_gold/020_mVillager_walk_gold.bmp" x="318" y="143" w="22" h="42" pX="0.454545" pY="0.880952"/>
+        <sprite n="aldeano_walk_gold/021_mVillager_walk_gold.bmp" x="342" y="143" w="23" h="43" pX="0.434783" pY="0.837209"/>
+        <sprite n="aldeano_walk_gold/022_mVillager_walk_gold.bmp" x="367" y="143" w="22" h="43" pX="0.409091" pY="0.813953"/>
+        <sprite n="aldeano_walk_gold/023_mVillager_walk_gold.bmp" x="391" y="143" w="23" h="43" pX="0.434783" pY="0.813953"/>
+        <sprite n="aldeano_walk_gold/024_mVillager_walk_gold.bmp" x="416" y="143" w="23" h="43" pX="0.434783" pY="0.837209"/>
+        <sprite n="aldeano_walk_gold/025_mVillager_walk_gold.bmp" x="441" y="143" w="23" h="43" pX="0.478261" pY="0.860465"/>
+        <sprite n="aldeano_walk_gold/026_mVillager_walk_gold.bmp" x="466" y="143" w="24" h="43" pX="0.5" pY="0.883721"/>
+        <sprite n="aldeano_walk_gold/027_mVillager_walk_gold.bmp" x="492" y="143" w="24" h="42" pX="0.5" pY="0.880952"/>
+        <sprite n="aldeano_walk_gold/028_mVillager_walk_gold.bmp" x="518" y="143" w="23" h="41" pX="0.478261" pY="0.902439"/>
+        <sprite n="aldeano_walk_gold/029_mVillager_walk_gold.bmp" x="543" y="143" w="24" h="40" pX="0.5" pY="0.9"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="aldeano_walk_gold/030_mVillager_walk_gold.bmp" x="569" y="143" w="29" h="36" pX="0.448276" pY="0.861111"/>
+        <sprite n="aldeano_walk_gold/031_mVillager_walk_gold.bmp" x="600" y="143" w="25" h="37" pX="0.4" pY="0.891892"/>
+        <sprite n="aldeano_walk_gold/032_mVillager_walk_gold.bmp" x="627" y="143" w="24" h="38" pX="0.458333" pY="0.894737"/>
+        <sprite n="aldeano_walk_gold/033_mVillager_walk_gold.bmp" x="653" y="143" w="25" h="39" pX="0.48" pY="0.897436"/>
+        <sprite n="aldeano_walk_gold/034_mVillager_walk_gold.bmp" x="680" y="143" w="25" h="40" pX="0.48" pY="0.875"/>
+        <sprite n="aldeano_walk_gold/035_mVillager_walk_gold.bmp" x="1" y="190" w="24" h="38" pX="0.416667" pY="0.868421"/>
+        <sprite n="aldeano_walk_gold/036_mVillager_walk_gold.bmp" x="27" y="190" w="28" h="36" pX="0.428571" pY="0.888889"/>
+        <sprite n="aldeano_walk_gold/037_mVillager_walk_gold.bmp" x="57" y="190" w="30" h="36" pX="0.433333" pY="0.861111"/>
+        <sprite n="aldeano_walk_gold/038_mVillager_walk_gold.bmp" x="89" y="190" w="29" h="37" pX="0.448276" pY="0.864865"/>
+        <sprite n="aldeano_walk_gold/039_mVillager_walk_gold.bmp" x="120" y="190" w="28" h="38" pX="0.428571" pY="0.868421"/>
+        <sprite n="aldeano_walk_gold/040_mVillager_walk_gold.bmp" x="150" y="190" w="24" h="38" pX="0.416667" pY="0.894737"/>
+        <sprite n="aldeano_walk_gold/041_mVillager_walk_gold.bmp" x="176" y="190" w="24" h="39" pX="0.416667" pY="0.871795"/>
+        <sprite n="aldeano_walk_gold/042_mVillager_walk_gold.bmp" x="202" y="190" w="24" h="39" pX="0.416667" pY="0.871795"/>
+        <sprite n="aldeano_walk_gold/043_mVillager_walk_gold.bmp" x="228" y="190" w="26" h="38" pX="0.384615" pY="0.868421"/>
+        <sprite n="aldeano_walk_gold/044_mVillager_walk_gold.bmp" x="256" y="190" w="28" h="37" pX="0.428571" pY="0.864865"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="aldeano_walk_gold/045_mVillager_walk_gold.bmp" x="286" y="190" w="22" h="37" pX="0.409091" pY="0.837838"/>
+        <sprite n="aldeano_walk_gold/046_mVillager_walk_gold.bmp" x="310" y="190" w="22" h="37" pX="0.454545" pY="0.864865"/>
+        <sprite n="aldeano_walk_gold/047_mVillager_walk_gold.bmp" x="334" y="190" w="23" h="38" pX="0.478261" pY="0.868421"/>
+        <sprite n="aldeano_walk_gold/048_mVillager_walk_gold.bmp" x="359" y="190" w="23" h="38" pX="0.521739" pY="0.868421"/>
+        <sprite n="aldeano_walk_gold/049_mVillager_walk_gold.bmp" x="384" y="190" w="22" h="38" pX="0.5" pY="0.868421"/>
+        <sprite n="aldeano_walk_gold/050_mVillager_walk_gold.bmp" x="408" y="190" w="23" h="38" pX="0.478261" pY="0.842105"/>
+        <sprite n="aldeano_walk_gold/051_mVillager_walk_gold.bmp" x="433" y="190" w="23" h="37" pX="0.478261" pY="0.837838"/>
+        <sprite n="aldeano_walk_gold/052_mVillager_walk_gold.bmp" x="458" y="190" w="26" h="37" pX="0.5" pY="0.837838"/>
+        <sprite n="aldeano_walk_gold/053_mVillager_walk_gold.bmp" x="486" y="190" w="26" h="38" pX="0.5" pY="0.842105"/>
+        <sprite n="aldeano_walk_gold/054_mVillager_walk_gold.bmp" x="514" y="190" w="24" h="39" pX="0.5" pY="0.846154"/>
+        <sprite n="aldeano_walk_gold/055_mVillager_walk_gold.bmp" x="540" y="190" w="23" h="40" pX="0.478261" pY="0.85"/>
+        <sprite n="aldeano_walk_gold/056_mVillager_walk_gold.bmp" x="565" y="190" w="23" h="41" pX="0.478261" pY="0.853659"/>
+        <sprite n="aldeano_walk_gold/057_mVillager_walk_gold.bmp" x="590" y="190" w="22" h="40" pX="0.454545" pY="0.85"/>
+        <sprite n="aldeano_walk_gold/058_mVillager_walk_gold.bmp" x="614" y="190" w="22" h="39" pX="0.409091" pY="0.846154"/>
+        <sprite n="aldeano_walk_gold/059_mVillager_walk_gold.bmp" x="638" y="190" w="22" h="37" pX="0.409091" pY="0.837838"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="aldeano_walk_gold/060_mVillager_walk_gold.bmp" x="662" y="190" w="19" h="39" pX="0.526316" pY="0.794872"/>
+        <sprite n="aldeano_walk_gold/061_mVillager_walk_gold.bmp" x="683" y="190" w="19" h="39" pX="0.526316" pY="0.820513"/>
+        <sprite n="aldeano_walk_gold/062_mVillager_walk_gold.bmp" x="1" y="233" w="19" h="39" pX="0.526316" pY="0.846154"/>
+        <sprite n="aldeano_walk_gold/063_mVillager_walk_gold.bmp" x="22" y="233" w="19" h="40" pX="0.578947" pY="0.85"/>
+        <sprite n="aldeano_walk_gold/064_mVillager_walk_gold.bmp" x="43" y="233" w="19" h="40" pX="0.578947" pY="0.85"/>
+        <sprite n="aldeano_walk_gold/065_mVillager_walk_gold.bmp" x="64" y="233" w="18" h="39" pX="0.555556" pY="0.846154"/>
+        <sprite n="aldeano_walk_gold/066_mVillager_walk_gold.bmp" x="84" y="233" w="19" h="40" pX="0.526316" pY="0.8"/>
+        <sprite n="aldeano_walk_gold/067_mVillager_walk_gold.bmp" x="105" y="233" w="19" h="39" pX="0.526316" pY="0.794872"/>
+        <sprite n="aldeano_walk_gold/068_mVillager_walk_gold.bmp" x="126" y="233" w="18" h="40" pX="0.555556" pY="0.8"/>
+        <sprite n="aldeano_walk_gold/069_mVillager_walk_gold.bmp" x="146" y="233" w="18" h="41" pX="0.555556" pY="0.804878"/>
+        <sprite n="aldeano_walk_gold/070_mVillager_walk_gold.bmp" x="166" y="233" w="19" h="41" pX="0.578947" pY="0.829268"/>
+        <sprite n="aldeano_walk_gold/071_mVillager_walk_gold.bmp" x="187" y="233" w="20" h="41" pX="0.55" pY="0.853659"/>
+        <sprite n="aldeano_walk_gold/072_mVillager_walk_gold.bmp" x="209" y="233" w="19" h="41" pX="0.526316" pY="0.829268"/>
+        <sprite n="aldeano_walk_gold/073_mVillager_walk_gold.bmp" x="230" y="233" w="19" h="41" pX="0.526316" pY="0.804878"/>
+        <sprite n="aldeano_walk_gold/074_mVillager_walk_gold.bmp" x="251" y="233" w="19" h="39" pX="0.526316" pY="0.794872"/>
+      </direction>
+    </action>
+
+
+
+    <!--WAlkMeat Action-->
+    <action enum ="walk_meat" speed="200">
+      <direction enum="south">
+        <sprite n="aldeano_walk_meat/000_mVillager_walk_meat.bmp" x="272" y="233" w="32" h="49" pX="0.4375" pY="0.877551"/>
+        <sprite n="aldeano_walk_meat/001_mVillager_walk_meat.bmp" x="306" y="233" w="32" h="48" pX="0.4375" pY="0.875"/>
+        <sprite n="aldeano_walk_meat/002_mVillager_walk_meat.bmp" x="340" y="233" w="34" h="47" pX="0.441176" pY="0.87234"/>
+        <sprite n="aldeano_walk_meat/003_mVillager_walk_meat.bmp" x="376" y="233" w="34" h="46" pX="0.470588" pY="0.891304"/>
+        <sprite n="aldeano_walk_meat/004_mVillager_walk_meat.bmp" x="412" y="233" w="33" h="47" pX="0.454545" pY="0.893617"/>
+        <sprite n="aldeano_walk_meat/005_mVillager_walk_meat.bmp" x="447" y="233" w="32" h="47" pX="0.46875" pY="0.893617"/>
+        <sprite n="aldeano_walk_meat/006_mVillager_walk_meat.bmp" x="481" y="233" w="29" h="47" pX="0.448276" pY="0.893617"/>
+        <sprite n="aldeano_walk_meat/007_mVillager_walk_meat.bmp" x="512" y="233" w="28" h="47" pX="0.464286" pY="0.893617"/>
+        <sprite n="aldeano_walk_meat/008_mVillager_walk_meat.bmp" x="542" y="233" w="28" h="48" pX="0.464286" pY="0.875"/>
+        <sprite n="aldeano_walk_meat/009_mVillager_walk_meat.bmp" x="572" y="233" w="28" h="48" pX="0.464286" pY="0.875"/>
+        <sprite n="aldeano_walk_meat/010_mVillager_walk_meat.bmp" x="602" y="233" w="26" h="49" pX="0.423077" pY="0.897959"/>
+        <sprite n="aldeano_walk_meat/011_mVillager_walk_meat.bmp" x="630" y="233" w="29" h="50" pX="0.448276" pY="0.9"/>
+        <sprite n="aldeano_walk_meat/012_mVillager_walk_meat.bmp" x="661" y="233" w="29" h="49" pX="0.448276" pY="0.897959"/>
+        <sprite n="aldeano_walk_meat/013_mVillager_walk_meat.bmp" x="692" y="233" w="30" h="49" pX="0.433333" pY="0.897959"/>
+        <sprite n="aldeano_walk_meat/014_mVillager_walk_meat.bmp" x="1" y="285" w="32" h="48" pX="0.4375" pY="0.895833"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="aldeano_walk_meat/015_mVillager_walk_meat.bmp" x="35" y="285" w="25" h="51" pX="0.4" pY="0.901961"/>
+        <sprite n="aldeano_walk_meat/016_mVillager_walk_meat.bmp" x="62" y="285" w="26" h="50" pX="0.384615" pY="0.9"/>
+        <sprite n="aldeano_walk_meat/017_mVillager_walk_meat.bmp" x="90" y="285" w="28" h="50" pX="0.392857" pY="0.9"/>
+        <sprite n="aldeano_walk_meat/018_mVillager_walk_meat.bmp" x="120" y="285" w="28" h="51" pX="0.392857" pY="0.901961"/>
+        <sprite n="aldeano_walk_meat/019_mVillager_walk_meat.bmp" x="150" y="285" w="28" h="51" pX="0.392857" pY="0.901961"/>
+        <sprite n="aldeano_walk_meat/020_mVillager_walk_meat.bmp" x="180" y="285" w="31" h="51" pX="0.419355" pY="0.901961"/>
+        <sprite n="aldeano_walk_meat/021_mVillager_walk_meat.bmp" x="213" y="285" w="29" h="50" pX="0.413793" pY="0.9"/>
+        <sprite n="aldeano_walk_meat/022_mVillager_walk_meat.bmp" x="244" y="285" w="28" h="50" pX="0.392857" pY="0.88"/>
+        <sprite n="aldeano_walk_meat/023_mVillager_walk_meat.bmp" x="274" y="285" w="28" h="50" pX="0.392857" pY="0.88"/>
+        <sprite n="aldeano_walk_meat/024_mVillager_walk_meat.bmp" x="304" y="285" w="27" h="50" pX="0.407407" pY="0.88"/>
+        <sprite n="aldeano_walk_meat/025_mVillager_walk_meat.bmp" x="333" y="285" w="26" h="51" pX="0.384615" pY="0.882353"/>
+        <sprite n="aldeano_walk_meat/026_mVillager_walk_meat.bmp" x="361" y="285" w="25" h="52" pX="0.4" pY="0.884615"/>
+        <sprite n="aldeano_walk_meat/027_mVillager_walk_meat.bmp" x="388" y="285" w="23" h="52" pX="0.391304" pY="0.884615"/>
+        <sprite n="aldeano_walk_meat/028_mVillager_walk_meat.bmp" x="413" y="285" w="23" h="52" pX="0.391304" pY="0.884615"/>
+        <sprite n="aldeano_walk_meat/029_mVillager_walk_meat.bmp" x="438" y="285" w="24" h="51" pX="0.375" pY="0.901961"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="aldeano_walk_meat/030_mVillager_walk_meat.bmp" x="464" y="285" w="29" h="52" pX="0.413793" pY="0.884615"/>
+        <sprite n="aldeano_walk_meat/031_mVillager_walk_meat.bmp" x="495" y="285" w="29" h="51" pX="0.413793" pY="0.901961"/>
+        <sprite n="aldeano_walk_meat/032_mVillager_walk_meat.bmp" x="526" y="285" w="27" h="51" pX="0.444444" pY="0.901961"/>
+        <sprite n="aldeano_walk_meat/033_mVillager_walk_meat.bmp" x="555" y="285" w="24" h="53" pX="0.458333" pY="0.886792"/>
+        <sprite n="aldeano_walk_meat/034_mVillager_walk_meat.bmp" x="581" y="285" w="22" h="52" pX="0.5" pY="0.903846"/>
+        <sprite n="aldeano_walk_meat/035_mVillager_walk_meat.bmp" x="605" y="285" w="20" h="52" pX="0.55" pY="0.903846"/>
+        <sprite n="aldeano_walk_meat/036_mVillager_walk_meat.bmp" x="627" y="285" w="21" h="53" pX="0.52381" pY="0.886792"/>
+        <sprite n="aldeano_walk_meat/037_mVillager_walk_meat.bmp" x="650" y="285" w="23" h="53" pX="0.478261" pY="0.867925"/>
+        <sprite n="aldeano_walk_meat/038_mVillager_walk_meat.bmp" x="675" y="285" w="27" h="53" pX="0.407407" pY="0.867925"/>
+        <sprite n="aldeano_walk_meat/039_mVillager_walk_meat.bmp" x="1" y="340" w="27" h="53" pX="0.407407" pY="0.849057"/>
+        <sprite n="aldeano_walk_meat/040_mVillager_walk_meat.bmp" x="30" y="340" w="24" h="54" pX="0.5" pY="0.851852"/>
+        <sprite n="aldeano_walk_meat/041_mVillager_walk_meat.bmp" x="56" y="340" w="26" h="53" pX="0.5" pY="0.867925"/>
+        <sprite n="aldeano_walk_meat/042_mVillager_walk_meat.bmp" x="84" y="340" w="27" h="54" pX="0.481481" pY="0.87037"/>
+        <sprite n="aldeano_walk_meat/043_mVillager_walk_meat.bmp" x="113" y="340" w="29" h="53" pX="0.448276" pY="0.886792"/>
+        <sprite n="aldeano_walk_meat/044_mVillager_walk_meat.bmp" x="144" y="340" w="29" h="52" pX="0.413793" pY="0.884615"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="aldeano_walk_meat/045_mVillager_walk_meat.bmp" x="175" y="340" w="27" h="51" pX="0.518519" pY="0.862745"/>
+        <sprite n="aldeano_walk_meat/046_mVillager_walk_meat.bmp" x="204" y="340" w="26" h="51" pX="0.5" pY="0.843137"/>
+        <sprite n="aldeano_walk_meat/047_mVillager_walk_meat.bmp" x="232" y="340" w="25" h="52" pX="0.48" pY="0.846154"/>
+        <sprite n="aldeano_walk_meat/048_mVillager_walk_meat.bmp" x="259" y="340" w="24" h="52" pX="0.458333" pY="0.865385"/>
+        <sprite n="aldeano_walk_meat/049_mVillager_walk_meat.bmp" x="285" y="340" w="24" h="54" pX="0.5" pY="0.851852"/>
+        <sprite n="aldeano_walk_meat/050_mVillager_walk_meat.bmp" x="311" y="340" w="24" h="52" pX="0.541667" pY="0.884615"/>
+        <sprite n="aldeano_walk_meat/051_mVillager_walk_meat.bmp" x="337" y="340" w="22" h="54" pX="0.590909" pY="0.851852"/>
+        <sprite n="aldeano_walk_meat/052_mVillager_walk_meat.bmp" x="361" y="340" w="23" h="52" pX="0.608696" pY="0.884615"/>
+        <sprite n="aldeano_walk_meat/053_mVillager_walk_meat.bmp" x="386" y="340" w="26" h="51" pX="0.538462" pY="0.882353"/>
+        <sprite n="aldeano_walk_meat/054_mVillager_walk_meat.bmp" x="414" y="340" w="27" h="53" pX="0.555556" pY="0.849057"/>
+        <sprite n="aldeano_walk_meat/055_mVillager_walk_meat.bmp" x="443" y="340" w="28" h="52" pX="0.571429" pY="0.884615"/>
+        <sprite n="aldeano_walk_meat/056_mVillager_walk_meat.bmp" x="473" y="340" w="29" h="53" pX="0.551724" pY="0.867925"/>
+        <sprite n="aldeano_walk_meat/057_mVillager_walk_meat.bmp" x="504" y="340" w="29" h="52" pX="0.517241" pY="0.884615"/>
+        <sprite n="aldeano_walk_meat/058_mVillager_walk_meat.bmp" x="535" y="340" w="27" h="51" pX="0.518519" pY="0.882353"/>
+        <sprite n="aldeano_walk_meat/059_mVillager_walk_meat.bmp" x="564" y="340" w="26" h="50" pX="0.5" pY="0.88"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="aldeano_walk_meat/060_mVillager_walk_meat.bmp" x="592" y="340" w="30" h="49" pX="0.6" pY="0.816327"/>
+        <sprite n="aldeano_walk_meat/061_mVillager_walk_meat.bmp" x="624" y="340" w="31" h="48" pX="0.580645" pY="0.8125"/>
+        <sprite n="aldeano_walk_meat/062_mVillager_walk_meat.bmp" x="657" y="340" w="33" h="47" pX="0.575758" pY="0.829787"/>
+        <sprite n="aldeano_walk_meat/063_mVillager_walk_meat.bmp" x="1" y="396" w="33" h="47" pX="0.545455" pY="0.851064"/>
+        <sprite n="aldeano_walk_meat/064_mVillager_walk_meat.bmp" x="36" y="396" w="32" h="47" pX="0.5625" pY="0.87234"/>
+        <sprite n="aldeano_walk_meat/065_mVillager_walk_meat.bmp" x="70" y="396" w="30" h="47" pX="0.566667" pY="0.893617"/>
+        <sprite n="aldeano_walk_meat/066_mVillager_walk_meat.bmp" x="102" y="396" w="27" h="49" pX="0.592593" pY="0.877551"/>
+        <sprite n="aldeano_walk_meat/067_mVillager_walk_meat.bmp" x="131" y="396" w="28" h="50" pX="0.607143" pY="0.86"/>
+        <sprite n="aldeano_walk_meat/068_mVillager_walk_meat.bmp" x="161" y="396" w="28" h="51" pX="0.642857" pY="0.843137"/>
+        <sprite n="aldeano_walk_meat/069_mVillager_walk_meat.bmp" x="191" y="396" w="27" h="51" pX="0.592593" pY="0.843137"/>
+        <sprite n="aldeano_walk_meat/070_mVillager_walk_meat.bmp" x="220" y="396" w="29" h="50" pX="0.62069" pY="0.88"/>
+        <sprite n="aldeano_walk_meat/071_mVillager_walk_meat.bmp" x="251" y="396" w="28" h="50" pX="0.607143" pY="0.88"/>
+        <sprite n="aldeano_walk_meat/072_mVillager_walk_meat.bmp" x="281" y="396" w="27" h="52" pX="0.592593" pY="0.846154"/>
+        <sprite n="aldeano_walk_meat/073_mVillager_walk_meat.bmp" x="310" y="396" w="27" h="51" pX="0.592593" pY="0.843137"/>
+        <sprite n="aldeano_walk_meat/074_mVillager_walk_meat.bmp" x="339" y="396" w="29" h="51" pX="0.62069" pY="0.823529"/>
+      </direction>
+    </action>
+
+
+    <!--WalkStone Action-->
+    <action enum ="walk_stone" speed="200">
+      <direction enum="south">
+        <sprite n="aldeano_walk_stone/000_mVillager_walk_stone.bmp" x="370" y="396" w="19" h="45" pX="0.578947" pY="0.822222"/>
+        <sprite n="aldeano_walk_stone/001_mVillager_walk_stone.bmp" x="391" y="396" w="19" h="43" pX="0.578947" pY="0.860465"/>
+        <sprite n="aldeano_walk_stone/002_mVillager_walk_stone.bmp" x="412" y="396" w="19" h="43" pX="0.578947" pY="0.883721"/>
+        <sprite n="aldeano_walk_stone/003_mVillager_walk_stone.bmp" x="433" y="396" w="18" h="43" pX="0.555556" pY="0.906977"/>
+        <sprite n="aldeano_walk_stone/004_mVillager_walk_stone.bmp" x="453" y="396" w="19" h="43" pX="0.526316" pY="0.906977"/>
+        <sprite n="aldeano_walk_stone/005_mVillager_walk_stone.bmp" x="474" y="396" w="19" h="43" pX="0.526316" pY="0.883721"/>
+        <sprite n="aldeano_walk_stone/006_mVillager_walk_stone.bmp" x="495" y="396" w="19" h="44" pX="0.526316" pY="0.840909"/>
+        <sprite n="aldeano_walk_stone/007_mVillager_walk_stone.bmp" x="516" y="396" w="19" h="45" pX="0.526316" pY="0.822222"/>
+        <sprite n="aldeano_walk_stone/008_mVillager_walk_stone.bmp" x="537" y="396" w="19" h="45" pX="0.526316" pY="0.822222"/>
+        <sprite n="aldeano_walk_stone/009_mVillager_walk_stone.bmp" x="558" y="396" w="19" h="45" pX="0.526316" pY="0.844444"/>
+        <sprite n="aldeano_walk_stone/010_mVillager_walk_stone.bmp" x="579" y="396" w="19" h="45" pX="0.526316" pY="0.866667"/>
+        <sprite n="aldeano_walk_stone/011_mVillager_walk_stone.bmp" x="600" y="396" w="19" h="44" pX="0.526316" pY="0.886364"/>
+        <sprite n="aldeano_walk_stone/012_mVillager_walk_stone.bmp" x="621" y="396" w="19" h="43" pX="0.578947" pY="0.906977"/>
+        <sprite n="aldeano_walk_stone/013_mVillager_walk_stone.bmp" x="642" y="396" w="19" h="43" pX="0.578947" pY="0.883721"/>
+        <sprite n="aldeano_walk_stone/014_mVillager_walk_stone.bmp" x="663" y="396" w="19" h="44" pX="0.578947" pY="0.840909"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="aldeano_walk_stone/015_mVillager_walk_stone.bmp" x="684" y="396" w="25" h="40" pX="0.52" pY="0.875"/>
+        <sprite n="aldeano_walk_stone/016_mVillager_walk_stone.bmp" x="1" y="450" w="23" h="40" pX="0.478261" pY="0.9"/>
+        <sprite n="aldeano_walk_stone/017_mVillager_walk_stone.bmp" x="26" y="450" w="23" h="41" pX="0.478261" pY="0.902439"/>
+        <sprite n="aldeano_walk_stone/018_mVillager_walk_stone.bmp" x="51" y="450" w="24" h="42" pX="0.5" pY="0.904762"/>
+        <sprite n="aldeano_walk_stone/019_mVillager_walk_stone.bmp" x="77" y="450" w="23" h="43" pX="0.478261" pY="0.883721"/>
+        <sprite n="aldeano_walk_stone/020_mVillager_walk_stone.bmp" x="102" y="450" w="22" h="42" pX="0.454545" pY="0.880952"/>
+        <sprite n="aldeano_walk_stone/021_mVillager_walk_stone.bmp" x="126" y="450" w="23" h="43" pX="0.434783" pY="0.837209"/>
+        <sprite n="aldeano_walk_stone/022_mVillager_walk_stone.bmp" x="151" y="450" w="22" h="43" pX="0.409091" pY="0.813953"/>
+        <sprite n="aldeano_walk_stone/023_mVillager_walk_stone.bmp" x="175" y="450" w="23" h="43" pX="0.434783" pY="0.813953"/>
+        <sprite n="aldeano_walk_stone/024_mVillager_walk_stone.bmp" x="200" y="450" w="23" h="43" pX="0.434783" pY="0.837209"/>
+        <sprite n="aldeano_walk_stone/025_mVillager_walk_stone.bmp" x="225" y="450" w="23" h="43" pX="0.478261" pY="0.860465"/>
+        <sprite n="aldeano_walk_stone/026_mVillager_walk_stone.bmp" x="250" y="450" w="23" h="44" pX="0.478261" pY="0.863636"/>
+        <sprite n="aldeano_walk_stone/027_mVillager_walk_stone.bmp" x="275" y="450" w="23" h="42" pX="0.478261" pY="0.880952"/>
+        <sprite n="aldeano_walk_stone/028_mVillager_walk_stone.bmp" x="300" y="450" w="23" h="41" pX="0.478261" pY="0.902439"/>
+        <sprite n="aldeano_walk_stone/029_mVillager_walk_stone.bmp" x="325" y="450" w="24" h="40" pX="0.5" pY="0.9"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="aldeano_walk_stone/030_mVillager_walk_stone.bmp" x="351" y="450" w="29" h="37" pX="0.448276" pY="0.864865"/>
+        <sprite n="aldeano_walk_stone/031_mVillager_walk_stone.bmp" x="382" y="450" w="25" h="37" pX="0.4" pY="0.891892"/>
+        <sprite n="aldeano_walk_stone/032_mVillager_walk_stone.bmp" x="409" y="450" w="23" h="38" pX="0.434783" pY="0.894737"/>
+        <sprite n="aldeano_walk_stone/033_mVillager_walk_stone.bmp" x="434" y="450" w="24" h="39" pX="0.458333" pY="0.897436"/>
+        <sprite n="aldeano_walk_stone/034_mVillager_walk_stone.bmp" x="460" y="450" w="24" h="40" pX="0.458333" pY="0.875"/>
+        <sprite n="aldeano_walk_stone/035_mVillager_walk_stone.bmp" x="486" y="450" w="24" h="38" pX="0.416667" pY="0.868421"/>
+        <sprite n="aldeano_walk_stone/036_mVillager_walk_stone.bmp" x="512" y="450" w="28" h="36" pX="0.428571" pY="0.888889"/>
+        <sprite n="aldeano_walk_stone/037_mVillager_walk_stone.bmp" x="542" y="450" w="30" h="36" pX="0.433333" pY="0.861111"/>
+        <sprite n="aldeano_walk_stone/038_mVillager_walk_stone.bmp" x="574" y="450" w="29" h="36" pX="0.448276" pY="0.861111"/>
+        <sprite n="aldeano_walk_stone/039_mVillager_walk_stone.bmp" x="605" y="450" w="28" h="37" pX="0.428571" pY="0.864865"/>
+        <sprite n="aldeano_walk_stone/040_mVillager_walk_stone.bmp" x="635" y="450" w="24" h="38" pX="0.416667" pY="0.894737"/>
+        <sprite n="aldeano_walk_stone/041_mVillager_walk_stone.bmp" x="661" y="450" w="24" h="39" pX="0.416667" pY="0.871795"/>
+        <sprite n="aldeano_walk_stone/042_mVillager_walk_stone.bmp" x="687" y="450" w="24" h="39" pX="0.416667" pY="0.871795"/>
+        <sprite n="aldeano_walk_stone/043_mVillager_walk_stone.bmp" x="1" y="496" w="26" h="38" pX="0.384615" pY="0.868421"/>
+        <sprite n="aldeano_walk_stone/044_mVillager_walk_stone.bmp" x="29" y="496" w="28" h="37" pX="0.428571" pY="0.864865"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="aldeano_walk_stone/045_mVillager_walk_stone.bmp" x="59" y="496" w="22" h="36" pX="0.409091" pY="0.833333"/>
+        <sprite n="aldeano_walk_stone/046_mVillager_walk_stone.bmp" x="83" y="496" w="22" h="36" pX="0.409091" pY="0.861111"/>
+        <sprite n="aldeano_walk_stone/047_mVillager_walk_stone.bmp" x="107" y="496" w="22" h="37" pX="0.454545" pY="0.864865"/>
+        <sprite n="aldeano_walk_stone/048_mVillager_walk_stone.bmp" x="131" y="496" w="22" h="37" pX="0.5" pY="0.864865"/>
+        <sprite n="aldeano_walk_stone/049_mVillager_walk_stone.bmp" x="155" y="496" w="22" h="37" pX="0.5" pY="0.864865"/>
+        <sprite n="aldeano_walk_stone/050_mVillager_walk_stone.bmp" x="179" y="496" w="22" h="38" pX="0.454545" pY="0.842105"/>
+        <sprite n="aldeano_walk_stone/051_mVillager_walk_stone.bmp" x="203" y="496" w="23" h="37" pX="0.478261" pY="0.837838"/>
+        <sprite n="aldeano_walk_stone/052_mVillager_walk_stone.bmp" x="228" y="496" w="26" h="36" pX="0.5" pY="0.833333"/>
+        <sprite n="aldeano_walk_stone/053_mVillager_walk_stone.bmp" x="256" y="496" w="26" h="37" pX="0.5" pY="0.837838"/>
+        <sprite n="aldeano_walk_stone/054_mVillager_walk_stone.bmp" x="284" y="496" w="24" h="38" pX="0.5" pY="0.842105"/>
+        <sprite n="aldeano_walk_stone/055_mVillager_walk_stone.bmp" x="310" y="496" w="22" h="39" pX="0.454545" pY="0.846154"/>
+        <sprite n="aldeano_walk_stone/056_mVillager_walk_stone.bmp" x="334" y="496" w="22" h="39" pX="0.454545" pY="0.846154"/>
+        <sprite n="aldeano_walk_stone/057_mVillager_walk_stone.bmp" x="358" y="496" w="21" h="39" pX="0.428571" pY="0.846154"/>
+        <sprite n="aldeano_walk_stone/058_mVillager_walk_stone.bmp" x="381" y="496" w="22" h="38" pX="0.409091" pY="0.842105"/>
+        <sprite n="aldeano_walk_stone/059_mVillager_walk_stone.bmp" x="405" y="496" w="22" h="37" pX="0.409091" pY="0.837838"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="aldeano_walk_stone/060_mVillager_walk_stone.bmp" x="429" y="496" w="19" h="38" pX="0.526316" pY="0.789474"/>
+        <sprite n="aldeano_walk_stone/061_mVillager_walk_stone.bmp" x="450" y="496" w="19" h="38" pX="0.526316" pY="0.815789"/>
+        <sprite n="aldeano_walk_stone/062_mVillager_walk_stone.bmp" x="471" y="496" w="19" h="38" pX="0.526316" pY="0.842105"/>
+        <sprite n="aldeano_walk_stone/063_mVillager_walk_stone.bmp" x="492" y="496" w="19" h="39" pX="0.578947" pY="0.846154"/>
+        <sprite n="aldeano_walk_stone/064_mVillager_walk_stone.bmp" x="513" y="496" w="19" h="39" pX="0.578947" pY="0.846154"/>
+        <sprite n="aldeano_walk_stone/065_mVillager_walk_stone.bmp" x="534" y="496" w="18" h="38" pX="0.555556" pY="0.842105"/>
+        <sprite n="aldeano_walk_stone/066_mVillager_walk_stone.bmp" x="554" y="496" w="18" h="39" pX="0.555556" pY="0.794872"/>
+        <sprite n="aldeano_walk_stone/067_mVillager_walk_stone.bmp" x="574" y="496" w="19" h="38" pX="0.526316" pY="0.789474"/>
+        <sprite n="aldeano_walk_stone/068_mVillager_walk_stone.bmp" x="595" y="496" w="18" h="39" pX="0.555556" pY="0.794872"/>
+        <sprite n="aldeano_walk_stone/069_mVillager_walk_stone.bmp" x="615" y="496" w="18" h="40" pX="0.555556" pY="0.8"/>
+        <sprite n="aldeano_walk_stone/070_mVillager_walk_stone.bmp" x="635" y="496" w="19" h="40" pX="0.578947" pY="0.825"/>
+        <sprite n="aldeano_walk_stone/071_mVillager_walk_stone.bmp" x="656" y="496" w="19" h="39" pX="0.578947" pY="0.846154"/>
+        <sprite n="aldeano_walk_stone/072_mVillager_walk_stone.bmp" x="677" y="496" w="19" h="40" pX="0.526316" pY="0.825"/>
+        <sprite n="aldeano_walk_stone/073_mVillager_walk_stone.bmp" x="698" y="496" w="19" h="40" pX="0.526316" pY="0.8"/>
+        <sprite n="aldeano_walk_stone/074_mVillager_walk_stone.bmp" x="1" y="538" w="19" h="39" pX="0.526316" pY="0.794872"/>
+      </direction>
+    </action>
+
+
+    <!--Walk Wood Action-->
+    <action enum ="walk_wood" speed="200">
+      <direction enum="south">
+        <sprite n="aldeano_walk_wood/000_mVillager_walk_wood.bmp" x="22" y="538" w="31" h="45" pX="0.548387" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/001_mVillager_walk_wood.bmp" x="55" y="538" w="30" h="43" pX="0.533333" pY="0.837209"/>
+        <sprite n="aldeano_walk_wood/002_mVillager_walk_wood.bmp" x="87" y="538" w="30" h="43" pX="0.533333" pY="0.837209"/>
+        <sprite n="aldeano_walk_wood/003_mVillager_walk_wood.bmp" x="119" y="538" w="30" h="44" pX="0.533333" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/004_mVillager_walk_wood.bmp" x="151" y="538" w="31" h="44" pX="0.548387" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/005_mVillager_walk_wood.bmp" x="184" y="538" w="30" h="44" pX="0.5" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/006_mVillager_walk_wood.bmp" x="216" y="538" w="30" h="44" pX="0.5" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/007_mVillager_walk_wood.bmp" x="248" y="538" w="29" h="45" pX="0.482759" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/008_mVillager_walk_wood.bmp" x="279" y="538" w="29" h="44" pX="0.448276" pY="0.818182"/>
+        <sprite n="aldeano_walk_wood/009_mVillager_walk_wood.bmp" x="310" y="538" w="27" h="43" pX="0.444444" pY="0.813953"/>
+        <sprite n="aldeano_walk_wood/010_mVillager_walk_wood.bmp" x="339" y="538" w="28" h="44" pX="0.464286" pY="0.818182"/>
+        <sprite n="aldeano_walk_wood/011_mVillager_walk_wood.bmp" x="369" y="538" w="30" h="45" pX="0.5" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/012_mVillager_walk_wood.bmp" x="401" y="538" w="30" h="45" pX="0.533333" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/013_mVillager_walk_wood.bmp" x="433" y="538" w="30" h="45" pX="0.533333" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/014_mVillager_walk_wood.bmp" x="465" y="538" w="30" h="44" pX="0.533333" pY="0.840909"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="aldeano_walk_wood/015_mVillager_walk_wood.bmp" x="497" y="538" w="33" h="43" pX="0.666667" pY="0.837209"/>
+        <sprite n="aldeano_walk_wood/016_mVillager_walk_wood.bmp" x="532" y="538" w="34" h="44" pX="0.647059" pY="0.818182"/>
+        <sprite n="aldeano_walk_wood/017_mVillager_walk_wood.bmp" x="568" y="538" w="32" h="44" pX="0.65625" pY="0.818182"/>
+        <sprite n="aldeano_walk_wood/018_mVillager_walk_wood.bmp" x="602" y="538" w="30" h="44" pX="0.7" pY="0.818182"/>
+        <sprite n="aldeano_walk_wood/019_mVillager_walk_wood.bmp" x="634" y="538" w="30" h="45" pX="0.7" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/020_mVillager_walk_wood.bmp" x="666" y="538" w="31" h="45" pX="0.709677" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/021_mVillager_walk_wood.bmp" x="1" y="585" w="31" h="45" pX="0.709677" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/022_mVillager_walk_wood.bmp" x="34" y="585" w="30" h="44" pX="0.7" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/023_mVillager_walk_wood.bmp" x="66" y="585" w="29" h="43" pX="0.689655" pY="0.813953"/>
+        <sprite n="aldeano_walk_wood/024_mVillager_walk_wood.bmp" x="97" y="585" w="30" h="43" pX="0.733333" pY="0.813953"/>
+        <sprite n="aldeano_walk_wood/025_mVillager_walk_wood.bmp" x="129" y="585" w="28" h="44" pX="0.75" pY="0.818182"/>
+        <sprite n="aldeano_walk_wood/026_mVillager_walk_wood.bmp" x="159" y="585" w="29" h="45" pX="0.758621" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/027_mVillager_walk_wood.bmp" x="190" y="585" w="28" h="45" pX="0.75" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/028_mVillager_walk_wood.bmp" x="220" y="585" w="31" h="45" pX="0.709677" pY="0.822222"/>
+        <sprite n="aldeano_walk_wood/029_mVillager_walk_wood.bmp" x="253" y="585" w="32" h="44" pX="0.6875" pY="0.818182"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="aldeano_walk_wood/030_mVillager_walk_wood.bmp" x="287" y="585" w="30" h="44" pX="0.6" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/031_mVillager_walk_wood.bmp" x="319" y="585" w="30" h="44" pX="0.6" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/032_mVillager_walk_wood.bmp" x="351" y="585" w="28" h="44" pX="0.607143" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/033_mVillager_walk_wood.bmp" x="381" y="585" w="26" h="45" pX="0.653846" pY="0.844444"/>
+        <sprite n="aldeano_walk_wood/034_mVillager_walk_wood.bmp" x="409" y="585" w="25" h="45" pX="0.72" pY="0.844444"/>
+        <sprite n="aldeano_walk_wood/035_mVillager_walk_wood.bmp" x="436" y="585" w="25" h="46" pX="0.72" pY="0.826087"/>
+        <sprite n="aldeano_walk_wood/036_mVillager_walk_wood.bmp" x="463" y="585" w="25" h="46" pX="0.76" pY="0.804348"/>
+        <sprite n="aldeano_walk_wood/037_mVillager_walk_wood.bmp" x="490" y="585" w="28" h="45" pX="0.714286" pY="0.8"/>
+        <sprite n="aldeano_walk_wood/038_mVillager_walk_wood.bmp" x="520" y="585" w="30" h="44" pX="0.666667" pY="0.795455"/>
+        <sprite n="aldeano_walk_wood/039_mVillager_walk_wood.bmp" x="552" y="585" w="30" h="43" pX="0.6" pY="0.860465"/>
+        <sprite n="aldeano_walk_wood/040_mVillager_walk_wood.bmp" x="584" y="585" w="27" h="45" pX="0.703704" pY="0.844444"/>
+        <sprite n="aldeano_walk_wood/041_mVillager_walk_wood.bmp" x="613" y="585" w="26" h="46" pX="0.730769" pY="0.826087"/>
+        <sprite n="aldeano_walk_wood/042_mVillager_walk_wood.bmp" x="641" y="585" w="25" h="45" pX="0.76" pY="0.844444"/>
+        <sprite n="aldeano_walk_wood/043_mVillager_walk_wood.bmp" x="668" y="585" w="27" h="45" pX="0.666667" pY="0.844444"/>
+        <sprite n="aldeano_walk_wood/044_mVillager_walk_wood.bmp" x="1" y="633" w="28" h="44" pX="0.642857" pY="0.840909"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="aldeano_walk_wood/045_mVillager_walk_wood.bmp" x="31" y="633" w="28" h="44" pX="0.642857" pY="0.863636"/>
+        <sprite n="aldeano_walk_wood/046_mVillager_walk_wood.bmp" x="61" y="633" w="27" h="44" pX="0.666667" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/047_mVillager_walk_wood.bmp" x="90" y="633" w="27" h="43" pX="0.666667" pY="0.860465"/>
+        <sprite n="aldeano_walk_wood/048_mVillager_walk_wood.bmp" x="119" y="633" w="28" h="43" pX="0.678571" pY="0.883721"/>
+        <sprite n="aldeano_walk_wood/049_mVillager_walk_wood.bmp" x="149" y="633" w="27" h="44" pX="0.666667" pY="0.886364"/>
+        <sprite n="aldeano_walk_wood/050_mVillager_walk_wood.bmp" x="178" y="633" w="27" h="44" pX="0.666667" pY="0.886364"/>
+        <sprite n="aldeano_walk_wood/051_mVillager_walk_wood.bmp" x="207" y="633" w="27" h="43" pX="0.666667" pY="0.906977"/>
+        <sprite n="aldeano_walk_wood/052_mVillager_walk_wood.bmp" x="236" y="633" w="27" h="43" pX="0.666667" pY="0.883721"/>
+        <sprite n="aldeano_walk_wood/053_mVillager_walk_wood.bmp" x="265" y="633" w="28" h="43" pX="0.642857" pY="0.883721"/>
+        <sprite n="aldeano_walk_wood/054_mVillager_walk_wood.bmp" x="295" y="633" w="29" h="41" pX="0.655172" pY="0.902439"/>
+        <sprite n="aldeano_walk_wood/055_mVillager_walk_wood.bmp" x="326" y="633" w="27" h="42" pX="0.666667" pY="0.904762"/>
+        <sprite n="aldeano_walk_wood/056_mVillager_walk_wood.bmp" x="355" y="633" w="27" h="43" pX="0.666667" pY="0.906977"/>
+        <sprite n="aldeano_walk_wood/057_mVillager_walk_wood.bmp" x="384" y="633" w="27" h="44" pX="0.666667" pY="0.886364"/>
+        <sprite n="aldeano_walk_wood/058_mVillager_walk_wood.bmp" x="413" y="633" w="27" h="44" pX="0.666667" pY="0.863636"/>
+        <sprite n="aldeano_walk_wood/059_mVillager_walk_wood.bmp" x="442" y="633" w="28" h="44" pX="0.642857" pY="0.863636"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="aldeano_walk_wood/060_mVillager_walk_wood.bmp" x="472" y="633" w="29" h="44" pX="0.586207" pY="0.840909"/>
+        <sprite n="aldeano_walk_wood/061_mVillager_walk_wood.bmp" x="503" y="633" w="26" h="43" pX="0.538462" pY="0.837209"/>
+        <sprite n="aldeano_walk_wood/062_mVillager_walk_wood.bmp" x="531" y="633" w="28" h="42" pX="0.571429" pY="0.857143"/>
+        <sprite n="aldeano_walk_wood/063_mVillager_walk_wood.bmp" x="561" y="633" w="28" h="42" pX="0.571429" pY="0.880952"/>
+        <sprite n="aldeano_walk_wood/064_mVillager_walk_wood.bmp" x="591" y="633" w="26" h="41" pX="0.576923" pY="0.902439"/>
+        <sprite n="aldeano_walk_wood/065_mVillager_walk_wood.bmp" x="619" y="633" w="29" h="40" pX="0.655172" pY="0.925"/>
+        <sprite n="aldeano_walk_wood/066_mVillager_walk_wood.bmp" x="650" y="633" w="29" h="41" pX="0.62069" pY="0.902439"/>
+        <sprite n="aldeano_walk_wood/067_mVillager_walk_wood.bmp" x="681" y="633" w="27" h="42" pX="0.62963" pY="0.880952"/>
+        <sprite n="aldeano_walk_wood/068_mVillager_walk_wood.bmp" x="1" y="679" w="27" h="43" pX="0.666667" pY="0.860465"/>
+        <sprite n="aldeano_walk_wood/069_mVillager_walk_wood.bmp" x="30" y="679" w="28" h="42" pX="0.642857" pY="0.857143"/>
+        <sprite n="aldeano_walk_wood/070_mVillager_walk_wood.bmp" x="60" y="679" w="26" h="42" pX="0.576923" pY="0.880952"/>
+        <sprite n="aldeano_walk_wood/071_mVillager_walk_wood.bmp" x="88" y="679" w="26" h="42" pX="0.576923" pY="0.880952"/>
+        <sprite n="aldeano_walk_wood/072_mVillager_walk_wood.bmp" x="116" y="679" w="26" h="41" pX="0.576923" pY="0.902439"/>
+        <sprite n="aldeano_walk_wood/073_mVillager_walk_wood.bmp" x="144" y="679" w="27" h="42" pX="0.555556" pY="0.880952"/>
+        <sprite n="aldeano_walk_wood/074_mVillager_walk_wood.bmp" x="173" y="679" w="29" h="43" pX="0.586207" pY="0.860465"/>
+      </direction>
+    </action>
+  </unit>
+</TextureAtlas>

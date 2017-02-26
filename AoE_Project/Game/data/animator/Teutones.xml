@@ -8,6 +8,8 @@
    <id xml = "villager_axe.xml" spritesheet = "villager_axe.png"/>
    <id xml = "villager_hammer.xml" spritesheet = "villager_hammer.png"/>
    <id xml = "villager_basket.xml" spritesheet = "villager_basket.png"/>
+   <id xml = "villager_bow.xml" spritesheet = "villager_bow.png"/>
+   <id xml = "villager_carry.xml" spritesheet = "villager_carry.png"/>
   </units>
   <buildings>
    <id xml = "TownCenterFeudal.xml" spritesheet = "TownCenterFeudal.png"/>

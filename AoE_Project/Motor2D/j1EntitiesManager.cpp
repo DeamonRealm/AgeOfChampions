@@ -196,6 +196,30 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 		new_unit->GenerateMark();
 		break;
 
+	case VILLAGER_BOW:
+		new_unit = new Unit("Villager");
+		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
+		new_unit->SetUnitType(UNIT_TYPE::VILLAGER_BOW);
+		new_unit->SetAction(ACTION_TYPE::IDLE);
+		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
+		new_unit->SetSelectionRect({ 0,0,30,40 });
+		App->animator->UnitPlay(new_unit);
+		new_unit->GenerateMark();
+		break;
+
+//Don't use this, it's not done and most likely it will break the code
+	case VILLAGER_CARRY:
+		new_unit = new Unit("Villager");
+		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
+		new_unit->SetUnitType(UNIT_TYPE::VILLAGER_CARRY);
+		new_unit->SetAction(ACTION_TYPE::IDLE);
+		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
+		new_unit->SetSelectionRect({ 0,0,30,40 });
+		App->animator->UnitPlay(new_unit);
+		new_unit->GenerateMark();
+		break;
+//------------------------
+
 	case MILITIA:
 		new_unit = new Unit("Militia");
 		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
