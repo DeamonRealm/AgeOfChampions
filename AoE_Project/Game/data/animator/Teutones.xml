@@ -4,6 +4,10 @@
    <id xml = "militia.xml" spritesheet = "militia.png"/>
    <id xml = "villager.xml" spritesheet = "villager.png"/>
    <id xml = "villager_pick.xml" spritesheet = "villager_pick.png"/>
+   <id xml = "villager_plow.xml" spritesheet = "villager_plow.png"/>
+   <id xml = "villager_axe.xml" spritesheet = "villager_axe.png"/>
+   <id xml = "villager_hammer.xml" spritesheet = "villager_hammer.png"/>
+   <id xml = "villager_basket.xml" spritesheet = "villager_basket.png"/>
   </units>
   <buildings>
    <id xml = "TownCenterFeudal.xml" spritesheet = "TownCenterFeudal.png"/>

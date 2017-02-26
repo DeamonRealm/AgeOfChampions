@@ -52,7 +52,7 @@ bool j1Scene::Start()
 
 
 	// Entities Build -------------------------------------
-	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::VILLAGER);
+	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::VILLAGER_BASKET);
 	arbalest->SetPosition(350, 280);
 	town_center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER);
 	town_center->SetPosition(550, 450);
