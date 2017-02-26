@@ -118,6 +118,7 @@ public:
 	j1ClusterAbstraction(j1Map* map, uint clusterSize);
 	~j1ClusterAbstraction();
 	//Map extraction
+	uchar GetValueMap(int x, int y);
 	void SetMap(uint width, uint height, uchar* data);
 	bool IsWalkable(int x, int y) const;
 	bool CheckBoundaries(const iPoint& pos) const;

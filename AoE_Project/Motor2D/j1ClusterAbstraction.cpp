@@ -354,7 +354,7 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 
 		for (int i = item.GetPosisitionY(); i < item.GetPosisitionY() + item.GetHeight(); i++) {
 			for (int j = item.GetPosisitionY(); j < item.GetPosisitionX() + item.GetWidth(); j++) {
-				tempMap = GetValueMap(j, i);
+				tempMap[(i*item.GetWidth()+j)] = GetValueMap(j, i);
 
 			}
 		}
