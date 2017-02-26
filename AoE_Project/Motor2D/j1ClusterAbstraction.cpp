@@ -254,11 +254,11 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 		case CLUSTER_HORIZONTAL:
 		{
 			Cluster& cluster1 = GetCluster(clusterID1);
-			checkNum = NodeExist(cluster1, cluster1.GetPosisitionX(), cluster1.GetPosisitionY(), graph);
+			checkNum = NodeExist(cluster1, item.GetPosX(), item.GetPosY(), graph);
 			if (checkNum == -1) {
 				Node* node1 = new Node();
 				numNode1 = graph->AddNode(node1);
-				node1->SetPosition(cluster1.GetPosisitionX(), cluster1.GetPosisitionY());
+				node1->SetPosition(item.GetPosX(), item.GetPosY());
 				node1->SetClusterID(clusterID1);
 				cluster1.AddNode(numNode1);
 				LOG("Node %i Generated x = %i, y = %i", numNode1,node1->GetPositionX(), node1->GetPositionY() );
@@ -269,10 +269,10 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 			}
 
 			Cluster& cluster2 = GetCluster(clusterID2);
-			checkNum = NodeExist(cluster2, cluster2.GetPosisitionX(), cluster2.GetPosisitionY()+1, graph);
+			checkNum = NodeExist(cluster2, item.GetPosX(), item.GetPosY()+1, graph);
 			if (checkNum == -1) {
 				Node* node2 = new Node();
-				node2->SetPosition(cluster2.GetPosisitionX(), cluster2.GetPosisitionY() + 1);
+				node2->SetPosition(item.GetPosX(), item.GetPosY() + 1);
 				numNode2 = graph->AddNode(node2);
 				node2->SetClusterID(clusterID2);
 				cluster2.AddNode(numNode2);
@@ -291,12 +291,12 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 		case CLUSTER_VERTICAL:
 		{
 			Cluster& cluster1 = GetCluster(clusterID1);
-			checkNum = NodeExist(cluster1, cluster1.GetPosisitionX(), cluster1.GetPosisitionY(), graph);
+			checkNum = NodeExist(cluster1, item.GetPosX(), item.GetPosY(), graph);
 
 			if (checkNum == -1) {
 				Node* node1 = new Node();
 				numNode1 = graph->AddNode(node1);
-				node1->SetPosition(cluster1.GetPosisitionX(), cluster1.GetPosisitionY());
+				node1->SetPosition(item.GetPosX(), item.GetPosY());
 				node1->SetClusterID(clusterID1);
 				cluster1.AddNode(numNode1);
 				LOG("Node %i Generated x = %i, y = %i", numNode1, node1->GetPositionX(), node1->GetPositionY());
@@ -307,10 +307,10 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 			}
 
 			Cluster& cluster2 = GetCluster(clusterID2);
-			checkNum = NodeExist(cluster2, cluster2.GetPosisitionX()+1, cluster2.GetPosisitionY(), graph);
+			checkNum = NodeExist(cluster2, item.GetPosX()+1, item.GetPosY(), graph);
 			if (checkNum == -1) {
 				Node* node2 = new Node();
-				node2->SetPosition(cluster2.GetPosisitionX() + 1, cluster2.GetPosisitionY());
+				node2->SetPosition(item.GetPosX() + 1, item.GetPosY());
 				numNode2 = graph->AddNode(node2);
 				node2->SetClusterID(clusterID2);
 				cluster2.AddNode(numNode2);
@@ -330,13 +330,19 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 		}
 	}
 }
-Node* Graph::GetNode(int i) {
+void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
+{
+
+}
+Node* Graph::GetNode(int i) 
+{
 	if (i >= 0 && i < nodes.size()) {
 		return nodes[i];
 	}
 	return 0;
 }
-void Graph::AddEdge(Edge* edge) {
+void Graph::AddEdge(Edge* edge) 
+{
 	if (edge) {
 		edges.push_back(edge);
 	}
@@ -364,17 +370,21 @@ Edge::~Edge()
 {
 }
 
-void Node::SetPosition(int x, int y) {
+void Node::SetPosition(int x, int y)
+{
 	posX = x;
 	posY = y;
 }
-void Node::SetClusterID(int id) {
+void Node::SetClusterID(int id) 
+{
 	clusterID = id;
 }
-int  Node::GetPositionX() {
+int  Node::GetPositionX() 
+{
 	return posX;
 }
-int  Node::GetPositionY() {
+int  Node::GetPositionY() 
+{
 	return posY;
 
 }

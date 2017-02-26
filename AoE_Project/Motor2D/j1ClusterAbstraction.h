@@ -134,6 +134,7 @@ public:
 	void SetEntryClusterID();
 	void CreateGraph();
 	void SetNodesOnClusters(Graph* graph);
+	void CreateIntraEdges(Graph* graph);
 
 private:
 	// size of the map 
