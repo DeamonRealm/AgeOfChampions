@@ -21,6 +21,14 @@ int Cluster::GetPosisitionY() {
 	return posY;
 
 }
+int Cluster::GetWidth()
+{
+	return width;
+}
+int Cluster::GetHeight()
+{
+	return height;
+}
 void Cluster::AddNode(int get) 
 {
 	nodes.push_back(get);
@@ -64,6 +72,10 @@ void j1ClusterAbstraction::CreateClusters()
 	}
 	maxColumn = column;
 	maxRow = row;
+}
+uchar j1ClusterAbstraction::GetValueMap(int x, int y)
+{
+	return map[(y*width)+x];
 }
 void j1ClusterAbstraction::SetMap(uint width, uint height, uchar* data)
 {
@@ -331,7 +343,23 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 	}
 }
 void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
+
 {
+
+	for (int i = 0; i < clusters.size(); i++)
+	{
+		Cluster& item = clusters[i];
+		uchar* tempMap;
+		tempMap = new uchar(item.GetHeight()*item.GetWidth());
+
+		for (int i = item.GetPosisitionY(); i < item.GetPosisitionY() + item.GetHeight(); i++) {
+			for (int j = item.GetPosisitionY(); j < item.GetPosisitionX() + item.GetWidth(); j++) {
+				tempMap = GetValueMap(j, i);
+
+			}
+		}
+}
+
 
 }
 Node* Graph::GetNode(int i) 

@@ -66,6 +66,8 @@ public:
 	int GetNodeNumberAt(int i);
 	int GetPosisitionX();
 	int GetPosisitionY();
+	int GetWidth();
+	int GetHeight();
 	void AddNode(int get);
 private:
 
