@@ -1,5 +1,5 @@
-#ifndef __j1SCENE_H__
-#define __j1SCENE_H__
+#ifndef __j1Menu_H__
+#define __j1Menu_H__
 
 #include "j1Module.h"
 
@@ -12,19 +12,20 @@ struct UI_Element;
 struct UI_Text_Box;
 struct UI_Scroll;
 struct UI_Popup_menu;
+struct UI_Fixed_Button;
 class  Unit;
 class  Building;
 
-class j1Scene : public j1Module
+class j1Menu : public j1Module
 {
 public:
 
-	j1Scene();
+	j1Menu();
 
 	// Destructor
-	virtual ~j1Scene();
+	virtual ~j1Menu();
 
-	void Init() { active = false; }
+	void Init() { active = true; }
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& config);
@@ -49,34 +50,24 @@ public:
 
 private:
 
-	//Scene Test Entities
-	Unit*		arbalest = nullptr;
-	Building*	town_center = nullptr;
+	//UI Elements
+	UI_Image* main_menu_background;
+	UI_Image* standard_background;
 
-	//Scene	UI
-	UI_Element* scene_1_screen;
-	
-	//pop_menu test
-	UI_String*		teutones;
-	UI_String*		ingleses;
-	UI_String*      japoneses;
-	UI_Popup_menu*  civilization_menu;
-	UI_Button*		civilization_button;
-	UI_String*		selected;
-	UI_Image*		background;
-public:
+	//MainMenu Elements
+	UI_Fixed_Button*	exit;
+	UI_Fixed_Button*	singleplayer;
+	UI_Fixed_Button*	multiplayer;
+	UI_Fixed_Button*	turotial;
+	UI_Fixed_Button*	mapeditor;
+	UI_Fixed_Button*	history;
+	UI_Fixed_Button*	options;
 
-	//Map Folders
-	std::vector <std::string> map_folder;
 
-	uint current_map;
-
-	//Change the current map
-	void Change_Map();
-
-	//Load the selected Map
-	bool Load_Current_Map();
+	//Menu UI screens
+	UI_Element* menu_screen;
+	UI_Element* standard_match_screen;
 
 };
 
-#endif // __j1SCENE_H__
+#endif // __j1MENU_H__

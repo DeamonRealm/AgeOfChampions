@@ -39,6 +39,14 @@ enum CURSOR_TARGET
 	CHOOP
 };
 
+enum TEXTURE_ID
+{
+	BACKGROUND,
+	STANDARD,
+	MAINMENU,
+	ICONS
+};
+
 // ---------------------------------------------------
 class j1Gui : public j1Module
 {
@@ -75,8 +83,18 @@ private:
 
 	//UI Textures
 	SDL_Texture*			atlas;
+	SDL_Texture*			background;
+	SDL_Texture*			mainmenu;
+	SDL_Texture*			standardmenu;
+	SDL_Texture*			icons;
+	
 	std::list<SDL_Texture*>	ui_textures;
+
 	std::string				atlas_file_name;
+	std::string				background_file_name;
+	std::string				mainmenu_file_name;
+	std::string				standardmenu_file_name;
+	std::string				icons_file_name;
 
 	//Target Module of gui input
 	j1Module*				default_input_target;

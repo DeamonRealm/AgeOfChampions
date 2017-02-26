@@ -65,12 +65,12 @@ bool UI_Scroll::CleanUp()
 
 void UI_Scroll::SetScrollableItem(const iPoint position, const SDL_Rect rect, int id)
 {
-	ScrollItem = UI_Image({ position.x,position.y,rect.w,rect.h }, rect, id);
+	ScrollItem = UI_Image({ position.x,position.y,rect.w,rect.h }, {0,0}, rect, id);
 }
 
 void UI_Scroll::SetScrollableBack(const iPoint position, const SDL_Rect rect, int id)
 {
-	ScrollBack = UI_Image({ position.x,position.y,rect.w,rect.h }, rect, id);
+	ScrollBack = UI_Image({ position.x,position.y,rect.w,rect.h }, {0,0}, rect, id);
 }
 
 void UI_Scroll::SetContentWindow(const SDL_Rect rect)

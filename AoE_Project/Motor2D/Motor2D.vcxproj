@@ -93,6 +93,7 @@
     <ClCompile Include="j1Player.cpp" />
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="j1Timer.cpp" />
+    <ClCompile Include="j1Menu.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
     <ClCompile Include="j1Textures.cpp" />
@@ -100,6 +101,7 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="UI_Button.cpp" />
     <ClCompile Include="UI_Element.cpp" />
+    <ClCompile Include="UI_Fixed_Button.cpp" />
     <ClCompile Include="UI_Image.cpp" />
     <ClCompile Include="UI_Popup_Menu.cpp" />
     <ClCompile Include="UI_Scroll.cpp" />
@@ -126,6 +128,7 @@
     <ClInclude Include="j1Audio.h" />
     <ClInclude Include="j1Input.h" />
     <ClInclude Include="j1EntitiesManager.h" />
+    <ClInclude Include="j1Menu.h" />
     <ClInclude Include="p2Log.h" />
     <ClInclude Include="j1App.h" />
     <ClInclude Include="p2Defs.h" />
@@ -138,6 +141,7 @@
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="UI_Button.h" />
     <ClInclude Include="UI_Element.h" />
+    <ClInclude Include="UI_Fixed_Button.h" />
     <ClInclude Include="UI_Image.h" />
     <ClInclude Include="UI_Popup_Menu.h" />
     <ClInclude Include="UI_Scroll.h" />

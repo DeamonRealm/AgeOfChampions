@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:01e8f414e3101d09c61b3aa006e134ba:1fa0a0264f739aa90ae0c512451c535c:5ef7391927c9d85283bf8ad38ddc0eb1$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="UI_Icons.png" width="660" height="660">
+	<Audio>
+    <sprite n="off" x="0" y="0" w="24" h="24" pX="0" pY="0"/>
+    <sprite n="off1" x="24" y="0" w="24" h="24" pX="0" pY="0"/>
+    <sprite n="on" x="48" y="0" w="24" h="24" pX="0" pY="0"/>
+    <sprite n="on1" x="72" y="0" w="24" h="24" pX="0" pY="0"/>
+	</Audio>
+	<Buildings>
+    <sprite n="Archery" x="96" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Barracks" x="132" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Blacksmith" x="168" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BombardTower" x="204" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Castle" x="240" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Farm" x="276" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Gate" x="312" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="House" x="348" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="LumberCamp" x="384" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Market" x="420" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mill" x="456" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MiningCamp" x="492" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Monastery" x="528" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Outpost" x="564" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="PalisadeWall" x="600" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="SiegeWorkshop" x="0" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Stable" x="36" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="StoneWall" x="72" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TownCentral" x="108" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="University" x="144" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="WatchTower" x="180" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Wonder" x="216" y="36" w="36" h="36" pX="0" pY="0"/>
+	</Buildings>
+	<Commands>
+    <sprite n="ActiveAttack_off" x="252" y="36" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="ActiveAttack_on" x="292" y="36" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="Arrow" x="332" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Bell" x="368" y="36" w="37" h="37" pX="0" pY="0"/>
+    <sprite n="Build" x="405" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BuildCatapult" x="441" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Cancel" x="477" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Defend_off" x="513" y="36" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="Defend_on" x="553" y="36" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="Destroy" x="593" y="36" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Die" x="0" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Disperse" x="36" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="DistributedF_off" x="72" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="DistributedF_on" x="108" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="DontProtect" x="144" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="EnterBuilding" x="180" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="ExitBuilding" x="216" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Flag_off" x="252" y="76" w="37" h="37" pX="0" pY="0"/>
+    <sprite n="Flag_on" x="289" y="76" w="37" h="37" pX="0" pY="0"/>
+    <sprite n="FocusFire" x="326" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Follow_off" x="362" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Follow_on" x="398" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="FoodForGold" x="434" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GateClosed" x="470" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GateOpen" x="506" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GetFood" x="542" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GetGold" x="578" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GetStone" x="614" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GetWood" x="0" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GoBackToWork" x="36" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GoldForFood" x="72" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GoldForStone" x="108" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Group" x="144" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GroupF_off" x="180" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="GroupF_on" x="216" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="KeepPlace_off" x="252" y="113" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="KeepPlace_on" x="292" y="113" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="Monk_02" x="368" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Monk_03" x="404" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Passivity_off" x="440" y="113" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="Passivity_on" x="480" y="113" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="ProtectPisition" x="520" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="ProtectPositionOn" x="556" y="113" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="ProtectUnit" x="596" y="113" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="ProtectUnitOn" x="0" y="153" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="Relic" x="40" y="153" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Repair" x="76" y="153" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Resources" x="112" y="153" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="StoneForGold" x="148" y="153" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Stop" x="184" y="153" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="UnbuildCatapult" x="220" y="153" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Unknown_eye" x="256" y="153" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="WoodForGold" x="292" y="153" w="36" h="36" pX="0" pY="0"/>
+	</Commands>
+	<Match>  
+    <sprite n="Chat_off" x="348" y="153" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Chat_on" x="398" y="153" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="CivTree_off" x="448" y="153" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="CivTreeOn" x="498" y="153" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Diplomacy_off" x="548" y="153" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Diplomacy_on" x="598" y="153" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Quest_off" x="0" y="193" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Quest_offClicked" x="50" y="193" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Quest_on" x="100" y="193" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Quest_onClicked" x="150" y="193" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Scroll_off" x="200" y="193" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Scroll_on" x="250" y="193" w="50" h="17" pX="0" pY="0"/>
+    <sprite n="Unknown_TopButton" x="328" y="153" w="20" h="15" pX="0" pY="0"/>
+	</Match>
+	<Minimap>
+    <sprite n="AdvancedMap_off" x="300" y="193" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="AdvancedMap_on" x="333" y="193" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="Forest_off" x="366" y="193" w="53" h="53" pX="0" pY="0"/>
+    <sprite n="Forest_on" x="419" y="193" w="53" h="53" pX="0" pY="0"/>
+    <sprite n="FreeVillager_off" x="472" y="193" w="53" h="53" pX="0" pY="0"/>
+    <sprite n="FreeVillager_on" x="525" y="193" w="53" h="53" pX="0" pY="0"/>
+    <sprite n="Info_off" x="578" y="193" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="Info_on" x="611" y="193" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="Resources_off" x="0" y="246" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="Resources_on" x="33" y="246" w="33" h="34" pX="0" pY="0"/>
+    <sprite n="Stadistics_off" x="66" y="246" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="Stadistics_on" x="99" y="246" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="Standard_off" x="132" y="246" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="Standard_on" x="165" y="246" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="Units_off" x="198" y="246" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="Units_on" x="231" y="246" w="33" h="33" pX="0" pY="0"/>
+	</Minimap>
+	<Mouse>
+    <sprite n="Arrow" x="264" y="246" w="24" h="32" pX="0" pY="0"/>
+    <sprite n="Arrow1" x="288" y="246" w="27" h="32" pX="0" pY="0"/>
+    <sprite n="Attack" x="315" y="246" w="35" h="33" pX="0" pY="0"/>
+    <sprite n="Banner" x="350" y="246" w="45" h="41" pX="0.5" pY="0.5"/>
+    <sprite n="Build" x="395" y="246" w="35" h="35" pX="0" pY="0"/>
+    <sprite n="CantBuild" x="430" y="246" w="36" h="22" pX="0.5" pY="0.5"/>
+    <sprite n="Chop" x="466" y="246" w="35" h="37" pX="0" pY="0"/>
+    <sprite n="EnterBuilding" x="501" y="246" w="32" h="38" pX="0" pY="0"/>
+    <sprite n="ExitBuilding" x="533" y="246" w="32" h="38" pX="0" pY="0"/>
+    <sprite n="FishingSpot" x="565" y="246" w="32" h="26" pX="0.5" pY="0.5"/>
+    <sprite n="Heal_0" x="597" y="246" w="54" h="29" pX="0.5" pY="0.5"/>
+    <sprite n="Heal_1" x="0" y="287" w="42" h="22" pX="0.5" pY="0.5"/>
+    <sprite n="HorseMove" x="42" y="287" w="40" h="28" pX="0" pY="0"/>
+    <sprite n="SelectUnit" x="82" y="287" w="37" h="37" pX="0" pY="0"/>
+    <sprite n="Shield" x="119" y="287" w="28" h="46" pX="0" pY="0"/>
+    <sprite n="ShipDown" x="147" y="287" w="43" h="42" pX="0" pY="0"/>
+    <sprite n="ShipUp" x="190" y="287" w="45" h="43" pX="0" pY="0"/>
+    <sprite n="Time" x="235" y="287" w="26" h="38" pX="0" pY="0"/>
+    <sprite n="Trumpet" x="261" y="287" w="39" h="39" pX="0.5" pY="0.5"/>
+	</Mouse>
+	<Profile>
+    <sprite n="Range" x="300" y="287" w="36" h="21" pX="0" pY="0"/>
+    <sprite n="Armor" x="336" y="287" w="36" h="23" pX="0" pY="0"/>
+    <sprite n="Attack" x="372" y="287" w="36" h="23" pX="0" pY="0"/>
+    <sprite n="Bags" x="408" y="287" w="36" h="23" pX="0" pY="0"/>
+    <sprite n="FoodStored" x="444" y="287" w="36" h="23" pX="0" pY="0"/>
+    <sprite n="GoldStored" x="480" y="287" w="36" h="23" pX="0" pY="0"/>
+    <sprite n="Shield" x="516" y="287" w="36" h="23" pX="0" pY="0"/>
+    <sprite n="StoneStored" x="552" y="287" w="36" h="23" pX="0" pY="0"/>
+    <sprite n="Time" x="588" y="287" w="36" h="23" pX="0" pY="0"/>
+    <sprite n="UnitsCapatity" x="624" y="287" w="36" h="23" pX="0" pY="0"/>
+    <sprite n="WoodStored" x="0" y="333" w="36" h="23" pX="0" pY="0"/>
+	</Profile>
+	<Resources>
+    <sprite n="BerryBush" x="36" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Food" x="72" y="333" w="34" h="30" pX="0" pY="0"/>
+    <sprite n="Gold" x="106" y="333" w="34" h="30" pX="0" pY="0"/>
+    <sprite n="GoldP" x="140" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Relic" x="176" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Stone" x="212" y="333" w="34" h="30" pX="0" pY="0"/>
+    <sprite n="StoneP" x="246" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Tree" x="282" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Wood" x="318" y="333" w="34" h="30" pX="0" pY="0"/>
+	</Resources>
+	<Tecnology>
+    <sprite n="AR_ArcherUp" x="352" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="AR_CavalryAUp" x="388" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="AR_CrossbowUp" x="424" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="AR_ParthianT" x="460" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="AR_Skirmisher" x="496" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="AR_ThumbRing" x="532" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="B_ManatArmsUp" x="568" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="B_MilitiaUp" x="604" y="333" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="B_PikemanUp" x="0" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="B_SpearmanUp" x="36" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="B_Squires" x="72" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="B_Tracking" x="108" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="B_TwoHandedUp" x="144" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_BlastFurnace" x="180" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_BodkinArrow" x="216" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_Bracer" x="252" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_ChainBA" x="288" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_ChainMailArmor" x="324" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_Fletching" x="360" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_Forging" x="396" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_IronCasting" x="432" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_LeatherAA" x="468" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_PaddedAA" x="504" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_PlateBA" x="540" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_PlateMailArmor" x="576" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_RingAA" x="612" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_ScaleBA" x="0" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BS_ScaleMailArmor" x="36" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="C_Conscription" x="72" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="C_Hoardings" x="108" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="C_Sappers" x="144" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="C_SpecialUp" x="180" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="C_Treason" x="216" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="C_Trebuchet" x="252" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="C_UnicTecnology" x="288" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="C_Wall" x="324" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="LC_BowSaw" x="360" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="LC_DoublebitAxe" x="396" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="LC_TwomSaw" x="432" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="LongSwordsmanUp" x="468" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="M_CropRotation" x="504" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="M_HeavyPlow" x="540" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="M_HorseCollar" x="576" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MC_GoldMining" x="612" y="405" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MC_GoldShaft" x="0" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MC_StoneMining" x="36" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MC_StoneShaft" x="72" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MK_Banking" x="108" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MK_Caravan" x="144" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MK_Cartography" x="180" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MK_Coinage" x="216" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MK_Guilds" x="252" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_Atonement" x="288" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_BlockPrinting" x="324" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_Faith" x="360" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_Fervor" x="396" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_HerbalMedicine" x="432" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_Heresy" x="468" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_Illumination" x="504" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_Redemption" x="540" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_Sanctity" x="576" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mo_Theocracy" x="612" y="441" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="S_Bloodlines" x="0" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="S_CavalierUp" x="36" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="S_Husbandry" x="72" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="S_KnightUp" x="108" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="S_ScoutCUp" x="144" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="SW_BatteringUp" x="180" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="SW_CappedUp" x="216" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="SW_MangonelUp" x="252" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="SW_Scorpion" x="288" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="SW_ScorpionUp" x="324" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="SW_SiegeOnagerUp" x="360" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TC_Castle" x="396" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TC_Feudal" x="432" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TC_HandCart" x="468" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TC_Imperial" x="504" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TC_Loom" x="540" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TC_Patrol" x="576" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TC_TownWatch" x="612" y="477" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TC_Wheelbarrow" x="0" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_Architecture" x="36" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_Ballistics" x="72" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_BombardTower" x="108" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_Chemistry" x="144" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_Cross" x="180" y="513" w="33" h="33" pX="0" pY="0"/>
+    <sprite n="U_GuardTowerUp" x="213" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_HeatedShot" x="249" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_Masonry" x="285" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_MurderHoles" x="321" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_SiegeEngineers" x="357" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_StoneWallUp" x="393" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_TreadmillCrane" x="429" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="U_WatchTowerUp" x="465" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Unknown_Axe" x="501" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Unknown_cartography" x="537" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Unknown_post" x="573" y="513" w="36" h="36" pX="0" pY="0"/>
+	</Tecnology>
+	<Units>
+    <sprite n="Arbalest" x="609" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Archer" x="0" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="BatteringRam" x="36" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Berserker" x="72" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Boar" x="108" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="CappedRam" x="144" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Cavalier" x="180" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="CavalryArcher" x="216" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Champion" x="252" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Conquistador" x="288" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Crossbowman" x="324" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Deer" x="360" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Elephant" x="396" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="EliteSkirmisher" x="432" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="FHero_00" x="468" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="HandCannoner" x="504" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="HeavyCavalryArcher" x="540" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="HeavyMonk" x="576" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="HeavyScorpion" x="612" y="549" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="King" x="0" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Knight" x="36" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="LightCavalry" x="72" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="LongBowman" x="108" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="LongSwordsman" x="144" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="ManatArms" x="180" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Mangonel" x="216" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MHero_00" x="252" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MHero_01" x="288" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MHero_02" x="324" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MHero_03" x="360" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MHero_04" x="396" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MHero_05" x="432" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MHero_06" x="468" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Militia" x="504" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Monk" x="540" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="MVillager" x="576" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Onager" x="612" y="585" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Paladin" x="0" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Petard" x="36" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Pikeman" x="72" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Priest" x="108" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Samurai" x="144" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Scorpion" x="180" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Scout" x="216" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Sheep" x="252" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="SiegeOnager" x="288" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="SiegeRam" x="324" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Skirmisher" x="360" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Spearman" x="396" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="TeutonicKnight" x="432" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Trebucket_off" x="468" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Trebucket_on" x="504" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Twohandedswordman" x="540" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Wagon" x="576" y="621" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Wolf" x="612" y="621" w="36" h="36" pX="0" pY="0"/>
+	</Units>
+</TextureAtlas>

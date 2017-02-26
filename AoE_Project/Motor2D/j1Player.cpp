@@ -26,6 +26,7 @@ bool Profile::MouseisIn(int x, int y)
 
 j1Player::j1Player()
 {
+	name = "player";
 }
 
 j1Player::~j1Player()

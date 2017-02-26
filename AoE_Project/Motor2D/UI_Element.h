@@ -15,8 +15,8 @@ enum UI_TYPE {
 	STRING,
 	IMG,
 	SCROLL,
-	POPUP_MENU
-
+	POPUP_MENU,
+	FIXED_BUTTON
 };
 
 class UI_Element {

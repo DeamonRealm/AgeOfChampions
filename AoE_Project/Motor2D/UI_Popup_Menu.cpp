@@ -10,7 +10,7 @@ UI_Popup_menu::UI_Popup_menu(const SDL_Rect & box, const UI_Image & tex_menu, co
 
 UI_Popup_menu::UI_Popup_menu(const UI_Popup_menu * copy): UI_Element(copy->box, copy->GetUItype()), tex_menu(copy->tex_menu), tex_selection(copy->tex_selection){}
 
-UI_Popup_menu::UI_Popup_menu() : UI_Element({ 0,0,0,0 }, POPUP_MENU), tex_selection(UI_Image({ 0,0,0,0 }, {0,0,0,0}, -1)), tex_menu(UI_Image({ 0,0,0,0 }, { 0,0,0,0 }, -1)) {}
+UI_Popup_menu::UI_Popup_menu() : UI_Element({ 0,0,0,0 }, POPUP_MENU), tex_selection(UI_Image({ 0,0,0,0 }, { 0,0 }, { 0, 0, 0, 0 }, -1)), tex_menu(UI_Image({ 0,0,0,0 }, {0,0}, { 0, 0, 0, 0 }, -1)) {}
 
 //Destructor =================================================
 UI_Popup_menu::~UI_Popup_menu()
@@ -184,10 +184,10 @@ char * UI_Popup_menu::GetOptionSelected() const
 
 void UI_Popup_menu::SetTexSelection(SDL_Rect img_rect, int text_id)
 {
-	tex_selection = UI_Image({ 0,0,0,0 }, img_rect, text_id);
+	tex_selection = UI_Image({ 0,0,0,0 }, {0,0}, img_rect, text_id);
 }
 
 void UI_Popup_menu::SetTexMenu(SDL_Rect img_rect, int text_id)
 {
-	tex_menu = UI_Image({ 0,0,0,0 }, img_rect, text_id);
+	tex_menu = UI_Image({ 0,0,0,0 }, {0,0}, img_rect, text_id);
 }

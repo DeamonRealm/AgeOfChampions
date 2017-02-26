@@ -2,11 +2,11 @@
 #include "j1Render.h"
 
 //Constructors ============================================
-UI_Image::UI_Image(const SDL_Rect& box, const SDL_Rect& texture_rect, int texture_id) : UI_Element(box, IMG), texture_rect(texture_rect), texture_id(texture_id) {}
+UI_Image::UI_Image(const SDL_Rect& box, const iPoint pivot, const SDL_Rect& texture_rect, int texture_id) : UI_Element(box, IMG), pivot(pivot), texture_rect(texture_rect), texture_id(texture_id) {}
 
-UI_Image::UI_Image(const UI_Image* copy) : UI_Element(copy->box, IMG), texture_rect(copy->texture_rect), texture_id(copy->texture_id) {}
+UI_Image::UI_Image(const UI_Image* copy) : UI_Element(copy->box, IMG), pivot(copy->pivot), texture_rect(copy->texture_rect), texture_id(copy->texture_id) {}
 
-UI_Image::UI_Image() : UI_Element({ 0,0,0,0 }, IMG), texture_rect({ 0,0,0,0 }) {}
+UI_Image::UI_Image() : UI_Element({ 0,0,0,0 }, IMG), pivot(0,0), texture_rect({ 0,0,0,0 }) {}
 
 //Destructors =============================================
 UI_Image::~UI_Image()
@@ -84,4 +84,9 @@ void UI_Image::ChangeTextureRect(SDL_Rect new_rect)
 void UI_Image::ChangeTextureId(int id)
 {
 	texture_id = id;
+}
+
+iPoint UI_Image::GetPivot() const
+{
+	return pivot;
 }

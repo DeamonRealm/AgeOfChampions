@@ -15,6 +15,7 @@
 #include "UI_String.h"
 #include "UI_Text_Box.h"
 #include "UI_Popup_Menu.h"
+#include "UI_Fixed_Button.h"
 
 //InGame elements
 #include "BaseEntities.h"
@@ -35,7 +36,14 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+	//atlas_file_name = conf.child("menu").attribute("file").as_string("");
+	
+	background_file_name = conf.child("background").attribute("file").as_string("");
+	mainmenu_file_name = conf.child("menu").attribute("file").as_string("");
+	standardmenu_file_name = conf.child("standard").attribute("file").as_string("");
+	icons_file_name = conf.child("icons").attribute("file").as_string("");
 
+	
 	return ret;
 }
 
@@ -44,7 +52,19 @@ bool j1Gui::Start()
 {
 	//Load Atlas
 	atlas = App->tex->Load(atlas_file_name.c_str());
-
+	
+	//UI_textures
+	background = App->tex->Load(background_file_name.c_str());
+	mainmenu = App->tex->Load(mainmenu_file_name.c_str());
+	standardmenu = App->tex->Load(standardmenu_file_name.c_str());
+	icons = App->tex->Load(icons_file_name.c_str());
+	
+	//Add textures to Ui_textures
+	ui_textures.push_back(background);
+	ui_textures.push_back(mainmenu);
+	ui_textures.push_back(standardmenu);
+	ui_textures.push_back(icons);
+	
 	return true;
 }
 
@@ -215,6 +235,9 @@ UI_Element* j1Gui::GenerateUI_Element(UI_TYPE element_type)
 
 	case POPUP_MENU:
 		new_element = new UI_Popup_menu();
+		break;
+	case FIXED_BUTTON:
+		new_element = new UI_Fixed_Button();
 		break;
 	}
 	
