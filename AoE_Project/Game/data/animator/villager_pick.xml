@@ -20,351 +20,422 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="villager_pick.png" width="748" height="748">
-
   <unit id ="villager_pick">
-    <!-- Die Action-->
-    <action enum= "die" speed="300">
-    <sprite n="aldeano_die_minning/000_mVillager_die_minning.bmp" direction="south" x="1" y="1" w="27" h="42" pX="0.555556" pY="0.857143"/>
-    <sprite n="aldeano_die_minning/001_mVillager_die_minning.bmp" direction="south" x="30" y="1" w="27" h="43" pX="0.481481" pY="0.813953"/>
-    <sprite n="aldeano_die_minning/002_mVillager_die_minning.bmp" direction="south" x="59" y="1" w="28" h="41" pX="0.5" pY="0.804878"/>
-    <sprite n="aldeano_die_minning/003_mVillager_die_minning.bmp" direction="south" x="89" y="1" w="38" h="37" pX="0.421053" pY="0.72973"/>
-    <sprite n="aldeano_die_minning/004_mVillager_die_minning.bmp" direction="south" x="129" y="1" w="40" h="35" pX="0.35" pY="0.685714"/>
-    <sprite n="aldeano_die_minning/005_mVillager_die_minning.bmp" direction="south" x="171" y="1" w="40" h="34" pX="0.325" pY="0.647059"/>
-    <sprite n="aldeano_die_minning/006_mVillager_die_minning.bmp" direction="south" x="213" y="1" w="42" h="30" pX="0.357143" pY="0.4"/>
-    <sprite n="aldeano_die_minning/007_mVillager_die_minning.bmp" direction="south" x="257" y="1" w="44" h="28" pX="0.386364" pY="0.107143"/>
-    <sprite n="aldeano_die_minning/008_mVillager_die_minning.bmp" direction="south" x="303" y="1" w="44" h="31" pX="0.363636" pY="0.16129"/>
-    <sprite n="aldeano_die_minning/009_mVillager_die_minning.bmp" direction="south" x="349" y="1" w="47" h="30" pX="0.361702" pY="0.133333"/>
-    <sprite n="aldeano_die_minning/010_mVillager_die_minning.bmp" direction="south" x="398" y="1" w="46" h="29" pX="0.369565" pY="0.0344828"/>
-    <sprite n="aldeano_die_minning/011_mVillager_die_minning.bmp" direction="south" x="446" y="1" w="45" h="28" pX="0.377778" pY="0"/>
-    <sprite n="aldeano_die_minning/012_mVillager_die_minning.bmp" direction="south" x="493" y="1" w="44" h="27" pX="0.386364" pY="-0.037037"/>
-    <sprite n="aldeano_die_minning/013_mVillager_die_minning.bmp" direction="south" x="539" y="1" w="43" h="26" pX="0.395349" pY="-0.0769231"/>
-    <sprite n="aldeano_die_minning/014_mVillager_die_minning.bmp" direction="south" x="584" y="1" w="43" h="27" pX="0.395349" pY="-0.0740741"/>
-    <sprite n="aldeano_die_minning/015_mVillager_die_minning.bmp" direction="south-west" x="629" y="1" w="26" h="43" pX="0.653846" pY="0.860465"/>
-    <sprite n="aldeano_die_minning/016_mVillager_die_minning.bmp" direction="south-west" x="657" y="1" w="30" h="44" pX="0.766667" pY="0.840909"/>
-    <sprite n="aldeano_die_minning/017_mVillager_die_minning.bmp" direction="south-west" x="689" y="1" w="28" h="43" pX="0.75" pY="0.790698"/>
-    <sprite n="aldeano_die_minning/018_mVillager_die_minning.bmp" direction="south-west" x="719" y="1" w="27" h="42" pX="0.666667" pY="0.666667"/>
-    <sprite n="aldeano_die_minning/019_mVillager_die_minning.bmp" direction="south-west" x="1" y="47" w="27" h="42" pX="0.666667" pY="0.595238"/>
-    <sprite n="aldeano_die_minning/020_mVillager_die_minning.bmp" direction="south-west" x="30" y="47" w="30" h="38" pX="0.633333" pY="0.631579"/>
-    <sprite n="aldeano_die_minning/021_mVillager_die_minning.bmp" direction="south-west" x="62" y="47" w="40" h="30" pX="0.7" pY="0.533333"/>
-    <sprite n="aldeano_die_minning/022_mVillager_die_minning.bmp" direction="south-west" x="104" y="47" w="44" h="21" pX="0.840909" pY="0.142857"/>
-    <sprite n="aldeano_die_minning/023_mVillager_die_minning.bmp" direction="south-west" x="150" y="47" w="43" h="30" pX="0.883721" pY="0.233333"/>
-    <sprite n="aldeano_die_minning/024_mVillager_die_minning.bmp" direction="south-west" x="195" y="47" w="44" h="31" pX="0.886364" pY="0.225806"/>
-    <sprite n="aldeano_die_minning/025_mVillager_die_minning.bmp" direction="south-west" x="241" y="47" w="44" h="27" pX="0.909091" pY="0.111111"/>
-    <sprite n="aldeano_die_minning/026_mVillager_die_minning.bmp" direction="south-west" x="287" y="47" w="44" h="26" pX="0.909091" pY="0.0769231"/>
-    <sprite n="aldeano_die_minning/027_mVillager_die_minning.bmp" direction="south-west" x="333" y="47" w="44" h="25" pX="0.931818" pY="0.08"/>
-    <sprite n="aldeano_die_minning/028_mVillager_die_minning.bmp" direction="south-west" x="379" y="47" w="44" h="24" pX="0.931818" pY="0.0416667"/>
-    <sprite n="aldeano_die_minning/029_mVillager_die_minning.bmp" direction="south-west" x="425" y="47" w="44" h="24" pX="0.931818" pY="0.0416667"/>
-    <sprite n="aldeano_die_minning/030_mVillager_die_minning.bmp" direction="west" x="471" y="47" w="22" h="43" pX="0.590909" pY="0.883721"/>
-    <sprite n="aldeano_die_minning/031_mVillager_die_minning.bmp" direction="west" x="495" y="47" w="28" h="41" pX="0.821429" pY="0.878049"/>
-    <sprite n="aldeano_die_minning/032_mVillager_die_minning.bmp" direction="west" x="525" y="47" w="37" h="40" pX="0.837838" pY="0.85"/>
-    <sprite n="aldeano_die_minning/033_mVillager_die_minning.bmp" direction="west" x="564" y="47" w="37" h="36" pX="0.810811" pY="0.777778"/>
-    <sprite n="aldeano_die_minning/034_mVillager_die_minning.bmp" direction="west" x="603" y="47" w="34" h="40" pX="0.794118" pY="0.675"/>
-    <sprite n="aldeano_die_minning/035_mVillager_die_minning.bmp" direction="west" x="639" y="47" w="30" h="42" pX="0.833333" pY="0.690476"/>
-    <sprite n="aldeano_die_minning/036_mVillager_die_minning.bmp" direction="west" x="671" y="47" w="38" h="40" pX="0.947368" pY="0.65"/>
-    <sprite n="aldeano_die_minning/037_mVillager_die_minning.bmp" direction="west" x="1" y="92" w="47" h="27" pX="1.02128" pY="0.481481"/>
-    <sprite n="aldeano_die_minning/038_mVillager_die_minning.bmp" direction="west" x="50" y="92" w="48" h="23" pX="1.04167" pY="0.434783"/>
-    <sprite n="aldeano_die_minning/039_mVillager_die_minning.bmp" direction="west" x="100" y="92" w="48" h="23" pX="1.0625" pY="0.434783"/>
-    <sprite n="aldeano_die_minning/040_mVillager_die_minning.bmp" direction="west" x="150" y="92" w="48" h="23" pX="1.0625" pY="0.434783"/>
-    <sprite n="aldeano_die_minning/041_mVillager_die_minning.bmp" direction="west" x="200" y="92" w="48" h="24" pX="1.08333" pY="0.458333"/>
-    <sprite n="aldeano_die_minning/042_mVillager_die_minning.bmp" direction="west" x="250" y="92" w="47" h="23" pX="1.10638" pY="0.478261"/>
-    <sprite n="aldeano_die_minning/043_mVillager_die_minning.bmp" direction="west" x="299" y="92" w="48" h="22" pX="1.10417" pY="0.454545"/>
-    <sprite n="aldeano_die_minning/044_mVillager_die_minning.bmp" direction="west" x="349" y="92" w="48" h="23" pX="1.10417" pY="0.434783"/>
-    <sprite n="aldeano_die_minning/045_mVillager_die_minning.bmp" direction="north-west" x="399" y="92" w="24" h="44" pX="0.666667" pY="0.863636"/>
-    <sprite n="aldeano_die_minning/046_mVillager_die_minning.bmp" direction="north-west" x="425" y="92" w="26" h="40" pX="0.692308" pY="0.9"/>
-    <sprite n="aldeano_die_minning/047_mVillager_die_minning.bmp" direction="north-west" x="453" y="92" w="33" h="39" pX="0.818182" pY="0.871795"/>
-    <sprite n="aldeano_die_minning/048_mVillager_die_minning.bmp" direction="north-west" x="488" y="92" w="38" h="34" pX="0.868421" pY="0.852941"/>
-    <sprite n="aldeano_die_minning/049_mVillager_die_minning.bmp" direction="north-west" x="528" y="92" w="38" h="34" pX="0.868421" pY="0.823529"/>
-    <sprite n="aldeano_die_minning/050_mVillager_die_minning.bmp" direction="north-west" x="568" y="92" w="39" h="40" pX="0.846154" pY="0.875"/>
-    <sprite n="aldeano_die_minning/051_mVillager_die_minning.bmp" direction="north-west" x="609" y="92" w="39" h="38" pX="0.948718" pY="0.973684"/>
-    <sprite n="aldeano_die_minning/052_mVillager_die_minning.bmp" direction="north-west" x="650" y="92" w="44" h="30" pX="0.931818" pY="0.866667"/>
-    <sprite n="aldeano_die_minning/053_mVillager_die_minning.bmp" direction="north-west" x="696" y="92" w="45" h="24" pX="0.977778" pY="0.916667"/>
-    <sprite n="aldeano_die_minning/054_mVillager_die_minning.bmp" direction="north-west" x="1" y="138" w="45" h="27" pX="1" pY="0.888889"/>
-    <sprite n="aldeano_die_minning/055_mVillager_die_minning.bmp" direction="north-west" x="48" y="138" w="46" h="25" pX="1" pY="0.88"/>
-    <sprite n="aldeano_die_minning/056_mVillager_die_minning.bmp" direction="north-west" x="96" y="138" w="45" h="25" pX="1" pY="0.88"/>
-    <sprite n="aldeano_die_minning/057_mVillager_die_minning.bmp" direction="north-west" x="143" y="138" w="45" h="24" pX="1" pY="0.916667"/>
-    <sprite n="aldeano_die_minning/058_mVillager_die_minning.bmp" direction="north-west" x="190" y="138" w="44" h="24" pX="1.02273" pY="0.916667"/>
-    <sprite n="aldeano_die_minning/059_mVillager_die_minning.bmp" direction="north-west" x="236" y="138" w="44" h="25" pX="1" pY="0.88"/>
-    <sprite n="aldeano_die_minning/060_mVillager_die_minning.bmp" direction="north" x="282" y="138" w="26" h="44" pX="0.461538" pY="0.863636"/>
-    <sprite n="aldeano_die_minning/061_mVillager_die_minning.bmp" direction="north" x="310" y="138" w="27" h="40" pX="0.518519" pY="0.9"/>
-    <sprite n="aldeano_die_minning/062_mVillager_die_minning.bmp" direction="north" x="339" y="138" w="29" h="40" pX="0.551724" pY="0.925"/>
-    <sprite n="aldeano_die_minning/063_mVillager_die_minning.bmp" direction="north" x="370" y="138" w="35" h="36" pX="0.571429" pY="0.888889"/>
-    <sprite n="aldeano_die_minning/064_mVillager_die_minning.bmp" direction="north" x="407" y="138" w="37" h="33" pX="0.648649" pY="0.848485"/>
-    <sprite n="aldeano_die_minning/065_mVillager_die_minning.bmp" direction="north" x="446" y="138" w="39" h="40" pX="0.666667" pY="0.9"/>
-    <sprite n="aldeano_die_minning/066_mVillager_die_minning.bmp" direction="north" x="487" y="138" w="41" h="40" pX="0.658537" pY="1.025"/>
-    <sprite n="aldeano_die_minning/067_mVillager_die_minning.bmp" direction="north" x="530" y="138" w="43" h="32" pX="0.627907" pY="1"/>
-    <sprite n="aldeano_die_minning/068_mVillager_die_minning.bmp" direction="north" x="575" y="138" w="44" h="26" pX="0.636364" pY="1.07692"/>
-    <sprite n="aldeano_die_minning/069_mVillager_die_minning.bmp" direction="north" x="621" y="138" w="44" h="28" pX="0.636364" pY="1.07143"/>
-    <sprite n="aldeano_die_minning/070_mVillager_die_minning.bmp" direction="north" x="667" y="138" w="43" h="27" pX="0.651163" pY="1.03704"/>
-    <sprite n="aldeano_die_minning/071_mVillager_die_minning.bmp" direction="north" x="1" y="184" w="43" h="27" pX="0.627907" pY="1.03704"/>
-    <sprite n="aldeano_die_minning/072_mVillager_die_minning.bmp" direction="north" x="46" y="184" w="42" h="27" pX="0.619048" pY="1.03704"/>
-    <sprite n="aldeano_die_minning/073_mVillager_die_minning.bmp" direction="north" x="90" y="184" w="34" h="27" pX="0.558824" pY="1.03704"/>
-    <sprite n="aldeano_die_minning/074_mVillager_die_minning.bmp" direction="north" x="126" y="184" w="40" h="28" pX="0.6" pY="1.03571"/>
+
+
+    <!--Die Action-->
+    <action enum ="die" speed="300">
+      <direction enum="south">
+      <sprite n="aldeano_die_minning/000_mVillager_die_minning.bmp" x="1" y="1" w="27" h="42" pX="0.555556" pY="0.857143"/>
+      <sprite n="aldeano_die_minning/001_mVillager_die_minning.bmp" x="30" y="1" w="27" h="43" pX="0.481481" pY="0.813953"/>
+      <sprite n="aldeano_die_minning/002_mVillager_die_minning.bmp" x="59" y="1" w="28" h="41" pX="0.5" pY="0.804878"/>
+      <sprite n="aldeano_die_minning/003_mVillager_die_minning.bmp" x="89" y="1" w="38" h="37" pX="0.421053" pY="0.72973"/>
+      <sprite n="aldeano_die_minning/004_mVillager_die_minning.bmp" x="129" y="1" w="40" h="35" pX="0.35" pY="0.685714"/>
+      <sprite n="aldeano_die_minning/005_mVillager_die_minning.bmp" x="171" y="1" w="40" h="34" pX="0.325" pY="0.647059"/>
+      <sprite n="aldeano_die_minning/006_mVillager_die_minning.bmp" x="213" y="1" w="42" h="30" pX="0.357143" pY="0.4"/>
+      <sprite n="aldeano_die_minning/007_mVillager_die_minning.bmp" x="257" y="1" w="44" h="28" pX="0.386364" pY="0.107143"/>
+      <sprite n="aldeano_die_minning/008_mVillager_die_minning.bmp" x="303" y="1" w="44" h="31" pX="0.363636" pY="0.16129"/>
+      <sprite n="aldeano_die_minning/009_mVillager_die_minning.bmp" x="349" y="1" w="47" h="30" pX="0.361702" pY="0.133333"/>
+      <sprite n="aldeano_die_minning/010_mVillager_die_minning.bmp" x="398" y="1" w="46" h="29" pX="0.369565" pY="0.0344828"/>
+      <sprite n="aldeano_die_minning/011_mVillager_die_minning.bmp" x="446" y="1" w="45" h="28" pX="0.377778" pY="0"/>
+      <sprite n="aldeano_die_minning/012_mVillager_die_minning.bmp" x="493" y="1" w="44" h="27" pX="0.386364" pY="-0.037037"/>
+      <sprite n="aldeano_die_minning/013_mVillager_die_minning.bmp" x="539" y="1" w="43" h="26" pX="0.395349" pY="-0.0769231"/>
+      <sprite n="aldeano_die_minning/014_mVillager_die_minning.bmp" x="584" y="1" w="43" h="27" pX="0.395349" pY="-0.0740741"/>
+      </direction>
+
+      <direction enum="south-west">
+      <sprite n="aldeano_die_minning/015_mVillager_die_minning.bmp" x="629" y="1" w="26" h="43" pX="0.653846" pY="0.860465"/>
+      <sprite n="aldeano_die_minning/016_mVillager_die_minning.bmp" x="657" y="1" w="30" h="44" pX="0.766667" pY="0.840909"/>
+      <sprite n="aldeano_die_minning/017_mVillager_die_minning.bmp" x="689" y="1" w="28" h="43" pX="0.75" pY="0.790698"/>
+      <sprite n="aldeano_die_minning/018_mVillager_die_minning.bmp" x="719" y="1" w="27" h="42" pX="0.666667" pY="0.666667"/>
+      <sprite n="aldeano_die_minning/019_mVillager_die_minning.bmp" x="1" y="47" w="27" h="42" pX="0.666667" pY="0.595238"/>
+      <sprite n="aldeano_die_minning/020_mVillager_die_minning.bmp" x="30" y="47" w="30" h="38" pX="0.633333" pY="0.631579"/>
+      <sprite n="aldeano_die_minning/021_mVillager_die_minning.bmp" x="62" y="47" w="40" h="30" pX="0.7" pY="0.533333"/>
+      <sprite n="aldeano_die_minning/022_mVillager_die_minning.bmp" x="104" y="47" w="44" h="21" pX="0.840909" pY="0.142857"/>
+      <sprite n="aldeano_die_minning/023_mVillager_die_minning.bmp" x="150" y="47" w="43" h="30" pX="0.883721" pY="0.233333"/>
+      <sprite n="aldeano_die_minning/024_mVillager_die_minning.bmp" x="195" y="47" w="44" h="31" pX="0.886364" pY="0.225806"/>
+      <sprite n="aldeano_die_minning/025_mVillager_die_minning.bmp" x="241" y="47" w="44" h="27" pX="0.909091" pY="0.111111"/>
+      <sprite n="aldeano_die_minning/026_mVillager_die_minning.bmp" x="287" y="47" w="44" h="26" pX="0.909091" pY="0.0769231"/>
+      <sprite n="aldeano_die_minning/027_mVillager_die_minning.bmp" x="333" y="47" w="44" h="25" pX="0.931818" pY="0.08"/>
+      <sprite n="aldeano_die_minning/028_mVillager_die_minning.bmp" x="379" y="47" w="44" h="24" pX="0.931818" pY="0.0416667"/>
+      <sprite n="aldeano_die_minning/029_mVillager_die_minning.bmp" x="425" y="47" w="44" h="24" pX="0.931818" pY="0.0416667"/>
+      </direction>
+
+      <direction enum="west">
+      <sprite n="aldeano_die_minning/030_mVillager_die_minning.bmp" x="471" y="47" w="22" h="43" pX="0.590909" pY="0.883721"/>
+      <sprite n="aldeano_die_minning/031_mVillager_die_minning.bmp" x="495" y="47" w="28" h="41" pX="0.821429" pY="0.878049"/>
+      <sprite n="aldeano_die_minning/032_mVillager_die_minning.bmp" x="525" y="47" w="37" h="40" pX="0.837838" pY="0.85"/>
+      <sprite n="aldeano_die_minning/033_mVillager_die_minning.bmp" x="564" y="47" w="37" h="36" pX="0.810811" pY="0.777778"/>
+      <sprite n="aldeano_die_minning/034_mVillager_die_minning.bmp" x="603" y="47" w="34" h="40" pX="0.794118" pY="0.675"/>
+      <sprite n="aldeano_die_minning/035_mVillager_die_minning.bmp" x="639" y="47" w="30" h="42" pX="0.833333" pY="0.690476"/>
+      <sprite n="aldeano_die_minning/036_mVillager_die_minning.bmp" x="671" y="47" w="38" h="40" pX="0.947368" pY="0.65"/>
+      <sprite n="aldeano_die_minning/037_mVillager_die_minning.bmp" x="1" y="92" w="47" h="27" pX="1.02128" pY="0.481481"/>
+      <sprite n="aldeano_die_minning/038_mVillager_die_minning.bmp" x="50" y="92" w="48" h="23" pX="1.04167" pY="0.434783"/>
+      <sprite n="aldeano_die_minning/039_mVillager_die_minning.bmp" x="100" y="92" w="48" h="23" pX="1.0625" pY="0.434783"/>
+      <sprite n="aldeano_die_minning/040_mVillager_die_minning.bmp" x="150" y="92" w="48" h="23" pX="1.0625" pY="0.434783"/>
+      <sprite n="aldeano_die_minning/041_mVillager_die_minning.bmp" x="200" y="92" w="48" h="24" pX="1.08333" pY="0.458333"/>
+      <sprite n="aldeano_die_minning/042_mVillager_die_minning.bmp" x="250" y="92" w="47" h="23" pX="1.10638" pY="0.478261"/>
+      <sprite n="aldeano_die_minning/043_mVillager_die_minning.bmp" x="299" y="92" w="48" h="22" pX="1.10417" pY="0.454545"/>
+      <sprite n="aldeano_die_minning/044_mVillager_die_minning.bmp" x="349" y="92" w="48" h="23" pX="1.10417" pY="0.434783"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="aldeano_die_minning/045_mVillager_die_minning.bmp" x="399" y="92" w="24" h="44" pX="0.666667" pY="0.863636"/>
+      <sprite n="aldeano_die_minning/046_mVillager_die_minning.bmp" x="425" y="92" w="26" h="40" pX="0.692308" pY="0.9"/>
+      <sprite n="aldeano_die_minning/047_mVillager_die_minning.bmp" x="453" y="92" w="33" h="39" pX="0.818182" pY="0.871795"/>
+      <sprite n="aldeano_die_minning/048_mVillager_die_minning.bmp" x="488" y="92" w="38" h="34" pX="0.868421" pY="0.852941"/>
+      <sprite n="aldeano_die_minning/049_mVillager_die_minning.bmp" x="528" y="92" w="38" h="34" pX="0.868421" pY="0.823529"/>
+      <sprite n="aldeano_die_minning/050_mVillager_die_minning.bmp" x="568" y="92" w="39" h="40" pX="0.846154" pY="0.875"/>
+      <sprite n="aldeano_die_minning/051_mVillager_die_minning.bmp" x="609" y="92" w="39" h="38" pX="0.948718" pY="0.973684"/>
+      <sprite n="aldeano_die_minning/052_mVillager_die_minning.bmp" x="650" y="92" w="44" h="30" pX="0.931818" pY="0.866667"/>
+      <sprite n="aldeano_die_minning/053_mVillager_die_minning.bmp" x="696" y="92" w="45" h="24" pX="0.977778" pY="0.916667"/>
+      <sprite n="aldeano_die_minning/054_mVillager_die_minning.bmp" x="1" y="138" w="45" h="27" pX="1" pY="0.888889"/>
+      <sprite n="aldeano_die_minning/055_mVillager_die_minning.bmp" x="48" y="138" w="46" h="25" pX="1" pY="0.88"/>
+      <sprite n="aldeano_die_minning/056_mVillager_die_minning.bmp" x="96" y="138" w="45" h="25" pX="1" pY="0.88"/>
+      <sprite n="aldeano_die_minning/057_mVillager_die_minning.bmp" x="143" y="138" w="45" h="24" pX="1" pY="0.916667"/>
+      <sprite n="aldeano_die_minning/058_mVillager_die_minning.bmp" x="190" y="138" w="44" h="24" pX="1.02273" pY="0.916667"/>
+      <sprite n="aldeano_die_minning/059_mVillager_die_minning.bmp" x="236" y="138" w="44" h="25" pX="1" pY="0.88"/>
+      </direction>
+
+      <direction enum="north">
+      <sprite n="aldeano_die_minning/060_mVillager_die_minning.bmp" x="282" y="138" w="26" h="44" pX="0.461538" pY="0.863636"/>
+      <sprite n="aldeano_die_minning/061_mVillager_die_minning.bmp" x="310" y="138" w="27" h="40" pX="0.518519" pY="0.9"/>
+      <sprite n="aldeano_die_minning/062_mVillager_die_minning.bmp" x="339" y="138" w="29" h="40" pX="0.551724" pY="0.925"/>
+      <sprite n="aldeano_die_minning/063_mVillager_die_minning.bmp" x="370" y="138" w="35" h="36" pX="0.571429" pY="0.888889"/>
+      <sprite n="aldeano_die_minning/064_mVillager_die_minning.bmp" x="407" y="138" w="37" h="33" pX="0.648649" pY="0.848485"/>
+      <sprite n="aldeano_die_minning/065_mVillager_die_minning.bmp" x="446" y="138" w="39" h="40" pX="0.666667" pY="0.9"/>
+      <sprite n="aldeano_die_minning/066_mVillager_die_minning.bmp" x="487" y="138" w="41" h="40" pX="0.658537" pY="1.025"/>
+      <sprite n="aldeano_die_minning/067_mVillager_die_minning.bmp" x="530" y="138" w="43" h="32" pX="0.627907" pY="1"/>
+      <sprite n="aldeano_die_minning/068_mVillager_die_minning.bmp" x="575" y="138" w="44" h="26" pX="0.636364" pY="1.07692"/>
+      <sprite n="aldeano_die_minning/069_mVillager_die_minning.bmp" x="621" y="138" w="44" h="28" pX="0.636364" pY="1.07143"/>
+      <sprite n="aldeano_die_minning/070_mVillager_die_minning.bmp" x="667" y="138" w="43" h="27" pX="0.651163" pY="1.03704"/>
+      <sprite n="aldeano_die_minning/071_mVillager_die_minning.bmp" x="1" y="184" w="43" h="27" pX="0.627907" pY="1.03704"/>
+      <sprite n="aldeano_die_minning/072_mVillager_die_minning.bmp" x="46" y="184" w="42" h="27" pX="0.619048" pY="1.03704"/>
+      <sprite n="aldeano_die_minning/073_mVillager_die_minning.bmp" x="90" y="184" w="34" h="27" pX="0.558824" pY="1.03704"/>
+      <sprite n="aldeano_die_minning/074_mVillager_die_minning.bmp" x="126" y="184" w="40" h="28" pX="0.6" pY="1.03571"/>
+      </direction>
     </action>
 
-    <!-- Disapear Action-->
-    <action enum= "disapear" speed="300">
-    <sprite n="aldeano_dissapear_minning/000_mVillager_dissapear_minning.bmp" direction="south" x="168" y="184" w="43" h="27" pX="0.395349" pY="-0.0740741"/>
-    <sprite n="aldeano_dissapear_minning/001_mVillager_dissapear_minning.bmp" direction="south" x="213" y="184" w="43" h="26" pX="0.395349" pY="-0.0769231"/>
-    <sprite n="aldeano_dissapear_minning/002_mVillager_dissapear_minning.bmp" direction="south" x="258" y="184" w="43" h="26" pX="0.395349" pY="-0.0769231"/>
-    <sprite n="aldeano_dissapear_minning/003_mVillager_dissapear_minning.bmp" direction="south" x="303" y="184" w="42" h="26" pX="0.380952" pY="-0.230769"/>
-    <sprite n="aldeano_dissapear_minning/004_mVillager_dissapear_minning.bmp" direction="south" x="347" y="184" w="42" h="25" pX="0.333333" pY="-0.12"/>
-    <sprite n="aldeano_dissapear_minning/005_mVillager_dissapear_minning.bmp" direction="south-west" x="391" y="184" w="44" h="24" pX="0.931818" pY="0.0416667"/>
-    <sprite n="aldeano_dissapear_minning/006_mVillager_dissapear_minning.bmp" direction="south-west" x="437" y="184" w="43" h="24" pX="0.930233" pY="0.0416667"/>
-    <sprite n="aldeano_dissapear_minning/007_mVillager_dissapear_minning.bmp" direction="south-west" x="482" y="184" w="42" h="24" pX="0.928571" pY="0.0416667"/>
-    <sprite n="aldeano_dissapear_minning/008_mVillager_dissapear_minning.bmp" direction="south-west" x="526" y="184" w="42" h="24" pX="0.928571" pY="0.0416667"/>
-    <sprite n="aldeano_dissapear_minning/009_mVillager_dissapear_minning.bmp" direction="south-west" x="570" y="184" w="40" h="26" pX="1" pY="0.115385"/>
-    <sprite n="aldeano_dissapear_minning/010_mVillager_dissapear_minning.bmp" direction="west" x="612" y="184" w="48" h="23" pX="1.10417" pY="0.434783"/>
-    <sprite n="aldeano_dissapear_minning/011_mVillager_dissapear_minning.bmp" direction="west" x="662" y="184" w="47" h="21" pX="1.10638" pY="0.380952"/>
-    <sprite n="aldeano_dissapear_minning/012_mVillager_dissapear_minning.bmp" direction="west" x="1" y="214" w="46" h="21" pX="1.1087" pY="0.380952"/>
-    <sprite n="aldeano_dissapear_minning/013_mVillager_dissapear_minning.bmp" direction="west" x="49" y="214" w="45" h="20" pX="1.11111" pY="0.35"/>
-    <sprite n="aldeano_dissapear_minning/014_mVillager_dissapear_minning.bmp" direction="west" x="96" y="214" w="45" h="19" pX="1.13333" pY="0.368421"/>
-    <sprite n="aldeano_dissapear_minning/015_mVillager_dissapear_minning.bmp" direction="north-west" x="143" y="214" w="44" h="25" pX="1" pY="0.88"/>
-    <sprite n="aldeano_dissapear_minning/016_mVillager_dissapear_minning.bmp" direction="north-west" x="189" y="214" w="44" h="24" pX="1" pY="0.916667"/>
-    <sprite n="aldeano_dissapear_minning/017_mVillager_dissapear_minning.bmp" direction="north-west" x="235" y="214" w="44" h="23" pX="1" pY="0.913043"/>
-    <sprite n="aldeano_dissapear_minning/018_mVillager_dissapear_minning.bmp" direction="north-west" x="281" y="214" w="44" h="23" pX="1" pY="0.913043"/>
-    <sprite n="aldeano_dissapear_minning/019_mVillager_dissapear_minning.bmp" direction="north-west" x="327" y="214" w="44" h="21" pX="1" pY="1"/>
-    <sprite n="aldeano_dissapear_minning/020_mVillager_dissapear_minning.bmp" direction="north" x="373" y="214" w="40" h="28" pX="0.6" pY="1.03571"/>
-    <sprite n="aldeano_dissapear_minning/021_mVillager_dissapear_minning.bmp" direction="north" x="415" y="214" w="40" h="27" pX="0.6" pY="1.03704"/>
-    <sprite n="aldeano_dissapear_minning/022_mVillager_dissapear_minning.bmp" direction="north" x="457" y="214" w="40" h="27" pX="0.6" pY="1.03704"/>
-    <sprite n="aldeano_dissapear_minning/023_mVillager_dissapear_minning.bmp" direction="north" x="499" y="214" w="38" h="27" pX="0.631579" pY="1.03704"/>
-    <sprite n="aldeano_dissapear_minning/024_mVillager_dissapear_minning.bmp" direction="north" x="539" y="214" w="39" h="25" pX="0.615385" pY="1.2"/>
+    <!--Disapear Action-->
+    <action enum ="disapear" speed="300">
+      <direction enum="south">
+      <sprite n="aldeano_dissapear_minning/000_mVillager_dissapear_minning.bmp" x="168" y="184" w="43" h="27" pX="0.395349" pY="-0.0740741"/>
+      <sprite n="aldeano_dissapear_minning/001_mVillager_dissapear_minning.bmp" x="213" y="184" w="43" h="26" pX="0.395349" pY="-0.0769231"/>
+      <sprite n="aldeano_dissapear_minning/002_mVillager_dissapear_minning.bmp" x="258" y="184" w="43" h="26" pX="0.395349" pY="-0.0769231"/>
+      <sprite n="aldeano_dissapear_minning/003_mVillager_dissapear_minning.bmp" x="303" y="184" w="42" h="26" pX="0.380952" pY="-0.230769"/>
+      <sprite n="aldeano_dissapear_minning/004_mVillager_dissapear_minning.bmp" x="347" y="184" w="42" h="25" pX="0.333333" pY="-0.12"/>
+      </direction>
+
+      <direction enum="south-west">
+      <sprite n="aldeano_dissapear_minning/005_mVillager_dissapear_minning.bmp" x="391" y="184" w="44" h="24" pX="0.931818" pY="0.0416667"/>
+      <sprite n="aldeano_dissapear_minning/006_mVillager_dissapear_minning.bmp" x="437" y="184" w="43" h="24" pX="0.930233" pY="0.0416667"/>
+      <sprite n="aldeano_dissapear_minning/007_mVillager_dissapear_minning.bmp" x="482" y="184" w="42" h="24" pX="0.928571" pY="0.0416667"/>
+      <sprite n="aldeano_dissapear_minning/008_mVillager_dissapear_minning.bmp" x="526" y="184" w="42" h="24" pX="0.928571" pY="0.0416667"/>
+      <sprite n="aldeano_dissapear_minning/009_mVillager_dissapear_minning.bmp" x="570" y="184" w="40" h="26" pX="1" pY="0.115385"/>
+      </direction>
+
+      <direction enum="west">
+      <sprite n="aldeano_dissapear_minning/010_mVillager_dissapear_minning.bmp" x="612" y="184" w="48" h="23" pX="1.10417" pY="0.434783"/>
+      <sprite n="aldeano_dissapear_minning/011_mVillager_dissapear_minning.bmp" x="662" y="184" w="47" h="21" pX="1.10638" pY="0.380952"/>
+      <sprite n="aldeano_dissapear_minning/012_mVillager_dissapear_minning.bmp" x="1" y="214" w="46" h="21" pX="1.1087" pY="0.380952"/>
+      <sprite n="aldeano_dissapear_minning/013_mVillager_dissapear_minning.bmp" x="49" y="214" w="45" h="20" pX="1.11111" pY="0.35"/>
+      <sprite n="aldeano_dissapear_minning/014_mVillager_dissapear_minning.bmp" x="96" y="214" w="45" h="19" pX="1.13333" pY="0.368421"/>
+      </direction>
+
+      <direction enum="north-west">
+      <sprite n="aldeano_dissapear_minning/015_mVillager_dissapear_minning.bmp" x="143" y="214" w="44" h="25" pX="1" pY="0.88"/>
+      <sprite n="aldeano_dissapear_minning/016_mVillager_dissapear_minning.bmp" x="189" y="214" w="44" h="24" pX="1" pY="0.916667"/>
+      <sprite n="aldeano_dissapear_minning/017_mVillager_dissapear_minning.bmp" x="235" y="214" w="44" h="23" pX="1" pY="0.913043"/>
+      <sprite n="aldeano_dissapear_minning/018_mVillager_dissapear_minning.bmp" x="281" y="214" w="44" h="23" pX="1" pY="0.913043"/>
+      <sprite n="aldeano_dissapear_minning/019_mVillager_dissapear_minning.bmp" x="327" y="214" w="44" h="21" pX="1" pY="1"/>
+      </direction>
+
+      <direction enum="north">
+      <sprite n="aldeano_dissapear_minning/020_mVillager_dissapear_minning.bmp" x="373" y="214" w="40" h="28" pX="0.6" pY="1.03571"/>
+      <sprite n="aldeano_dissapear_minning/021_mVillager_dissapear_minning.bmp" x="415" y="214" w="40" h="27" pX="0.6" pY="1.03704"/>
+      <sprite n="aldeano_dissapear_minning/022_mVillager_dissapear_minning.bmp" x="457" y="214" w="40" h="27" pX="0.6" pY="1.03704"/>
+      <sprite n="aldeano_dissapear_minning/023_mVillager_dissapear_minning.bmp" x="499" y="214" w="38" h="27" pX="0.631579" pY="1.03704"/>
+      <sprite n="aldeano_dissapear_minning/024_mVillager_dissapear_minning.bmp" x="539" y="214" w="39" h="25" pX="0.615385" pY="1.2"/>
+      </direction>
     </action>
 
-    <!-- Idle Action-->
-    <action enum= "idle" speed="300">
-    <sprite n="aldeano_idle_minning/000_mVillager_idle_minning.bmp" direction="south" x="580" y="214" w="28" h="42" pX="0.357143" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/001_mVillager_idle_minning.bmp" direction="south" x="610" y="214" w="26" h="42" pX="0.346154" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/002_mVillager_idle_minning.bmp" direction="south" x="638" y="214" w="25" h="42" pX="0.36" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/003_mVillager_idle_minning.bmp" direction="south" x="665" y="214" w="26" h="42" pX="0.346154" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/004_mVillager_idle_minning.bmp" direction="south" x="693" y="214" w="26" h="42" pX="0.346154" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/005_mVillager_idle_minning.bmp" direction="south" x="721" y="214" w="26" h="42" pX="0.346154" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/006_mVillager_idle_minning.bmp" direction="south" x="1" y="258" w="26" h="42" pX="0.346154" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/007_mVillager_idle_minning.bmp" direction="south" x="29" y="258" w="26" h="42" pX="0.346154" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/008_mVillager_idle_minning.bmp" direction="south" x="57" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/009_mVillager_idle_minning.bmp" direction="south" x="86" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/010_mVillager_idle_minning.bmp" direction="south" x="115" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/011_mVillager_idle_minning.bmp" direction="south" x="144" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/012_mVillager_idle_minning.bmp" direction="south" x="173" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/013_mVillager_idle_minning.bmp" direction="south" x="202" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/014_mVillager_idle_minning.bmp" direction="south" x="231" y="258" w="28" h="42" pX="0.357143" pY="0.857143"/>
-    <sprite n="aldeano_idle_minning/015_mVillager_idle_minning.bmp" direction="south-west" x="261" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/016_mVillager_idle_minning.bmp" direction="south-west" x="291" y="258" w="29" h="40" pX="0.37931" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/017_mVillager_idle_minning.bmp" direction="south-west" x="322" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/018_mVillager_idle_minning.bmp" direction="south-west" x="354" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/019_mVillager_idle_minning.bmp" direction="south-west" x="386" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/020_mVillager_idle_minning.bmp" direction="south-west" x="418" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/021_mVillager_idle_minning.bmp" direction="south-west" x="450" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/022_mVillager_idle_minning.bmp" direction="south-west" x="482" y="258" w="29" h="40" pX="0.413793" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/023_mVillager_idle_minning.bmp" direction="south-west" x="513" y="258" w="29" h="40" pX="0.413793" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/024_mVillager_idle_minning.bmp" direction="south-west" x="544" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/025_mVillager_idle_minning.bmp" direction="south-west" x="574" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/026_mVillager_idle_minning.bmp" direction="south-west" x="604" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/027_mVillager_idle_minning.bmp" direction="south-west" x="634" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/028_mVillager_idle_minning.bmp" direction="south-west" x="664" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/029_mVillager_idle_minning.bmp" direction="south-west" x="694" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
-    <sprite n="aldeano_idle_minning/030_mVillager_idle_minning.bmp" direction="west" x="724" y="258" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/031_mVillager_idle_minning.bmp" direction="west" x="1" y="302" w="21" h="41" pX="0.47619" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/032_mVillager_idle_minning.bmp" direction="west" x="24" y="302" w="21" h="41" pX="0.47619" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/033_mVillager_idle_minning.bmp" direction="west" x="47" y="302" w="21" h="41" pX="0.47619" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/034_mVillager_idle_minning.bmp" direction="west" x="70" y="302" w="21" h="41" pX="0.47619" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/035_mVillager_idle_minning.bmp" direction="west" x="93" y="302" w="22" h="41" pX="0.5" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/036_mVillager_idle_minning.bmp" direction="west" x="117" y="302" w="20" h="41" pX="0.5" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/037_mVillager_idle_minning.bmp" direction="west" x="139" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/038_mVillager_idle_minning.bmp" direction="west" x="160" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/039_mVillager_idle_minning.bmp" direction="west" x="181" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/040_mVillager_idle_minning.bmp" direction="west" x="202" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/041_mVillager_idle_minning.bmp" direction="west" x="223" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/042_mVillager_idle_minning.bmp" direction="west" x="244" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/043_mVillager_idle_minning.bmp" direction="west" x="265" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/044_mVillager_idle_minning.bmp" direction="west" x="286" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_idle_minning/045_mVillager_idle_minning.bmp" direction="north-west" x="307" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/046_mVillager_idle_minning.bmp" direction="north-west" x="324" y="302" w="16" h="43" pX="0.5625" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/047_mVillager_idle_minning.bmp" direction="north-west" x="342" y="302" w="16" h="43" pX="0.5625" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/048_mVillager_idle_minning.bmp" direction="north-west" x="360" y="302" w="15" h="43" pX="0.6" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/049_mVillager_idle_minning.bmp" direction="north-west" x="377" y="302" w="15" h="43" pX="0.6" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/050_mVillager_idle_minning.bmp" direction="north-west" x="394" y="302" w="15" h="43" pX="0.6" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/051_mVillager_idle_minning.bmp" direction="north-west" x="411" y="302" w="15" h="43" pX="0.6" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/052_mVillager_idle_minning.bmp" direction="north-west" x="428" y="302" w="16" h="43" pX="0.625" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/053_mVillager_idle_minning.bmp" direction="north-west" x="446" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/054_mVillager_idle_minning.bmp" direction="north-west" x="463" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/055_mVillager_idle_minning.bmp" direction="north-west" x="480" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/056_mVillager_idle_minning.bmp" direction="north-west" x="497" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/057_mVillager_idle_minning.bmp" direction="north-west" x="514" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/058_mVillager_idle_minning.bmp" direction="north-west" x="531" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/059_mVillager_idle_minning.bmp" direction="north-west" x="548" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
-    <sprite n="aldeano_idle_minning/060_mVillager_idle_minning.bmp" direction="north" x="565" y="302" w="26" h="44" pX="0.692308" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/061_mVillager_idle_minning.bmp" direction="north" x="593" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/062_mVillager_idle_minning.bmp" direction="north" x="620" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/063_mVillager_idle_minning.bmp" direction="north" x="647" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/064_mVillager_idle_minning.bmp" direction="north" x="674" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/065_mVillager_idle_minning.bmp" direction="north" x="701" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/066_mVillager_idle_minning.bmp" direction="north" x="1" y="348" w="25" h="44" pX="0.68" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/067_mVillager_idle_minning.bmp" direction="north" x="28" y="348" w="25" h="44" pX="0.68" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/068_mVillager_idle_minning.bmp" direction="north" x="55" y="348" w="25" h="44" pX="0.68" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/069_mVillager_idle_minning.bmp" direction="north" x="82" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/070_mVillager_idle_minning.bmp" direction="north" x="110" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/071_mVillager_idle_minning.bmp" direction="north" x="138" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/072_mVillager_idle_minning.bmp" direction="north" x="166" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/073_mVillager_idle_minning.bmp" direction="north" x="194" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
-    <sprite n="aldeano_idle_minning/074_mVillager_idle_minning.bmp" direction="north" x="222" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
+    <!--Idle Action-->
+    <action enum ="idle" speed="300">
+      <direction enum="south">
+      <sprite n="aldeano_idle_minning/000_mVillager_idle_minning.bmp" x="580" y="214" w="28" h="42" pX="0.357143" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/001_mVillager_idle_minning.bmp" x="610" y="214" w="26" h="42" pX="0.346154" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/002_mVillager_idle_minning.bmp" x="638" y="214" w="25" h="42" pX="0.36" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/003_mVillager_idle_minning.bmp" x="665" y="214" w="26" h="42" pX="0.346154" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/004_mVillager_idle_minning.bmp" x="693" y="214" w="26" h="42" pX="0.346154" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/005_mVillager_idle_minning.bmp" x="721" y="214" w="26" h="42" pX="0.346154" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/006_mVillager_idle_minning.bmp" x="1" y="258" w="26" h="42" pX="0.346154" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/007_mVillager_idle_minning.bmp" x="29" y="258" w="26" h="42" pX="0.346154" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/008_mVillager_idle_minning.bmp" x="57" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/009_mVillager_idle_minning.bmp" x="86" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/010_mVillager_idle_minning.bmp" x="115" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/011_mVillager_idle_minning.bmp" x="144" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/012_mVillager_idle_minning.bmp" x="173" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/013_mVillager_idle_minning.bmp" x="202" y="258" w="27" h="42" pX="0.37037" pY="0.857143"/>
+      <sprite n="aldeano_idle_minning/014_mVillager_idle_minning.bmp" x="231" y="258" w="28" h="42" pX="0.357143" pY="0.857143"/>
+      </direction>
+
+      <direction enum="south-west">
+      <sprite n="aldeano_idle_minning/015_mVillager_idle_minning.bmp" x="261" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/016_mVillager_idle_minning.bmp" x="291" y="258" w="29" h="40" pX="0.37931" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/017_mVillager_idle_minning.bmp" x="322" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/018_mVillager_idle_minning.bmp" x="354" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/019_mVillager_idle_minning.bmp" x="386" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/020_mVillager_idle_minning.bmp" x="418" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/021_mVillager_idle_minning.bmp" x="450" y="258" w="30" h="40" pX="0.4" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/022_mVillager_idle_minning.bmp" x="482" y="258" w="29" h="40" pX="0.413793" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/023_mVillager_idle_minning.bmp" x="513" y="258" w="29" h="40" pX="0.413793" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/024_mVillager_idle_minning.bmp" x="544" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/025_mVillager_idle_minning.bmp" x="574" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/026_mVillager_idle_minning.bmp" x="604" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/027_mVillager_idle_minning.bmp" x="634" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/028_mVillager_idle_minning.bmp" x="664" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
+      <sprite n="aldeano_idle_minning/029_mVillager_idle_minning.bmp" x="694" y="258" w="28" h="40" pX="0.392857" pY="0.9"/>
+      </direction>
+
+      <direction enum="west">
+      <sprite n="aldeano_idle_minning/030_mVillager_idle_minning.bmp" x="724" y="258" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/031_mVillager_idle_minning.bmp" x="1" y="302" w="21" h="41" pX="0.47619" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/032_mVillager_idle_minning.bmp" x="24" y="302" w="21" h="41" pX="0.47619" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/033_mVillager_idle_minning.bmp" x="47" y="302" w="21" h="41" pX="0.47619" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/034_mVillager_idle_minning.bmp" x="70" y="302" w="21" h="41" pX="0.47619" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/035_mVillager_idle_minning.bmp" x="93" y="302" w="22" h="41" pX="0.5" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/036_mVillager_idle_minning.bmp" x="117" y="302" w="20" h="41" pX="0.5" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/037_mVillager_idle_minning.bmp" x="139" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/038_mVillager_idle_minning.bmp" x="160" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/039_mVillager_idle_minning.bmp" x="181" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/040_mVillager_idle_minning.bmp" x="202" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/041_mVillager_idle_minning.bmp" x="223" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/042_mVillager_idle_minning.bmp" x="244" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/043_mVillager_idle_minning.bmp" x="265" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      <sprite n="aldeano_idle_minning/044_mVillager_idle_minning.bmp" x="286" y="302" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      </direction>
+
+      <direction enum="north-west">
+      <sprite n="aldeano_idle_minning/045_mVillager_idle_minning.bmp" x="307" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/046_mVillager_idle_minning.bmp" x="324" y="302" w="16" h="43" pX="0.5625" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/047_mVillager_idle_minning.bmp" x="342" y="302" w="16" h="43" pX="0.5625" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/048_mVillager_idle_minning.bmp" x="360" y="302" w="15" h="43" pX="0.6" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/049_mVillager_idle_minning.bmp" x="377" y="302" w="15" h="43" pX="0.6" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/050_mVillager_idle_minning.bmp" x="394" y="302" w="15" h="43" pX="0.6" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/051_mVillager_idle_minning.bmp" x="411" y="302" w="15" h="43" pX="0.6" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/052_mVillager_idle_minning.bmp" x="428" y="302" w="16" h="43" pX="0.625" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/053_mVillager_idle_minning.bmp" x="446" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/054_mVillager_idle_minning.bmp" x="463" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/055_mVillager_idle_minning.bmp" x="480" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/056_mVillager_idle_minning.bmp" x="497" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/057_mVillager_idle_minning.bmp" x="514" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/058_mVillager_idle_minning.bmp" x="531" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
+      <sprite n="aldeano_idle_minning/059_mVillager_idle_minning.bmp" x="548" y="302" w="15" h="43" pX="0.666667" pY="0.860465"/>
+      </direction>
+
+      <direction enum="north">
+      <sprite n="aldeano_idle_minning/060_mVillager_idle_minning.bmp" x="565" y="302" w="26" h="44" pX="0.692308" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/061_mVillager_idle_minning.bmp" x="593" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/062_mVillager_idle_minning.bmp" x="620" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/063_mVillager_idle_minning.bmp" x="647" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/064_mVillager_idle_minning.bmp" x="674" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/065_mVillager_idle_minning.bmp" x="701" y="302" w="25" h="44" pX="0.68" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/066_mVillager_idle_minning.bmp" x="1" y="348" w="25" h="44" pX="0.68" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/067_mVillager_idle_minning.bmp" x="28" y="348" w="25" h="44" pX="0.68" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/068_mVillager_idle_minning.bmp" x="55" y="348" w="25" h="44" pX="0.68" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/069_mVillager_idle_minning.bmp" x="82" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/070_mVillager_idle_minning.bmp" x="110" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/071_mVillager_idle_minning.bmp" x="138" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/072_mVillager_idle_minning.bmp" x="166" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/073_mVillager_idle_minning.bmp" x="194" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
+      <sprite n="aldeano_idle_minning/074_mVillager_idle_minning.bmp" x="222" y="348" w="26" h="44" pX="0.692308" pY="0.863636"/>
+      </direction>
     </action>
 
-    <!--Minning Action-->
-    <action enum ="minning" speed="300">
-    <sprite n="aldeano_minning/000_mVillager_minning.bmp" direction="south" x="250" y="348" w="28" h="42" pX="0.357143" pY="0.857143"/>
-    <sprite n="aldeano_minning/001_mVillager_minning.bmp" direction="south" x="280" y="348" w="29" h="40" pX="0.275862" pY="0.85"/>
-    <sprite n="aldeano_minning/002_mVillager_minning.bmp" direction="south" x="311" y="348" w="33" h="39" pX="0.242424" pY="0.794872"/>
-    <sprite n="aldeano_minning/003_mVillager_minning.bmp" direction="south" x="346" y="348" w="35" h="39" pX="0.228571" pY="0.794872"/>
-    <sprite n="aldeano_minning/004_mVillager_minning.bmp" direction="south" x="383" y="348" w="38" h="43" pX="0.184211" pY="0.813953"/>
-    <sprite n="aldeano_minning/005_mVillager_minning.bmp" direction="south" x="423" y="348" w="31" h="50" pX="0.258065" pY="0.82"/>
-    <sprite n="aldeano_minning/006_mVillager_minning.bmp" direction="south" x="456" y="348" w="19" h="51" pX="0.421053" pY="0.843137"/>
-    <sprite n="aldeano_minning/007_mVillager_minning.bmp" direction="south" x="477" y="348" w="19" h="39" pX="0.473684" pY="0.794872"/>
-    <sprite n="aldeano_minning/008_mVillager_minning.bmp" direction="south" x="498" y="348" w="19" h="61" pX="0.473684" pY="0.901639"/>
-    <sprite n="aldeano_minning/009_mVillager_minning.bmp" direction="south" x="519" y="348" w="18" h="40" pX="0.444444" pY="0.45"/>
-    <sprite n="aldeano_minning/010_mVillager_minning.bmp" direction="south" x="539" y="348" w="18" h="39" pX="0.444444" pY="0.461538"/>
-    <sprite n="aldeano_minning/011_mVillager_minning.bmp" direction="south" x="559" y="348" w="18" h="39" pX="0.444444" pY="0.487179"/>
-    <sprite n="aldeano_minning/012_mVillager_minning.bmp" direction="south" x="579" y="348" w="24" h="36" pX="0.333333" pY="0.638889"/>
-    <sprite n="aldeano_minning/013_mVillager_minning.bmp" direction="south" x="605" y="348" w="30" h="35" pX="0.266667" pY="0.828571"/>
-    <sprite n="aldeano_minning/014_mVillager_minning.bmp" direction="south" x="637" y="348" w="31" h="39" pX="0.290323" pY="0.846154"/>
-    <sprite n="aldeano_minning/015_mVillager_minning.bmp" direction="south-west" x="670" y="348" w="28" h="40" pX="0.392857" pY="0.9"/>
-    <sprite n="aldeano_minning/016_mVillager_minning.bmp" direction="south-west" x="700" y="348" w="31" h="37" pX="0.387097" pY="0.891892"/>
-    <sprite n="aldeano_minning/017_mVillager_minning.bmp" direction="south-west" x="1" y="411" w="34" h="35" pX="0.352941" pY="0.828571"/>
-    <sprite n="aldeano_minning/018_mVillager_minning.bmp" direction="south-west" x="37" y="411" w="39" h="34" pX="0.333333" pY="0.764706"/>
-    <sprite n="aldeano_minning/019_mVillager_minning.bmp" direction="south-west" x="78" y="411" w="42" h="37" pX="0.333333" pY="0.756757"/>
-    <sprite n="aldeano_minning/020_mVillager_minning.bmp" direction="south-west" x="122" y="411" w="37" h="44" pX="0.378378" pY="0.795455"/>
-    <sprite n="aldeano_minning/021_mVillager_minning.bmp" direction="south-west" x="161" y="411" w="32" h="44" pX="0.4375" pY="0.863636"/>
-    <sprite n="aldeano_minning/022_mVillager_minning.bmp" direction="south-west" x="195" y="411" w="33" h="38" pX="0.424242" pY="0.842105"/>
-    <sprite n="aldeano_minning/023_mVillager_minning.bmp" direction="south-west" x="230" y="411" w="34" h="56" pX="0.382353" pY="0.910714"/>
-    <sprite n="aldeano_minning/024_mVillager_minning.bmp" direction="south-west" x="266" y="411" w="42" h="34" pX="0.785714" pY="0.529412"/>
-    <sprite n="aldeano_minning/025_mVillager_minning.bmp" direction="south-west" x="310" y="411" w="39" h="33" pX="0.794872" pY="0.545455"/>
-    <sprite n="aldeano_minning/026_mVillager_minning.bmp" direction="south-west" x="351" y="411" w="36" h="35" pX="0.75" pY="0.542857"/>
-    <sprite n="aldeano_minning/027_mVillager_minning.bmp" direction="south-west" x="389" y="411" w="25" h="37" pX="0.64" pY="0.648649"/>
-    <sprite n="aldeano_minning/028_mVillager_minning.bmp" direction="south-west" x="416" y="411" w="21" h="38" pX="0.571429" pY="0.763158"/>
-    <sprite n="aldeano_minning/029_mVillager_minning.bmp" direction="south-west" x="439" y="411" w="25" h="37" pX="0.48" pY="0.891892"/>
-    <sprite n="aldeano_minning/030_mVillager_minning.bmp" direction="west" x="466" y="411" w="19" h="41" pX="0.526316" pY="0.878049"/>
-    <sprite n="aldeano_minning/031_mVillager_minning.bmp" direction="west" x="487" y="411" w="24" h="38" pX="0.583333" pY="0.868421"/>
-    <sprite n="aldeano_minning/032_mVillager_minning.bmp" direction="west" x="513" y="411" w="28" h="38" pX="0.607143" pY="0.789474"/>
-    <sprite n="aldeano_minning/033_mVillager_minning.bmp" direction="west" x="543" y="411" w="29" h="33" pX="0.551724" pY="0.787879"/>
-    <sprite n="aldeano_minning/034_mVillager_minning.bmp" direction="west" x="574" y="411" w="29" h="39" pX="0.586207" pY="0.666667"/>
-    <sprite n="aldeano_minning/035_mVillager_minning.bmp" direction="west" x="605" y="411" w="33" h="38" pX="0.606061" pY="0.789474"/>
-    <sprite n="aldeano_minning/036_mVillager_minning.bmp" direction="west" x="640" y="411" w="38" h="37" pX="0.421053" pY="0.864865"/>
-    <sprite n="aldeano_minning/037_mVillager_minning.bmp" direction="west" x="680" y="411" w="42" h="38" pX="0.380952" pY="0.868421"/>
-    <sprite n="aldeano_minning/038_mVillager_minning.bmp" direction="west" x="1" y="469" w="42" h="46" pX="0.309524" pY="0.891304"/>
-    <sprite n="aldeano_minning/039_mVillager_minning.bmp" direction="west" x="45" y="469" w="52" h="26" pX="0.826923" pY="0.807692"/>
-    <sprite n="aldeano_minning/040_mVillager_minning.bmp" direction="west" x="99" y="469" w="49" h="25" pX="0.816327" pY="0.8"/>
-    <sprite n="aldeano_minning/041_mVillager_minning.bmp" direction="west" x="150" y="469" w="49" h="28" pX="0.816327" pY="0.821429"/>
-    <sprite n="aldeano_minning/042_mVillager_minning.bmp" direction="west" x="201" y="469" w="44" h="32" pX="0.795455" pY="0.84375"/>
-    <sprite n="aldeano_minning/043_mVillager_minning.bmp" direction="west" x="247" y="469" w="33" h="37" pX="0.727273" pY="0.864865"/>
-    <sprite n="aldeano_minning/044_mVillager_minning.bmp" direction="west" x="282" y="469" w="21" h="40" pX="0.571429" pY="0.875"/>
-    <sprite n="aldeano_minning/045_mVillager_minning.bmp" direction="north-west" x="305" y="469" w="17" h="43" pX="0.705882" pY="0.860465"/>
-    <sprite n="aldeano_minning/046_mVillager_minning.bmp" direction="north-west" x="324" y="469" w="21" h="41" pX="0.714286" pY="0.853659"/>
-    <sprite n="aldeano_minning/047_mVillager_minning.bmp" direction="north-west" x="347" y="469" w="22" h="37" pX="0.772727" pY="0.864865"/>
-    <sprite n="aldeano_minning/048_mVillager_minning.bmp" direction="north-west" x="371" y="469" w="23" h="35" pX="0.782609" pY="0.828571"/>
-    <sprite n="aldeano_minning/049_mVillager_minning.bmp" direction="north-west" x="396" y="469" w="25" h="41" pX="0.8" pY="0.682927"/>
-    <sprite n="aldeano_minning/050_mVillager_minning.bmp" direction="north-west" x="423" y="469" w="26" h="36" pX="0.807692" pY="0.861111"/>
-    <sprite n="aldeano_minning/051_mVillager_minning.bmp" direction="north-west" x="451" y="469" w="27" h="41" pX="0.481481" pY="0.878049"/>
-    <sprite n="aldeano_minning/052_mVillager_minning.bmp" direction="north-west" x="480" y="469" w="31" h="38" pX="0.419355" pY="0.868421"/>
-    <sprite n="aldeano_minning/053_mVillager_minning.bmp" direction="north-west" x="513" y="469" w="33" h="40" pX="0.363636" pY="0.875"/>
-    <sprite n="aldeano_minning/054_mVillager_minning.bmp" direction="north-west" x="548" y="469" w="37" h="31" pX="0.810811" pY="0.83871"/>
-    <sprite n="aldeano_minning/055_mVillager_minning.bmp" direction="north-west" x="587" y="469" w="35" h="30" pX="0.8" pY="0.833333"/>
-    <sprite n="aldeano_minning/056_mVillager_minning.bmp" direction="north-west" x="624" y="469" w="38" h="33" pX="0.815789" pY="0.848485"/>
-    <sprite n="aldeano_minning/057_mVillager_minning.bmp" direction="north-west" x="664" y="469" w="40" h="37" pX="0.825" pY="0.864865"/>
-    <sprite n="aldeano_minning/058_mVillager_minning.bmp" direction="north-west" x="706" y="469" w="37" h="41" pX="0.837838" pY="0.853659"/>
-    <sprite n="aldeano_minning/059_mVillager_minning.bmp" direction="north-west" x="1" y="517" w="27" h="42" pX="0.777778" pY="0.880952"/>
-    <sprite n="aldeano_minning/060_mVillager_minning.bmp" direction="north" x="30" y="517" w="26" h="44" pX="0.692308" pY="0.863636"/>
-    <sprite n="aldeano_minning/061_mVillager_minning.bmp" direction="north" x="58" y="517" w="29" h="43" pX="0.758621" pY="0.860465"/>
-    <sprite n="aldeano_minning/062_mVillager_minning.bmp" direction="north" x="89" y="517" w="32" h="40" pX="0.75" pY="0.875"/>
-    <sprite n="aldeano_minning/063_mVillager_minning.bmp" direction="north" x="123" y="517" w="35" h="38" pX="0.771429" pY="0.868421"/>
-    <sprite n="aldeano_minning/064_mVillager_minning.bmp" direction="north" x="160" y="517" w="38" h="37" pX="0.815789" pY="0.864865"/>
-    <sprite n="aldeano_minning/065_mVillager_minning.bmp" direction="north" x="200" y="517" w="32" h="40" pX="0.75" pY="0.85"/>
-    <sprite n="aldeano_minning/066_mVillager_minning.bmp" direction="north" x="234" y="517" w="21" h="41" pX="0.619048" pY="0.902439"/>
-    <sprite n="aldeano_minning/067_mVillager_minning.bmp" direction="north" x="257" y="517" w="19" h="37" pX="0.631579" pY="0.891892"/>
-    <sprite n="aldeano_minning/068_mVillager_minning.bmp" direction="north" x="278" y="517" w="19" h="40" pX="0.578947" pY="0.9"/>
-    <sprite n="aldeano_minning/069_mVillager_minning.bmp" direction="north" x="299" y="517" w="19" h="33" pX="0.578947" pY="0.848485"/>
-    <sprite n="aldeano_minning/070_mVillager_minning.bmp" direction="north" x="320" y="517" w="18" h="35" pX="0.555556" pY="0.857143"/>
-    <sprite n="aldeano_minning/071_mVillager_minning.bmp" direction="north" x="340" y="517" w="20" h="38" pX="0.6" pY="0.868421"/>
-    <sprite n="aldeano_minning/072_mVillager_minning.bmp" direction="north" x="362" y="517" w="23" h="40" pX="0.652174" pY="0.875"/>
-    <sprite n="aldeano_minning/073_mVillager_minning.bmp" direction="north" x="387" y="517" w="29" h="43" pX="0.758621" pY="0.860465"/>
-    <sprite n="aldeano_minning/074_mVillager_minning.bmp" direction="north" x="418" y="517" w="29" h="44" pX="0.758621" pY="0.863636"/>
+    <!-- Attack Action-->
+    <action enum= "attack" speed="300">
+      <direction enum="south">
+      <sprite n="aldeano_minning/000_mVillager_minning.bmp" x="250" y="348" w="28" h="42" pX="0.357143" pY="0.857143"/>
+      <sprite n="aldeano_minning/001_mVillager_minning.bmp" x="280" y="348" w="29" h="40" pX="0.275862" pY="0.85"/>
+      <sprite n="aldeano_minning/002_mVillager_minning.bmp" x="311" y="348" w="33" h="39" pX="0.242424" pY="0.794872"/>
+      <sprite n="aldeano_minning/003_mVillager_minning.bmp" x="346" y="348" w="35" h="39" pX="0.228571" pY="0.794872"/>
+      <sprite n="aldeano_minning/004_mVillager_minning.bmp" x="383" y="348" w="38" h="43" pX="0.184211" pY="0.813953"/>
+      <sprite n="aldeano_minning/005_mVillager_minning.bmp" x="423" y="348" w="31" h="50" pX="0.258065" pY="0.82"/>
+      <sprite n="aldeano_minning/006_mVillager_minning.bmp" x="456" y="348" w="19" h="51" pX="0.421053" pY="0.843137"/>
+      <sprite n="aldeano_minning/007_mVillager_minning.bmp" x="477" y="348" w="19" h="39" pX="0.473684" pY="0.794872"/>
+      <sprite n="aldeano_minning/008_mVillager_minning.bmp" x="498" y="348" w="19" h="61" pX="0.473684" pY="0.901639"/>
+      <sprite n="aldeano_minning/009_mVillager_minning.bmp" x="519" y="348" w="18" h="40" pX="0.444444" pY="0.45"/>
+      <sprite n="aldeano_minning/010_mVillager_minning.bmp" x="539" y="348" w="18" h="39" pX="0.444444" pY="0.461538"/>
+      <sprite n="aldeano_minning/011_mVillager_minning.bmp" x="559" y="348" w="18" h="39" pX="0.444444" pY="0.487179"/>
+      <sprite n="aldeano_minning/012_mVillager_minning.bmp" x="579" y="348" w="24" h="36" pX="0.333333" pY="0.638889"/>
+      <sprite n="aldeano_minning/013_mVillager_minning.bmp" x="605" y="348" w="30" h="35" pX="0.266667" pY="0.828571"/>
+      <sprite n="aldeano_minning/014_mVillager_minning.bmp" x="637" y="348" w="31" h="39" pX="0.290323" pY="0.846154"/>
+      </direction>
+
+      <direction enum="south-west">
+      <sprite n="aldeano_minning/015_mVillager_minning.bmp" x="670" y="348" w="28" h="40" pX="0.392857" pY="0.9"/>
+      <sprite n="aldeano_minning/016_mVillager_minning.bmp" x="700" y="348" w="31" h="37" pX="0.387097" pY="0.891892"/>
+      <sprite n="aldeano_minning/017_mVillager_minning.bmp" x="1" y="411" w="34" h="35" pX="0.352941" pY="0.828571"/>
+      <sprite n="aldeano_minning/018_mVillager_minning.bmp" x="37" y="411" w="39" h="34" pX="0.333333" pY="0.764706"/>
+      <sprite n="aldeano_minning/019_mVillager_minning.bmp" x="78" y="411" w="42" h="37" pX="0.333333" pY="0.756757"/>
+      <sprite n="aldeano_minning/020_mVillager_minning.bmp" x="122" y="411" w="37" h="44" pX="0.378378" pY="0.795455"/>
+      <sprite n="aldeano_minning/021_mVillager_minning.bmp" x="161" y="411" w="32" h="44" pX="0.4375" pY="0.863636"/>
+      <sprite n="aldeano_minning/022_mVillager_minning.bmp" x="195" y="411" w="33" h="38" pX="0.424242" pY="0.842105"/>
+      <sprite n="aldeano_minning/023_mVillager_minning.bmp" x="230" y="411" w="34" h="56" pX="0.382353" pY="0.910714"/>
+      <sprite n="aldeano_minning/024_mVillager_minning.bmp" x="266" y="411" w="42" h="34" pX="0.785714" pY="0.529412"/>
+      <sprite n="aldeano_minning/025_mVillager_minning.bmp" x="310" y="411" w="39" h="33" pX="0.794872" pY="0.545455"/>
+      <sprite n="aldeano_minning/026_mVillager_minning.bmp" x="351" y="411" w="36" h="35" pX="0.75" pY="0.542857"/>
+      <sprite n="aldeano_minning/027_mVillager_minning.bmp" x="389" y="411" w="25" h="37" pX="0.64" pY="0.648649"/>
+      <sprite n="aldeano_minning/028_mVillager_minning.bmp" x="416" y="411" w="21" h="38" pX="0.571429" pY="0.763158"/>
+      <sprite n="aldeano_minning/029_mVillager_minning.bmp" x="439" y="411" w="25" h="37" pX="0.48" pY="0.891892"/>
+       </direction>
+
+      <direction enum="west">
+      <sprite n="aldeano_minning/030_mVillager_minning.bmp" x="466" y="411" w="19" h="41" pX="0.526316" pY="0.878049"/>
+      <sprite n="aldeano_minning/031_mVillager_minning.bmp" x="487" y="411" w="24" h="38" pX="0.583333" pY="0.868421"/>
+      <sprite n="aldeano_minning/032_mVillager_minning.bmp" x="513" y="411" w="28" h="38" pX="0.607143" pY="0.789474"/>
+      <sprite n="aldeano_minning/033_mVillager_minning.bmp" x="543" y="411" w="29" h="33" pX="0.551724" pY="0.787879"/>
+      <sprite n="aldeano_minning/034_mVillager_minning.bmp" x="574" y="411" w="29" h="39" pX="0.586207" pY="0.666667"/>
+      <sprite n="aldeano_minning/035_mVillager_minning.bmp" x="605" y="411" w="33" h="38" pX="0.606061" pY="0.789474"/>
+      <sprite n="aldeano_minning/036_mVillager_minning.bmp" x="640" y="411" w="38" h="37" pX="0.421053" pY="0.864865"/>
+      <sprite n="aldeano_minning/037_mVillager_minning.bmp" x="680" y="411" w="42" h="38" pX="0.380952" pY="0.868421"/>
+      <sprite n="aldeano_minning/038_mVillager_minning.bmp" x="1" y="469" w="42" h="46" pX="0.309524" pY="0.891304"/>
+      <sprite n="aldeano_minning/039_mVillager_minning.bmp" x="45" y="469" w="52" h="26" pX="0.826923" pY="0.807692"/>
+      <sprite n="aldeano_minning/040_mVillager_minning.bmp" x="99" y="469" w="49" h="25" pX="0.816327" pY="0.8"/>
+      <sprite n="aldeano_minning/041_mVillager_minning.bmp" x="150" y="469" w="49" h="28" pX="0.816327" pY="0.821429"/>
+      <sprite n="aldeano_minning/042_mVillager_minning.bmp" x="201" y="469" w="44" h="32" pX="0.795455" pY="0.84375"/>
+      <sprite n="aldeano_minning/043_mVillager_minning.bmp" x="247" y="469" w="33" h="37" pX="0.727273" pY="0.864865"/>
+      <sprite n="aldeano_minning/044_mVillager_minning.bmp" x="282" y="469" w="21" h="40" pX="0.571429" pY="0.875"/>
+      </direction>
+
+      <direction enum="north-west">
+      <sprite n="aldeano_minning/045_mVillager_minning.bmp" x="305" y="469" w="17" h="43" pX="0.705882" pY="0.860465"/>
+      <sprite n="aldeano_minning/046_mVillager_minning.bmp" x="324" y="469" w="21" h="41" pX="0.714286" pY="0.853659"/>
+      <sprite n="aldeano_minning/047_mVillager_minning.bmp" x="347" y="469" w="22" h="37" pX="0.772727" pY="0.864865"/>
+      <sprite n="aldeano_minning/048_mVillager_minning.bmp" x="371" y="469" w="23" h="35" pX="0.782609" pY="0.828571"/>
+      <sprite n="aldeano_minning/049_mVillager_minning.bmp" x="396" y="469" w="25" h="41" pX="0.8" pY="0.682927"/>
+      <sprite n="aldeano_minning/050_mVillager_minning.bmp" x="423" y="469" w="26" h="36" pX="0.807692" pY="0.861111"/>
+      <sprite n="aldeano_minning/051_mVillager_minning.bmp" x="451" y="469" w="27" h="41" pX="0.481481" pY="0.878049"/>
+      <sprite n="aldeano_minning/052_mVillager_minning.bmp" x="480" y="469" w="31" h="38" pX="0.419355" pY="0.868421"/>
+      <sprite n="aldeano_minning/053_mVillager_minning.bmp" x="513" y="469" w="33" h="40" pX="0.363636" pY="0.875"/>
+      <sprite n="aldeano_minning/054_mVillager_minning.bmp" x="548" y="469" w="37" h="31" pX="0.810811" pY="0.83871"/>
+      <sprite n="aldeano_minning/055_mVillager_minning.bmp" x="587" y="469" w="35" h="30" pX="0.8" pY="0.833333"/>
+      <sprite n="aldeano_minning/056_mVillager_minning.bmp" x="624" y="469" w="38" h="33" pX="0.815789" pY="0.848485"/>
+      <sprite n="aldeano_minning/057_mVillager_minning.bmp" x="664" y="469" w="40" h="37" pX="0.825" pY="0.864865"/>
+      <sprite n="aldeano_minning/058_mVillager_minning.bmp" x="706" y="469" w="37" h="41" pX="0.837838" pY="0.853659"/>
+      <sprite n="aldeano_minning/059_mVillager_minning.bmp" x="1" y="517" w="27" h="42" pX="0.777778" pY="0.880952"/>
+      </direction>
+
+      <direction enum="north">
+      <sprite n="aldeano_minning/060_mVillager_minning.bmp" x="30" y="517" w="26" h="44" pX="0.692308" pY="0.863636"/>
+      <sprite n="aldeano_minning/061_mVillager_minning.bmp" x="58" y="517" w="29" h="43" pX="0.758621" pY="0.860465"/>
+      <sprite n="aldeano_minning/062_mVillager_minning.bmp" x="89" y="517" w="32" h="40" pX="0.75" pY="0.875"/>
+      <sprite n="aldeano_minning/063_mVillager_minning.bmp" x="123" y="517" w="35" h="38" pX="0.771429" pY="0.868421"/>
+      <sprite n="aldeano_minning/064_mVillager_minning.bmp" x="160" y="517" w="38" h="37" pX="0.815789" pY="0.864865"/>
+      <sprite n="aldeano_minning/065_mVillager_minning.bmp" x="200" y="517" w="32" h="40" pX="0.75" pY="0.85"/>
+      <sprite n="aldeano_minning/066_mVillager_minning.bmp" x="234" y="517" w="21" h="41" pX="0.619048" pY="0.902439"/>
+      <sprite n="aldeano_minning/067_mVillager_minning.bmp" x="257" y="517" w="19" h="37" pX="0.631579" pY="0.891892"/>
+      <sprite n="aldeano_minning/068_mVillager_minning.bmp" x="278" y="517" w="19" h="40" pX="0.578947" pY="0.9"/>
+      <sprite n="aldeano_minning/069_mVillager_minning.bmp" x="299" y="517" w="19" h="33" pX="0.578947" pY="0.848485"/>
+      <sprite n="aldeano_minning/070_mVillager_minning.bmp" x="320" y="517" w="18" h="35" pX="0.555556" pY="0.857143"/>
+      <sprite n="aldeano_minning/071_mVillager_minning.bmp" x="340" y="517" w="20" h="38" pX="0.6" pY="0.868421"/>
+      <sprite n="aldeano_minning/072_mVillager_minning.bmp" x="362" y="517" w="23" h="40" pX="0.652174" pY="0.875"/>
+      <sprite n="aldeano_minning/073_mVillager_minning.bmp" x="387" y="517" w="29" h="43" pX="0.758621" pY="0.860465"/>
+      <sprite n="aldeano_minning/074_mVillager_minning.bmp" x="418" y="517" w="29" h="44" pX="0.758621" pY="0.863636"/>
+      </direction>
     </action>
 
     <!--Walk Action-->
     <action enum ="walk" speed="300">
-    <sprite n="aldeano_walk_minning/000_mVillager_walk_minning.bmp" direction="south" x="449" y="517" w="32" h="44" pX="0.40625" pY="0.818182"/>
-    <sprite n="aldeano_walk_minning/001_mVillager_walk_minning.bmp" direction="south" x="483" y="517" w="31" h="44" pX="0.419355" pY="0.818182"/>
-    <sprite n="aldeano_walk_minning/002_mVillager_walk_minning.bmp" direction="south" x="516" y="517" w="31" h="43" pX="0.419355" pY="0.837209"/>
-    <sprite n="aldeano_walk_minning/003_mVillager_walk_minning.bmp" direction="south" x="549" y="517" w="31" h="44" pX="0.419355" pY="0.840909"/>
-    <sprite n="aldeano_walk_minning/004_mVillager_walk_minning.bmp" direction="south" x="582" y="517" w="32" h="42" pX="0.40625" pY="0.880952"/>
-    <sprite n="aldeano_walk_minning/005_mVillager_walk_minning.bmp" direction="south" x="616" y="517" w="33" h="42" pX="0.363636" pY="0.880952"/>
-    <sprite n="aldeano_walk_minning/006_mVillager_walk_minning.bmp" direction="south" x="651" y="517" w="34" h="44" pX="0.352941" pY="0.818182"/>
-    <sprite n="aldeano_walk_minning/007_mVillager_walk_minning.bmp" direction="south" x="687" y="517" w="34" h="44" pX="0.323529" pY="0.818182"/>
-    <sprite n="aldeano_walk_minning/008_mVillager_walk_minning.bmp" direction="south" x="1" y="563" w="34" h="44" pX="0.294118" pY="0.818182"/>
-    <sprite n="aldeano_walk_minning/009_mVillager_walk_minning.bmp" direction="south" x="37" y="563" w="34" h="44" pX="0.323529" pY="0.818182"/>
-    <sprite n="aldeano_walk_minning/010_mVillager_walk_minning.bmp" direction="south" x="73" y="563" w="34" h="41" pX="0.352941" pY="0.878049"/>
-    <sprite n="aldeano_walk_minning/011_mVillager_walk_minning.bmp" direction="south" x="109" y="563" w="34" h="42" pX="0.382353" pY="0.880952"/>
-    <sprite n="aldeano_walk_minning/012_mVillager_walk_minning.bmp" direction="south" x="145" y="563" w="33" h="44" pX="0.393939" pY="0.818182"/>
-    <sprite n="aldeano_walk_minning/013_mVillager_walk_minning.bmp" direction="south" x="180" y="563" w="32" h="41" pX="0.40625" pY="0.878049"/>
-    <sprite n="aldeano_walk_minning/014_mVillager_walk_minning.bmp" direction="south" x="214" y="563" w="32" h="43" pX="0.40625" pY="0.837209"/>
-    <sprite n="aldeano_walk_minning/015_mVillager_walk_minning.bmp" direction="south-west" x="248" y="563" w="24" h="46" pX="0.583333" pY="0.782609"/>
-    <sprite n="aldeano_walk_minning/016_mVillager_walk_minning.bmp" direction="south-west" x="274" y="563" w="26" h="48" pX="0.576923" pY="0.770833"/>
-    <sprite n="aldeano_walk_minning/017_mVillager_walk_minning.bmp" direction="south-west" x="302" y="563" w="29" h="48" pX="0.586207" pY="0.791667"/>
-    <sprite n="aldeano_walk_minning/018_mVillager_walk_minning.bmp" direction="south-west" x="333" y="563" w="27" h="49" pX="0.592593" pY="0.77551"/>
-    <sprite n="aldeano_walk_minning/019_mVillager_walk_minning.bmp" direction="south-west" x="362" y="563" w="26" h="47" pX="0.576923" pY="0.808511"/>
-    <sprite n="aldeano_walk_minning/020_mVillager_walk_minning.bmp" direction="south-west" x="390" y="563" w="27" h="47" pX="0.555556" pY="0.787234"/>
-    <sprite n="aldeano_walk_minning/021_mVillager_walk_minning.bmp" direction="south-west" x="419" y="563" w="27" h="47" pX="0.518519" pY="0.787234"/>
-    <sprite n="aldeano_walk_minning/022_mVillager_walk_minning.bmp" direction="south-west" x="448" y="563" w="28" h="45" pX="0.5" pY="0.8"/>
-    <sprite n="aldeano_walk_minning/023_mVillager_walk_minning.bmp" direction="south-west" x="478" y="563" w="28" h="45" pX="0.5" pY="0.8"/>
-    <sprite n="aldeano_walk_minning/024_mVillager_walk_minning.bmp" direction="south-west" x="508" y="563" w="28" h="45" pX="0.5" pY="0.8"/>
-    <sprite n="aldeano_walk_minning/025_mVillager_walk_minning.bmp" direction="south-west" x="538" y="563" w="28" h="46" pX="0.535714" pY="0.804348"/>
-    <sprite n="aldeano_walk_minning/026_mVillager_walk_minning.bmp" direction="south-west" x="568" y="563" w="27" h="47" pX="0.555556" pY="0.787234"/>
-    <sprite n="aldeano_walk_minning/027_mVillager_walk_minning.bmp" direction="south-west" x="597" y="563" w="27" h="46" pX="0.592593" pY="0.804348"/>
-    <sprite n="aldeano_walk_minning/028_mVillager_walk_minning.bmp" direction="south-west" x="626" y="563" w="25" h="47" pX="0.56" pY="0.787234"/>
-    <sprite n="aldeano_walk_minning/029_mVillager_walk_minning.bmp" direction="south-west" x="653" y="563" w="24" h="47" pX="0.583333" pY="0.787234"/>
-    <sprite n="aldeano_walk_minning/030_mVillager_walk_minning.bmp" direction="west" x="679" y="563" w="31" h="47" pX="0.645161" pY="0.808511"/>
-    <sprite n="aldeano_walk_minning/031_mVillager_walk_minning.bmp" direction="west" x="712" y="563" w="33" h="47" pX="0.636364" pY="0.808511"/>
-    <sprite n="aldeano_walk_minning/032_mVillager_walk_minning.bmp" direction="west" x="1" y="614" w="33" h="48" pX="0.636364" pY="0.8125"/>
-    <sprite n="aldeano_walk_minning/033_mVillager_walk_minning.bmp" direction="west" x="36" y="614" w="31" h="48" pX="0.645161" pY="0.8125"/>
-    <sprite n="aldeano_walk_minning/034_mVillager_walk_minning.bmp" direction="west" x="69" y="614" w="27" h="49" pX="0.666667" pY="0.795918"/>
-    <sprite n="aldeano_walk_minning/035_mVillager_walk_minning.bmp" direction="west" x="98" y="614" w="24" h="48" pX="0.708333" pY="0.791667"/>
-    <sprite n="aldeano_walk_minning/036_mVillager_walk_minning.bmp" direction="west" x="124" y="614" w="24" h="48" pX="0.708333" pY="0.791667"/>
-    <sprite n="aldeano_walk_minning/037_mVillager_walk_minning.bmp" direction="west" x="150" y="614" w="25" h="48" pX="0.64" pY="0.770833"/>
-    <sprite n="aldeano_walk_minning/038_mVillager_walk_minning.bmp" direction="west" x="177" y="614" w="28" h="47" pX="0.571429" pY="0.787234"/>
-    <sprite n="aldeano_walk_minning/039_mVillager_walk_minning.bmp" direction="west" x="207" y="614" w="28" h="47" pX="0.571429" pY="0.787234"/>
-    <sprite n="aldeano_walk_minning/040_mVillager_walk_minning.bmp" direction="west" x="237" y="614" w="27" h="48" pX="0.62963" pY="0.791667"/>
-    <sprite n="aldeano_walk_minning/041_mVillager_walk_minning.bmp" direction="west" x="266" y="614" w="24" h="45" pX="0.708333" pY="0.866667"/>
-    <sprite n="aldeano_walk_minning/042_mVillager_walk_minning.bmp" direction="west" x="292" y="614" w="24" h="49" pX="0.75" pY="0.795918"/>
-    <sprite n="aldeano_walk_minning/043_mVillager_walk_minning.bmp" direction="west" x="318" y="614" w="26" h="48" pX="0.692308" pY="0.791667"/>
-    <sprite n="aldeano_walk_minning/044_mVillager_walk_minning.bmp" direction="west" x="346" y="614" w="29" h="47" pX="0.689655" pY="0.808511"/>
-    <sprite n="aldeano_walk_minning/045_mVillager_walk_minning.bmp" direction="north-west" x="377" y="614" w="34" h="45" pX="0.794118" pY="0.8"/>
-    <sprite n="aldeano_walk_minning/046_mVillager_walk_minning.bmp" direction="north-west" x="413" y="614" w="33" h="45" pX="0.787879" pY="0.866667"/>
-    <sprite n="aldeano_walk_minning/047_mVillager_walk_minning.bmp" direction="north-west" x="448" y="614" w="33" h="46" pX="0.787879" pY="0.869565"/>
-    <sprite n="aldeano_walk_minning/048_mVillager_walk_minning.bmp" direction="north-west" x="483" y="614" w="31" h="45" pX="0.774194" pY="0.888889"/>
-    <sprite n="aldeano_walk_minning/049_mVillager_walk_minning.bmp" direction="north-west" x="516" y="614" w="33" h="44" pX="0.787879" pY="0.909091"/>
-    <sprite n="aldeano_walk_minning/050_mVillager_walk_minning.bmp" direction="north-west" x="551" y="614" w="32" h="45" pX="0.8125" pY="0.888889"/>
-    <sprite n="aldeano_walk_minning/051_mVillager_walk_minning.bmp" direction="north-west" x="585" y="614" w="34" h="45" pX="0.764706" pY="0.866667"/>
-    <sprite n="aldeano_walk_minning/052_mVillager_walk_minning.bmp" direction="north-west" x="621" y="614" w="34" h="44" pX="0.735294" pY="0.863636"/>
-    <sprite n="aldeano_walk_minning/053_mVillager_walk_minning.bmp" direction="north-west" x="657" y="614" w="35" h="44" pX="0.685714" pY="0.863636"/>
-    <sprite n="aldeano_walk_minning/054_mVillager_walk_minning.bmp" direction="north-west" x="694" y="614" w="38" h="44" pX="0.684211" pY="0.863636"/>
-    <sprite n="aldeano_walk_minning/055_mVillager_walk_minning.bmp" direction="north-west" x="1" y="665" w="37" h="45" pX="0.702703" pY="0.866667"/>
-    <sprite n="aldeano_walk_minning/056_mVillager_walk_minning.bmp" direction="north-west" x="40" y="665" w="35" h="44" pX="0.742857" pY="0.909091"/>
-    <sprite n="aldeano_walk_minning/057_mVillager_walk_minning.bmp" direction="north-west" x="77" y="665" w="30" h="44" pX="0.766667" pY="0.909091"/>
-    <sprite n="aldeano_walk_minning/058_mVillager_walk_minning.bmp" direction="north-west" x="109" y="665" w="33" h="45" pX="0.787879" pY="0.888889"/>
-    <sprite n="aldeano_walk_minning/059_mVillager_walk_minning.bmp" direction="north-west" x="144" y="665" w="33" h="44" pX="0.787879" pY="0.886364"/>
-    <sprite n="aldeano_walk_minning/060_mVillager_walk_minning.bmp" direction="north" x="179" y="665" w="32" h="46" pX="0.6875" pY="0.869565"/>
-    <sprite n="aldeano_walk_minning/061_mVillager_walk_minning.bmp" direction="north" x="213" y="665" w="31" h="46" pX="0.677419" pY="0.869565"/>
-    <sprite n="aldeano_walk_minning/062_mVillager_walk_minning.bmp" direction="north" x="246" y="665" w="30" h="45" pX="0.633333" pY="0.888889"/>
-    <sprite n="aldeano_walk_minning/063_mVillager_walk_minning.bmp" direction="north" x="278" y="665" w="30" h="45" pX="0.633333" pY="0.888889"/>
-    <sprite n="aldeano_walk_minning/064_mVillager_walk_minning.bmp" direction="north" x="310" y="665" w="32" h="43" pX="0.6875" pY="0.930233"/>
-    <sprite n="aldeano_walk_minning/065_mVillager_walk_minning.bmp" direction="north" x="344" y="665" w="32" h="43" pX="0.71875" pY="0.930233"/>
-    <sprite n="aldeano_walk_minning/066_mVillager_walk_minning.bmp" direction="north" x="378" y="665" w="31" h="44" pX="0.709677" pY="0.909091"/>
-    <sprite n="aldeano_walk_minning/067_mVillager_walk_minning.bmp" direction="north" x="411" y="665" w="31" h="45" pX="0.741935" pY="0.866667"/>
-    <sprite n="aldeano_walk_minning/068_mVillager_walk_minning.bmp" direction="north" x="444" y="665" w="31" h="44" pX="0.741935" pY="0.863636"/>
-    <sprite n="aldeano_walk_minning/069_mVillager_walk_minning.bmp" direction="north" x="477" y="665" w="31" h="45" pX="0.741935" pY="0.866667"/>
-    <sprite n="aldeano_walk_minning/070_mVillager_walk_minning.bmp" direction="north" x="510" y="665" w="32" h="45" pX="0.71875" pY="0.888889"/>
-    <sprite n="aldeano_walk_minning/071_mVillager_walk_minning.bmp" direction="north" x="544" y="665" w="31" h="44" pX="0.709677" pY="0.909091"/>
-    <sprite n="aldeano_walk_minning/072_mVillager_walk_minning.bmp" direction="north" x="577" y="665" w="32" h="44" pX="0.6875" pY="0.909091"/>
-    <sprite n="aldeano_walk_minning/073_mVillager_walk_minning.bmp" direction="north" x="611" y="665" w="32" h="44" pX="0.6875" pY="0.909091"/>
-    <sprite n="aldeano_walk_minning/074_mVillager_walk_minning.bmp" direction="north" x="645" y="665" w="29" h="45" pX="0.655172" pY="0.888889"/>
+      <direction enum="south">
+      <sprite n="aldeano_walk_minning/000_mVillager_walk_minning.bmp" x="449" y="517" w="32" h="44" pX="0.40625" pY="0.818182"/>
+      <sprite n="aldeano_walk_minning/001_mVillager_walk_minning.bmp" x="483" y="517" w="31" h="44" pX="0.419355" pY="0.818182"/>
+      <sprite n="aldeano_walk_minning/002_mVillager_walk_minning.bmp" x="516" y="517" w="31" h="43" pX="0.419355" pY="0.837209"/>
+      <sprite n="aldeano_walk_minning/003_mVillager_walk_minning.bmp" x="549" y="517" w="31" h="44" pX="0.419355" pY="0.840909"/>
+      <sprite n="aldeano_walk_minning/004_mVillager_walk_minning.bmp" x="582" y="517" w="32" h="42" pX="0.40625" pY="0.880952"/>
+      <sprite n="aldeano_walk_minning/005_mVillager_walk_minning.bmp" x="616" y="517" w="33" h="42" pX="0.363636" pY="0.880952"/>
+      <sprite n="aldeano_walk_minning/006_mVillager_walk_minning.bmp" x="651" y="517" w="34" h="44" pX="0.352941" pY="0.818182"/>
+      <sprite n="aldeano_walk_minning/007_mVillager_walk_minning.bmp" x="687" y="517" w="34" h="44" pX="0.323529" pY="0.818182"/>
+      <sprite n="aldeano_walk_minning/008_mVillager_walk_minning.bmp" x="1" y="563" w="34" h="44" pX="0.294118" pY="0.818182"/>
+      <sprite n="aldeano_walk_minning/009_mVillager_walk_minning.bmp" x="37" y="563" w="34" h="44" pX="0.323529" pY="0.818182"/>
+      <sprite n="aldeano_walk_minning/010_mVillager_walk_minning.bmp" x="73" y="563" w="34" h="41" pX="0.352941" pY="0.878049"/>
+      <sprite n="aldeano_walk_minning/011_mVillager_walk_minning.bmp" x="109" y="563" w="34" h="42" pX="0.382353" pY="0.880952"/>
+      <sprite n="aldeano_walk_minning/012_mVillager_walk_minning.bmp" x="145" y="563" w="33" h="44" pX="0.393939" pY="0.818182"/>
+      <sprite n="aldeano_walk_minning/013_mVillager_walk_minning.bmp" x="180" y="563" w="32" h="41" pX="0.40625" pY="0.878049"/>
+      <sprite n="aldeano_walk_minning/014_mVillager_walk_minning.bmp" x="214" y="563" w="32" h="43" pX="0.40625" pY="0.837209"/>
+      </direction>
+
+      <direction enum="south-west">
+      <sprite n="aldeano_walk_minning/015_mVillager_walk_minning.bmp" x="248" y="563" w="24" h="46" pX="0.583333" pY="0.782609"/>
+      <sprite n="aldeano_walk_minning/016_mVillager_walk_minning.bmp" x="274" y="563" w="26" h="48" pX="0.576923" pY="0.770833"/>
+      <sprite n="aldeano_walk_minning/017_mVillager_walk_minning.bmp" x="302" y="563" w="29" h="48" pX="0.586207" pY="0.791667"/>
+      <sprite n="aldeano_walk_minning/018_mVillager_walk_minning.bmp" x="333" y="563" w="27" h="49" pX="0.592593" pY="0.77551"/>
+      <sprite n="aldeano_walk_minning/019_mVillager_walk_minning.bmp" x="362" y="563" w="26" h="47" pX="0.576923" pY="0.808511"/>
+      <sprite n="aldeano_walk_minning/020_mVillager_walk_minning.bmp" x="390" y="563" w="27" h="47" pX="0.555556" pY="0.787234"/>
+      <sprite n="aldeano_walk_minning/021_mVillager_walk_minning.bmp" x="419" y="563" w="27" h="47" pX="0.518519" pY="0.787234"/>
+      <sprite n="aldeano_walk_minning/022_mVillager_walk_minning.bmp" x="448" y="563" w="28" h="45" pX="0.5" pY="0.8"/>
+      <sprite n="aldeano_walk_minning/023_mVillager_walk_minning.bmp" x="478" y="563" w="28" h="45" pX="0.5" pY="0.8"/>
+      <sprite n="aldeano_walk_minning/024_mVillager_walk_minning.bmp" x="508" y="563" w="28" h="45" pX="0.5" pY="0.8"/>
+      <sprite n="aldeano_walk_minning/025_mVillager_walk_minning.bmp" x="538" y="563" w="28" h="46" pX="0.535714" pY="0.804348"/>
+      <sprite n="aldeano_walk_minning/026_mVillager_walk_minning.bmp" x="568" y="563" w="27" h="47" pX="0.555556" pY="0.787234"/>
+      <sprite n="aldeano_walk_minning/027_mVillager_walk_minning.bmp" x="597" y="563" w="27" h="46" pX="0.592593" pY="0.804348"/>
+      <sprite n="aldeano_walk_minning/028_mVillager_walk_minning.bmp" x="626" y="563" w="25" h="47" pX="0.56" pY="0.787234"/>
+      <sprite n="aldeano_walk_minning/029_mVillager_walk_minning.bmp" x="653" y="563" w="24" h="47" pX="0.583333" pY="0.787234"/>
+      </direction>
+
+      <direction enum="west">
+      <sprite n="aldeano_walk_minning/030_mVillager_walk_minning.bmp" x="679" y="563" w="31" h="47" pX="0.645161" pY="0.808511"/>
+      <sprite n="aldeano_walk_minning/031_mVillager_walk_minning.bmp" x="712" y="563" w="33" h="47" pX="0.636364" pY="0.808511"/>
+      <sprite n="aldeano_walk_minning/032_mVillager_walk_minning.bmp" x="1" y="614" w="33" h="48" pX="0.636364" pY="0.8125"/>
+      <sprite n="aldeano_walk_minning/033_mVillager_walk_minning.bmp" x="36" y="614" w="31" h="48" pX="0.645161" pY="0.8125"/>
+      <sprite n="aldeano_walk_minning/034_mVillager_walk_minning.bmp" x="69" y="614" w="27" h="49" pX="0.666667" pY="0.795918"/>
+      <sprite n="aldeano_walk_minning/035_mVillager_walk_minning.bmp" x="98" y="614" w="24" h="48" pX="0.708333" pY="0.791667"/>
+      <sprite n="aldeano_walk_minning/036_mVillager_walk_minning.bmp" x="124" y="614" w="24" h="48" pX="0.708333" pY="0.791667"/>
+      <sprite n="aldeano_walk_minning/037_mVillager_walk_minning.bmp" x="150" y="614" w="25" h="48" pX="0.64" pY="0.770833"/>
+      <sprite n="aldeano_walk_minning/038_mVillager_walk_minning.bmp" x="177" y="614" w="28" h="47" pX="0.571429" pY="0.787234"/>
+      <sprite n="aldeano_walk_minning/039_mVillager_walk_minning.bmp" x="207" y="614" w="28" h="47" pX="0.571429" pY="0.787234"/>
+      <sprite n="aldeano_walk_minning/040_mVillager_walk_minning.bmp" x="237" y="614" w="27" h="48" pX="0.62963" pY="0.791667"/>
+      <sprite n="aldeano_walk_minning/041_mVillager_walk_minning.bmp" x="266" y="614" w="24" h="45" pX="0.708333" pY="0.866667"/>
+      <sprite n="aldeano_walk_minning/042_mVillager_walk_minning.bmp" x="292" y="614" w="24" h="49" pX="0.75" pY="0.795918"/>
+      <sprite n="aldeano_walk_minning/043_mVillager_walk_minning.bmp" x="318" y="614" w="26" h="48" pX="0.692308" pY="0.791667"/>
+      <sprite n="aldeano_walk_minning/044_mVillager_walk_minning.bmp" x="346" y="614" w="29" h="47" pX="0.689655" pY="0.808511"/>
+      </direction>
+
+      <direction enum="north-west">
+      <sprite n="aldeano_walk_minning/045_mVillager_walk_minning.bmp" x="377" y="614" w="34" h="45" pX="0.794118" pY="0.8"/>
+      <sprite n="aldeano_walk_minning/046_mVillager_walk_minning.bmp" x="413" y="614" w="33" h="45" pX="0.787879" pY="0.866667"/>
+      <sprite n="aldeano_walk_minning/047_mVillager_walk_minning.bmp" x="448" y="614" w="33" h="46" pX="0.787879" pY="0.869565"/>
+      <sprite n="aldeano_walk_minning/048_mVillager_walk_minning.bmp" x="483" y="614" w="31" h="45" pX="0.774194" pY="0.888889"/>
+      <sprite n="aldeano_walk_minning/049_mVillager_walk_minning.bmp" x="516" y="614" w="33" h="44" pX="0.787879" pY="0.909091"/>
+      <sprite n="aldeano_walk_minning/050_mVillager_walk_minning.bmp" x="551" y="614" w="32" h="45" pX="0.8125" pY="0.888889"/>
+      <sprite n="aldeano_walk_minning/051_mVillager_walk_minning.bmp" x="585" y="614" w="34" h="45" pX="0.764706" pY="0.866667"/>
+      <sprite n="aldeano_walk_minning/052_mVillager_walk_minning.bmp" x="621" y="614" w="34" h="44" pX="0.735294" pY="0.863636"/>
+      <sprite n="aldeano_walk_minning/053_mVillager_walk_minning.bmp" x="657" y="614" w="35" h="44" pX="0.685714" pY="0.863636"/>
+      <sprite n="aldeano_walk_minning/054_mVillager_walk_minning.bmp" x="694" y="614" w="38" h="44" pX="0.684211" pY="0.863636"/>
+      <sprite n="aldeano_walk_minning/055_mVillager_walk_minning.bmp" x="1" y="665" w="37" h="45" pX="0.702703" pY="0.866667"/>
+      <sprite n="aldeano_walk_minning/056_mVillager_walk_minning.bmp" x="40" y="665" w="35" h="44" pX="0.742857" pY="0.909091"/>
+      <sprite n="aldeano_walk_minning/057_mVillager_walk_minning.bmp" x="77" y="665" w="30" h="44" pX="0.766667" pY="0.909091"/>
+      <sprite n="aldeano_walk_minning/058_mVillager_walk_minning.bmp" x="109" y="665" w="33" h="45" pX="0.787879" pY="0.888889"/>
+      <sprite n="aldeano_walk_minning/059_mVillager_walk_minning.bmp" x="144" y="665" w="33" h="44" pX="0.787879" pY="0.886364"/>
+      </direction>
+
+      <direction enum="north">
+      <sprite n="aldeano_walk_minning/060_mVillager_walk_minning.bmp" x="179" y="665" w="32" h="46" pX="0.6875" pY="0.869565"/>
+      <sprite n="aldeano_walk_minning/061_mVillager_walk_minning.bmp" x="213" y="665" w="31" h="46" pX="0.677419" pY="0.869565"/>
+      <sprite n="aldeano_walk_minning/062_mVillager_walk_minning.bmp" x="246" y="665" w="30" h="45" pX="0.633333" pY="0.888889"/>
+      <sprite n="aldeano_walk_minning/063_mVillager_walk_minning.bmp" x="278" y="665" w="30" h="45" pX="0.633333" pY="0.888889"/>
+      <sprite n="aldeano_walk_minning/064_mVillager_walk_minning.bmp" x="310" y="665" w="32" h="43" pX="0.6875" pY="0.930233"/>
+      <sprite n="aldeano_walk_minning/065_mVillager_walk_minning.bmp" x="344" y="665" w="32" h="43" pX="0.71875" pY="0.930233"/>
+      <sprite n="aldeano_walk_minning/066_mVillager_walk_minning.bmp" x="378" y="665" w="31" h="44" pX="0.709677" pY="0.909091"/>
+      <sprite n="aldeano_walk_minning/067_mVillager_walk_minning.bmp" x="411" y="665" w="31" h="45" pX="0.741935" pY="0.866667"/>
+      <sprite n="aldeano_walk_minning/068_mVillager_walk_minning.bmp" x="444" y="665" w="31" h="44" pX="0.741935" pY="0.863636"/>
+      <sprite n="aldeano_walk_minning/069_mVillager_walk_minning.bmp" x="477" y="665" w="31" h="45" pX="0.741935" pY="0.866667"/>
+      <sprite n="aldeano_walk_minning/070_mVillager_walk_minning.bmp" x="510" y="665" w="32" h="45" pX="0.71875" pY="0.888889"/>
+      <sprite n="aldeano_walk_minning/071_mVillager_walk_minning.bmp" x="544" y="665" w="31" h="44" pX="0.709677" pY="0.909091"/>
+      <sprite n="aldeano_walk_minning/072_mVillager_walk_minning.bmp" x="577" y="665" w="32" h="44" pX="0.6875" pY="0.909091"/>
+      <sprite n="aldeano_walk_minning/073_mVillager_walk_minning.bmp" x="611" y="665" w="32" h="44" pX="0.6875" pY="0.909091"/>
+      <sprite n="aldeano_walk_minning/074_mVillager_walk_minning.bmp" x="645" y="665" w="29" h="45" pX="0.655172" pY="0.888889"/>
+      </direction>
     </action>
   </unit>
 </TextureAtlas>

@@ -159,10 +159,10 @@ private:
 	std::vector<Animation_Block*> resource_blocks;
 
 	//Methods that transform strings to enums (used when loading data from xml)
-	UNIT_TYPE		Str_to_UnitEnum(const char* str)const;
-	ACTION_TYPE		Str_to_ActionEnum(const char* str)const;
-	DIRECTION_TYPE	Str_to_DirectionEnum(const char* str)const;
-	BUILDING_TYPE	Str_to_BuildingEnum(const char* str)const;
+	UNIT_TYPE		StrToUnitEnum(const char* str)const;
+	ACTION_TYPE		StrToActionEnum(const char* str)const;
+	DIRECTION_TYPE	StrToDirectionEnum(const char* str)const;
+	BUILDING_TYPE	StrToBuildingEnum(const char* str)const;
 
 public:
 

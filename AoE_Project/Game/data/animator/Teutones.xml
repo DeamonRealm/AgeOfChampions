@@ -3,9 +3,7 @@
    <id xml = "arbalest.xml" spritesheet = "arbalest.png"/>
    <id xml = "militia.xml" spritesheet = "militia.png"/>
    <id xml = "villager.xml" spritesheet = "villager.png"/>
-    <!--
    <id xml = "villager_pick.xml" spritesheet = "villager_pick.png"/>
-   -->
   </units>
   <buildings>
    <id xml = "TownCenterFeudal.xml" spritesheet = "TownCenterFeudal.png"/>

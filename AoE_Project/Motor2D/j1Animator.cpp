@@ -267,16 +267,22 @@ bool j1Animator::CleanUp()
 }
 
 //Methods that transform strings to enums (used when loading data from xml)
-UNIT_TYPE j1Animator::Str_to_UnitEnum(const char* str) const
+UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 {
-	if (strcmp(str, "militia") == 0)	return MILITIA;
-	if (strcmp(str, "arbalest") == 0)	return ARBALEST;
-	if (strcmp(str, "villager") == 0)	return VILLAGER;
-
+	if (strcmp(str, "militia") == 0)			return MILITIA;
+	if (strcmp(str, "arbalest") == 0)			return ARBALEST;
+	if (strcmp(str, "villager") == 0)			return VILLAGER;
+	if (strcmp(str, "villager_pick") == 0)		return VILLAGER_PICK;
+	if (strcmp(str, "villager_plow") == 0)		return VILLAGER_PLOW;
+	if (strcmp(str, "villager_bow") == 0)		return VILLAGER_BOW;
+	if (strcmp(str, "villager_basket") == 0)	return VILLAGER_BASKET;
+	if (strcmp(str, "villager_axe") == 0)		return VILLAGER_AXE;
+	if (strcmp(str, "villager_hammer") == 0)	return VILLAGER_HAMMER;
+	if (strcmp(str, "villager_carry") == 0)		return VILLAGER_CARRY;
 	return NO_UNIT;
 }
 
-ACTION_TYPE j1Animator::Str_to_ActionEnum(const char* str) const
+ACTION_TYPE j1Animator::StrToActionEnum(const char* str) const
 {
 	if (strcmp(str, "attack") == 0)		return ATTATCK;
 	if (strcmp(str, "die") == 0)		return DIE;
@@ -286,7 +292,7 @@ ACTION_TYPE j1Animator::Str_to_ActionEnum(const char* str) const
 	return NO_ACTION;
 }
 
-DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const char* str) const
+DIRECTION_TYPE j1Animator::StrToDirectionEnum(const char* str) const
 {
 	if (strcmp(str, "north") == 0)			return NORTH;
 	if (strcmp(str, "north-east") == 0)		return NORTH_EAST;
@@ -299,7 +305,7 @@ DIRECTION_TYPE j1Animator::Str_to_DirectionEnum(const char* str) const
 	return NO_DIRECTION;
 }
 
-BUILDING_TYPE j1Animator::Str_to_BuildingEnum(const char* str) const
+BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 {
 	if (strcmp(str, "town_center") == 0)	return TOWN_CENTER;
 	return NO_BUILDING;
@@ -378,7 +384,6 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 	//Load Animations data
 	//Node focused at any unit node
 	pugi::xml_node unit_node = animations_data.child("TextureAtlas").child("unit");
-	Animation_Block* unit_anim_block = nullptr;
 	//Node focused at any unit action node
 	pugi::xml_node action_node;
 	//Node focused at any direction action node
@@ -387,9 +392,9 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 	pugi::xml_node sprite;
 
 	//Build new unit animation block
-	unit_anim_block = new Animation_Block();
+	Animation_Block* unit_anim_block = new Animation_Block();
 	//Get unit enum
-	unit_anim_block->SetId(Str_to_UnitEnum(unit_node.attribute("id").as_string()));
+	unit_anim_block->SetId(StrToUnitEnum(unit_node.attribute("id").as_string()));
 
 	//Iterate all unit action nodes
 	action_node = unit_node.first_child();
@@ -398,7 +403,7 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 		//Build new action animation block
 		Animation_Block* action_anim_block = new Animation_Block();
 		//Get current action enum
-		action_anim_block->SetId(Str_to_ActionEnum(action_node.attribute("enum").as_string()));
+		action_anim_block->SetId(StrToActionEnum(action_node.attribute("enum").as_string()));
 		//Get current action animation speed
 		uint speed = action_node.attribute("speed").as_uint();
 
@@ -410,7 +415,7 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 			//Build new direction animation block
 			Animation_Block* direction_anim_block = new Animation_Block();
 			//Get direction block direction enum
-			direction_anim_block->SetId(Str_to_DirectionEnum(direction_node.attribute("enum").as_string()));
+			direction_anim_block->SetId(StrToDirectionEnum(direction_node.attribute("enum").as_string()));
 
 			//Build direction block animation
 			Animation* animation = new Animation();
@@ -493,7 +498,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 	
 	//Allocate building animation block data 
 	Animation_Block* building_block = new Animation_Block();
-	building_block->SetId((uint)Str_to_BuildingEnum(build_node.attribute("id").as_string()));
+	building_block->SetId((uint)StrToBuildingEnum(build_node.attribute("id").as_string()));
 
 	//Iterate all building actions
 	pugi::xml_node action_node = build_node.first_child();
@@ -501,7 +506,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 	{
 		//Allocate action animation block data
 		Animation_Block* action_block = new Animation_Block();
-		action_block->SetId((uint)Str_to_ActionEnum(action_node.attribute("enum").as_string()));
+		action_block->SetId((uint)StrToActionEnum(action_node.attribute("enum").as_string()));
 
 		//Build animation
 		Animation* anim = new Animation();
