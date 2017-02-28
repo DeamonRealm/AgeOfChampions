@@ -96,6 +96,9 @@
     <ClCompile Include="UI_Fixed_Button.cpp">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClCompile>
+    <ClCompile Include="j1Astar.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -207,6 +210,9 @@
     </ClInclude>
     <ClInclude Include="UI_Fixed_Button.h">
       <Filter>UserInteraface\UI_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Astar.h">
+      <Filter>Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -133,6 +133,7 @@ public:
 	void CreateEntryVertical(int start, int end, int x, int row, int column);
 
 	int NodeExist(Cluster& cluster,int posX,int posY, Graph* graph);
+	bool EdgeExist(Cluster& cluster, int nodeID1, int nodeID2, Graph* graph);
 
 	void SetEntryClusterID();
 	void CreateGraph();

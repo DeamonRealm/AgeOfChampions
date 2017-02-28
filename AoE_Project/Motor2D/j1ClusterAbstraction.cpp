@@ -1,6 +1,6 @@
 #include "j1ClusterAbstraction.h"
 #include "p2Log.h"
-
+#include "j1Astar.h"
 Cluster::Cluster(int posX, int posY, int width, int height, int row, int column, int id):posX(posX),posY(posY),width(width), height(height),row(row),column(column),id(id)
 {
 }
@@ -40,6 +40,7 @@ j1ClusterAbstraction::j1ClusterAbstraction(j1Map * m, uint clusterSize):clusterS
 	CreateClusters();
 	SetEntryClusterID();
 	SetNodesOnClusters(&graph);
+	//CreateIntraEdges(&graph);
 }
 
 j1ClusterAbstraction::~j1ClusterAbstraction()
@@ -345,19 +346,61 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 
 {
-
+	uchar* temp_map = new uchar[100];
 	for (int i = 0; i < clusters.size(); i++)
 	{
 		Cluster& item = clusters[i];
-		uchar* tempMap;
-		tempMap = new uchar(item.GetHeight()*item.GetWidth());
-
-		for (int i = item.GetPosisitionY(); i < item.GetPosisitionY() + item.GetHeight(); i++) {
-			for (int j = item.GetPosisitionY(); j < item.GetPosisitionX() + item.GetWidth(); j++) {
-				tempMap[(i*item.GetWidth()+j)] = GetValueMap(j, i);
-
-			}
+		int size = item.GetHeight()*item.GetWidth();
+		if (sizeof(temp_map) != size) {
+			delete[] temp_map;
+			temp_map = new uchar(item.GetHeight()*item.GetWidth());
 		}
+		int x = 0;
+		int y = 0;
+		int node_number=0;
+		std::vector<Node*> temp_nodes;
+
+		for (int i = item.GetPosisitionY(); i < item.GetPosisitionY() + item.GetHeight()-1; i++) 
+		{
+			x = 0;
+			for (int j = item.GetPosisitionX(); j < item.GetPosisitionX() + item.GetWidth()-1; j++)
+			{
+				temp_map[(x*item.GetWidth()+y)] = GetValueMap(j, i);
+				node_number=NodeExist(item, j, i, graph);
+				if (node_number != -1) {
+					Node* tmp_node = new Node;
+					tmp_node->SetPosition(x, y);
+					tmp_node->nodeNum = node_number;
+					temp_nodes.push_back(tmp_node);
+				}
+				x++;
+			}
+			y++;
+		}
+
+		j1Astar* astar = new j1Astar;
+		int distance;
+		for (int i = 0; i < temp_nodes.size(); i++)
+		{
+			for (int j = 0; j < temp_nodes.size(); j++) 
+			{
+				if (i == j)
+					continue;
+				astar->CreatePath(temp_map,item.GetWidth(),item.GetHeight(), temp_nodes[i], temp_nodes[j], distance);
+				if (distance != -1) {
+					if (!NodeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
+					{
+						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance));
+					}
+				}
+				//A*(temp_map,node i, node j, distance)
+				//edge exist?
+				//graph.push_back(new Edge( node i id, node j id, ditance)
+			}
+
+		}
+		temp_nodes.clear();
+		
 }
 
 
