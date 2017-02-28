@@ -63,6 +63,7 @@ private:
 	UI_Fixed_Button*	history;
 	UI_Fixed_Button*	options;
 
+	UI_Fixed_Button*	option_selected = nullptr;
 
 	//Menu UI screens
 	UI_Element* menu_screen;

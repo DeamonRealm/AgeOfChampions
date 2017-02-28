@@ -67,43 +67,43 @@ bool j1Menu::Start()
 
 	exit = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
 	exit->SetTexFromXML(unit_node.child("exit"), 1);
-	exit->SetBoxPosition(174, 631);
+	exit->SetBoxPosition(174, 674);
 	exit->Activate();
 	menu_screen->AddChild(exit);
 
 	history = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
 	history->SetTexFromXML(unit_node.child("history"), 1);
-	history->SetBoxPosition(290, 198);
+	history->SetBoxPosition(298, 208);
 	history->Activate();
 	menu_screen->AddChild(history);
 
 	mapeditor = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
 	mapeditor->SetTexFromXML(unit_node.child("mapeditor"), 1);
-	mapeditor->SetBoxPosition(410, 344);
+	mapeditor->SetBoxPosition(413, 348);
 	mapeditor->Activate();
 	menu_screen->AddChild(mapeditor);
 
 	multiplayer = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
 	multiplayer->SetTexFromXML(unit_node.child("multiplayer"), 1);
-	multiplayer->SetBoxPosition(495, 265);
+	multiplayer->SetBoxPosition(496, 273);
 	multiplayer->Activate();
 	menu_screen->AddChild(multiplayer);
 
 	options = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
 	options->SetTexFromXML(unit_node.child("options"), 1);
-	options->SetBoxPosition(295, 439);
+	options->SetBoxPosition(297, 443);
 	options->Activate();
 	menu_screen->AddChild(options);
 
 	singleplayer = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
 	singleplayer->SetTexFromXML(unit_node.child("singleplayer"),1);
-	singleplayer->SetBoxPosition(532, 9);
+	singleplayer->SetBoxPosition(537, 14);
 	singleplayer->Activate();
 	menu_screen->AddChild(singleplayer);
 
 	turotial = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
 	turotial->SetTexFromXML(unit_node.child("tutorial"), 1);
-	turotial->SetBoxPosition(135, 2);
+	turotial->SetBoxPosition(142, 8);
 	turotial->Activate();
 	menu_screen->AddChild(turotial);
 	
@@ -123,6 +123,7 @@ bool j1Menu::Start()
 
 bool j1Menu::PreUpdate()
 {
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) App->SetQuit();
 	return true;
 }
 
@@ -159,11 +160,23 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;
 	case MOUSE_LEFT_BUTTON_UP:
+		if (target->GetUItype() == FIXED_BUTTON)
+		{
+			if (option_selected != nullptr)
+			{
+				option_selected->button_state = UP;
+			}
+			option_selected = (UI_Fixed_Button*) target;
+		}
 		if (target == singleplayer)
 		{
 			App->scene->Enable();
 			CleanUp();
 			Disable();
+		}
+		if (target == exit)
+		{
+			App->SetQuit();
 		}
 		break;
 	case MOUSE_RIGHT_BUTTON:

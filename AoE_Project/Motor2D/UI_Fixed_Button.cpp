@@ -153,8 +153,10 @@ void UI_Fixed_Button::SetTexFromXML(const pugi::xml_node & conf, int texture_id)
 
 		iPoint pivot;
 		float pivx = img.attribute("pX").as_float(0.0f)*rect.w;
+		pivx = (pivx > (floor(pivx) + 0.5f)) ? ceil(pivx) : floor(pivx);
 		pivot.x = (int)pivx;
 		float pivy = img.attribute("pY").as_float(0.0f)*rect.h;
+		pivy = (pivy > (floor(pivy) + 0.5f)) ? ceil(pivy) : floor(pivy);
 		pivot.y = (int)pivy;
 
 		if (strcmp("up", name.c_str())==0) this->SetTexUP(rect, pivot, texture_id);

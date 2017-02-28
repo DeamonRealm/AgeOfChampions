@@ -32,7 +32,7 @@ history/up oX="10" oY="8" oW="160" oH="147"
     <sprite n="down" x="0" y="137" w="160" h="147" pX="0.05" pY="0.0680272"/>
     <sprite n="hover-down" x="160" y="137" w="160" h="147" pX="0.05" pY="0.0680272"/>
     <sprite n="hover-up" x="320" y="137" w="160" h="147" pX="0.05" pY="0.0680272"/>
-    <sprite n="up" x="480" y="137" w="139" h="131" pX="0.05" pY="0.0612245"/>
+    <sprite n="up" x="480" y="137" w="139" h="131" pX="-0.015" pY="0.015" oX="10" oY="8" oW="160" oH="147"/>
  </history>
  <mapeditor>	
     <sprite n="down" x="619" y="137" w="123" h="97" pX="0.0243902" pY="0.0412371"/>
@@ -59,8 +59,8 @@ history/up oX="10" oY="8" oW="160" oH="147"
     <sprite n="up" x="850" y="472" w="192" h="258" pX="0.0260417" pY="0.0193798"/>
  </singleplayer>
  <tutorial>
-    <sprite n="down" x="0" y="730" w="218" h="254" pX="0.0366973" pY="0.019685"/>
-    <sprite n="hover-down" x="218" y="730" w="218" h="254" pX="0.0366973" pY="0.019685"/>
+    <sprite n="hover-down" x="0" y="730" w="218" h="254" pX="0.0366973" pY="0.019685"/>
+    <sprite n="down" x="218" y="730" w="218" h="254" pX="0.0366973" pY="0.019685"/>
     <sprite n="hover-up" x="436" y="730" w="218" h="254" pX="0.0366973" pY="0.019685"/>
     <sprite n="up" x="654" y="730" w="218" h="254" pX="0.0366973" pY="0.019685"/>
  </tutorial>
