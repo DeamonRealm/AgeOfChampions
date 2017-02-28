@@ -40,7 +40,7 @@ j1ClusterAbstraction::j1ClusterAbstraction(j1Map * m, uint clusterSize):clusterS
 	CreateClusters();
 	SetEntryClusterID();
 	SetNodesOnClusters(&graph);
-	//CreateIntraEdges(&graph);
+	CreateIntraEdges(&graph);
 }
 
 j1ClusterAbstraction::~j1ClusterAbstraction()
@@ -212,6 +212,20 @@ int j1ClusterAbstraction::NodeExist(Cluster& cluster, int posX, int posY, Graph*
 	return -1;
 
 }
+bool j1ClusterAbstraction::EdgeExist(Cluster & cluster, int nodeID1, int nodeID2, Graph * graph)
+{
+	bool ret = false;
+	int number = 0;
+	for (int i = 0; i < graph->EdgeSize(); i++) {
+		if (graph->EdgeAt(i)->GetNodeNum1() == nodeID1 && graph->EdgeAt(i)->GetNodeNum2() == nodeID2
+			|| graph->EdgeAt(i)->GetNodeNum1() == nodeID2 && graph->EdgeAt(i)->GetNodeNum2() == nodeID1)
+		{
+			ret = true;
+		}
+	
+	}
+	return ret;
+}
 void j1ClusterAbstraction::SetEntryClusterID()
 {
 
@@ -344,31 +358,37 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 	}
 }
 void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
-
 {
 	uchar* temp_map = new uchar[100];
+	int new_size = 100;
+	j1Astar* astar = new j1Astar();
+	std::vector<Node*> temp_nodes;
+
 	for (int i = 0; i < clusters.size(); i++)
 	{
 		Cluster& item = clusters[i];
 		int size = item.GetHeight()*item.GetWidth();
-		if (sizeof(temp_map) != size) {
+
+		if (new_size != size) {
 			delete[] temp_map;
-			temp_map = new uchar(item.GetHeight()*item.GetWidth());
+			new_size = size;
+			temp_map = new uchar[new_size];
 		}
 		int x = 0;
 		int y = 0;
-		int node_number=0;
-		std::vector<Node*> temp_nodes;
-
-		for (int i = item.GetPosisitionY(); i < item.GetPosisitionY() + item.GetHeight()-1; i++) 
+		int node_number = 0;
+		LOG("cluster %i", i);
+		
+		for (int i = item.GetPosisitionY(); i < (item.GetPosisitionY() + item.GetHeight()); i++)
 		{
 			x = 0;
-			for (int j = item.GetPosisitionX(); j < item.GetPosisitionX() + item.GetWidth()-1; j++)
+			for (int j = item.GetPosisitionX(); j <( item.GetPosisitionX() + item.GetWidth()); j++)
 			{
-				temp_map[(x*item.GetWidth()+y)] = GetValueMap(j, i);
-				node_number=NodeExist(item, j, i, graph);
+				temp_map[(y*item.GetWidth() + x)] = GetValueMap(j, i);
+				LOG("%i", (y*item.GetWidth() + x));
+				node_number = NodeExist(item, j, i, graph);
 				if (node_number != -1) {
-					Node* tmp_node = new Node;
+					Node* tmp_node = new Node();
 					tmp_node->SetPosition(x, y);
 					tmp_node->nodeNum = node_number;
 					temp_nodes.push_back(tmp_node);
@@ -377,18 +397,18 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 			}
 			y++;
 		}
-
-		j1Astar* astar = new j1Astar;
+		
+		
 		int distance;
 		for (int i = 0; i < temp_nodes.size(); i++)
 		{
-			for (int j = 0; j < temp_nodes.size(); j++) 
+			for (int j = 0; j < temp_nodes.size(); j++)
 			{
 				if (i == j)
 					continue;
-				astar->CreatePath(temp_map,item.GetWidth(),item.GetHeight(), temp_nodes[i], temp_nodes[j], distance);
+				astar->CreatePath(temp_map, item.GetWidth(), item.GetHeight(), temp_nodes[i], temp_nodes[j], distance);
 				if (distance != -1) {
-					if (!NodeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
+					if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
 					{
 						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance));
 					}
@@ -399,11 +419,10 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 			}
 
 		}
-		temp_nodes.clear();
 		
-}
+		temp_nodes.clear();
 
-
+	}
 }
 Node* Graph::GetNode(int i) 
 {
@@ -433,12 +452,33 @@ int Graph::AddNode(Node * node)
 	return -1;
 }
 
+int Graph::EdgeSize()
+{
+	return edges.size();
+}
+
+Edge * Graph::EdgeAt(int i)
+{
+
+	return edges[i];
+}
+
 Edge::Edge(int nodeNum1, int nodeNum2, int distance) : nodeNum1(nodeNum1),nodeNum2(nodeNum2),distance(distance)
 {
 
 }
 Edge::~Edge()
 {
+}
+
+int Edge::GetNodeNum1()
+{
+	return nodeNum1;
+}
+
+int Edge::GetNodeNum2()
+{
+	return nodeNum2;
 }
 
 void Node::SetPosition(int x, int y)

@@ -19,6 +19,8 @@ public:
 
 	Edge(int nodeNum1,int nodeNum2,int distance);
 	~Edge();
+	int GetNodeNum1();
+	int GetNodeNum2();
 private:
 	int distance;
 	int nodeNum1;
@@ -51,7 +53,8 @@ public:
 	void AddEdge(Edge* edge);
 	
 	int AddNode(Node* edge);
-
+	int EdgeSize();
+	Edge* EdgeAt(int i);
 private:
 	std::vector<Node*> nodes;
 	std::vector<Edge*> edges;
