@@ -167,8 +167,6 @@ private:
 public:
 
 	//Functionality -------------------
-	//Load Civilization -----
-	bool		LoadCivilization(const char* folder);
 	//Blocks Load Methods ---
 	bool		LoadUnitBlock(const char* xml_folder, const char* tex_folder);
 	bool		LoadBuildingBlock(const char* xml_folder, const char* tex_folder);

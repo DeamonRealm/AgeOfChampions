@@ -140,6 +140,29 @@ SDL_RWops* j1FileSystem::Load(const char* file) const
 		return NULL;
 }
 
+bool j1FileSystem::LoadXML(const char * file, pugi::xml_document* doc) const
+{
+	LOG("Loading: %s", file);
+	char* buffer = nullptr;
+	int size = App->fs->Load(file, &buffer);
+	if (size == 0)
+	{
+		LOG("Error loading %s buffer", file);
+		return false;
+	}
+	pugi::xml_parse_result result = doc->load_buffer(buffer, size);
+	RELEASE(buffer);
+
+	if (result == NULL)
+	{
+		LOG("Error loading %s data: %s", file, result.description());
+		doc->reset();
+		return false;
+	}
+
+	return true;
+}
+
 int close_sdl_rwops(SDL_RWops *rw)
 {
 	RELEASE(rw->hidden.mem.base);

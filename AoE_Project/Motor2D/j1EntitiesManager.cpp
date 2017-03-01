@@ -4,18 +4,20 @@
 #include "j1Render.h"
 #include "j1Animator.h"
 #include "j1Input.h"
+#include "j1FileSystem.h"
 
 #include "p2Log.h"
 
 //Constructors ========================
 j1EntitiesManager::j1EntitiesManager()
 {
-
+	name = "entities_manager";
 }
 
 //Destructors =========================
 j1EntitiesManager::~j1EntitiesManager()
 {
+
 }
 
 //Game Loop ===========================
@@ -26,7 +28,10 @@ bool j1EntitiesManager::Awake(pugi::xml_node & config_node)
 
 bool j1EntitiesManager::Start()
 {
-	return true;
+	//Load Civilization Test
+	bool ret = LoadCivilization("Teutones.xml");
+
+	return ret;
 }
 
 bool j1EntitiesManager::Update(float dt)
@@ -121,7 +126,45 @@ bool j1EntitiesManager::CleanUp()
 	return true;
 }
 
+
 //Functionality =======================
+bool j1EntitiesManager::LoadCivilization(const char * folder)
+{
+	j1Timer time;
+	time.Start();
+
+	//Load civilization data from loaded folder
+	LOG("---- Loading %s...", folder);
+	std::string load_folder = name + "/" + folder;
+	pugi::xml_document civilization_data;
+	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))return false;
+
+	//Boolean to check the correct file loads
+	bool ret = true;
+	std::string tex_folder;
+	std::string tex_file;
+	//Load civilization units list
+	pugi::xml_node unit_node = civilization_data.child("data").child("units").first_child();
+	while (unit_node != NULL)
+	{
+		if (!ret)break;
+		ret = App->animator->LoadUnitBlock(unit_node.attribute("xml").as_string(), unit_node.attribute("spritesheet").as_string());
+		unit_node = unit_node.next_sibling();
+	}
+	//Load civilization buildings list
+	pugi::xml_node building_node = civilization_data.child("data").child("buildings").first_child();
+	while (building_node != NULL)
+	{
+		if (!ret)break;
+		ret = App->animator->LoadBuildingBlock(building_node.attribute("xml").as_string(), building_node.attribute("spritesheet").as_string());
+		building_node = building_node.next_sibling();
+	}
+
+	LOG("---- %s loaded in %.3f", folder, time.ReadSec());
+
+	return ret;
+}
+
 Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 {
 	Unit* new_unit = nullptr;
@@ -275,4 +318,10 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 
 	//Return the generated unit
 	return new_buidling;
+}
+
+bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
+{
+
+	return true;
 }

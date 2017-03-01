@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<data>
+  <unit civ="Teutones">
+    <stats
+      name="Arbales"
+      entity_type="1"  
+      unit_type ="2"
+      selection_w="50"
+      selection_h="50"
+      max_life="150"
+      life="150"
+      view_area="15"
+      speed="2.5"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_type="1"
+      attack_range="25"
+      defence="10"
+      defence_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      coin_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+</data>

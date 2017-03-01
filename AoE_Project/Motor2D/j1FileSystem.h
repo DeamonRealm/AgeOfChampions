@@ -34,6 +34,7 @@ public:
 	// Open for Read/Write
 	unsigned int Load(const char* file, char** buffer) const;
 	SDL_RWops* Load(const char* file) const;
+	bool LoadXML(const char* file, pugi::xml_document* doc)const;
 
 	unsigned int Save(const char* file, const char* buffer, unsigned int size) const;
 

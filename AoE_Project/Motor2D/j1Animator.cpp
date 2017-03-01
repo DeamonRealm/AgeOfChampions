@@ -225,10 +225,7 @@ bool j1Animator::Awake(pugi::xml_node& config)
 
 bool j1Animator::Start()
 {
-	//Load Civilization Test
-	bool ret = LoadCivilization("Teutones.xml");
-
-	return ret;
+	return true;
 }
 
 bool j1Animator::PostUpdate()
@@ -312,74 +309,17 @@ BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 }
 
 //Functionality =======================
-bool j1Animator::LoadCivilization(const char* folder)
-{
-	j1Timer time;
-	time.Start();
-	LOG("---- Loading %s...", folder);
-
-	//Load civilization data from loaded folder
-	char* buffer = nullptr;
-	std::string load_folder = name + "/" + folder;
-	int size = App->fs->Load(load_folder.c_str(), &buffer);
-	pugi::xml_document civilization_data;
-	pugi::xml_parse_result result = civilization_data.load_buffer(buffer, size);
-	RELEASE(buffer);
-
-	//Check result of the buffer loaded
-	if (result == NULL)
-	{
-		LOG("Error loading civilization data: %s", result.description());
-		return false;
-	}
-
-	//Boolean to check the correct file loads
-	bool ret = true;
-	std::string tex_folder;
-	std::string tex_file;
-	//Load civilization units list
-	pugi::xml_node unit_node = civilization_data.child("data").child("units").first_child();
-	while (unit_node != NULL)
-	{
-		if (!ret)break;
-		ret = LoadUnitBlock(unit_node.attribute("xml").as_string(), unit_node.attribute("spritesheet").as_string());
-		unit_node = unit_node.next_sibling();
-	}
-	//Load civilization buildings list
-	pugi::xml_node building_node = civilization_data.child("data").child("buildings").first_child();
-	while (building_node != NULL)
-	{
-		if (!ret)break;
-		ret = LoadBuildingBlock(building_node.attribute("xml").as_string(), building_node.attribute("spritesheet").as_string());
-		building_node = building_node.next_sibling();
-	}
-
-	LOG("---- %s loaded in %.3f", folder, time.ReadSec());
-
-	return ret;
-}
-
 bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 {
 	//Load animations data from folders
 	//XML load
 	LOG("Loading: %s", xml_folder);
-	char* buffer = nullptr;
 	std::string load_folder = name + "/" + xml_folder;
-	int size = App->fs->Load(load_folder.c_str(), &buffer);
 	pugi::xml_document animations_data;
-	pugi::xml_parse_result result = animations_data.load_buffer(buffer, size);
-	RELEASE(buffer);
+	if (!App->fs->LoadXML(load_folder.c_str(), &animations_data)) return false;
 	//Texture load
 	load_folder = name + "/" + tex_folder;
 	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
-
-	//Check result of the buffer loaded
-	if (result == NULL || texture == nullptr)
-	{
-		LOG("Error loading %s data: %s", xml_folder, result.description());
-		return false;
-	}
 
 	//Load Animations data
 	//Node focused at any unit node
@@ -476,27 +416,17 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 	//Load animations data from folders
 	//XML load
 	LOG("Loading: %s", xml_folder);
-	char* buffer = nullptr;
 	std::string load_folder = name + "/" + xml_folder;
-	int size = App->fs->Load(load_folder.c_str(), &buffer);
 	pugi::xml_document build_anim_data;
-	pugi::xml_parse_result result = build_anim_data.load_buffer(buffer, size);
-	RELEASE(buffer);
+	if (!App->fs->LoadXML(load_folder.c_str(), &build_anim_data))return false;
 	//Texture load
 	load_folder = name + "/" + tex_folder;
 	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
 
-	//Check result of the buffer loaded
-	if (result == NULL || texture == nullptr)
-	{
-		LOG("Error loading %s data: %s", xml_folder, result.description());
-		return false;
-	}
-
 	//Focus building id
 	pugi::xml_node build_node = build_anim_data.child("TextureAtlas").child("building");
 	
-	//Allocate building animation block data 
+	//Allocate building animation block data
 	Animation_Block* building_block = new Animation_Block();
 	building_block->SetId((uint)StrToBuildingEnum(build_node.attribute("id").as_string()));
 

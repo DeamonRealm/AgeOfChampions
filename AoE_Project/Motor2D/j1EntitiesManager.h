@@ -42,9 +42,15 @@ private:
 
 public:
 
-	//Functionality
+	//Functionality -------------------
+	//Load all choosed civilization data
+	bool		LoadCivilization(const char* folder);
+	//Factory Methods -------
 	Unit*		GenerateUnit(UNIT_TYPE type);
 	Building*	GenerateBuilding(BUILDING_TYPE type);
+	//Definition Methods ----
+	bool		AddUnitDefinition(const pugi::xml_node* unit_node);
+	bool		AddBuildingDefinition(const pugi::xml_node* building_node);
 
 };
 #endif // _ENTITIES_MANAGER_
