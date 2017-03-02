@@ -2,7 +2,7 @@
 
 <data>
   <!--Arbalest Data-->
-  <unit civ="Teutons" id="unit">
+  <unit civ="Teutons" id="arbalest">
     <stats
       name="Arbalest"
       entity_type="1"  
@@ -31,7 +31,7 @@
     />
   </unit>
   <!--Militia Data-->
-  <unit civ="Teutons" id="unit">
+  <unit civ="Teutons" id="militia">
     <stats
       name="Militia"
       entity_type="1"
@@ -60,7 +60,7 @@
     />
   </unit>
   <!--Villager Data-->
-  <unit civ="Teutons/English" id="unit">
+  <unit civ="Teutons/English" id="villager">
     <stats
       name="Villager"
       entity_type="1"

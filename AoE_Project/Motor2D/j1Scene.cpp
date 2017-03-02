@@ -214,8 +214,9 @@ bool j1Scene::Update(float dt)
 		App->animator->UnitPlay(arbalest);
 	}
 	// ------------------------------------------
-	App->map->Draw();
 
+	App->map->Draw();
+	App->entities_manager->Draw();
 
 	return true;
 }

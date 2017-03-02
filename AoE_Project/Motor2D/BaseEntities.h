@@ -99,7 +99,8 @@ protected:
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
 	Animation*		current_animation = nullptr;
 	bool			flip_sprite = false;
-	Primitive*		mark = nullptr;
+	Primitive		mark;
+	SDL_Rect		icon_rect = { 0,0,0,0 };
 
 public:
 
@@ -126,6 +127,7 @@ public:
 	Animation*		GetAnimation()const;
 	bool			GetFlipSprite()const;
 	Primitive*		GetMark()const;
+	const SDL_Rect&	GetIcon()const;
 };
 /// ---------------------------------------------
 

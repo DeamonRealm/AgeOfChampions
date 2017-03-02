@@ -19,7 +19,7 @@ Entity::Entity(const Entity* copy) :position(copy->position), entity_type(copy->
 //Destructors =========================
 Entity::~Entity()
 {
-	delete mark;
+
 }
 
 
@@ -29,7 +29,7 @@ bool Entity::Draw(bool debug)
 {
 	bool ret = false;
 	//Draw Entity Mark
-	if(debug)ret = mark->Draw();
+	if(debug)ret = mark.Draw();
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
@@ -47,7 +47,7 @@ void Entity::SetPosition(float x, float y)
 {
 	position.x = x;
 	position.y = y;
-	mark->SetPosition(iPoint(x, y));
+	mark.SetPosition(iPoint(x, y));
 }
 
 void Entity::SetEntityType(ENTITY_TYPE type)
@@ -75,16 +75,16 @@ void Entity::GenerateMark()
 	switch (entity_type)
 	{
 	case UNIT:
-		mark = new Circle(iPoint(position.x,position.y), 50);
-		mark->SetColor({ 150,50,40,255 });
-		mark->SetXAngle(7);
+		mark = Circle(iPoint(position.x,position.y), 50);
+		mark.SetColor({ 150,50,40,255 });
+		mark.SetXAngle(7);
 		break;
 	case RESOURCE:
 		break;
 	case BUILDING:
-		mark = new Rectng(iPoint(position.x,position.y - 25), 400);
-		mark->SetColor({ 150,250,40,255 });
-		mark->SetXAngle(7);
+		mark = Rectng(iPoint(position.x,position.y - 25), 400);
+		mark.SetColor({ 150,250,40,255 });
+		mark.SetXAngle(7);
 		break;
 	}
 }
@@ -125,6 +125,11 @@ Primitive* Entity::GetMark() const
 	return (Primitive*)&mark;
 }
 
+const SDL_Rect& Entity::GetIcon()const
+{
+	return icon_rect;
+}
+
 // ----------------
 ///----------------------------------------------
 ///Class Unit -----------------------------------
@@ -156,7 +161,7 @@ bool Unit::Draw(bool debug)
 
 	if (debug) {
 		//Draw Entity Mark
-		ret = mark->Draw();
+		ret = mark.Draw();
 
 		//Draw Entity Selection Rect
 		App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
@@ -511,7 +516,7 @@ bool Building::Draw(bool debug)
 	bool ret = false;
 
 	//Debug Draw
-	if(debug)ret = mark->Draw();
+	if(debug)ret = mark.Draw();
 
 	//Get all sprites of the current animation
 	const std::vector<Sprite>*	sprites = current_animation->GetAllSprites();

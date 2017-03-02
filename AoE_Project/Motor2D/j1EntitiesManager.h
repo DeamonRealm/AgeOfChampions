@@ -22,6 +22,9 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
+	//Draw entities
+	bool Draw()const;
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -40,6 +43,14 @@ private:
 	//Boolean that defines the debug mode state
 	bool debug = false;
 
+	//Methods that transform strings to enums (used when loading data from xml)
+	ENTITY_TYPE		StrToEntityEnum(const char* str)const;
+
+	//Methods to add entities definitions
+	bool		AddUnitDefinition(const pugi::xml_node* unit_node);
+	bool		AddResourceDefinition(const pugi::xml_node* resource_node);
+	bool		AddBuildingDefinition(const pugi::xml_node* building_node);
+
 public:
 
 	//Functionality -------------------
@@ -48,9 +59,5 @@ public:
 	//Factory Methods -------
 	Unit*		GenerateUnit(UNIT_TYPE type);
 	Building*	GenerateBuilding(BUILDING_TYPE type);
-	//Definition Methods ----
-	bool		AddUnitDefinition(const pugi::xml_node* unit_node);
-	bool		AddBuildingDefinition(const pugi::xml_node* building_node);
-
 };
 #endif // _ENTITIES_MANAGER_

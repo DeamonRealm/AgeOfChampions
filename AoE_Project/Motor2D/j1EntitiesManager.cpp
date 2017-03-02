@@ -29,16 +29,21 @@ bool j1EntitiesManager::Awake(pugi::xml_node & config_node)
 bool j1EntitiesManager::Start()
 {
 	//Load Civilization Test
-	bool ret = LoadCivilization("Teutones.xml");
-
+	bool ret = LoadCivilization("Teutons.xml");
 	return ret;
 }
 
 bool j1EntitiesManager::Update(float dt)
 {
-	bool ret = true;
 	//Activate / Deactivate debug mode 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) debug = !debug;
+
+	return true;
+}
+
+bool j1EntitiesManager::Draw() const
+{
+	bool ret = true;
 
 	//Draw all units
 	std::list<Unit*>::const_iterator unit_item = units.begin();
@@ -126,6 +131,31 @@ bool j1EntitiesManager::CleanUp()
 	return true;
 }
 
+//Methods that transform strings to enums (used when loading data from xml)
+ENTITY_TYPE j1EntitiesManager::StrToEntityEnum(const char * str) const
+{
+	if (strcmp(str, "unit") == 0)		return UNIT;
+	if (strcmp(str, "resource") == 0)	return RESOURCE;
+	if (strcmp(str, "building") == 0)	return BUILDING;
+	return NO_ENTITY;
+}
+
+//Methods to add entities definitions
+bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
+{
+
+	return true;
+}
+
+bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_node)
+{
+	return true;
+}
+
+bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_node)
+{
+	return true;
+}
 
 //Functionality =======================
 bool j1EntitiesManager::LoadCivilization(const char * folder)
@@ -133,11 +163,16 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	j1Timer time;
 	time.Start();
 
+	//Load Civilization Animations --------------
 	//Load civilization data from loaded folder
 	LOG("---- Loading %s...", folder);
 	std::string load_folder = name + "/" + folder;
 	pugi::xml_document civilization_data;
-	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))return false;
+	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
+	{
+		LOG("Civilization animations load error!");
+		return false;
+	}
 
 	//Boolean to check the correct file loads
 	bool ret = true;
@@ -159,6 +194,45 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 		ret = App->animator->LoadBuildingBlock(building_node.attribute("xml").as_string(), building_node.attribute("spritesheet").as_string());
 		building_node = building_node.next_sibling();
 	}
+	// ------------------------------------------
+
+	//Load Civilization Stats -------------------
+	//Load stats document
+	/*civilization_data.reset();
+	load_folder.clear();
+	load_folder = name + "/" + "StatsData.xml";
+	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
+	{
+		LOG("Civilization stats load error!");
+		return false;
+	}
+
+	//Focus first entity node
+	pugi::xml_node entity_node = civilization_data.child("data").first_child();
+
+	while (entity_node != NULL)
+	{
+		switch (StrToEntityEnum(entity_node.attribute("id").as_string()))
+		{
+		case UNIT:		AddUnitDefinition(&entity_node.first_child());		break;
+		case RESOURCE:	AddResourceDefinition(&entity_node.first_child());	break;
+		case BUILDING:	AddBuildingDefinition(&entity_node.first_child());	break;
+
+		default:
+			//Entity ID error case
+			LOG("Error loading entity id");
+			civilization_data.reset();
+			return false;
+			break;
+		}
+		//Focus the next entity node
+		entity_node = entity_node.next_sibling();
+	}*/
+	// ------------------------------------------
+
+
+	//Clean loaded xml
+	civilization_data.reset();
 
 	LOG("---- %s loaded in %.3f", folder, time.ReadSec());
 
@@ -318,10 +392,4 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 
 	//Return the generated unit
 	return new_buidling;
-}
-
-bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
-{
-
-	return true;
 }
