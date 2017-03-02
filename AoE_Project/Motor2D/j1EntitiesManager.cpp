@@ -94,39 +94,13 @@ bool j1EntitiesManager::CleanUp()
 	buildings.clear();
 
 	//Clean Up units_defs vector
-	uint size = units_defs.size();
-	if (size > 0)
-	{
-		size--;
-		for (uint k = size; k >= 0; k--)
-		{
-			RELEASE(units_defs[k]);
-		}
-		units_defs.clear();
-	}
+	units_defs.clear();
 
 	//Clean Up resoureces_defs vector
-	size = resoureces_defs.size();
-	if (size > 0)
-	{
-		size--;
-		for (uint k = size; k >= 0; k--)
-		{
-			RELEASE(resoureces_defs[k]);
-		}
-		resoureces_defs.clear();
-	}
+	resources_defs.clear();
+
 	//Clean Up buildings_defs vector
-	size = buildings_defs.size();
-	if (size > 0)
-	{
-		size--;
-		for (uint k = size; k >= 0; k--)
-		{
-			RELEASE(buildings_defs[k]);
-		}
-		buildings_defs.clear();
-	}
+	buildings_defs.clear();
 
 	return true;
 }
@@ -143,7 +117,59 @@ ENTITY_TYPE j1EntitiesManager::StrToEntityEnum(const char * str) const
 //Methods to add entities definitions
 bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 {
+	if (unit_node == nullptr)return false;
 
+	//Generate a new unit definition from the node
+	Unit new_def;
+	
+	//Unit ID ---------------
+	/*Name*/			new_def.SetName(unit_node->attribute("name").as_string());
+	/*Entity Type*/		new_def.SetEntityType((ENTITY_TYPE)unit_node->attribute("entity_type").as_uint());
+	/*Unit Type*/		new_def.SetUnitType((UNIT_TYPE)unit_node->attribute("unit_type").as_uint());
+	/*Attack Type*/		new_def.SetAttackType((ATTACK_TYPE)unit_node->attribute("attack_type").as_uint());
+
+	//Unit Primitives -------
+	/*Mark*/			Circle* mark = new Circle();
+						new_def.SetMark(mark);
+	/*Mark Radius*/		mark->SetRad(unit_node->attribute("mark_rad").as_uint());
+	/*Mark X Angle*/	mark->SetXAngle(unit_node->attribute("mark_x_angle").as_float());
+	/*Selection Rect*/	SDL_Rect selection_rect;
+	/*S.Rect X*/		selection_rect.x = unit_node->attribute("selection_x").as_int();
+	/*S.Rect Y*/		selection_rect.y = unit_node->attribute("selection_y").as_int();
+	/*S.Rect W*/		selection_rect.w = unit_node->attribute("selection_w").as_int();
+	/*S.Rect H*/		selection_rect.h = unit_node->attribute("selection_h").as_int();
+						new_def.SetSelectionRect(selection_rect);
+	/*Icon Rect*/		SDL_Rect icon_rect;
+	/*I.Rect X*/		icon_rect.x = unit_node->attribute("icon_x").as_int();
+	/*I.Rect Y*/		icon_rect.y = unit_node->attribute("icon_y").as_int();
+	/*I.Rect W*/		icon_rect.w = unit_node->attribute("icon_w").as_int();
+	/*I.Rect H*/		icon_rect.h = unit_node->attribute("icon_h").as_int();
+						new_def.SetIcon(icon_rect);
+
+	//Unit Metrics ----------
+	/*Max Life*/		new_def.SetMaxLife(unit_node->attribute("max_life").as_uint());
+	/*Life*/			new_def.SetLife(unit_node->attribute("life").as_uint());
+	/*View Area*/		new_def.SetViewArea(unit_node->attribute("view_area").as_uint());
+	/*Speed*/			new_def.SetSpeed(unit_node->attribute("speed").as_float());
+	/*Attack Points*/	new_def.SetAttackHitPoints(unit_node->attribute("attack_hitpoints").as_uint());
+	/*Attack Bonus*/	new_def.SetAttackBonus(unit_node->attribute("attack_bonus").as_uint());
+	/*Siege Points*/	new_def.SetSiegeHitPoints(unit_node->attribute("siege_hitpoints").as_uint());
+	/*Attack Rate*/		new_def.SetAttackRate(unit_node->attribute("attack_rate").as_uint());
+	/*Attack Range*/	new_def.SetAttackRange(unit_node->attribute("attack_range").as_uint());
+	/*Defense*/			new_def.SetDefense(unit_node->attribute("defense").as_uint());
+	/*Defense Bonus*/	new_def.SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
+	/*Armor*/			new_def.SetArmor(unit_node->attribute("armor").as_uint());
+	/*Armor Bonus*/		new_def.SetArmorBonus(unit_node->attribute("armor_bomus").as_uint());
+	/*Food Cost*/		new_def.SetFoodCost(unit_node->attribute("food_cost").as_uint());
+	/*Wood Cost*/		new_def.SetWoodCost(unit_node->attribute("wood_cost").as_uint());
+	/*Coin Cost*/		new_def.SetCoinCost(unit_node->attribute("coin_cost").as_uint());
+	/*Population Cost*/	new_def.SetPopulationCost(unit_node->attribute("population_cost").as_uint());
+	/*Train Time*/		new_def.SetTrainTime(unit_node->attribute("train_time").as_uint());
+
+	units_defs.push_back(new_def);
+	
+	LOG("%s definition built!", new_def.GetName());
+	
 	return true;
 }
 
@@ -198,7 +224,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 
 	//Load Civilization Stats -------------------
 	//Load stats document
-	/*civilization_data.reset();
+	civilization_data.reset();
 	load_folder.clear();
 	load_folder = name + "/" + "StatsData.xml";
 	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
@@ -220,14 +246,12 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 
 		default:
 			//Entity ID error case
-			LOG("Error loading entity id");
-			civilization_data.reset();
-			return false;
+			LOG("Error loading entity %s", entity_node.first_child().attribute("name").as_string());
 			break;
 		}
 		//Focus the next entity node
 		entity_node = entity_node.next_sibling();
-	}*/
+	}
 	// ------------------------------------------
 
 
@@ -243,130 +267,29 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 {
 	Unit* new_unit = nullptr;
 
-	switch (type)
+	uint def_num = units_defs.size();
+	for (uint k = 0; k < def_num; k++)
 	{
-	case NO_UNIT: new_unit = new Unit("undefined"); break;
+		if (units_defs[k].GetUnitType() == type)
+		{
+			//Build unit
+			new_unit = new Unit(&units_defs[k]);
+			
+			//Build unit mark
+			Circle* mark = (Circle*)units_defs[k].GetMark();
+			Circle* cpy = new Circle(*mark);
+			new_unit->SetMark(cpy);
+			
+			//Set unit animation
+			App->animator->UnitPlay(new_unit);
+			
+			//Add the new unit at the units manage list
+			units.push_back(new_unit);
 
-	case VILLAGER_PICK:
-		new_unit = new Unit("Villager");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::VILLAGER_PICK);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({ 0,0,30,40 });
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-		break;
-
-	case VILLAGER:
-		new_unit = new Unit("Villager");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::VILLAGER);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({ 0,0,30,40 });
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-		break;
-
-	case VILLAGER_PLOW:
-		new_unit = new Unit("Villager");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::VILLAGER_PLOW);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({0,0,30,40});
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-		break;
-
-	case VILLAGER_AXE:
-		new_unit = new Unit("Villager");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::VILLAGER_AXE);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({ 0,0,30,40 });
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-		break;
-
-	case VILLAGER_HAMMER:
-		new_unit = new Unit("Villager");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::VILLAGER_HAMMER);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({ 0,0,30,40 });
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-		break;
-
-	case VILLAGER_BASKET:
-		new_unit = new Unit("Villager");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::VILLAGER_BASKET);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({ 0,0,30,40 });
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-		break;
-
-	case VILLAGER_BOW:
-		new_unit = new Unit("Villager");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::VILLAGER_BOW);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({ 0,0,30,40 });
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-		break;
-
-//Don't use this, it's not done and most likely it will break the code
-	case VILLAGER_CARRY:
-		new_unit = new Unit("Villager");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::VILLAGER_CARRY);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({ 0,0,30,40 });
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-		break;
-//------------------------
-
-	case MILITIA:
-		new_unit = new Unit("Militia");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::MILITIA);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({ 0,0,30,40 });
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-	 break;
-
-	case ARBALEST:
-		new_unit = new Unit("Arbalest");
-		new_unit->SetEntityType(ENTITY_TYPE::UNIT);
-		new_unit->SetUnitType(UNIT_TYPE::ARBALEST);
-		new_unit->SetAction(ACTION_TYPE::IDLE);
-		new_unit->SetDirection(DIRECTION_TYPE::SOUTH);
-		new_unit->SetSelectionRect({ 0,0,35,45 });
-		App->animator->UnitPlay(new_unit);
-		new_unit->GenerateMark();
-	 break;
-
-
+			return new_unit;
+		}
 	}
-
-	//Add new unit at the manager list
-	if(new_unit != nullptr)units.push_back(new_unit);
-	
-	//Return the generated unit
-	return new_unit;
+	return nullptr;
 }
 
 Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
@@ -383,7 +306,7 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 		new_buidling->SetEntityType(ENTITY_TYPE::BUILDING);
 		new_buidling->SetBuildingType(BUILDING_TYPE::TOWN_CENTER);
 		new_buidling->SetAnimation(App->animator->BuildingPlay(TOWN_CENTER, IDLE, NO_DIRECTION));
-		new_buidling->GenerateMark();
+
 		break;
 	}
 

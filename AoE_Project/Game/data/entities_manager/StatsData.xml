@@ -2,13 +2,21 @@
 
 <data>
   <!--Arbalest Data-->
-  <unit civ="Teutons" id="arbalest">
+  <unit civ="Teutons" id="unit">
     <stats
       name="Arbalest"
       entity_type="1"  
       unit_type ="2"
+      mark_rad ="55"
+      mark_x_angle ="10"
+      selection_x ="0"
+      selection_y ="0"
       selection_w="50"
       selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
       max_life="150"
       life="150"
       view_area="15"
@@ -19,25 +27,36 @@
       attack_rate="200"
       attack_type="1"
       attack_range="25"
-      defence="10"
-      defence_bonus="5"
+      defense="10"
+      defense_bonus="5"
       armor="12"
       armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       coin_cost="5"
-      poblation_cost="2"
+      population_cost="2"
       train_time="8"
     />
   </unit>
   <!--Militia Data-->
-  <unit civ="Teutons" id="militia">
+  <unit civ="Teutons" id="unit">
     <stats
       name="Militia"
       entity_type="1"
-      unit_type ="2"
+      unit_type ="1"
+      attack_type="1"
+      
+      mark_rad ="55"
+      mark_x_angle ="10"
+      selection_x ="0"
+      selection_y ="0"
       selection_w="50"
       selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
       max_life="150"
       life="150"
       view_area="15"
@@ -46,10 +65,9 @@
       attack_bonus="2"
       siege_hitpoints="10"
       attack_rate="200"
-      attack_type="1"
       attack_range="25"
-      defence="10"
-      defence_bonus="5"
+      defense="10"
+      defense_bonus="5"
       armor="12"
       armor_bonus="5"
       food_cost="5"
@@ -60,13 +78,21 @@
     />
   </unit>
   <!--Villager Data-->
-  <unit civ="Teutons/English" id="villager">
+  <unit civ="Teutons/English" id="unit">
     <stats
       name="Villager"
       entity_type="1"
-      unit_type ="2"
+      unit_type ="3"
+      mark_rad ="55"
+      mark_x_angle ="10"
+      selection_x ="0"
+      selection_y ="0"
       selection_w="50"
       selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
       max_life="150"
       life="150"
       view_area="15"
@@ -77,8 +103,8 @@
       attack_rate="200"
       attack_type="1"
       attack_range="25"
-      defence="10"
-      defence_bonus="5"
+      defense="10"
+      defense_bonus="5"
       armor="12"
       armor_bonus="5"
       food_cost="5"

@@ -36,9 +36,9 @@ private:
 	std::list<Building*>	buildings;
 
 	//Vector of predefined units
-	std::vector<Unit*>		units_defs;
-	std::vector<Resource*>	resoureces_defs;
-	std::vector<Building*>	buildings_defs;
+	std::vector<Unit>		units_defs;
+	std::vector<Resource>	resources_defs;
+	std::vector<Building>	buildings_defs;
 
 	//Boolean that defines the debug mode state
 	bool debug = false;
@@ -54,7 +54,7 @@ private:
 public:
 
 	//Functionality -------------------
-	//Load all choosed civilization data
+	//Load all chosen civilization data
 	bool		LoadCivilization(const char* folder);
 	//Factory Methods -------
 	Unit*		GenerateUnit(UNIT_TYPE type);

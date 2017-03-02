@@ -86,6 +86,7 @@ class Entity
 {
 public:
 
+	Entity();
 	Entity(const std::string& name, const  fPoint& position = { 0,0 } , ENTITY_TYPE entity_type = NO_ENTITY);
 	Entity(const Entity* copy);
 
@@ -99,7 +100,7 @@ protected:
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
 	Animation*		current_animation = nullptr;
 	bool			flip_sprite = false;
-	Primitive		mark;
+	Primitive*		mark;
 	SDL_Rect		icon_rect = { 0,0,0,0 };
 
 public:
@@ -117,7 +118,8 @@ public:
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 	void			SetAnimation(Animation* anim);
 	void			SetFlipSprite(bool flip);
-	void			GenerateMark();
+	void			SetMark(const Primitive* primitive_mark);
+	void			SetIcon(const SDL_Rect& icon);
 
 	//Get Methods -----------
 	const char*		GetName()const;
@@ -137,6 +139,7 @@ class Unit : public Entity
 {
 public:
 
+	Unit();
 	Unit(const std::string& name);
 	Unit(const Unit* copy);
 
@@ -153,25 +156,25 @@ protected:
 	//Movement ---------
 	uint			view_area = 0;
 	float			speed = 0;
-	ACTION_TYPE		action_type = NO_ACTION;
-	DIRECTION_TYPE	direction_type = NO_DIRECTION;
+	ACTION_TYPE		action_type = IDLE;
+	DIRECTION_TYPE	direction_type = SOUTH;
 	//Attack -----------
 	uint			attack_hitpoints = 0;
 	uint			attack_bonus = 0;
 	uint			siege_hitpoints = 0;
-	float			attack_rate = 0;
+	uint			attack_rate = 0;
 	ATTACK_TYPE		attack_type = NO_ATTACK;
 	float			attack_range = 0;
 	//Defense/Armor ----
-	uint			defence = 0;
-	uint			defence_bonus = 0;
+	uint			defense = 0;
+	uint			defense_bonus = 0;
 	uint			armor = 0;
 	uint			armor_bonus = 0;
 	//Resources --------
 	uint			food_cost = 0;
 	uint			wood_cost = 0;
 	uint			coin_cost = 0;
-	uint			poblation_cost = 0;
+	uint			population_cost = 0;
 	uint			train_time = 0;
 	uint			exp = 0;
 
@@ -184,7 +187,7 @@ public:
 	//Set Methods -----------
 	void	SetUnitType(UNIT_TYPE type);
 	void	SetSelectionRect(const SDL_Rect& rect);
-	void	SetFullLife(uint full_life_val);
+	void	SetMaxLife(uint full_life_val);
 	void	SetLife(uint life_val);
 	void	SetViewArea(uint area_val);
 	void	SetSpeed(float speed_val);
@@ -193,17 +196,17 @@ public:
 	void	SetAttackHitPoints(uint atk_val);
 	void	SetAttackBonus(uint atk_bonus);
 	void	SetSiegeHitPoints(uint siege_val);
-	void	SetAttackRate(float atk_rate);
+	void	SetAttackRate(uint atk_rate);
 	void	SetAttackType(ATTACK_TYPE atk_type);
 	void	SetAttackRange(float atk_range);
-	void	SetDefence(uint def);
-	void	SetDefenceBonus(uint def_bonus);
+	void	SetDefense(uint def);
+	void	SetDefenseBonus(uint def_bonus);
 	void	SetArmor(uint arm);
 	void	SetArmorBonus(uint arm_bonus);
 	void	SetFoodCost(uint food_cst);
 	void	SetWoodCost(uint wood_cst);
 	void	SetCoinCost(uint coin_cst);
-	void	SetPoblationCost(uint poblation_cst);
+	void	SetPopulationCost(uint poblation_cst);
 	void	SetTrainTime(uint train_time_val);
 	void	SetExp(uint experience);
 
@@ -222,14 +225,14 @@ public:
 	float			GetAttackRate()const;
 	ATTACK_TYPE		GetAttackType()const;
 	float			GetAttackRange()const;
-	uint			GetDefence()const;
-	uint			GetDefenceBonus()const;
+	uint			GetDefense()const;
+	uint			GetDefenseBonus()const;
 	uint			GetArmor()const;
 	uint			GetArmorBonus()const;
 	uint			GetFoodCost()const;
 	uint			GetWoodCost()const;
 	uint			GetCoinCost()const;
-	uint			GetPoblationCost()const;
+	uint			GetPopulationCost()const;
 	uint			GetTrainTime()const;
 	uint			GetExp()const;
 };
@@ -291,7 +294,7 @@ public:
 
 	//Functionality -------------------
 	//Factory that generates any type of unit supported by the building
-	virtual Unit* GenerateUnit(UNIT_TYPE new_unit_type)const;
+	virtual Unit* CraftUnit(UNIT_TYPE new_unit_type)const;
 
 	//Draw ------------------
 	bool	Draw(bool debug);

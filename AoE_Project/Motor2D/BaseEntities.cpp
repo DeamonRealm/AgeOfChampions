@@ -4,14 +4,20 @@
 #include "j1Render.h"
 #include "j1Animator.h"
 
+
 ///Class Entity ---------------------------------
 //Constructors ========================
+Entity::Entity() :name("")
+{
+
+}
+
 Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE entity_type) : name(name), position(position), entity_type(entity_type)
 {
 
 }
 
-Entity::Entity(const Entity* copy) :position(copy->position), entity_type(copy->entity_type)
+Entity::Entity(const Entity* copy) : name(copy->name), position(copy->position), entity_type(copy->entity_type), entity_diplomacy(copy->entity_diplomacy), icon_rect(copy->icon_rect)
 {
 
 }
@@ -29,7 +35,7 @@ bool Entity::Draw(bool debug)
 {
 	bool ret = false;
 	//Draw Entity Mark
-	if(debug)ret = mark.Draw();
+	if(debug)ret = mark->Draw();
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
@@ -47,7 +53,7 @@ void Entity::SetPosition(float x, float y)
 {
 	position.x = x;
 	position.y = y;
-	mark.SetPosition(iPoint(x, y));
+	mark->SetPosition(iPoint(x, y));
 }
 
 void Entity::SetEntityType(ENTITY_TYPE type)
@@ -70,24 +76,16 @@ void Entity::SetFlipSprite(bool flip)
 	flip_sprite = flip;
 }
 
-void Entity::GenerateMark()
+void Entity::SetMark(const Primitive * primitive_mark)
 {
-	switch (entity_type)
-	{
-	case UNIT:
-		mark = Circle(iPoint(position.x,position.y), 50);
-		mark.SetColor({ 150,50,40,255 });
-		mark.SetXAngle(7);
-		break;
-	case RESOURCE:
-		break;
-	case BUILDING:
-		mark = Rectng(iPoint(position.x,position.y - 25), 400);
-		mark.SetColor({ 150,250,40,255 });
-		mark.SetXAngle(7);
-		break;
-	}
+	mark = (Primitive*)primitive_mark;
 }
+
+void Entity::SetIcon(const SDL_Rect & icon)
+{
+	icon_rect = icon;
+}
+
 // ----------------
 //Get Methods -----
 const char* Entity::GetName() const
@@ -132,17 +130,24 @@ const SDL_Rect& Entity::GetIcon()const
 
 // ----------------
 ///----------------------------------------------
+
+
 ///Class Unit -----------------------------------
 //Constructors ========================
+Unit::Unit() :Entity()
+{
+
+}
+
 Unit::Unit(const std::string& name): Entity(name)
 {
 
 }
 
-Unit::Unit(const Unit * copy) :Entity(copy->name, copy->position, copy->entity_type), unit_type(unit_type), max_life(max_life), life(life), view_area(view_area),
-speed(speed), action_type(action_type), direction_type(direction_type), attack_hitpoints(attack_hitpoints), attack_bonus(attack_bonus), siege_hitpoints(siege_hitpoints),
-attack_rate(attack_rate), attack_type(attack_type), attack_range(attack_range), defence(defence), defence_bonus(defence_bonus), armor(armor), armor_bonus(armor_bonus),
-food_cost(food_cost), wood_cost(wood_cost), coin_cost(coin_cost), poblation_cost(poblation_cost), train_time(train_time)
+Unit::Unit(const Unit* copy) : Entity(copy), unit_type(copy->unit_type), selection_rect(copy->selection_rect), max_life(copy->max_life), life(copy->life), view_area(copy->view_area),
+speed(copy->speed), action_type(copy->action_type), direction_type(copy->direction_type), attack_hitpoints(copy->attack_hitpoints), attack_bonus(copy->attack_bonus), siege_hitpoints(copy->siege_hitpoints),
+attack_rate(copy->attack_rate), attack_type(copy->attack_type), attack_range(copy->attack_range), defense(copy->defense), defense_bonus(copy->defense_bonus), armor(copy->armor), armor_bonus(copy->armor_bonus),
+food_cost(copy->food_cost), wood_cost(copy->wood_cost), coin_cost(copy->coin_cost), population_cost(copy->population_cost), train_time(copy->train_time)
 {
 
 }
@@ -161,7 +166,7 @@ bool Unit::Draw(bool debug)
 
 	if (debug) {
 		//Draw Entity Mark
-		ret = mark.Draw();
+		ret = mark->Draw();
 
 		//Draw Entity Selection Rect
 		App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
@@ -199,7 +204,7 @@ void Unit::SetSelectionRect(const SDL_Rect & rect)
 	selection_rect = rect;
 }
 
-void Unit::SetFullLife(uint full_life_val)
+void Unit::SetMaxLife(uint full_life_val)
 {
 	max_life = full_life_val;
 }
@@ -244,7 +249,7 @@ void Unit::SetSiegeHitPoints(uint siege_val)
 	siege_hitpoints = siege_val;
 }
 
-void Unit::SetAttackRate(float atk_rate)
+void Unit::SetAttackRate(uint atk_rate)
 {
 	attack_rate = atk_rate;
 }
@@ -259,14 +264,14 @@ void Unit::SetAttackRange(float atk_range)
 	attack_range = atk_range;
 }
 
-void Unit::SetDefence(uint def)
+void Unit::SetDefense(uint def)
 {
-	defence = def;
+	defense = def;
 }
 
-void Unit::SetDefenceBonus(uint def_bonus)
+void Unit::SetDefenseBonus(uint def_bonus)
 {
-	defence_bonus = def_bonus;
+	defense_bonus = def_bonus;
 }
 
 void Unit::SetArmor(uint arm)
@@ -294,9 +299,9 @@ void Unit::SetCoinCost(uint coin_cst)
 	coin_cost = coin_cst;
 }
 
-void Unit::SetPoblationCost(uint poblation_cst)
+void Unit::SetPopulationCost(uint poblation_cst)
 {
-	poblation_cost = poblation_cst;
+	population_cost = poblation_cst;
 }
 
 void Unit::SetTrainTime(uint train_time_val)
@@ -379,14 +384,14 @@ float Unit::GetAttackRange()const
 	return attack_range;
 }
 
-uint Unit::GetDefence()const
+uint Unit::GetDefense()const
 {
-	return defence;
+	return defense;
 }
 
-uint Unit::GetDefenceBonus() const
+uint Unit::GetDefenseBonus() const
 {
-	return defence_bonus;
+	return defense_bonus;
 }
 
 uint Unit::GetArmor() const
@@ -414,9 +419,9 @@ uint Unit::GetCoinCost() const
 	return coin_cost;
 }
 
-uint Unit::GetPoblationCost() const
+uint Unit::GetPopulationCost() const
 {
-	return poblation_cost;
+	return population_cost;
 }
 
 uint Unit::GetTrainTime() const
@@ -505,7 +510,7 @@ Building::~Building()
 
 //Functionality =======================
 //Units Generator -----------
-Unit * Building::GenerateUnit(UNIT_TYPE new_unit_type) const
+Unit * Building::CraftUnit(UNIT_TYPE new_unit_type) const
 {
 	return nullptr;
 }
@@ -516,7 +521,7 @@ bool Building::Draw(bool debug)
 	bool ret = false;
 
 	//Debug Draw
-	if(debug)ret = mark.Draw();
+	if(debug)ret = mark->Draw();
 
 	//Get all sprites of the current animation
 	const std::vector<Sprite>*	sprites = current_animation->GetAllSprites();
