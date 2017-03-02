@@ -37,6 +37,8 @@ public:
 
 public:
 
+	void Init() { active = false; }
+
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
@@ -61,6 +63,8 @@ private:
 	uint			population = 0;
 	uint			max_population = 5;
 
+	SDL_Rect		selection_rect;
+
 	std::list<Unit*>	actual_population;
 	std::list<Entity*>	selected_elements;
 
@@ -78,8 +82,12 @@ public:
 	void DrawUnitsSelected();
 	void DrawEntitysSelected();
 	*/
+	bool UnitisIn(int x, int y, int width, int height);
+	bool PointisIn(int x, int y);
 
 	void Select_Entity();
-	void CheckPixelAlpha(int x, int y);
+	void Select_Group();
+
+	void Expand_SelectionRect();
 };
 #endif // !_J1PLAYER_H_
