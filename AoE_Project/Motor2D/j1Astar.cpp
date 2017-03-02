@@ -41,6 +41,7 @@ void j1Astar::SetMap(uchar * logic_map, int width_map, int height_map)
 	height = height_map;
 	copy_map = new uchar[width*height];
 	memcpy(copy_map, logic_map, width*height);
+	
 }
 
 
@@ -55,16 +56,16 @@ int j1Astar::CreatePath(Node* start, Node*goal) {
 		ret = 1;
 		PathList open;
 		PathList close;
-		//	PathNode current;
 		open.list.push_back(PathNode(0, origin.DistanceManhattan(destination), origin, nullptr));
 		while (open.list.size() != 0) 
 		{
-		//	close.list.push_back(open.GetNodeLowestScore());
+			close.list.push_back(open.GetNodeLowestScore()._Ptr->_Myval);
 			open.list.erase(open.GetNodeLowestScore());
-			if (close.list.end()->pos == destination) 
+			if (close.list.back().pos == destination) 
 			{
+				std::list<PathNode>::const_iterator item = close.list.end();
 
-				for (std::list<PathNode>::const_iterator item = close.list.end(); item->parent != nullptr; item = close.Find(item->parent->pos)) 
+				for (item--; item->parent != nullptr; item = close.Find(item->parent->pos)) 
 				{
 					last_path.push_back(item->pos);
 				}
@@ -75,7 +76,7 @@ int j1Astar::CreatePath(Node* start, Node*goal) {
 			else
 			{
 				PathList neightbords;
-				close.list.end()->FindWalkableAdjacents(neightbords,this);
+				close.list.back().FindWalkableAdjacents(neightbords,this);
 				for (std::list<PathNode>::iterator  item = neightbords.list.begin(); item != neightbords.list.end(); item++) {
 					if (item==close.Find(item->pos)) 
 					{
@@ -210,6 +211,7 @@ std::list<PathNode>::iterator PathList::Find(const iPoint & point)
 std::list<PathNode>::const_iterator PathList::GetNodeLowestScore() const
 {
 	std::list<PathNode>::const_iterator ret = list.end();
+	ret--;
 	float min = 65535;
 	
 	std::list<PathNode>::const_iterator item = list.end();

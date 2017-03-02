@@ -43,7 +43,6 @@ struct PathNode
 	// -----------
 	float g;
 	int h;
-	int id;
 	iPoint pos;
 	const PathNode* parent; // needed to reconstruct the path in the end
 };
