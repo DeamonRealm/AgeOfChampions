@@ -1,6 +1,7 @@
 #pragma once
 #ifndef _J1CLUSTER_ABSTRACTION_H_
 #define _J1CLUSTER_ABSTRACTION_H_
+#include <list>
 #include <vector>
 #include "j1Map.h"
 #include "j1LogicMap.h"

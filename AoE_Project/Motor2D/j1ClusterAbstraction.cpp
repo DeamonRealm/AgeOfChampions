@@ -399,14 +399,15 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 		}
 		
 		
-		int distance;
+		int distance=-1;
 		for (int i = 0; i < temp_nodes.size(); i++)
 		{
 			for (int j = 0; j < temp_nodes.size(); j++)
 			{
 				if (i == j)
 					continue;
-				astar->CreatePath(temp_map, item.GetWidth(), item.GetHeight(), temp_nodes[i], temp_nodes[j], distance);
+				astar->SetMap(temp_map, item.GetWidth(), item.GetHeight());
+				//distance=astar->CreatePath( temp_nodes[i], temp_nodes[j]);
 				if (distance != -1) {
 					if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
 					{
