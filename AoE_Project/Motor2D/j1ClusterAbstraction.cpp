@@ -411,7 +411,7 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 				if (distance != -1) {
 					if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
 					{
-						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance));
+//						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance));
 						LOG("Intra Edge Generated on nodeOne = %i nodeTwo = %i", temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum);
 					}
 				}
