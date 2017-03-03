@@ -16,7 +16,7 @@ Primitive::Primitive(const iPoint& position, const SDL_Color& color) :position(p
 
 }
 
-Primitive::Primitive(const Primitive& copy) : position(copy.position), color(copy.color)
+Primitive::Primitive(const Primitive& copy) : position(copy.position), color(copy.color), x_angle(copy.x_angle)
 {
 
 }
@@ -70,7 +70,7 @@ Circle::Circle(const iPoint& position, uint rad) :Primitive(position), rad(rad)
 
 }
 
-Circle::Circle(const Circle & copy) : Primitive(copy.position, copy.color), rad(copy.rad)
+Circle::Circle(const Circle & copy) : Primitive(copy), rad(copy.rad)
 {
 
 }

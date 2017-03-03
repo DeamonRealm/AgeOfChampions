@@ -129,10 +129,11 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Attack Type*/		new_def.SetAttackType((ATTACK_TYPE)unit_node->attribute("attack_type").as_uint());
 
 	//Unit Primitives -------
-	/*Mark*/			Circle* mark = new Circle();
+	/*Mark*/			Circle mark;
+	/*Mark Radius*/		mark.SetRad(unit_node->attribute("mark_rad").as_uint());
+	/*Mark X Angle*/	mark.SetXAngle(unit_node->attribute("mark_x_angle").as_float());
+						mark.SetColor({ 255,255,255,255 });
 						new_def.SetMark(mark);
-	/*Mark Radius*/		mark->SetRad(unit_node->attribute("mark_rad").as_uint());
-	/*Mark X Angle*/	mark->SetXAngle(unit_node->attribute("mark_x_angle").as_float());
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = unit_node->attribute("selection_x").as_int();
 	/*S.Rect Y*/		selection_rect.y = unit_node->attribute("selection_y").as_int();
@@ -273,12 +274,7 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 		if (units_defs[k].GetUnitType() == type)
 		{
 			//Build unit
-			new_unit = new Unit(&units_defs[k]);
-			
-			//Build unit mark
-			Circle* mark = (Circle*)units_defs[k].GetMark();
-			Circle* cpy = new Circle(*mark);
-			new_unit->SetMark(cpy);
+			new_unit = new Unit(units_defs[k]);
 			
 			//Set unit animation
 			App->animator->UnitPlay(new_unit);

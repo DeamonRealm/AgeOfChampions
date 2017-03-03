@@ -54,10 +54,8 @@ bool j1Scene::Start()
 	// Entities Build -------------------------------------
 	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::ARBALEST); ///Don't use VILLAGER_CARRY animations are differently sorted and WILL break the code
 	arbalest->SetPosition(350, 280);
-	/*town_center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER);
-	town_center->SetPosition(550, 450);
 	town_center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER);
-	town_center->SetPosition(450, 330);*/
+	town_center->SetPosition(550, 450);
 	// ----------------------------------------------------
 
 

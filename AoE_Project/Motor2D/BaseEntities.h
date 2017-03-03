@@ -88,19 +88,19 @@ public:
 
 	Entity();
 	Entity(const std::string& name, const  fPoint& position = { 0,0 } , ENTITY_TYPE entity_type = NO_ENTITY);
-	Entity(const Entity* copy);
+	Entity(const Entity& copy);
 
 	~Entity();
 
 protected:
 
+	bool			selected = false;
 	std::string		name;
 	fPoint			position = { 0,0 };
 	ENTITY_TYPE		entity_type = NO_ENTITY;
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
 	Animation*		current_animation = nullptr;
 	bool			flip_sprite = false;
-	Primitive*		mark;
 	SDL_Rect		icon_rect = { 0,0,0,0 };
 
 public:
@@ -108,17 +108,20 @@ public:
 
 
 	//Functionality -------------------
+	//Select/Deselect ------
+	void			Select();
+	void			Deselect();
+	
 	//Draw ------------------
 	virtual bool	Draw(bool debug);
-
+	
 	//Set Methods -----------
 	void			SetName(const char* name_str);
-	void			SetPosition(float x, float y);
+	virtual void	SetPosition(float x, float y);
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 	void			SetAnimation(Animation* anim);
 	void			SetFlipSprite(bool flip);
-	void			SetMark(const Primitive* primitive_mark);
 	void			SetIcon(const SDL_Rect& icon);
 
 	//Get Methods -----------
@@ -128,7 +131,6 @@ public:
 	DIPLOMACY		GetDiplomacy()const;
 	Animation*		GetAnimation()const;
 	bool			GetFlipSprite()const;
-	Primitive*		GetMark()const;
 	const SDL_Rect&	GetIcon()const;
 };
 /// ---------------------------------------------
@@ -141,7 +143,7 @@ public:
 
 	Unit();
 	Unit(const std::string& name);
-	Unit(const Unit* copy);
+	Unit(const Unit& copy);
 
 	~Unit();
 
@@ -150,6 +152,7 @@ protected:
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
 	SDL_Rect		selection_rect = { 0,0,0,0 };
+	Circle			mark;
 	//Life -------------
 	uint			max_life = 0;
 	float			life = 0;
@@ -185,8 +188,10 @@ public:
 	bool	Draw(bool debug);
 
 	//Set Methods -----------
+	void	SetPosition(float x, float y);
 	void	SetUnitType(UNIT_TYPE type);
 	void	SetSelectionRect(const SDL_Rect& rect);
+	void	SetMark(const Circle& new_mark);
 	void	SetMaxLife(uint full_life_val);
 	void	SetLife(uint life_val);
 	void	SetViewArea(uint area_val);
@@ -213,6 +218,7 @@ public:
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
 	const SDL_Rect*	GetSelectionRect()const;
+	const Circle&	GetMark()const;
 	uint			GetFullLife()const;
 	uint			GetLife()const;
 	uint			GetViewArea()const;
@@ -245,11 +251,12 @@ class Resource : public Entity
 public:
 
 	Resource(const std::string& name);
-	Resource(const Resource* copy);
+	Resource(const Resource& copy);
 	~Resource();
 
 protected:
 
+	Rectng			mark;
 	RESOURCE_TYPE	resource_type = NO_RESOURCE;
 	uint			max_resources = 0;
 	uint			current_resources = 0;
@@ -276,7 +283,7 @@ class Building : public Entity
 public:
 
 	Building(const std::string& name);
-	Building(const Building* copy);
+	Building(const Building& copy);
 	~Building();
 
 protected:

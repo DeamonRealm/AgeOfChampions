@@ -17,7 +17,7 @@ Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE enti
 
 }
 
-Entity::Entity(const Entity* copy) : name(copy->name), position(copy->position), entity_type(copy->entity_type), entity_diplomacy(copy->entity_diplomacy), icon_rect(copy->icon_rect)
+Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), icon_rect(copy.icon_rect)
 {
 
 }
@@ -30,12 +30,21 @@ Entity::~Entity()
 
 
 //Functionality =======================
+//Select/Deselect ------
+void Entity::Select()
+{
+	selected = true;
+}
+
+void Entity::Deselect()
+{
+	selected = false;
+}
+
 // Draw -----------
 bool Entity::Draw(bool debug)
 {
 	bool ret = false;
-	//Draw Entity Mark
-	if(debug)ret = mark->Draw();
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
@@ -53,7 +62,6 @@ void Entity::SetPosition(float x, float y)
 {
 	position.x = x;
 	position.y = y;
-	mark->SetPosition(iPoint(x, y));
 }
 
 void Entity::SetEntityType(ENTITY_TYPE type)
@@ -74,11 +82,6 @@ void Entity::SetAnimation(Animation * anim)
 void Entity::SetFlipSprite(bool flip)
 {
 	flip_sprite = flip;
-}
-
-void Entity::SetMark(const Primitive * primitive_mark)
-{
-	mark = (Primitive*)primitive_mark;
 }
 
 void Entity::SetIcon(const SDL_Rect & icon)
@@ -118,11 +121,6 @@ bool Entity::GetFlipSprite() const
 	return flip_sprite;
 }
 
-Primitive* Entity::GetMark() const
-{
-	return (Primitive*)&mark;
-}
-
 const SDL_Rect& Entity::GetIcon()const
 {
 	return icon_rect;
@@ -144,10 +142,10 @@ Unit::Unit(const std::string& name): Entity(name)
 
 }
 
-Unit::Unit(const Unit* copy) : Entity(copy), unit_type(copy->unit_type), selection_rect(copy->selection_rect), max_life(copy->max_life), life(copy->life), view_area(copy->view_area),
-speed(copy->speed), action_type(copy->action_type), direction_type(copy->direction_type), attack_hitpoints(copy->attack_hitpoints), attack_bonus(copy->attack_bonus), siege_hitpoints(copy->siege_hitpoints),
-attack_rate(copy->attack_rate), attack_type(copy->attack_type), attack_range(copy->attack_range), defense(copy->defense), defense_bonus(copy->defense_bonus), armor(copy->armor), armor_bonus(copy->armor_bonus),
-food_cost(copy->food_cost), wood_cost(copy->wood_cost), coin_cost(copy->coin_cost), population_cost(copy->population_cost), train_time(copy->train_time)
+Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), selection_rect(copy.selection_rect), mark(copy.mark), max_life(copy.max_life), life(copy.life), view_area(copy.view_area),
+speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
+attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_range(copy.attack_range), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
+food_cost(copy.food_cost), wood_cost(copy.wood_cost), coin_cost(copy.coin_cost), population_cost(copy.population_cost), train_time(copy.train_time)
 {
 
 }
@@ -163,11 +161,11 @@ Unit::~Unit()
 bool Unit::Draw(bool debug)
 {
 	bool ret = false;
-
+	
+	//Draw Entity Mark
+	if(selected)ret = mark.Draw();
+	
 	if (debug) {
-		//Draw Entity Mark
-		ret = mark->Draw();
-
 		//Draw Entity Selection Rect
 		App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
 
@@ -194,6 +192,15 @@ bool Unit::Draw(bool debug)
 }
 
 //Set Methods -----
+void Unit::SetPosition(float x, float y)
+{
+	//Set unit position
+	position.x = x;
+	position.y = y;
+	//Set unit mark position
+	mark.SetPosition(iPoint(x, y));
+}
+
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
@@ -202,6 +209,11 @@ void Unit::SetUnitType(UNIT_TYPE type)
 void Unit::SetSelectionRect(const SDL_Rect & rect)
 {
 	selection_rect = rect;
+}
+
+void Unit::SetMark(const Circle & new_mark)
+{
+	mark = new_mark;
 }
 
 void Unit::SetMaxLife(uint full_life_val)
@@ -324,6 +336,11 @@ const SDL_Rect * Unit::GetSelectionRect() const
 	return &selection_rect;
 }
 
+const Circle& Unit::GetMark() const
+{
+	return mark;
+}
+
 uint Unit::GetFullLife() const
 {
 	return max_life;
@@ -442,7 +459,7 @@ Resource::Resource(const std::string & name):Entity(name)
 
 }
 
-Resource::Resource(const Resource * copy) : Entity(copy->name, copy->position, copy->entity_type), resource_type(resource_type), max_resources(max_resources), current_resources(current_resources)
+Resource::Resource(const Resource& copy) : Entity(copy), resource_type(resource_type), max_resources(max_resources), current_resources(current_resources)
 {
 
 }
@@ -491,7 +508,7 @@ Building::Building(const std::string & name):Entity(name)
 
 }
 
-Building::Building(const Building* copy) : Entity(copy->name, copy->position, copy->entity_type), buiding_type(copy->buiding_type), max_life(copy->max_life), life(copy->life), units_capacity(units_capacity), current_units(copy->current_units)
+Building::Building(const Building& copy) : Entity(copy), buiding_type(copy.buiding_type), max_life(copy.max_life), life(copy.life), units_capacity(units_capacity), current_units(copy.current_units)
 {
 
 }
@@ -521,7 +538,7 @@ bool Building::Draw(bool debug)
 	bool ret = false;
 
 	//Debug Draw
-	if(debug)ret = mark->Draw();
+	//if(debug)ret = mark->Draw();
 
 	//Get all sprites of the current animation
 	const std::vector<Sprite>*	sprites = current_animation->GetAllSprites();

@@ -32,7 +32,7 @@ protected:
 
 	iPoint		position = {0,0};
 	float		x_angle = 0.0f;
-	SDL_Color	color = { 0,0,0,0 };
+	SDL_Color	color = { 0,0,0,255 };
 
 public:
 
