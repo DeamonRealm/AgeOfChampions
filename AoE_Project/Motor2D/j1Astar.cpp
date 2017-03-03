@@ -59,8 +59,8 @@ int j1Astar::CreatePath(Node* start, Node*goal) {
 		open.list.push_back(PathNode(0, origin.DistanceManhattan(destination), origin, nullptr));
 		while (open.list.size() != 0) 
 		{
-			close.list.push_back(open.GetNodeLowestScore()._Ptr->_Myval);
-			open.list.erase(open.GetNodeLowestScore());
+			close.list.push_back(open.GetNodeLowestScore().base()._Ptr->_Myval);
+			open.list.erase(open.GetNodeLowestScore().base());
 			if (close.list.back().pos == destination) 
 			{
 				std::list<PathNode>::const_iterator item = close.list.end();
@@ -125,21 +125,21 @@ uint PathNode::FindWalkableAdjacents(PathList & list_to_fill, j1Astar* Astar) co
 	bool northClose = false, southClose = false, eastClose = false, westClose = false;
 	// south
 	cell.create(pos.x, pos.y + 1);
-	if (Astar->IsWalkable(cell) && cell.x != 25)
+	if (Astar->IsWalkable(cell) )
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 	else {
 		southClose = true;
 	}
 	// north
 	cell.create(pos.x, pos.y - 1);
-	if (Astar->IsWalkable(cell) && cell.x != 25)
+	if (Astar->IsWalkable(cell) )
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 	else {
 		northClose = true;
 	}
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if (Astar->IsWalkable(cell) && cell.x != 25)
+	if (Astar->IsWalkable(cell))
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 	else {
 		eastClose = true;
@@ -153,19 +153,19 @@ uint PathNode::FindWalkableAdjacents(PathList & list_to_fill, j1Astar* Astar) co
 	}
 	// south-east
 	cell.create(pos.x + 1, pos.y + 1);
-	if (Astar->IsWalkable(cell) && southClose == false && eastClose == false && cell.x != 25)
+	if (Astar->IsWalkable(cell) && southClose == false && eastClose == false )
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 	// south-west
 	cell.create(pos.x - 1, pos.y + 1);
-	if (Astar->IsWalkable(cell) && southClose == false && westClose == false && cell.x != 25)
+	if (Astar->IsWalkable(cell) && southClose == false && westClose == false )
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 	// north-east
 	cell.create(pos.x + 1, pos.y - 1);
-	if (Astar->IsWalkable(cell) && northClose == false && eastClose == false && cell.x != 25)
+	if (Astar->IsWalkable(cell) && northClose == false && eastClose == false )
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 	// north-west
 	cell.create(pos.x - 1, pos.y - 1);
-	if (Astar->IsWalkable(cell) && northClose == false && westClose == false && cell.x != 25)
+	if (Astar->IsWalkable(cell) && northClose == false && westClose == false )
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	
@@ -197,32 +197,29 @@ int PathNode::CalculateF(const iPoint & destination)
 
 std::list<PathNode>::iterator PathList::Find(const iPoint & point)
 {
-	int ret = -1;
 	std::list<PathNode>::iterator item = list.begin();
 	while (item!=list.end())
 	{
 		if (item->pos== point) {
 			return item;
 		}
-		item++;
+		++item;
 	}
 }
 
-std::list<PathNode>::const_iterator PathList::GetNodeLowestScore() const
+std::list<PathNode>::const_reverse_iterator PathList::GetNodeLowestScore() const
 {
-	std::list<PathNode>::const_iterator ret = list.end();
-	ret--;
+	std::list<PathNode>::const_reverse_iterator ret = list.crbegin();
+	std::list<PathNode>::const_reverse_iterator item = list.crbegin();
 	float min = 65535;
-	
-	std::list<PathNode>::const_iterator item = list.end();
-	while (item != list.begin())
+	while (item != list.crend())
 	{
 		if (item->Score() < min)
 		{
-			min = item->Score();
+			min = ret->Score();
 			ret = item;
 		}
-		item--;
+		++item;
 	}
 	return ret;
 }
