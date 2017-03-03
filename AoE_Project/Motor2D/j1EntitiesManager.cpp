@@ -116,6 +116,13 @@ ENTITY_TYPE j1EntitiesManager::StrToEntityEnum(const char * str) const
 	return NO_ENTITY;
 }
 
+ATTACK_TYPE j1EntitiesManager::StrToAttackEnum(const char * str) const
+{
+	if (strcmp(str, "melee") == 0)		return MELEE;
+	if (strcmp(str, "distance") == 0)	return DISTANCE;
+	return NO_ATTACK;
+}
+
 //Methods to add entities definitions
 bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 {
@@ -126,10 +133,9 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	
 	//Unit ID ---------------
 	/*Name*/			new_def.SetName(unit_node->attribute("name").as_string());
-	/*Entity Type*/		new_def.SetEntityType((ENTITY_TYPE)unit_node->attribute("entity_type").as_uint());
-	/*Unit Type*/		new_def.SetUnitType((UNIT_TYPE)unit_node->attribute("unit_type").as_uint());
-	/*Attack Type*/		new_def.SetAttackType((ATTACK_TYPE)unit_node->attribute("attack_type").as_uint());
-
+	/*Entity Type*/		new_def.SetEntityType(StrToEntityEnum(unit_node->attribute("entity_type").as_string()));
+	/*Unit Type*/		new_def.SetUnitType(App->animator->StrToUnitEnum(unit_node->attribute("unit_type").as_string()));
+	/*Attack Type*/		new_def.SetAttackType(StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
 	//Unit Primitives -------
 	/*Mark*/			Circle mark;
 	/*Mark Radius*/		mark.SetRad(unit_node->attribute("mark_rad").as_uint());
@@ -228,7 +234,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	while (unit_node != NULL)
 	{
 		if (!ret)break;
-		ret = App->animator->LoadUnitBlock(unit_node.attribute("xml").as_string(), unit_node.attribute("spritesheet").as_string());
+		ret = App->animator->LoadUnitBlock(unit_node.attribute("xml").as_string());
 		unit_node = unit_node.next_sibling();
 	}
 	//Load civilization buildings list

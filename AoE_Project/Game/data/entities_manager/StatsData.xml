@@ -5,8 +5,10 @@
   <unit civ="Teutons" id="unit">
     <stats
       name="Arbalest"
-      entity_type="1"  
-      unit_type ="2"
+      entity_type="unit"  
+      unit_type ="arbalest"
+      attack_type="melee"
+      
       mark_rad ="55"
       mark_x_angle ="10"
       selection_x ="0"
@@ -25,7 +27,6 @@
       attack_bonus="2"
       siege_hitpoints="10"
       attack_rate="200"
-      attack_type="1"
       attack_range="25"
       defense="10"
       defense_bonus="5"
@@ -42,9 +43,48 @@
   <unit civ="Teutons" id="unit">
     <stats
       name="Militia"
-      entity_type="1"
-      unit_type ="1"
-      attack_type="1"
+      entity_type="unit"
+      unit_type ="militia"
+      attack_type="melee"
+      
+      mark_rad ="55"
+      mark_x_angle ="10"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      life="150"
+      view_area="15"
+      speed="2.5"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      coin_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Archer Data-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Archer"
+      entity_type="unit"
+      unit_type ="archer"
+      attack_type="distance"
       
       mark_rad ="55"
       mark_x_angle ="10"
@@ -81,8 +121,10 @@
   <unit civ="Teutons/English" id="unit">
     <stats
       name="Villager"
-      entity_type="1"
-      unit_type ="3"
+      entity_type="unit"
+      unit_type ="villager"
+      attack_type="melee"
+      
       mark_rad ="55"
       mark_x_angle ="10"
       selection_x ="0"
@@ -101,7 +143,6 @@
       attack_bonus="2"
       siege_hitpoints="10"
       attack_rate="200"
-      attack_type="1"
       attack_range="25"
       defense="10"
       defense_bonus="5"

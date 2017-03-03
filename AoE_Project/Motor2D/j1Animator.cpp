@@ -268,6 +268,7 @@ UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 {
 	if (strcmp(str, "militia") == 0)			return MILITIA;
 	if (strcmp(str, "arbalest") == 0)			return ARBALEST;
+	if (strcmp(str, "archer") == 0)				return ARCHER;
 	if (strcmp(str, "villager") == 0)			return VILLAGER;
 	if (strcmp(str, "villager_pick") == 0)		return VILLAGER_PICK;
 	if (strcmp(str, "villager_plow") == 0)		return VILLAGER_PLOW;
@@ -309,7 +310,7 @@ BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 }
 
 //Functionality =======================
-bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
+bool j1Animator::LoadUnitBlock(const char* xml_folder)
 {
 	//Load animations data from folders
 	//XML load
@@ -318,7 +319,7 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder, const char* tex_folder)
 	pugi::xml_document animations_data;
 	if (!App->fs->LoadXML(load_folder.c_str(), &animations_data)) return false;
 	//Texture load
-	load_folder = name + "/" + tex_folder;
+	load_folder = name + "/" + animations_data.child("TextureAtlas").attribute("imagePath").as_string();
 	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
 
 	//Load Animations data

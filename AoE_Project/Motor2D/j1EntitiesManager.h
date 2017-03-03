@@ -45,6 +45,7 @@ private:
 
 	//Methods that transform strings to enums (used when loading data from xml)
 	ENTITY_TYPE		StrToEntityEnum(const char* str)const;
+	ATTACK_TYPE		StrToAttackEnum(const char* str)const;
 
 	//Methods to add entities definitions
 	bool		AddUnitDefinition(const pugi::xml_node* unit_node);

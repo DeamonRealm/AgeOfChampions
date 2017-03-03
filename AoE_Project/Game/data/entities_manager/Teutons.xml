@@ -1,15 +1,16 @@
 <data civilization ="Teutons">
   <units>
-   <id xml = "arbalest.xml" spritesheet = "arbalest.png"/>
-   <id xml = "militia.xml" spritesheet = "militia.png"/>
-   <id xml = "villager.xml" spritesheet = "villager.png"/>
-   <id xml = "villager_pick.xml" spritesheet = "villager_pick.png"/>
-   <id xml = "villager_plow.xml" spritesheet = "villager_plow.png"/>
-   <id xml = "villager_axe.xml" spritesheet = "villager_axe.png"/>
-   <id xml = "villager_hammer.xml" spritesheet = "villager_hammer.png"/>
-   <id xml = "villager_basket.xml" spritesheet = "villager_basket.png"/>
-   <id xml = "villager_bow.xml" spritesheet = "villager_bow.png"/>
-   <id xml = "villager_carry.xml" spritesheet = "villager_carry.png"/>
+   <id xml = "archer.xml"/>
+   <id xml = "arbalest.xml"/>
+   <id xml = "militia.xml"/>
+   <id xml = "villager.xml"/>
+   <id xml = "villager_pick.xml"/>
+   <id xml = "villager_plow.xml"/>
+   <id xml = "villager_axe.xml"/>
+   <id xml = "villager_hammer.xml"/>
+   <id xml = "villager_basket.xml"/>
+   <id xml = "villager_bow.xml"/>
+   <id xml = "villager_carry.xml"/>
   </units>
   <buildings>
    <id xml = "TownCenterFeudal.xml" spritesheet = "TownCenterFeudal.png"/>

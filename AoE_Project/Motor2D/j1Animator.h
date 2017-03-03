@@ -158,17 +158,17 @@ private:
 	std::vector<Animation_Block*> building_blocks;
 	std::vector<Animation_Block*> resource_blocks;
 
+public:
+
+	//Functionality -------------------
 	//Methods that transform strings to enums (used when loading data from xml)
 	UNIT_TYPE		StrToUnitEnum(const char* str)const;
 	ACTION_TYPE		StrToActionEnum(const char* str)const;
 	DIRECTION_TYPE	StrToDirectionEnum(const char* str)const;
 	BUILDING_TYPE	StrToBuildingEnum(const char* str)const;
 
-public:
-
-	//Functionality -------------------
 	//Blocks Load Methods ---
-	bool		LoadUnitBlock(const char* xml_folder, const char* tex_folder);
+	bool		LoadUnitBlock(const char* xml_folder);
 	bool		LoadBuildingBlock(const char* xml_folder, const char* tex_folder);
 	bool		LoadResourceBlock(const char* folder);
 
