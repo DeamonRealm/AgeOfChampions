@@ -256,7 +256,6 @@ public:
 
 protected:
 
-	Rectng			mark;
 	RESOURCE_TYPE	resource_type = NO_RESOURCE;
 	uint			max_resources = 0;
 	uint			current_resources = 0;
@@ -288,6 +287,7 @@ public:
 
 protected:
 
+	Rectng			mark;
 	BUILDING_TYPE	buiding_type = NO_BUILDING;
 	uint			max_life = 0;
 	uint			life = 0;
@@ -307,6 +307,7 @@ public:
 	bool	Draw(bool debug);
 
 	//Set Methods -----------
+	void	SetMark(const Rectng& rectangle);
 	void	SetBuildingType(BUILDING_TYPE type);
 	void	SetMaxLife(uint max_life_val);
 	void	SetLife(uint life_val);
@@ -314,6 +315,7 @@ public:
 	void	SetCurrentUnits(uint units);
 
 	//Get Methods -----------
+	const Rectng&	GetMark()const;
 	BUILDING_TYPE	GetBuildingType()const;
 	uint			GetMaxLife()const;
 	uint			GetLife()const;

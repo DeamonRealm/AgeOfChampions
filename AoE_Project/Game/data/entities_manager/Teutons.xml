@@ -1,4 +1,4 @@
-<data>
+<data civilization ="Teutons">
   <units>
    <id xml = "arbalest.xml" spritesheet = "arbalest.png"/>
    <id xml = "militia.xml" spritesheet = "militia.png"/>

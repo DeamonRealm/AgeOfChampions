@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "j1EntitiesManager.h"
 
 #include "j1App.h"
@@ -184,6 +186,22 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	return true;
 }
 
+//Check if the entity civilizations string contains the chosen one
+bool j1EntitiesManager::CivilizationCheck(char * civs_str, const char * chosen_civ)
+{
+	if (civs_str == nullptr || chosen_civ == nullptr)return false;
+
+	char* civ = strtok(civs_str, "/");
+	while (civ != NULL)
+	{
+
+		if (strcmp(civ, chosen_civ) == 0)return true;
+		civ = strtok(NULL, "/");
+
+	}
+	return false;
+}
+
 //Functionality =======================
 bool j1EntitiesManager::LoadCivilization(const char * folder)
 {
@@ -201,12 +219,12 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 		return false;
 	}
 
+	//Get Civilization name
+	std::string civ_name = civilization_data.first_child().first_attribute().as_string();
 	//Boolean to check the correct file loads
 	bool ret = true;
-	std::string tex_folder;
-	std::string tex_file;
 	//Load civilization units list
-	pugi::xml_node unit_node = civilization_data.child("data").child("units").first_child();
+	pugi::xml_node unit_node = civilization_data.first_child().child("units").first_child();
 	while (unit_node != NULL)
 	{
 		if (!ret)break;
@@ -239,6 +257,14 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 
 	while (entity_node != NULL)
 	{
+		//Check if the entity is in the chosen civilization
+		if (!CivilizationCheck((char*)entity_node.attribute("civ").as_string(), civ_name.c_str()))
+		{
+			entity_node = entity_node.next_sibling();
+			continue;
+		}
+
+		//If the entity is in the civilization the entity definition is loaded
 		switch (StrToEntityEnum(entity_node.attribute("id").as_string()))
 		{
 		case UNIT:		AddUnitDefinition(&entity_node.first_child());		break;
@@ -250,6 +276,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 			LOG("Error loading entity %s", entity_node.first_child().attribute("name").as_string());
 			break;
 		}
+
 		//Focus the next entity node
 		entity_node = entity_node.next_sibling();
 	}

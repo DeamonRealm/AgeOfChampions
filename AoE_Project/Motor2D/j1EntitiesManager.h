@@ -51,6 +51,9 @@ private:
 	bool		AddResourceDefinition(const pugi::xml_node* resource_node);
 	bool		AddBuildingDefinition(const pugi::xml_node* building_node);
 
+	//Check if the entity civilizations string contains the chosen one
+	bool		CivilizationCheck(char* civs_str, const char* chosen_civ);
+
 public:
 
 	//Functionality -------------------

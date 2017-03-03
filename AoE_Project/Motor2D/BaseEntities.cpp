@@ -508,7 +508,7 @@ Building::Building(const std::string & name):Entity(name)
 
 }
 
-Building::Building(const Building& copy) : Entity(copy), buiding_type(copy.buiding_type), max_life(copy.max_life), life(copy.life), units_capacity(units_capacity), current_units(copy.current_units)
+Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), buiding_type(copy.buiding_type), max_life(copy.max_life), life(copy.life), units_capacity(units_capacity), current_units(copy.current_units)
 {
 
 }
@@ -553,6 +553,11 @@ bool Building::Draw(bool debug)
 	return ret;
 }
 
+void Building::SetMark(const Rectng & rectangle)
+{
+	mark = rectangle;
+}
+
 //Set Methods ---------------
 void Building::SetBuildingType(BUILDING_TYPE type)
 {
@@ -577,6 +582,11 @@ void Building::SetUnitsCapacity(uint capacity)
 void Building::SetCurrentUnits(uint units)
 {
 	current_units = units;
+}
+
+const Rectng & Building::GetMark() const
+{
+	return mark;
 }
 
 //Get Methods ---------------
