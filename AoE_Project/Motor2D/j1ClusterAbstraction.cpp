@@ -377,7 +377,7 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 		int x = 0;
 		int y = 0;
 		int node_number = 0;
-		LOG("cluster %i", i);
+	//	LOG("cluster %i", i);
 		
 		for (int i = item.GetPosisitionY(); i < (item.GetPosisitionY() + item.GetHeight()); i++)
 		{
@@ -385,7 +385,7 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 			for (int j = item.GetPosisitionX(); j <( item.GetPosisitionX() + item.GetWidth()); j++)
 			{
 				temp_map[(y*item.GetWidth() + x)] = GetValueMap(j, i);
-				LOG("%i", (y*item.GetWidth() + x));
+				//LOG("%i", (y*item.GetWidth() + x));
 				node_number = NodeExist(item, j, i, graph);
 				if (node_number != -1) {
 					Node* tmp_node = new Node();
@@ -407,7 +407,7 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 				if (i == j)
 					continue;
 				astar->SetMap(temp_map, item.GetWidth(), item.GetHeight());
-			//	distance=astar->CreatePath( temp_nodes[i], temp_nodes[j]);
+				distance=astar->CreatePath( temp_nodes[i], temp_nodes[j]);
 				if (distance != -1) {
 					if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
 					{

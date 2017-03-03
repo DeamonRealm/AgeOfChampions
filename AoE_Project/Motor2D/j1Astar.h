@@ -44,6 +44,9 @@ struct PathNode
 	float g;
 	int h;
 	iPoint pos;
+	bool operator ==(const PathNode& node)const ;
+	bool operator !=(const PathNode& node)const;
+
 	const PathNode* parent; // needed to reconstruct the path in the end
 };
 
@@ -56,7 +59,7 @@ struct PathList
 	std::list<PathNode>::iterator Find(const iPoint& point);
 
 	// Returns the Pathnode with lowest score in this list or NULL if empty
-	std::list<PathNode>::const_reverse_iterator GetNodeLowestScore() const;
+	PathNode* GetNodeLowestScore() const;
 
 	// -----------
 	// The list itself

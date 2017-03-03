@@ -59,8 +59,8 @@ int j1Astar::CreatePath(Node* start, Node*goal) {
 		open.list.push_back(PathNode(0, origin.DistanceManhattan(destination), origin, nullptr));
 		while (open.list.size() != 0) 
 		{
-			close.list.push_back(open.GetNodeLowestScore().base()._Ptr->_Myval);
-			open.list.erase(open.GetNodeLowestScore().base());
+			close.list.push_back(*open.GetNodeLowestScore());
+			open.list.remove(*open.GetNodeLowestScore());
 			if (close.list.back().pos == destination) 
 			{
 				std::list<PathNode>::const_iterator item = close.list.end();
@@ -195,6 +195,16 @@ int PathNode::CalculateF(const iPoint & destination)
 	return  g + h;
 }
 
+bool PathNode::operator==(const PathNode & node) const
+{
+	return pos == node.pos;
+}
+
+bool PathNode::operator!=(const PathNode & node) const
+{
+	return !operator==(node);
+}
+
 std::list<PathNode>::iterator PathList::Find(const iPoint & point)
 {
 	std::list<PathNode>::iterator item = list.begin();
@@ -207,17 +217,17 @@ std::list<PathNode>::iterator PathList::Find(const iPoint & point)
 	}
 }
 
-std::list<PathNode>::const_reverse_iterator PathList::GetNodeLowestScore() const
+PathNode* PathList::GetNodeLowestScore() const
 {
-	std::list<PathNode>::const_reverse_iterator ret = list.crbegin();
+	PathNode* ret = nullptr;
 	std::list<PathNode>::const_reverse_iterator item = list.crbegin();
 	float min = 65535;
 	while (item != list.crend())
 	{
 		if (item->Score() < min)
 		{
-			min = ret->Score();
-			ret = item;
+			min = item->Score();
+			ret = &item.base()._Ptr->_Prev->_Myval;
 		}
 		++item;
 	}
