@@ -12,7 +12,7 @@ Blit_Call::Blit_Call()
 
 }
 
-Blit_Call::Blit_Call(const iPoint & position, const iPoint& pivot, SDL_Texture * texture, const SDL_Rect& rect, bool flip, int priority) :position(position),pivot(pivot), texture(texture), rect(rect), flip(flip), priority(priority)
+Blit_Call::Blit_Call(const iPoint & position, const iPoint& pivot, SDL_Texture * texture, const SDL_Rect& rect, bool flip, int priority, uint opacity) :position(position),pivot(pivot), texture(texture), rect(rect), flip(flip), priority(priority), opacity(opacity)
 {
 
 }
@@ -56,6 +56,11 @@ const SDL_Rect* Blit_Call::GetRect() const
 bool Blit_Call::GetFlip() const
 {
 	return flip;
+}
+
+uint Blit_Call::GetOpacity() const
+{
+	return opacity;
 }
 
 bool Blit_Call::operator<(const Blit_Call & target) const
@@ -136,7 +141,7 @@ bool j1Render::Update(float dt)
 	for (uint k = 0; k < size; k++)
 	{
 		const Blit_Call* blit = &blit_queue.top();
-		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect(), blit->GetFlip(), blit->GetXPivot(), blit->GetYPivot());
+		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect(), blit->GetFlip(),blit->GetOpacity(), blit->GetXPivot(), blit->GetYPivot());
 		blit_queue.pop();
 	}
 	return true;
@@ -193,11 +198,11 @@ void j1Render::ChangeVSYNCstate(bool state)
 	renderer = SDL_CreateRenderer(App->win->window, -1, renderer_flag);
 }
 
-bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect* section, bool horizontal_flip, int priority, int pivot_x, int pivot_y, float speed, double angle)
+bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect* section, bool horizontal_flip, int priority, uint opacity, int pivot_x, int pivot_y, float speed, double angle)
 {
 	bool ret = false;
 	if (texture != nullptr)ret = true;
-	blit_queue.emplace(iPoint(x, y), iPoint(pivot_x, pivot_y) , texture, *section, horizontal_flip, priority);
+	blit_queue.emplace(iPoint(x, y), iPoint(pivot_x, pivot_y) , texture, *section, horizontal_flip, priority, opacity);
 	return true;
 }
 
@@ -223,7 +228,7 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 }
 
 // Blit to screen
-bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool horizontal_flip, int pivot_x, int pivot_y, float speed, double angle) const
+bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool horizontal_flip, uint opacity, int pivot_x, int pivot_y, float speed, double angle) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -265,6 +270,11 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		pivot.y = pivot_y;
 		p = &pivot;
 	}
+	int op_check = 2;
+	if (opacity != 255)
+	{
+		op_check = SDL_SetTextureAlphaMod(texture, opacity);
+	}
 
 	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, (SDL_RendererFlip)horizontal_flip))
 	{
@@ -272,6 +282,10 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		ret = false;
 	}
 
+	if (op_check != 2)
+	{
+		op_check = SDL_SetTextureAlphaMod(texture,255);
+	}
 	return ret;
 }
 

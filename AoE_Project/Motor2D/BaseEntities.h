@@ -177,7 +177,7 @@ protected:
 	//Resources --------
 	uint			food_cost = 0;
 	uint			wood_cost = 0;
-	uint			coin_cost = 0;
+	uint			gold_cost = 0;
 	uint			population_cost = 0;
 	uint			train_time = 0;
 	uint			exp = 0;
@@ -211,7 +211,7 @@ public:
 	void	SetArmorBonus(uint arm_bonus);
 	void	SetFoodCost(uint food_cst);
 	void	SetWoodCost(uint wood_cst);
-	void	SetCoinCost(uint coin_cst);
+	void	SetGoldCost(uint coin_cst);
 	void	SetPopulationCost(uint poblation_cst);
 	void	SetTrainTime(uint train_time_val);
 	void	SetExp(uint experience);
@@ -238,7 +238,7 @@ public:
 	uint			GetArmorBonus()const;
 	uint			GetFoodCost()const;
 	uint			GetWoodCost()const;
-	uint			GetCoinCost()const;
+	uint			GetGoldCost()const;
 	uint			GetPopulationCost()const;
 	uint			GetTrainTime()const;
 	uint			GetExp()const;
@@ -289,7 +289,7 @@ public:
 protected:
 
 	Rectng			mark;
-	BUILDING_TYPE	buiding_type = NO_BUILDING;
+	BUILDING_TYPE	building_type = NO_BUILDING;
 	uint			max_life = 0;
 	uint			life = 0;
 	uint			units_capacity = 0;

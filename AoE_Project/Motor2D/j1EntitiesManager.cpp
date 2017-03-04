@@ -171,7 +171,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Armor Bonus*/		new_def.SetArmorBonus(unit_node->attribute("armor_bomus").as_uint());
 	/*Food Cost*/		new_def.SetFoodCost(unit_node->attribute("food_cost").as_uint());
 	/*Wood Cost*/		new_def.SetWoodCost(unit_node->attribute("wood_cost").as_uint());
-	/*Coin Cost*/		new_def.SetCoinCost(unit_node->attribute("coin_cost").as_uint());
+	/*Gold Cost*/		new_def.SetGoldCost(unit_node->attribute("gold_cost").as_uint());
 	/*Population Cost*/	new_def.SetPopulationCost(unit_node->attribute("population_cost").as_uint());
 	/*Train Time*/		new_def.SetTrainTime(unit_node->attribute("train_time").as_uint());
 
@@ -242,7 +242,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	while (building_node != NULL)
 	{
 		if (!ret)break;
-		ret = App->animator->LoadBuildingBlock(building_node.attribute("xml").as_string(), building_node.attribute("spritesheet").as_string());
+		ret = App->animator->LoadBuildingBlock(building_node.attribute("xml").as_string());
 		building_node = building_node.next_sibling();
 	}
 	// ------------------------------------------

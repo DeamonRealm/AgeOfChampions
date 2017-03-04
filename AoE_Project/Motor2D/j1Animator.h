@@ -17,7 +17,7 @@ class Sprite
 {
 public:
 
-	Sprite(const SDL_Rect& frame, const iPoint& pivot, int z_cord = 0);
+	Sprite(const SDL_Rect& frame, const iPoint& pivot, int z_cord = 0, uint opacity = 255);
 	~Sprite();
 
 private:
@@ -25,6 +25,7 @@ private:
 	SDL_Rect		frame = { 0,0,0,0 };
 	iPoint			pivot = { 0,0 };
 	int				z_cord = 0;
+	uint			opacity = 255;
 
 public:
 
@@ -34,6 +35,8 @@ public:
 	int					GetXpivot()const;
 	int					GetYpivot()const;
 	int					GetZ_cord()const;
+	uint				GetOpacity()const;
+
 };
 /// ---------------------------------------------
 
@@ -81,7 +84,7 @@ public:
 	uint							GetId()const;
 
 	//Add New sprite
-	void AddSprite(const SDL_Rect& rect, const iPoint& point, const int z = 0);
+	void AddSprite(const SDL_Rect& rect, const iPoint& point, const int z = 0, const uint opacity = 255);
 
 };
 /// ---------------------------------------------
@@ -169,7 +172,7 @@ public:
 
 	//Blocks Load Methods ---
 	bool		LoadUnitBlock(const char* xml_folder);
-	bool		LoadBuildingBlock(const char* xml_folder, const char* tex_folder);
+	bool		LoadBuildingBlock(const char* xml_folder);
 	bool		LoadResourceBlock(const char* folder);
 
 	//Animations Methods ----

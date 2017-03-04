@@ -10,7 +10,7 @@
 
 ///Animation Sprite Class -----------------------
 //Constructor ===============
-Sprite::Sprite(const SDL_Rect & frame, const iPoint & pivot, int z_cord) : frame(frame), pivot(pivot), z_cord(z_cord)
+Sprite::Sprite(const SDL_Rect & frame, const iPoint & pivot, int z_cord, uint opacity) : frame(frame), pivot(pivot), z_cord(z_cord), opacity(opacity)
 {
 
 }
@@ -36,6 +36,10 @@ int Sprite::GetYpivot() const
 int Sprite::GetZ_cord() const
 {
 	return z_cord;
+}
+uint Sprite::GetOpacity() const
+{
+	return opacity;
 }
 /// ---------------------------------------------
 
@@ -124,9 +128,9 @@ uint Animation::GetId() const
 	return enum_id;
 }
 
-void Animation::AddSprite(const SDL_Rect & rect, const iPoint & point, const int z)
+void Animation::AddSprite(const SDL_Rect & rect, const iPoint & point, const int z, const uint opacity)
 {
-	sprites.push_back(Sprite(rect, point, z));
+	sprites.push_back(Sprite(rect, point, z, opacity));
 }
 /// ---------------------------------------------
 
@@ -412,7 +416,7 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 	return true;
 }
 
-bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folder)
+bool j1Animator::LoadBuildingBlock(const char* xml_folder)
 {
 	//Load animations data from folders
 	//XML load
@@ -421,7 +425,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 	pugi::xml_document build_anim_data;
 	if (!App->fs->LoadXML(load_folder.c_str(), &build_anim_data))return false;
 	//Texture load
-	load_folder = name + "/" + tex_folder;
+	load_folder = name + "/" + build_anim_data.child("TextureAtlas").attribute("imagePath").as_string();
 	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
 
 	//Focus building id
@@ -455,9 +459,11 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder, const char* tex_folde
 			pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
 			float pY = sprite.attribute("pY").as_float() * rect.h;
 			pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+			//Load sprite opacity
+			uint opacity = sprite.attribute("opacity").as_uint();
 
 			//Add sprite at animation
-			anim->AddSprite(rect, iPoint(pX, pY), sprite.attribute("z").as_int());
+			anim->AddSprite(rect, iPoint(pX, pY), sprite.attribute("z").as_int(),opacity);
 
 			//Focus next animation sprite
 			sprite = sprite.next_sibling();

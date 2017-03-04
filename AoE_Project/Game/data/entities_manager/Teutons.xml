@@ -13,6 +13,6 @@
    <id xml = "villager_carry.xml"/>
   </units>
   <buildings>
-   <id xml = "TownCenterFeudal.xml" spritesheet = "TownCenterFeudal.png"/>
+   <id xml = "town_center_feudal.xml"/>
   </buildings>
 </data>

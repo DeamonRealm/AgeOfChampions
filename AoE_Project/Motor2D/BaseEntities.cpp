@@ -145,7 +145,7 @@ Unit::Unit(const std::string& name): Entity(name)
 Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), selection_rect(copy.selection_rect), mark(copy.mark), max_life(copy.max_life), life(copy.life), view_area(copy.view_area),
 speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
 attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_range(copy.attack_range), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
-food_cost(copy.food_cost), wood_cost(copy.wood_cost), coin_cost(copy.coin_cost), population_cost(copy.population_cost), train_time(copy.train_time)
+food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time)
 {
 
 }
@@ -186,7 +186,7 @@ bool Unit::Draw(bool debug)
 	
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetXpivot(), sprite->GetYpivot());
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(),sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
 
 	return ret;
 }
@@ -306,9 +306,9 @@ void Unit::SetWoodCost(uint wood_cst)
 	wood_cost = wood_cst;
 }
 
-void Unit::SetCoinCost(uint coin_cst)
+void Unit::SetGoldCost(uint coin_cst)
 {
-	coin_cost = coin_cst;
+	gold_cost = coin_cst;
 }
 
 void Unit::SetPopulationCost(uint poblation_cst)
@@ -431,9 +431,9 @@ uint Unit::GetWoodCost() const
 	return wood_cost;
 }
 
-uint Unit::GetCoinCost() const
+uint Unit::GetGoldCost() const
 {
-	return coin_cost;
+	return gold_cost;
 }
 
 uint Unit::GetPopulationCost() const
@@ -508,7 +508,7 @@ Building::Building(const std::string & name):Entity(name)
 
 }
 
-Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), buiding_type(copy.buiding_type), max_life(copy.max_life), life(copy.life), units_capacity(units_capacity), current_units(copy.current_units)
+Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), building_type(copy.building_type), max_life(copy.max_life), life(copy.life), units_capacity(units_capacity), current_units(copy.current_units)
 {
 
 }
@@ -546,7 +546,7 @@ bool Building::Draw(bool debug)
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord());
+		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(),sprites->at(k).GetOpacity());
 		if(!ret)break;
 	}
 
@@ -561,7 +561,7 @@ void Building::SetMark(const Rectng & rectangle)
 //Set Methods ---------------
 void Building::SetBuildingType(BUILDING_TYPE type)
 {
-	buiding_type = type;
+	building_type = type;
 }
 
 void Building::SetMaxLife(uint max_life_val)
@@ -592,7 +592,7 @@ const Rectng & Building::GetMark() const
 //Get Methods ---------------
 BUILDING_TYPE Building::GetBuildingType() const
 {
-	return buiding_type;
+	return building_type;
 }
 
 uint Building::GetMaxLife() const
