@@ -6,11 +6,16 @@
 #include "p2Point.h"
 #include "SDL/include/SDL_rect.h"
 struct SDL_Texture;
-struct Unit;
+class Unit;
+class Building;
+class Resource;
 enum UNIT_TYPE;
 enum ACTION_TYPE;
 enum DIRECTION_TYPE;
 enum BUILDING_TYPE;
+enum RESOURCE_TYPE;
+enum ATTACK_TYPE;
+enum ENTITY_TYPE;
 
 ///Animation Sprite Class -----------------------
 class Sprite
@@ -165,18 +170,23 @@ public:
 
 	//Functionality -------------------
 	//Methods that transform strings to enums (used when loading data from xml)
+	ENTITY_TYPE		StrToEntityEnum(const char* str)const;
 	UNIT_TYPE		StrToUnitEnum(const char* str)const;
 	ACTION_TYPE		StrToActionEnum(const char* str)const;
 	DIRECTION_TYPE	StrToDirectionEnum(const char* str)const;
 	BUILDING_TYPE	StrToBuildingEnum(const char* str)const;
+	ATTACK_TYPE		StrToAttackEnum(const char* str)const;
+	RESOURCE_TYPE	StrToResourceEnum(const char* str)const;
 
 	//Blocks Load Methods ---
 	bool		LoadUnitBlock(const char* xml_folder);
 	bool		LoadBuildingBlock(const char* xml_folder);
-	bool		LoadResourceBlock(const char* folder);
+	bool		LoadResourceBlock(const char* xml_folder);
 
 	//Animations Methods ----
 	bool UnitPlay(Unit* target);
-	Animation* BuildingPlay(const BUILDING_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)const;
+	bool BuildingPlay(Building* target);
+	bool ResourcePlay(Resource* target);
+
 };
 #endif // !_J1ANIMATOR_H_

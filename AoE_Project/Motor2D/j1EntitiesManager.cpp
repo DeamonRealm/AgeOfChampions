@@ -54,7 +54,13 @@ bool j1EntitiesManager::Draw() const
 		ret = unit_item._Ptr->_Myval->Draw(debug);
 		unit_item++;
 	}
-
+	//Draw all Resources
+	std::list<Resource*>::const_iterator resource_item = resources.begin();
+	while (resource_item != resources.end() && ret)
+	{
+		ret = resource_item._Ptr->_Myval->Draw(debug);
+		resource_item++;
+	}
 	//Draw all buildings
 	std::list<Building*>::const_iterator building_item = buildings.begin();
 	while (building_item != buildings.end() && ret)
@@ -107,22 +113,6 @@ bool j1EntitiesManager::CleanUp()
 	return true;
 }
 
-//Methods that transform strings to enums (used when loading data from xml)
-ENTITY_TYPE j1EntitiesManager::StrToEntityEnum(const char * str) const
-{
-	if (strcmp(str, "unit") == 0)		return UNIT;
-	if (strcmp(str, "resource") == 0)	return RESOURCE;
-	if (strcmp(str, "building") == 0)	return BUILDING;
-	return NO_ENTITY;
-}
-
-ATTACK_TYPE j1EntitiesManager::StrToAttackEnum(const char * str) const
-{
-	if (strcmp(str, "melee") == 0)		return MELEE;
-	if (strcmp(str, "distance") == 0)	return DISTANCE;
-	return NO_ATTACK;
-}
-
 //Methods to add entities definitions
 bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 {
@@ -133,9 +123,9 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	
 	//Unit ID ---------------
 	/*Name*/			new_def.SetName(unit_node->attribute("name").as_string());
-	/*Entity Type*/		new_def.SetEntityType(StrToEntityEnum(unit_node->attribute("entity_type").as_string()));
+	/*Entity Type*/		new_def.SetEntityType(UNIT);
 	/*Unit Type*/		new_def.SetUnitType(App->animator->StrToUnitEnum(unit_node->attribute("unit_type").as_string()));
-	/*Attack Type*/		new_def.SetAttackType(StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
+	/*Attack Type*/		new_def.SetAttackType(App->animator->StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
 	//Unit Primitives -------
 	/*Mark*/			Circle mark;
 	/*Mark Radius*/		mark.SetRad(unit_node->attribute("mark_rad").as_uint());
@@ -245,6 +235,10 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 		ret = App->animator->LoadBuildingBlock(building_node.attribute("xml").as_string());
 		building_node = building_node.next_sibling();
 	}
+	//Load civilization resources
+	pugi::xml_node resource_node = civilization_data.first_child().child("resources").first_child();
+	if(resource_node != NULL)ret = App->animator->LoadResourceBlock(resource_node.attribute("xml").as_string());
+	else LOG("Error loading civilization Resources");
 	// ------------------------------------------
 
 	//Load Civilization Stats -------------------
@@ -271,7 +265,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 		}
 
 		//If the entity is in the civilization the entity definition is loaded
-		switch (StrToEntityEnum(entity_node.attribute("id").as_string()))
+		switch (App->animator->StrToEntityEnum(entity_node.attribute("id").as_string()))
 		{
 		case UNIT:		AddUnitDefinition(&entity_node.first_child());		break;
 		case RESOURCE:	AddResourceDefinition(&entity_node.first_child());	break;
@@ -334,7 +328,7 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 		new_buidling = new Building("Town Center");
 		new_buidling->SetEntityType(ENTITY_TYPE::BUILDING);
 		new_buidling->SetBuildingType(BUILDING_TYPE::TOWN_CENTER);
-		new_buidling->SetAnimation(App->animator->BuildingPlay(TOWN_CENTER, IDLE, NO_DIRECTION));
+		App->animator->BuildingPlay(new_buidling);
 
 		break;
 	}
@@ -344,4 +338,25 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 
 	//Return the generated unit
 	return new_buidling;
+}
+
+Resource * j1EntitiesManager::GenerateResource(RESOURCE_TYPE type)
+{
+	//Pointer to the new resource
+	Resource* new_resource = nullptr;
+
+	//Allocate resource class
+	new_resource = new Resource();
+	
+	//Set resource type
+	new_resource->SetEntityType(RESOURCE);
+	new_resource->SetResourceType(type);
+
+	//Randomly set the animation of the new resource checking the type
+	App->animator->ResourcePlay(new_resource);
+
+	//Add the new resource at the entity manager resources list
+	resources.push_back(new_resource);
+
+	return new_resource;
 }

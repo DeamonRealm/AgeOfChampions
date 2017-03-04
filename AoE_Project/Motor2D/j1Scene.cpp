@@ -52,10 +52,22 @@ bool j1Scene::Start()
 
 
 	// Entities Build -------------------------------------
-	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::ARCHER); ///Don't use VILLAGER_CARRY animations are differently sorted and WILL break the code
+	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::VILLAGER); ///Don't use VILLAGER_CARRY animations are differently sorted and WILL break the code
 	arbalest->SetPosition(350, 280);
 	town_center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER);
 	town_center->SetPosition(550, 450);
+	tree = App->entities_manager->GenerateResource(RESOURCE_TYPE::TREE);
+	tree->SetPosition(130, 650);
+	chop = App->entities_manager->GenerateResource(RESOURCE_TYPE::CHOP);
+	chop->SetPosition(220, 350);
+	tree_cut = App->entities_manager->GenerateResource(RESOURCE_TYPE::TREE_CUT);
+	tree_cut->SetPosition(340, 350);
+	berry_bush = App->entities_manager->GenerateResource(RESOURCE_TYPE::BERRY_BUSH);
+	berry_bush->SetPosition(440, 380);
+	gold_ore = App->entities_manager->GenerateResource(RESOURCE_TYPE::GOLD_ORE);
+	gold_ore->SetPosition(300, 480);
+	stone_ore = App->entities_manager->GenerateResource(RESOURCE_TYPE::STONE_ORE);
+	stone_ore->SetPosition(200, 480);
 	// ----------------------------------------------------
 
 
@@ -151,7 +163,7 @@ bool j1Scene::Update(float dt)
 
 	//Test unit movement animation --------------
 	fPoint pos = arbalest->GetPosition();
-	float speed = 55;
+	float speed = 95;
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		arbalest->SetAction(ACTION_TYPE::WALK);

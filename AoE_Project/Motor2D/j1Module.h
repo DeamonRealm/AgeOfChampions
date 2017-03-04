@@ -7,11 +7,11 @@
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
-struct UI_Element;
+class UI_Element;
 enum GUI_INPUT;
 enum CONSOLE_COMMAND_TYPE;
-struct Cvar;
-struct Command;
+class Cvar;
+class Command;
 
 class j1Module
 {

@@ -33,12 +33,12 @@ int Blit_Call::GetY() const
 	return position.y;
 }
 
-float Blit_Call::GetXPivot() const
+int Blit_Call::GetXPivot() const
 {
 	return pivot.x;
 }
 
-float Blit_Call::GetYPivot() const
+int Blit_Call::GetYPivot() const
 {
 	return pivot.y;
 }

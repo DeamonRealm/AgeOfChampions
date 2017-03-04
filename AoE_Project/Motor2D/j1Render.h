@@ -6,7 +6,7 @@
 #include "j1Module.h"
 #include <queue>
 
-struct Cvar;
+class Cvar;
 
 ///Class Blit_Call ------------------------------
 //Little class to save all blit calls and organize them in a priority queue
@@ -34,8 +34,8 @@ public:
 	//Get Methods -----------
 	int				GetX()const;
 	int				GetY()const;
-	float			GetXPivot()const;
-	float			GetYPivot()const;
+	int				GetXPivot()const;
+	int				GetYPivot()const;
 	SDL_Texture*	GetTex()const;
 	const SDL_Rect*	GetRect()const;
 	bool			GetFlip()const;

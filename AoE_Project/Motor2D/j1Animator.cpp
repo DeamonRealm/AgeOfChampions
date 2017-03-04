@@ -1,5 +1,8 @@
 #include "j1Animator.h"
 
+#include <time.h>
+#include <stdlib.h>
+
 #include "j1App.h"
 #include "j1FileSystem.h"
 #include "j1Render.h"
@@ -267,7 +270,16 @@ bool j1Animator::CleanUp()
 	return true;
 }
 
+
 //Methods that transform strings to enums (used when loading data from xml)
+ENTITY_TYPE j1Animator::StrToEntityEnum(const char * str) const
+{
+	if (strcmp(str, "unit") == 0)		return UNIT;
+	if (strcmp(str, "resource") == 0)	return RESOURCE;
+	if (strcmp(str, "building") == 0)	return BUILDING;
+	return NO_ENTITY;
+}
+
 UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 {
 	if (strcmp(str, "militia") == 0)			return MILITIA;
@@ -311,6 +323,24 @@ BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 {
 	if (strcmp(str, "town_center") == 0)	return TOWN_CENTER;
 	return NO_BUILDING;
+}
+
+ATTACK_TYPE j1Animator::StrToAttackEnum(const char * str) const
+{
+	if (strcmp(str, "melee") == 0)		return MELEE;
+	if (strcmp(str, "distance") == 0)	return DISTANCE;
+	return NO_ATTACK;
+}
+
+RESOURCE_TYPE j1Animator::StrToResourceEnum(const char * str) const
+{
+	if (strcmp(str, "tree") == 0)		return TREE;
+	if (strcmp(str, "tree_cut") == 0)	return TREE_CUT;
+	if (strcmp(str, "chop") == 0)		return CHOP;
+	if (strcmp(str, "berry_bush") == 0)	return BERRY_BUSH;
+	if (strcmp(str, "gold_ore") == 0)	return GOLD_ORE;
+	if (strcmp(str, "stone_ore") == 0)	return STONE_ORE;
+	return NO_RESOURCE;
 }
 
 //Functionality =======================
@@ -488,6 +518,81 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder)
 	return true;
 }
 
+bool j1Animator::LoadResourceBlock(const char * xml_folder)
+{
+	//Load animations data from folders
+	//XML load
+	LOG("Loading: %s", xml_folder);
+	std::string load_folder = name + "/" + xml_folder;
+	pugi::xml_document resource_anim_data;
+	if (!App->fs->LoadXML(load_folder.c_str(), &resource_anim_data))return false;
+	//Texture load
+	load_folder = name + "/" + resource_anim_data.child("TextureAtlas").attribute("imagePath").as_string();
+	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
+
+	//Node to a resource type
+	pugi::xml_node resource_node = resource_anim_data.first_child().first_child();
+	while (resource_node != NULL)
+	{
+		//Create a pointer to the new resource AnimationBlock
+		Animation_Block* resource_block = new Animation_Block();
+		resource_block->SetId(StrToResourceEnum(resource_node.attribute("id").as_string()));
+
+		//Focus the first element of the current resource
+		pugi::xml_node element_node = resource_node.first_child();
+		while (element_node != NULL)
+		{
+			//Build an animation block for the current element
+			Animation_Block* element_block = new Animation_Block();
+			
+			//Build current element animation
+			Animation* anim = new Animation();
+			anim->SetLoop(false);
+
+			//Focus the first sprite of the current element
+			pugi::xml_node sprite = element_node.first_child();
+			while (sprite != NULL)
+			{
+				//Load sprite rect
+				SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
+				//Load sprite pivot
+				float pX = sprite.attribute("pX").as_float() * rect.w;
+				pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+				float pY = sprite.attribute("pY").as_float() * rect.h;
+				pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+				//Load sprite opacity
+				uint opacity = sprite.attribute("opacity").as_uint();
+				if (opacity == 0)opacity = 255;
+
+				//Add sprite at animation
+				anim->AddSprite(rect, iPoint(pX, pY), sprite.attribute("z").as_int(), opacity);
+
+				//Focus next animation sprite
+				sprite = sprite.next_sibling();
+			}
+
+			//Set built animation texture
+			anim->SetTexture(texture);
+
+			//Set animation of the current element block
+			element_block->SetAnimation(anim);
+
+			//Add element block to the resource childs list
+			resource_block->AddAnimationBlock(element_block);
+
+			//Focus the next element node
+			element_node = element_node.next_sibling();
+		}
+
+		//Add resource block built at the resources vector
+		resource_blocks.push_back(resource_block);
+
+		resource_node = resource_node.next_sibling();
+	}
+
+	return true;
+}
+
 bool j1Animator::UnitPlay(Unit* target)
 {
 	DIRECTION_TYPE direction = target->GetDirection();
@@ -544,7 +649,7 @@ bool j1Animator::UnitPlay(Unit* target)
 	return false;
 }
 
-Animation * j1Animator::BuildingPlay(const BUILDING_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction) const
+bool j1Animator::BuildingPlay(Building* target)
 {
 	Animation_Block* block = nullptr;
 
@@ -556,17 +661,57 @@ Animation * j1Animator::BuildingPlay(const BUILDING_TYPE unit, const ACTION_TYPE
 		block = building_blocks[k];
 
 		//Compare block unit id
-		if (block->GetId() == unit)
+		if (block->GetId() == target->GetBuildingType())
 		{
 			//Compare block action id
-			block = block->SearchId(action);
+			block = block->SearchId(IDLE);
 			//If action block is found search the correct direction block or return unidirectional action
-			if (direction == NO_DIRECTION)return block->GetAnimation(); 
-			if (block != nullptr)block = block->SearchId(direction);
+			if (target->GetDirectionType() == NO_DIRECTION)
+			{
+				target->SetAnimation(block->GetAnimation());
+				return true;
+			}
+			if (block != nullptr)block = block->SearchId(target->GetDirectionType());
 			//If direction block is found returns the block animation
-			if (block != nullptr)return block->GetAnimation();
+			if (block != nullptr)
+			{
+				target->SetAnimation(block->GetAnimation());
+				return true;
+			}
 		}
 	}
 
-	return nullptr;
+	return false;
+}
+
+bool j1Animator::ResourcePlay(Resource * target)
+{
+	//Initialize random numbers generator
+	time_t t;
+	srand(time(&t));
+
+	//Iterate the resource animations vector
+	uint size = resource_blocks.size();
+	for (uint k = 0; k < size; k++)
+	{
+		//Compare resource type id
+		if (resource_blocks[k]->GetId() == target->GetResourceType())
+		{
+			//Generate a random number to select one of the possible animations
+			uint rand_index = rand() % resource_blocks[k]->GetChildsNum();
+			//Choose the child with the random index and get its animation
+			Animation* anim = resource_blocks[k]->GetBlock(rand_index)->GetAnimation();
+			if (anim != nullptr)
+			{
+				target->SetAnimation(anim);
+				return true;
+			}
+			else
+			{
+				LOG("Error getting resource animation");
+				return false;
+			}
+		}
+	}
+	return false;
 }

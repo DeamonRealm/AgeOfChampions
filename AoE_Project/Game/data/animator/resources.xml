@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:5b087de2d118adec630e6f7cd888af17:621bb66510b7cb4b02c7e942221ceb73:31fca6b2cc775958f1ac27b9600486fc$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="resources.png" width="763" height="763">
+  
+  <resource id="tree">
+    <!--Tree 1-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree1.bmp" x="32" y="1" z="0" w="119" h="143" pX="0.436975" pY="0.993007"/>
+      <sprite n="Arboles/000_ShadowTree1Shadow.bmp" x="153" y="1" z="30" w="101" h="20" opacity="50" pX="0.623762" pY="0.95"/>
+    </element>
+    <!--Tree 2-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree2.bmp" x="256" y="1" z="0" w="110" h="165" pX="0.481818" pY="1"/>
+      <sprite n="Arboles/000_ShadowTree2Shadow.bmp" x="368" y="1" z="30" w="89" h="20" opacity="50" pX="0.685393" pY="0.8"/>
+    </element>
+    <!--Tree 3-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree3.bmp" x="459" y="1" z="0" w="107" h="162" pX="0.392523" pY="1"/>
+      <sprite n="Arboles/000_ShadowTree3Shadow.bmp" x="568" y="1" z="30" w="101" h="23" opacity="50" pX="0.673267" pY="0.73913"/>
+    </element>
+    <!--Tree 4-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree4.bmp" x="1" y="168" z="0" w="126" h="127" pX="0.444444" pY="0.984252"/>
+      <sprite n="Arboles/000_ShadowTree4Shadow.bmp" x="129" y="168" z="30" w="97" h="27" opacity="50" pX="0.57732" pY="0.740741"/>
+    </element>
+    <!--Tree 5-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree5.bmp" x="228" y="168" z="0" w="106" h="172" pX="0.45283" pY="0.994186"/>
+      <sprite n="Arboles/000_ShadowTree5Shadow.bmp" x="336" y="168" z="30" w="101" h="37" opacity="50" pX="0.712871" pY="0.72973"/>
+    </element>
+    <!--Tree 6-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree6.bmp" x="439" y="168" z="0" w="121" h="178" pX="0.77686" pY="0.966292"/>
+      <sprite n="Arboles/000_ShadowTree6Shadow.bmp" x="562" y="168" z="30" w="124" h="36" opacity="50" pX="1.02419" pY="0.388889"/>
+    </element>
+    <!--Tree 7-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree7.bmp" x="1" y="348" z="0" w="102" h="176" pX="0.362745" pY="1"/>
+      <sprite n="Arboles/000_ShadowTree7Shadow.bmp" x="105" y="348" z="30" w="107" h="69" opacity="50" pX="0.551402" pY="0.84058"/>
+    </element>
+    <!--Tree 8-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree8.bmp" x="214" y="348" z="0" w="102" h="180" pX="0.323529" pY="0.983333"/>
+      <sprite n="Arboles/000_ShadowTree8Shadow.bmp" x="105" y="348" z="30" w="107" h="69" opacity="50" pX="0.542056" pY="0.84058"/>
+    </element>
+    <!--Tree 9-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree9.bmp" x="318" y="348" z="0" w="176" h="182" pX="0.448864" pY="0.978022"/>
+      <sprite n="Arboles/000_ShadowTree9Shadow.bmp" x="496" y="348" z="30" w="154" h="43" opacity="50" pX="0.694805" pY="0.697674"/>
+    </element>
+    <!--Tree 10-->
+    <element>
+      <sprite n="Arboles/000_ShadowTree10.bmp" x="652" y="348" z="0" w="110" h="129" pX="0.472727" pY="0.984496"/>
+      <sprite n="Arboles/000_ShadowTree10Shadow.bmp" x="1" y="532" z="30" w="98" h="23" opacity="50" pX="0.663265" pY="0.826087"/>
+    </element>
+  </resource>
+  
+  <resource id="chop">
+  <!--Tree Chop 1-->
+    <element>
+    <sprite n="Arboles/000_chop.bmp" x="1" y="1" z="0" w="29" h="20" pX="0.689655" pY="1.25"/>
+    </element>
+  <!--Tree Chop 2-->
+    <element>
+    <sprite n="Arboles/001_chop.bmp" x="194" y="532" z="0" w="20" h="20" pX="0.8" pY="0.9"/>
+    </element>
+  <!--Tree Chop 3-->
+    <element>
+    <sprite n="Arboles/002_chop.bmp" x="311" y="532" z="0" w="24" h="19" pX="-0.125" pY="0.684211"/>
+    </element>
+  </resource>
+  
+  <resource id="tree_cut">
+  <!--Tree Cut 1-->
+    <element>
+    <sprite n="Arboles/000_TreeCut.bmp" x="101" y="532" z="0" w="91" h="35" pX="0.692308" pY="0.514286"/>
+    </element>
+  <!--Tree Cut 2-->
+    <element>
+   <sprite n="Arboles/001_TreeCut.bmp" x="216" y="532" z="0" w="93" h="36" pX="0.72043" pY="0.416667"/>
+    </element>
+  </resource>
+  
+  <!--Berry Bushes-->
+  <resource id="berry_bush">
+    <element>
+    <sprite n="BerryBush/000_BerryBush.bmp" x="337" y="532" z="0" w="71" h="50" pX="0.591549" pY="0.78"/>
+    </element>
+    <element>
+    <sprite n="BerryBush/001_BerryBush.bmp" x="410" y="532" z="0" w="88" h="51" pX="0.534091" pY="0.823529"/>
+    </element>
+    <element>
+    <sprite n="BerryBush/002_BerryBush.bmp" x="500" y="532" z="0" w="69" h="64" pX="0.623188" pY="0.71875"/>
+    </element>
+    <element>
+    <sprite n="BerryBush/003_BerryBush.bmp" x="571" y="532" z="0" w="80" h="57" pX="0.55" pY="0.77193"/>
+    </element>
+  </resource>
+  
+  <!--Bolder Ores-->
+  <resource id="gold_ore">
+    <element>
+    <sprite n="GoldOre/000_4479.bmp" x="653" y="532" z="0" w="82" h="40" pX="0.463415" pY="0.5"/>
+    </element>
+    <element>
+    <sprite n="GoldOre/001_4479.bmp" x="1" y="598" z="0" w="76" h="45" pX="0.447368" pY="0.488889"/>
+    </element>
+    <element>
+    <sprite n="GoldOre/002_4479.bmp" x="79" y="598" z="0" w="79" h="46" pX="0.455696" pY="0.391304"/>
+    </element>
+    <element>
+    <sprite n="GoldOre/003_4479.bmp" x="160" y="598" z="0" w="82" h="54" pX="0.439024" pY="0.425926"/>
+    </element>
+    <element>
+    <sprite n="GoldOre/004_4479.bmp" x="244" y="598" z="0" w="82" h="48" pX="0.402439" pY="0.395833"/>
+    </element>
+    <element>
+    <sprite n="GoldOre/005_4479.bmp" x="328" y="598" z="0" w="89" h="49" pX="0.438202" pY="0.387755"/>
+    </element>
+    <element>
+    <sprite n="GoldOre/006_4479.bmp" x="419" y="598" z="0" w="71" h="53" pX="0.394366" pY="0.396226"/>
+    </element>
+  </resource>
+  
+  <!--Stone Ores-->
+  <resource id="stone_ore">
+    <element>
+    <sprite n="StoneOre/000_StoneOre.bmp" x="492" y="598" z="0" w="71" h="38" pX="0.549296" pY="0.710526"/>
+    </element>
+    <element>
+    <sprite n="StoneOre/001_StoneOre.bmp" x="565" y="598" z="0" w="73" h="39" pX="0.520548" pY="0.692308"/>
+    </element>
+    <element>
+    <sprite n="StoneOre/002_StoneOre.bmp" x="640" y="598" z="0" w="66" h="42" pX="0.560606" pY="0.690476"/>
+    </element>
+    <element>
+    <sprite n="StoneOre/003_StoneOre.bmp" x="1" y="654" z="0" w="76" h="42" pX="0.5" pY="0.666667"/>
+    </element>
+    <element>
+    <sprite n="StoneOre/004_StoneOre.bmp" x="79" y="654" z="0" w="72" h="44" pX="0.513889" pY="0.636364"/>
+    </element>
+    <element>
+    <sprite n="StoneOre/005_StoneOre.bmp" x="153" y="654" z="0" w="83" h="46" pX="0.493976" pY="0.76087"/>
+    </element>
+    <element>
+    <sprite n="StoneOre/006_StoneOre.bmp" x="238" y="654" z="0" w="78" h="44" pX="0.551282" pY="0.681818"/>
+    </element>
+  </resource>
+  
+</TextureAtlas>

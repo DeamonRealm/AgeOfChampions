@@ -15,4 +15,7 @@
   <buildings>
    <id xml = "town_center_feudal.xml"/>
   </buildings>
+  <resources>
+   <id xml ="resources.xml"/>
+  </resources>
 </data>

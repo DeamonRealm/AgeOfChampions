@@ -37,7 +37,12 @@ enum UNIT_TYPE
 enum RESOURCE_TYPE
 {
 	NO_RESOURCE = 0,
-	TREE
+	TREE,
+	TREE_CUT,
+	CHOP,
+	BERRY_BUSH,
+	GOLD_ORE,
+	STONE_ORE
 };
 enum BUILDING_TYPE
 {
@@ -229,7 +234,7 @@ public:
 	uint			GetAttackHitPoints()const;
 	uint			GetAttackBonus()const;
 	uint			GetSiegeHitPoints()const;
-	float			GetAttackRate()const;
+	uint			GetAttackRate()const;
 	ATTACK_TYPE		GetAttackType()const;
 	float			GetAttackRange()const;
 	uint			GetDefense()const;
@@ -251,6 +256,7 @@ class Resource : public Entity
 {
 public:
 
+	Resource();
 	Resource(const std::string& name);
 	Resource(const Resource& copy);
 	~Resource();
@@ -264,6 +270,9 @@ protected:
 public:
 
 	//Functionality -------------------
+	//Draw ------------------
+	bool	Draw(bool debug);
+
 	//Set Methods -----------
 	void	SetResourceType(RESOURCE_TYPE type);
 	void	SetMaxResources(uint max_res);
@@ -278,6 +287,7 @@ public:
 /// ---------------------------------------------
 
 ///Class Building -------------------------------
+//Base class that defines standard attributes of buildings
 class Building : public Entity
 {
 public:
@@ -290,6 +300,8 @@ protected:
 
 	Rectng			mark;
 	BUILDING_TYPE	building_type = NO_BUILDING;
+	ACTION_TYPE		action_type = IDLE;
+	DIRECTION_TYPE	direction_type = NO_DIRECTION;
 	uint			max_life = 0;
 	uint			life = 0;
 	uint			units_capacity = 0;
@@ -310,6 +322,8 @@ public:
 	//Set Methods -----------
 	void	SetMark(const Rectng& rectangle);
 	void	SetBuildingType(BUILDING_TYPE type);
+	void	SetActionType(ACTION_TYPE type);
+	void	SetDirectionType(DIRECTION_TYPE type);
 	void	SetMaxLife(uint max_life_val);
 	void	SetLife(uint life_val);
 	void	SetUnitsCapacity(uint capacity);
@@ -318,6 +332,8 @@ public:
 	//Get Methods -----------
 	const Rectng&	GetMark()const;
 	BUILDING_TYPE	GetBuildingType()const;
+	ACTION_TYPE		GetActionType()const;
+	DIRECTION_TYPE	GetDirectionType()const;
 	uint			GetMaxLife()const;
 	uint			GetLife()const;
 	uint			GetUnitsCapacity()const;

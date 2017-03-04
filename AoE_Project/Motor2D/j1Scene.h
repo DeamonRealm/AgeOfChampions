@@ -4,16 +4,17 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
-struct UI_Button;
-struct UI_String;
-struct UI_Interactive_String;
-struct UI_Image;
-struct UI_Element;
-struct UI_Text_Box;
-struct UI_Scroll;
-struct UI_Popup_menu;
-class  Unit;
-class  Building;
+class UI_Button;
+class UI_String;
+class UI_Interactive_String;
+class UI_Image;
+class UI_Element;
+class UI_Text_Box;
+class UI_Scroll;
+class UI_Popup_menu;
+class Unit;
+class Building;
+class Resource;
 
 class j1Scene : public j1Module
 {
@@ -52,6 +53,13 @@ private:
 	//Scene Test Entities
 	Unit*		arbalest = nullptr;
 	Building*	town_center = nullptr;
+	Resource*	tree = nullptr;
+	Resource*	chop = nullptr;
+	Resource*   tree_cut = nullptr;
+	Resource*	berry_bush = nullptr;
+	Resource*	gold_ore = nullptr;
+	Resource*	stone_ore = nullptr;
+	
 
 	//Scene	UI
 	UI_Element* scene_1_screen;

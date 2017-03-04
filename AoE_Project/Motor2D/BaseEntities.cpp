@@ -386,7 +386,7 @@ uint Unit::GetSiegeHitPoints()const
 	return siege_hitpoints;
 }
 
-float Unit::GetAttackRate()const
+uint Unit::GetAttackRate()const
 {
 	return attack_rate;
 }
@@ -452,8 +452,14 @@ uint Unit::GetExp() const
 // ----------------
 ///----------------------------------------------
 
+
 ///Class Resource -------------------------------
 //Constructors ========================
+Resource::Resource() :Entity()
+{
+
+}
+
 Resource::Resource(const std::string & name):Entity(name)
 {
 
@@ -467,9 +473,25 @@ Resource::Resource(const Resource& copy) : Entity(copy), resource_type(resource_
 //Destructors =========================
 Resource::~Resource()
 {
+
 }
 
 //Functionality =======================
+bool Resource::Draw(bool debug)
+{
+	const std::vector<Sprite>* sprites = current_animation->GetAllSprites();
+	
+	bool ret = false;
+
+	uint size = sprites->size();
+	for (uint k = 0; k < size; k++)
+	{
+		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity());
+		if (!ret)break;
+	}
+
+	return ret;
+}
 void Resource::SetResourceType(RESOURCE_TYPE type)
 {
 	resource_type = type;
@@ -564,6 +586,16 @@ void Building::SetBuildingType(BUILDING_TYPE type)
 	building_type = type;
 }
 
+void Building::SetActionType(ACTION_TYPE type)
+{
+	action_type = type;
+}
+
+void Building::SetDirectionType(DIRECTION_TYPE type)
+{
+	direction_type = type;
+}
+
 void Building::SetMaxLife(uint max_life_val)
 {
 	max_life = max_life_val;
@@ -593,6 +625,16 @@ const Rectng & Building::GetMark() const
 BUILDING_TYPE Building::GetBuildingType() const
 {
 	return building_type;
+}
+
+ACTION_TYPE Building::GetActionType() const
+{
+	return action_type;
+}
+
+DIRECTION_TYPE Building::GetDirectionType() const
+{
+	return direction_type;
 }
 
 uint Building::GetMaxLife() const

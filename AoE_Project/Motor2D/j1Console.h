@@ -6,9 +6,9 @@
 #include "Command.h"
 #include "SDL\include\SDL_rect.h"
 
-struct UI_Text_Box;
-struct UI_Scroll;
-struct UI_String;
+class UI_Text_Box;
+class UI_Scroll;
+class UI_String;
 struct _TTF_Font;
 
 class j1Console : public j1Module {

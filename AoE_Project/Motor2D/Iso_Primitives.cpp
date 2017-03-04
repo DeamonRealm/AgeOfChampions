@@ -125,13 +125,13 @@ bool Rectng::Draw()
 	bool ret = false;
 
 	//Calculate the diagonal distance from the center to the vertex
-	int diagonal_len = floor(sqrt(((width*0.5f)*(width*0.5f)) + ((height*0.5f)*(height*0.5f))));
+	int diagonal_len = (int)floor(sqrt(((width*0.5f)*(width*0.5f)) + ((height*0.5f)*(height*0.5f))));
 	
 	//Draw lines with the correct angles and coordinates to form the rotated quad
-	ret = App->render->DrawLine(position.x, position.y - (diagonal_len * sin(x_angle)), position.x + diagonal_len, position.y, color.r, color.g, color.b, color.a, true);
-	ret = App->render->DrawLine(position.x, position.y + (diagonal_len * sin(x_angle)), position.x + diagonal_len, position.y, color.r, color.g, color.b, color.a, true);
-	ret = App->render->DrawLine(position.x - diagonal_len, position.y, position.x, position.y - (diagonal_len * sin(x_angle)), color.r, color.g, color.b, color.a, true);
-	ret = App->render->DrawLine(position.x - diagonal_len, position.y, position.x, position.y + (diagonal_len * sin(x_angle)), color.r, color.g, color.b, color.a, true);
+	ret = App->render->DrawLine(position.x, position.y - (int)(diagonal_len * sin(x_angle)), position.x + diagonal_len, position.y, color.r, color.g, color.b, color.a, true);
+	ret = App->render->DrawLine(position.x, position.y + (int)(diagonal_len * sin(x_angle)), position.x + diagonal_len, position.y, color.r, color.g, color.b, color.a, true);
+	ret = App->render->DrawLine(position.x - diagonal_len, position.y, position.x, position.y - (int)(diagonal_len * sin(x_angle)), color.r, color.g, color.b, color.a, true);
+	ret = App->render->DrawLine(position.x - diagonal_len, position.y, position.x, position.y + (int)(diagonal_len * sin(x_angle)), color.r, color.g, color.b, color.a, true);
 	
 	return true;
 }
