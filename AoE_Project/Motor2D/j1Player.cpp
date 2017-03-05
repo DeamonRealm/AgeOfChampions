@@ -10,18 +10,46 @@
 #include "j1Gui.h"
 #include "j1EntitiesManager.h"
 
+#include "UI_Element.h"
+#include "UI_String.h"
 
-void Profile::DrawBasicAt(int x, int y)
+
+
+Entity_Profile::Entity_Profile()
+{
+	element = nullptr;
+	name = (UI_String*) App->gui->GenerateUI_Element(STRING);
+	name->SetColor({ 255,255,255,255 });
+	diplomacy = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	diplomacy->SetColor({ 255,255,255,255 });
+}
+
+Entity_Profile::~Entity_Profile()
 {
 }
 
-void Profile::DrawProfileAt(int x, int y)
+void Entity_Profile::SetEntity(Entity * entity_selected)
 {
+	element = entity_selected;
+	name->SetString((char*)element->GetName());
+	 
+	switch (element->GetDiplomacy())
+	{
+	case NEUTRAL: diplomacy->SetString("Neutral");
+		break;
+	case ALLY: diplomacy->SetString("Player");
+		break;
+	case ENEMY: diplomacy->SetString("Enemy");
+		break;
+	}
 }
 
-bool Profile::MouseisIn(int x, int y)
+void Entity_Profile::DrawProfile() const
 {
-	return false;
+	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 750, 500, &element->GetIcon());
+	name->DrawAt(800, 500);
+	diplomacy->DrawAt(800, 520);
+	
 }
 
 j1Player::j1Player()
@@ -45,6 +73,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 bool j1Player::Start()
 {
 	selection_rect = { 0,0,0,0 };
+	Selected = new Entity_Profile();
 	return true;
 }
 
@@ -89,13 +118,20 @@ bool j1Player::PostUpdate()
 		Select_Group();
 		selection_rect = { 0,0,0,0 };
 	}
+	if (selected_elements.size() == 1) Selected->DrawProfile();
+
 	return true;
 }
 
 bool j1Player::CleanUp()
 {
 	actual_population.clear();
+	delete Selected;
 	return true;
+}
+
+void j1Player::DrawGroup()
+{
 }
 
 //Check if unit is inside selection rect
@@ -159,6 +195,7 @@ void j1Player::Select_Entity()
 				selected_elements.clear();
 				selected_elements.push_back(item._Ptr->_Myval);
 				LOG("Entity Selected: Type: %s", selected_elements.begin()._Ptr->_Myval->GetName());
+				Selected->SetEntity(item._Ptr->_Myval);
 			}
 			return;
 		}
@@ -170,8 +207,9 @@ void j1Player::Select_Entity()
 //Select group of units (only Allys)
 void j1Player::Select_Group()
 {
-	selected_elements.clear();
+	
 	if (selection_rect.w == 0 || selection_rect.h == 0) return;
+	selected_elements.clear();
 
 	int x = 0, y = 0;
 	int width = 0, height = 0;

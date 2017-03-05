@@ -13,19 +13,28 @@ class Entity;
 class Unit;
 class Resource;
 class Building;
+class UI_String;
 class UI_Image;
 
-
-struct Profile
+class Entity_Profile
 {
-	Entity*			entity_profile;
-	SDL_Texture*	texture = nullptr;
+public:
+	Entity_Profile();
+	~Entity_Profile();
 
-	void DrawBasicAt(int x = 0, int y = 0);
-	void DrawProfileAt(int x = 0, int y = 0);
-	
-	bool MouseisIn(int x = 0, int y = 0);
+	void SetEntity(Entity* entity_selected);
+	void DrawProfile() const;
+
+private:
+
+	Entity*			element;
+
+	UI_String*		name;
+	UI_String*		diplomacy;
+
+
 };
+
 
 //Animator Module -------------------------------
 class j1Player : public j1Module
@@ -68,20 +77,16 @@ private:
 	std::list<Unit*>	actual_population;
 	std::list<Entity*>	selected_elements;
 
+	Entity_Profile* Selected;
+
 
 public:
 
 	//Functionality -------------------
-	
-	/*void Generate_Unit();
-	void Generate_Building();
-
-	void select_entity();
 
 	//Draw Profiles 
-	void DrawUnitsSelected();
-	void DrawEntitysSelected();
-	*/
+	void DrawGroup();
+	
 	bool UnitisIn(int x, int y, int width, int height);
 	bool PointisIn(int x, int y);
 
