@@ -56,7 +56,7 @@
   </map>
 
   <scene>
-  	<map_folder>init_portals_map.tmx</map_folder>
+  	<map_folder>TinyMap.tmx</map_folder>
   </scene>
 
   <animator>
