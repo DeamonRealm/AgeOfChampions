@@ -46,7 +46,8 @@ struct PathNode
 	iPoint pos;
 	bool operator ==(const PathNode& node)const ;
 	bool operator !=(const PathNode& node)const;
-
+	bool on_close = false;
+	bool on_open = false;
 	const PathNode* parent; // needed to reconstruct the path in the end
 };
 

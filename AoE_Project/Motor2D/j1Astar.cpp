@@ -60,6 +60,8 @@ int j1Astar::CreatePath(Node* start, Node*goal) {
 		while (open.list.size() != 0) 
 		{
 			close.list.push_back(*open.GetNodeLowestScore());
+			close.list.back().on_close = true;
+
 			open.list.remove(*open.GetNodeLowestScore());
 			if (close.list.back().pos == destination) 
 			{
@@ -78,11 +80,11 @@ int j1Astar::CreatePath(Node* start, Node*goal) {
 				PathList neightbords;
 				close.list.back().FindWalkableAdjacents(neightbords,this);
 				for (std::list<PathNode>::iterator  item = neightbords.list.begin(); item != neightbords.list.end(); item++) {
-					if (item==close.Find(item->pos)) 
+					if (item->on_close==true) 
 					{
 						continue;
 					}
-					else if (item == open.Find(item->pos))
+					else if (item->on_open == true)
 					{
 						PathNode temp;
 						temp = open.Find(item->pos)._Ptr->_Myval;
@@ -94,6 +96,7 @@ int j1Astar::CreatePath(Node* start, Node*goal) {
 					}
 					else 
 					{
+						item->on_open = true;
 						item->CalculateF(destination);
 						open.list.push_back(item._Mynode()->_Myval);
 					}
