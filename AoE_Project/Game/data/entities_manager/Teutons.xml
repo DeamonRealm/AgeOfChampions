@@ -7,6 +7,7 @@
    <id xml = "cavalry_archer.xml"/>
    <id xml = "elit_skirmisher.xml"/>
    <id xml = "heavy_cavalry_archer.xml"/>
+   <id xml = "knight.xml"/>
    <id xml = "villager.xml"/>
    <id xml = "villager_pick.xml"/>
    <id xml = "villager_plow.xml"/>
