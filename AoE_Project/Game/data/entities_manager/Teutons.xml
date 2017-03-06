@@ -10,6 +10,8 @@
    <id xml = "knight.xml"/>
    <id xml = "monk.xml"/>
    <id xml = "paladin.xml"/>
+   <id xml = "pikeman.xml"/>
+   <id xml = "spearman.xml"/>
    <id xml = "villager.xml"/>
    <id xml = "villager_pick.xml"/>
    <id xml = "villager_plow.xml"/>

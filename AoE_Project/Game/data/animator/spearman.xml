@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:858cb277bc94dd30b1ac34bc6b53e0ec:3c04bb8ebfaf54cf35ecebee14638b4e:16d30efb4e2bfaecac1186c1e32b5398$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Spearman.png" width="862" height="862">
+  <!-- Define the unit type-->
+  <unit id ="spearman">
+
+
+
+    <!--Attack Action-->
+    <action enum ="attack" speed="200">
+      <direction enum="south">
+        <sprite n="Spearman_attack/000_Spearman_attack.bmp" x="1" y="1" w="39" h="61" pX="0.769231" pY="0.606557"/>
+        <sprite n="Spearman_attack/001_Spearman_attack.bmp" x="42" y="1" w="34" h="60" pX="0.735294" pY="0.6"/>
+        <sprite n="Spearman_attack/002_Spearman_attack.bmp" x="78" y="1" w="27" h="60" pX="0.666667" pY="0.583333"/>
+        <sprite n="Spearman_attack/003_Spearman_attack.bmp" x="107" y="1" w="22" h="57" pX="0.590909" pY="0.578947"/>
+        <sprite n="Spearman_attack/004_Spearman_attack.bmp" x="131" y="1" w="24" h="57" pX="0.541667" pY="0.54386"/>
+        <sprite n="Spearman_attack/005_Spearman_attack.bmp" x="157" y="1" w="27" h="64" pX="0.555556" pY="0.453125"/>
+        <sprite n="Spearman_attack/006_Spearman_attack.bmp" x="186" y="1" w="22" h="69" pX="0.545455" pY="0.449275"/>
+        <sprite n="Spearman_attack/007_Spearman_attack.bmp" x="210" y="1" w="29" h="66" pX="0.586207" pY="0.5"/>
+        <sprite n="Spearman_attack/008_Spearman_attack.bmp" x="241" y="1" w="33" h="63" pX="0.69697" pY="0.571429"/>
+        <sprite n="Spearman_attack/009_Spearman_attack.bmp" x="276" y="1" w="40" h="61" pX="0.775" pY="0.622951"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="Spearman_attack/010_Spearman_attack.bmp" x="318" y="1" w="66" h="46" pX="0.80303" pY="0.826087"/>
+        <sprite n="Spearman_attack/011_Spearman_attack.bmp" x="386" y="1" w="63" h="47" pX="0.793651" pY="0.787234"/>
+        <sprite n="Spearman_attack/012_Spearman_attack.bmp" x="451" y="1" w="58" h="49" pX="0.775862" pY="0.734694"/>
+        <sprite n="Spearman_attack/013_Spearman_attack.bmp" x="511" y="1" w="54" h="48" pX="0.759259" pY="0.708333"/>
+        <sprite n="Spearman_attack/014_Spearman_attack.bmp" x="567" y="1" w="53" h="48" pX="0.811321" pY="0.666667"/>
+        <sprite n="Spearman_attack/015_Spearman_attack.bmp" x="622" y="1" w="63" h="54" pX="0.84127" pY="0.574074"/>
+        <sprite n="Spearman_attack/016_Spearman_attack.bmp" x="687" y="1" w="67" h="56" pX="0.850746" pY="0.571429"/>
+        <sprite n="Spearman_attack/017_Spearman_attack.bmp" x="756" y="1" w="66" h="53" pX="0.848485" pY="0.641509"/>
+        <sprite n="Spearman_attack/018_Spearman_attack.bmp" x="1" y="72" w="63" h="48" pX="0.809524" pY="0.75"/>
+        <sprite n="Spearman_attack/019_Spearman_attack.bmp" x="66" y="72" w="64" h="45" pX="0.8125" pY="0.844444"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="Spearman_attack/020_Spearman_attack.bmp" x="132" y="72" w="60" h="43" pX="0.766667" pY="0.883721"/>
+        <sprite n="Spearman_attack/021_Spearman_attack.bmp" x="194" y="72" w="61" h="42" pX="0.754098" pY="0.880952"/>
+        <sprite n="Spearman_attack/022_Spearman_attack.bmp" x="257" y="72" w="65" h="42" pX="0.753846" pY="0.880952"/>
+        <sprite n="Spearman_attack/023_Spearman_attack.bmp" x="324" y="72" w="65" h="41" pX="0.738462" pY="0.878049"/>
+        <sprite n="Spearman_attack/024_Spearman_attack.bmp" x="391" y="72" w="64" h="40" pX="0.78125" pY="0.85"/>
+        <sprite n="Spearman_attack/025_Spearman_attack.bmp" x="457" y="72" w="75" h="41" pX="0.866667" pY="0.829268"/>
+        <sprite n="Spearman_attack/026_Spearman_attack.bmp" x="534" y="72" w="82" h="41" pX="0.878049" pY="0.853659"/>
+        <sprite n="Spearman_attack/027_Spearman_attack.bmp" x="618" y="72" w="72" h="42" pX="0.861111" pY="0.857143"/>
+        <sprite n="Spearman_attack/028_Spearman_attack.bmp" x="692" y="72" w="62" h="42" pX="0.806452" pY="0.880952"/>
+        <sprite n="Spearman_attack/029_Spearman_attack.bmp" x="756" y="72" w="59" h="43" pX="0.762712" pY="0.883721"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="Spearman_attack/030_Spearman_attack.bmp" x="817" y="72" w="30" h="55" pX="0.533333" pY="0.854545"/>
+        <sprite n="Spearman_attack/031_Spearman_attack.bmp" x="1" y="129" w="36" h="56" pX="0.583333" pY="0.857143"/>
+        <sprite n="Spearman_attack/032_Spearman_attack.bmp" x="39" y="129" w="44" h="51" pX="0.590909" pY="0.843137"/>
+        <sprite n="Spearman_attack/033_Spearman_attack.bmp" x="85" y="129" w="46" h="45" pX="0.608696" pY="0.844444"/>
+        <sprite n="Spearman_attack/034_Spearman_attack.bmp" x="133" y="129" w="47" h="45" pX="0.638298" pY="0.866667"/>
+        <sprite n="Spearman_attack/035_Spearman_attack.bmp" x="182" y="129" w="56" h="48" pX="0.75" pY="0.875"/>
+        <sprite n="Spearman_attack/036_Spearman_attack.bmp" x="240" y="129" w="60" h="52" pX="0.75" pY="0.884615"/>
+        <sprite n="Spearman_attack/037_Spearman_attack.bmp" x="302" y="129" w="49" h="48" pX="0.714286" pY="0.875"/>
+        <sprite n="Spearman_attack/038_Spearman_attack.bmp" x="353" y="129" w="36" h="47" pX="0.611111" pY="0.851064"/>
+        <sprite n="Spearman_attack/039_Spearman_attack.bmp" x="391" y="129" w="29" h="53" pX="0.517241" pY="0.867925"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="Spearman_attack/040_Spearman_attack.bmp" x="422" y="129" w="37" h="52" pX="0.297297" pY="0.846154"/>
+        <sprite n="Spearman_attack/041_Spearman_attack.bmp" x="461" y="129" w="32" h="55" pX="0.3125" pY="0.854545"/>
+        <sprite n="Spearman_attack/042_Spearman_attack.bmp" x="495" y="129" w="24" h="54" pX="0.375" pY="0.833333"/>
+        <sprite n="Spearman_attack/043_Spearman_attack.bmp" x="521" y="129" w="21" h="50" pX="0.380952" pY="0.82"/>
+        <sprite n="Spearman_attack/044_Spearman_attack.bmp" x="544" y="129" w="24" h="49" pX="0.5" pY="0.857143"/>
+        <sprite n="Spearman_attack/045_Spearman_attack.bmp" x="570" y="129" w="27" h="55" pX="0.481481" pY="0.890909"/>
+        <sprite n="Spearman_attack/046_Spearman_attack.bmp" x="599" y="129" w="26" h="58" pX="0.461538" pY="0.896552"/>
+        <sprite n="Spearman_attack/047_Spearman_attack.bmp" x="627" y="129" w="28" h="52" pX="0.464286" pY="0.884615"/>
+        <sprite n="Spearman_attack/048_Spearman_attack.bmp" x="657" y="129" w="34" h="47" pX="0.352941" pY="0.851064"/>
+        <sprite n="Spearman_attack/049_Spearman_attack.bmp" x="693" y="129" w="38" h="51" pX="0.289474" pY="0.843137"/>
+      </direction>
+    </action>
+
+
+    <!--Die Action-->
+    <action enum ="die" speed="200">
+      <direction enum="south">
+        <sprite n="Spearman_die/000_Spearman_die.bmp" x="733" y="129" w="32" h="57" pX="0.5" pY="0.508772"/>
+        <sprite n="Spearman_die/001_Spearman_die.bmp" x="767" y="129" w="34" h="62" pX="0.558824" pY="0.451613"/>
+        <sprite n="Spearman_die/002_Spearman_die.bmp" x="803" y="129" w="34" h="61" pX="0.588235" pY="0.409836"/>
+        <sprite n="Spearman_die/003_Spearman_die.bmp" x="1" y="193" w="32" h="53" pX="0.59375" pY="0.283019"/>
+        <sprite n="Spearman_die/004_Spearman_die.bmp" x="35" y="193" w="31" h="52" pX="0.548387" pY="0.269231"/>
+        <sprite n="Spearman_die/005_Spearman_die.bmp" x="68" y="193" w="26" h="52" pX="0.538462" pY="0.269231"/>
+        <sprite n="Spearman_die/006_Spearman_die.bmp" x="96" y="193" w="26" h="52" pX="0.576923" pY="0.25"/>
+        <sprite n="Spearman_die/007_Spearman_die.bmp" x="124" y="193" w="31" h="50" pX="0.645161" pY="0.2"/>
+        <sprite n="Spearman_die/008_Spearman_die.bmp" x="157" y="193" w="36" h="55" pX="0.694444" pY="0.272727"/>
+        <sprite n="Spearman_die/009_Spearman_die.bmp" x="195" y="193" w="50" h="47" pX="0.78" pY="0.148936"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="Spearman_die/010_Spearman_die.bmp" x="247" y="193" w="58" h="52" pX="0.810345" pY="0.653846"/>
+        <sprite n="Spearman_die/011_Spearman_die.bmp" x="307" y="193" w="64" h="54" pX="0.828125" pY="0.611111"/>
+        <sprite n="Spearman_die/012_Spearman_die.bmp" x="373" y="193" w="74" h="55" pX="0.743243" pY="0.581818"/>
+        <sprite n="Spearman_die/013_Spearman_die.bmp" x="449" y="193" w="72" h="50" pX="0.736111" pY="0.5"/>
+        <sprite n="Spearman_die/014_Spearman_die.bmp" x="523" y="193" w="77" h="48" pX="0.701299" pY="0.479167"/>
+        <sprite n="Spearman_die/015_Spearman_die.bmp" x="602" y="193" w="88" h="32" pX="0.602273" pY="0.21875"/>
+        <sprite n="Spearman_die/016_Spearman_die.bmp" x="692" y="193" w="93" h="35" pX="0.580645" pY="0.142857"/>
+        <sprite n="Spearman_die/017_Spearman_die.bmp" x="1" y="250" w="98" h="33" pX="0.561224" pY="0.0606061"/>
+        <sprite n="Spearman_die/018_Spearman_die.bmp" x="101" y="250" w="99" h="31" pX="0.565657" pY="0"/>
+        <sprite n="Spearman_die/019_Spearman_die.bmp" x="202" y="250" w="99" h="31" pX="0.565657" pY="0"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="Spearman_die/020_Spearman_die.bmp" x="303" y="250" w="66" h="46" pX="0.863636" pY="0.847826"/>
+        <sprite n="Spearman_die/021_Spearman_die.bmp" x="371" y="250" w="67" h="50" pX="0.940299" pY="0.7"/>
+        <sprite n="Spearman_die/022_Spearman_die.bmp" x="440" y="250" w="70" h="52" pX="0.957143" pY="0.730769"/>
+        <sprite n="Spearman_die/023_Spearman_die.bmp" x="512" y="250" w="72" h="51" pX="0.930556" pY="0.686275"/>
+        <sprite n="Spearman_die/024_Spearman_die.bmp" x="586" y="250" w="75" h="40" pX="0.906667" pY="0.6"/>
+        <sprite n="Spearman_die/025_Spearman_die.bmp" x="663" y="250" w="69" h="34" pX="0.971014" pY="0.205882"/>
+        <sprite n="Spearman_die/026_Spearman_die.bmp" x="734" y="250" w="72" h="47" pX="0.944444" pY="0.255319"/>
+        <sprite n="Spearman_die/027_Spearman_die.bmp" x="1" y="304" w="74" h="42" pX="0.945946" pY="0.190476"/>
+        <sprite n="Spearman_die/028_Spearman_die.bmp" x="77" y="304" w="73" h="43" pX="0.972603" pY="0.162791"/>
+        <sprite n="Spearman_die/029_Spearman_die.bmp" x="152" y="304" w="73" h="43" pX="0.972603" pY="0.162791"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="Spearman_die/030_Spearman_die.bmp" x="227" y="304" w="52" h="62" pX="0.711538" pY="0.870968"/>
+        <sprite n="Spearman_die/031_Spearman_die.bmp" x="281" y="304" w="57" h="56" pX="0.701754" pY="0.857143"/>
+        <sprite n="Spearman_die/032_Spearman_die.bmp" x="340" y="304" w="58" h="47" pX="0.706897" pY="0.851064"/>
+        <sprite n="Spearman_die/033_Spearman_die.bmp" x="400" y="304" w="56" h="48" pX="0.75" pY="0.875"/>
+        <sprite n="Spearman_die/034_Spearman_die.bmp" x="458" y="304" w="56" h="32" pX="0.75" pY="0.78125"/>
+        <sprite n="Spearman_die/035_Spearman_die.bmp" x="516" y="304" w="57" h="30" pX="0.736842" pY="0.833333"/>
+        <sprite n="Spearman_die/036_Spearman_die.bmp" x="575" y="304" w="60" h="34" pX="0.716667" pY="0.794118"/>
+        <sprite n="Spearman_die/037_Spearman_die.bmp" x="637" y="304" w="59" h="32" pX="0.745763" pY="0.84375"/>
+        <sprite n="Spearman_die/038_Spearman_die.bmp" x="698" y="304" w="59" h="32" pX="0.745763" pY="0.875"/>
+        <sprite n="Spearman_die/039_Spearman_die.bmp" x="759" y="304" w="69" h="29" pX="0.637681" pY="0.896552"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="Spearman_die/040_Spearman_die.bmp" x="830" y="304" w="29" h="63" pX="0.482759" pY="0.920635"/>
+        <sprite n="Spearman_die/041_Spearman_die.bmp" x="1" y="369" w="45" h="55" pX="0.622222" pY="0.945455"/>
+        <sprite n="Spearman_die/042_Spearman_die.bmp" x="48" y="369" w="46" h="46" pX="0.608696" pY="0.956522"/>
+        <sprite n="Spearman_die/043_Spearman_die.bmp" x="96" y="369" w="44" h="45" pX="0.636364" pY="0.911111"/>
+        <sprite n="Spearman_die/044_Spearman_die.bmp" x="142" y="369" w="44" h="41" pX="0.636364" pY="0.902439"/>
+        <sprite n="Spearman_die/045_Spearman_die.bmp" x="188" y="369" w="66" h="34" pX="0.757576" pY="0.941176"/>
+        <sprite n="Spearman_die/046_Spearman_die.bmp" x="256" y="369" w="78" h="36" pX="0.794872" pY="0.916667"/>
+        <sprite n="Spearman_die/047_Spearman_die.bmp" x="336" y="369" w="75" h="36" pX="0.786667" pY="0.916667"/>
+        <sprite n="Spearman_die/048_Spearman_die.bmp" x="413" y="369" w="79" h="36" pX="0.797468" pY="0.916667"/>
+        <sprite n="Spearman_die/049_Spearman_die.bmp" x="494" y="369" w="79" h="36" pX="0.797468" pY="0.916667"/>
+      </direction>
+    </action>
+
+
+    <!--Disappear Action-->
+    <action enum ="disappear" speed="200">
+      <direction enum="south">
+        <sprite n="Spearman_dissapear/000_Spearman_idle.bmp" x="575" y="369" w="48" h="45" pX="0.791667" pY="0.133333"/>
+        <sprite n="Spearman_dissapear/001_Spearman_idle.bmp" x="625" y="369" w="48" h="45" pX="0.791667" pY="0.133333"/>
+        <sprite n="Spearman_dissapear/002_Spearman_idle.bmp" x="675" y="369" w="48" h="45" pX="0.791667" pY="0.133333"/>
+        <sprite n="Spearman_dissapear/003_Spearman_idle.bmp" x="725" y="369" w="47" h="44" pX="0.808511" pY="0.136364"/>
+        <sprite n="Spearman_dissapear/004_Spearman_idle.bmp" x="774" y="369" w="47" h="44" pX="0.808511" pY="0.136364"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="Spearman_dissapear/005_Spearman_idle.bmp" x="1" y="426" w="97" h="29" pX="0.56701" pY="-0.0344828"/>
+        <sprite n="Spearman_dissapear/006_Spearman_idle.bmp" x="100" y="426" w="97" h="29" pX="0.56701" pY="-0.0344828"/>
+        <sprite n="Spearman_dissapear/007_Spearman_idle.bmp" x="199" y="426" w="95" h="28" pX="0.578947" pY="-0.0357143"/>
+        <sprite n="Spearman_dissapear/008_Spearman_idle.bmp" x="296" y="426" w="95" h="28" pX="0.578947" pY="-0.0357143"/>
+        <sprite n="Spearman_dissapear/009_Spearman_idle.bmp" x="393" y="426" w="95" h="27" pX="0.578947" pY="-0.037037"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="Spearman_dissapear/010_Spearman_idle.bmp" x="490" y="426" w="71" h="41" pX="0.985915" pY="0.146341"/>
+        <sprite n="Spearman_dissapear/011_Spearman_idle.bmp" x="563" y="426" w="67" h="40" pX="1" pY="0.15"/>
+        <sprite n="Spearman_dissapear/012_Spearman_idle.bmp" x="632" y="426" w="66" h="38" pX="1.01515" pY="0.157895"/>
+        <sprite n="Spearman_dissapear/013_Spearman_idle.bmp" x="700" y="426" w="66" h="36" pX="1.01515" pY="0.166667"/>
+        <sprite n="Spearman_dissapear/014_Spearman_idle.bmp" x="768" y="426" w="60" h="35" pX="1.01667" pY="0.171429"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="Spearman_dissapear/015_Spearman_idle.bmp" x="1" y="469" w="67" h="27" pX="0.641791" pY="0.925926"/>
+        <sprite n="Spearman_dissapear/016_Spearman_idle.bmp" x="70" y="469" w="65" h="27" pX="0.661538" pY="0.925926"/>
+        <sprite n="Spearman_dissapear/017_Spearman_idle.bmp" x="137" y="469" w="65" h="26" pX="0.661538" pY="0.961538"/>
+        <sprite n="Spearman_dissapear/018_Spearman_idle.bmp" x="204" y="469" w="65" h="26" pX="0.661538" pY="0.961538"/>
+        <sprite n="Spearman_dissapear/019_Spearman_idle.bmp" x="271" y="469" w="65" h="26" pX="0.661538" pY="0.961538"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="Spearman_dissapear/020_Spearman_idle.bmp" x="338" y="469" w="77" h="34" pX="0.805195" pY="0.941176"/>
+        <sprite n="Spearman_dissapear/021_Spearman_idle.bmp" x="417" y="469" w="77" h="33" pX="0.805195" pY="0.969697"/>
+        <sprite n="Spearman_dissapear/022_Spearman_idle.bmp" x="496" y="469" w="77" h="32" pX="0.805195" pY="1"/>
+        <sprite n="Spearman_dissapear/023_Spearman_idle.bmp" x="575" y="469" w="67" h="31" pX="0.850746" pY="1.03226"/>
+        <sprite n="Spearman_dissapear/024_Spearman_idle.bmp" x="644" y="469" w="67" h="31" pX="0.850746" pY="1.03226"/>
+      </direction>
+    </action>
+
+
+    <!--Idle Action-->
+    <action enum ="idle" speed="200">
+      <direction enum="south">
+        <sprite n="Spearman_idle/000_Spearman_dissapear.bmp" x="713" y="469" w="56" h="50" pX="0.625" pY="0.76"/>
+        <sprite n="Spearman_idle/001_Spearman_dissapear.bmp" x="771" y="469" w="57" h="50" pX="0.614035" pY="0.78"/>
+        <sprite n="Spearman_idle/002_Spearman_dissapear.bmp" x="1" y="521" w="57" h="49" pX="0.614035" pY="0.795918"/>
+        <sprite n="Spearman_idle/003_Spearman_dissapear.bmp" x="60" y="521" w="58" h="48" pX="0.637931" pY="0.8125"/>
+        <sprite n="Spearman_idle/004_Spearman_dissapear.bmp" x="120" y="521" w="57" h="48" pX="0.631579" pY="0.8125"/>
+        <sprite n="Spearman_idle/005_Spearman_dissapear.bmp" x="179" y="521" w="59" h="48" pX="0.644068" pY="0.8125"/>
+        <sprite n="Spearman_idle/006_Spearman_dissapear.bmp" x="240" y="521" w="58" h="49" pX="0.62069" pY="0.795918"/>
+        <sprite n="Spearman_idle/007_Spearman_dissapear.bmp" x="300" y="521" w="57" h="49" pX="0.614035" pY="0.795918"/>
+        <sprite n="Spearman_idle/008_Spearman_dissapear.bmp" x="359" y="521" w="56" h="50" pX="0.625" pY="0.76"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="Spearman_idle/009_Spearman_dissapear.bmp" x="417" y="521" w="31" h="55" pX="0.677419" pY="0.909091"/>
+        <sprite n="Spearman_idle/010_Spearman_dissapear.bmp" x="450" y="521" w="31" h="54" pX="0.677419" pY="0.907407"/>
+        <sprite n="Spearman_idle/011_Spearman_dissapear.bmp" x="483" y="521" w="31" h="55" pX="0.677419" pY="0.909091"/>
+        <sprite n="Spearman_idle/012_Spearman_dissapear.bmp" x="516" y="521" w="32" h="55" pX="0.6875" pY="0.909091"/>
+        <sprite n="Spearman_idle/013_Spearman_dissapear.bmp" x="550" y="521" w="32" h="55" pX="0.6875" pY="0.909091"/>
+        <sprite n="Spearman_idle/014_Spearman_dissapear.bmp" x="584" y="521" w="32" h="55" pX="0.6875" pY="0.909091"/>
+        <sprite n="Spearman_idle/015_Spearman_dissapear.bmp" x="618" y="521" w="31" h="55" pX="0.677419" pY="0.909091"/>
+        <sprite n="Spearman_idle/016_Spearman_dissapear.bmp" x="651" y="521" w="31" h="54" pX="0.677419" pY="0.907407"/>
+        <sprite n="Spearman_idle/017_Spearman_dissapear.bmp" x="684" y="521" w="32" h="54" pX="0.6875" pY="0.907407"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="Spearman_idle/018_Spearman_dissapear.bmp" x="718" y="521" w="30" h="59" pX="0.7" pY="0.898305"/>
+        <sprite n="Spearman_idle/019_Spearman_dissapear.bmp" x="750" y="521" w="29" h="60" pX="0.689655" pY="0.9"/>
+        <sprite n="Spearman_idle/020_Spearman_dissapear.bmp" x="781" y="521" w="29" h="61" pX="0.689655" pY="0.901639"/>
+        <sprite n="Spearman_idle/021_Spearman_dissapear.bmp" x="812" y="521" w="29" h="62" pX="0.689655" pY="0.903226"/>
+        <sprite n="Spearman_idle/022_Spearman_dissapear.bmp" x="1" y="585" w="29" h="61" pX="0.689655" pY="0.901639"/>
+        <sprite n="Spearman_idle/023_Spearman_dissapear.bmp" x="32" y="585" w="29" h="62" pX="0.689655" pY="0.903226"/>
+        <sprite n="Spearman_idle/024_Spearman_dissapear.bmp" x="63" y="585" w="29" h="61" pX="0.689655" pY="0.901639"/>
+        <sprite n="Spearman_idle/025_Spearman_dissapear.bmp" x="94" y="585" w="29" h="60" pX="0.689655" pY="0.9"/>
+        <sprite n="Spearman_idle/026_Spearman_dissapear.bmp" x="125" y="585" w="30" h="61" pX="0.7" pY="0.901639"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="Spearman_idle/027_Spearman_dissapear.bmp" x="157" y="585" w="26" h="61" pX="0.615385" pY="0.852459"/>
+        <sprite n="Spearman_idle/028_Spearman_dissapear.bmp" x="185" y="585" w="26" h="61" pX="0.615385" pY="0.852459"/>
+        <sprite n="Spearman_idle/029_Spearman_dissapear.bmp" x="213" y="585" w="27" h="60" pX="0.62963" pY="0.866667"/>
+        <sprite n="Spearman_idle/030_Spearman_dissapear.bmp" x="242" y="585" w="31" h="60" pX="0.580645" pY="0.866667"/>
+        <sprite n="Spearman_idle/031_Spearman_dissapear.bmp" x="275" y="585" w="32" h="59" pX="0.5625" pY="0.881356"/>
+        <sprite n="Spearman_idle/032_Spearman_dissapear.bmp" x="309" y="585" w="31" h="59" pX="0.580645" pY="0.881356"/>
+        <sprite n="Spearman_idle/033_Spearman_dissapear.bmp" x="342" y="585" w="30" h="60" pX="0.6" pY="0.866667"/>
+        <sprite n="Spearman_idle/034_Spearman_dissapear.bmp" x="374" y="585" w="27" h="61" pX="0.62963" pY="0.868852"/>
+        <sprite n="Spearman_idle/035_Spearman_dissapear.bmp" x="403" y="585" w="26" h="61" pX="0.615385" pY="0.852459"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="Spearman_idle/036_Spearman_dissapear.bmp" x="431" y="585" w="50" h="50" pX="0.42" pY="0.92"/>
+        <sprite n="Spearman_idle/037_Spearman_dissapear.bmp" x="483" y="585" w="51" h="51" pX="0.411765" pY="0.901961"/>
+        <sprite n="Spearman_idle/038_Spearman_dissapear.bmp" x="536" y="585" w="52" h="51" pX="0.403846" pY="0.901961"/>
+        <sprite n="Spearman_idle/039_Spearman_dissapear.bmp" x="590" y="585" w="52" h="49" pX="0.384615" pY="0.897959"/>
+        <sprite n="Spearman_idle/040_Spearman_dissapear.bmp" x="644" y="585" w="53" h="49" pX="0.396226" pY="0.897959"/>
+        <sprite n="Spearman_idle/041_Spearman_dissapear.bmp" x="699" y="585" w="53" h="49" pX="0.396226" pY="0.897959"/>
+        <sprite n="Spearman_idle/042_Spearman_dissapear.bmp" x="754" y="585" w="53" h="51" pX="0.396226" pY="0.901961"/>
+        <sprite n="Spearman_idle/043_Spearman_dissapear.bmp" x="809" y="585" w="52" h="51" pX="0.403846" pY="0.901961"/>
+        <sprite n="Spearman_idle/044_Spearman_dissapear.bmp" x="1" y="649" w="50" h="50" pX="0.42" pY="0.92"/>
+      </direction>
+    </action>
+
+
+    <!--Walk Action-->
+    <action enum ="walk" speed="200">
+      <direction enum="south">
+        <sprite n="Spearman_walk/000_Spearman_walk.bmp" x="53" y="649" w="61" h="46" pX="0.622951" pY="0.804348"/>
+        <sprite n="Spearman_walk/001_Spearman_walk.bmp" x="116" y="649" w="63" h="44" pX="0.634921" pY="0.818182"/>
+        <sprite n="Spearman_walk/002_Spearman_walk.bmp" x="181" y="649" w="62" h="44" pX="0.629032" pY="0.840909"/>
+        <sprite n="Spearman_walk/003_Spearman_walk.bmp" x="245" y="649" w="61" h="46" pX="0.606557" pY="0.826087"/>
+        <sprite n="Spearman_walk/004_Spearman_walk.bmp" x="308" y="649" w="60" h="46" pX="0.6" pY="0.804348"/>
+        <sprite n="Spearman_walk/005_Spearman_walk.bmp" x="370" y="649" w="56" h="46" pX="0.589286" pY="0.76087"/>
+        <sprite n="Spearman_walk/006_Spearman_walk.bmp" x="428" y="649" w="57" h="46" pX="0.578947" pY="0.76087"/>
+        <sprite n="Spearman_walk/007_Spearman_walk.bmp" x="487" y="649" w="60" h="46" pX="0.583333" pY="0.804348"/>
+        <sprite n="Spearman_walk/008_Spearman_walk.bmp" x="549" y="649" w="62" h="45" pX="0.612903" pY="0.844444"/>
+        <sprite n="Spearman_walk/009_Spearman_walk.bmp" x="613" y="649" w="61" h="44" pX="0.606557" pY="0.840909"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="Spearman_walk/010_Spearman_walk.bmp" x="676" y="649" w="46" h="55" pX="0.717391" pY="0.763636"/>
+        <sprite n="Spearman_walk/011_Spearman_walk.bmp" x="724" y="649" w="46" h="52" pX="0.717391" pY="0.75"/>
+        <sprite n="Spearman_walk/012_Spearman_walk.bmp" x="772" y="649" w="49" h="52" pX="0.714286" pY="0.769231"/>
+        <sprite n="Spearman_walk/013_Spearman_walk.bmp" x="1" y="706" w="51" h="54" pX="0.705882" pY="0.777778"/>
+        <sprite n="Spearman_walk/014_Spearman_walk.bmp" x="54" y="706" w="53" h="51" pX="0.698113" pY="0.784314"/>
+        <sprite n="Spearman_walk/015_Spearman_walk.bmp" x="109" y="706" w="55" h="48" pX="0.690909" pY="0.791667"/>
+        <sprite n="Spearman_walk/016_Spearman_walk.bmp" x="166" y="706" w="56" h="47" pX="0.678571" pY="0.787234"/>
+        <sprite n="Spearman_walk/017_Spearman_walk.bmp" x="224" y="706" w="53" h="51" pX="0.698113" pY="0.764706"/>
+        <sprite n="Spearman_walk/018_Spearman_walk.bmp" x="279" y="706" w="48" h="54" pX="0.708333" pY="0.777778"/>
+        <sprite n="Spearman_walk/019_Spearman_walk.bmp" x="329" y="706" w="47" h="55" pX="0.723404" pY="0.763636"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="Spearman_walk/020_Spearman_walk.bmp" x="378" y="706" w="25" h="61" pX="0.52" pY="0.786885"/>
+        <sprite n="Spearman_walk/021_Spearman_walk.bmp" x="405" y="706" w="26" h="59" pX="0.461538" pY="0.779661"/>
+        <sprite n="Spearman_walk/022_Spearman_walk.bmp" x="433" y="706" w="26" h="60" pX="0.538462" pY="0.783333"/>
+        <sprite n="Spearman_walk/023_Spearman_walk.bmp" x="461" y="706" w="28" h="62" pX="0.607143" pY="0.790323"/>
+        <sprite n="Spearman_walk/024_Spearman_walk.bmp" x="491" y="706" w="29" h="62" pX="0.655172" pY="0.790323"/>
+        <sprite n="Spearman_walk/025_Spearman_walk.bmp" x="522" y="706" w="36" h="60" pX="0.611111" pY="0.783333"/>
+        <sprite n="Spearman_walk/026_Spearman_walk.bmp" x="560" y="706" w="35" h="60" pX="0.628571" pY="0.766667"/>
+        <sprite n="Spearman_walk/027_Spearman_walk.bmp" x="597" y="706" w="29" h="62" pX="0.62069" pY="0.774194"/>
+        <sprite n="Spearman_walk/028_Spearman_walk.bmp" x="628" y="706" w="26" h="62" pX="0.538462" pY="0.774194"/>
+        <sprite n="Spearman_walk/029_Spearman_walk.bmp" x="656" y="706" w="25" h="62" pX="0.52" pY="0.790323"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="Spearman_walk/030_Spearman_walk.bmp" x="683" y="706" w="42" h="53" pX="0.52381" pY="0.849057"/>
+        <sprite n="Spearman_walk/031_Spearman_walk.bmp" x="727" y="706" w="42" h="51" pX="0.5" pY="0.843137"/>
+        <sprite n="Spearman_walk/032_Spearman_walk.bmp" x="771" y="706" w="41" h="53" pX="0.536585" pY="0.849057"/>
+        <sprite n="Spearman_walk/033_Spearman_walk.bmp" x="814" y="706" w="37" h="57" pX="0.540541" pY="0.842105"/>
+        <sprite n="Spearman_walk/034_Spearman_walk.bmp" x="1" y="770" w="31" h="58" pX="0.580645" pY="0.844828"/>
+        <sprite n="Spearman_walk/035_Spearman_walk.bmp" x="34" y="770" w="29" h="59" pX="0.586207" pY="0.830508"/>
+        <sprite n="Spearman_walk/036_Spearman_walk.bmp" x="65" y="770" w="29" h="58" pX="0.586207" pY="0.827586"/>
+        <sprite n="Spearman_walk/037_Spearman_walk.bmp" x="96" y="770" w="35" h="57" pX="0.571429" pY="0.842105"/>
+        <sprite n="Spearman_walk/038_Spearman_walk.bmp" x="133" y="770" w="40" h="56" pX="0.55" pY="0.839286"/>
+        <sprite n="Spearman_walk/039_Spearman_walk.bmp" x="175" y="770" w="41" h="54" pX="0.536585" pY="0.851852"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="Spearman_walk/040_Spearman_walk.bmp" x="218" y="770" w="58" h="45" pX="0.396552" pY="0.822222"/>
+        <sprite n="Spearman_walk/041_Spearman_walk.bmp" x="278" y="770" w="58" h="46" pX="0.396552" pY="0.804348"/>
+        <sprite n="Spearman_walk/042_Spearman_walk.bmp" x="338" y="770" w="56" h="45" pX="0.375" pY="0.844444"/>
+        <sprite n="Spearman_walk/043_Spearman_walk.bmp" x="396" y="770" w="55" h="46" pX="0.4" pY="0.847826"/>
+        <sprite n="Spearman_walk/044_Spearman_walk.bmp" x="453" y="770" w="55" h="48" pX="0.418182" pY="0.854167"/>
+        <sprite n="Spearman_walk/045_Spearman_walk.bmp" x="510" y="770" w="53" h="50" pX="0.433962" pY="0.84"/>
+        <sprite n="Spearman_walk/046_Spearman_walk.bmp" x="565" y="770" w="54" h="49" pX="0.444444" pY="0.836735"/>
+        <sprite n="Spearman_walk/047_Spearman_walk.bmp" x="621" y="770" w="57" h="46" pX="0.438596" pY="0.847826"/>
+        <sprite n="Spearman_walk/048_Spearman_walk.bmp" x="680" y="770" w="57" h="45" pX="0.421053" pY="0.844444"/>
+        <sprite n="Spearman_walk/049_Spearman_walk.bmp" x="739" y="770" w="56" h="44" pX="0.392857" pY="0.840909"/>
+      </direction>
+    </action>
+  </unit>
+ </TextureAtlas>
