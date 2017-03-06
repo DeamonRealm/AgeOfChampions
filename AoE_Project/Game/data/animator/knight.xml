@@ -21,7 +21,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="knight.png" width="1104" height="1104">
   <!-- Define the unit type-->
-  <unit id ="villager">
+  <unit id ="knight">
 
     <!-- Attack Action-->
     <action enum="attack" speed="200">
