@@ -107,6 +107,7 @@ protected:
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
 	Animation*		current_animation = nullptr;
 	bool			flip_sprite = false;
+	SDL_Rect		selection_rect = { 0,0,0,0 };
 	SDL_Rect		icon_rect = { 0,0,0,0 };
 
 public:
@@ -128,6 +129,7 @@ public:
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 	void			SetAnimation(Animation* anim);
 	void			SetFlipSprite(bool flip);
+	void			SetSelectionRect(const SDL_Rect& rect);
 	void			SetIcon(const SDL_Rect& icon);
 
 	//Get Methods -----------
@@ -137,6 +139,7 @@ public:
 	DIPLOMACY		GetDiplomacy()const;
 	Animation*		GetAnimation()const;
 	bool			GetFlipSprite()const;
+	const SDL_Rect*	GetSelectionRect()const;
 	const SDL_Rect&	GetIcon()const;
 };
 /// ---------------------------------------------
@@ -157,7 +160,6 @@ protected:
 
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
-	SDL_Rect		selection_rect = { 0,0,0,0 };
 	Circle			mark;
 	//Life -------------
 	uint			max_life = 0;
@@ -196,7 +198,7 @@ public:
 	//Set Methods -----------
 	void	SetPosition(float x, float y);
 	void	SetUnitType(UNIT_TYPE type);
-	void	SetSelectionRect(const SDL_Rect& rect);
+
 	void	SetMark(const Circle& new_mark);
 	void	SetMaxLife(uint full_life_val);
 	void	SetLife(uint life_val);
@@ -223,7 +225,6 @@ public:
 
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
-	const SDL_Rect*	GetSelectionRect()const;
 	const Circle&	GetMark()const;
 	uint			GetFullLife()const;
 	uint			GetLife()const;
@@ -263,6 +264,7 @@ public:
 
 protected:
 
+	Rectng			mark;
 	RESOURCE_TYPE	resource_type = NO_RESOURCE;
 	uint			max_resources = 0;
 	uint			current_resources = 0;
@@ -274,11 +276,14 @@ public:
 	bool	Draw(bool debug);
 
 	//Set Methods -----------
+	void	SetPosition(float x, float y);
+	void	SetMark(const Rectng& rectangle);
 	void	SetResourceType(RESOURCE_TYPE type);
 	void	SetMaxResources(uint max_res);
 	void	SetCurrentResources(uint current_res);
 
 	//Get Methods -----------
+	const Rectng&	GetMark()const;
 	RESOURCE_TYPE	GetResourceType()const;
 	uint			GetMaxResources()const;
 	uint			GetCurrentResources()const;

@@ -28,6 +28,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Handle Console Input ----------------------
+	void Console_Command_Input(Command* command, Cvar* cvar, std::string* input);
+	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
+
 private:
 
 	//Lists of current game entities
@@ -42,6 +46,8 @@ private:
 
 	//Boolean that defines the debug mode state
 	bool debug = false;
+	// Cvar that defines the console unit generator unit type
+	Cvar* unit_cvar;
 
 	//Methods to add entities definitions
 	bool		AddUnitDefinition(const pugi::xml_node* unit_node);
@@ -59,6 +65,6 @@ public:
 	//Factory Methods -------
 	Unit*		GenerateUnit(UNIT_TYPE type);
 	Building*	GenerateBuilding(BUILDING_TYPE type);
-	Resource*	GenerateResource(RESOURCE_TYPE type);
+	Resource*	GenerateResource(RESOURCE_TYPE type, uint id_index = 0);
 };
 #endif // _ENTITIES_MANAGER_

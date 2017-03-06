@@ -250,7 +250,7 @@ bool j1Console::AutoCompleteInputBox(char* input)
 {
 	//Get input str length
 	uint char_num = strlen(input);
-	if (char_num > 17)return false;
+	if (char_num > 30)return false;
 	uint input_step = 1;
 	uint init = 0;
 

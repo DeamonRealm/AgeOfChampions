@@ -17,7 +17,7 @@ Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE enti
 
 }
 
-Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), icon_rect(copy.icon_rect)
+Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), selection_rect(copy.selection_rect), icon_rect(copy.icon_rect)
 {
 
 }
@@ -84,6 +84,11 @@ void Entity::SetFlipSprite(bool flip)
 	flip_sprite = flip;
 }
 
+void Entity::SetSelectionRect(const SDL_Rect & rect)
+{
+	selection_rect = rect;
+}
+
 void Entity::SetIcon(const SDL_Rect & icon)
 {
 	icon_rect = icon;
@@ -121,6 +126,11 @@ bool Entity::GetFlipSprite() const
 	return flip_sprite;
 }
 
+const SDL_Rect * Entity::GetSelectionRect() const
+{
+	return &selection_rect;
+}
+
 const SDL_Rect& Entity::GetIcon()const
 {
 	return icon_rect;
@@ -142,7 +152,7 @@ Unit::Unit(const std::string& name): Entity(name)
 
 }
 
-Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), selection_rect(copy.selection_rect), mark(copy.mark), max_life(copy.max_life), life(copy.life), view_area(copy.view_area),
+Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), max_life(copy.max_life), life(copy.life), view_area(copy.view_area),
 speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
 attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_range(copy.attack_range), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time)
@@ -198,17 +208,12 @@ void Unit::SetPosition(float x, float y)
 	position.x = x;
 	position.y = y;
 	//Set unit mark position
-	mark.SetPosition(iPoint(x, y));
+	mark.SetPosition(iPoint( x, y ));
 }
 
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
-}
-
-void Unit::SetSelectionRect(const SDL_Rect & rect)
-{
-	selection_rect = rect;
 }
 
 void Unit::SetMark(const Circle & new_mark)
@@ -329,11 +334,6 @@ void Unit::SetExp(uint experience)
 UNIT_TYPE Unit::GetUnitType()const
 {
 	return unit_type;
-}
-
-const SDL_Rect * Unit::GetSelectionRect() const
-{
-	return &selection_rect;
 }
 
 const Circle& Unit::GetMark() const
@@ -479,6 +479,11 @@ Resource::~Resource()
 //Functionality =======================
 bool Resource::Draw(bool debug)
 {
+	if (debug)
+	{
+		mark.Draw();
+	}
+
 	const std::vector<Sprite>* sprites = current_animation->GetAllSprites();
 	
 	bool ret = false;
@@ -492,6 +497,21 @@ bool Resource::Draw(bool debug)
 
 	return ret;
 }
+
+void Resource::SetPosition(float x, float y)
+{
+	//Set resource position
+	position.x = x;
+	position.y = y;
+	//Set resource mark position
+	mark.SetPosition(iPoint( x,y ));
+}
+
+void Resource::SetMark(const Rectng & rectangle)
+{
+	mark = rectangle;
+}
+
 void Resource::SetResourceType(RESOURCE_TYPE type)
 {
 	resource_type = type;
@@ -505,6 +525,11 @@ void Resource::SetMaxResources(uint max_res)
 void Resource::SetCurrentResources(uint current_res)
 {
 	current_resources = current_res;
+}
+
+const Rectng& Resource::GetMark() const
+{
+	return mark;
 }
 
 RESOURCE_TYPE Resource::GetResourceType() const

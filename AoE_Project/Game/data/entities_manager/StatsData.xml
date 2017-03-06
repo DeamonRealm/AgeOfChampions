@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <data>
+  <!--Units-->
+
   <!--Arbalest Data-->
   <unit civ="Teutons" id="unit">
-    <stats
+  <stats
       name="Arbalest"  
       unit_type ="arbalest"
       attack_type="melee"
       
       mark_rad ="55"
-      mark_x_angle ="10"
       selection_x ="0"
       selection_y ="0"
       selection_w="50"
@@ -46,7 +47,6 @@
       attack_type="melee"
       
       mark_rad ="55"
-      mark_x_angle ="10"
       selection_x ="0"
       selection_y ="0"
       selection_w="50"
@@ -84,7 +84,6 @@
       attack_type="distance"
       
       mark_rad ="55"
-      mark_x_angle ="10"
       selection_x ="0"
       selection_y ="0"
       selection_w="50"
@@ -122,7 +121,6 @@
       attack_type="melee"
       
       mark_rad ="55"
-      mark_x_angle ="10"
       selection_x ="0"
       selection_y ="0"
       selection_w="50"
@@ -150,5 +148,27 @@
       poblation_cost="2"
       train_time="8"
     />
+  </unit>
+
+  <!--Resources-->
+  
+  <!--Tree-->
+  <unit civ="Teutons/English" id="unit">
+    <stats
+      name="Villager"
+      resource_type="tree"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="30"
+      selection_h="80"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      mark_w="20"
+      mark_h="20"
+      max_resources="250"
+      />
   </unit>
 </data>

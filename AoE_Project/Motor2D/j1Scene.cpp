@@ -142,13 +142,13 @@ bool j1Scene::Update(float dt)
 {
 	// Gui Upper Element ---------------------------
 	App->gui->CalculateUpperElement(scene_1_screen);
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
 		j1Timer ptimer;
 		ptimer.Start();
 		j1ClusterAbstraction YOLO = j1ClusterAbstraction(App->map, 10);
 		LOG("TIME %f", ptimer.ReadSec());
-	}
+	}*/
 	//MAP MOVEMENT-----------------------------------------
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
