@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:820777d4efbaf7e09c4c70f5f094ed54:927b2f5be485fd111735a770f419b938:292d5c8b4131e5859de48cc70b7f57b3$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="heavy_cavalry_archer.png" width="1148" height="1148">
+  <!-- Define the unit type-->
+  <unit id ="heavy_cavalry_archer">
+
+
+    <!--Attack Action-->
+    <action enum ="attack" speed="200">
+      <direction enum="south">
+        <sprite n="HeavyCavalryArcher_attack/000_Heavy CavalryArcher_attack.bmp" x="1" y="1" w="36" h="83" pX="0.611111" pY="0.759036"/>
+        <sprite n="HeavyCavalryArcher_attack/001_Heavy CavalryArcher_attack.bmp" x="39" y="1" w="39" h="83" pX="0.589744" pY="0.759036"/>
+        <sprite n="HeavyCavalryArcher_attack/002_Heavy CavalryArcher_attack.bmp" x="80" y="1" w="39" h="83" pX="0.692308" pY="0.759036"/>
+        <sprite n="HeavyCavalryArcher_attack/003_Heavy CavalryArcher_attack.bmp" x="121" y="1" w="44" h="83" pX="0.727273" pY="0.759036"/>
+        <sprite n="HeavyCavalryArcher_attack/004_Heavy CavalryArcher_attack.bmp" x="167" y="1" w="45" h="94" pX="0.733333" pY="0.787234"/>
+        <sprite n="HeavyCavalryArcher_attack/005_Heavy CavalryArcher_attack.bmp" x="214" y="1" w="47" h="80" pX="0.744681" pY="0.75"/>
+        <sprite n="HeavyCavalryArcher_attack/006_Heavy CavalryArcher_attack.bmp" x="263" y="1" w="48" h="81" pX="0.770833" pY="0.753086"/>
+        <sprite n="HeavyCavalryArcher_attack/007_Heavy CavalryArcher_attack.bmp" x="313" y="1" w="36" h="81" pX="0.722222" pY="0.753086"/>
+        <sprite n="HeavyCavalryArcher_attack/008_Heavy CavalryArcher_attack.bmp" x="351" y="1" w="33" h="81" pX="0.69697" pY="0.753086"/>
+        <sprite n="HeavyCavalryArcher_attack/009_Heavy CavalryArcher_attack.bmp" x="386" y="1" w="35" h="81" pX="0.685714" pY="0.753086"/>
+        <sprite n="HeavyCavalryArcher_attack/010_Heavy CavalryArcher_attack.bmp" x="423" y="1" w="38" h="81" pX="0.684211" pY="0.753086"/>
+        <sprite n="HeavyCavalryArcher_attack/011_Heavy CavalryArcher_attack.bmp" x="463" y="1" w="34" h="81" pX="0.676471" pY="0.753086"/>
+        <sprite n="HeavyCavalryArcher_attack/012_Heavy CavalryArcher_attack.bmp" x="499" y="1" w="34" h="82" pX="0.647059" pY="0.756098"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="HeavyCavalryArcher_attack/013_Heavy CavalryArcher_attack.bmp" x="535" y="1" w="64" h="76" pX="0.640625" pY="0.815789"/>
+        <sprite n="HeavyCavalryArcher_attack/014_Heavy CavalryArcher_attack.bmp" x="601" y="1" w="65" h="76" pX="0.630769" pY="0.815789"/>
+        <sprite n="HeavyCavalryArcher_attack/015_Heavy CavalryArcher_attack.bmp" x="668" y="1" w="63" h="75" pX="0.650794" pY="0.813333"/>
+        <sprite n="HeavyCavalryArcher_attack/016_Heavy CavalryArcher_attack.bmp" x="733" y="1" w="60" h="75" pX="0.683333" pY="0.8"/>
+        <sprite n="HeavyCavalryArcher_attack/017_Heavy CavalryArcher_attack.bmp" x="795" y="1" w="59" h="89" pX="0.694915" pY="0.831461"/>
+        <sprite n="HeavyCavalryArcher_attack/018_Heavy CavalryArcher_attack.bmp" x="856" y="1" w="59" h="76" pX="0.694915" pY="0.802632"/>
+        <sprite n="HeavyCavalryArcher_attack/019_Heavy CavalryArcher_attack.bmp" x="917" y="1" w="60" h="76" pX="0.7" pY="0.802632"/>
+        <sprite n="HeavyCavalryArcher_attack/020_Heavy CavalryArcher_attack.bmp" x="979" y="1" w="60" h="78" pX="0.683333" pY="0.807692"/>
+        <sprite n="HeavyCavalryArcher_attack/021_Heavy CavalryArcher_attack.bmp" x="1041" y="1" w="62" h="76" pX="0.66129" pY="0.802632"/>
+        <sprite n="HeavyCavalryArcher_attack/022_Heavy CavalryArcher_attack.bmp" x="1" y="97" w="65" h="75" pX="0.630769" pY="0.813333"/>
+        <sprite n="HeavyCavalryArcher_attack/023_Heavy CavalryArcher_attack.bmp" x="68" y="97" w="65" h="75" pX="0.630769" pY="0.813333"/>
+        <sprite n="HeavyCavalryArcher_attack/024_Heavy CavalryArcher_attack.bmp" x="135" y="97" w="62" h="75" pX="0.66129" pY="0.813333"/>
+        <sprite n="HeavyCavalryArcher_attack/025_Heavy CavalryArcher_attack.bmp" x="199" y="97" w="59" h="76" pX="0.677966" pY="0.815789"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="HeavyCavalryArcher_attack/026_Heavy CavalryArcher_attack.bmp" x="260" y="97" w="79" h="70" pX="0.620253" pY="0.871429"/>
+        <sprite n="HeavyCavalryArcher_attack/027_Heavy CavalryArcher_attack.bmp" x="341" y="97" w="83" h="70" pX="0.60241" pY="0.871429"/>
+        <sprite n="HeavyCavalryArcher_attack/028_Heavy CavalryArcher_attack.bmp" x="426" y="97" w="82" h="68" pX="0.609756" pY="0.882353"/>
+        <sprite n="HeavyCavalryArcher_attack/029_Heavy CavalryArcher_attack.bmp" x="510" y="97" w="84" h="68" pX="0.607143" pY="0.882353"/>
+        <sprite n="HeavyCavalryArcher_attack/030_Heavy CavalryArcher_attack.bmp" x="596" y="97" w="76" h="82" pX="0.671053" pY="0.902439"/>
+        <sprite n="HeavyCavalryArcher_attack/031_Heavy CavalryArcher_attack.bmp" x="674" y="97" w="77" h="69" pX="0.662338" pY="0.884058"/>
+        <sprite n="HeavyCavalryArcher_attack/032_Heavy CavalryArcher_attack.bmp" x="753" y="97" w="79" h="70" pX="0.64557" pY="0.9"/>
+        <sprite n="HeavyCavalryArcher_attack/033_Heavy CavalryArcher_attack.bmp" x="834" y="97" w="77" h="76" pX="0.662338" pY="0.907895"/>
+        <sprite n="HeavyCavalryArcher_attack/034_Heavy CavalryArcher_attack.bmp" x="913" y="97" w="75" h="75" pX="0.666667" pY="0.906667"/>
+        <sprite n="HeavyCavalryArcher_attack/035_Heavy CavalryArcher_attack.bmp" x="990" y="97" w="75" h="75" pX="0.666667" pY="0.893333"/>
+        <sprite n="HeavyCavalryArcher_attack/036_Heavy CavalryArcher_attack.bmp" x="1067" y="97" w="74" h="69" pX="0.675676" pY="0.884058"/>
+        <sprite n="HeavyCavalryArcher_attack/037_Heavy CavalryArcher_attack.bmp" x="1" y="181" w="74" h="68" pX="0.662162" pY="0.897059"/>
+        <sprite n="HeavyCavalryArcher_attack/038_Heavy CavalryArcher_attack.bmp" x="77" y="181" w="74" h="69" pX="0.662162" pY="0.884058"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="HeavyCavalryArcher_attack/039_Heavy CavalryArcher_attack.bmp" x="153" y="181" w="61" h="77" pX="0.786885" pY="0.792208"/>
+        <sprite n="HeavyCavalryArcher_attack/040_Heavy CavalryArcher_attack.bmp" x="216" y="181" w="63" h="77" pX="0.634921" pY="0.818182"/>
+        <sprite n="HeavyCavalryArcher_attack/041_Heavy CavalryArcher_attack.bmp" x="281" y="181" w="63" h="76" pX="0.634921" pY="0.828947"/>
+        <sprite n="HeavyCavalryArcher_attack/042_Heavy CavalryArcher_attack.bmp" x="346" y="181" w="66" h="75" pX="0.606061" pY="0.84"/>
+        <sprite n="HeavyCavalryArcher_attack/043_Heavy CavalryArcher_attack.bmp" x="414" y="181" w="66" h="88" pX="0.606061" pY="0.863636"/>
+        <sprite n="HeavyCavalryArcher_attack/044_Heavy CavalryArcher_attack.bmp" x="482" y="181" w="66" h="76" pX="0.606061" pY="0.842105"/>
+        <sprite n="HeavyCavalryArcher_attack/045_Heavy CavalryArcher_attack.bmp" x="550" y="181" w="66" h="77" pX="0.606061" pY="0.844156"/>
+        <sprite n="HeavyCavalryArcher_attack/046_Heavy CavalryArcher_attack.bmp" x="618" y="181" w="58" h="83" pX="0.689655" pY="0.855422"/>
+        <sprite n="HeavyCavalryArcher_attack/047_Heavy CavalryArcher_attack.bmp" x="678" y="181" w="57" h="85" pX="0.701754" pY="0.847059"/>
+        <sprite n="HeavyCavalryArcher_attack/048_Heavy CavalryArcher_attack.bmp" x="737" y="181" w="57" h="85" pX="0.701754" pY="0.835294"/>
+        <sprite n="HeavyCavalryArcher_attack/049_Heavy CavalryArcher_attack.bmp" x="796" y="181" w="57" h="80" pX="0.701754" pY="0.825"/>
+        <sprite n="HeavyCavalryArcher_attack/050_Heavy CavalryArcher_attack.bmp" x="855" y="181" w="57" h="76" pX="0.701754" pY="0.828947"/>
+        <sprite n="HeavyCavalryArcher_attack/051_Heavy CavalryArcher_attack.bmp" x="914" y="181" w="57" h="74" pX="0.684211" pY="0.837838"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="HeavyCavalryArcher_attack/052_Heavy CavalryArcher_attack.bmp" x="973" y="181" w="38" h="84" pX="0.710526" pY="0.785714"/>
+        <sprite n="HeavyCavalryArcher_attack/053_Heavy CavalryArcher_attack.bmp" x="1013" y="181" w="38" h="85" pX="0.710526" pY="0.776471"/>
+        <sprite n="HeavyCavalryArcher_attack/054_Heavy CavalryArcher_attack.bmp" x="1053" y="181" w="34" h="86" pX="0.647059" pY="0.77907"/>
+        <sprite n="HeavyCavalryArcher_attack/055_Heavy CavalryArcher_attack.bmp" x="1089" y="181" w="39" h="86" pX="0.564103" pY="0.77907"/>
+        <sprite n="HeavyCavalryArcher_attack/056_Heavy CavalryArcher_attack.bmp" x="1" y="271" w="42" h="92" pX="0.52381" pY="0.836957"/>
+        <sprite n="HeavyCavalryArcher_attack/057_Heavy CavalryArcher_attack.bmp" x="45" y="271" w="42" h="82" pX="0.52381" pY="0.817073"/>
+        <sprite n="HeavyCavalryArcher_attack/058_Heavy CavalryArcher_attack.bmp" x="89" y="271" w="42" h="83" pX="0.5" pY="0.807229"/>
+        <sprite n="HeavyCavalryArcher_attack/059_Heavy CavalryArcher_attack.bmp" x="133" y="271" w="33" h="85" pX="0.636364" pY="0.823529"/>
+        <sprite n="HeavyCavalryArcher_attack/060_Heavy CavalryArcher_attack.bmp" x="168" y="271" w="33" h="86" pX="0.636364" pY="0.825581"/>
+        <sprite n="HeavyCavalryArcher_attack/061_Heavy CavalryArcher_attack.bmp" x="203" y="271" w="33" h="85" pX="0.636364" pY="0.823529"/>
+        <sprite n="HeavyCavalryArcher_attack/062_Heavy CavalryArcher_attack.bmp" x="238" y="271" w="34" h="80" pX="0.647059" pY="0.825"/>
+        <sprite n="HeavyCavalryArcher_attack/063_Heavy CavalryArcher_attack.bmp" x="274" y="271" w="34" h="81" pX="0.647059" pY="0.814815"/>
+        <sprite n="HeavyCavalryArcher_attack/064_Heavy CavalryArcher_attack.bmp" x="310" y="271" w="33" h="81" pX="0.666667" pY="0.814815"/>
+      </direction>
+    </action>
+
+
+
+    <!--Die Action-->
+    <action enum ="die" speed="200">
+      <direction enum="south">
+        <sprite n="HeavyCavalryArcher_die/000_Heavy CavalryArcher_die.bmp" x="345" y="271" w="41" h="79" pX="0.414634" pY="0.772152"/>
+        <sprite n="HeavyCavalryArcher_die/001_Heavy CavalryArcher_die.bmp" x="388" y="271" w="39" h="79" pX="0.435897" pY="0.759494"/>
+        <sprite n="HeavyCavalryArcher_die/002_Heavy CavalryArcher_die.bmp" x="429" y="271" w="47" h="75" pX="0.723404" pY="0.866667"/>
+        <sprite n="HeavyCavalryArcher_die/003_Heavy CavalryArcher_die.bmp" x="478" y="271" w="68" h="71" pX="0.852941" pY="0.929577"/>
+        <sprite n="HeavyCavalryArcher_die/004_Heavy CavalryArcher_die.bmp" x="548" y="271" w="70" h="58" pX="0.728571" pY="0.844828"/>
+        <sprite n="HeavyCavalryArcher_die/005_Heavy CavalryArcher_die.bmp" x="620" y="271" w="59" h="56" pX="0.677966" pY="0.785714"/>
+        <sprite n="HeavyCavalryArcher_die/006_Heavy CavalryArcher_die.bmp" x="681" y="271" w="65" h="43" pX="0.507692" pY="0.534884"/>
+        <sprite n="HeavyCavalryArcher_die/007_Heavy CavalryArcher_die.bmp" x="748" y="271" w="72" h="46" pX="0.416667" pY="0.543478"/>
+        <sprite n="HeavyCavalryArcher_die/008_Heavy CavalryArcher_die.bmp" x="822" y="271" w="76" h="45" pX="0.394737" pY="0.533333"/>
+        <sprite n="HeavyCavalryArcher_die/009_Heavy CavalryArcher_die.bmp" x="900" y="271" w="81" h="45" pX="0.37037" pY="0.533333"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="HeavyCavalryArcher_die/010_Heavy CavalryArcher_die.bmp" x="983" y="271" w="47" h="81" pX="0.595745" pY="0.740741"/>
+        <sprite n="HeavyCavalryArcher_die/011_Heavy CavalryArcher_die.bmp" x="1032" y="271" w="47" h="79" pX="0.553191" pY="0.734177"/>
+        <sprite n="HeavyCavalryArcher_die/012_Heavy CavalryArcher_die.bmp" x="1081" y="271" w="66" h="72" pX="0.590909" pY="0.888889"/>
+        <sprite n="HeavyCavalryArcher_die/013_Heavy CavalryArcher_die.bmp" x="1" y="365" w="79" h="70" pX="0.582278" pY="0.957143"/>
+        <sprite n="HeavyCavalryArcher_die/014_Heavy CavalryArcher_die.bmp" x="82" y="365" w="81" h="64" pX="0.469136" pY="0.890625"/>
+        <sprite n="HeavyCavalryArcher_die/015_Heavy CavalryArcher_die.bmp" x="165" y="365" w="75" h="58" pX="0.48" pY="0.827586"/>
+        <sprite n="HeavyCavalryArcher_die/016_Heavy CavalryArcher_die.bmp" x="242" y="365" w="55" h="40" pX="0.654545" pY="0.575"/>
+        <sprite n="HeavyCavalryArcher_die/017_Heavy CavalryArcher_die.bmp" x="299" y="365" w="69" h="49" pX="0.521739" pY="0.510204"/>
+        <sprite n="HeavyCavalryArcher_die/018_Heavy CavalryArcher_die.bmp" x="370" y="365" w="75" h="49" pX="0.533333" pY="0.469388"/>
+        <sprite n="HeavyCavalryArcher_die/019_Heavy CavalryArcher_die.bmp" x="447" y="365" w="79" h="51" pX="0.506329" pY="0.45098"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="HeavyCavalryArcher_die/020_Heavy CavalryArcher_die.bmp" x="528" y="365" w="69" h="73" pX="0.666667" pY="0.821918"/>
+        <sprite n="HeavyCavalryArcher_die/021_Heavy CavalryArcher_die.bmp" x="599" y="365" w="76" h="71" pX="0.605263" pY="0.816901"/>
+        <sprite n="HeavyCavalryArcher_die/022_Heavy CavalryArcher_die.bmp" x="677" y="365" w="66" h="74" pX="0.5" pY="0.891892"/>
+        <sprite n="HeavyCavalryArcher_die/023_Heavy CavalryArcher_die.bmp" x="745" y="365" w="56" h="73" pX="0.339286" pY="0.90411"/>
+        <sprite n="HeavyCavalryArcher_die/024_Heavy CavalryArcher_die.bmp" x="803" y="365" w="66" h="72" pX="0.393939" pY="0.833333"/>
+        <sprite n="HeavyCavalryArcher_die/025_Heavy CavalryArcher_die.bmp" x="871" y="365" w="64" h="63" pX="0.46875" pY="0.809524"/>
+        <sprite n="HeavyCavalryArcher_die/026_Heavy CavalryArcher_die.bmp" x="937" y="365" w="71" h="43" pX="0.633803" pY="0.55814"/>
+        <sprite n="HeavyCavalryArcher_die/027_Heavy CavalryArcher_die.bmp" x="1010" y="365" w="73" h="43" pX="0.616438" pY="0.44186"/>
+        <sprite n="HeavyCavalryArcher_die/028_Heavy CavalryArcher_die.bmp" x="1" y="441" w="83" h="44" pX="0.554217" pY="0.409091"/>
+        <sprite n="HeavyCavalryArcher_die/029_Heavy CavalryArcher_die.bmp" x="86" y="441" w="83" h="47" pX="0.554217" pY="0.382979"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="HeavyCavalryArcher_die/030_Heavy CavalryArcher_die.bmp" x="171" y="441" w="69" h="71" pX="0.73913" pY="0.830986"/>
+        <sprite n="HeavyCavalryArcher_die/031_Heavy CavalryArcher_die.bmp" x="242" y="441" w="72" h="71" pX="0.694444" pY="0.816901"/>
+        <sprite n="HeavyCavalryArcher_die/032_Heavy CavalryArcher_die.bmp" x="316" y="441" w="47" h="82" pX="0.489362" pY="0.804878"/>
+        <sprite n="HeavyCavalryArcher_die/033_Heavy CavalryArcher_die.bmp" x="365" y="441" w="49" h="80" pX="0.346939" pY="0.7625"/>
+        <sprite n="HeavyCavalryArcher_die/034_Heavy CavalryArcher_die.bmp" x="416" y="441" w="56" h="78" pX="0.410714" pY="0.692308"/>
+        <sprite n="HeavyCavalryArcher_die/035_Heavy CavalryArcher_die.bmp" x="474" y="441" w="59" h="75" pX="0.440678" pY="0.706667"/>
+        <sprite n="HeavyCavalryArcher_die/036_Heavy CavalryArcher_die.bmp" x="535" y="441" w="73" h="44" pX="0.534247" pY="0.727273"/>
+        <sprite n="HeavyCavalryArcher_die/037_Heavy CavalryArcher_die.bmp" x="610" y="441" w="83" h="43" pX="0.614458" pY="0.55814"/>
+        <sprite n="HeavyCavalryArcher_die/038_Heavy CavalryArcher_die.bmp" x="695" y="441" w="86" h="40" pX="0.627907" pY="0.5"/>
+        <sprite n="HeavyCavalryArcher_die/039_Heavy CavalryArcher_die.bmp" x="783" y="441" w="89" h="43" pX="0.640449" pY="0.465116"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="HeavyCavalryArcher_die/040_Heavy CavalryArcher_die.bmp" x="874" y="441" w="43" h="74" pX="0.837209" pY="0.810811"/>
+        <sprite n="HeavyCavalryArcher_die/041_Heavy CavalryArcher_die.bmp" x="919" y="441" w="40" h="75" pX="0.825" pY="0.773333"/>
+        <sprite n="HeavyCavalryArcher_die/042_Heavy CavalryArcher_die.bmp" x="961" y="441" w="45" h="81" pX="0.577778" pY="0.765432"/>
+        <sprite n="HeavyCavalryArcher_die/043_Heavy CavalryArcher_die.bmp" x="1008" y="441" w="64" h="74" pX="0.328125" pY="0.716216"/>
+        <sprite n="HeavyCavalryArcher_die/044_Heavy CavalryArcher_die.bmp" x="1074" y="441" w="68" h="72" pX="0.441176" pY="0.680556"/>
+        <sprite n="HeavyCavalryArcher_die/045_Heavy CavalryArcher_die.bmp" x="1" y="525" w="59" h="69" pX="0.491525" pY="0.710145"/>
+        <sprite n="HeavyCavalryArcher_die/046_Heavy CavalryArcher_die.bmp" x="62" y="525" w="65" h="54" pX="0.630769" pY="0.722222"/>
+        <sprite n="HeavyCavalryArcher_die/047_Heavy CavalryArcher_die.bmp" x="129" y="525" w="71" h="45" pX="0.690141" pY="0.622222"/>
+        <sprite n="HeavyCavalryArcher_die/048_Heavy CavalryArcher_die.bmp" x="202" y="525" w="76" h="49" pX="0.710526" pY="0.571429"/>
+        <sprite n="HeavyCavalryArcher_die/049_Heavy CavalryArcher_die.bmp" x="280" y="525" w="80" h="49" pX="0.725" pY="0.571429"/>
+      </direction>
+    </action>
+
+
+    <!--Disappear Action-->
+    <action enum ="disappear" speed="200">
+      <direction enum="south">
+        <sprite n="HeavyCavalryArcher_dissapear/000_Heavy CavalryArcher_dissapear.bmp" x="362" y="525" w="81" h="45" pX="0.37037" pY="0.533333"/>
+        <sprite n="HeavyCavalryArcher_dissapear/001_Heavy CavalryArcher_dissapear.bmp" x="445" y="525" w="78" h="43" pX="0.371795" pY="0.534884"/>
+        <sprite n="HeavyCavalryArcher_dissapear/002_Heavy CavalryArcher_dissapear.bmp" x="525" y="525" w="77" h="42" pX="0.376623" pY="0.547619"/>
+        <sprite n="HeavyCavalryArcher_dissapear/003_Heavy CavalryArcher_dissapear.bmp" x="604" y="525" w="72" h="40" pX="0.333333" pY="0.55"/>
+        <sprite n="HeavyCavalryArcher_dissapear/004_Heavy CavalryArcher_dissapear.bmp" x="678" y="525" w="69" h="39" pX="0.304348" pY="0.564103"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="HeavyCavalryArcher_dissapear/005_Heavy CavalryArcher_dissapear.bmp" x="749" y="525" w="79" h="51" pX="0.506329" pY="0.45098"/>
+        <sprite n="HeavyCavalryArcher_dissapear/006_Heavy CavalryArcher_dissapear.bmp" x="830" y="525" w="77" h="45" pX="0.519481" pY="0.466667"/>
+        <sprite n="HeavyCavalryArcher_dissapear/007_Heavy CavalryArcher_dissapear.bmp" x="909" y="525" w="74" h="43" pX="0.540541" pY="0.465116"/>
+        <sprite n="HeavyCavalryArcher_dissapear/008_Heavy CavalryArcher_dissapear.bmp" x="985" y="525" w="69" h="40" pX="0.57971" pY="0.45"/>
+        <sprite n="HeavyCavalryArcher_dissapear/009_Heavy CavalryArcher_dissapear.bmp" x="1056" y="525" w="61" h="39" pX="0.52459" pY="0.435897"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="HeavyCavalryArcher_dissapear/010_Heavy CavalryArcher_dissapear.bmp" x="1" y="596" w="83" h="47" pX="0.554217" pY="0.382979"/>
+        <sprite n="HeavyCavalryArcher_dissapear/011_Heavy CavalryArcher_dissapear.bmp" x="86" y="596" w="78" h="42" pX="0.576923" pY="0.380952"/>
+        <sprite n="HeavyCavalryArcher_dissapear/012_Heavy CavalryArcher_dissapear.bmp" x="166" y="596" w="75" h="40" pX="0.6" pY="0.375"/>
+        <sprite n="HeavyCavalryArcher_dissapear/013_Heavy CavalryArcher_dissapear.bmp" x="243" y="596" w="73" h="40" pX="0.616438" pY="0.35"/>
+        <sprite n="HeavyCavalryArcher_dissapear/014_Heavy CavalryArcher_dissapear.bmp" x="318" y="596" w="72" h="40" pX="0.611111" pY="0.35"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="HeavyCavalryArcher_dissapear/015_Heavy CavalryArcher_dissapear.bmp" x="392" y="596" w="89" h="43" pX="0.640449" pY="0.465116"/>
+        <sprite n="HeavyCavalryArcher_dissapear/016_Heavy CavalryArcher_dissapear.bmp" x="483" y="596" w="86" h="42" pX="0.651163" pY="0.452381"/>
+        <sprite n="HeavyCavalryArcher_dissapear/017_Heavy CavalryArcher_dissapear.bmp" x="571" y="596" w="79" h="41" pX="0.696203" pY="0.439024"/>
+        <sprite n="HeavyCavalryArcher_dissapear/018_Heavy CavalryArcher_dissapear.bmp" x="652" y="596" w="70" h="40" pX="0.685714" pY="0.425"/>
+        <sprite n="HeavyCavalryArcher_dissapear/019_Heavy CavalryArcher_dissapear.bmp" x="724" y="596" w="65" h="39" pX="0.738462" pY="0.410256"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="HeavyCavalryArcher_dissapear/020_Heavy CavalryArcher_dissapear.bmp" x="791" y="596" w="80" h="49" pX="0.725" pY="0.571429"/>
+        <sprite n="HeavyCavalryArcher_dissapear/021_Heavy CavalryArcher_dissapear.bmp" x="873" y="596" w="78" h="44" pX="0.717949" pY="0.545455"/>
+        <sprite n="HeavyCavalryArcher_dissapear/022_Heavy CavalryArcher_dissapear.bmp" x="953" y="596" w="74" h="41" pX="0.743243" pY="0.560976"/>
+        <sprite n="HeavyCavalryArcher_dissapear/023_Heavy CavalryArcher_dissapear.bmp" x="1029" y="596" w="71" h="40" pX="0.774648" pY="0.575"/>
+        <sprite n="HeavyCavalryArcher_dissapear/024_Heavy CavalryArcher_dissapear.bmp" x="1" y="647" w="70" h="38" pX="0.785714" pY="0.578947"/>
+      </direction>
+    </action>
+
+
+    <!--Idle Action-->
+    <action enum ="idle" speed="200">
+      <direction enum="south">
+        <sprite n="HeavyCavalryArcher_idle/000_Heavy CavalryArcher_idle.bmp" x="73" y="647" w="33" h="82" pX="0.666667" pY="0.756098"/>
+        <sprite n="HeavyCavalryArcher_idle/001_Heavy CavalryArcher_idle.bmp" x="108" y="647" w="35" h="80" pX="0.657143" pY="0.775"/>
+        <sprite n="HeavyCavalryArcher_idle/002_Heavy CavalryArcher_idle.bmp" x="145" y="647" w="36" h="80" pX="0.638889" pY="0.775"/>
+        <sprite n="HeavyCavalryArcher_idle/003_Heavy CavalryArcher_idle.bmp" x="183" y="647" w="44" h="79" pX="0.704545" pY="0.759494"/>
+        <sprite n="HeavyCavalryArcher_idle/004_Heavy CavalryArcher_idle.bmp" x="229" y="647" w="48" h="77" pX="0.791667" pY="0.792208"/>
+        <sprite n="HeavyCavalryArcher_idle/005_Heavy CavalryArcher_idle.bmp" x="279" y="647" w="49" h="77" pX="0.795918" pY="0.805195"/>
+        <sprite n="HeavyCavalryArcher_idle/006_Heavy CavalryArcher_idle.bmp" x="330" y="647" w="44" h="78" pX="0.795455" pY="0.794872"/>
+        <sprite n="HeavyCavalryArcher_idle/007_Heavy CavalryArcher_idle.bmp" x="376" y="647" w="36" h="82" pX="0.666667" pY="0.743902"/>
+        <sprite n="HeavyCavalryArcher_idle/008_Heavy CavalryArcher_idle.bmp" x="414" y="647" w="38" h="81" pX="0.684211" pY="0.740741"/>
+        <sprite n="HeavyCavalryArcher_idle/009_Heavy CavalryArcher_idle.bmp" x="454" y="647" w="37" h="81" pX="0.675676" pY="0.765432"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="HeavyCavalryArcher_idle/010_Heavy CavalryArcher_idle.bmp" x="493" y="647" w="63" h="74" pX="0.571429" pY="0.837838"/>
+        <sprite n="HeavyCavalryArcher_idle/011_Heavy CavalryArcher_idle.bmp" x="558" y="647" w="52" h="72" pX="0.576923" pY="0.875"/>
+        <sprite n="HeavyCavalryArcher_idle/012_Heavy CavalryArcher_idle.bmp" x="612" y="647" w="55" h="74" pX="0.545455" pY="0.878378"/>
+        <sprite n="HeavyCavalryArcher_idle/013_Heavy CavalryArcher_idle.bmp" x="669" y="647" w="60" h="75" pX="0.566667" pY="0.84"/>
+        <sprite n="HeavyCavalryArcher_idle/014_Heavy CavalryArcher_idle.bmp" x="731" y="647" w="53" h="73" pX="0.54717" pY="0.890411"/>
+        <sprite n="HeavyCavalryArcher_idle/015_Heavy CavalryArcher_idle.bmp" x="786" y="647" w="53" h="74" pX="0.54717" pY="0.891892"/>
+        <sprite n="HeavyCavalryArcher_idle/016_Heavy CavalryArcher_idle.bmp" x="841" y="647" w="56" h="75" pX="0.625" pY="0.853333"/>
+        <sprite n="HeavyCavalryArcher_idle/017_Heavy CavalryArcher_idle.bmp" x="899" y="647" w="61" h="76" pX="0.688525" pY="0.789474"/>
+        <sprite n="HeavyCavalryArcher_idle/018_Heavy CavalryArcher_idle.bmp" x="962" y="647" w="60" h="76" pX="0.683333" pY="0.802632"/>
+        <sprite n="HeavyCavalryArcher_idle/019_Heavy CavalryArcher_idle.bmp" x="1024" y="647" w="59" h="76" pX="0.677966" pY="0.815789"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="HeavyCavalryArcher_idle/020_Heavy CavalryArcher_idle.bmp" x="1" y="731" w="86" h="68" pX="0.511628" pY="0.882353"/>
+        <sprite n="HeavyCavalryArcher_idle/021_Heavy CavalryArcher_idle.bmp" x="89" y="731" w="64" h="67" pX="0.5625" pY="0.880597"/>
+        <sprite n="HeavyCavalryArcher_idle/022_Heavy CavalryArcher_idle.bmp" x="155" y="731" w="73" h="69" pX="0.506849" pY="0.884058"/>
+        <sprite n="HeavyCavalryArcher_idle/023_Heavy CavalryArcher_idle.bmp" x="230" y="731" w="82" h="68" pX="0.52439" pY="0.882353"/>
+        <sprite n="HeavyCavalryArcher_idle/024_Heavy CavalryArcher_idle.bmp" x="314" y="731" w="70" h="69" pX="0.5" pY="0.884058"/>
+        <sprite n="HeavyCavalryArcher_idle/025_Heavy CavalryArcher_idle.bmp" x="386" y="731" w="68" h="69" pX="0.529412" pY="0.884058"/>
+        <sprite n="HeavyCavalryArcher_idle/026_Heavy CavalryArcher_idle.bmp" x="456" y="731" w="73" h="68" pX="0.60274" pY="0.882353"/>
+        <sprite n="HeavyCavalryArcher_idle/027_Heavy CavalryArcher_idle.bmp" x="531" y="731" w="82" h="69" pX="0.646341" pY="0.884058"/>
+        <sprite n="HeavyCavalryArcher_idle/028_Heavy CavalryArcher_idle.bmp" x="615" y="731" w="79" h="70" pX="0.632911" pY="0.885714"/>
+        <sprite n="HeavyCavalryArcher_idle/029_Heavy CavalryArcher_idle.bmp" x="696" y="731" w="77" h="70" pX="0.623377" pY="0.885714"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="HeavyCavalryArcher_idle/030_Heavy CavalryArcher_idle.bmp" x="775" y="731" w="66" h="78" pX="0.530303" pY="0.794872"/>
+        <sprite n="HeavyCavalryArcher_idle/031_Heavy CavalryArcher_idle.bmp" x="843" y="731" w="53" h="75" pX="0.566038" pY="0.826667"/>
+        <sprite n="HeavyCavalryArcher_idle/032_Heavy CavalryArcher_idle.bmp" x="898" y="731" w="57" h="76" pX="0.526316" pY="0.802632"/>
+        <sprite n="HeavyCavalryArcher_idle/033_Heavy CavalryArcher_idle.bmp" x="957" y="731" w="62" h="72" pX="0.532258" pY="0.791667"/>
+        <sprite n="HeavyCavalryArcher_idle/034_Heavy CavalryArcher_idle.bmp" x="1021" y="731" w="54" h="76" pX="0.537037" pY="0.815789"/>
+        <sprite n="HeavyCavalryArcher_idle/035_Heavy CavalryArcher_idle.bmp" x="1077" y="731" w="52" h="78" pX="0.557692" pY="0.820513"/>
+        <sprite n="HeavyCavalryArcher_idle/036_Heavy CavalryArcher_idle.bmp" x="1" y="811" w="57" h="76" pX="0.614035" pY="0.842105"/>
+        <sprite n="HeavyCavalryArcher_idle/037_Heavy CavalryArcher_idle.bmp" x="60" y="811" w="63" h="73" pX="0.650794" pY="0.835616"/>
+        <sprite n="HeavyCavalryArcher_idle/038_Heavy CavalryArcher_idle.bmp" x="125" y="811" w="62" h="74" pX="0.645161" pY="0.837838"/>
+        <sprite n="HeavyCavalryArcher_idle/039_Heavy CavalryArcher_idle.bmp" x="189" y="811" w="60" h="73" pX="0.633333" pY="0.835616"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="HeavyCavalryArcher_idle/040_Heavy CavalryArcher_idle.bmp" x="251" y="811" w="34" h="84" pX="0.676471" pY="0.821429"/>
+        <sprite n="HeavyCavalryArcher_idle/041_Heavy CavalryArcher_idle.bmp" x="287" y="811" w="36" h="84" pX="0.694444" pY="0.821429"/>
+        <sprite n="HeavyCavalryArcher_idle/042_Heavy CavalryArcher_idle.bmp" x="325" y="811" w="38" h="86" pX="0.684211" pY="0.825581"/>
+        <sprite n="HeavyCavalryArcher_idle/043_Heavy CavalryArcher_idle.bmp" x="365" y="811" w="41" h="81" pX="0.634146" pY="0.839506"/>
+        <sprite n="HeavyCavalryArcher_idle/044_Heavy CavalryArcher_idle.bmp" x="408" y="811" w="46" h="78" pX="0.521739" pY="0.833333"/>
+        <sprite n="HeavyCavalryArcher_idle/045_Heavy CavalryArcher_idle.bmp" x="456" y="811" w="46" h="78" pX="0.5" pY="0.820513"/>
+        <sprite n="HeavyCavalryArcher_idle/046_Heavy CavalryArcher_idle.bmp" x="504" y="811" w="42" h="79" pX="0.52381" pY="0.822785"/>
+        <sprite n="HeavyCavalryArcher_idle/047_Heavy CavalryArcher_idle.bmp" x="548" y="811" w="38" h="80" pX="0.631579" pY="0.825"/>
+        <sprite n="HeavyCavalryArcher_idle/048_Heavy CavalryArcher_idle.bmp" x="588" y="811" w="38" h="80" pX="0.657895" pY="0.8125"/>
+        <sprite n="HeavyCavalryArcher_idle/049_Heavy CavalryArcher_idle.bmp" x="628" y="811" w="36" h="81" pX="0.611111" pY="0.814815"/>
+      </direction>
+    </action>
+
+
+    <!--Walk Action-->
+    <action enum ="walk" speed="200">
+      <direction enum="south">
+        <sprite n="HeavyCavalryArcher_walk/000_Heavy CavalryArcher_walk.bmp" x="666" y="811" w="33" h="81" pX="0.666667" pY="0.777778"/>
+        <sprite n="HeavyCavalryArcher_walk/001_Heavy CavalryArcher_walk.bmp" x="701" y="811" w="33" h="81" pX="0.666667" pY="0.790123"/>
+        <sprite n="HeavyCavalryArcher_walk/002_Heavy CavalryArcher_walk.bmp" x="736" y="811" w="33" h="82" pX="0.666667" pY="0.792683"/>
+        <sprite n="HeavyCavalryArcher_walk/003_Heavy CavalryArcher_walk.bmp" x="771" y="811" w="33" h="83" pX="0.666667" pY="0.795181"/>
+        <sprite n="HeavyCavalryArcher_walk/004_Heavy CavalryArcher_walk.bmp" x="806" y="811" w="33" h="83" pX="0.666667" pY="0.795181"/>
+        <sprite n="HeavyCavalryArcher_walk/005_Heavy CavalryArcher_walk.bmp" x="841" y="811" w="33" h="82" pX="0.666667" pY="0.792683"/>
+        <sprite n="HeavyCavalryArcher_walk/006_Heavy CavalryArcher_walk.bmp" x="876" y="811" w="33" h="79" pX="0.666667" pY="0.78481"/>
+        <sprite n="HeavyCavalryArcher_walk/007_Heavy CavalryArcher_walk.bmp" x="911" y="811" w="33" h="78" pX="0.666667" pY="0.782051"/>
+        <sprite n="HeavyCavalryArcher_walk/008_Heavy CavalryArcher_walk.bmp" x="946" y="811" w="32" h="79" pX="0.65625" pY="0.772152"/>
+        <sprite n="HeavyCavalryArcher_walk/009_Heavy CavalryArcher_walk.bmp" x="980" y="811" w="33" h="80" pX="0.666667" pY="0.775"/>
+      </direction>
+
+      <direction enum="south-west">
+        <sprite n="HeavyCavalryArcher_walk/010_Heavy CavalryArcher_walk.bmp" x="1015" y="811" w="57" h="75" pX="0.649123" pY="0.826667"/>
+        <sprite n="HeavyCavalryArcher_walk/011_Heavy CavalryArcher_walk.bmp" x="1074" y="811" w="56" h="75" pX="0.642857" pY="0.84"/>
+        <sprite n="HeavyCavalryArcher_walk/012_Heavy CavalryArcher_walk.bmp" x="1" y="899" w="55" h="76" pX="0.654545" pY="0.842105"/>
+        <sprite n="HeavyCavalryArcher_walk/013_Heavy CavalryArcher_walk.bmp" x="58" y="899" w="56" h="77" pX="0.642857" pY="0.844156"/>
+        <sprite n="HeavyCavalryArcher_walk/014_Heavy CavalryArcher_walk.bmp" x="116" y="899" w="58" h="77" pX="0.62069" pY="0.844156"/>
+        <sprite n="HeavyCavalryArcher_walk/015_Heavy CavalryArcher_walk.bmp" x="176" y="899" w="59" h="76" pX="0.610169" pY="0.842105"/>
+        <sprite n="HeavyCavalryArcher_walk/016_Heavy CavalryArcher_walk.bmp" x="237" y="899" w="64" h="74" pX="0.5625" pY="0.837838"/>
+        <sprite n="HeavyCavalryArcher_walk/017_Heavy CavalryArcher_walk.bmp" x="303" y="899" w="64" h="74" pX="0.5625" pY="0.824324"/>
+        <sprite n="HeavyCavalryArcher_walk/018_Heavy CavalryArcher_walk.bmp" x="369" y="899" w="62" h="74" pX="0.596774" pY="0.824324"/>
+        <sprite n="HeavyCavalryArcher_walk/019_Heavy CavalryArcher_walk.bmp" x="433" y="899" w="60" h="75" pX="0.633333" pY="0.826667"/>
+      </direction>
+
+      <direction enum="west">
+        <sprite n="HeavyCavalryArcher_walk/020_Heavy CavalryArcher_walk.bmp" x="495" y="899" w="72" h="68" pX="0.625" pY="0.897059"/>
+        <sprite n="HeavyCavalryArcher_walk/021_Heavy CavalryArcher_walk.bmp" x="569" y="899" w="71" h="69" pX="0.619718" pY="0.898551"/>
+        <sprite n="HeavyCavalryArcher_walk/022_Heavy CavalryArcher_walk.bmp" x="642" y="899" w="72" h="69" pX="0.611111" pY="0.898551"/>
+        <sprite n="HeavyCavalryArcher_walk/023_Heavy CavalryArcher_walk.bmp" x="716" y="899" w="74" h="71" pX="0.594595" pY="0.901408"/>
+        <sprite n="HeavyCavalryArcher_walk/024_Heavy CavalryArcher_walk.bmp" x="792" y="899" w="75" h="71" pX="0.573333" pY="0.901408"/>
+        <sprite n="HeavyCavalryArcher_walk/025_Heavy CavalryArcher_walk.bmp" x="869" y="899" w="77" h="71" pX="0.558442" pY="0.901408"/>
+        <sprite n="HeavyCavalryArcher_walk/026_Heavy CavalryArcher_walk.bmp" x="948" y="899" w="84" h="68" pX="0.511905" pY="0.897059"/>
+        <sprite n="HeavyCavalryArcher_walk/027_Heavy CavalryArcher_walk.bmp" x="1034" y="899" w="84" h="67" pX="0.52381" pY="0.895522"/>
+        <sprite n="HeavyCavalryArcher_walk/028_Heavy CavalryArcher_walk.bmp" x="1" y="978" w="81" h="67" pX="0.54321" pY="0.895522"/>
+        <sprite n="HeavyCavalryArcher_walk/029_Heavy CavalryArcher_walk.bmp" x="84" y="978" w="77" h="68" pX="0.584416" pY="0.897059"/>
+      </direction>
+
+      <direction enum="north-west">
+        <sprite n="HeavyCavalryArcher_walk/030_Heavy CavalryArcher_walk.bmp" x="163" y="978" w="58" h="74" pX="0.62069" pY="0.824324"/>
+        <sprite n="HeavyCavalryArcher_walk/031_Heavy CavalryArcher_walk.bmp" x="223" y="978" w="56" h="75" pX="0.642857" pY="0.826667"/>
+        <sprite n="HeavyCavalryArcher_walk/032_Heavy CavalryArcher_walk.bmp" x="281" y="978" w="56" h="76" pX="0.642857" pY="0.842105"/>
+        <sprite n="HeavyCavalryArcher_walk/033_Heavy CavalryArcher_walk.bmp" x="339" y="978" w="57" h="77" pX="0.631579" pY="0.831169"/>
+        <sprite n="HeavyCavalryArcher_walk/034_Heavy CavalryArcher_walk.bmp" x="398" y="978" w="58" h="77" pX="0.603448" pY="0.831169"/>
+        <sprite n="HeavyCavalryArcher_walk/035_Heavy CavalryArcher_walk.bmp" x="458" y="978" w="59" h="76" pX="0.59322" pY="0.815789"/>
+        <sprite n="HeavyCavalryArcher_walk/036_Heavy CavalryArcher_walk.bmp" x="519" y="978" w="64" h="78" pX="0.546875" pY="0.782051"/>
+        <sprite n="HeavyCavalryArcher_walk/037_Heavy CavalryArcher_walk.bmp" x="585" y="978" w="65" h="77" pX="0.553846" pY="0.779221"/>
+        <sprite n="HeavyCavalryArcher_walk/038_Heavy CavalryArcher_walk.bmp" x="652" y="978" w="62" h="75" pX="0.580645" pY="0.8"/>
+        <sprite n="HeavyCavalryArcher_walk/039_Heavy CavalryArcher_walk.bmp" x="716" y="978" w="61" h="73" pX="0.590164" pY="0.821918"/>
+      </direction>
+
+      <direction enum="north">
+        <sprite n="HeavyCavalryArcher_walk/040_Heavy CavalryArcher_walk.bmp" x="779" y="978" w="34" h="81" pX="0.705882" pY="0.802469"/>
+        <sprite n="HeavyCavalryArcher_walk/041_Heavy CavalryArcher_walk.bmp" x="815" y="978" w="34" h="82" pX="0.705882" pY="0.804878"/>
+        <sprite n="HeavyCavalryArcher_walk/042_Heavy CavalryArcher_walk.bmp" x="851" y="978" w="34" h="84" pX="0.705882" pY="0.797619"/>
+        <sprite n="HeavyCavalryArcher_walk/043_Heavy CavalryArcher_walk.bmp" x="887" y="978" w="34" h="84" pX="0.705882" pY="0.797619"/>
+        <sprite n="HeavyCavalryArcher_walk/044_Heavy CavalryArcher_walk.bmp" x="923" y="978" w="34" h="84" pX="0.705882" pY="0.785714"/>
+        <sprite n="HeavyCavalryArcher_walk/045_Heavy CavalryArcher_walk.bmp" x="959" y="978" w="34" h="84" pX="0.705882" pY="0.77381"/>
+        <sprite n="HeavyCavalryArcher_walk/046_Heavy CavalryArcher_walk.bmp" x="995" y="978" w="34" h="88" pX="0.705882" pY="0.727273"/>
+        <sprite n="HeavyCavalryArcher_walk/047_Heavy CavalryArcher_walk.bmp" x="1031" y="978" w="34" h="87" pX="0.705882" pY="0.735632"/>
+        <sprite n="HeavyCavalryArcher_walk/048_Heavy CavalryArcher_walk.bmp" x="1067" y="978" w="34" h="85" pX="0.705882" pY="0.752941"/>
+        <sprite n="HeavyCavalryArcher_walk/049_Heavy CavalryArcher_walk.bmp" x="1103" y="978" w="34" h="82" pX="0.705882" pY="0.780488"/>
+      </direction>
+    </action>
+  </unit>
+</TextureAtlas>

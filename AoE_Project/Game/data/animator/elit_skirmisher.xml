@@ -21,7 +21,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="elit_skirmisher.png" width="763" height="763">
   <!-- Define the unit type-->
-  <unit id ="villager">
+  <unit id ="elite_skirmisher">
 
 
     <!-- Attack Action-->
