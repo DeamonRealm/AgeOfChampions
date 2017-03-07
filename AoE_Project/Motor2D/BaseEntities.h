@@ -228,7 +228,7 @@ public:
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
 	const Circle&	GetMark()const;
-	uint			GetFullLife()const;
+	uint			GetMaxLife()const;
 	uint			GetLife()const;
 	uint			GetViewArea()const;
 	float			GetSpeed()const;
