@@ -5,7 +5,7 @@
    <id xml = "militia.xml"/>
    <id xml = "cavalier.xml"/>
    <id xml = "cavalry_archer.xml"/>
-   <id xml = "elit_skirmisher.xml"/>
+   <id xml = "elite_skirmisher.xml"/>
    <id xml = "heavy_cavalry_archer.xml"/>
    <id xml = "knight.xml"/>
    <id xml = "monk.xml"/>

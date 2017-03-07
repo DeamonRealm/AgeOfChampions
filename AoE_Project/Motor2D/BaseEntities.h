@@ -25,6 +25,16 @@ enum UNIT_TYPE
 	MILITIA,
 	ARBALEST,
 	ARCHER,
+	CAVALIER,
+	CAVALRY_ARCHER,
+	ELITE_SKIRMISHER,
+	HEAVY_CAVALRY_ARCHER,
+	KNIGHT,
+	MONK,
+	PALADIN,
+	PIKEMAN,
+	SPEARMAN,
+	//Villagers
 	VILLAGER,
 	VILLAGER_PICK,
 	VILLAGER_PLOW,
@@ -300,6 +310,7 @@ class Building : public Entity
 {
 public:
 
+	Building();
 	Building(const std::string& name);
 	Building(const Building& copy);
 	~Building();

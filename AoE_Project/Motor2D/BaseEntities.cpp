@@ -475,7 +475,7 @@ Resource::Resource(const std::string & name):Entity(name)
 
 }
 
-Resource::Resource(const Resource& copy) : Entity(copy), resource_type(copy.resource_type), max_resources(copy.max_resources), current_resources(copy.current_resources)
+Resource::Resource(const Resource& copy) : Entity(copy), resource_type(copy.resource_type), mark(copy.mark), max_resources(copy.max_resources), current_resources(copy.current_resources)
 {
 
 }
@@ -489,14 +489,30 @@ Resource::~Resource()
 //Functionality =======================
 bool Resource::Draw(bool debug)
 {
-	if (debug)
-	{
-		mark.Draw();
+	bool ret = false;
+	//Draw Resource Mark
+	if(selected)ret = mark.Draw();
+
+	if (debug) {
+		//Draw Entity Selection Rect
+		App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
+
+		//Draw axis lines to check the center of the unit (tool used during the sprites allocation)
+		int length = 55;
+		iPoint p1 = { (int)position.x, (int)position.y - length };
+		iPoint p2 = { (int)position.x, (int)position.y + length };
+		SDL_Color color = { 50,255,200,255 };
+		Line y_axis(p1, p2, color);
+		p1.x -= length;
+		p1.y += length;
+		p2.x += length;
+		p2.y -= length;
+		Line x_axis(p1, p2, color);
+		y_axis.Draw();
+		x_axis.Draw();
 	}
 
 	const std::vector<Sprite>* sprites = current_animation->GetAllSprites();
-	
-	bool ret = false;
 
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
@@ -558,8 +574,14 @@ uint Resource::GetCurrentResources() const
 }
 ///----------------------------------------------
 
+
 ///Class Building -------------------------------
 //Constructors ========================
+Building::Building() :Entity()
+{
+
+}
+
 Building::Building(const std::string & name):Entity(name)
 {
 
@@ -595,7 +617,26 @@ bool Building::Draw(bool debug)
 	bool ret = false;
 
 	//Debug Draw
-	//if(debug)ret = mark->Draw();
+	ret = mark.Draw();
+
+	if (debug) {
+		//Draw Entity Selection Rect
+		App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
+
+		//Draw axis lines to check the center of the unit (tool used during the sprites allocation)
+		int length = 200;
+		iPoint p1 = { (int)position.x, (int)position.y - length };
+		iPoint p2 = { (int)position.x, (int)position.y + length };
+		SDL_Color color = { 50,255,200,255 };
+		Line y_axis(p1, p2, color);
+		p1.x -= length;
+		p1.y += length;
+		p2.x += length;
+		p2.y -= length;
+		Line x_axis(p1, p2, color);
+		y_axis.Draw();
+		x_axis.Draw();
+	}
 
 	//Get all sprites of the current animation
 	const std::vector<Sprite>*	sprites = current_animation->GetAllSprites();

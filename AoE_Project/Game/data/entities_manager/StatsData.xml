@@ -3,7 +3,7 @@
 <data>
   <!--Units-->
 
-  <!--Arbalest Data-->
+  <!--Arbalest-->
   <unit civ="Teutons" id="unit">
   <stats
       name="Arbalest"  
@@ -40,7 +40,7 @@
       train_time="8"
     />
   </unit>
-  <!--Militia Data-->
+  <!--Militia-->
   <unit civ="Teutons" id="unit">
     <stats
       name="Militia"
@@ -77,7 +77,7 @@
       train_time="21"
     />
   </unit>
-  <!--Archer Data-->
+  <!--Archer-->
   <unit civ="Teutons" id="unit">
     <stats
       name="Archer"
@@ -114,7 +114,340 @@
       train_time="8"
     />
   </unit>
-  <!--Villager Data-->
+  <!--Cavalier-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Cavalier"
+      unit_type ="cavalier"
+      attack_type="melee"
+      
+      mark_rad ="55"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      view_area="15"
+      speed="2.5"
+      attack_delay ="50"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      gold_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Cavalry Archer-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Cavalry Archer"
+      unit_type ="cavalry_archer"
+      attack_type="distance"
+      
+      mark_rad ="55"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      view_area="15"
+      speed="2.5"
+      attack_delay ="50"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      gold_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Elite Skirmisher-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Elite Skirmisher"
+      unit_type ="elite_skirmisher"
+      attack_type="melee"
+      
+      mark_rad ="55"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      view_area="15"
+      speed="2.5"
+      attack_delay ="50"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      gold_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Heavy Cavalry Archer-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Heavy Cavalry Archer"
+      unit_type ="heavy_cavalry_archer"
+      attack_type="distance"
+      
+      mark_rad ="55"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      view_area="15"
+      speed="2.5"
+      attack_delay ="50"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      gold_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Knight-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Knight"
+      unit_type ="knight"
+      attack_type="melee"
+      
+      mark_rad ="55"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      view_area="15"
+      speed="2.5"
+      attack_delay ="50"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      gold_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Monk-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Monk"
+      unit_type ="monk"
+      attack_type="distance"
+      
+      mark_rad ="55"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      view_area="15"
+      speed="2.5"
+      attack_delay ="50"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      gold_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Paladin-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Paladin"
+      unit_type ="paladin"
+      attack_type="melee"
+      
+      mark_rad ="55"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      view_area="15"
+      speed="2.5"
+      attack_delay ="50"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      gold_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Pikeman-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Pikeman"
+      unit_type ="pikeman"
+      attack_type="melee"
+      
+      mark_rad ="55"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      view_area="15"
+      speed="2.5"
+      attack_delay ="50"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      gold_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Spearman-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Spearman"
+      unit_type ="spearman"
+      attack_type="melee"
+      
+      mark_rad ="55"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      
+      max_life="150"
+      view_area="15"
+      speed="2.5"
+      attack_delay ="50"
+      attack_hitpoints="5"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="200"
+      attack_range="25"
+      defense="10"
+      defense_bonus="5"
+      armor="12"
+      armor_bonus="5"
+      food_cost="5"
+      wood_cost="5"
+      gold_cost="5"
+      poblation_cost="2"
+      train_time="8"
+    />
+  </unit>
+  <!--Villager-->
   <unit civ="Teutons/English" id="unit">
     <stats
       name="Villager"
@@ -162,14 +495,14 @@
       
       selection_x ="0"
       selection_y ="0"
-      selection_w="30"
-      selection_h="80"
+      selection_w="110"
+      selection_h="130"
       icon_x="10"
       icon_y="20"
       icon_w="50"
       icon_h="45"
-      mark_w="20"
-      mark_h="20"
+      mark_w="60"
+      mark_h="60"
       max_resources="250"
       />
   </unit>
@@ -180,15 +513,15 @@
       resource_type="berry_bush"
       
       selection_x ="0"
-      selection_y ="0"
-      selection_w="30"
-      selection_h="80"
+      selection_y ="15"
+      selection_w="70"
+      selection_h="50"
       icon_x="10"
       icon_y="20"
       icon_w="50"
       icon_h="45"
-      mark_w="20"
-      mark_h="20"
+      mark_w="70"
+      mark_h="80"
       max_resources="250"
       />
   </unit>
@@ -199,16 +532,16 @@
       resource_type="gold_ore"
       
       selection_x ="0"
-      selection_y ="0"
-      selection_w="30"
-      selection_h="80"
+      selection_y ="25"
+      selection_w="80"
+      selection_h="50"
       icon_x="10"
       icon_y="20"
       icon_w="50"
       icon_h="45"
-      mark_w="20"
-      mark_h="20"
-      max_resources="250"
+      mark_w="70"
+      mark_h="70"
+      max_resources="500"
       />
   </unit>
   <!--Stone Ore-->
@@ -218,16 +551,38 @@
       resource_type="stone_ore"
       
       selection_x ="0"
-      selection_y ="0"
-      selection_w="30"
-      selection_h="80"
+      selection_y ="20"
+      selection_w="80"
+      selection_h="50"
       icon_x="10"
       icon_y="20"
       icon_w="50"
       icon_h="45"
-      mark_w="20"
-      mark_h="20"
-      max_resources="250"
+      mark_w="70"
+      mark_h="70"
+      max_resources="350"
+      />
+  </unit>
+  
+  <!--Buildings-->
+  
+  <!--Town Center Feudal -->
+  <unit civ="Teutons/English" id="building">
+    <stats
+      name="Town Center"
+      resource_type="town_center"
+      
+      selection_x ="0"
+      selection_y ="98"
+      selection_w="370"
+      selection_h="250"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      mark_w="60"
+      mark_h="60"
+
       />
   </unit>
 </data>

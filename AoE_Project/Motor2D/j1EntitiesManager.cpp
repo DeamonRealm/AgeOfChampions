@@ -251,6 +251,42 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_no
 
 bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_node)
 {
+	if (building_node == nullptr)return false;
+
+	//Generate a new building definition from the node
+	Building new_def;
+
+	//Building ID -----------
+	/*Name*/			new_def.SetName(building_node->attribute("name").as_string());
+	/*Entity Type*/		new_def.SetEntityType(BUILDING);
+	/*Building Type*/	new_def.SetBuildingType(App->animator->StrToBuildingEnum(building_node->attribute("resource_type").as_string()));
+
+	//Building Primitives ---
+	/*Mark*/			Rectng mark;
+	/*Mark Width*/		mark.SetWidth(building_node->attribute("mark_w").as_uint());
+	/*Mark Height*/		mark.SetHeight(building_node->attribute("mark_h").as_uint());
+	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
+						new_def.SetMark(mark);
+	/*Selection Rect*/	SDL_Rect selection_rect;
+	/*S.Rect X*/		selection_rect.x = building_node->attribute("selection_x").as_int();
+	/*S.Rect Y*/		selection_rect.y = building_node->attribute("selection_y").as_int();
+	/*S.Rect W*/		selection_rect.w = building_node->attribute("selection_w").as_int();
+	/*S.Rect H*/		selection_rect.h = building_node->attribute("selection_h").as_int();
+						new_def.SetSelectionRect(selection_rect);
+	/*Icon Rect*/		SDL_Rect icon_rect;
+	/*I.Rect X*/		icon_rect.x = building_node->attribute("icon_x").as_int();
+	/*I.Rect Y*/		icon_rect.y = building_node->attribute("icon_y").as_int();
+	/*I.Rect W*/		icon_rect.w = building_node->attribute("icon_w").as_int();
+	/*I.Rect H*/		icon_rect.h = building_node->attribute("icon_h").as_int();
+						new_def.SetIcon(icon_rect);
+
+	//Building Metrics ------
+
+
+	buildings_defs.push_back(new_def);
+
+	LOG("%s definition built!", new_def.GetName());
+
 	return true;
 }
 
@@ -389,27 +425,26 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 
 Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 {
-	Building* new_buidling = nullptr;
+	Building* new_building = nullptr;
 
-	switch (type)
+	uint def_num = buildings_defs.size();
+	for (uint k = 0; k < def_num; k++)
 	{
-	case NO_BUILDING:	new_buidling = new Building("undefined");		 break;
-	case FARM:
-		break;
-	case TOWN_CENTER:
-		new_buidling = new Building("Town Center");
-		new_buidling->SetEntityType(ENTITY_TYPE::BUILDING);
-		new_buidling->SetBuildingType(BUILDING_TYPE::TOWN_CENTER);
-		App->animator->BuildingPlay(new_buidling);
+		if (buildings_defs[k].GetBuildingType() == type)
+		{
+			//Build unit
+			new_building = new Building(buildings_defs[k]);
 
-		break;
+			//Set unit animation
+			App->animator->BuildingPlay(new_building);
+
+			//Add the new unit at the units manage list
+			buildings.push_back(new_building);
+
+			return new_building;
+		}
 	}
-
-	//Add new unit at the manager list
-	if (new_buidling != nullptr)buildings.push_back(new_buidling);
-
-	//Return the generated unit
-	return new_buidling;
+	return nullptr;
 }
 
 Resource * j1EntitiesManager::GenerateResource(RESOURCE_TYPE type,uint id_index)

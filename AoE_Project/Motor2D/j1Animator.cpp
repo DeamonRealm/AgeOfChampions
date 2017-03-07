@@ -282,17 +282,26 @@ ENTITY_TYPE j1Animator::StrToEntityEnum(const char * str) const
 
 UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 {
-	if (strcmp(str, "militia") == 0)			return MILITIA;
-	if (strcmp(str, "arbalest") == 0)			return ARBALEST;
-	if (strcmp(str, "archer") == 0)				return ARCHER;
-	if (strcmp(str, "villager") == 0)			return VILLAGER;
-	if (strcmp(str, "villager_pick") == 0)		return VILLAGER_PICK;
-	if (strcmp(str, "villager_plow") == 0)		return VILLAGER_PLOW;
-	if (strcmp(str, "villager_bow") == 0)		return VILLAGER_BOW;
-	if (strcmp(str, "villager_basket") == 0)	return VILLAGER_BASKET;
-	if (strcmp(str, "villager_axe") == 0)		return VILLAGER_AXE;
-	if (strcmp(str, "villager_hammer") == 0)	return VILLAGER_HAMMER;
-	if (strcmp(str, "villager_carry") == 0)		return VILLAGER_CARRY;
+	if (strcmp(str, "spearman") == 0)				return SPEARMAN;
+	if (strcmp(str, "pikeman") == 0)				return PIKEMAN;
+	if (strcmp(str, "paladin") == 0)				return PALADIN;
+	if (strcmp(str, "monk") == 0)					return MONK;
+	if (strcmp(str, "knight") == 0)					return KNIGHT;
+	if (strcmp(str, "heavy_cavalry_archer") == 0)	return HEAVY_CAVALRY_ARCHER;
+	if (strcmp(str, "elite_skirmisher") == 0)		return ELITE_SKIRMISHER;
+	if (strcmp(str, "cavalry_archer") == 0)			return CAVALRY_ARCHER;
+	if (strcmp(str, "cavalier") == 0)				return CAVALIER;
+	if (strcmp(str, "militia") == 0)				return MILITIA;
+	if (strcmp(str, "arbalest") == 0)				return ARBALEST;
+	if (strcmp(str, "archer") == 0)					return ARCHER;
+	if (strcmp(str, "villager") == 0)				return VILLAGER;
+	if (strcmp(str, "villager_pick") == 0)			return VILLAGER_PICK;
+	if (strcmp(str, "villager_plow") == 0)			return VILLAGER_PLOW;
+	if (strcmp(str, "villager_bow") == 0)			return VILLAGER_BOW;
+	if (strcmp(str, "villager_basket") == 0)		return VILLAGER_BASKET;
+	if (strcmp(str, "villager_axe") == 0)			return VILLAGER_AXE;
+	if (strcmp(str, "villager_hammer") == 0)		return VILLAGER_HAMMER;
+	if (strcmp(str, "villager_carry") == 0)			return VILLAGER_CARRY;
 	return NO_UNIT;
 }
 
