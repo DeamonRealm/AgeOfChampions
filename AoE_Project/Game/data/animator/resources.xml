@@ -37,35 +37,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       <sprite n="Arboles/000_ShadowTree3.bmp" x="459" y="1" z="0" w="107" h="162" pX="0.392523" pY="1"/>
       <sprite n="Arboles/000_ShadowTree3Shadow.bmp" x="568" y="1" z="30" w="101" h="23" opacity="50" pX="0.673267" pY="0.73913"/>
     </element>
-    <!--Tree 4-->
-    <element>
-      <sprite n="Arboles/000_ShadowTree4.bmp" x="1" y="168" z="0" w="126" h="127" pX="0.444444" pY="0.984252"/>
-      <sprite n="Arboles/000_ShadowTree4Shadow.bmp" x="129" y="168" z="30" w="97" h="27" opacity="50" pX="0.57732" pY="0.740741"/>
-    </element>
     <!--Tree 5-->
     <element>
       <sprite n="Arboles/000_ShadowTree5.bmp" x="228" y="168" z="0" w="106" h="172" pX="0.45283" pY="0.994186"/>
       <sprite n="Arboles/000_ShadowTree5Shadow.bmp" x="336" y="168" z="30" w="101" h="37" opacity="50" pX="0.712871" pY="0.72973"/>
-    </element>
-    <!--Tree 6-->
-    <element>
-      <sprite n="Arboles/000_ShadowTree6.bmp" x="439" y="168" z="0" w="121" h="178" pX="0.77686" pY="0.966292"/>
-      <sprite n="Arboles/000_ShadowTree6Shadow.bmp" x="562" y="168" z="30" w="124" h="36" opacity="50" pX="1.02419" pY="0.388889"/>
-    </element>
-    <!--Tree 7-->
-    <element>
-      <sprite n="Arboles/000_ShadowTree7.bmp" x="1" y="348" z="0" w="102" h="176" pX="0.362745" pY="1"/>
-      <sprite n="Arboles/000_ShadowTree7Shadow.bmp" x="105" y="348" z="30" w="107" h="69" opacity="50" pX="0.551402" pY="0.84058"/>
-    </element>
-    <!--Tree 8-->
-    <element>
-      <sprite n="Arboles/000_ShadowTree8.bmp" x="214" y="348" z="0" w="102" h="180" pX="0.323529" pY="0.983333"/>
-      <sprite n="Arboles/000_ShadowTree8Shadow.bmp" x="105" y="348" z="30" w="107" h="69" opacity="50" pX="0.542056" pY="0.84058"/>
-    </element>
-    <!--Tree 9-->
-    <element>
-      <sprite n="Arboles/000_ShadowTree9.bmp" x="318" y="348" z="0" w="176" h="182" pX="0.448864" pY="0.978022"/>
-      <sprite n="Arboles/000_ShadowTree9Shadow.bmp" x="496" y="348" z="30" w="154" h="43" opacity="50" pX="0.694805" pY="0.697674"/>
     </element>
     <!--Tree 10-->
     <element>

@@ -6,6 +6,7 @@
 #include "j1Render.h"
 #include "j1FileSystem.h"
 #include "j1Textures.h"
+#include "j1Window.h"
 
 #include <math.h>
 
@@ -149,6 +150,10 @@ int j1Map::MovementCost(int x, int y) const
 
 void j1Map::Draw()
 {
+	uint window_width = 0;
+	uint window_height = 0;
+	App->win->GetWindowSize(window_width, window_height);
+
 	if (map_loaded == false)
 		return;
 
@@ -170,12 +175,19 @@ void j1Map::Draw()
 			for (int x = 0; x < data.width; ++x)
 			{
 				int tile_id = layer->Get(x, y);
+				iPoint pos = MapToWorld(x, y);
+
+				if (pos.x < -App->render->camera.x || pos.x < App->render->camera.x - window_width)
+				{
+					continue;
+				}
+
 				if (tile_id > 0)
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
 
 					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorld(x, y);
+					
 
 					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
