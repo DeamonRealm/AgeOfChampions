@@ -95,6 +95,8 @@ public:
 	void Select_Entity();
 	void Select_Group();
 
+	void UnSelect_Entity();
+
 	void Expand_SelectionRect();
 };
 #endif // !_J1PLAYER_H_

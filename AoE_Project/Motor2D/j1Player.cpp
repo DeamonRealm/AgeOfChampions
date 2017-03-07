@@ -96,7 +96,7 @@ bool j1Player::PreUpdate()
 		Select_Entity();
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
 		int x, y;
 		App->input->GetMousePosition(x, y);
@@ -158,6 +158,10 @@ bool j1Player::UnitisIn(int x, int y, int width, int height)
 		selection_rect.y += selection_rect.h;
 		selection_rect.h = -selection_rect.h;
 	}
+	int camera_x, camera_y;
+	camera_x = App->render->camera.x;
+	camera_y = App->render->camera.y;
+
 	if (PointisIn(x,y)) return true;
 	if (PointisIn(x + width, y + height)) return true;
 	if (PointisIn(x + width,y)) return true;
@@ -169,7 +173,11 @@ bool j1Player::UnitisIn(int x, int y, int width, int height)
 //Check if point is inside selection rect
 bool j1Player::PointisIn(int x, int y)
 {
-	if (selection_rect.x < x && selection_rect.x + selection_rect.w > x && selection_rect.y < y && selection_rect.y + selection_rect.h > y) return true;
+	int camera_x, camera_y;
+	camera_x = App->render->camera.x;
+	camera_y = App->render->camera.y;
+
+	if (selection_rect.x - camera_x < x && selection_rect.x - camera_x + selection_rect.w > x && selection_rect.y - camera_y < y && selection_rect.y - camera_y + selection_rect.h > y) return true;
 	else return false;
 }
 
@@ -181,6 +189,8 @@ void j1Player::Select_Entity()
 
 	x -= App->render->camera.x;
 	y -= App->render->camera.y;
+
+	UnSelect_Entity();
 
 	iPoint item_position;
 	iPoint item_pivot;
@@ -203,15 +213,24 @@ void j1Player::Select_Entity()
 		{
 			if (selected_elements.begin()._Ptr->_Myval != item._Ptr->_Myval)
 			{
-				selected_elements.clear();
-				selected_elements.push_back(item._Ptr->_Myval);
-				LOG("Entity Selected: Type: %s", selected_elements.begin()._Ptr->_Myval->GetName());
-				Selected->SetEntity(item._Ptr->_Myval);
-				item._Ptr->_Myval->Select();
-			}
-			else item._Ptr->_Myval->Deselect();
-			
+				if (selected_elements.size() == 1)
+				{
+					if (selected_elements.begin()._Ptr->_Myval->GetPosition().y <= item._Ptr->_Myval->GetPosition().y)
+					{
+						selected_elements.begin()._Ptr->_Myval->Deselect();
+						selected_elements.clear();
+					}
+				}
+				if(selected_elements.size() == 0)
+				{
+					selected_elements.push_back(item._Ptr->_Myval);
+					LOG("Entity Selected: Type: %s", selected_elements.begin()._Ptr->_Myval->GetName());
+					Selected->SetEntity(item._Ptr->_Myval);
+					item._Ptr->_Myval->Select();
+				}
+			}			
 		}
+		else item._Ptr->_Myval->Deselect();
 		item++;
 	}
 
@@ -220,9 +239,8 @@ void j1Player::Select_Entity()
 //Select group of units (only Allys)
 void j1Player::Select_Group()
 {
-	
 	if (selection_rect.w == 0 || selection_rect.h == 0) return;
-	selected_elements.clear();
+	UnSelect_Entity();
 
 	int x = 0, y = 0;
 	int width = 0, height = 0;
@@ -244,14 +262,23 @@ void j1Player::Select_Group()
 				selected_elements.push_back(item._Ptr->_Myval);
 				item._Ptr->_Myval->Select();
 			}
-			else item._Ptr->_Myval->Deselect();
 		}
 		item++;
 	}
-	
 	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 
 	LOG("Selected: %i", selected_elements.size());
+}
+
+void j1Player::UnSelect_Entity()
+{
+	std::list<Unit*>::const_iterator item = actual_population.begin();
+	while (item != actual_population.end())
+	{
+		item._Ptr->_Myval->Deselect();
+		item++;
+	}
+	selected_elements.clear();
 }
 
 //Expand Selection Rect
