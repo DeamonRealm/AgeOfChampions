@@ -339,6 +339,7 @@ public:
 	bool	Draw(bool debug);
 
 	//Set Methods -----------
+	void	SetPosition(float x, float y);
 	void	SetMark(const Rectng& rectangle);
 	void	SetBuildingType(BUILDING_TYPE type);
 	void	SetActionType(ACTION_TYPE type);

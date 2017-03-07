@@ -651,6 +651,15 @@ bool Building::Draw(bool debug)
 	return ret;
 }
 
+void Building::SetPosition(float x, float y)
+{
+	//Set building position
+	position.x = x;
+	position.y = y;
+	//Set building mark position
+	mark.SetPosition(iPoint(x, y));
+}
+
 void Building::SetMark(const Rectng & rectangle)
 {
 	mark = rectangle;

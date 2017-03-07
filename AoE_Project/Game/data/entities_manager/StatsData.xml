@@ -580,8 +580,8 @@
       icon_y="20"
       icon_w="50"
       icon_h="45"
-      mark_w="60"
-      mark_h="60"
+      mark_w="300"
+      mark_h="300"
 
       />
   </unit>
