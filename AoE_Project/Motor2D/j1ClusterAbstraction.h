@@ -9,6 +9,12 @@ enum ClusterOrientation {
 	CLUSTER_HORIZONTAL,
 	CLUSTER_VERTICAL
 };
+enum EdgeType
+{
+INTER_EDGE,
+INTRA_EDGE
+
+};
 #define MAX_ENTRY_NUM 6
 #define INVALID_WALK_CODE 255
 
@@ -18,7 +24,7 @@ class Edge
 {
 public:
 
-	Edge(int nodeNum1,int nodeNum2,int distance);
+	Edge(int nodeNum1,int nodeNum2,int distance,EdgeType type);
 	~Edge();
 	int GetNodeNum1();
 	int GetNodeNum2();
@@ -26,6 +32,7 @@ private:
 	int distance;
 	int nodeNum1;
 	int nodeNum2;
+	EdgeType type;
 };
 struct Node
 {

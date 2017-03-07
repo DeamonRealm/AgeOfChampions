@@ -324,7 +324,7 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 				numNode2 = checkNum;
 			}
 
-			graph->AddEdge(new Edge(numNode1, numNode2, 1));
+			graph->AddEdge(new Edge(numNode1, numNode2, 1, INTER_EDGE));
 		//	LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
 
@@ -362,7 +362,7 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 				numNode2 = checkNum;
 			}
 
-			graph->AddEdge(new Edge(numNode1, numNode2, 1));
+			graph->AddEdge(new Edge(numNode1, numNode2, 1, INTER_EDGE));
 		//	LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
 		break;
@@ -423,13 +423,14 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 			{
 				if (i == j)
 					continue;
-			
-				astar->SetMap(temp_map, cluster_width, cluster_height);
-				distance=astar->CreatePath( temp_nodes[i], temp_nodes[j]);
-				if (distance != -1) {
-					if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
-					{
-						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance));
+
+				if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
+				{
+					astar->SetMap(temp_map, cluster_width, cluster_height);
+					distance = astar->CreatePath(temp_nodes[i], temp_nodes[j]);
+					if (distance != -1) {
+
+						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance, INTRA_EDGE));
 						LOG("Intra Edge Generated on nodeOne = %i nodeTwo = %i", temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum);
 					}
 				}
@@ -481,7 +482,7 @@ Edge * Graph::EdgeAt(int i)
 	return edges[i];
 }
 
-Edge::Edge(int nodeNum1, int nodeNum2, int distance) : nodeNum1(nodeNum1),nodeNum2(nodeNum2),distance(distance)
+Edge::Edge(int nodeNum1, int nodeNum2, int distance, EdgeType type) : nodeNum1(nodeNum1),nodeNum2(nodeNum2),distance(distance),type(type)
 {
 
 }
