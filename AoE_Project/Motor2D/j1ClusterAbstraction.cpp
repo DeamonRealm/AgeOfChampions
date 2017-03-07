@@ -324,7 +324,10 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 				numNode2 = checkNum;
 			}
 
+			
 			graph->AddEdge(new Edge(numNode1, numNode2, 1, INTER_EDGE));
+			graph->GetNode(numNode1)->SetParent(numNode2);
+			graph->GetNode(numNode2)->SetParent(numNode1);
 		//	LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
 
@@ -363,6 +366,8 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 			}
 
 			graph->AddEdge(new Edge(numNode1, numNode2, 1, INTER_EDGE));
+			graph->GetNode(numNode1)->SetParent(numNode2);
+			graph->GetNode(numNode2)->SetParent(numNode1);
 		//	LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
 		break;
@@ -426,11 +431,14 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 
 				if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
 				{
+
 					astar->SetMap(temp_map, cluster_width, cluster_height);
 					distance = astar->CreatePath(temp_nodes[i], temp_nodes[j]);
 					if (distance != -1) {
 
 						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance, INTRA_EDGE));
+						graph->GetNode(temp_nodes[i]->nodeNum)->SetParent(temp_nodes[j]->nodeNum);
+						graph->GetNode(temp_nodes[j]->nodeNum)->SetParent(temp_nodes[i]->nodeNum);
 						LOG("Intra Edge Generated on nodeOne = %i nodeTwo = %i", temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum);
 					}
 				}
@@ -441,6 +449,10 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 		temp_nodes.clear();
 
 	}
+
+}
+void j1ClusterAbstraction::CreateBFS(Node * from, Node * to)
+{
 
 }
 Node* Graph::GetNode(int i) 
@@ -470,6 +482,21 @@ int Graph::AddNode(Node * node)
 	//error
 	return -1;
 }
+
+void Graph::RemoveNode(Node * node, int & ret)
+{
+	int remove_id = node->nodeNum;
+	
+	Node* tmp = GetNode(remove_id);
+	for (int i = 0; i < tmp->ParentSize(); i++) {
+		GetNode(tmp->GetParentIDAt(i))->RemoveParent(remove_id);
+	}
+
+	//for(int i = 0;i<edges.size)
+	//nodes.erase(node);
+}
+
+
 
 int Graph::EdgeSize()
 {
@@ -509,6 +536,10 @@ void Node::SetClusterID(int id)
 {
 	clusterID = id;
 }
+void Node::SetParent(int nodeID)
+{
+	parent_ID.push_back(nodeID);
+}
 int  Node::GetPositionX() 
 {
 	return posX;
@@ -517,6 +548,21 @@ int  Node::GetPositionY()
 {
 	return posY;
 
+}
+
+int Node::GetParentIDAt(int index)
+{
+	return parent_ID[index];
+}
+
+int Node::ParentSize()
+{
+	return parent_ID.size();
+}
+
+void Node::RemoveParent(int node_id)
+{
+	//parent_ID.erase(node_id);
 }
 
 Entry::Entry(int posX, int posY, int clusterID1, int clusterID2, int row, int column, int lenght, ClusterOrientation orientation): posX(posX),posY(posY),clusterID1(clusterID1),clusterID2(clusterID2),row(row),column(column),lenght(lenght),orientation(orientation)

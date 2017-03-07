@@ -39,15 +39,21 @@ struct Node
 public:
 	void SetPosition(int posX, int posY);
 	void SetClusterID(int id);
-
+	void SetParent(int nodeID);
+	
 	int GetPositionX();
 	int GetPositionY();
+	int GetParentIDAt(int index);
+	int ParentSize();
+	void RemoveParent(int node_id);
 	int nodeNum;
-	
 private:
 	int clusterID;
 	int posX;
 	int posY;
+	std::vector<int> parent_ID;
+	bool visited = false;
+
 };
 
 class Graph
@@ -61,6 +67,7 @@ public:
 	void AddEdge(Edge* edge);
 	
 	int AddNode(Node* edge);
+	void RemoveNode(Node* node, int &ret);
 	int EdgeSize();
 	Edge* EdgeAt(int i);
 private:
@@ -151,6 +158,7 @@ public:
 	void SetNodesOnClusters(Graph* graph);
 	void CreateIntraEdges(Graph* graph);
 
+	void CreateBFS(Node* from, Node* to);
 private:
 	// size of the map 
 	uint					width;
