@@ -74,6 +74,8 @@ private:
 
 	SDL_Rect		selection_rect;
 
+	UI_Image*			game_hud;
+
 	std::list<Unit*>	actual_population;
 	std::list<Entity*>	selected_elements;
 

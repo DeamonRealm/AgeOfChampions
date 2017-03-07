@@ -11,23 +11,26 @@
 #include "j1EntitiesManager.h"
 
 #include "UI_Element.h"
+#include "UI_Image.h"
 #include "UI_String.h"
 
 
-
+//Entity Profile Constructor =====================================================
 Entity_Profile::Entity_Profile()
 {
 	element = nullptr;
 	name = (UI_String*) App->gui->GenerateUI_Element(STRING);
-	name->SetColor({ 255,255,255,255 });
+	name->SetColor({ 0,0,0,255 });
 	diplomacy = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	diplomacy->SetColor({ 255,255,255,255 });
+	diplomacy->SetColor({ 0,0,0,255 });
 }
 
+//Entity Profile Destructor ======================================================
 Entity_Profile::~Entity_Profile()
 {
 }
 
+//Functionality ==================================================================
 void Entity_Profile::SetEntity(Entity * entity_selected)
 {
 	element = entity_selected;
@@ -46,17 +49,19 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 
 void Entity_Profile::DrawProfile() const
 {
-	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 750, 500, &element->GetIcon());
-	name->DrawAt(800, 500);
-	diplomacy->DrawAt(800, 520);
+	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 320 - App->render->camera.x, 630 - App->render->camera.y, &element->GetIcon());
+	name->DrawAt(370, 630);
+	diplomacy->DrawAt(370, 650);
 	
 }
 
+//j1Player Constructor ============================================================
 j1Player::j1Player()
 {
 	name = "player";
 }
 
+//j1Player Destructor ============================================================
 j1Player::~j1Player()
 {
 }
@@ -72,8 +77,14 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 bool j1Player::Start()
 {
+	game_hud = (UI_Image*) App->gui->GenerateUI_Element(IMG);
+	game_hud->ChangeTextureId(HUD);
+	game_hud->SetLayer(10);
+	App->gui->PushScreen(game_hud);
+
 	selection_rect = { 0,0,0,0 };
 	Selected = new Entity_Profile();
+
 	return true;
 }
 
@@ -108,7 +119,7 @@ bool j1Player::PreUpdate()
 
 bool j1Player::PostUpdate()
 {
-
+	game_hud->Draw(false);
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
 		Expand_SelectionRect();
@@ -233,6 +244,9 @@ void j1Player::Select_Group()
 		}
 		item++;
 	}
+	
+	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+
 	LOG("Selected: %i", selected_elements.size());
 }
 

@@ -44,7 +44,8 @@ enum TEXTURE_ID
 	BACKGROUND,
 	STANDARD,
 	MAINMENU,
-	ICONS
+	ICONS,
+	HUD
 };
 
 // ---------------------------------------------------
@@ -87,6 +88,7 @@ private:
 	SDL_Texture*			mainmenu;
 	SDL_Texture*			standardmenu;
 	SDL_Texture*			icons;
+	SDL_Texture*			hud;
 	
 	std::list<SDL_Texture*>	ui_textures;
 
@@ -95,6 +97,7 @@ private:
 	std::string				mainmenu_file_name;
 	std::string				standardmenu_file_name;
 	std::string				icons_file_name;
+	std::string				hud_file_name;
 
 	//Target Module of gui input
 	j1Module*				default_input_target;

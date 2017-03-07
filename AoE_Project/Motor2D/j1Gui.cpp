@@ -42,7 +42,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	mainmenu_file_name = conf.child("menu").attribute("file").as_string("");
 	standardmenu_file_name = conf.child("standard").attribute("file").as_string("");
 	icons_file_name = conf.child("icons").attribute("file").as_string("");
-
+	hud_file_name = conf.child("hud").attribute("file").as_string("");
 	
 	return ret;
 }
@@ -58,12 +58,14 @@ bool j1Gui::Start()
 	mainmenu = App->tex->Load(mainmenu_file_name.c_str());
 	standardmenu = App->tex->Load(standardmenu_file_name.c_str());
 	icons = App->tex->Load(icons_file_name.c_str());
+	hud = App->tex->Load(hud_file_name.c_str());
 	
 	//Add textures to Ui_textures
 	ui_textures.push_back(background);
 	ui_textures.push_back(mainmenu);
 	ui_textures.push_back(standardmenu);
 	ui_textures.push_back(icons);
+	ui_textures.push_back(hud);
 	
 	return true;
 }

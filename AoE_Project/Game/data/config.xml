@@ -29,6 +29,7 @@
     <menu file="gui/Main_Menu.png"/>
     <standard file="gui/Standard_Match.png"/>
     <icons file="gui/UI_Icons.png"/>
+    <hud file="gui/HUD.png"/>
     <c_vars>
     </c_vars>
   </gui>
