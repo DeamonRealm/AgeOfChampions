@@ -12,8 +12,18 @@ Controls for v.0.1 (protoype to test correct animation and draw order)
 
 ##Media 
 **Facebook:**https://www.facebook.com/DemonRealm.P2    
-**Twitter:**https://twitter.com/Demon_Realm
+**Twitter:**https://twitter.com/Demon_Realm    
 **Github page:** https://github.com/DeamonRealm/Age_of_Empires_II
+
+
+##Credits
+This software was made using SDL libraries: https://www.libsdl.org/   
+
+This software is based on pugixml library (http://pugixml.org).   
+pugixml is Copyright (C) 2006-2015 Arseny Kapoulkine. 
+
+Physfs was made using Physfs library: https://icculus.org/physfs/
+
 
 
 ##Changelog
