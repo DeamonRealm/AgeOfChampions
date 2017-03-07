@@ -96,7 +96,7 @@ bool j1Player::PreUpdate()
 		Select_Entity();
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
 	{
 		int x, y;
 		App->input->GetMousePosition(x, y);
@@ -207,8 +207,10 @@ void j1Player::Select_Entity()
 				selected_elements.push_back(item._Ptr->_Myval);
 				LOG("Entity Selected: Type: %s", selected_elements.begin()._Ptr->_Myval->GetName());
 				Selected->SetEntity(item._Ptr->_Myval);
+				item._Ptr->_Myval->Select();
 			}
-			return;
+			else item._Ptr->_Myval->Deselect();
+			
 		}
 		item++;
 	}
@@ -240,7 +242,9 @@ void j1Player::Select_Group()
 			if (UnitisIn(x, y, width, height))
 			{
 				selected_elements.push_back(item._Ptr->_Myval);
+				item._Ptr->_Myval->Select();
 			}
+			else item._Ptr->_Myval->Deselect();
 		}
 		item++;
 	}

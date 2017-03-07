@@ -150,10 +150,6 @@ int j1Map::MovementCost(int x, int y) const
 
 void j1Map::Draw()
 {
-	uint window_width = 0;
-	uint window_height = 0;
-	App->win->GetWindowSize(window_width, window_height);
-
 	if (map_loaded == false)
 		return;
 
@@ -176,8 +172,9 @@ void j1Map::Draw()
 			{
 				int tile_id = layer->Get(x, y);
 				iPoint pos = MapToWorld(x, y);
-
-				if (pos.x < -App->render->camera.x || pos.x < App->render->camera.x - window_width)
+				//uint camera_x_lim = App->render->camera.x + window_width
+				if (!(pos.x + data.tile_width * 0.9 >= -App->render->camera.x && pos.x <= -App->render->camera.x + App->render->camera.w) ||
+					!(pos.y + data.tile_height * 0.9 >= -App->render->camera.y && pos.y <= -App->render->camera.y + App->render->camera.h))
 				{
 					continue;
 				}

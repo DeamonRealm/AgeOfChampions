@@ -68,7 +68,7 @@ private:
 	uint			wood = 0;
 	uint			meat = 0;
 	uint			gold = 0;
-	uint			Stone = 0;
+	uint			stone = 0;
 	uint			population = 0;
 	uint			max_population = 5;
 
