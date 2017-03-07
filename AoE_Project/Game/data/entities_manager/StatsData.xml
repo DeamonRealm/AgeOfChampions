@@ -19,10 +19,11 @@
       icon_y="513"
       icon_w="36"
       icon_h="36"
+      
       max_life="150"
-      life="150"
       view_area="15"
       speed="2.5"
+      attack_delay ="50"
       attack_hitpoints="5"
       attack_bonus="2"
       siege_hitpoints="10"
@@ -55,25 +56,25 @@
       icon_y="585"
       icon_w="36"
       icon_h="36"
-      
-      max_life="150"
-      life="150"
+  
+      max_life="40"
       view_area="15"
       speed="2.5"
-      attack_hitpoints="5"
+      attack_delay ="50"
+      attack_hitpoints="4"
       attack_bonus="2"
       siege_hitpoints="10"
-      attack_rate="200"
+      attack_rate="2030"
       attack_range="25"
-      defense="10"
+      defense="0"
       defense_bonus="5"
-      armor="12"
+      armor="0"
       armor_bonus="5"
-      food_cost="5"
-      wood_cost="5"
-      gold_cost="5"
+      food_cost="60"
+      wood_cost="0"
+      gold_cost="20"
       poblation_cost="2"
-      train_time="8"
+      train_time="21"
     />
   </unit>
   <!--Archer Data-->
@@ -94,9 +95,9 @@
       icon_h="45"
       
       max_life="150"
-      life="150"
       view_area="15"
       speed="2.5"
+      attack_delay ="50"
       attack_hitpoints="5"
       attack_bonus="2"
       siege_hitpoints="10"
@@ -129,10 +130,11 @@
       icon_y="20"
       icon_w="50"
       icon_h="45"
+      
       max_life="150"
-      life="150"
       view_area="15"
       speed="15.5"
+      attack_delay ="50"
       attack_hitpoints="5"
       attack_bonus="2"
       siege_hitpoints="10"
@@ -153,10 +155,67 @@
   <!--Resources-->
   
   <!--Tree-->
-  <unit civ="Teutons/English" id="unit">
+  <unit civ="Teutons/English" id="resource">
     <stats
-      name="Villager"
+      name="Tree"
       resource_type="tree"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="30"
+      selection_h="80"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      mark_w="20"
+      mark_h="20"
+      max_resources="250"
+      />
+  </unit>
+  <!--Berry Bush-->
+  <unit civ="Teutons/English" id="resource">
+    <stats
+      name="Berry Bush"
+      resource_type="berry_bush"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="30"
+      selection_h="80"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      mark_w="20"
+      mark_h="20"
+      max_resources="250"
+      />
+  </unit>
+  <!--Gold Ore-->
+  <unit civ="Teutons/English" id="resource">
+    <stats
+      name="Gold Ore"
+      resource_type="gold_ore"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="30"
+      selection_h="80"
+      icon_x="10"
+      icon_y="20"
+      icon_w="50"
+      icon_h="45"
+      mark_w="20"
+      mark_h="20"
+      max_resources="250"
+      />
+  </unit>
+  <!--Stone Ore-->
+  <unit civ="Teutons/English" id="resource">
+    <stats
+      name="Stone Ore"
+      resource_type="stone_ore"
       
       selection_x ="0"
       selection_y ="0"

@@ -164,7 +164,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	//Unit Primitives -------
 	/*Mark*/			Circle mark;
 	/*Mark Radius*/		mark.SetRad(unit_node->attribute("mark_rad").as_uint());
-						mark.SetColor({ 255,255,255,255 });
+	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
 						new_def.SetMark(mark);
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = unit_node->attribute("selection_x").as_int();
@@ -181,9 +181,10 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 
 	//Unit Metrics ----------
 	/*Max Life*/		new_def.SetMaxLife(unit_node->attribute("max_life").as_uint());
-	/*Life*/			new_def.SetLife(unit_node->attribute("life").as_uint());
+	/*Life*/			new_def.SetLife(new_def.GetMaxLife());
 	/*View Area*/		new_def.SetViewArea(unit_node->attribute("view_area").as_uint());
 	/*Speed*/			new_def.SetSpeed(unit_node->attribute("speed").as_float());
+	/*Attack Delay*/	new_def.SetAttackDelay(unit_node->attribute("attack_delay").as_uint());
 	/*Attack Points*/	new_def.SetAttackHitPoints(unit_node->attribute("attack_hitpoints").as_uint());
 	/*Attack Bonus*/	new_def.SetAttackBonus(unit_node->attribute("attack_bonus").as_uint());
 	/*Siege Points*/	new_def.SetSiegeHitPoints(unit_node->attribute("siege_hitpoints").as_uint());
@@ -208,6 +209,43 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 
 bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_node)
 {
+	if (resource_node == nullptr)return false;
+
+	//Generate a new resource definition from the node
+	Resource new_def;
+
+	//Resource ID -----------
+	/*Name*/			new_def.SetName(resource_node->attribute("name").as_string());
+	/*Entity Type*/		new_def.SetEntityType(RESOURCE);
+	/*Resource Type*/	new_def.SetResourceType(App->animator->StrToResourceEnum(resource_node->attribute("resource_type").as_string()));
+	
+	//Resource Primitives ---
+	/*Mark*/			Rectng mark;
+	/*Mark Width*/		mark.SetWidth(resource_node->attribute("mark_w").as_uint());
+	/*Mark Height*/		mark.SetHeight(resource_node->attribute("mark_h").as_uint());
+	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
+						new_def.SetMark(mark);
+	/*Selection Rect*/	SDL_Rect selection_rect;
+	/*S.Rect X*/		selection_rect.x = resource_node->attribute("selection_x").as_int();
+	/*S.Rect Y*/		selection_rect.y = resource_node->attribute("selection_y").as_int();
+	/*S.Rect W*/		selection_rect.w = resource_node->attribute("selection_w").as_int();
+	/*S.Rect H*/		selection_rect.h = resource_node->attribute("selection_h").as_int();
+						new_def.SetSelectionRect(selection_rect);
+	/*Icon Rect*/		SDL_Rect icon_rect;
+	/*I.Rect X*/		icon_rect.x = resource_node->attribute("icon_x").as_int();
+	/*I.Rect Y*/		icon_rect.y = resource_node->attribute("icon_y").as_int();
+	/*I.Rect W*/		icon_rect.w = resource_node->attribute("icon_w").as_int();
+	/*I.Rect H*/		icon_rect.h = resource_node->attribute("icon_h").as_int();
+						new_def.SetIcon(icon_rect);
+
+	//Resource Metrics ------
+	/*Max Resources*/	new_def.SetMaxResources(resource_node->attribute("max_resources").as_uint());
+	/*C.Resources*/		new_def.SetCurrentResources(new_def.GetMaxResources());
+
+	resources_defs.push_back(new_def);
+
+	LOG("%s definition built!", new_def.GetName());
+
 	return true;
 }
 
@@ -376,6 +414,28 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 
 Resource * j1EntitiesManager::GenerateResource(RESOURCE_TYPE type,uint id_index)
 {
+	Resource* new_resource = nullptr;
+
+	uint def_num = resources_defs.size();
+	for (uint k = 0; k < def_num; k++)
+	{
+		if (resources_defs[k].GetResourceType() == type)
+		{
+			//Build unit
+			new_resource = new Resource(resources_defs[k]);
+
+			//Set unit animation
+			App->animator->ResourcePlay(new_resource);
+
+			//Add the new unit at the units manage list
+			resources.push_back(new_resource);
+
+			return new_resource;
+		}
+	}
+	return nullptr;
+
+	/*
 	//Pointer to the new resource
 	Resource* new_resource = nullptr;
 
@@ -399,5 +459,5 @@ Resource * j1EntitiesManager::GenerateResource(RESOURCE_TYPE type,uint id_index)
 	//Add the new resource at the entity manager resources list
 	resources.push_back(new_resource);
 
-	return new_resource;
+	return new_resource;*/
 }

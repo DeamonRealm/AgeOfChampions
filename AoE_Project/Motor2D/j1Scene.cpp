@@ -58,10 +58,6 @@ bool j1Scene::Start()
 	town_center->SetPosition(550, 450);
 	tree = App->entities_manager->GenerateResource(RESOURCE_TYPE::TREE);
 	tree->SetPosition(130, 650);
-	chop = App->entities_manager->GenerateResource(RESOURCE_TYPE::CHOP);
-	chop->SetPosition(220, 350);
-	tree_cut = App->entities_manager->GenerateResource(RESOURCE_TYPE::TREE_CUT);
-	tree_cut->SetPosition(340, 350);
 	berry_bush = App->entities_manager->GenerateResource(RESOURCE_TYPE::BERRY_BUSH);
 	berry_bush->SetPosition(440, 380);
 	gold_ore = App->entities_manager->GenerateResource(RESOURCE_TYPE::GOLD_ORE);

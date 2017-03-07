@@ -170,6 +170,7 @@ protected:
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = SOUTH;
 	//Attack -----------
+	uint			attack_delay = 0;
 	uint			attack_hitpoints = 0;
 	uint			attack_bonus = 0;
 	uint			siege_hitpoints = 0;
@@ -206,6 +207,7 @@ public:
 	void	SetSpeed(float speed_val);
 	void	SetAction(ACTION_TYPE action_val);
 	void	SetDirection(DIRECTION_TYPE direction_val);
+	void	SetAttackDelay(uint atk_delay);
 	void	SetAttackHitPoints(uint atk_val);
 	void	SetAttackBonus(uint atk_bonus);
 	void	SetSiegeHitPoints(uint siege_val);
@@ -232,6 +234,7 @@ public:
 	float			GetSpeed()const;
 	ACTION_TYPE		GetAction()const;
 	DIRECTION_TYPE	GetDirection()const;
+	uint			GetAttackDelay()const;
 	uint			GetAttackHitPoints()const;
 	uint			GetAttackBonus()const;
 	uint			GetSiegeHitPoints()const;

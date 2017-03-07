@@ -251,6 +251,11 @@ void Unit::SetDirection(DIRECTION_TYPE direction_val)
 	direction_type = direction_val;
 }
 
+void Unit::SetAttackDelay(uint atk_delay)
+{
+	attack_delay = atk_delay;
+}
+
 void Unit::SetAttackHitPoints(uint atk_val)
 {
 	attack_hitpoints = atk_val;
@@ -341,7 +346,7 @@ const Circle& Unit::GetMark() const
 	return mark;
 }
 
-uint Unit::GetFullLife() const
+uint Unit::GetMaxLife() const
 {
 	return max_life;
 }
@@ -369,6 +374,11 @@ ACTION_TYPE Unit::GetAction()const
 DIRECTION_TYPE Unit::GetDirection()const
 {
 	return direction_type;
+}
+
+uint Unit::GetAttackDelay() const
+{
+	return attack_delay;
 }
 
 uint Unit::GetAttackHitPoints()const
@@ -465,7 +475,7 @@ Resource::Resource(const std::string & name):Entity(name)
 
 }
 
-Resource::Resource(const Resource& copy) : Entity(copy), resource_type(resource_type), max_resources(max_resources), current_resources(current_resources)
+Resource::Resource(const Resource& copy) : Entity(copy), resource_type(copy.resource_type), max_resources(copy.max_resources), current_resources(copy.current_resources)
 {
 
 }
