@@ -72,6 +72,9 @@ private:
 	uint			population = 0;
 	uint			max_population = 5;
 
+	j1Timer			double_click;
+	bool			double_clickon;
+
 	SDL_Rect		selection_rect;
 
 	UI_Image*			game_hud;
@@ -94,6 +97,7 @@ public:
 
 	void Select_Entity();
 	void Select_Group();
+	void Select_Type();
 
 	void UnSelect_Entity();
 

@@ -7,6 +7,7 @@
 #include "j1Animator.h"
 
 #include "j1App.h"
+#include "j1Window.h"
 #include "j1Gui.h"
 #include "j1EntitiesManager.h"
 
@@ -85,6 +86,8 @@ bool j1Player::Start()
 	selection_rect = { 0,0,0,0 };
 	Selected = new Entity_Profile();
 
+	double_clickon = false;
+
 	return true;
 }
 
@@ -94,6 +97,15 @@ bool j1Player::PreUpdate()
 	{
 		App->input->GetMousePosition(selection_rect.x, selection_rect.y);
 		Select_Entity();
+		if ((selected_elements.size() == 1 && double_click.Read() == 0)|| (selected_elements.size() == 1 && double_click.Read() >= 500))
+		{
+			double_click.Start();
+		}
+		else if (double_click.Read() > 0 && double_click.Read() < 500)
+		{
+			double_clickon = true;
+			Select_Type();
+		}
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
@@ -120,13 +132,20 @@ bool j1Player::PreUpdate()
 bool j1Player::PostUpdate()
 {
 	game_hud->Draw(false);
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && double_clickon == false)
 	{
 		Expand_SelectionRect();
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
-		Select_Group();
+		if (double_clickon == true)
+		{
+			double_clickon = false;
+		}
+		else
+		{
+			Select_Group();
+		}
 		selection_rect = { 0,0,0,0 };
 	}
 	if (selected_elements.size() == 1) Selected->DrawProfile();
@@ -137,7 +156,9 @@ bool j1Player::PostUpdate()
 bool j1Player::CleanUp()
 {
 	actual_population.clear();
+	selected_elements.clear();
 	delete Selected;
+
 	return true;
 }
 
@@ -268,6 +289,45 @@ void j1Player::Select_Group()
 	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 
 	LOG("Selected: %i", selected_elements.size());
+}
+
+void j1Player::Select_Type()
+{
+	if (selected_elements.begin()._Ptr->_Myval->GetEntityType() != UNIT) return;
+	uint width = 0, height = 0;
+	App->win->GetWindowSize(width, height);
+
+	selection_rect = { 0, 32, (int)width, 560 };
+
+	Unit* selected = (Unit*)selected_elements.begin()._Ptr->_Myval;
+	UNIT_TYPE type = selected->GetUnitType();
+	
+	UnSelect_Entity();
+	
+	int x = 0, y = 0;
+	
+	std::list<Unit*>::const_iterator item = actual_population.begin();
+	while (item != actual_population.end())
+	{
+		if (item._Ptr->_Myval->GetUnitType() == type && item._Ptr->_Myval->GetDiplomacy() == ALLY)
+		{
+			x = item._Ptr->_Myval->GetPosition().x;
+			x -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot();
+			y = item._Ptr->_Myval->GetPosition().y;
+			y -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot();
+			width = item._Ptr->_Myval->GetSelectionRect()->w;
+			height = item._Ptr->_Myval->GetSelectionRect()->h;
+
+			if (UnitisIn(x, y, width, height))
+			{
+				selected_elements.push_back(item._Ptr->_Myval);
+				item._Ptr->_Myval->Select();
+			}
+		}
+		item++;
+	}
+	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+
 }
 
 void j1Player::UnSelect_Entity()
