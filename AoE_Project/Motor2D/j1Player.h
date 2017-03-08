@@ -64,6 +64,7 @@ public:
 	bool CleanUp();
 
 private:
+
 	std::string		civilization;
 	uint			wood = 0;
 	uint			meat = 0;
@@ -77,7 +78,7 @@ private:
 
 	SDL_Rect		selection_rect;
 
-	UI_Image*			game_hud;
+	UI_Image*			game_hud = nullptr;
 
 	std::list<Unit*>	actual_population;
 	std::list<Entity*>	selected_elements;
@@ -91,16 +92,19 @@ public:
 
 	//Draw Profiles 
 	void DrawGroup();
+
+	//Move Method
+	bool MoveSelectedUnits(int x, int y);
 	
+	//Coordinates Methods
 	bool UnitisIn(int x, int y, int width, int height);
 	bool PointisIn(int x, int y);
 
+	//Select Methods
 	void Select_Entity();
 	void Select_Group();
 	void Select_Type();
-
 	void UnSelect_Entity();
-
 	void Expand_SelectionRect();
 };
 #endif // !_J1PLAYER_H_

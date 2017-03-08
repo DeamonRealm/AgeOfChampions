@@ -1,12 +1,20 @@
 #include "j1Astar.h"
 #include "p2Defs.h"
 
-j1Astar::j1Astar() {
+///Class Astar ------------------------
+//Constructors ==============
+j1Astar::j1Astar()
+{
 
 }
-j1Astar::~j1Astar() {
+
+//Destructors ===============
+j1Astar::~j1Astar()
+{
 
 }
+
+//Functionality =============
 bool j1Astar::IsWalkable(iPoint& destination)const
 {
 	bool ret = false;
@@ -18,13 +26,13 @@ bool j1Astar::IsWalkable(iPoint& destination)const
 	}
 	return ret;
 }
+
 // Utility: return true if pos is inside the map boundaries
 bool j1Astar::CheckBoundaries(const iPoint& pos) const
 {
 	return (pos.x >= 0 && pos.x <= (int)width &&
 		pos.y >= 0 && pos.y <= (int)height);
 }
-
 
 // Utility: return the walkability value of a tile
 uchar j1Astar::GetTileAt(const iPoint& pos) const
@@ -34,6 +42,7 @@ uchar j1Astar::GetTileAt(const iPoint& pos) const
 
 	return INVALID_WALK_CODE;
 }
+
 void j1Astar::SetMap(uchar * logic_map, int width_map, int height_map)
 {
 	RELEASE_ARRAY(copy_map);
@@ -44,8 +53,8 @@ void j1Astar::SetMap(uchar * logic_map, int width_map, int height_map)
 	
 }
 
-
-int j1Astar::CreatePath(Node* start, Node*goal) {
+int j1Astar::CreatePath(Node* start, Node*goal)
+{
 	
 	int ret = -1;
 	iPoint origin(start->GetPositionX(), start->GetPositionY());
@@ -107,20 +116,27 @@ int j1Astar::CreatePath(Node* start, Node*goal) {
 	}
 	return ret;
 }
+/// -----------------------------------
 
+
+/// Struct PathNode -------------------
+//Constructors ==============
 PathNode::PathNode()
 {
+
 }
-
-
 
 PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent): g(g), h(h), pos(pos), parent(parent)
 {
-}
-PathNode::PathNode(const PathNode & node) : g(node.g), h(node.h), pos(node.pos),parent(node.parent)
-{
+
 }
 
+PathNode::PathNode(const PathNode & node) : g(node.g), h(node.h), pos(node.pos),parent(node.parent)
+{
+
+}
+
+//Functionality =============
 uint PathNode::FindWalkableAdjacents(PathList & list_to_fill, j1Astar* Astar) const
 {
 	iPoint cell;
@@ -198,6 +214,7 @@ int PathNode::CalculateF(const iPoint & destination)
 	return  g + h;
 }
 
+//Operators =================
 bool PathNode::operator==(const PathNode & node) const
 {
 	return pos == node.pos;
@@ -207,7 +224,11 @@ bool PathNode::operator!=(const PathNode & node) const
 {
 	return !operator==(node);
 }
+/// -----------------------------------
 
+
+///Struct PathList --------------------
+//Functionality =============
 std::list<PathNode>::iterator PathList::Find(const iPoint & point)
 {
 	std::list<PathNode>::iterator item = list.begin();
@@ -236,3 +257,4 @@ PathNode* PathList::GetNodeLowestScore() const
 	}
 	return ret;
 }
+/// -----------------------------------

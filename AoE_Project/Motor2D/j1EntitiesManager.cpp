@@ -43,9 +43,6 @@ bool j1EntitiesManager::Start()
 
 bool j1EntitiesManager::Update(float dt)
 {
-	//Activate / Deactivate debug mode 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) debug = !debug;
-
 	return true;
 }
 
@@ -57,21 +54,21 @@ bool j1EntitiesManager::Draw() const
 	std::list<Unit*>::const_iterator unit_item = units.begin();
 	while (unit_item != units.end() && ret)
 	{
-		ret = unit_item._Ptr->_Myval->Draw(debug);
+		ret = unit_item._Ptr->_Myval->Draw(App->debug_mode);
 		unit_item++;
 	}
 	//Draw all Resources
 	std::list<Resource*>::const_iterator resource_item = resources.begin();
 	while (resource_item != resources.end() && ret)
 	{
-		ret = resource_item._Ptr->_Myval->Draw(debug);
+		ret = resource_item._Ptr->_Myval->Draw(App->debug_mode);
 		resource_item++;
 	}
 	//Draw all buildings
 	std::list<Building*>::const_iterator building_item = buildings.begin();
 	while (building_item != buildings.end() && ret)
 	{
-		ret = building_item._Ptr->_Myval->Draw(debug);
+		ret = building_item._Ptr->_Myval->Draw(App->debug_mode);
 		building_item++;
 	}
 

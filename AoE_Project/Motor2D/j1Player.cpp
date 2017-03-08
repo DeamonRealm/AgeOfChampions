@@ -93,49 +93,58 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate()
 {
+	int x, y;
+	App->input->GetMousePosition(x, y);
+
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		App->input->GetMousePosition(selection_rect.x, selection_rect.y);
+		selection_rect.x = x;
+		selection_rect.y = y;
+		uint selected_size = selected_elements.size();
+		Uint32 double_click_read = double_click.Read();
+
 		Select_Entity();
-		if ((selected_elements.size() == 1 && double_click.Read() == 0)|| (selected_elements.size() == 1 && double_click.Read() >= 500))
+
+		if ((selected_size == 1 && double_click_read == 0)|| (selected_size == 1 && double_click_read >= 500))
 		{
 			double_click.Start();
 		}
-		else if (double_click.Read() > 0 && double_click.Read() < 500)
+		else if (double_click_read > 0 && double_click_read < 500)
 		{
 			double_clickon = true;
 			Select_Type();
 		}
 	}
 
+	//Generate a Militia unit in the mouse coordinates
 	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
 		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
 	}
+	//Generate a Arbalest unit in the mouse coordinates
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
 		Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
 	}
+
 	return true;
 }
 
 bool j1Player::PostUpdate()
 {
 	game_hud->Draw(false);
+
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && double_clickon == false)
 	{
 		Expand_SelectionRect();
 	}
+
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
 		if (double_clickon == true)
@@ -148,6 +157,7 @@ bool j1Player::PostUpdate()
 		}
 		selection_rect = { 0,0,0,0 };
 	}
+
 	if (selected_elements.size() == 1) Selected->DrawProfile();
 
 	return true;
@@ -164,6 +174,11 @@ bool j1Player::CleanUp()
 
 void j1Player::DrawGroup()
 {
+}
+
+bool j1Player::MoveSelectedUnits(int x, int y)
+{
+	return true;
 }
 
 //Check if unit is inside selection rect

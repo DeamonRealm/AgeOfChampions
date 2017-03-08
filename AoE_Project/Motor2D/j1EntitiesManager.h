@@ -44,8 +44,6 @@ private:
 	std::vector<Resource>	resources_defs;
 	std::vector<Building>	buildings_defs;
 
-	//Boolean that defines the debug mode state
-	bool debug = false;
 	// Cvar that defines the console unit generator unit type
 	Cvar* unit_cvar;
 

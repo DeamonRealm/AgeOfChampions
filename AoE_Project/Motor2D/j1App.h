@@ -161,6 +161,8 @@ public:
 
 	void SetQuit();
 
+	bool	debug_mode = false;
+
 };
 
 extern j1App* App;

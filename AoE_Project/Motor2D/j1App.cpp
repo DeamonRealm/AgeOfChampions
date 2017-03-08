@@ -204,6 +204,12 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
+	//Activate/Deactivate debug mode
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		debug_mode = !debug_mode;
+	}
+
 	bool ret = true;
 	PrepareUpdate();
 

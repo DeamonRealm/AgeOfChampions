@@ -148,14 +148,15 @@ int j1Map::MovementCost(int x, int y) const
 	return ret;
 }
 
-void j1Map::Draw()
+void j1Map::Draw(bool debug)
 {
-	if (map_loaded == false)
-		return;
+	if (map_loaded == false) return;
 
+	//Iterators to iterate all the map layers
 	std::list<MapLayer*>::iterator item = data.layers.begin();
 	std::list<MapLayer*>::iterator end = data.layers.end();
 
+	//Draw all map tiles
 	while(item != end)
 	{
 		MapLayer* layer = item._Ptr->_Myval;
@@ -170,28 +171,62 @@ void j1Map::Draw()
 		{
 			for (int x = 0; x < data.width; ++x)
 			{
+				//Get tile id
 				int tile_id = layer->Get(x, y);
+
+				//Transform tile map coordinates to world coordinates
 				iPoint pos = MapToWorld(x, y);
-				//uint camera_x_lim = App->render->camera.x + window_width
+
+				//Check if the tile is inside the renderer view port
 				if (!(pos.x + data.tile_width * 0.9 >= -App->render->camera.x && pos.x <= -App->render->camera.x + App->render->camera.w) ||
 					!(pos.y + data.tile_height * 0.9 >= -App->render->camera.y && pos.y <= -App->render->camera.y + App->render->camera.h))
 				{
 					continue;
 				}
 
+				//Check if the tile is defined
 				if (tile_id > 0)
 				{
+					//Get tileset from tile id
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
 
+					//Get tile texture rect
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					
-
+					//Blit the current tile
 					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
 			}
 		}
 
 		item++;
+	}
+
+	//Draw map tiles net
+	if (debug)
+	{
+		//Tiles size to locate the debug lines in the tiles vertex
+		uint tile_h_2 = floor(data.tile_height * 0.5);
+		uint tile_w = floor(data.tile_width);
+
+		//X axis lines
+		for (uint x = 0; x < data.width; x++)
+		{
+			iPoint init = MapToWorld(x, 0);
+			iPoint end = MapToWorld(x, data.height);
+
+			App->render->DrawLine(init.x + tile_w, init.y + tile_h_2, end.x + tile_w, end.y + tile_h_2, 0, 250, 0);
+		}
+
+		//Y axis lines
+		for (uint y = 0; y < data.height; y++)
+		{
+			iPoint init = MapToWorld(0, y);
+			iPoint end = MapToWorld(data.width, y);
+
+			App->render->DrawLine(init.x, init.y + tile_h_2, end.x, end.y + tile_h_2, 0, 250, 0);
+		}
+
 	}
 }
 
