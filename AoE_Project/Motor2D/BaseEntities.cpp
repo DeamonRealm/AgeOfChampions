@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Animator.h"
 
+#include "p2Log.h"
 
 ///Class Entity ---------------------------------
 //Constructors ========================
@@ -201,6 +202,70 @@ bool Unit::Draw(bool debug)
 	return ret;
 }
 
+//Move ------------
+bool Unit::Move()
+{
+	//Check if the unit have an assigned path
+	if (path == nullptr)
+	{
+		LOG("Error path not found!");
+		return false;
+	}
+
+	iPoint location = iPoint(position.x, position.y);
+	iPoint goal = path->back();
+
+	//Update goal node and animation direction
+	if (iPoint(position.x, position.y) == goal)
+	{
+		if (!path->size())
+		{
+			delete path;
+			LOG("Path completed!");
+			return true;
+		}
+		path->pop_back();
+		goal = path->back();
+
+		iPoint dir_point = goal - location;
+		if (dir_point.x == 0)
+		{
+			if (dir_point.y > 0)direction_type = DIRECTION_TYPE::SOUTH;
+			else if (dir_point.y < 0)direction_type = DIRECTION_TYPE::NORTH;
+		}
+		else if (dir_point.y == 0)
+		{
+			if (dir_point.x > 0)direction_type = DIRECTION_TYPE::EAST;
+			else if (dir_point.x < 0)direction_type = DIRECTION_TYPE::WEST;
+		}
+		else if (dir_point.x && dir_point.y)
+		{
+			direction_type = DIRECTION_TYPE::NORTH_EAST;
+		}
+		else if (!dir_point.x && dir_point.y)
+		{
+			direction_type = DIRECTION_TYPE::NORTH_WEST;
+		}
+		else if (dir_point.x && !dir_point.y)
+		{
+			direction_type = DIRECTION_TYPE::SOUTH_EAST;
+		}
+		else if (!dir_point.x && !dir_point.y)
+		{
+			direction_type = DIRECTION_TYPE::SOUTH_WEST;
+		}
+	}
+
+	int norm = location.DistanceTo(goal);
+	float x_step = speed * (goal.x - location.x) / norm;
+	float y_step = speed * (goal.y - location.y) / norm;
+
+	position.x += x_step;
+	position.y += y_step;
+
+	return true;
+}
+
 //Set Methods -----
 void Unit::SetPosition(float x, float y)
 {
@@ -333,6 +398,10 @@ void Unit::SetTrainTime(uint train_time_val)
 void Unit::SetExp(uint experience)
 {
 	exp = experience;
+}
+void Unit::SetPath(const std::vector<iPoint>* new_path)
+{
+	path = (std::vector<iPoint>*)new_path;
 }
 // ----------------
 //Get Methods -----

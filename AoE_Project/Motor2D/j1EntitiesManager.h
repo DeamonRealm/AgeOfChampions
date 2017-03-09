@@ -64,5 +64,8 @@ public:
 	Unit*		GenerateUnit(UNIT_TYPE type);
 	Building*	GenerateBuilding(BUILDING_TYPE type);
 	Resource*	GenerateResource(RESOURCE_TYPE type, uint id_index = 0);
+	//Entities Management Methods
+	bool		SetUnitPath(Unit* target, const iPoint& goal);
+	bool		SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal);
 };
 #endif // _ENTITIES_MANAGER_

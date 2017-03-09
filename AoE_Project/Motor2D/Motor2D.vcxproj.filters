@@ -99,6 +99,9 @@
     <ClCompile Include="j1Astar.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -212,6 +215,9 @@
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClInclude>
     <ClInclude Include="j1Astar.h">
+      <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>

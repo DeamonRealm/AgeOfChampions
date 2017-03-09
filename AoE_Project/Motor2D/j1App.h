@@ -28,7 +28,7 @@ class j1Module;
 class j1Animator;
 class j1EntitiesManager;
 class j1Player;
-
+class j1Pathfinding;
 
 class Command;
 class Cvar;
@@ -110,6 +110,7 @@ public:
 	j1Animator*			animator = NULL;
 	j1EntitiesManager*	entities_manager = NULL;
 	j1Player*			player = NULL;
+	j1Pathfinding*		pathfinding = NULL;
 
 	// Add a new module to handle
 	void		AddModule(j1Module* module);
@@ -134,8 +135,8 @@ private:
 	pugi::xml_node config_node;
 
 	std::list<j1Module*>	modules;
-	int						argc;
-	char**					args;
+	int						argc = 0;
+	char**					args = nullptr;
 
 	std::string				title;
 	std::string				organization;
@@ -157,8 +158,8 @@ private:
 
 	bool				want_to_quit = false;
 
-	Cvar*				save_dir;
-	Cvar*				load_dir;
+	Cvar*				save_dir = nullptr;
+	Cvar*				load_dir = nullptr;
 
 	mutable std::list<std::string*>	saved_games;
 

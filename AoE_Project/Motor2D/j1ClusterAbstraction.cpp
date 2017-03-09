@@ -1,7 +1,10 @@
 #include "j1ClusterAbstraction.h"
+
+#include "j1App.h"
 #include "p2Log.h"
-#include "j1Astar.h"
 #include "j1Timer.h"
+#include "j1Pathfinding.h"
+
 Cluster::Cluster(int posX, int posY, int width, int height, int row, int column, int id):posX(posX),posY(posY),width(width), height(height),row(row),column(column),id(id)
 {
 }
@@ -380,7 +383,6 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 {
 	uchar* temp_map = new uchar[100];
 	int new_size = 100;
-	j1Astar* astar = new j1Astar();
 	std::vector<Node*> temp_nodes;
 
 	for (int i = 0; i < clusters.size(); i++)
@@ -432,8 +434,8 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 				if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
 				{
 
-					astar->SetMap(temp_map, cluster_width, cluster_height);
-					distance = astar->CreatePath(temp_nodes[i], temp_nodes[j]);
+					App->pathfinding->SetMap(temp_map, cluster_width, cluster_height);
+					distance = App->pathfinding->CreatePath(temp_nodes[i], temp_nodes[j]);
 					if (distance != -1) {
 
 						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance, INTRA_EDGE));

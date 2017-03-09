@@ -2,6 +2,7 @@
 #define _BASE_ENTITIES_
 
 #include <list>
+#include <vector>
 #include "p2Defs.h"
 #include "p2Point.h"
 #include "Iso_Primitives.h"
@@ -9,6 +10,7 @@
 
 struct Animation;
 struct SDL_Texture;
+struct PathNode;
 enum CURSOR_TARGET;
 
 // ENTITIES ENUMS -----------
@@ -202,10 +204,17 @@ protected:
 
 public:
 
+	//Path to follow
+	std::vector<iPoint>* path = nullptr;
+
+public:
+
 	//Functionality -------------------
 	//Draw ------------------
 	bool	Draw(bool debug);
-
+	//Move ------------------
+	bool	Move();
+	
 	//Set Methods -----------
 	void	SetPosition(float x, float y);
 	void	SetUnitType(UNIT_TYPE type);
@@ -234,6 +243,7 @@ public:
 	void	SetPopulationCost(uint poblation_cst);
 	void	SetTrainTime(uint train_time_val);
 	void	SetExp(uint experience);
+	void	SetPath(const std::vector<iPoint>* new_path);
 
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;

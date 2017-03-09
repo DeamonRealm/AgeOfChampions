@@ -1,41 +1,47 @@
-/*#ifndef _J1ASTAR_H_
-#define _J1ASTAR_H_
+#ifndef _PATHFINDING_H_
+#define _PATHFINDING_H_
 
-#include "j1Map.h"
-#include "j1ClusterAbstraction.h"
-
+#include "j1Module.h"
+#include "p2Point.h"
 
 struct PathList;
-struct PathNode;
+struct Node;
 
-///Class Astar ------------------------
-//Class to manage a A* pathfinding
-class j1Astar
+///class Pathfinding ------------------
+class j1Pathfinding : public j1Module
 {
 public:
 
-	j1Astar();
-	~j1Astar();
-	
+	j1Pathfinding();
+	~j1Pathfinding();
+
+private:
+
+	//Copy of the current map logic data
+	uchar*	logic_map = nullptr;
+	//Logic map dimensions
+	uint	width = 0;
+	uint	height = 0;
+	//A pointer to the last path generated
+	std::vector<iPoint> last_path;
+
+public:
+
+	//Functionality ---------
+	//Methods used during the paths creation to work with map data
 	// Check if the cell coordinate is walkable
 	bool	IsWalkable(const iPoint& destination)const;
 	// Check if the boundaries of x coordinate are walkable
 	bool	CheckBoundaries(const iPoint& pos) const;
 	// Get tile from x coordinate
 	uchar	GetTileAt(const iPoint& pos) const;
+
 	// Set copy map data
-	void	SetMap(uchar*logic_map, int width, int height);
+	void SetMap(uchar* map, int map_width, int map_height);
 	// Create a path with two nodes
-	int		CreatePath(Node* start, Node*goal);
+	int	CreatePath(Node* start, Node*goal);
 	// Create a path with two coordinates
-	std::vector<iPoint>* CreatePath(const iPoint& origin,const iPoint& goal);
-
-private:
-
-	uchar*				copy_map = nullptr;
-	uint				width = 0;
-	uint				height = 0;
-	std::vector<iPoint> last_path;
+	std::vector<iPoint>* CreatePath(const iPoint& origin, const iPoint& goal);
 
 };
 /// -----------------------------------
@@ -51,7 +57,7 @@ struct PathNode
 
 	//Methods----------------
 	// Fills a list (PathList) of all valid adjacent path nodes
-	uint FindWalkableAdjacents(PathList& list_to_fill,j1Astar* Astar) const;
+	uint FindWalkableAdjacents(PathList& list_to_fill) const;
 	// Calculates this tile score
 	float Score() const;
 	// Calculate the F for a specific destination tile
@@ -67,7 +73,7 @@ struct PathNode
 	iPoint			pos = { 0,0 };
 	bool			on_close = false;
 	bool			on_open = false;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	const PathNode* parent = nullptr; // needed to reconstruct the path in the end
 
 };
 /// -----------------------------------
@@ -88,5 +94,4 @@ struct PathList
 
 };
 /// -----------------------------------
-
-#endif // _J1ASTAR_H_*/
+#endif // _PATHFINDING_H_

@@ -8,7 +8,7 @@
 #include "j1Input.h"
 #include "j1FileSystem.h"
 #include "j1Console.h"
-
+#include "j1Pathfinding.h"
 #include "p2Log.h"
 
 //Constructors ========================
@@ -43,7 +43,17 @@ bool j1EntitiesManager::Start()
 
 bool j1EntitiesManager::Update(float dt)
 {
-	return true;
+	std::list<Unit*>::const_iterator item = units.begin();
+	bool ret = true;
+
+	while (item != units.end())
+	{
+		if (item._Ptr->_Myval->path != nullptr)ret = item._Ptr->_Myval->Move();
+		
+		item++;
+	}
+
+	return ret;
 }
 
 bool j1EntitiesManager::Draw() const
@@ -492,4 +502,38 @@ Resource * j1EntitiesManager::GenerateResource(RESOURCE_TYPE type,uint id_index)
 	resources.push_back(new_resource);
 
 	return new_resource;*/
+}
+
+bool j1EntitiesManager::SetUnitPath(Unit * target, const iPoint & goal)
+{
+	fPoint target_pos = target->GetPosition();
+
+	//Create path from unit position to the goal
+	std::vector<iPoint>* path = App->pathfinding->CreatePath(iPoint(target_pos.x, target_pos.y) , goal);
+	
+	if (path == nullptr)return false;
+
+	//Set target path
+	target->SetPath(path);
+
+	return true;
+}
+
+bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iPoint & goal)
+{
+	if(targets.size() > 0)return false;
+
+	uint size = targets.size();
+	for (uint k = 0; k < size; k++)
+	{
+		//Get target position
+		fPoint target_pos = targets[k]->GetPosition();
+		//Calculate path from target position to goal
+		std::vector<iPoint>* path = App->pathfinding->CreatePath(iPoint(target_pos.x, target_pos.y), goal);
+		//Return false if the path is incorrect
+		if (path == nullptr)return false;
+		//Set current target path
+		targets[k]->SetPath(path);
+	}
+	return true;
 }
