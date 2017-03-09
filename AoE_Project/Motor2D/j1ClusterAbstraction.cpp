@@ -326,8 +326,8 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 
 			
 			graph->AddEdge(new Edge(numNode1, numNode2, 1, INTER_EDGE));
-			graph->GetNode(numNode1)->SetParent(numNode2);
-			graph->GetNode(numNode2)->SetParent(numNode1);
+			graph->GetNode(numNode1)->SetParent(graph->GetNode(numNode2));
+			graph->GetNode(numNode2)->SetParent(graph->GetNode(numNode1));
 		//	LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
 
@@ -366,8 +366,8 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 			}
 
 			graph->AddEdge(new Edge(numNode1, numNode2, 1, INTER_EDGE));
-			graph->GetNode(numNode1)->SetParent(numNode2);
-			graph->GetNode(numNode2)->SetParent(numNode1);
+			graph->GetNode(numNode1)->SetParent(graph->GetNode(numNode2));
+			graph->GetNode(numNode2)->SetParent(graph->GetNode(numNode1));
 		//	LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
 		break;
@@ -437,8 +437,8 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 					if (distance != -1) {
 
 						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance, INTRA_EDGE));
-						graph->GetNode(temp_nodes[i]->nodeNum)->SetParent(temp_nodes[j]->nodeNum);
-						graph->GetNode(temp_nodes[j]->nodeNum)->SetParent(temp_nodes[i]->nodeNum);
+						graph->GetNode(temp_nodes[i]->nodeNum)->SetParent(graph->GetNode(temp_nodes[j]->nodeNum));
+						graph->GetNode(temp_nodes[j]->nodeNum)->SetParent(graph->GetNode(temp_nodes[i]->nodeNum));
 						LOG("Intra Edge Generated on nodeOne = %i nodeTwo = %i", temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum);
 					}
 				}
@@ -453,6 +453,44 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 }
 void j1ClusterAbstraction::CreateBFS(Node * from, Node * to)
 {
+	std::queue<Node*> nodes;
+	Node* goals = nullptr;
+	nodes.push(from);
+	Node* tmp = nodes.front();
+	bool goal = false;
+	int iteration_number = 0;
+	while (goal != true){
+		nodes.pop();
+
+		for (int i = 0; i < tmp->GetParentSize(); i++) {
+			if (tmp->GetParentIDAt(i)->visited != true) {
+				if (tmp->GetParentIDAt(i) == to) {
+					tmp->GetParentIDAt(i)->SetTrack(tmp);
+					tmp->GetParentIDAt(i)->visited = true;
+					goals = tmp->GetParentIDAt(i);
+					goal = true;
+				}
+				else {
+					tmp->GetParentIDAt(i)->SetTrack(tmp);
+
+					tmp->GetParentIDAt(i)->visited = true;
+					nodes.push(tmp->GetParentIDAt(i));
+				}
+			}
+		}
+		tmp = nodes.front();
+		
+	}
+	if (goal) {
+		best_path.clear();
+		Node* set_goal = goals;
+		while (set_goal->nodeNum != from->nodeNum) {
+			best_path.push_back(set_goal);
+			set_goal = set_goal->GetTrackBack();
+		}
+		best_path.push_back(set_goal);
+		std::reverse(best_path.begin(), best_path.end());
+	}
 
 }
 Node* Graph::GetNode(int i) 
@@ -488,8 +526,7 @@ void Graph::RemoveNode(Node * node, int & ret)
 	int remove_id = node->nodeNum;
 	
 	Node* tmp = GetNode(remove_id);
-	for (int i = 0; i < tmp->ParentSize(); i++) {
-		GetNode(tmp->GetParentIDAt(i))->RemoveParent(remove_id);
+	for (int i = 0; i < tmp->GetParentSize(); i++) {
 	}
 
 	//for(int i = 0;i<edges.size)
@@ -536,9 +573,13 @@ void Node::SetClusterID(int id)
 {
 	clusterID = id;
 }
-void Node::SetParent(int nodeID)
+void Node::SetParent(Node* nodeID)
 {
-	parent_ID.push_back(nodeID);
+	parent.push_back(nodeID);
+}
+void Node::SetTrack(Node * get)
+{
+	track_back = get;
 }
 int  Node::GetPositionX() 
 {
@@ -550,19 +591,40 @@ int  Node::GetPositionY()
 
 }
 
-int Node::GetParentIDAt(int index)
+Node* Node::GetParentIDAt(int index)
 {
-	return parent_ID[index];
+	std::list<Node*>::iterator item = parent.begin();
+	int i = 0;
+	while (item != parent.end())
+	{
+		if (i++ == index) {
+			return item._Ptr->_Myval;
+		}
+		
+		++item;
+	}
+	//return parent[index];
 }
 
-int Node::ParentSize()
+int Node::GetParentSize()
 {
-	return parent_ID.size();
+	return parent.size();
+}
+
+Node * Node::GetTrackBack()
+{
+	return track_back;
 }
 
 void Node::RemoveParent(int node_id)
 {
 	//parent_ID.erase(node_id);
+}
+
+void Node::ResetNode()
+{
+	track_back = nullptr;
+	visited = false;
 }
 
 Entry::Entry(int posX, int posY, int clusterID1, int clusterID2, int row, int column, int lenght, ClusterOrientation orientation): posX(posX),posY(posY),clusterID1(clusterID1),clusterID2(clusterID2),row(row),column(column),lenght(lenght),orientation(orientation)

@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "j1ClusterAbstraction.h"
 
 struct SDL_Texture;
 class UI_Button;
@@ -84,7 +85,7 @@ public:
 
 	//Load the selected Map
 	bool Load_Current_Map();
-
+	j1ClusterAbstraction* YOLO = nullptr;
 };
 
 #endif // __j1SCENE_H__

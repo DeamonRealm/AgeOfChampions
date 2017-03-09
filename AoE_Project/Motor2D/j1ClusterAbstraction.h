@@ -3,6 +3,7 @@
 #define _J1CLUSTER_ABSTRACTION_H_
 #include <list>
 #include <vector>
+#include <queue>
 #include "j1Map.h"
 #include "j1LogicMap.h"
 enum ClusterOrientation {
@@ -39,20 +40,26 @@ struct Node
 public:
 	void SetPosition(int posX, int posY);
 	void SetClusterID(int id);
-	void SetParent(int nodeID);
-	
+	void SetParent(Node* nodeID);
+	void SetTrack(Node* get);
+
 	int GetPositionX();
 	int GetPositionY();
-	int GetParentIDAt(int index);
-	int ParentSize();
+	Node* GetParentIDAt(int index);
+	int GetParentSize();
+	Node* GetTrackBack();
+
 	void RemoveParent(int node_id);
+	void ResetNode();
 	int nodeNum;
+	bool visited = false;
+
 private:
 	int clusterID;
 	int posX;
 	int posY;
-	std::vector<int> parent_ID;
-	bool visited = false;
+	std::list<Node*> parent;
+	Node* track_back = nullptr;
 
 };
 
@@ -159,14 +166,18 @@ public:
 	void CreateIntraEdges(Graph* graph);
 
 	void CreateBFS(Node* from, Node* to);
+	Graph					graph;
+	std::vector<Node*>		best_path;
+
 private:
 	// size of the map 
 	uint					width;
 	uint					height;
 	uint					clusterSize;
-	Graph					graph;
 	std::vector<Entry>		entrys;
 	std::vector<Cluster>	clusters;
+
+
 	//This only works with a single level of terrain in case we have more than one unit size we will have to add a vector map
 	uchar* map;
 	int maxColumn;
