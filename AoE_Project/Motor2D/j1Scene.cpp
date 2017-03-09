@@ -136,6 +136,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	// Gui Upper Element ---------------------------
+	/*
 	App->gui->CalculateUpperElement(scene_1_screen);
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
@@ -144,6 +145,7 @@ bool j1Scene::Update(float dt)
 		YOLO = new j1ClusterAbstraction(App->map, 10);
 		LOG("TIME %f", ptimer.ReadSec());
 	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
 		j1Timer ptimer;
@@ -156,6 +158,7 @@ bool j1Scene::Update(float dt)
 		LOG("TIME %f", ptimer.ReadSec());
 
 	}
+	*/
 	//MAP MOVEMENT-----------------------------------------
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
