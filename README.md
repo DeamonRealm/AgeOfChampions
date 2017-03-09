@@ -17,14 +17,19 @@ Controls for v.0.1 (protoype to test correct animation and draw order)
 
 
 ##Credits
-This software was made using SDL libraries: https://www.libsdl.org/   
 
-This software is based on pugixml library (http://pugixml.org).   
+####Libraries
+This software was made using [SDL](https://www.libsdl.org/) libraries.   
+
+This software is based on [pugixml](http://pugixml.org) library.
 pugixml is Copyright (C) 2006-2015 Arseny Kapoulkine. 
 
-Physfs was made using Physfs library: https://icculus.org/physfs/
+Virtual file system was made using [Physfs](https://icculus.org/physfs/) library. 
 
+####Tools
+[Dr.Memory](http://www.drmemory.org/) is used to control all memory leaks.
 
+[Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ##Changelog
 ####v.0.1
