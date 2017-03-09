@@ -21,6 +21,8 @@
 #include "j1App.h"
 #include "j1Player.h"
 
+
+
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -216,14 +218,26 @@ bool j1App::Update()
 	if(input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 
-	if(ret == true)
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
+		BROFILER_FRAME("PreUpdate");
 		ret = PreUpdate();
+	}
 
-	if(ret == true)
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
+		BROFILER_FRAME("DoUpdate");
 		ret = DoUpdate();
+	}
 
-	if(ret == true)
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
+		BROFILER_FRAME("PostUpdate");
 		ret = PostUpdate();
+	}
 
 	FinishUpdate();
 	return ret;

@@ -6,6 +6,11 @@
 #include "PugiXml\src\pugixml.hpp"
 #include <list>
 
+//Brofiler Tool
+#define BROFILER_FRAME
+#include "Brofiler/Brofiler.h"
+#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
+
 // Modules
 class j1Window;
 class j1Input;
