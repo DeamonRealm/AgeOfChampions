@@ -5,14 +5,6 @@
 #include "j1ClusterAbstraction.h"
 
 struct SDL_Texture;
-class UI_Button;
-class UI_String;
-class UI_Interactive_String;
-class UI_Image;
-class UI_Element;
-class UI_Text_Box;
-class UI_Scroll;
-class UI_Popup_menu;
 class Unit;
 class Building;
 class Resource;
@@ -64,15 +56,7 @@ private:
 
 	//Scene	UI
 	UI_Element* scene_1_screen;
-	
-	//pop_menu test
-	UI_String*		teutones;
-	UI_String*		ingleses;
-	UI_String*      japoneses;
-	UI_Popup_menu*  civilization_menu;
-	UI_Button*		civilization_button;
-	UI_String*		selected;
-	UI_Image*		background;
+
 public:
 
 	//Map Folders

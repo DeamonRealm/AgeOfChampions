@@ -73,52 +73,6 @@ bool j1Scene::Start()
 	scene_1_screen->SetBox({ 0,0,App->win->screen_surface->w, App->win->screen_surface->h });
 	scene_1_screen->Activate();
 	scene_1_screen->SetInputTarget(this);
-	
-	civilization_menu = (UI_Popup_menu*)App->gui->GenerateUI_Element(POPUP_MENU);
-	civilization_menu->SetBox({ 200, 480, 150, 90 });
-	civilization_menu->SetTexMenu({ 0,0, 0, 0 });
-	civilization_menu->SetTexSelection({ 0,0, 0, 0 });
-	civilization_menu->Desactivate();
-	scene_1_screen->AddChild(civilization_menu);
-	
-	teutones = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	teutones->SetColor({255,255,255,255});
-	teutones->SetFont(NULL);
-	teutones->SetString("Teutones");
-	teutones->Activate();
-	civilization_menu->AddChild(teutones);
-	civilization_menu->AddOption(teutones);
-
-	ingleses = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	ingleses->SetColor({ 255,255,255,255 });
-	ingleses->SetFont(NULL);
-	ingleses->SetString("Ingleses");
-	ingleses->Activate();
-	civilization_menu->AddChild(ingleses);
-	civilization_menu->AddOption(ingleses);
-
-	japoneses = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	japoneses->SetColor({ 255,255,255,255 });
-	japoneses->SetFont(NULL);
-	japoneses->SetString("Japoneses");
-	japoneses->Activate();
-	civilization_menu->AddChild(japoneses);
-	civilization_menu->AddOption(japoneses);
-	
-	civilization_button = (UI_Button*)App->gui->GenerateUI_Element(BUTTON);
-	civilization_button->SetBox({ 160, 400,230,60 });
-	civilization_button->SetTexOFF({ 648,172,219,59 });
-	civilization_button->SetTexON({ 5,116,220,59 });
-	civilization_button->SetTexOVER({ 416,170,220,62 });
-	scene_1_screen->AddChild(civilization_button);
-	
-	selected = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	selected->SetColor({ 255,255,255,255 });
-	selected->SetFont(NULL);
-	selected->SetString(civilization_menu->GetOptionSelected());
-	selected->SetBox({ 210, 420, 50, 100 });
-	selected->Activate();
-	scene_1_screen->AddChild(selected);
 
 	App->gui->PushScreen(scene_1_screen);
 	// ----------------------------------------------------
@@ -276,35 +230,14 @@ void j1Scene::GUI_Input(UI_Element* target, GUI_INPUT input)
 	switch (input)
 	{
 	case UP_ARROW:
-		if (target == civilization_menu)
-		{
-			selected->SetString(civilization_menu->GetOptionSelected());
-		}
 		break;
 	case DOWN_ARROW:
-		if (target == civilization_menu)
-		{
-			selected->SetString(civilization_menu->GetOptionSelected());
-		}
 		break;
 	case LEFT_ARROW:
 		break;
 	case RIGHT_ARROW:
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
-		if (target == civilization_menu)
-		{
-			selected->SetString(civilization_menu->GetOptionSelected());
-		}
-		if (target == civilization_button)
-		{
-			if (civilization_menu->GetActiveState()) civilization_menu->Desactivate();
-			else
-			{
-				civilization_menu->Activate();
-				App->gui->ItemSelected = civilization_menu;
-			}
-		}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;
@@ -321,10 +254,6 @@ void j1Scene::GUI_Input(UI_Element* target, GUI_INPUT input)
 	case MOUSE_OUT:
 		break;
 	case ENTER:
-		if (target == civilization_menu)
-		{
-			selected->SetString(civilization_menu->GetOptionSelected());
-		}
 		break;
 	}
 }

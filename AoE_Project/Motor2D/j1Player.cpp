@@ -85,6 +85,20 @@ bool j1Player::Start()
 
 	selection_rect = { 0,0,0,0 };
 	Selected = new Entity_Profile();
+	
+	UI_Image*	profile;
+	group_profile.reserve(max_selected_units);
+	int i = 0;
+	
+	while (i < max_selected_units)
+	{
+		profile = (UI_Image*)App->gui->GenerateUI_Element(IMG);
+		profile->Desactivate();
+		profile->ChangeTextureId(ICONS);
+		profile->SetBoxPosition(320, 630);
+		group_profile.push_back(profile);
+		i++;
+	}
 
 	double_clickon = false;
 
@@ -100,10 +114,10 @@ bool j1Player::PreUpdate()
 	{
 		selection_rect.x = x;
 		selection_rect.y = y;
-		uint selected_size = selected_elements.size();
 		Uint32 double_click_read = double_click.Read();
 
 		Select_Entity();
+		uint selected_size = selected_elements.size();
 
 		if ((selected_size == 1 && double_click_read == 0)|| (selected_size == 1 && double_click_read >= 500))
 		{
@@ -113,6 +127,13 @@ bool j1Player::PreUpdate()
 		{
 			double_clickon = true;
 			Select_Type();
+		}
+	}
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	{
+		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
+		{
+			App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(x, y));
 		}
 	}
 
@@ -159,6 +180,7 @@ bool j1Player::PostUpdate()
 	}
 
 	if (selected_elements.size() == 1) Selected->DrawProfile();
+	else if (selected_elements.size() > 1) DrawGroup();
 
 	return true;
 }
@@ -174,6 +196,12 @@ bool j1Player::CleanUp()
 
 void j1Player::DrawGroup()
 {
+	int i = 0;
+	while (i < selected_elements.size())
+	{
+		group_profile[i]->Draw(App->debug_mode);
+		i++;
+	}
 }
 
 bool j1Player::MoveSelectedUnits(int x, int y)
@@ -284,7 +312,7 @@ void j1Player::Select_Group()
 	std::list<Unit*>::const_iterator item = actual_population.begin();
 	while (item != actual_population.end())
 	{
-		if (item._Ptr->_Myval->GetDiplomacy() == ALLY)
+		if (item._Ptr->_Myval->GetDiplomacy() == ALLY && selected_elements.size() < 60)
 		{
 			x = item._Ptr->_Myval->GetPosition().x;
 			x -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot();
@@ -302,6 +330,7 @@ void j1Player::Select_Group()
 		item++;
 	}
 	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+	else SetGroupProfile();
 
 	LOG("Selected: %i", selected_elements.size());
 }
@@ -324,7 +353,7 @@ void j1Player::Select_Type()
 	std::list<Unit*>::const_iterator item = actual_population.begin();
 	while (item != actual_population.end())
 	{
-		if (item._Ptr->_Myval->GetUnitType() == type && item._Ptr->_Myval->GetDiplomacy() == ALLY)
+		if (item._Ptr->_Myval->GetUnitType() == type && item._Ptr->_Myval->GetDiplomacy() == ALLY && selected_elements.size() < 60)
 		{
 			x = item._Ptr->_Myval->GetPosition().x;
 			x -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot();
@@ -342,6 +371,7 @@ void j1Player::Select_Type()
 		item++;
 	}
 	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+	else SetGroupProfile();
 
 }
 
@@ -365,5 +395,20 @@ void j1Player::Expand_SelectionRect()
 	selection_rect.h -= selection_rect.y;
 	
 	App->render->DrawQuad({ selection_rect.x - App->render->camera.x, selection_rect.y - App->render->camera.y, selection_rect.w, selection_rect.h }, 255, 255, 255, 255, false);
+}
+
+void j1Player::SetGroupProfile()
+{
+	int i = 0;
+	int j = 0;
+	std::list<Entity*>::const_iterator item = selected_elements.begin();
+	while (item != selected_elements.end())
+	{
+		group_profile[i]->ChangeTextureRect(item._Ptr->_Myval->GetIcon());
+		group_profile[i]->SetBoxPosition(370 + (i%16) * 37, 630 + j * 37);
+		if (i == 16 || i == 32) j++;
+		item++;
+		i++;
+	}
 }
 

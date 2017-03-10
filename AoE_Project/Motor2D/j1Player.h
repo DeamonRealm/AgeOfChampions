@@ -72,6 +72,7 @@ private:
 	uint			stone = 0;
 	uint			population = 0;
 	uint			max_population = 5;
+	uint			max_selected_units = 60;
 
 	j1Timer			double_click;
 	bool			double_clickon;
@@ -82,6 +83,8 @@ private:
 
 	std::list<Unit*>	actual_population;
 	std::list<Entity*>	selected_elements;
+
+	std::vector<UI_Image*>  group_profile;
 
 	Entity_Profile* Selected;
 
@@ -106,5 +109,8 @@ public:
 	void Select_Type();
 	void UnSelect_Entity();
 	void Expand_SelectionRect();
+
+	//Selction Panel (Group Functions)
+	void SetGroupProfile();
 };
 #endif // !_J1PLAYER_H_
