@@ -19,19 +19,20 @@ INTRA_EDGE
 #define INVALID_WALK_CODE 255
 
 class Cluster;
-
+struct Node;
 class Edge
 {
 public:
 
-	Edge(int nodeNum1,int nodeNum2,int distance,EdgeType type);
+	Edge(Node* nodeNum1, Node* nodeNum2,int distance,EdgeType type);
 	~Edge();
-	int GetNodeNum1();
-	int GetNodeNum2();
+	Node* GetNodeNum1();
+	Node* GetNodeNum2();
+	Node* GetTheOtherNode(int nodeID);
 private:
 	int distance;
-	int nodeNum1;
-	int nodeNum2;
+	Node* nodeNum1;
+	Node* nodeNum2;
 	EdgeType type;
 };
 struct Node
@@ -39,12 +40,12 @@ struct Node
 public:
 	void SetPosition(int posX, int posY);
 	void SetClusterID(int id);
-	void SetParent(Node* nodeID);
+	void SetParent(Edge* edge);
 	void SetTrack(Node* get);
 
 	int GetPositionX();
 	int GetPositionY();
-	Node* GetParentIDAt(int index);
+	Edge* GetParentIDAt(int index);
 	int GetParentSize();
 	Node* GetTrackBack();
 
@@ -57,7 +58,7 @@ private:
 	int clusterID;
 	int posX;
 	int posY;
-	std::list<Node*> parent;
+	std::list<Edge*> parent;
 	Node* track_back = nullptr;
 
 };
@@ -70,11 +71,14 @@ public:
 	~Graph();
 	*/
 	Node* GetNode(int i);
-	void AddEdge(Edge* edge);
+	Edge* AddEdge(Edge* edge);
 	
 	int AddNode(Node* edge);
 	void RemoveNode(Node* node, int &ret);
 	int EdgeSize();
+	int GetNodesSize()const;
+	Node* GetNodesAt(int index)const;
+
 	Edge* EdgeAt(int i);
 private:
 	std::vector<Node*> nodes;
@@ -165,8 +169,8 @@ public:
 	void CreateIntraEdges(Graph* graph);
 
 	void CreateBFS(Node* from, Node* to);
-	Graph					graph;
 	std::vector<Node*>		best_path;
+	Graph					graph;
 
 private:
 	// size of the map 
@@ -181,6 +185,7 @@ private:
 	uchar* map;
 	int maxColumn;
 	int maxRow;
+
 };
 
 

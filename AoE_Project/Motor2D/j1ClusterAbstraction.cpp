@@ -234,8 +234,8 @@ bool j1ClusterAbstraction::EdgeExist(Cluster & cluster, int nodeID1, int nodeID2
 	int number = 0;
 	int edge_size = graph->EdgeSize();
 	for (int i = 0; i < edge_size; i++) {
-		if (graph->EdgeAt(i)->GetNodeNum1() == nodeID1 && graph->EdgeAt(i)->GetNodeNum2() == nodeID2
-			|| graph->EdgeAt(i)->GetNodeNum1() == nodeID2 && graph->EdgeAt(i)->GetNodeNum2() == nodeID1)
+		if (graph->EdgeAt(i)->GetNodeNum1()->nodeNum == nodeID1 && graph->EdgeAt(i)->GetNodeNum2()->nodeNum == nodeID2
+			|| graph->EdgeAt(i)->GetNodeNum1()->nodeNum == nodeID2 && graph->EdgeAt(i)->GetNodeNum2()->nodeNum == nodeID1)
 		{
 			ret = true;
 		}
@@ -328,9 +328,9 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 			}
 
 			
-			graph->AddEdge(new Edge(numNode1, numNode2, 1, INTER_EDGE));
-			graph->GetNode(numNode1)->SetParent(graph->GetNode(numNode2));
-			graph->GetNode(numNode2)->SetParent(graph->GetNode(numNode1));
+			Edge* set = graph->AddEdge(new Edge(graph->GetNode(numNode1), graph->GetNode(numNode2), 1, INTER_EDGE));
+			graph->GetNode(numNode1)->SetParent(set);
+			graph->GetNode(numNode2)->SetParent(set);
 		//	LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
 
@@ -368,9 +368,9 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 				numNode2 = checkNum;
 			}
 
-			graph->AddEdge(new Edge(numNode1, numNode2, 1, INTER_EDGE));
-			graph->GetNode(numNode1)->SetParent(graph->GetNode(numNode2));
-			graph->GetNode(numNode2)->SetParent(graph->GetNode(numNode1));
+			Edge* set = graph->AddEdge(new Edge(graph->GetNode(numNode1), graph->GetNode(numNode2), 1, INTER_EDGE));
+			graph->GetNode(numNode1)->SetParent(set);
+			graph->GetNode(numNode2)->SetParent(set);
 		//	LOG("Inter Edge Generated on nodeOne = %i nodeTwo = %i", numNode1, numNode2);
 		}
 		break;
@@ -438,9 +438,9 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 					distance = App->pathfinding->CreatePath(temp_nodes[i], temp_nodes[j]);
 					if (distance != -1) {
 
-						graph->AddEdge(new Edge(temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, distance, INTRA_EDGE));
-						graph->GetNode(temp_nodes[i]->nodeNum)->SetParent(graph->GetNode(temp_nodes[j]->nodeNum));
-						graph->GetNode(temp_nodes[j]->nodeNum)->SetParent(graph->GetNode(temp_nodes[i]->nodeNum));
+						Edge* set = graph->AddEdge(new Edge(graph->GetNode(temp_nodes[i]->nodeNum), graph->GetNode(temp_nodes[j]->nodeNum), distance, INTRA_EDGE));
+						graph->GetNode(temp_nodes[i]->nodeNum)->SetParent(set);
+						graph->GetNode(temp_nodes[j]->nodeNum)->SetParent(set);
 						LOG("Intra Edge Generated on nodeOne = %i nodeTwo = %i", temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum);
 					}
 				}
@@ -456,27 +456,32 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 void j1ClusterAbstraction::CreateBFS(Node * from, Node * to)
 {
 	std::queue<Node*> nodes;
+	for (int i = 0; i < graph.GetNodesSize(); i++) {
+		graph.GetNodesAt(i)->ResetNode();
+	}
 	Node* goals = nullptr;
 	nodes.push(from);
 	Node* tmp = nodes.front();
 	bool goal = false;
-	int iteration_number = 0;
+
+	tmp->visited = true;
 	while (goal != true){
 		nodes.pop();
 
 		for (int i = 0; i < tmp->GetParentSize(); i++) {
-			if (tmp->GetParentIDAt(i)->visited != true) {
-				if (tmp->GetParentIDAt(i) == to) {
-					tmp->GetParentIDAt(i)->SetTrack(tmp);
-					tmp->GetParentIDAt(i)->visited = true;
-					goals = tmp->GetParentIDAt(i);
+			Node* objective_node = tmp->GetParentIDAt(i)->GetTheOtherNode(tmp->nodeNum);
+			if (objective_node->visited != true) {
+				if (objective_node == to) {
+					objective_node->SetTrack(tmp);
+					objective_node->visited = true;
+					goals = objective_node;
 					goal = true;
 				}
 				else {
-					tmp->GetParentIDAt(i)->SetTrack(tmp);
+					objective_node->SetTrack(tmp);
 
-					tmp->GetParentIDAt(i)->visited = true;
-					nodes.push(tmp->GetParentIDAt(i));
+					objective_node->visited = true;
+					nodes.push(objective_node);
 				}
 			}
 		}
@@ -502,11 +507,15 @@ Node* Graph::GetNode(int i)
 	}
 	return 0;
 }
-void Graph::AddEdge(Edge* edge) 
+Edge* Graph::AddEdge(Edge* edge)
 {
+	Edge* ret = nullptr;
 	if (edge) {
 		edges.push_back(edge);
+		ret = edges.back();
+
 	}
+	return ret;
 }
 
 
@@ -542,13 +551,23 @@ int Graph::EdgeSize()
 	return edges.size();
 }
 
+int Graph::GetNodesSize()const
+{
+	return nodes.size();
+}
+
+Node * Graph::GetNodesAt(int index) const
+{
+	return nodes[index];
+}
+
 Edge * Graph::EdgeAt(int i)
 {
 
 	return edges[i];
 }
 
-Edge::Edge(int nodeNum1, int nodeNum2, int distance, EdgeType type) : nodeNum1(nodeNum1),nodeNum2(nodeNum2),distance(distance),type(type)
+Edge::Edge(Node* nodeNum1, Node* nodeNum2, int distance, EdgeType type) : nodeNum1(nodeNum1),nodeNum2(nodeNum2),distance(distance),type(type)
 {
 
 }
@@ -556,14 +575,24 @@ Edge::~Edge()
 {
 }
 
-int Edge::GetNodeNum1()
+Node* Edge::GetNodeNum1()
 {
 	return nodeNum1;
 }
 
-int Edge::GetNodeNum2()
+Node* Edge::GetNodeNum2()
 {
 	return nodeNum2;
+}
+
+Node* Edge::GetTheOtherNode(int nodeID)
+{
+	Node* ret = nullptr;
+	if (nodeNum1->nodeNum == nodeID)
+		ret = nodeNum2;
+	else
+		ret = nodeNum1;
+	return ret;
 }
 
 void Node::SetPosition(int x, int y)
@@ -575,9 +604,9 @@ void Node::SetClusterID(int id)
 {
 	clusterID = id;
 }
-void Node::SetParent(Node* nodeID)
+void Node::SetParent(Edge* edge)
 {
-	parent.push_back(nodeID);
+	parent.push_back(edge);
 }
 void Node::SetTrack(Node * get)
 {
@@ -593,9 +622,9 @@ int  Node::GetPositionY()
 
 }
 
-Node* Node::GetParentIDAt(int index)
+Edge* Node::GetParentIDAt(int index)
 {
-	std::list<Node*>::iterator item = parent.begin();
+	std::list<Edge*>::iterator item = parent.begin();
 	int i = 0;
 	while (item != parent.end())
 	{
