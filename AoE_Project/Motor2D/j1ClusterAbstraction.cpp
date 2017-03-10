@@ -322,6 +322,38 @@ Node * j1ClusterAbstraction::PutNode(const iPoint& pos)
 		return graph.GetNode(check_num);
 	}
 }
+void j1ClusterAbstraction::DeleteNode(Node* start, Node* goal)
+{
+	bool delete_start = true;
+	//Check if start is a entry node
+	for (int i = 0; i < start->GetParentSize(); i++)
+	{
+		if (start->GetParentIDAt(i)->GetEdgeType() == INTRA_EDGE) {
+			delete_start = false;
+		}
+	}
+	if (delete_start) {
+		DeleteNode(start);
+	}
+	bool delete_goal = true;
+	//Check if goal is a entry node
+	for (int i = 0; i < goal->GetParentSize(); i++)
+	{
+		if (goal->GetParentIDAt(i)->GetEdgeType() == INTRA_EDGE) {
+			delete_start = false;
+		}
+	}
+	if (delete_start) {
+		DeleteNode(goal);
+	}
+}
+void j1ClusterAbstraction::DeleteNode(Node * node)
+{
+	for (int i = 0; i < node->GetParentSize(); i++)
+	{
+		
+	}
+}
 bool j1ClusterAbstraction::EdgeExist(Cluster & cluster, int nodeID1, int nodeID2, Graph * graph)
 {
 	bool ret = false;
@@ -687,6 +719,11 @@ Node* Edge::GetTheOtherNode(int nodeID)
 	else
 		ret = nodeNum1;
 	return ret;
+}
+
+EdgeType Edge::GetEdgeType()
+{
+	return type;
 }
 
 void Node::SetPosition(int x, int y)

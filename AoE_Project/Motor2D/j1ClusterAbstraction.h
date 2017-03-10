@@ -29,6 +29,7 @@ public:
 	Node* GetNodeNum1();
 	Node* GetNodeNum2();
 	Node* GetTheOtherNode(int nodeID);
+	EdgeType GetEdgeType();
 private:
 	int distance;
 	Node* nodeNum1;
@@ -163,7 +164,11 @@ public:
 	void CreateEntryVertical(int start, int end, int x, int row, int column);
 	//Node Functions
 	int NodeExist(Cluster& cluster,int posX,int posY, Graph* graph);
+	
 	Node* PutNode(const iPoint& pos);
+	
+	void DeleteNode(Node* start, Node* goal);
+	void DeleteNode(Node* node);
 	// Edge Functions
 	bool EdgeExist(Cluster& cluster, int nodeID1, int nodeID2, Graph* graph);
 
