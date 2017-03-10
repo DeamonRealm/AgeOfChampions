@@ -96,6 +96,7 @@ public:
 	int GetPosisitionY();
 	int GetWidth();
 	int GetHeight();
+	int GetClusterId();
 	void AddNode(int get);
 private:
 
@@ -155,12 +156,15 @@ public:
 	void CreateClusters();
 	void AddCluster(Cluster add);
 	Cluster& GetCluster(int at);
-	int  GetClusterID(int clusterRow, int clusterColumn);
+	int GetClusterID(int clusterRow, int clusterColumn);
+	Cluster& FindClusterID(iPoint position);
 	//
 	void CreateEntryHorizontal(int start, int end, int x, int row, int column);
 	void CreateEntryVertical(int start, int end, int x, int row, int column);
-
+	//Node Functions
 	int NodeExist(Cluster& cluster,int posX,int posY, Graph* graph);
+	Node* PutNode(const iPoint& pos);
+	// Edge Functions
 	bool EdgeExist(Cluster& cluster, int nodeID1, int nodeID2, Graph* graph);
 
 	void SetEntryClusterID();

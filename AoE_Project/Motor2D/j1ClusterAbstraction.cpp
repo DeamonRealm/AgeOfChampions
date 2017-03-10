@@ -33,6 +33,10 @@ int Cluster::GetHeight()
 {
 	return height;
 }
+int Cluster::GetClusterId()
+{
+	return id;
+}
 void Cluster::AddNode(int get) 
 {
 	nodes.push_back(get);
@@ -120,6 +124,26 @@ int j1ClusterAbstraction::GetClusterID(int clusterRow, int clusterColumn)
 {
 
 	return (clusterRow*maxColumn+clusterColumn);
+}
+
+Cluster& j1ClusterAbstraction::FindClusterID(iPoint position)
+{
+	if (position.x<0 || position.x>width || position.y < 0 || position.y >width) {
+		for (int i = 0; i < clusters.size(); i++)
+		{
+			Cluster& item = clusters[i];
+			int posX = item.GetPosisitionX();
+			int posY = item.GetPosisitionY();
+
+			int width = item.GetWidth();
+			int height = item.GetHeight();
+			if (posX >= position.x && posX + width < position.x
+				&&posY >= position.y && posY + height < position.y) {
+				return item;
+			}
+
+		}
+	}
 }
 
 bool j1ClusterAbstraction::IsWalkable(int x, int y) const
@@ -227,6 +251,76 @@ int j1ClusterAbstraction::NodeExist(Cluster& cluster, int posX, int posY, Graph*
 	}
 	return -1;
 
+}
+Node * j1ClusterAbstraction::PutNode(const iPoint& pos)
+{
+	Cluster& cluster= FindClusterID(pos);
+
+	int check_num = NodeExist(cluster, pos.x, pos.y, &graph);
+	int node_num = 0;
+	if (check_num == -1) {
+		Node* node = new Node();
+		node->SetPosition(pos.x , pos.y);
+		node_num = graph.AddNode(node);
+		node->SetClusterID(cluster.GetClusterId());
+		cluster.AddNode(node_num);
+		//	LOG("Node %i Generated x = %i, y = %i", numNode2,node2->GetPositionX(), node2->GetPositionY());
+		return node;
+	}
+	else {
+		std::vector<Node*> temp_nodes;
+		int map_size = cluster.GetHeight()*cluster.GetWidth();
+		uchar* temp_map = new uchar[map_size];
+	
+		int x = 0;
+		int y = 0;
+		int node_number = 0;
+
+		int cluster_pos_y = cluster.GetPosisitionY(), cluster_pos_x = cluster.GetPosisitionX();
+		int cluster_height = cluster.GetHeight(), cluster_width = cluster.GetWidth();
+
+		for (int i = cluster_pos_y; i < (cluster_pos_y + cluster_height); i++)
+		{
+			x = 0;
+			for (int j = cluster_pos_x; j < (cluster_pos_x + cluster_width); j++)
+			{
+				temp_map[(y*cluster_width + x)] = GetValueMap(j, i);
+				node_number = NodeExist(cluster, j, i, &graph);
+				if (node_number != -1) {
+					Node* tmp_node = new Node();
+					tmp_node->SetPosition(x, y);
+					tmp_node->nodeNum = node_number;
+					temp_nodes.push_back(tmp_node);
+				}
+				x++;
+			}
+			y++;
+		}
+
+		int distance = -1;
+		int node_size = temp_nodes.size();
+		for (int i = 0; i < node_size; i++)
+		{
+			int node_num1 = check_num;
+			int node_num2 = temp_nodes[i]->nodeNum;
+			if (node_num1 == node_num2)
+				continue;
+
+			if (!EdgeExist(cluster, node_num1, node_num2, &graph))
+			{
+				App->pathfinding->SetMap(temp_map, cluster_width, cluster_height);
+				distance = App->pathfinding->CreatePath(graph.GetNode(node_num1), temp_nodes[i]);
+				if (distance != -1)
+				{
+					Edge* set = graph.AddEdge(new Edge(graph.GetNode(node_num1), graph.GetNode(node_num2), distance, INTRA_EDGE));
+					graph.GetNode(node_num1)->SetParent(set);
+					graph.GetNode(node_num2)->SetParent(set);
+					LOG("Intra Edge Generated on nodeOne = %i nodeTwo = %i", node_num1, node_num2);
+				}
+			}
+		}
+		return graph.GetNode(check_num);
+	}
 }
 bool j1ClusterAbstraction::EdgeExist(Cluster & cluster, int nodeID1, int nodeID2, Graph * graph)
 {
@@ -381,8 +475,8 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 }
 void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 {
-	uchar* temp_map = new uchar[100];
-	int new_size = 100;
+	int new_size = clusterSize*clusterSize;
+	uchar* temp_map = new uchar[new_size];
 	std::vector<Node*> temp_nodes;
 
 	for (int i = 0; i < clusters.size(); i++)
