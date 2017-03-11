@@ -85,6 +85,11 @@ public:
 		return (x != v.x || y != v.y);
 	}
 
+	bool operator < (const p2Point& p) const
+	{
+		return (((abs(x) - abs(p.x)) <= 0) && ((abs(y) - abs(p.y)) <= 0));
+	}
+
 	// Utils ------------------------------------------------
 	bool IsZero() const
 	{

@@ -12,7 +12,7 @@ Blit_Call::Blit_Call()
 
 }
 
-Blit_Call::Blit_Call(const iPoint & position, const iPoint& pivot, SDL_Texture * texture, const SDL_Rect& rect, bool flip, int priority, uint opacity) :position(position),pivot(pivot), texture(texture), rect(rect), flip(flip), priority(priority), opacity(opacity)
+Blit_Call::Blit_Call(const iPoint & position, const iPoint& pivot, SDL_Texture* texture, SDL_Rect* rect, bool flip, int priority, uint opacity) :position(position),pivot(pivot), texture(texture), rect(rect), flip(flip), priority(priority), opacity(opacity)
 {
 
 }
@@ -50,7 +50,7 @@ SDL_Texture * Blit_Call::GetTex() const
 
 const SDL_Rect* Blit_Call::GetRect() const
 {
-	return &rect;
+	return rect;
 }
 
 bool Blit_Call::GetFlip() const
@@ -202,7 +202,7 @@ bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect* sec
 {
 	bool ret = false;
 	if (texture != nullptr)ret = true;
-	blit_queue.emplace(iPoint(x, y), iPoint(pivot_x, pivot_y) , texture, *section, horizontal_flip, priority, opacity);
+	blit_queue.emplace(iPoint(x, y), iPoint(pivot_x, pivot_y) , texture, (SDL_Rect*)section, horizontal_flip, priority, opacity);
 	return true;
 }
 

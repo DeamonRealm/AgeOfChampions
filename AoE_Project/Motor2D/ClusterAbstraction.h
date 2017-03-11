@@ -142,11 +142,12 @@ private:
 
 };
 
-class j1ClusterAbstraction
+class ClusterAbstraction
 {
 public:
-	j1ClusterAbstraction(j1Map* map, uint clusterSize);
-	~j1ClusterAbstraction();
+	ClusterAbstraction(j1Map* map, uint clusterSize);
+	~ClusterAbstraction();
+
 	//Map extraction
 	uchar GetValueMap(int x, int y);
 	void SetMap(uint width, uint height, uchar* data);
@@ -181,19 +182,20 @@ public:
 	std::vector<Node*>		best_path;
 	Graph					graph;
 
-private:
+public:
+
 	// size of the map 
-	uint					width;
-	uint					height;
-	uint					clusterSize;
+	uint					width = 0;
+	uint					height = 0;
+	uint					clusterSize = 0;
 	std::vector<Entry>		entrys;
 	std::vector<Cluster>	clusters;
 
 
 	//This only works with a single level of terrain in case we have more than one unit size we will have to add a vector map
-	uchar* map;
-	int maxColumn;
-	int maxRow;
+	uchar* logic_map = nullptr;
+	int maxColumn = 0;
+	int maxRow = 0;
 
 };
 

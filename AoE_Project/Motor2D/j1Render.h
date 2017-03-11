@@ -15,7 +15,7 @@ class Blit_Call
 public:
 
 	Blit_Call();
-	Blit_Call(const iPoint& position, const iPoint& pivot, SDL_Texture* texture, const SDL_Rect& rect, bool flip, int priority, uint opacity);
+	Blit_Call(const iPoint& position, const iPoint& pivot, SDL_Texture* texture, SDL_Rect* rect, bool flip, int priority, uint opacity);
 	~Blit_Call();
 
 private:
@@ -23,7 +23,7 @@ private:
 	iPoint			position = { 0,0 };
 	iPoint			pivot = { 0,0 };
 	SDL_Texture*	texture = nullptr;
-	SDL_Rect		rect = { 0,0,0,0 };
+	SDL_Rect*		rect = nullptr;
 	bool			flip = false;
 	uint			opacity = 255;
 	int				priority = 0;

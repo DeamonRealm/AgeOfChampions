@@ -148,12 +148,12 @@ bool j1Player::PreUpdate()
 	{
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 		{
-			App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(x, y));
+			App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(x - App->render->camera.x, y - App->render->camera.y));
 		}
 	}
 
 	//Generate a Militia unit in the mouse coordinates
-	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);

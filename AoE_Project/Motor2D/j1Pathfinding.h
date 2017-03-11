@@ -6,6 +6,8 @@
 
 struct PathList;
 struct Node;
+struct ClusterAbstraction;
+struct SDL_Texture;
 
 ///class Pathfinding ------------------
 class j1Pathfinding : public j1Module
@@ -15,15 +17,23 @@ public:
 	j1Pathfinding();
 	~j1Pathfinding();
 
+	// Called before the first frame
+	bool Start();
+
+	// Called before quitting
+	bool CleanUp();
+
 private:
 
-	//Copy of the current map logic data
-	uchar*	logic_map = nullptr;
-	//Logic map dimensions
-	uint	width = 0;
-	uint	height = 0;
 	//A pointer to the last path generated
 	std::vector<iPoint> last_path;
+	//Map cluster abstraction
+	ClusterAbstraction* cluster_abstraction = nullptr;
+
+public:
+
+	//Path tile debug texture
+	SDL_Texture* path_texture = nullptr;
 
 public:
 
@@ -36,8 +46,6 @@ public:
 	// Get tile from x coordinate
 	uchar	GetTileAt(const iPoint& pos) const;
 
-	// Set copy map data
-	void SetMap(uchar* map, int map_width, int map_height);
 	// Create a path with two nodes
 	int	CreatePath(Node* start, Node*goal);
 	// Create a path with two coordinates

@@ -3,7 +3,9 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Animator.h"
-
+#include "j1Pathfinding.h"
+#include "j1Fonts.h"
+#include "j1Map.h"
 #include "p2Log.h"
 
 ///Class Entity ---------------------------------
@@ -193,6 +195,19 @@ bool Unit::Draw(bool debug)
 		Line x_axis(p1, p2, color);
 		y_axis.Draw();
 		x_axis.Draw();
+		if (path != nullptr)DrawPath();
+		
+		//This is bullshit for ram but is temporal
+		char x_bff[8];
+		snprintf(x_bff, 8, "%.2f", position.x);
+		std::string x_str = x_bff;
+		char y_bff[8];
+		snprintf(y_bff, 8, "%.2f", position.y);
+		std::string y_str = y_bff;
+		std::string pos = "X:" + x_str + ",Y:" + y_str;
+		SDL_Color tex_color = {255,255,0,255 };
+		pos_texture = App->font->Print(pos.c_str(), tex_color, App->font->default);
+		App->render->CallBlit(pos_texture, position.x, position.y);
 	}
 	
 	//Draw Entity Current animation frame
@@ -200,6 +215,20 @@ bool Unit::Draw(bool debug)
 	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(),sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
 
 	return ret;
+}
+
+bool Unit::DrawPath()
+{
+	if (path == nullptr) return false;
+
+	uint size = path->size();
+	for (uint k = 0; k < size; k++)
+	{
+		iPoint cell = path->at(k);
+		App->render->CallBlit(App->pathfinding->path_texture, cell.x - App->map->data.tile_width * 0.5, cell.y);
+	}
+	
+	return true;
 }
 
 //Move ------------
@@ -212,58 +241,87 @@ bool Unit::Move()
 		return false;
 	}
 
+	//Build location & goal path points
 	iPoint location = iPoint(position.x, position.y);
 	iPoint goal = path->back();
 
 	//Update goal node and animation direction
-	if (iPoint(position.x, position.y) == goal)
+	if ((iPoint(position.x, position.y) - goal) < iPoint(1, 1))
 	{
-		if (!path->size())
+		if (path->size() == 1)
 		{
+			//Set unit at the goal pixel position
+			position.x = (float)goal.x;
+			position.y = (float)goal.y;
+
+			//Stop idle walk animation
+			action_type = IDLE;
+			App->animator->UnitPlay(this);
+			
+			//Delete unit path
 			delete path;
+			path = nullptr;
+
 			LOG("Path completed!");
 			return true;
 		}
+
+		//Set the unit next tile goal
 		path->pop_back();
 		goal = path->back();
-
-		iPoint dir_point = goal - location;
-		if (dir_point.x == 0)
-		{
-			if (dir_point.y > 0)direction_type = DIRECTION_TYPE::SOUTH;
-			else if (dir_point.y < 0)direction_type = DIRECTION_TYPE::NORTH;
-		}
-		else if (dir_point.y == 0)
-		{
-			if (dir_point.x > 0)direction_type = DIRECTION_TYPE::EAST;
-			else if (dir_point.x < 0)direction_type = DIRECTION_TYPE::WEST;
-		}
-		else if (dir_point.x && dir_point.y)
-		{
-			direction_type = DIRECTION_TYPE::NORTH_EAST;
-		}
-		else if (!dir_point.x && dir_point.y)
-		{
-			direction_type = DIRECTION_TYPE::NORTH_WEST;
-		}
-		else if (dir_point.x && !dir_point.y)
-		{
-			direction_type = DIRECTION_TYPE::SOUTH_EAST;
-		}
-		else if (!dir_point.x && !dir_point.y)
-		{
-			direction_type = DIRECTION_TYPE::SOUTH_WEST;
-		}
+		//Focus the unit at the next goal
+		Focus(goal);
 	}
 
+	//Calculate the X/Y values that the unit have to move 
+	//checking the goal location and the unit movement speed
 	int norm = location.DistanceTo(goal);
 	float x_step = speed * (goal.x - location.x) / norm;
 	float y_step = speed * (goal.y - location.y) / norm;
 
+	//Add the calculated values at the unit & mark position
 	position.x += x_step;
 	position.y += y_step;
+	mark.SetPosition(iPoint(position.x,position.y));
 
 	return true;
+}
+
+void Unit::Focus(const iPoint & target)
+{
+	//Calculate the directional vector
+	iPoint dir_point = target - iPoint(position.x, position.y);
+
+	//Find the correct direction in relation of the goal and the location
+	if (abs(dir_point.x) < 4)
+	{
+		if (dir_point.y > 0)direction_type = DIRECTION_TYPE::SOUTH;
+		else direction_type = DIRECTION_TYPE::NORTH;
+	}
+	else if (abs(dir_point.y) < 4)
+	{
+		if (dir_point.x > 0)direction_type = DIRECTION_TYPE::EAST;
+		else direction_type = DIRECTION_TYPE::WEST;
+	}
+	else if (dir_point.x >= 0 && dir_point.y >= 0)
+	{
+		direction_type = DIRECTION_TYPE::SOUTH_EAST;
+	}
+	else if (dir_point.x <= 0 && dir_point.y >= 0)
+	{
+		direction_type = DIRECTION_TYPE::SOUTH_WEST;
+	}
+	else if (dir_point.x >= 0 && dir_point.y <= 0)
+	{
+		direction_type = DIRECTION_TYPE::NORTH_EAST;
+	}
+	else if (dir_point.x <= 0 && dir_point.y <= 0)
+	{
+		direction_type = DIRECTION_TYPE::NORTH_WEST;
+	}
+	
+	//Set the unit animation with the new direction
+	App->animator->UnitPlay(this);
 }
 
 //Set Methods -----

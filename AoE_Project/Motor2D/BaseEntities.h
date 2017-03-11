@@ -173,6 +173,7 @@ protected:
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
 	Circle			mark;
+	SDL_Texture*	pos_texture = nullptr;
 	//Life -------------
 	uint			max_life = 0;
 	float			life = 0;
@@ -212,9 +213,11 @@ public:
 	//Functionality -------------------
 	//Draw ------------------
 	bool	Draw(bool debug);
+	bool	DrawPath();
 	//Move ------------------
 	bool	Move();
-	
+	void	Focus(const iPoint& target);
+
 	//Set Methods -----------
 	void	SetPosition(float x, float y);
 	void	SetUnitType(UNIT_TYPE type);

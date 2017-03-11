@@ -1,4 +1,4 @@
-#include "j1ClusterAbstraction.h"
+#include "ClusterAbstraction.h"
 
 #include "j1App.h"
 #include "p2Log.h"
@@ -41,12 +41,11 @@ void Cluster::AddNode(int get)
 {
 	nodes.push_back(get);
 }
-j1ClusterAbstraction::j1ClusterAbstraction(j1Map * m, uint clusterSize):clusterSize(clusterSize)
+ClusterAbstraction::ClusterAbstraction(j1Map * m, uint clusterSize):clusterSize(clusterSize)
 {
 	j1Timer ptimer;
-	ptimer.Start();
-	if (m->CreateWalkabilityMap(width, height, &map))
-		SetMap(width, height, map);
+	if (m->CreateWalkabilityMap(width, height, &logic_map))
+		SetMap(width, height, logic_map);
 	LOG("SetMap %f", ptimer.ReadSec());
 	ptimer.Start();
 	CreateClusters();
@@ -63,11 +62,14 @@ j1ClusterAbstraction::j1ClusterAbstraction(j1Map * m, uint clusterSize):clusterS
 
 }
 
-j1ClusterAbstraction::~j1ClusterAbstraction()
+ClusterAbstraction::~ClusterAbstraction()
 {
-	RELEASE_ARRAY(map);
+	RELEASE_ARRAY(logic_map);
+	clusters.clear();
+	best_path.clear();
+	entrys.clear();
 }
-void j1ClusterAbstraction::CreateClusters()
+void ClusterAbstraction::CreateClusters()
 {
 	int row = 0, column = 0, clusterID = 0;
 	int clusterW = 0, clusterH = 0;
@@ -94,39 +96,39 @@ void j1ClusterAbstraction::CreateClusters()
 	maxColumn = column;
 	maxRow = row;
 }
-uchar j1ClusterAbstraction::GetValueMap(int x, int y)
+uchar ClusterAbstraction::GetValueMap(int x, int y)
 {
-	return map[(y*width)+x];
+	return logic_map[(y*width)+x];
 }
-void j1ClusterAbstraction::SetMap(uint width, uint height, uchar* data)
+void ClusterAbstraction::SetMap(uint width, uint height, uchar* data)
 {
 	this->width = width;
 	this->height = height;
 
-	RELEASE_ARRAY(map);
-	map = new uchar[width*height];
-	memcpy(map, data, width*height);
+	RELEASE_ARRAY(logic_map);
+	logic_map = new uchar[width*height];
+	memcpy(logic_map, data, width*height);
 }
 
-void j1ClusterAbstraction::AddCluster(Cluster add)
+void ClusterAbstraction::AddCluster(Cluster add)
 {
 	clusters.push_back(add);
 }
 
-Cluster & j1ClusterAbstraction::GetCluster(int at)
+Cluster & ClusterAbstraction::GetCluster(int at)
 {
 	if (at >= 0 && at < (int)clusters.size()) {
 		return clusters[at];
 	}
 }
 
-int j1ClusterAbstraction::GetClusterID(int clusterRow, int clusterColumn)
+int ClusterAbstraction::GetClusterID(int clusterRow, int clusterColumn)
 {
 
 	return (clusterRow*maxColumn+clusterColumn);
 }
 
-Cluster& j1ClusterAbstraction::FindClusterID(iPoint position)
+Cluster& ClusterAbstraction::FindClusterID(iPoint position)
 {
 	if (position.x<0 || position.x>width || position.y < 0 || position.y >width) {
 		for (int i = 0; i < clusters.size(); i++)
@@ -146,7 +148,7 @@ Cluster& j1ClusterAbstraction::FindClusterID(iPoint position)
 	}
 }
 
-bool j1ClusterAbstraction::IsWalkable(int x, int y) const
+bool ClusterAbstraction::IsWalkable(int x, int y) const
 {
 		bool ret = false;
 		iPoint pos(x, y);
@@ -160,7 +162,7 @@ bool j1ClusterAbstraction::IsWalkable(int x, int y) const
 	}
 
 // Utility: return true if pos is inside the map boundaries
-bool j1ClusterAbstraction::CheckBoundaries(const iPoint& pos) const
+bool ClusterAbstraction::CheckBoundaries(const iPoint& pos) const
 {
 	return (pos.x >= 0 && pos.x <= (int)width &&
 		pos.y >= 0 && pos.y <= (int)height);
@@ -168,15 +170,15 @@ bool j1ClusterAbstraction::CheckBoundaries(const iPoint& pos) const
 
 
 // Utility: return the walkability value of a tile
-uchar j1ClusterAbstraction::GetTileAt(const iPoint& pos) const
+uchar ClusterAbstraction::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
-		return map[(pos.y*width) + pos.x];
+		return logic_map[(pos.y*width) + pos.x];
 
 	return INVALID_WALK_CODE;
 }
 
-void j1ClusterAbstraction::CreateEntryHorizontal(int start, int end, int y, int row, int column)
+void ClusterAbstraction::CreateEntryHorizontal(int start, int end, int y, int row, int column)
 {
 	int begin = 0;
 	for (int i = start; i <= end; i++) {
@@ -209,7 +211,7 @@ void j1ClusterAbstraction::CreateEntryHorizontal(int start, int end, int y, int 
 	}
 }
 
-void j1ClusterAbstraction::CreateEntryVertical(int start, int end, int x, int row, int column)
+void ClusterAbstraction::CreateEntryVertical(int start, int end, int x, int row, int column)
 {
 	int begin = 0;
 	for (int i = start; i <= end; i++) {
@@ -240,7 +242,7 @@ void j1ClusterAbstraction::CreateEntryVertical(int start, int end, int x, int ro
 		i--;
 	}
 }
-int j1ClusterAbstraction::NodeExist(Cluster& cluster, int posX, int posY, Graph* graph) {
+int ClusterAbstraction::NodeExist(Cluster& cluster, int posX, int posY, Graph* graph) {
 	int ret = -1;
 	for (int i = 0; i < cluster.NodeSize(); i++) {
 		ret = cluster.GetNodeNumberAt(i);
@@ -252,7 +254,7 @@ int j1ClusterAbstraction::NodeExist(Cluster& cluster, int posX, int posY, Graph*
 	return -1;
 
 }
-Node * j1ClusterAbstraction::PutNode(const iPoint& pos)
+Node * ClusterAbstraction::PutNode(const iPoint& pos)
 {
 	Cluster& cluster= FindClusterID(pos);
 
@@ -308,7 +310,7 @@ Node * j1ClusterAbstraction::PutNode(const iPoint& pos)
 
 			if (!EdgeExist(cluster, node_num1, node_num2, &graph))
 			{
-				App->pathfinding->SetMap(temp_map, cluster_width, cluster_height);
+				SetMap(cluster_width, cluster_height, temp_map);
 				distance = App->pathfinding->CreatePath(graph.GetNode(node_num1), temp_nodes[i]);
 				if (distance != -1)
 				{
@@ -322,7 +324,7 @@ Node * j1ClusterAbstraction::PutNode(const iPoint& pos)
 		return graph.GetNode(check_num);
 	}
 }
-void j1ClusterAbstraction::DeleteNode(Node* start, Node* goal)
+void ClusterAbstraction::DeleteNode(Node* start, Node* goal)
 {
 	bool delete_start = true;
 	//Check if start is a entry node
@@ -347,14 +349,14 @@ void j1ClusterAbstraction::DeleteNode(Node* start, Node* goal)
 		DeleteNode(goal);
 	}
 }
-void j1ClusterAbstraction::DeleteNode(Node * node)
+void ClusterAbstraction::DeleteNode(Node * node)
 {
 	for (int i = 0; i < node->GetParentSize(); i++)
 	{
 		
 	}
 }
-bool j1ClusterAbstraction::EdgeExist(Cluster & cluster, int nodeID1, int nodeID2, Graph * graph)
+bool ClusterAbstraction::EdgeExist(Cluster & cluster, int nodeID1, int nodeID2, Graph * graph)
 {
 	bool ret = false;
 	int number = 0;
@@ -369,7 +371,7 @@ bool j1ClusterAbstraction::EdgeExist(Cluster & cluster, int nodeID1, int nodeID2
 	}
 	return ret;
 }
-void j1ClusterAbstraction::SetEntryClusterID()
+void ClusterAbstraction::SetEntryClusterID()
 {
 
 	int clusterID1;
@@ -402,12 +404,12 @@ void j1ClusterAbstraction::SetEntryClusterID()
 	}
 }
 
-void j1ClusterAbstraction::CreateGraph()
+void ClusterAbstraction::CreateGraph()
 {
 	SetNodesOnClusters(&graph);
 }
 
-void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
+void ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 {
 	int checkNum = -1;
 	int numNode1 = -1;
@@ -505,7 +507,7 @@ void j1ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 		}
 	}
 }
-void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
+void ClusterAbstraction::CreateIntraEdges(Graph * graph)
 {
 	int new_size = clusterSize*clusterSize;
 	uchar* temp_map = new uchar[new_size];
@@ -560,7 +562,7 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 				if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
 				{
 
-					App->pathfinding->SetMap(temp_map, cluster_width, cluster_height);
+					SetMap(cluster_width, cluster_height, temp_map);
 					distance = App->pathfinding->CreatePath(temp_nodes[i], temp_nodes[j]);
 					if (distance != -1) {
 
@@ -579,7 +581,7 @@ void j1ClusterAbstraction::CreateIntraEdges(Graph * graph)
 	}
 
 }
-void j1ClusterAbstraction::CreateBFS(Node * from, Node * to)
+void ClusterAbstraction::CreateBFS(Node * from, Node * to)
 {
 	std::queue<Node*> nodes;
 	for (int i = 0; i < graph.GetNodesSize(); i++) {

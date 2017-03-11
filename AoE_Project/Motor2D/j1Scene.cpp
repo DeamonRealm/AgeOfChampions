@@ -95,7 +95,6 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
 		j1Timer ptimer;
-		ptimer.Start();
 		YOLO = new j1ClusterAbstraction(App->map, 10);
 		LOG("TIME %f", ptimer.ReadSec());
 	}
@@ -103,8 +102,6 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
 		j1Timer ptimer;
-		ptimer.Start();
-
 		YOLO->CreateBFS(YOLO->graph.GetNode(4), YOLO->graph.GetNode(200));
 		for (int i = 0; i < YOLO->best_path.size(); i++) {
 			LOG("node pass by %i", YOLO->best_path[i]->nodeNum);

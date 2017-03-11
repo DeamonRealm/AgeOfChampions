@@ -78,9 +78,6 @@
     <ClCompile Include="j1EntitiesManager.cpp">
       <Filter>Modules\EnititiesManager</Filter>
     </ClCompile>
-    <ClCompile Include="j1ClusterAbstraction.cpp">
-      <Filter>Pathfinding</Filter>
-    </ClCompile>
     <ClCompile Include="Villager.cpp">
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClCompile>
@@ -96,10 +93,10 @@
     <ClCompile Include="UI_Fixed_Button.cpp">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClCompile>
-    <ClCompile Include="j1Astar.cpp">
+    <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="j1Pathfinding.cpp">
+    <ClCompile Include="ClusterAbstraction.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
   </ItemGroup>
@@ -196,9 +193,6 @@
     <ClInclude Include="BaseEntities.h">
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1ClusterAbstraction.h">
-      <Filter>Pathfinding</Filter>
-    </ClInclude>
     <ClInclude Include="Villager.h">
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClInclude>
@@ -214,10 +208,10 @@
     <ClInclude Include="UI_Fixed_Button.h">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClInclude>
-    <ClInclude Include="j1Astar.h">
+    <ClInclude Include="j1Pathfinding.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
-    <ClInclude Include="j1Pathfinding.h">
+    <ClInclude Include="ClusterAbstraction.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>

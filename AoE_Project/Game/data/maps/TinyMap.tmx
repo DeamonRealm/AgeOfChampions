@@ -3,8 +3,8 @@
  <tileset firstgid="1" name="try" tilewidth="96" tileheight="47" spacing="1" margin="1" tilecount="16" columns="2">
   <image source="try.png" width="256" height="384"/>
  </tileset>
- <tileset firstgid="17" name="meta2" tilewidth="96" tileheight="47" spacing="1" margin="1" tilecount="1" columns="1">
-  <image source="meta2.png" width="128" height="64"/>
+ <tileset firstgid="17" name="collision" tilewidth="96" tileheight="47" spacing="1" margin="1" tilecount="2" columns="2">
+  <image source="colision.PNG" width="195" height="49"/>
  </tileset>
  <layer name="Capa de Patrones 1" width="120" height="120">
   <properties>

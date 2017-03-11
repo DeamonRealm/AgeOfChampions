@@ -1,7 +1,8 @@
 #include "j1Pathfinding.h"
 
 #include "j1App.h"
-#include "j1ClusterAbstraction.h"
+#include "ClusterAbstraction.h"
+#include "j1Textures.h"
 #include "p2Log.h"
 
 ///class Pathfinding ------------------
@@ -17,10 +18,32 @@ j1Pathfinding::~j1Pathfinding()
 
 }
 
+//Game Loop ===========================
+bool j1Pathfinding::Start()
+{
+	//Generate map cluster abstraction
+	j1Timer timer;
+	//cluster_abstraction = new ClusterAbstraction(App->map, 10);
+	LOG("Cluster abstraction generated in %.3f", timer.ReadSec());
+
+	//Load debug tiles trexture
+	path_texture = App->tex->Load("maps/path_tex.png");
+	return true;
+}
+
+bool j1Pathfinding::CleanUp()
+{
+	delete cluster_abstraction;
+	return true;
+}
+
 //Functionality =======================
 //Methods used during the paths creation to work with map data
 bool j1Pathfinding::IsWalkable(const iPoint & destination) const
 {
+	//Temp while the map don't have collision mask
+	return true;
+
 	bool ret = false;
 	uchar t = GetTileAt(destination);
 	return (t != INVALID_WALK_CODE && t > 0);
@@ -28,24 +51,15 @@ bool j1Pathfinding::IsWalkable(const iPoint & destination) const
 
 bool j1Pathfinding::CheckBoundaries(const iPoint & pos) const
 {
-	return (pos.x >= 0 && pos.x <= (int)width && pos.y >= 0 && pos.y <= (int)height);
+	return (pos.x >= 0 && pos.x <= (int)cluster_abstraction->width && pos.y >= 0 && pos.y <= (int)cluster_abstraction->height);
 }
 
 uchar j1Pathfinding::GetTileAt(const iPoint & pos) const
 {
 	if (CheckBoundaries(pos))
-		return logic_map[(pos.y*width) + pos.x];
+		return cluster_abstraction->GetValueMap(pos.x, pos.y);
 
 	return INVALID_WALK_CODE;
-}
-
-void j1Pathfinding::SetMap(uchar* map, int map_width, int map_height)
-{
-	RELEASE_ARRAY(logic_map);
-	width = map_width;
-	height = map_height;
-	logic_map = new uchar[width * height];
-	memcpy(logic_map, map, width * height);
 }
 
 int j1Pathfinding::CreatePath(Node * start, Node * goal)
@@ -76,7 +90,7 @@ int j1Pathfinding::CreatePath(Node * start, Node * goal)
 					last_path.push_back(item->pos);
 				}
 				last_path.push_back(close.list.begin()->pos);
-				std::reverse(last_path.begin(), last_path.end());
+
 				return ret = last_path.size();
 			}
 			else
@@ -155,14 +169,14 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 
 			//Allocate the path memory
 			std::vector<iPoint>* path = new std::vector<iPoint>;
+			//Add the real pixel precision goal
+			path->push_back(goal);
 
-			//Backtrack & transform to world coordinates (to travel with pixels)
+			//Transform to world coordinates (to travel with pixels)
 			for (item--; item->parent != nullptr; item = close.Find(item->parent->pos))
 			{
 				path->push_back(App->map->MapToWorld(item->pos.x, item->pos.y));
 			}
-			iPoint end = close.list.begin()->pos;
-			path->push_back(App->map->MapToWorld(end.x, end.y));
 
 			//Return the built path
 			return path;

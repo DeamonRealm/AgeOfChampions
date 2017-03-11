@@ -48,7 +48,10 @@ bool j1EntitiesManager::Update(float dt)
 
 	while (item != units.end())
 	{
-		if (item._Ptr->_Myval->path != nullptr)ret = item._Ptr->_Myval->Move();
+		if (item._Ptr->_Myval->path != nullptr)
+		{
+			ret = item._Ptr->_Myval->Move();
+		}
 		
 		item++;
 	}
@@ -515,7 +518,12 @@ bool j1EntitiesManager::SetUnitPath(Unit * target, const iPoint & goal)
 
 	//Set target path
 	target->SetPath(path);
-
+	if (target->GetAction() != WALK)
+	{
+		target->SetAction(WALK);
+		target->Focus(path->front());
+	}
+	
 	return true;
 }
 
