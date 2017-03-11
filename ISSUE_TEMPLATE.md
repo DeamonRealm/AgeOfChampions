@@ -1,29 +1,29 @@
-####Build:
+**Build:**
 
 
 
-####Type:
+**Type:**
 
 
 
-####Severity:
+**Severity:**
 [ ]Critical   
 [ ]Major   
 [ ]Minor   
 
 
-####Priority:
+**Priority:**
 [ ]Urgent  
 [ ]High  
 [ ]Normal  
 [ ]Low  
 
 
-####Steps to reproduce:
+**Steps to reproduce:**
 
 
 
-####Frequency:
+**Frequency:**
 
 
-####Screenshot(optional):
+**Screenshot(optional):**
