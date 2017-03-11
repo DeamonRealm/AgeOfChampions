@@ -50,9 +50,14 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 
 void Entity_Profile::DrawProfile() const
 {
-	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 320 - App->render->camera.x, 630 - App->render->camera.y, &element->GetIcon());
-	name->DrawAt(370, 630);
-	diplomacy->DrawAt(370, 650);
+	//Draw profile background
+	App->render->DrawQuad({ 338 - App->render->camera.x, 628 - App->render->camera.y, 39, 41 }, 148, 148, 148);
+	App->render->DrawQuad({ 340 - App->render->camera.x, 666 - App->render->camera.y, 36, 3 }, 255, 0, 0);
+
+	//Draw icon
+	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 630 - App->render->camera.y, &element->GetIcon());
+	name->DrawAt(390, 630);
+	diplomacy->DrawAt(390, 650);
 	
 }
 
@@ -138,7 +143,7 @@ bool j1Player::PreUpdate()
 	}
 
 	//Generate a Militia unit in the mouse coordinates
-	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
@@ -187,20 +192,38 @@ bool j1Player::PostUpdate()
 
 bool j1Player::CleanUp()
 {
+	//Clear list and vectors
 	actual_population.clear();
 	selected_elements.clear();
+	group_profile.clear();
+
 	delete Selected;
 
 	return true;
 }
 
+//Draw group_profiles
 void j1Player::DrawGroup()
 {
-	int i = 0;
-	while (i < selected_elements.size())
+	SDL_Rect* box = nullptr;
+	uint	  life = 0, max_life = 0;
+
+	int i = selected_elements.size()-1;
+	std::list<Entity*>::const_iterator item = selected_elements.end();
+	while (item != selected_elements.begin())
 	{
+		item--;
+		box = group_profile[i]->GetBox();
+		//Draw profile background
+		App->render->DrawQuad({ box->x - 2 - App->render->camera.x, box->y - 2 - App->render->camera.y, 39, 41 }, 148, 148, 148);
+		App->render->DrawQuad({ box->x - App->render->camera.x, box->y +36 - App->render->camera.y, 36, 3 }, 255, 0, 0);
+
+		//Draw life
+
+		//Draw icon
 		group_profile[i]->Draw(App->debug_mode);
-		i++;
+
+		i--;
 	}
 }
 
@@ -330,8 +353,11 @@ void j1Player::Select_Group()
 		item++;
 	}
 	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
-	else SetGroupProfile();
-
+	else
+	{
+		max_row_units = 16;
+		SetGroupProfile();
+	}
 	LOG("Selected: %i", selected_elements.size());
 }
 
@@ -371,8 +397,11 @@ void j1Player::Select_Type()
 		item++;
 	}
 	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
-	else SetGroupProfile();
-
+	else
+	{
+		max_row_units = 16;
+		SetGroupProfile();
+	}
 }
 
 void j1Player::UnSelect_Entity()
@@ -401,12 +430,18 @@ void j1Player::SetGroupProfile()
 {
 	int i = 0;
 	int j = 0;
+
 	std::list<Entity*>::const_iterator item = selected_elements.begin();
 	while (item != selected_elements.end())
 	{
+		if (i%max_row_units == 0 && i != 0) j++;
+		if (j == 3) {
+			max_row_units++;
+			SetGroupProfile();
+			return;
+		} 
 		group_profile[i]->ChangeTextureRect(item._Ptr->_Myval->GetIcon());
-		group_profile[i]->SetBoxPosition(370 + (i%16) * 37, 630 + j * 37);
-		if (i == 16 || i == 32) j++;
+		group_profile[i]->SetBoxPosition(340 + (i%max_row_units) * (row_size/max_row_units), 630 + j * 42);
 		item++;
 		i++;
 	}

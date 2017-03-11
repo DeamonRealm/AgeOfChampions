@@ -72,7 +72,11 @@ private:
 	uint			stone = 0;
 	uint			population = 0;
 	uint			max_population = 5;
+	
+	//group selection
 	uint			max_selected_units = 60;
+	uint			max_row_units = 16;
+	uint			row_size = 608;
 
 	j1Timer			double_click;
 	bool			double_clickon;
