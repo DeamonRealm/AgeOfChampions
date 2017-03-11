@@ -146,6 +146,8 @@ bool j1Menu::CleanUp()
 
 void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 {
+	if (active == false)return;
+
 	switch (input)
 	{
 	case UP_ARROW:

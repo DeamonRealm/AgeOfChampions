@@ -23,11 +23,12 @@ public:
 	~Entity_Profile();
 
 	void SetEntity(Entity* entity_selected);
+	Entity* GetEntity();
 	void DrawProfile() const;
 
 private:
 
-	Entity*			element;
+	Entity*			element = nullptr;
 
 	UI_String*		name;
 	UI_String*		diplomacy;
@@ -35,6 +36,13 @@ private:
 
 };
 
+enum SELECT_TYPE
+{
+	SINGLE,
+	GROUP,
+	DOUBLECLICK,
+	ADD
+};
 
 //Animator Module -------------------------------
 class j1Player : public j1Module
@@ -105,14 +113,13 @@ public:
 	
 	//Coordinates Methods
 	bool UnitisIn(int x, int y, int width, int height);
-	bool PointisIn(int x, int y);
+	bool PointisIn(int x, int y) const;
 
 	//Select Methods
-	void Select_Entity();
-	void Select_Group();
-	void Select_Type();
+	void Select(SELECT_TYPE type);
 	void UnSelect_Entity();
 	void Expand_SelectionRect();
+	Entity*	GetUpperEntity()const;
 
 	//Selction Panel (Group Functions)
 	void SetGroupProfile();

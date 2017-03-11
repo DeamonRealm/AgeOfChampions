@@ -48,13 +48,20 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	}
 }
 
+Entity * Entity_Profile::GetEntity()
+{
+	return element;
+}
+
 void Entity_Profile::DrawProfile() const
 {
 	//Draw profile background
 	App->render->DrawQuad({ 338 - App->render->camera.x, 628 - App->render->camera.y, 39, 41 }, 148, 148, 148);
 	App->render->DrawQuad({ 340 - App->render->camera.x, 666 - App->render->camera.y, 36, 3 }, 255, 0, 0);
 
-	//Draw icon
+	//Draw life
+
+	//Draw profile
 	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 630 - App->render->camera.y, &element->GetIcon());
 	name->DrawAt(390, 630);
 	diplomacy->DrawAt(390, 650);
@@ -121,17 +128,20 @@ bool j1Player::PreUpdate()
 		selection_rect.y = y;
 		Uint32 double_click_read = double_click.Read();
 
-		Select_Entity();
-		uint selected_size = selected_elements.size();
+		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT)
+		{
+			Select(ADD);
+		}
+		else Select(SINGLE);
 
-		if ((selected_size == 1 && double_click_read == 0)|| (selected_size == 1 && double_click_read >= 500))
+		if ((selected_elements.size() == 1 && double_click_read == 0)|| (selected_elements.size() == 1 && double_click_read >= 250))
 		{
 			double_click.Start();
 		}
-		else if (double_click_read > 0 && double_click_read < 500)
+		else if (double_click_read > 0 && double_click_read < 250)
 		{
 			double_clickon = true;
-			Select_Type();
+			Select(DOUBLECLICK);
 		}
 	}
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
@@ -179,7 +189,7 @@ bool j1Player::PostUpdate()
 		}
 		else
 		{
-			Select_Group();
+			Select(GROUP);
 		}
 		selection_rect = { 0,0,0,0 };
 	}
@@ -215,7 +225,7 @@ void j1Player::DrawGroup()
 		item--;
 		box = group_profile[i]->GetBox();
 		//Draw profile background
-		App->render->DrawQuad({ box->x - 2 - App->render->camera.x, box->y - 2 - App->render->camera.y, 39, 41 }, 148, 148, 148);
+		App->render->DrawQuad({ box->x - 2 - App->render->camera.x, box->y - 2 - App->render->camera.y, 39, 41 }, 138, 138, 138);
 		App->render->DrawQuad({ box->x - App->render->camera.x, box->y +36 - App->render->camera.y, 36, 3 }, 255, 0, 0);
 
 		//Draw life
@@ -258,7 +268,7 @@ bool j1Player::UnitisIn(int x, int y, int width, int height)
 }
 
 //Check if point is inside selection rect
-bool j1Player::PointisIn(int x, int y)
+bool j1Player::PointisIn(int x, int y) const
 {
 	int camera_x, camera_y;
 	camera_x = App->render->camera.x;
@@ -268,146 +278,90 @@ bool j1Player::PointisIn(int x, int y)
 	else return false;
 }
 
-//Select one unit
-void j1Player::Select_Entity()
+//Select Entityes Function
+void j1Player::Select(SELECT_TYPE type)
 {
-	int x, y;
-	App->input->GetMousePosition(x, y);
-
-	x -= App->render->camera.x;
-	y -= App->render->camera.y;
-
-	UnSelect_Entity();
-
-	iPoint item_position;
-	iPoint item_pivot;
-	int rect_width = 0;
-	int rect_height = 0;
-
-	std::list<Unit*>::const_iterator item = actual_population.begin();
-	while (item != actual_population.end())
+	if (type == GROUP || type == DOUBLECLICK)
 	{
-		rect_width = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->w;
-		rect_height = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->h;
-		
-		fPoint pos = item._Ptr->_Myval->GetPosition();
-		
-		item_position = iPoint(pos.x, pos.y);
-		item_pivot = { item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot(),item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot() };
-		item_position -= item_pivot;
+		UNIT_TYPE unit_type = NO_UNIT;
+		int x = 0, y = 0;
+		uint width = 0, height = 0;
 
-		if (x >= item_position.x && x <= item_position.x + rect_width && y >= item_position.y && y <= item_position.y + rect_height)
+		if (type == DOUBLECLICK)
 		{
-			if (selected_elements.begin()._Ptr->_Myval != item._Ptr->_Myval)
+			if (Selected->GetEntity() == nullptr) return;
+			else if (Selected->GetEntity()->GetEntityType() != UNIT) return;
+			App->win->GetWindowSize(width, height);
+
+			selection_rect = { 0, 32, (int)width, 560 };
+			unit_type = ((Unit*)Selected->GetEntity())->GetUnitType();
+		}
+		else if (selection_rect.w == 0 || selection_rect.h == 0) return;
+
+		UnSelect_Entity();
+
+		//Select Entity
+		std::list<Unit*>::const_iterator item = actual_population.begin();
+		while (item != actual_population.end())
+		{
+			if (item._Ptr->_Myval->GetDiplomacy() != ALLY) ;
+			else if (item._Ptr->_Myval->GetEntityType() != UNIT) ;
+			else if (type == DOUBLECLICK && unit_type != item._Ptr->_Myval->GetUnitType()) ;
+			else if (item._Ptr->_Myval->GetDiplomacy() == ALLY && selected_elements.size() < 60)
 			{
-				if (selected_elements.size() == 1)
-				{
-					if (selected_elements.begin()._Ptr->_Myval->GetPosition().y <= item._Ptr->_Myval->GetPosition().y)
-					{
-						selected_elements.begin()._Ptr->_Myval->Deselect();
-						selected_elements.clear();
-					}
-				}
-				if(selected_elements.size() == 0)
+				x = item._Ptr->_Myval->GetPosition().x;
+				x -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot();
+				y = item._Ptr->_Myval->GetPosition().y;
+				y -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot();
+				width = item._Ptr->_Myval->GetSelectionRect()->w;
+				height = item._Ptr->_Myval->GetSelectionRect()->h;
+
+				if (UnitisIn(x, y, width, height))
 				{
 					selected_elements.push_back(item._Ptr->_Myval);
-					LOG("Entity Selected: Type: %s", selected_elements.begin()._Ptr->_Myval->GetName());
-					Selected->SetEntity(item._Ptr->_Myval);
 					item._Ptr->_Myval->Select();
 				}
-			}			
-		}
-		else item._Ptr->_Myval->Deselect();
-		item++;
-	}
-
-}
-
-//Select group of units (only Allys)
-void j1Player::Select_Group()
-{
-	if (selection_rect.w == 0 || selection_rect.h == 0) return;
-	UnSelect_Entity();
-
-	int x = 0, y = 0;
-	int width = 0, height = 0;
-
-	std::list<Unit*>::const_iterator item = actual_population.begin();
-	while (item != actual_population.end())
-	{
-		if (item._Ptr->_Myval->GetDiplomacy() == ALLY && selected_elements.size() < 60)
-		{
-			x = item._Ptr->_Myval->GetPosition().x;
-			x -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot();
-			y = item._Ptr->_Myval->GetPosition().y;
-			y -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot();
-			width = item._Ptr->_Myval->GetSelectionRect()->w;
-			height = item._Ptr->_Myval->GetSelectionRect()->h;
-			
-			if (UnitisIn(x, y, width, height))
-			{
-				selected_elements.push_back(item._Ptr->_Myval);
-				item._Ptr->_Myval->Select();
 			}
+			item++;
 		}
-		item++;
 	}
-	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 	else
 	{
-		max_row_units = 16;
-		SetGroupProfile();
-	}
-	LOG("Selected: %i", selected_elements.size());
-}
+		if (type == SINGLE) UnSelect_Entity();
 
-void j1Player::Select_Type()
-{
-	if (selected_elements.begin()._Ptr->_Myval->GetEntityType() != UNIT) return;
-	uint width = 0, height = 0;
-	App->win->GetWindowSize(width, height);
+		Entity* upper = GetUpperEntity();
 
-	selection_rect = { 0, 32, (int)width, 560 };
+		if (upper == nullptr) return;
+		upper->Select();
 
-	Unit* selected = (Unit*)selected_elements.begin()._Ptr->_Myval;
-	UNIT_TYPE type = selected->GetUnitType();
-	
-	UnSelect_Entity();
-	
-	int x = 0, y = 0;
-	
-	std::list<Unit*>::const_iterator item = actual_population.begin();
-	while (item != actual_population.end())
-	{
-		if (item._Ptr->_Myval->GetUnitType() == type && item._Ptr->_Myval->GetDiplomacy() == ALLY && selected_elements.size() < 60)
+		if (type == SINGLE)
 		{
-			x = item._Ptr->_Myval->GetPosition().x;
-			x -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot();
-			y = item._Ptr->_Myval->GetPosition().y;
-			y -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot();
-			width = item._Ptr->_Myval->GetSelectionRect()->w;
-			height = item._Ptr->_Myval->GetSelectionRect()->h;
-
-			if (UnitisIn(x, y, width, height))
+			UnSelect_Entity();
+			selected_elements.push_back(upper);
+		}
+		else if (upper->GetEntityType() == UNIT)
+		{
+			if (std::find(selected_elements.begin(), selected_elements.end(), upper) == selected_elements.end())
 			{
-				selected_elements.push_back(item._Ptr->_Myval);
-				item._Ptr->_Myval->Select();
+				selected_elements.push_back(upper);
 			}
 		}
-		item++;
 	}
+	
+	//Configure Selection Panel
 	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
-	else
+	else if (selected_elements.size() > 1)
 	{
 		max_row_units = 16;
 		SetGroupProfile();
 	}
 }
 
+//Clean Selected_elements
 void j1Player::UnSelect_Entity()
 {
-	std::list<Unit*>::const_iterator item = actual_population.begin();
-	while (item != actual_population.end())
+	std::list<Entity*>::const_iterator item = selected_elements.begin();
+	while (item != selected_elements.end())
 	{
 		item._Ptr->_Myval->Deselect();
 		item++;
@@ -424,6 +378,44 @@ void j1Player::Expand_SelectionRect()
 	selection_rect.h -= selection_rect.y;
 	
 	App->render->DrawQuad({ selection_rect.x - App->render->camera.x, selection_rect.y - App->render->camera.y, selection_rect.w, selection_rect.h }, 255, 255, 255, 255, false);
+}
+
+//Return Upper Entity
+Entity * j1Player::GetUpperEntity()const
+{
+	int x = 0, y = 0;
+	int width = 0, height = 0;
+
+	App->input->GetMousePosition(x, y);
+	x -= App->render->camera.x;
+	y -= App->render->camera.y;
+
+	fPoint pos;
+	iPoint item_position;
+	iPoint item_pivot;
+
+	Entity* ret = nullptr;
+	std::list<Unit*>::const_iterator item = actual_population.begin();
+	while (item != actual_population.end())
+	{
+		width = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->w;
+		height = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->h;
+		pos = item._Ptr->_Myval->GetPosition();
+		item_position = iPoint(pos.x, pos.y);
+		item_pivot = { item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot(),item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot() };
+		item_position -= item_pivot;
+
+		if (x >= item_position.x && x <= item_position.x + width && y >= item_position.y && y <= item_position.y + height)
+		{
+			if (ret == nullptr) ret = item._Ptr->_Myval;
+			else if (ret->GetPosition().y <= item._Ptr->_Myval->GetPosition().y)
+			{
+				ret = item._Ptr->_Myval;
+			}
+		}
+		item++;
+	}
+	return ret;
 }
 
 void j1Player::SetGroupProfile()
@@ -446,4 +438,3 @@ void j1Player::SetGroupProfile()
 		i++;
 	}
 }
-
