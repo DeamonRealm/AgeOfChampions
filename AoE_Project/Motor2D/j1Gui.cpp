@@ -6,6 +6,7 @@
 #include "j1Textures.h"
 #include "j1Fonts.h"
 #include "j1Input.h"
+#include "j1FileSystem.h"
 
 //UI_Elements
 #include "UI_Element.h"
@@ -36,8 +37,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
-	//atlas_file_name = conf.child("menu").attribute("file").as_string("");
-	
+
 	background_file_name = conf.child("background").attribute("file").as_string("");
 	mainmenu_file_name = conf.child("menu").attribute("file").as_string("");
 	standardmenu_file_name = conf.child("standard").attribute("file").as_string("");
@@ -67,6 +67,11 @@ bool j1Gui::Start()
 	ui_textures.push_back(icons);
 	ui_textures.push_back(hud);
 	
+	LoadCursorTypes();
+	ChangeMouseTexture(DEFAULT);
+
+	SDL_ShowCursor(0);
+
 	return true;
 }
 
@@ -112,6 +117,7 @@ bool j1Gui::PostUpdate()
 	{ 
 		SDL_ShowCursor(1);
 	}
+	
 
 	// Update & draw the UI screens
 	std::list<UI_Element*>::iterator item = screens.begin();
@@ -280,16 +286,57 @@ uint j1Gui::CalculateUpperElement(UI_Element* parent, uint layer)
 	return uint(layer);
 }
 
-void j1Gui::ChangeMouseTexture(UNIT_TYPE type)
+void j1Gui::ChangeMouseTexture(CURSOR_TARGET type)
 {
+	cursor_type = type;
+	cursor_rect = cursors_rects[type];
+	cursor_pivot = cursors_pivots[type];
 }
 
-void j1Gui::ChangeMouseTexture(RESOURCE_TYPE type)
+void j1Gui::LoadCursorTypes()
 {
+	int vector_size = 8;
+	cursors_rects.reserve(vector_size);
+	cursors_pivots.reserve(vector_size);
+	
+	//Load Menu configuration data from loaded folder
+	char* buffer = nullptr;
+	int size = App->fs->Load("gui/ui_icons.xml", &buffer);
+	pugi::xml_document icons_data;
+	pugi::xml_parse_result result = icons_data.load_buffer(buffer, size);
+	RELEASE(buffer);
+
+	pugi::xml_node unit_node = icons_data.first_child().child("Mouse").first_child();
+	
+	SDL_Rect rect = { 0,0,0,0 };
+	iPoint pivot = { 0,0 };
+
+	int i = 0;
+	while (i < vector_size)
+	{
+		rect = { unit_node.attribute("x").as_int(0),unit_node.attribute("y").as_int(0),unit_node.attribute("w").as_int(0),unit_node.attribute("h").as_int(0) };
+
+		float pivx = unit_node.attribute("pX").as_float(0.0f)*rect.w;
+		pivx = (pivx >(floor(pivx) + 0.5f)) ? ceil(pivx) : floor(pivx);
+		pivot.x = (int)pivx;
+		float pivy = unit_node.attribute("pY").as_float(0.0f)*rect.h;
+		pivy = (pivy > (floor(pivy) + 0.5f)) ? ceil(pivy) : floor(pivy);
+		pivot.y = (int)pivy;
+
+		cursors_rects.push_back(rect);
+		cursors_pivots.push_back(pivot);
+
+		unit_node = unit_node.next_sibling();
+		i++;
+	}
+
 }
 
-void j1Gui::ChangeMouseTexture(BUILDING_TYPE type)
+void j1Gui::DrawMouseTexture()
 {
+	int x = 0, y = 0;
+	App->input->GetMousePosition(x, y);
+	App->render->Blit(icons, x - cursor_pivot.x - App->render->camera.x, y - cursor_pivot.y - App->render->camera.y, &cursor_rect);
 }
 
 void j1Gui::SetDefaultInputTarget(j1Module * target)

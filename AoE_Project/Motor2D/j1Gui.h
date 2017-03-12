@@ -3,12 +3,14 @@
 
 #include "j1Module.h"
 
+#include "p2Point.h"
+#include "SDL\include\SDL_rect.h"
+
+
 struct UI_Element;
 struct SDL_Texture;
 enum UI_TYPE;
-enum UNIT_TYPE;
-enum RESOURCE_TYPE;
-enum BUILDING_TYPE;
+
 
 enum GUI_INPUT {
 
@@ -31,12 +33,14 @@ enum GUI_INPUT {
 
 enum CURSOR_TARGET
 {
-	UNKNOWN,
-	MENU,
-	HAND,
-	SWORD,
-	BUILD,
-	CHOOP
+	DEFAULT,
+	SELECT,
+	ATTACK,
+	REPAIR,
+	GUARD,
+	CAPTURE,
+	MARK,
+	FIRE
 };
 
 enum TEXTURE_ID
@@ -104,6 +108,11 @@ private:
 
 	//Cursor type;
 	CURSOR_TARGET			cursor_type;
+	SDL_Rect				cursor_rect;
+	iPoint					cursor_pivot;
+
+	std::vector<SDL_Rect>	cursors_rects;
+	std::vector<iPoint>		cursors_pivots;
 
 public:
 
@@ -127,9 +136,11 @@ public:
 	uint				CalculateUpperElement(UI_Element* parent, uint layer = 0);
 
 	//mouse function
-	void				ChangeMouseTexture(UNIT_TYPE type);
-	void				ChangeMouseTexture(RESOURCE_TYPE type);
-	void				ChangeMouseTexture(BUILDING_TYPE type);
+	void				ChangeMouseTexture(CURSOR_TARGET type);
+	void				LoadCursorTypes();
+
+	//Draw mouse
+	void				DrawMouseTexture();
 
 	//Gui taget funtions
 	void				SetDefaultInputTarget(j1Module* target);

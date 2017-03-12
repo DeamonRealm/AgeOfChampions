@@ -136,6 +136,7 @@ bool j1Menu::Update(float dt)
 
 bool j1Menu::PostUpdate()
 {
+	if (SDL_ShowCursor(-1) == 0) App->gui->DrawMouseTexture();
 	return true;
 }
 
@@ -185,7 +186,8 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		break;
 	case MOUSE_RIGHT_BUTTON:
 		break;
-	case MOUSE_IN:
+	case MOUSE_IN: if (target->GetUItype() == BUTTON || target->GetUItype() == FIXED_BUTTON) App->gui->ChangeMouseTexture(SELECT);
+				   else App->gui->ChangeMouseTexture(DEFAULT);
 		break;
 	case MOUSE_OUT:
 		break;

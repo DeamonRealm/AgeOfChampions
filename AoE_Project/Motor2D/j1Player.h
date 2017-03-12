@@ -100,6 +100,9 @@ private:
 
 	Entity_Profile* Selected;
 
+	//Used for mouse detection
+	Entity*			UpperEntity = nullptr;
+
 
 public:
 
@@ -119,7 +122,7 @@ public:
 	void Select(SELECT_TYPE type);
 	void UnSelect_Entity();
 	void Expand_SelectionRect();
-	Entity*	GetUpperEntity()const;
+	Entity*	GetUpperEntity(int x, int y)const;
 
 	//Selction Panel (Group Functions)
 	void SetGroupProfile();

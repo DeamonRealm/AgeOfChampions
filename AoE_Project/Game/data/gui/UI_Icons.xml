@@ -140,20 +140,20 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 	</Minimap>
 	<Mouse>
     <sprite n="Arrow" x="264" y="246" w="24" h="32" pX="0" pY="0"/>
-    <sprite n="Arrow1" x="288" y="246" w="27" h="32" pX="0" pY="0"/>
+    <sprite n="SelectUnit" x="82" y="287" w="37" h="37" pX="0" pY="0"/>
     <sprite n="Attack" x="315" y="246" w="35" h="33" pX="0" pY="0"/>
+    <sprite n="Repair" x="395" y="246" w="35" h="35" pX="0" pY="0"/>
+    <sprite n="Guard" x="119" y="287" w="28" h="46" pX="0" pY="0"/>
+    <sprite n="Capture" x="597" y="246" w="54" h="29" pX="0.5" pY="0.5"/>
     <sprite n="Banner" x="350" y="246" w="45" h="41" pX="0.5" pY="0.5"/>
-    <sprite n="Build" x="395" y="246" w="35" h="35" pX="0" pY="0"/>
+    <sprite n="ShotFire" x="466" y="246" w="35" h="37" pX="0" pY="0"/>
     <sprite n="CantBuild" x="430" y="246" w="36" h="22" pX="0.5" pY="0.5"/>
-    <sprite n="Chop" x="466" y="246" w="35" h="37" pX="0" pY="0"/>
     <sprite n="EnterBuilding" x="501" y="246" w="32" h="38" pX="0" pY="0"/>
     <sprite n="ExitBuilding" x="533" y="246" w="32" h="38" pX="0" pY="0"/>
     <sprite n="FishingSpot" x="565" y="246" w="32" h="26" pX="0.5" pY="0.5"/>
-    <sprite n="Heal_0" x="597" y="246" w="54" h="29" pX="0.5" pY="0.5"/>
+    <sprite n="Arrow1" x="288" y="246" w="27" h="32" pX="0" pY="0"/>
     <sprite n="Heal_1" x="0" y="287" w="42" h="22" pX="0.5" pY="0.5"/>
     <sprite n="HorseMove" x="42" y="287" w="40" h="28" pX="0" pY="0"/>
-    <sprite n="SelectUnit" x="82" y="287" w="37" h="37" pX="0" pY="0"/>
-    <sprite n="Shield" x="119" y="287" w="28" h="46" pX="0" pY="0"/>
     <sprite n="ShipDown" x="147" y="287" w="43" h="42" pX="0" pY="0"/>
     <sprite n="ShipUp" x="190" y="287" w="45" h="43" pX="0" pY="0"/>
     <sprite n="Time" x="235" y="287" w="26" h="38" pX="0" pY="0"/>

@@ -122,6 +122,10 @@ bool j1Player::PreUpdate()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 
+	UpperEntity = GetUpperEntity(x,y);
+	if (UpperEntity != nullptr) App->gui->ChangeMouseTexture(SELECT);
+	else App->gui->ChangeMouseTexture(DEFAULT);
+
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		selection_rect.x = x;
@@ -196,6 +200,11 @@ bool j1Player::PostUpdate()
 
 	if (selected_elements.size() == 1) Selected->DrawProfile();
 	else if (selected_elements.size() > 1) DrawGroup();
+
+
+
+	//Draw Mouse Last one
+	if (SDL_ShowCursor(-1) == 0) App->gui->DrawMouseTexture();
 
 	return true;
 }
@@ -329,21 +338,19 @@ void j1Player::Select(SELECT_TYPE type)
 	{
 		if (type == SINGLE) UnSelect_Entity();
 
-		Entity* upper = GetUpperEntity();
-
-		if (upper == nullptr) return;
-		upper->Select();
+		if (UpperEntity == nullptr) return;
+		UpperEntity->Select();
 
 		if (type == SINGLE)
 		{
 			UnSelect_Entity();
-			selected_elements.push_back(upper);
+			selected_elements.push_back(UpperEntity);
 		}
-		else if (upper->GetEntityType() == UNIT)
+		else if (UpperEntity->GetEntityType() == UNIT)
 		{
-			if (std::find(selected_elements.begin(), selected_elements.end(), upper) == selected_elements.end())
+			if (std::find(selected_elements.begin(), selected_elements.end(), UpperEntity) == selected_elements.end())
 			{
-				selected_elements.push_back(upper);
+				selected_elements.push_back(UpperEntity);
 			}
 		}
 	}
@@ -381,12 +388,12 @@ void j1Player::Expand_SelectionRect()
 }
 
 //Return Upper Entity
-Entity * j1Player::GetUpperEntity()const
+Entity * j1Player::GetUpperEntity(int x, int y)const
 {
-	int x = 0, y = 0;
+//	int x = 0, y = 0;
 	int width = 0, height = 0;
 
-	App->input->GetMousePosition(x, y);
+//	App->input->GetMousePosition(x, y);
 	x -= App->render->camera.x;
 	y -= App->render->camera.y;
 
