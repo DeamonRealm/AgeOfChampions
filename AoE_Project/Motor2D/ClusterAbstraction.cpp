@@ -37,6 +37,12 @@ int Cluster::GetClusterId()
 {
 	return id;
 }
+void Cluster::SetClusterMap(uchar* data)
+{
+	RELEASE_ARRAY(logic_cluster_map);
+	logic_cluster_map = new uchar[width*height];
+	memcpy(logic_cluster_map, data, width*height);
+}
 void Cluster::AddNode(int get) 
 {
 	nodes.push_back(get);
@@ -69,6 +75,7 @@ ClusterAbstraction::~ClusterAbstraction()
 	best_path.clear();
 	entrys.clear();
 }
+
 void ClusterAbstraction::CreateClusters()
 {
 	int row = 0, column = 0, clusterID = 0;
@@ -130,7 +137,7 @@ int ClusterAbstraction::GetClusterID(int clusterRow, int clusterColumn)
 
 Cluster& ClusterAbstraction::FindClusterID(iPoint position)
 {
-	if (position.x<0 || position.x>width || position.y < 0 || position.y >width) {
+	if (position.x>0 || position.x<width || position.y > 0 || position.y <height) {
 		for (int i = 0; i < clusters.size(); i++)
 		{
 			Cluster& item = clusters[i];
@@ -139,8 +146,8 @@ Cluster& ClusterAbstraction::FindClusterID(iPoint position)
 
 			int width = item.GetWidth();
 			int height = item.GetHeight();
-			if (posX >= position.x && posX + width < position.x
-				&&posY >= position.y && posY + height < position.y) {
+			if (posX <= position.x && posX + width > position.x
+				&&posY <= position.y && posY + height > position.y) {
 				return item;
 			}
 
@@ -267,13 +274,11 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 		node->SetClusterID(cluster.GetClusterId());
 		cluster.AddNode(node_num);
 		//	LOG("Node %i Generated x = %i, y = %i", numNode2,node2->GetPositionX(), node2->GetPositionY());
-		return node;
-	}
-	else {
+		
 		std::vector<Node*> temp_nodes;
 		int map_size = cluster.GetHeight()*cluster.GetWidth();
 		uchar* temp_map = new uchar[map_size];
-	
+
 		int x = 0;
 		int y = 0;
 		int node_number = 0;
@@ -281,6 +286,7 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 		int cluster_pos_y = cluster.GetPosisitionY(), cluster_pos_x = cluster.GetPosisitionX();
 		int cluster_height = cluster.GetHeight(), cluster_width = cluster.GetWidth();
 
+		Node* conector_node = nullptr;
 		for (int i = cluster_pos_y; i < (cluster_pos_y + cluster_height); i++)
 		{
 			x = 0;
@@ -293,6 +299,9 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 					tmp_node->SetPosition(x, y);
 					tmp_node->nodeNum = node_number;
 					temp_nodes.push_back(tmp_node);
+					if (tmp_node->nodeNum == node_num) {
+						conector_node = tmp_node;
+					}
 				}
 				x++;
 			}
@@ -301,17 +310,18 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 
 		int distance = -1;
 		int node_size = temp_nodes.size();
+		
 		for (int i = 0; i < node_size; i++)
 		{
-			int node_num1 = check_num;
+			int node_num1 = node_num;
 			int node_num2 = temp_nodes[i]->nodeNum;
 			if (node_num1 == node_num2)
 				continue;
 
 			if (!EdgeExist(cluster, node_num1, node_num2, &graph))
 			{
-				SetMap(cluster_width, cluster_height, temp_map);
-				distance = App->pathfinding->CreatePath(graph.GetNode(node_num1), temp_nodes[i]);
+				App->pathfinding->SetMap(cluster_width, cluster_height, temp_map);
+				distance = App->pathfinding->CreatePath(conector_node, temp_nodes[i]);
 				if (distance != -1)
 				{
 					Edge* set = graph.AddEdge(new Edge(graph.GetNode(node_num1), graph.GetNode(node_num2), distance, INTRA_EDGE));
@@ -321,11 +331,27 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 				}
 			}
 		}
+		return node;
+	}
+	else {
+	
 		return graph.GetNode(check_num);
 	}
 }
 void ClusterAbstraction::DeleteNode(Node* start, Node* goal)
 {
+
+	bool delete_goal = true;
+	//Check if goal is a entry node
+	for (int i = 0; i < goal->GetParentSize(); i++)
+	{
+		if (goal->GetParentIDAt(i)->GetEdgeType() == INTRA_EDGE) {
+			delete_goal = false;
+		}
+	}
+	if (delete_goal) {
+		DeleteNode(goal);
+	}
 	bool delete_start = true;
 	//Check if start is a entry node
 	for (int i = 0; i < start->GetParentSize(); i++)
@@ -337,24 +363,16 @@ void ClusterAbstraction::DeleteNode(Node* start, Node* goal)
 	if (delete_start) {
 		DeleteNode(start);
 	}
-	bool delete_goal = true;
-	//Check if goal is a entry node
-	for (int i = 0; i < goal->GetParentSize(); i++)
-	{
-		if (goal->GetParentIDAt(i)->GetEdgeType() == INTRA_EDGE) {
-			delete_start = false;
-		}
-	}
-	if (delete_start) {
-		DeleteNode(goal);
-	}
 }
 void ClusterAbstraction::DeleteNode(Node * node)
 {
 	for (int i = 0; i < node->GetParentSize(); i++)
 	{
-		
+		Edge* edge = node->GetParentIDAt(i)->RemoveParentNode();
+
 	}
+	graph.RemoveNode(node);
+
 }
 bool ClusterAbstraction::EdgeExist(Cluster & cluster, int nodeID1, int nodeID2, Graph * graph)
 {
@@ -561,8 +579,7 @@ void ClusterAbstraction::CreateIntraEdges(Graph * graph)
 
 				if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
 				{
-
-					SetMap(cluster_width, cluster_height, temp_map);
+					App->pathfinding->SetMap(cluster_width, cluster_height, temp_map);
 					distance = App->pathfinding->CreatePath(temp_nodes[i], temp_nodes[j]);
 					if (distance != -1) {
 
@@ -581,52 +598,117 @@ void ClusterAbstraction::CreateIntraEdges(Graph * graph)
 	}
 
 }
-void ClusterAbstraction::CreateBFS(Node * from, Node * to)
+int ClusterAbstraction::CreateBFS(Node * from, Node * to)
 {
-	std::queue<Node*> nodes;
-	for (int i = 0; i < graph.GetNodesSize(); i++) {
+	int ret = -1;
+	
+	std::queue<Node*> nodes1;
+	std::queue<Node*> nodes2;
+	bool look_queue1 = true;
+	for (int i = 0; i < graph.GetNodesSize(); i++) 
+	{
 		graph.GetNodesAt(i)->ResetNode();
 	}
-	Node* goals = nullptr;
-	nodes.push(from);
-	Node* tmp = nodes.front();
+	std::vector<Node*> goals;
+	nodes1.push(from);
+	Node* tmp = nodes1.front();
 	bool goal = false;
-
 	tmp->visited = true;
-	while (goal != true){
-		nodes.pop();
+	int cycle = tmp->GetParentSize();
+	while (goal != true)
+	{
+		if (look_queue1)
+		{
+			nodes1.pop();
+			for (int i = 0; i < tmp->GetParentSize(); i++)
+			{
+				Node* objective_node = tmp->GetParentIDAt(i)->GetTheOtherNode(tmp->nodeNum);
+				if (objective_node->visited != true)
+				{
+					if (objective_node == to) 
+					{
+						objective_node->SetTrack(tmp);
+						objective_node->visited = true;
+						goals.push_back(objective_node);
+					}
+					else {
+						objective_node->SetTrack(tmp);
 
-		for (int i = 0; i < tmp->GetParentSize(); i++) {
-			Node* objective_node = tmp->GetParentIDAt(i)->GetTheOtherNode(tmp->nodeNum);
-			if (objective_node->visited != true) {
-				if (objective_node == to) {
-					objective_node->SetTrack(tmp);
-					objective_node->visited = true;
-					goals = objective_node;
-					goal = true;
-				}
-				else {
-					objective_node->SetTrack(tmp);
-
-					objective_node->visited = true;
-					nodes.push(objective_node);
+						objective_node->visited = true;
+						nodes2.push(objective_node);
+					}
 				}
 			}
+			if (!nodes1.empty())
+				tmp = nodes1.front();
+			else {
+				if (!goals.empty()) 
+				{
+					goal = true;
+				}
+				look_queue1 = false;
+			}
 		}
-		tmp = nodes.front();
+		else
+		{
+			nodes2.pop();
+			for (int i = 0; i < tmp->GetParentSize(); i++)
+			{
+				Node* objective_node = tmp->GetParentIDAt(i)->GetTheOtherNode(tmp->nodeNum);
+				if (objective_node->visited != true)
+				{
+					if (objective_node == to) 
+					{
+						objective_node->SetTrack(tmp);
+						objective_node->visited = true;
+						goals.push_back(objective_node);
+						goal = true;
+					}
+					else 
+					{
+						objective_node->SetTrack(tmp);
+
+						objective_node->visited = true;
+						nodes1.push(objective_node);
+					}
+				}
+			}
+			if (!nodes2.empty())
+				tmp = nodes2.front();			
+			else {
+				if (!goals.empty())
+				{
+					goal = true;
+				}
+				look_queue1 = false;
+			}
+		}
 		
 	}
 	if (goal) {
 		best_path.clear();
-		Node* set_goal = goals;
+		Node* set_goal = nullptr;
+
+		while (!goals.empty()) {
+			Node* set_goal = goals.back();
+		}
 		while (set_goal->nodeNum != from->nodeNum) {
 			best_path.push_back(set_goal);
 			set_goal = set_goal->GetTrackBack();
 		}
 		best_path.push_back(set_goal);
-		std::reverse(best_path.begin(), best_path.end());
+		ret = best_path.size();
 	}
+	return ret;
 
+}
+std::vector<Node*> ClusterAbstraction::GetBestPath()
+{
+	return best_path;
+}
+Node * ClusterAbstraction::GetBestPathAt(int index)
+{
+	return best_path[index];
 }
 Node* Graph::GetNode(int i) 
 {
@@ -660,16 +742,17 @@ int Graph::AddNode(Node * node)
 	return -1;
 }
 
-void Graph::RemoveNode(Node * node, int & ret)
+void Graph::RemoveNode(Node * node)
 {
 	int remove_id = node->nodeNum;
-	
-	Node* tmp = GetNode(remove_id);
-	for (int i = 0; i < tmp->GetParentSize(); i++) {
+	if (nodes.back()->nodeNum == remove_id) {
+		nodes.pop_back();
 	}
+}
 
-	//for(int i = 0;i<edges.size)
-	//nodes.erase(node);
+void Graph::RemoveEdge(Edge* edge)
+{
+	//edges.
 }
 
 
@@ -728,6 +811,13 @@ EdgeType Edge::GetEdgeType()
 	return type;
 }
 
+Edge * Edge::RemoveParentNode()
+{
+	nodeNum1->RemoveParent(this);
+	nodeNum2->RemoveParent(this);
+	return this;
+}
+
 void Node::SetPosition(int x, int y)
 {
 	posX = x;
@@ -780,8 +870,14 @@ Node * Node::GetTrackBack()
 	return track_back;
 }
 
-void Node::RemoveParent(int node_id)
+int Node::GetClusterId()
 {
+	return clusterID;
+}
+
+void Node::RemoveParent(Edge* edge)
+{
+	parent.remove(edge);
 	//parent_ID.erase(node_id);
 }
 

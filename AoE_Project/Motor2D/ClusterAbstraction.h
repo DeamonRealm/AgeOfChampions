@@ -29,7 +29,9 @@ public:
 	Node* GetNodeNum1();
 	Node* GetNodeNum2();
 	Node* GetTheOtherNode(int nodeID);
+	//int GetDistanceWith(int otherNode);
 	EdgeType GetEdgeType();
+	Edge* RemoveParentNode();
 private:
 	int distance;
 	Node* nodeNum1;
@@ -49,8 +51,8 @@ public:
 	Edge* GetParentIDAt(int index);
 	int GetParentSize();
 	Node* GetTrackBack();
-
-	void RemoveParent(int node_id);
+	int GetClusterId();
+	void RemoveParent(Edge* edge);
 	void ResetNode();
 	int nodeNum;
 	bool visited = false;
@@ -75,7 +77,8 @@ public:
 	Edge* AddEdge(Edge* edge);
 	
 	int AddNode(Node* edge);
-	void RemoveNode(Node* node, int &ret);
+	void RemoveNode(Node* node);
+	void RemoveEdge(Edge* edge);
 	int EdgeSize();
 	int GetNodesSize()const;
 	Node* GetNodesAt(int index)const;
@@ -98,6 +101,7 @@ public:
 	int GetWidth();
 	int GetHeight();
 	int GetClusterId();
+	void SetClusterMap(uchar* data);
 	void AddNode(int get);
 private:
 
@@ -109,6 +113,8 @@ private:
 	int						column;
 	int						id;
 	std::vector<int>		nodes;
+	uchar*					logic_cluster_map = nullptr;
+
 };
 
 class Entry
@@ -165,7 +171,7 @@ public:
 	void CreateEntryVertical(int start, int end, int x, int row, int column);
 	//Node Functions
 	int NodeExist(Cluster& cluster,int posX,int posY, Graph* graph);
-	
+	//void SetNodes(const iPoint& origin, const iPoint& goal);
 	Node* PutNode(const iPoint& pos);
 	
 	void DeleteNode(Node* start, Node* goal);
@@ -178,8 +184,9 @@ public:
 	void SetNodesOnClusters(Graph* graph);
 	void CreateIntraEdges(Graph* graph);
 
-	void CreateBFS(Node* from, Node* to);
-	std::vector<Node*>		best_path;
+	int CreateBFS(Node* from, Node* to);
+	std::vector<Node*> GetBestPath();
+	Node* GetBestPathAt(int index);
 	Graph					graph;
 
 public:
@@ -190,6 +197,7 @@ public:
 	uint					clusterSize = 0;
 	std::vector<Entry>		entrys;
 	std::vector<Cluster>	clusters;
+	std::vector<Node*>		best_path;
 
 
 	//This only works with a single level of terrain in case we have more than one unit size we will have to add a vector map

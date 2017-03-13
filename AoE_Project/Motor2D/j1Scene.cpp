@@ -11,6 +11,7 @@
 #include "j1Console.h"
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
+#include "j1Pathfinding.h"
 //UI Elements
 #include "UI_Text_Box.h"
 #include "UI_Button.h"
@@ -91,14 +92,16 @@ bool j1Scene::Update(float dt)
 {
 	// Gui Upper Element ---------------------------
 	/*
+
 	App->gui->CalculateUpperElement(scene_1_screen);
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
 		j1Timer ptimer;
-		YOLO = new j1ClusterAbstraction(App->map, 10);
+		App->pathfinding->InitClusterAbstraction();
 		LOG("TIME %f", ptimer.ReadSec());
 	}
-	
+	*/
+	/*
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
 		j1Timer ptimer;

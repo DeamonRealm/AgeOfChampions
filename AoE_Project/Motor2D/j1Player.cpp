@@ -152,7 +152,7 @@ bool j1Player::PreUpdate()
 	{
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 		{
-			App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(x - App->render->camera.x, y - App->render->camera.y));
+		//	App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(x - App->render->camera.x, y - App->render->camera.y));
 		}
 	}
 

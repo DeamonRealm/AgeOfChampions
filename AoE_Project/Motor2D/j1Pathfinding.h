@@ -22,9 +22,12 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
+	void SetMap(uint width, uint height, uchar* data);
+	uchar GetValueMap(int x, int y) const;
 private:
-
+	uchar* logic_map;
+	int width;
+	int height;
 	//A pointer to the last path generated
 	std::vector<iPoint> last_path;
 	//Map cluster abstraction
@@ -40,6 +43,7 @@ public:
 	//Functionality ---------
 	//Methods used during the paths creation to work with map data
 	// Check if the cell coordinate is walkable
+	void	InitClusterAbstraction();
 	bool	IsWalkable(const iPoint& destination)const;
 	// Check if the boundaries of x coordinate are walkable
 	bool	CheckBoundaries(const iPoint& pos) const;
@@ -48,8 +52,8 @@ public:
 
 	// Create a path with two nodes
 	int	CreatePath(Node* start, Node*goal);
-	// Create a path with two coordinates
 	std::vector<iPoint>* CreatePath(const iPoint& origin, const iPoint& goal);
+	// Create a path with two coordinates
 
 };
 /// -----------------------------------

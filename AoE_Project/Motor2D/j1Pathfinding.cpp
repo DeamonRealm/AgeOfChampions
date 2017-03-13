@@ -9,7 +9,6 @@
 // Constructors =======================
 j1Pathfinding::j1Pathfinding()
 {
-
 }
 
 // Destructors ========================
@@ -28,6 +27,7 @@ bool j1Pathfinding::Start()
 
 	//Load debug tiles trexture
 	path_texture = App->tex->Load("maps/path_tex.png");
+
 	return true;
 }
 
@@ -35,6 +35,21 @@ bool j1Pathfinding::CleanUp()
 {
 	delete cluster_abstraction;
 	return true;
+}
+
+void j1Pathfinding::SetMap(uint width, uint height, uchar * data)
+{
+	this->width = width;
+	this->height = height;
+
+	RELEASE_ARRAY(logic_map);
+	logic_map = new uchar[width*height];
+	memcpy(logic_map, data, width*height);
+}
+
+void j1Pathfinding::InitClusterAbstraction()
+{
+	cluster_abstraction = new ClusterAbstraction(App->map, 10);
 }
 
 //Functionality =======================
@@ -57,9 +72,14 @@ bool j1Pathfinding::CheckBoundaries(const iPoint & pos) const
 uchar j1Pathfinding::GetTileAt(const iPoint & pos) const
 {
 	if (CheckBoundaries(pos))
-		return cluster_abstraction->GetValueMap(pos.x, pos.y);
+		return GetValueMap(pos.x, pos.y);
 
 	return INVALID_WALK_CODE;
+}
+
+uchar j1Pathfinding::GetValueMap(int x, int y) const
+{
+	return logic_map[(y*width) + x];
 }
 
 int j1Pathfinding::CreatePath(Node * start, Node * goal)
@@ -84,7 +104,7 @@ int j1Pathfinding::CreatePath(Node * start, Node * goal)
 			if (close.list.back().pos == destination)
 			{
 				std::list<PathNode>::const_iterator item = close.list.end();
-
+				last_path.clear();
 				for (item--; item->parent != nullptr; item = close.Find(item->parent->pos))
 				{
 					last_path.push_back(item->pos);
@@ -126,6 +146,87 @@ int j1Pathfinding::CreatePath(Node * start, Node * goal)
 	return ret;
 }
 
+std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoint & destination)
+{
+	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
+	iPoint map_goal = App->map->WorldToMap(destination.x, destination.y);
+	SetMap(cluster_abstraction->width, cluster_abstraction->height, cluster_abstraction->logic_map);
+
+	if (!IsWalkable(map_origin)||!IsWalkable(map_goal))
+	{
+		return nullptr;
+	}
+
+	Node* start = nullptr;
+	Node* goal = nullptr;
+
+	start = cluster_abstraction->PutNode(map_origin);
+	goal = cluster_abstraction->PutNode(map_goal);
+	if (start->GetClusterId() == goal->GetClusterId()) 
+	{
+		CreatePath(start, goal);
+		std::vector<iPoint>* path = new std::vector<iPoint>;
+
+		for (int i = 0; i < last_path.size(); i++) 
+		{
+			path->push_back(App->map->MapToWorld(last_path[i].x, last_path[i].y));
+		}
+		
+		std::reverse(path->begin(), path->end());
+
+		//Return the built path
+		return path;
+	}
+	else 
+	{
+		int bfs = cluster_abstraction->CreateBFS(start, goal);
+		if (bfs != -1)
+		{
+			std::vector<iPoint>* path = new std::vector<iPoint>;
+			int best_path_size = cluster_abstraction->GetBestPath().size();
+			int node_pos2 = best_path_size - 1;
+			int node_pos1 = node_pos2-1;
+
+			while (node_pos1 != 0)
+			{
+				Node* start= cluster_abstraction->GetBestPathAt(node_pos1);
+				Node* goal = cluster_abstraction->GetBestPathAt(node_pos2);
+				if (start->GetClusterId() != goal->GetClusterId())
+				{
+
+				}
+				else
+				{
+					CreatePath(start, goal);
+					for (int i = 0; i < last_path.size(); i++)
+					{
+						if (path->size() == 0) {
+							path->push_back(App->map->MapToWorld(last_path[i].x, last_path[i].y));
+						}
+						else if (path->back() != last_path[i])
+						{
+							path->push_back(App->map->MapToWorld(last_path[i].x, last_path[i].y));
+						}
+					
+					}
+
+				}		
+
+
+				node_pos1--;
+				node_pos2--;
+
+			}
+			cluster_abstraction->DeleteNode(start, goal);
+			std::reverse(path->begin(), path->end());
+			return path;
+		}
+	}
+	
+	//get 2 nodes if they are in the same cluster get the cluster map
+	//if not are in the same cluster set node2 parent of node1
+}
+/*
 std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoint & goal)
 {
 	if (origin == goal)
@@ -164,22 +265,6 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 		if (close.list.back().pos == goal_p)
 		{
 
-			//Build the optimal path with the visited nodes
-			std::list<PathNode>::const_iterator item = close.list.end();
-
-			//Allocate the path memory
-			std::vector<iPoint>* path = new std::vector<iPoint>;
-			//Add the real pixel precision goal
-			path->push_back(goal);
-
-			//Transform to world coordinates (to travel with pixels)
-			for (item--; item->parent != nullptr; item = close.Find(item->parent->pos))
-			{
-				path->push_back(App->map->MapToWorld(item->pos.x, item->pos.y));
-			}
-
-			//Return the built path
-			return path;
 		}
 		else
 		{
@@ -223,6 +308,7 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 	LOG("Path not found :(");
 	return nullptr;
 }
+*/
 /// -----------------------------------
 
 
