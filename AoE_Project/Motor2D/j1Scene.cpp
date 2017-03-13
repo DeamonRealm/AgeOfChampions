@@ -91,7 +91,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	// Gui Upper Element ---------------------------
-	/*
+	
 
 	App->gui->CalculateUpperElement(scene_1_screen);
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
@@ -100,7 +100,7 @@ bool j1Scene::Update(float dt)
 		App->pathfinding->InitClusterAbstraction();
 		LOG("TIME %f", ptimer.ReadSec());
 	}
-	*/
+	
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{

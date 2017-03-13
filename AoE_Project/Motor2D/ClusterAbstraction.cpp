@@ -374,6 +374,18 @@ void ClusterAbstraction::DeleteNode(Node * node)
 	graph.RemoveNode(node);
 
 }
+int ClusterAbstraction::GetDistanceOver(Node * start, Node * goal)
+{
+	for (int i = 0; i < start->GetParentSize(); i++) {
+		for (int j = 0; j < goal->GetParentSize(); j++) {
+			if (start->GetParentIDAt(i) == start->GetParentIDAt(j)
+				&& start->GetParentIDAt(i)->GetTheOtherNode(start->nodeNum)==goal) {
+				return start->GetParentIDAt(i)->GetDistance();
+			}
+		}
+	}
+	return 0;
+}
 bool ClusterAbstraction::EdgeExist(Cluster & cluster, int nodeID1, int nodeID2, Graph * graph)
 {
 	bool ret = false;
@@ -647,6 +659,8 @@ int ClusterAbstraction::CreateBFS(Node * from, Node * to)
 					goal = true;
 				}
 				look_queue1 = false;
+				tmp = nodes2.front();
+
 			}
 		}
 		else
@@ -680,7 +694,9 @@ int ClusterAbstraction::CreateBFS(Node * from, Node * to)
 				{
 					goal = true;
 				}
-				look_queue1 = false;
+				look_queue1 = true;
+				tmp = nodes1.front();
+
 			}
 		}
 		
@@ -688,9 +704,22 @@ int ClusterAbstraction::CreateBFS(Node * from, Node * to)
 	if (goal) {
 		best_path.clear();
 		Node* set_goal = nullptr;
-
+		int distance = 0;
+		int min_distance = 20000;
+		Node* tmp_node1 = goals.back();
+		Node* tmp_node2 = tmp_node1->GetTrackBack();
 		while (!goals.empty()) {
-			Node* set_goal = goals.back();
+			while (tmp_node1->nodeNum != from->nodeNum) {
+				distance += GetDistanceOver(tmp_node1, tmp_node2);
+				tmp_node1 = tmp_node1->GetTrackBack();
+				tmp_node2 = tmp_node2->GetTrackBack();
+			}
+		//	distance += GetDistanceOver(tmp_node1, tmp_node2);
+			if (distance < min_distance) {
+				min_distance = distance;
+				set_goal = goals.back();
+			}
+			goals.pop_back();
 		}
 		while (set_goal->nodeNum != from->nodeNum) {
 			best_path.push_back(set_goal);
@@ -804,6 +833,11 @@ Node* Edge::GetTheOtherNode(int nodeID)
 	else
 		ret = nodeNum1;
 	return ret;
+}
+
+int Edge::GetDistance()
+{
+	return distance;
 }
 
 EdgeType Edge::GetEdgeType()
