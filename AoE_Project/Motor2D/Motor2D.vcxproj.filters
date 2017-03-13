@@ -78,9 +78,6 @@
     <ClCompile Include="j1EntitiesManager.cpp">
       <Filter>Modules\EnititiesManager</Filter>
     </ClCompile>
-    <ClCompile Include="Villager.cpp">
-      <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Iso_Primitives.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
@@ -98,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="ClusterAbstraction.cpp">
       <Filter>Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Villager.cpp">
+      <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

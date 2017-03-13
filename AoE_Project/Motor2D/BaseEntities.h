@@ -7,6 +7,7 @@
 #include "p2Point.h"
 #include "Iso_Primitives.h"
 #include"SDL/include/SDL_rect.h"
+#include "j1Timer.h"
 
 struct Animation;
 struct SDL_Texture;
@@ -54,7 +55,9 @@ enum RESOURCE_TYPE
 	CHOP,
 	BERRY_BUSH,
 	GOLD_ORE,
-	STONE_ORE
+	TINY_GOLD_ORE,
+	STONE_ORE,
+	TINY_STONE_ORE
 };
 enum BUILDING_TYPE
 {
@@ -131,6 +134,9 @@ public:
 	void			Select();
 	void			Deselect();
 	
+	//Update ----------------
+	virtual bool	Update();
+
 	//Draw ------------------
 	virtual bool	Draw(bool debug);
 	
@@ -147,6 +153,7 @@ public:
 	//Get Methods -----------
 	const char*		GetName()const;
 	const fPoint&	GetPosition()const;
+	iPoint			GetPositionRounded()const;
 	ENTITY_TYPE		GetEntityType()const;
 	DIPLOMACY		GetDiplomacy()const;
 	Animation*		GetAnimation()const;
@@ -174,15 +181,17 @@ protected:
 	UNIT_TYPE		unit_type = NO_UNIT;
 	Circle			mark;
 	SDL_Texture*	pos_texture = nullptr;
+	Entity*			interaction_target = nullptr;
 	//Life -------------
 	uint			max_life = 0;
 	float			life = 0;
 	//Movement ---------
-	uint			view_area = 0;
+	float			view_area = 0;
 	float			speed = 0;
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = SOUTH;
 	//Attack -----------
+	j1Timer			attack_timer;
 	uint			attack_delay = 0;
 	uint			attack_hitpoints = 0;
 	uint			attack_bonus = 0;
@@ -214,18 +223,25 @@ public:
 	//Draw ------------------
 	bool	Draw(bool debug);
 	bool	DrawPath();
-	//Move ------------------
-	bool	Move();
-	void	Focus(const iPoint& target);
+
+	//Update ----------------
+	bool	Update();
+
+	//Actions ---------------
+	bool			Move();
+	virtual bool	Interact();
+	void			Focus(const iPoint& target);
+	bool			Attack();
+	bool			Cover();
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y);
 	void	SetUnitType(UNIT_TYPE type);
-
+	void	SetInteractionTarget(const Entity* target);
 	void	SetMark(const Circle& new_mark);
 	void	SetMaxLife(uint full_life_val);
 	void	SetLife(uint life_val);
-	void	SetViewArea(uint area_val);
+	void	SetViewArea(float area_val);
 	void	SetSpeed(float speed_val);
 	void	SetAction(ACTION_TYPE action_val);
 	void	SetDirection(DIRECTION_TYPE direction_val);
@@ -251,9 +267,10 @@ public:
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
 	const Circle&	GetMark()const;
+	const Entity*	GetInteractionTarget();
 	uint			GetMaxLife()const;
 	uint			GetLife()const;
-	uint			GetViewArea()const;
+	float			GetViewArea()const;
 	float			GetSpeed()const;
 	ACTION_TYPE		GetAction()const;
 	DIRECTION_TYPE	GetDirection()const;

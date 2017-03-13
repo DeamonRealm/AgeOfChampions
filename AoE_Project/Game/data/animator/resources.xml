@@ -91,7 +91,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </element>
   </resource>
   
-  <!--Bolder Ores-->
+  <!--Gold Ores-->
   <resource id="gold_ore">
     <element>
     <sprite n="GoldOre/000_4479.bmp" x="653" y="532" z="0" w="82" h="40" pX="0.463415" pY="0.5"/>
@@ -102,6 +102,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <element>
     <sprite n="GoldOre/002_4479.bmp" x="79" y="598" z="0" w="79" h="46" pX="0.455696" pY="0.391304"/>
     </element>
+  </resource>
+
+  <!--Tiny Gold Ores-->
+  <resource id="tiny_gold_ore">
     <element>
     <sprite n="GoldOre/003_4479.bmp" x="160" y="598" z="0" w="82" h="54" pX="0.439024" pY="0.425926"/>
     </element>
@@ -130,6 +134,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <element>
     <sprite n="StoneOre/003_StoneOre.bmp" x="1" y="654" z="0" w="76" h="42" pX="0.5" pY="0.666667"/>
     </element>
+  </resource>
+  
+  <!--Tiny Stone Ores-->
+  <resource id="tiny_stone_ore">
     <element>
     <sprite n="StoneOre/004_StoneOre.bmp" x="79" y="654" z="0" w="72" h="44" pX="0.513889" pY="0.636364"/>
     </element>

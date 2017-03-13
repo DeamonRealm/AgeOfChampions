@@ -7,6 +7,7 @@
 #include "j1Fonts.h"
 #include "j1Map.h"
 #include "p2Log.h"
+#include "j1EntitiesManager.h"
 
 ///Class Entity ---------------------------------
 //Constructors ========================
@@ -33,7 +34,7 @@ Entity::~Entity()
 
 
 //Functionality =======================
-//Select/Deselect ------
+//Select/Deselect -
 void Entity::Select()
 {
 	selected = true;
@@ -42,6 +43,12 @@ void Entity::Select()
 void Entity::Deselect()
 {
 	selected = false;
+}
+
+//Update ----------
+bool Entity::Update()
+{
+	return true;
 }
 
 // Draw -----------
@@ -107,6 +114,11 @@ const char* Entity::GetName() const
 const fPoint& Entity::GetPosition() const
 {
 	return position;
+}
+
+iPoint Entity::GetPositionRounded() const
+{
+	return iPoint(position.x,position.y);
 }
 
 ENTITY_TYPE Entity::GetEntityType() const
@@ -231,7 +243,15 @@ bool Unit::DrawPath()
 	return true;
 }
 
-//Move ------------
+//Update ----------
+bool Unit::Update()
+{
+	if (path != nullptr)return Move();
+	if (interaction_target != nullptr)Interact();
+	return false;
+}
+
+//Actions ---------
 bool Unit::Move()
 {
 	//Check if the unit have an assigned path
@@ -262,6 +282,7 @@ bool Unit::Move()
 			delete path;
 			path = nullptr;
 
+			if (interaction_target != nullptr)Interact();
 			LOG("Path completed!");
 			return true;
 		}
@@ -284,6 +305,26 @@ bool Unit::Move()
 	position.y += y_step;
 	mark.SetPosition(iPoint(position.x,position.y));
 
+	return true;
+}
+
+bool Unit::Interact()
+{
+	//Calculate the distance between the unit and the resource 
+	double distance = sqrt(abs(interaction_target->GetPositionRounded().DistanceNoSqrt(iPoint(position.x, position.y))));
+	//Check if the resource is in the action area of the villager
+	if (view_area < distance)
+	{
+		App->entities_manager->SetUnitPath(this, interaction_target->GetPositionRounded());
+		return false;
+	}
+
+	//If the target is in the interaction area the unit do the correct action with it
+	switch (interaction_target->GetEntityType())
+	{
+	case UNIT:			Attack();		break;
+	case BUILDING:		Cover();		break;
+	}
 	return true;
 }
 
@@ -324,6 +365,20 @@ void Unit::Focus(const iPoint & target)
 	App->animator->UnitPlay(this);
 }
 
+bool Unit::Attack()
+{
+	//Calculate the attack & apply the value at the target life points
+	((Unit*)interaction_target)->life -= attack_hitpoints;
+
+	return false;
+}
+
+bool Unit::Cover()
+{
+
+	return false;
+}
+
 //Set Methods -----
 void Unit::SetPosition(float x, float y)
 {
@@ -354,7 +409,7 @@ void Unit::SetLife(uint life_val)
 	life = life_val;
 }
 
-void Unit::SetViewArea(uint area_val)
+void Unit::SetViewArea(float area_val)
 {
 	view_area = area_val;
 }
@@ -483,7 +538,7 @@ uint Unit::GetLife() const
 	return life;
 }
 
-uint Unit::GetViewArea()const
+float Unit::GetViewArea()const
 {
 	return view_area;
 }

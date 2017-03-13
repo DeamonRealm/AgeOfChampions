@@ -348,7 +348,9 @@ RESOURCE_TYPE j1Animator::StrToResourceEnum(const char * str) const
 	if (strcmp(str, "chop") == 0)		return CHOP;
 	if (strcmp(str, "berry_bush") == 0)	return BERRY_BUSH;
 	if (strcmp(str, "gold_ore") == 0)	return GOLD_ORE;
+	if (strcmp(str, "tiny_gold_ore") == 0)	return TINY_GOLD_ORE;
 	if (strcmp(str, "stone_ore") == 0)	return STONE_ORE;
+	if (strcmp(str, "tiny_stone_ore") == 0)	return TINY_STONE_ORE;
 	return NO_RESOURCE;
 }
 

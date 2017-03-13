@@ -48,11 +48,9 @@ bool j1EntitiesManager::Update(float dt)
 
 	while (item != units.end())
 	{
-		if (item._Ptr->_Myval->path != nullptr)
-		{
-			ret = item._Ptr->_Myval->Move();
-		}
-		
+
+		ret = item._Ptr->_Myval->Update();
+
 		item++;
 	}
 
