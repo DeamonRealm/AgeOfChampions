@@ -6,15 +6,20 @@
 Tribute game to Age of Empires II developed by DemonRealm.
 
 
-##How to play
+## How to play
 Right now there are only prototype releases to test the functionallity of our game.    
-Controls for v.0.2 (protoype to test correct animation and draw order)   
-* WASD to move the villager
-* GRAVE to activate/deactivate console (enter "help" in the console to see all the commands)
-* F1 for debug mode
-* Arrows to move the camera
+Controls for v.0.2.1 (protoype to test correct animation and draw order)   
+
 * Mouse Double Click to select unit
 * Mouse Drag to select unit groups
+
+#### Debug controls
+* JIKL to move the character
+* WASDQEZX to change the orientation of the character
+* 1,2,3,4,5 to change animation type
+* GRAVE to activate/deactivate console (enter "help" in the console to see all the commands)
+* F1 to activate debug draw
+* Arrows to move the camera
 
 ##Media 
 **Facebook:**https://www.facebook.com/DemonRealm.P2    
