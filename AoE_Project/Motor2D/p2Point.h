@@ -137,7 +137,12 @@ public:
 
 		return (fx*fx) + (fy*fy);
 	}
-
+	TYPE DistanceOctile(const p2Point& v) const
+	{
+	
+		return MAX(abs(v.x - x), abs(v.y - y)) + (sqrt(2) - 1)*MIN(abs(v.x - x), abs(v.y - y));
+	}
+	
 	TYPE DistanceManhattan(const p2Point& v) const
 	{
 		return abs(v.x - x) + abs(v.y - y);
