@@ -3,7 +3,7 @@
 
 #include "j1Module.h"
 #include "p2Point.h"
-
+#include <queue>
 struct PathList;
 struct Node;
 struct ClusterAbstraction;
@@ -53,6 +53,8 @@ public:
 	// Create a path with two nodes
 	int	CreatePath(Node* start, Node*goal);
 	std::vector<iPoint>* CreatePath(const iPoint& origin, const iPoint& goal);
+	std::vector<iPoint>* SimpleAstar(const iPoint& origin, const iPoint& goal);
+
 	// Create a path with two coordinates
 
 };
@@ -105,5 +107,25 @@ struct PathList
 	std::list<PathNode> list;
 
 };
+struct compare
+{
+	bool operator()(const PathNode& l, const PathNode& r)
+	{
+		return l.Score() >= r.Score();
+	}
+};
+struct OpenList
+{
+public:
+	//Methods ---------------
+	// Looks for a node in this list and returns it's list node or NULL
+	//std::list<PathNode>::iterator Find(const iPoint& point);
+	// Returns the path node with lowest score in this list or NULL if empty
+	//PathNode* GetNodeLowestScore() const;
+
+	// PathList data --------
+	std::priority_queue<PathNode, std::vector<PathNode>, compare > list;
+};
+
 /// -----------------------------------
 #endif // _PATHFINDING_H_

@@ -514,7 +514,7 @@ bool j1EntitiesManager::SetUnitPath(Unit * target, const iPoint & goal)
 	fPoint target_pos = target->GetPosition();
 
 	//Create path from unit position to the goal
-	std::vector<iPoint>* path = App->pathfinding->CreatePath(iPoint(target_pos.x, target_pos.y) , goal);
+	std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(target_pos.x, target_pos.y) , goal);
 	
 	if (path == nullptr)return false;
 

@@ -92,15 +92,15 @@ int j1Pathfinding::CreatePath(Node * start, Node * goal)
 	if (IsWalkable(origin) && IsWalkable(destination))
 	{
 		ret = 1;
-		PathList open;
+		OpenList open;
 		PathList close;
-		open.list.push_back(PathNode(0, origin.DistanceManhattan(destination), origin, nullptr));
+		
+		open.list.push(PathNode(0, origin.DistanceManhattan(destination), origin, nullptr));
 		while (open.list.size() != 0)
 		{
-			close.list.push_back(*open.GetNodeLowestScore());
+			close.list.push_back(open.list.top());
 			close.list.back().on_close = true;
-
-			open.list.remove(*open.GetNodeLowestScore());
+			open.list.pop();
 			if (close.list.back().pos == destination)
 			{
 				std::list<PathNode>::const_iterator item = close.list.end();
@@ -125,18 +125,18 @@ int j1Pathfinding::CreatePath(Node * start, Node * goal)
 					else if (item->on_open == true)
 					{
 						PathNode temp;
-						temp = open.Find(item->pos)._Ptr->_Myval;
+					//	temp = open.Find(item->pos)._Ptr->_Myval;
 						item->CalculateF(destination);
 						if (item->g < temp.g)
 						{
-							open.Find(item->pos)->parent = item->parent;
+					//		open.Find(item->pos)->parent = item->parent;
 						}
 					}
 					else
 					{
 						item->on_open = true;
 						item->CalculateF(destination);
-						open.list.push_back(item._Mynode()->_Myval);
+						open.list.push(item._Mynode()->_Myval);
 					}
 				}
 				neightbords.list.clear();
@@ -172,7 +172,7 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 			path->push_back(App->map->MapToWorld(last_path[i].x, last_path[i].y));
 		}
 		
-		std::reverse(path->begin(), path->end());
+		//std::reverse(path->begin(), path->end());
 
 		//Return the built path
 		return path;
@@ -218,7 +218,7 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 
 			}
 			cluster_abstraction->DeleteNode(start, goal);
-			std::reverse(path->begin(), path->end());
+			//std::reverse(path->begin(), path->end());
 			return path;
 		}
 	}
@@ -226,89 +226,75 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 	//get 2 nodes if they are in the same cluster get the cluster map
 	//if not are in the same cluster set node2 parent of node1
 }
-/*
-std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoint & goal)
+
+std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPoint & destination)
 {
-	if (origin == goal)
+
+	int ret = -1;
+	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
+	iPoint map_goal = App->map->WorldToMap(destination.x, destination.y);
+	if (IsWalkable(map_origin) && IsWalkable(map_goal))
 	{
-		LOG("Path origin and goal are the same!");
-		return nullptr;
-	}
+		ret = 1;
+		OpenList open;
+		PathList close;
 
-	//Transform origin world coordinates to map tile coordinates
-	iPoint origin_p(App->map->WorldToMap(origin.x, origin.y));
-	//Transform goal world coordinates to map tile coordinates
-	iPoint goal_p(App->map->WorldToMap(goal.x, goal.y));
-
-	//Check if the origin/goal are walkable
-	if (!IsWalkable(origin_p) || !IsWalkable(goal_p))
-	{
-		LOG("Path origin or goal aren't walkable!");
-		return nullptr;
-	}
-
-	PathList open;
-	PathList close;
-
-	//Add origin in the closed list
-	open.list.push_back(PathNode(0, origin_p.DistanceManhattan(goal_p), origin_p, nullptr));
-
-	//Expand open list while the adjacent nodes are walkable
-	while (open.list.size() != 0)
-	{
-		close.list.push_back(*open.GetNodeLowestScore());
-		close.list.back().on_close = true;
-
-		open.list.remove(*open.GetNodeLowestScore());
-
-		//Check if the close list have the goal tile
-		if (close.list.back().pos == goal_p)
+		open.list.push(PathNode(0, map_origin.DistanceManhattan(map_goal), map_origin, nullptr));
+		while (open.list.size() != 0)
 		{
+			close.list.push_back(open.list.top());
+			close.list.back().on_close = true;
+			open.list.pop();
+			if (close.list.back().pos == map_goal)
+			{
+				std::list<PathNode>::const_iterator item = close.list.end();
+				std::vector<iPoint>* path = new std::vector<iPoint>;
 
-		}
-		else
-		{
-			//Find current tile neighbors
-			PathList neighbors;
-
-			close.list.back().FindWalkableAdjacents(neighbors);
-
-			for (std::list<PathNode>::iterator item = neighbors.list.begin(); item != neighbors.list.end(); item++) {
-
-				//In case that the tile is already in the list 
-				if (item->on_close == true)
+				last_path.clear();
+				for (item--; item->parent != nullptr; item = close.Find(item->parent->pos))
 				{
-					continue;
+					last_path.push_back(item->pos);
+					path->push_back(App->map->MapToWorld(item->pos.x, item->pos.y));
+					
 				}
+				last_path.push_back(close.list.begin()->pos);
+				path->push_back(App->map->MapToWorld(item->pos.x, item->pos.y));
 
-				//In case that the item is in the open list but not in the closed
-				if (item->on_open == true)
-				{
-					PathNode temp;
-					temp = open.Find(item->pos)._Ptr->_Myval;
-					item->CalculateF(goal_p);
-					if (item->g < temp.g)
+				return path;
+			}
+			else
+			{
+				PathList neightbords;
+				close.list.back().FindWalkableAdjacents(neightbords);
+				for (std::list<PathNode>::iterator item = neightbords.list.begin(); item != neightbords.list.end(); item++) {
+					if (item->on_close == true)
 					{
-						open.Find(item->pos)->parent = item->parent;
+						continue;
+					}
+					else if (item->on_open == true)
+					{
+						PathNode temp;
+						//	temp = open.Find(item->pos)._Ptr->_Myval;
+						item->CalculateF(map_goal);
+						if (item->g < temp.g)
+						{
+							//		open.Find(item->pos)->parent = item->parent;
+						}
+					}
+					else
+					{
+						item->on_open = true;
+						item->CalculateF(map_goal);
+						open.list.push(item._Mynode()->_Myval);
 					}
 				}
-
-				//In case that the item isn't in any list
-				else
-				{
-					item->on_open = true;
-					item->CalculateF(goal_p);
-					open.list.push_back(item._Mynode()->_Myval);
-				}
+				neightbords.list.clear();
 			}
-			neighbors.list.clear();
 		}
 	}
-
-	LOG("Path not found :(");
 	return nullptr;
 }
-*/
+
 /// -----------------------------------
 
 
