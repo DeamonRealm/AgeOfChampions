@@ -156,6 +156,7 @@ bool j1Player::PreUpdate()
 		}
 	}
 
+	/*
 	//Generate a Militia unit in the mouse coordinates
 	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
@@ -172,7 +173,7 @@ bool j1Player::PreUpdate()
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
 	}
-
+	*/
 	return true;
 }
 

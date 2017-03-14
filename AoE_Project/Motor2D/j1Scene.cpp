@@ -205,6 +205,26 @@ bool j1Scene::Update(float dt)
 		arbalest->SetAction(ACTION_TYPE::DISAPPEAR);
 		App->animator->UnitPlay(arbalest);
 	}
+
+
+	///Movement
+	else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
+	{
+		arbalest->SetPosition(pos.x, pos.y + -speed * dt);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+	{
+		arbalest->SetPosition(pos.x, pos.y + speed * dt);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+	{
+		arbalest->SetPosition(pos.x + speed * dt, pos.y );
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+	{
+		arbalest->SetPosition(pos.x + -speed * dt, pos.y);
+	}
+
 	// ------------------------------------------
 
 	App->map->Draw(App->debug_mode);
