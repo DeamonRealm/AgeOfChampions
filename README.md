@@ -38,6 +38,11 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ##Changelog
+#### v.0.2.1
+* Changed movenet keys
+* Control to change animation type
+* Better control over the direction of the animations
+
 ####v.0.2
 * Buidings shadows
 * Console Units Factory
