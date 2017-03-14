@@ -44,7 +44,7 @@ private:
 
 	//Scene Test Entities
 
-	Building*	town_center = nullptr;
+	//Building*	town_center = nullptr;
 	Resource*	tree = nullptr;
 	Resource*	chop = nullptr;
 	Resource*   tree_cut = nullptr;

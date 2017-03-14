@@ -158,8 +158,15 @@ bool j1Player::PreUpdate()
 		}
 	}
 
-	/*
-	//Generate a Militia unit in the mouse coordinates
+
+	//Generate a town center in the mouse coordinates
+	if(App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER);
+		center->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		center->SetDiplomacy(ALLY);
+	}
+	/*//Generate a Militia unit in the mouse coordinates
 	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA);
@@ -174,8 +181,8 @@ bool j1Player::PreUpdate()
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
-	}
-	*/
+	}*/
+
 	return true;
 }
 

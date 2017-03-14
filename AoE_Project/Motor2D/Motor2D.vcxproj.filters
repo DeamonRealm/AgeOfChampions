@@ -97,7 +97,7 @@
       <Filter>Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="Villager.cpp">
-      <Filter>Modules\EnititiesManager\Entities</Filter>
+      <Filter>Modules\EnititiesManager\Entities\Units</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -193,9 +193,6 @@
     <ClInclude Include="BaseEntities.h">
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Villager.h">
-      <Filter>Modules\EnititiesManager\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Iso_Primitives.h">
       <Filter>Tools</Filter>
     </ClInclude>
@@ -213,6 +210,12 @@
     </ClInclude>
     <ClInclude Include="ClusterAbstraction.h">
       <Filter>Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Villager.h">
+      <Filter>Modules\EnititiesManager\Entities\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Modules\EnititiesManager\Entities\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +248,12 @@
     </Filter>
     <Filter Include="Pathfinding">
       <UniqueIdentifier>{ea379160-4af9-4193-a358-27e9a38147db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\EnititiesManager\Entities\Resources">
+      <UniqueIdentifier>{fe59764e-557e-4596-ab01-7541e66fc2d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\EnititiesManager\Entities\Units">
+      <UniqueIdentifier>{42eeae8d-de8d-4202-aa8f-1202d80ae835}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

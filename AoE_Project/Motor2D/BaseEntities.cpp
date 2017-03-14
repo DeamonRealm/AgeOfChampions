@@ -884,11 +884,14 @@ bool Building::Draw(bool debug)
 
 void Building::SetPosition(float x, float y)
 {
-	//Set building position
-	position.x = x;
-	position.y = y;
+	//Set building position fixing it in the tiles coordinates
+	iPoint coords = App->map->WorldToMap(x, y);
+	coords = App->map->MapToWorld(coords.x, coords.y);
+	position.x = coords.x;
+	position.y = coords.y;
+
 	//Set building mark position
-	mark.SetPosition(iPoint(x, y));
+	mark.SetPosition(iPoint(position.x, position.y));
 }
 
 void Building::SetMark(const Rectng & rectangle)
