@@ -47,6 +47,14 @@ enum UNIT_TYPE
 	VILLAGER_HAMMER,
 	VILLAGER_CARRY
 };
+enum UNIT_CLASS
+{
+	CIVILIAN = 0,
+	INFANTRY,
+	ARCHERY,
+	CAVALRY,
+	SIEGE
+};
 enum RESOURCE_TYPE
 {
 	NO_RESOURCE = 0,
@@ -163,6 +171,29 @@ public:
 };
 /// ---------------------------------------------
 
+//Class Bonus ---------------
+enum BONUS_TYPE
+{
+	NO_BONUS = 0,
+	CLASS_BONUS,
+	UNIT_BONUS
+};
+
+class Bonus
+{
+public:
+
+	Bonus(BONUS_TYPE type, uint type_id, uint bonus) :type(type), type_id(type_id), bonus(bonus) {}
+	~Bonus() {}
+
+public:
+
+	uint bonus = 0;
+	BONUS_TYPE type = NO_BONUS;
+	uint type_id = 0;
+
+};
+// --------------------------
 ///Class Unit -----------------------------------
 //Base class that define the general attributes for all units
 class Unit : public Entity
@@ -212,7 +243,9 @@ protected:
 	uint			train_time = 0;
 	uint			exp = 0;
 
-public:
+	//Bonuses data
+	std::vector<Bonus*> attack_bonuses;
+	std::vector<Bonus*> defence_bonuses;
 
 	//Path to follow
 	std::vector<iPoint>* path = nullptr;
@@ -233,6 +266,9 @@ public:
 	void			Focus(const iPoint& target);
 	bool			Attack();
 	bool			Cover();
+
+	//Bonus -----------------
+	void	AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence);
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y);
@@ -364,6 +400,11 @@ public:
 	//Functionality -------------------
 	//Factory that generates any type of unit supported by the building
 	virtual Unit* CraftUnit(UNIT_TYPE new_unit_type)const;
+
+	//Cover / Release units
+	bool	CoverUnit(const Unit* target);
+	void	ReleaseUnit(const Unit* target);
+	void	ReleaseAllUnits();
 
 	//Draw ------------------
 	bool	Draw(bool debug);

@@ -377,8 +377,15 @@ bool Unit::Attack()
 
 bool Unit::Cover()
 {
+	return ((Building*)interaction_target)->CoverUnit(this);;
+}
 
-	return false;
+//Bonus -----------
+void Unit::AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence)
+{
+	Bonus* new_bonus = new Bonus(type, type_id, bonus);
+	if (defence) defence_bonuses.push_back(new_bonus);
+	else defence_bonuses.push_back(new_bonus);
 }
 
 //Set Methods -----
@@ -394,6 +401,11 @@ void Unit::SetPosition(float x, float y)
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
+}
+
+void Unit::SetInteractionTarget(const Entity * target)
+{
+	interaction_target = (Entity*)target;
 }
 
 void Unit::SetMark(const Circle & new_mark)
@@ -528,6 +540,11 @@ UNIT_TYPE Unit::GetUnitType()const
 const Circle& Unit::GetMark() const
 {
 	return mark;
+}
+
+const Entity * Unit::GetInteractionTarget()
+{
+	return interaction_target;
 }
 
 uint Unit::GetMaxLife() const
@@ -793,6 +810,36 @@ Building::~Building()
 Unit * Building::CraftUnit(UNIT_TYPE new_unit_type) const
 {
 	return nullptr;
+}
+
+bool Building::CoverUnit(const Unit * target)
+{
+	if (units_capacity == current_units)
+	{
+		LOG("Building is full!");
+		return false;
+	}
+
+	units_in.push_back(App->entities_manager->PopUnit(target));
+
+	return true;
+}
+
+void Building::ReleaseUnit(const Unit * target)
+{
+	units_in.remove((Unit*)target);
+	App->entities_manager->AddUnit(target);
+}
+
+void Building::ReleaseAllUnits()
+{
+	uint size = units_in.size();
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_in.back()->GetUnitType() == VILLAGER)units_in.back()->Interact();
+		App->entities_manager->AddUnit(units_in.back());
+		units_in.pop_back();
+	}
 }
 
 //Draw ----------------------

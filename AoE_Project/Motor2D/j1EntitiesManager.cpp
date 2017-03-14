@@ -547,3 +547,14 @@ bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iP
 	}
 	return true;
 }
+
+void j1EntitiesManager::AddUnit(const Unit * unit)
+{
+	units.push_back((Unit*)unit);
+}
+
+Unit * j1EntitiesManager::PopUnit(const Unit * unit)
+{
+	units.remove((Unit*)unit);
+	return (Unit*)unit;
+}

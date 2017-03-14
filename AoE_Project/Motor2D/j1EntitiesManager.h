@@ -67,5 +67,8 @@ public:
 	//Entities Management Methods
 	bool		SetUnitPath(Unit* target, const iPoint& goal);
 	bool		SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal);
+
+	void		AddUnit(const Unit* unit);
+	Unit*		PopUnit(const Unit* unit);
 };
 #endif // _ENTITIES_MANAGER_
