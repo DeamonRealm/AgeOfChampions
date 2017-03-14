@@ -210,6 +210,7 @@ bool Unit::Draw(bool debug)
 		if (path != nullptr)DrawPath();
 		
 		//This is bullshit for ram but is temporal
+		/*
 		char x_bff[8];
 		snprintf(x_bff, 8, "%.2f", position.x);
 		std::string x_str = x_bff;
@@ -220,6 +221,7 @@ bool Unit::Draw(bool debug)
 		SDL_Color tex_color = {255,255,0,255 };
 		pos_texture = App->font->Print(pos.c_str(), tex_color, App->font->default);
 		App->render->CallBlit(pos_texture, position.x, position.y);
+		*/
 	}
 	
 	//Draw Entity Current animation frame

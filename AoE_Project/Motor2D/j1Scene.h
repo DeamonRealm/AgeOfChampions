@@ -43,7 +43,7 @@ public:
 private:
 
 	//Scene Test Entities
-	Unit*		arbalest = nullptr;
+
 	Building*	town_center = nullptr;
 	Resource*	tree = nullptr;
 	Resource*	chop = nullptr;
@@ -62,6 +62,10 @@ public:
 	std::vector <std::string> map_folder;
 
 	uint current_map;
+
+
+	//Troops for testing
+	Unit*		arbalest = nullptr;
 
 	//Change the current map
 	void Change_Map();

@@ -94,12 +94,12 @@ bool j1Scene::Update(float dt)
 	
 
 	App->gui->CalculateUpperElement(scene_1_screen);
-	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
 		j1Timer ptimer;
 		App->pathfinding->InitClusterAbstraction();
 		LOG("TIME %f", ptimer.ReadSec());
-	}
+	}*/
 	
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
@@ -130,66 +130,79 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= SDL_ceil(500 * dt);
 
-	//Test unit movement animation --------------
+
+
+	//Test unit animations --------------
 	fPoint pos = arbalest->GetPosition();
 	float speed = 95;
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		arbalest->SetAction(ACTION_TYPE::WALK);
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		{
-			arbalest->SetPosition(pos.x + speed * 0.5 * dt, pos.y + -speed * 0.5 * dt);
-			arbalest->SetDirection(DIRECTION_TYPE::NORTH_EAST);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		{
-			arbalest->SetPosition(pos.x + -speed * 0.5 * dt, pos.y + -speed * 0.5 * dt);
-			arbalest->SetDirection(DIRECTION_TYPE::NORTH_WEST);
-		}
-		else
-		{
-			arbalest->SetPosition(pos.x, pos.y + -speed * dt);
-			arbalest->SetDirection(DIRECTION_TYPE::NORTH);
-		}
+		arbalest->SetDirection(DIRECTION_TYPE::NORTH);
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
+	{
+		arbalest->SetDirection(DIRECTION_TYPE::NORTH_EAST);
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+	{
+		arbalest->SetDirection(DIRECTION_TYPE::NORTH_WEST);
 		App->animator->UnitPlay(arbalest);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		arbalest->SetAction(ACTION_TYPE::WALK);
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		{
-			arbalest->SetPosition(pos.x + speed * 0.5 * dt, pos.y + speed * 0.5 * dt);
-			arbalest->SetDirection(DIRECTION_TYPE::SOUTH_EAST);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		{
-			arbalest->SetPosition(pos.x + -speed * 0.5 * dt, pos.y + speed * 0.5 * dt);
-			arbalest->SetDirection(DIRECTION_TYPE::SOUTH_WEST);
-		}
-		else
-		{
-			arbalest->SetPosition(pos.x, pos.y + speed * dt);
-			arbalest->SetDirection(DIRECTION_TYPE::SOUTH);
-		}
+		arbalest->SetDirection(DIRECTION_TYPE::SOUTH);
 		App->animator->UnitPlay(arbalest);
 	}
+
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		arbalest->SetPosition(pos.x + -speed * dt, pos.y);
-		arbalest->SetAction(ACTION_TYPE::WALK);
 		arbalest->SetDirection(DIRECTION_TYPE::WEST);
 		App->animator->UnitPlay(arbalest);
 	}
+
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		arbalest->SetPosition(pos.x + speed * dt, pos.y );
-		arbalest->SetAction(ACTION_TYPE::WALK);
 		arbalest->SetDirection(DIRECTION_TYPE::EAST);
 		App->animator->UnitPlay(arbalest);
 	}
-	else
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
+	{
+		arbalest->SetDirection(DIRECTION_TYPE::SOUTH_WEST);
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT)
+	{
+		arbalest->SetDirection(DIRECTION_TYPE::SOUTH_EAST);
+		App->animator->UnitPlay(arbalest);
+	}
+	
+
+	///Change unit animation
+	else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_REPEAT)
 	{
 		arbalest->SetAction(ACTION_TYPE::IDLE);
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_REPEAT)
+	{
+		arbalest->SetAction(ACTION_TYPE::WALK);
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_REPEAT)
+	{
+		arbalest->SetAction(ACTION_TYPE::ATTATCK);
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_REPEAT)
+	{
+		arbalest->SetAction(ACTION_TYPE::DIE);
+		App->animator->UnitPlay(arbalest);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_5) == KEY_REPEAT)
+	{
+		arbalest->SetAction(ACTION_TYPE::DISAPPEAR);
 		App->animator->UnitPlay(arbalest);
 	}
 	// ------------------------------------------

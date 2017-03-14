@@ -11,6 +11,9 @@
 #include "j1Pathfinding.h"
 #include "p2Log.h"
 
+//Testing purposes only should be erased
+#include "j1Scene.h"
+
 //Constructors ========================
 j1EntitiesManager::j1EntitiesManager()
 {
@@ -138,6 +141,7 @@ void j1EntitiesManager::Console_Command_Input(Command * command, Cvar * cvar, st
 			int x, y;
 			App->input->GetMousePosition(x, y);
 			unit->SetPosition((float)x, (float)y);
+			App->scene->arbalest = unit;
 		}
 		else LOG("Unit type undefined!");
 	}
