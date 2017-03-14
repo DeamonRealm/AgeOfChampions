@@ -46,6 +46,7 @@ bool j1EntitiesManager::Start()
 
 bool j1EntitiesManager::Update(float dt)
 {
+	//Update all the units
 	std::list<Unit*>::const_iterator item = units.begin();
 	bool ret = true;
 
@@ -56,6 +57,9 @@ bool j1EntitiesManager::Update(float dt)
 
 		item++;
 	}
+
+	//Clean all the wasted entities
+	if (wasted_units.size() > 0) wasted_units.clear();
 
 	return ret;
 }
@@ -411,7 +415,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	return ret;
 }
 
-Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
+Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 {
 	Unit* new_unit = nullptr;
 
@@ -435,7 +439,7 @@ Unit * j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 	return nullptr;
 }
 
-Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
+Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 {
 	Building* new_building = nullptr;
 
@@ -459,7 +463,7 @@ Building * j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 	return nullptr;
 }
 
-Resource * j1EntitiesManager::GenerateResource(RESOURCE_TYPE type,uint id_index)
+Resource* j1EntitiesManager::GenerateResource(RESOURCE_TYPE type,uint id_index)
 {
 	Resource* new_resource = nullptr;
 
@@ -481,35 +485,31 @@ Resource * j1EntitiesManager::GenerateResource(RESOURCE_TYPE type,uint id_index)
 		}
 	}
 	return nullptr;
-
-	/*
-	//Pointer to the new resource
-	Resource* new_resource = nullptr;
-
-	//Allocate resource class
-	new_resource = new Resource();
-	
-	//Set resource type
-	new_resource->SetEntityType(RESOURCE);
-	new_resource->SetResourceType(type);
-	
-	//Generate resource mark
-	Rectng mark;
-	mark.SetHeight(80);
-	mark.SetWidth(80);
-	mark.SetColor({ 255,100,255,255 });
-	new_resource->SetMark(mark);
-
-	//Randomly set the animation of the new resource checking the type
-	App->animator->ResourcePlay(new_resource);
-
-	//Add the new resource at the entity manager resources list
-	resources.push_back(new_resource);
-
-	return new_resource;*/
 }
 
-bool j1EntitiesManager::SetUnitPath(Unit * target, const iPoint & goal)
+bool j1EntitiesManager::DeleteEntity(Entity * entity)
+{
+	//Check if the entity is really defined
+	if (entity == nullptr || entity->GetEntityType() == NO_ENTITY)
+	{
+		return false;
+	}
+	
+	//Get the entity type
+	ENTITY_TYPE type = entity->GetEntityType();
+	
+	//Remove the entity from the correct list
+	if (type == RESOURCE) resources.remove((Resource*)entity);
+	else if (type == BUILDING) buildings.remove((Building*)entity);
+	else units.remove((Unit*)entity);
+
+	//Add the entity at the wasted entities list 
+	wasted_units.push_back(entity);
+
+	return true;
+}
+
+bool j1EntitiesManager::SetUnitPath(Unit* target, const iPoint& goal)
 {
 	fPoint target_pos = target->GetPosition();
 

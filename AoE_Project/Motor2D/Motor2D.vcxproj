@@ -102,6 +102,7 @@
     <ClCompile Include="j1Textures.cpp" />
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="UI_Button.cpp" />
     <ClCompile Include="UI_Element.cpp" />
     <ClCompile Include="UI_Fixed_Button.cpp" />
@@ -110,7 +111,7 @@
     <ClCompile Include="UI_Scroll.cpp" />
     <ClCompile Include="UI_String.cpp" />
     <ClCompile Include="UI_Text_Box.cpp" />
-    <ClCompile Include="Villager.cpp" />
+    <ClCompile Include="Units.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Iso_Primitives.h" />
@@ -143,7 +144,7 @@
     <ClInclude Include="j1Window.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
-    <ClInclude Include="Tree.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="UI_Button.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="UI_Fixed_Button.h" />
@@ -152,7 +153,7 @@
     <ClInclude Include="UI_Scroll.h" />
     <ClInclude Include="UI_String.h" />
     <ClInclude Include="UI_Text_Box.h" />
-    <ClInclude Include="Villager.h" />
+    <ClInclude Include="Units.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

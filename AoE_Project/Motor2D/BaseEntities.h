@@ -116,18 +116,22 @@ class Entity
 public:
 
 	Entity();
-	Entity(const std::string& name, const  fPoint& position = { 0,0 } , ENTITY_TYPE entity_type = NO_ENTITY);
 	Entity(const Entity& copy);
 
 	~Entity();
 
 protected:
 
+	//State ------------
 	bool			selected = false;
 	std::string		name;
 	fPoint			position = { 0,0 };
 	ENTITY_TYPE		entity_type = NO_ENTITY;
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
+	//Life -------------
+	uint			max_life = 0;
+	float			life = 0;
+	//Visual -----------
 	Animation*		current_animation = nullptr;
 	bool			flip_sprite = false;
 	SDL_Rect		selection_rect = { 0,0,0,0 };
@@ -153,6 +157,8 @@ public:
 	virtual void	SetPosition(float x, float y);
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
+	void			SetMaxLife(uint full_life_val);
+	void			SetLife(uint life_val);
 	void			SetAnimation(Animation* anim);
 	void			SetFlipSprite(bool flip);
 	void			SetSelectionRect(const SDL_Rect& rect);
@@ -164,6 +170,8 @@ public:
 	iPoint			GetPositionRounded()const;
 	ENTITY_TYPE		GetEntityType()const;
 	DIPLOMACY		GetDiplomacy()const;
+	uint			GetMaxLife()const;
+	virtual uint	GetLife()const;
 	Animation*		GetAnimation()const;
 	bool			GetFlipSprite()const;
 	const SDL_Rect*	GetSelectionRect()const;
@@ -201,7 +209,6 @@ class Unit : public Entity
 public:
 
 	Unit();
-	Unit(const std::string& name);
 	Unit(const Unit& copy);
 
 	~Unit();
@@ -213,16 +220,13 @@ protected:
 	Circle			mark;
 	SDL_Texture*	pos_texture = nullptr;
 	Entity*			interaction_target = nullptr;
-	//Life -------------
-	uint			max_life = 0;
-	float			life = 0;
 	//Movement ---------
 	float			view_area = 0;
 	float			speed = 0;
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = SOUTH;
 	//Attack -----------
-	j1Timer			attack_timer;
+	j1Timer			action_timer;
 	uint			attack_delay = 0;
 	uint			attack_hitpoints = 0;
 	uint			attack_bonus = 0;
@@ -275,8 +279,6 @@ public:
 	void	SetUnitType(UNIT_TYPE type);
 	void	SetInteractionTarget(const Entity* target);
 	void	SetMark(const Circle& new_mark);
-	void	SetMaxLife(uint full_life_val);
-	void	SetLife(uint life_val);
 	void	SetViewArea(float area_val);
 	void	SetSpeed(float speed_val);
 	void	SetAction(ACTION_TYPE action_val);
@@ -304,8 +306,6 @@ public:
 	UNIT_TYPE		GetUnitType()const;
 	const Circle&	GetMark()const;
 	const Entity*	GetInteractionTarget();
-	uint			GetMaxLife()const;
-	uint			GetLife()const;
 	float			GetViewArea()const;
 	float			GetSpeed()const;
 	ACTION_TYPE		GetAction()const;
@@ -337,7 +337,6 @@ class Resource : public Entity
 public:
 
 	Resource();
-	Resource(const std::string& name);
 	Resource(const Resource& copy);
 	~Resource();
 
@@ -353,6 +352,9 @@ public:
 	//Functionality -------------------
 	//Draw ------------------
 	bool	Draw(bool debug);
+
+	//State -----------------
+	virtual bool ExtractResources(uint* value);
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y);
@@ -377,7 +379,6 @@ class Building : public Entity
 public:
 
 	Building();
-	Building(const std::string& name);
 	Building(const Building& copy);
 	~Building();
 

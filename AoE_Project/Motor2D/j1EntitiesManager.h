@@ -39,6 +39,9 @@ private:
 	std::list<Resource*>	resources;
 	std::list<Building*>	buildings;
 
+	//Vector where all the killed/destroyed entities are placed
+	std::vector<Entity*>	wasted_units;
+
 	//Vector of predefined units
 	std::vector<Unit>		units_defs;
 	std::vector<Resource>	resources_defs;
@@ -64,10 +67,15 @@ public:
 	Unit*		GenerateUnit(UNIT_TYPE type);
 	Building*	GenerateBuilding(BUILDING_TYPE type);
 	Resource*	GenerateResource(RESOURCE_TYPE type, uint id_index = 0);
+
+	//Delete Methods --------
+	bool		DeleteEntity(Entity* entity);
+
 	//Entities Management Methods
 	bool		SetUnitPath(Unit* target, const iPoint& goal);
 	bool		SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal);
 
+	//Units lists movement units used in buildings cover
 	void		AddUnit(const Unit* unit);
 	Unit*		PopUnit(const Unit* unit);
 };

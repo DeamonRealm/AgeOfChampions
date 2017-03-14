@@ -16,12 +16,8 @@ Entity::Entity() :name("")
 
 }
 
-Entity::Entity(const std::string& name, const fPoint& position, ENTITY_TYPE entity_type) : name(name), position(position), entity_type(entity_type)
-{
-
-}
-
-Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), selection_rect(copy.selection_rect), icon_rect(copy.icon_rect)
+Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), selection_rect(copy.selection_rect),
+icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_animation(copy.current_animation)
 {
 
 }
@@ -84,6 +80,16 @@ void Entity::SetDiplomacy(DIPLOMACY new_diplomacy)
 	entity_diplomacy = new_diplomacy;
 }
 
+void Entity::SetMaxLife(uint full_life_val)
+{
+	max_life = full_life_val;
+}
+
+void Entity::SetLife(uint life_val)
+{
+	life = life_val;
+}
+
 void Entity::SetAnimation(Animation * anim)
 {
 	current_animation = (Animation*)anim;
@@ -131,6 +137,16 @@ DIPLOMACY Entity::GetDiplomacy() const
 	return entity_diplomacy;
 }
 
+uint Entity::GetMaxLife() const
+{
+	return max_life;
+}
+
+uint Entity::GetLife() const
+{
+	return life;
+}
+
 Animation * Entity::GetAnimation() const
 {
 	return current_animation;
@@ -162,12 +178,7 @@ Unit::Unit() :Entity()
 
 }
 
-Unit::Unit(const std::string& name): Entity(name)
-{
-
-}
-
-Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), max_life(copy.max_life), life(copy.life), view_area(copy.view_area),
+Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), view_area(copy.view_area),
 speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
 attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_range(copy.attack_range), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time)
@@ -324,8 +335,8 @@ bool Unit::Interact()
 	//If the target is in the interaction area the unit do the correct action with it
 	switch (interaction_target->GetEntityType())
 	{
-	case UNIT:			Attack();		break;
-	case BUILDING:		Cover();		break;
+	case UNIT:			if(action_timer.Read() > attack_rate)Attack();		break;
+	case BUILDING:		Cover();											break;
 	}
 	return true;
 }
@@ -369,9 +380,16 @@ void Unit::Focus(const iPoint & target)
 
 bool Unit::Attack()
 {
+	if (interaction_target->GetLife() == 0)
+	{
+		App->entities_manager->DeleteEntity(interaction_target);
+		return false;
+	}
 	//Calculate the attack & apply the value at the target life points
-	((Unit*)interaction_target)->life -= attack_hitpoints;
+	((Unit*)interaction_target)->life -= MIN(((Unit*)interaction_target)->life, attack_hitpoints);
 
+	//Reset action timer
+	action_timer.Start();
 	return false;
 }
 
@@ -411,16 +429,6 @@ void Unit::SetInteractionTarget(const Entity * target)
 void Unit::SetMark(const Circle & new_mark)
 {
 	mark = new_mark;
-}
-
-void Unit::SetMaxLife(uint full_life_val)
-{
-	max_life = full_life_val;
-}
-
-void Unit::SetLife(uint life_val)
-{
-	life = life_val;
 }
 
 void Unit::SetViewArea(float area_val)
@@ -547,16 +555,6 @@ const Entity * Unit::GetInteractionTarget()
 	return interaction_target;
 }
 
-uint Unit::GetMaxLife() const
-{
-	return max_life;
-}
-
-uint Unit::GetLife() const
-{
-	return life;
-}
-
 float Unit::GetViewArea()const
 {
 	return view_area;
@@ -671,11 +669,6 @@ Resource::Resource() :Entity()
 
 }
 
-Resource::Resource(const std::string & name):Entity(name)
-{
-
-}
-
 Resource::Resource(const Resource& copy) : Entity(copy), resource_type(copy.resource_type), mark(copy.mark), max_resources(copy.max_resources), current_resources(copy.current_resources)
 {
 
@@ -723,6 +716,34 @@ bool Resource::Draw(bool debug)
 	}
 
 	return ret;
+}
+
+bool Resource::ExtractResources(uint* value)
+{
+	if (life == 0)return false;
+	if (life <= *value)
+	{
+		*value = life;
+		life = 0;
+		App->entities_manager->DeleteEntity(this);
+		return true;
+	}
+	else
+	{
+		life -= *value;
+		if (resource_type == GOLD_ORE && life < 50)
+		{
+			resource_type = TINY_GOLD_ORE;
+			App->animator->ResourcePlay(this);
+		}
+		else if (resource_type == STONE_ORE && life < 50)
+		{
+			resource_type = TINY_STONE_ORE;
+			App->animator->ResourcePlay(this);
+		}
+
+		return true;
+	}
 }
 
 void Resource::SetPosition(float x, float y)
@@ -779,11 +800,6 @@ uint Resource::GetCurrentResources() const
 ///Class Building -------------------------------
 //Constructors ========================
 Building::Building() :Entity()
-{
-
-}
-
-Building::Building(const std::string & name):Entity(name)
 {
 
 }

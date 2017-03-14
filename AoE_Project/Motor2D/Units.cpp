@@ -1,11 +1,16 @@
-#include "Villager.h"
+#include "Units.h"
 #include "j1App.h"
 #include "j1EntitiesManager.h"
 #include "p2Log.h"
 
-
+/// Class Villager --------------------
 //Constructors ========================
 Villager::Villager()
+{
+
+}
+
+Villager::Villager(const Villager & copy) :Unit(copy), resources_capacity(copy.resources_capacity), current_resources(copy.current_resources), recollect_capacity(copy.recollect_capacity), recollect_rate(copy.recollect_rate)
 {
 
 }
@@ -46,40 +51,34 @@ bool Villager::Interact()
 	//If the target is in the interaction area the unit do the correct action with it
 	switch (interaction_target->GetEntityType())
 	{
-	case UNIT:		Attack();		break;
-	case RESOURCE:	Recollect();	break;
-	case BUILDING:	Cover();		break;
+		case UNIT:		if (action_timer.Read() > attack_rate)Attack();			break;
+		case RESOURCE:	if (action_timer.Read() > recollect_rate)Recollect();	break;
+		case BUILDING:	Cover();												break;
 	}
 	return true;
 }
 
 bool Villager::Recollect()
 {
-	//Extract the correct resources
-	switch (((Resource*)interaction_target)->GetResourceType())
-	{
-	case TREE:
-		break;
-	case TREE_CUT:
-		break;
-	case CHOP:
-		break;
-	case BERRY_BUSH:
-		break;
-	case GOLD_ORE:
-		break;
-	case TINY_GOLD_ORE:
-		break;
-	case STONE_ORE:
-		break;
-	case TINY_STONE_ORE:
-		break;
-	}
+	//Get resources from the target resource
+	uint recolect_value = MIN(recollect_capacity, resources_capacity - current_resources);
 	
-	//CHeck if the resource is empty
-	if (((Resource*)interaction_target)->GetCurrentResources() == 0)
+	//Extract resource material, if it fails return false
+	if (!((Resource*)interaction_target)->ExtractResources(&recolect_value)) return false;
+	
+	//Add extracted resources at the villager
+	current_resources += recolect_value;
+
+	//If villager is full let's find a place to download
+	if (current_resources == resources_capacity)
 	{
-		//Delete resource of entities manager list
-		return false;
+		//Go to the nearest download point
 	}
+
+	//Reset interaction timer
+	action_timer.Start();
+
+	return true;
 }
+
+/// -----------------------------------
