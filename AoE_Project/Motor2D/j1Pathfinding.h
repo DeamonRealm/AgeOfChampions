@@ -8,7 +8,7 @@ struct PathList;
 struct Node;
 struct ClusterAbstraction;
 struct SDL_Texture;
-
+struct PathNode;
 ///class Pathfinding ------------------
 class j1Pathfinding : public j1Module
 {
@@ -24,8 +24,17 @@ public:
 	bool CleanUp();
 	void SetMap(uint width, uint height, uchar* data);
 	uchar GetValueMap(int x, int y) const;
+	void SetMapOpen(int x, int y);
+	void SetMapOClosed(int x, int y);
+
+	bool IsMapOnOpen(int x, int y);
+	bool IsMapOnClosed(int x, int y);
+	PathNode* GetPathNode(int x, int y);
 private:
 	uchar* logic_map;
+	bool* node_on_open;
+	bool* node_on_close;
+	PathNode* path_nodes;
 	int width;
 	int height;
 	//A pointer to the last path generated
@@ -71,12 +80,12 @@ struct PathNode
 
 	//Methods----------------
 	// Fills a list (PathList) of all valid adjacent path nodes
-	uint FindWalkableAdjacents(PathList& list_to_fill) const;
+	uint FindWalkableAdjacents(PathList* list_to_fill) const;
 	// Calculates this tile score
 	float Score() const;
 	// Calculate the F for a specific destination tile
 	int CalculateF(const iPoint& destination);
-
+	void SetPosition(const iPoint& value);
 	//Operators -------------
 	bool operator ==(const PathNode& node)const;
 	bool operator !=(const PathNode& node)const;
@@ -99,19 +108,19 @@ struct PathList
 
 	//Methods ---------------
 	// Looks for a node in this list and returns it's list node or NULL
-	std::list<PathNode>::iterator Find(const iPoint& point);
+//	std::list<PathNode>::iterator Find(const iPoint& point);
 	// Returns the path node with lowest score in this list or NULL if empty
-	PathNode* GetNodeLowestScore() const;
+	//PathNode* GetNodeLowestScore() const;
 
 	// PathList data --------
-	std::list<PathNode> list;
+	std::list<PathNode*> list;
 
 };
 struct compare
 {
-	bool operator()(const PathNode& l, const PathNode& r)
+	bool operator()(const PathNode* l, const PathNode* r)
 	{
-		return l.Score() >= r.Score();
+		return l->Score() >= r->Score();
 	}
 };
 struct OpenList
@@ -124,7 +133,7 @@ public:
 	//PathNode* GetNodeLowestScore() const;
 
 	// PathList data --------
-	std::priority_queue<PathNode, std::vector<PathNode>, compare > list;
+	std::priority_queue<PathNode*, std::vector<PathNode*>, compare > list;
 };
 
 /// -----------------------------------

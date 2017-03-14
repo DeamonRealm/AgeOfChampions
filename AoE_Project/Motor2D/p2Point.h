@@ -7,7 +7,7 @@
 
 #include "p2Defs.h"
 #include <math.h>
-
+#define OCTANEVALUE 0,4142
 template<class TYPE>
 class p2Point
 {
@@ -139,8 +139,8 @@ public:
 	}
 	TYPE DistanceOctile(const p2Point& v) const
 	{
-	
-		return MAX(abs(v.x - x), abs(v.y - y)) + (sqrt(2) - 1)*MIN(abs(v.x - x), abs(v.y - y));
+		
+		return MAX(abs(v.x - x), abs(v.y - y)) + OCTANEVALUE*MIN(abs(v.x - x), abs(v.y - y));
 	}
 	
 	TYPE DistanceManhattan(const p2Point& v) const
