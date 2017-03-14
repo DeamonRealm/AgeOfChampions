@@ -111,7 +111,7 @@ private:
 	//Enum id of this block
 	uint							enum_id = 0;
 	//Pointer to a vector of animations 
-	Animation*		animation;
+	Animation*		animation=nullptr;
 
 public:
 

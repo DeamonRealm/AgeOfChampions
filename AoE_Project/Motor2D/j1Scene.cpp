@@ -208,7 +208,7 @@ bool j1Scene::Update(float dt)
 
 
 	///Movement
-	else if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
 	{
 		arbalest->SetPosition(pos.x, pos.y + -speed * dt);
 	}
