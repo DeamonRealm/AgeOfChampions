@@ -118,7 +118,7 @@ struct compare
 {
 	bool operator()(const PathNode* l, const PathNode* r)
 	{
-		return l->Score() >= r->Score();
+		return l->g >= r->g;
 	}
 };
 struct OpenList

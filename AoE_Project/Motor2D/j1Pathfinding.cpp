@@ -85,28 +85,8 @@ uchar j1Pathfinding::GetValueMap(int x, int y) const
 	return logic_map[(y*width) + x];
 }
 
-void j1Pathfinding::SetMapOpen(int x, int y)
-{
-	node_on_open[(y*width) + x] = true;
-}
-
-void j1Pathfinding::SetMapOClosed(int x, int y)
-{
-	//node_on_open[(y*width) + x] = false;
-	node_on_close[(y*width) + x] = true;
 
 
-}
-
-bool j1Pathfinding::IsMapOnOpen(int x, int y)
-{
-	return node_on_open[(y*width) + x];
-}
-
-bool j1Pathfinding::IsMapOnClosed(int x, int y)
-{
-	return node_on_close[(y*width) + x];
-}
 
 PathNode* j1Pathfinding::GetPathNode(int x, int y)
 {
