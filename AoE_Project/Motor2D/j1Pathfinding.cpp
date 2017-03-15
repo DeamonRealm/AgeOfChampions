@@ -268,7 +268,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 		firstNode->SetPosition(map_origin);
 		firstNode->g = 0;
 
-		firstNode->h= map_origin.DistanceManhattan(map_goal);
+		firstNode->h= map_origin.DistanceOctile(map_goal);
 
 		open.list.push(firstNode);
 		PathNode* current=nullptr;
@@ -292,7 +292,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 					
 				}
 				last_path.push_back(current->pos);
-				path->push_back(App->map->MapToWorld(current->pos.x, current->pos.y));
+				path->push_back(origin);
 				
 				return path;
 			}
@@ -476,7 +476,7 @@ float PathNode::Score() const
 
 int PathNode::CalculateF(const iPoint & destination)
 {
-	switch (parent->pos.DistanceManhattan(pos))
+	switch (parent->pos.DistanceOctile(pos))
 	{
 	case 1:
 		g = parent->g + 10;
@@ -488,7 +488,7 @@ int PathNode::CalculateF(const iPoint & destination)
 		break;
 	}
 
-	h = pos.DistanceManhattan(destination) * 10;
+	h = pos.DistanceOctile(destination) * 10;
 	return  g + h;
 }
 

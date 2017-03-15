@@ -139,8 +139,13 @@ public:
 	}
 	TYPE DistanceOctile(const p2Point& v) const
 	{
-		
-		return MAX(abs(v.x - x), abs(v.y - y)) + OCTANEVALUE*MIN(abs(v.x - x), abs(v.y - y));
+			int xDistance = abs(x - v.x);
+			int yDistance = abs(y - v.y);
+			if (xDistance > yDistance)
+				return 14 * yDistance + 10 * (xDistance - yDistance);
+			else
+				return 14 * xDistance + 10 * (yDistance - xDistance);
+
 	}
 	
 	TYPE DistanceManhattan(const p2Point& v) const
