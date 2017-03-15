@@ -32,8 +32,6 @@ public:
 	PathNode* GetPathNode(int x, int y);
 private:
 	uchar* logic_map;
-	bool* node_on_open;
-	bool* node_on_close;
 	PathNode* path_nodes;
 	int width;
 	int height;

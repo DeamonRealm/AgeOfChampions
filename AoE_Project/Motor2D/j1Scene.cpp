@@ -94,12 +94,17 @@ bool j1Scene::Update(float dt)
 	
 
 	App->gui->CalculateUpperElement(scene_1_screen);
-	/*if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
+		uint width = 0;
+		uint height = 0;
+		uchar* logic_map = nullptr;
 		j1Timer ptimer;
-		App->pathfinding->InitClusterAbstraction();
+		App->map->CreateWalkabilityMap(width, height, &logic_map);
+		App->pathfinding->SetMap(width, height, logic_map);
+		//App->pathfinding->InitClusterAbstraction();
 		LOG("TIME %f", ptimer.ReadSec());
-	}*/
+	}
 	
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)

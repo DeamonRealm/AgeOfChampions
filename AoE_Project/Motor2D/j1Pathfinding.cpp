@@ -45,10 +45,6 @@ void j1Pathfinding::SetMap(uint width, uint height, uchar * data)
 	RELEASE_ARRAY(logic_map);
 	int size = width*height;
 	logic_map = new uchar[size];
-	node_on_open = new bool[size];
-	std::fill(node_on_open, node_on_open+size, false);
-	node_on_close = new bool[size];
-	std::fill(node_on_close, node_on_close + size, false);
 	path_nodes = new PathNode[size];
 
 	memcpy(logic_map, data, width*height);
@@ -191,7 +187,7 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 	iPoint map_goal = App->map->WorldToMap(destination.x, destination.y);
 	SetMap(cluster_abstraction->width, cluster_abstraction->height, cluster_abstraction->logic_map);
 
-	if (!IsWalkable(map_origin)||!IsWalkable(map_goal))
+	if (!IsWalkable(map_origin) || !IsWalkable(map_goal) || map_origin == map_goal);
 	{
 		return nullptr;
 	}
@@ -269,7 +265,7 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPoint & destination)
 {
 	int size = width*height;
-	std::fill(path_nodes, path_nodes + size, PathNode(-1, -1, iPoint(0, 0), nullptr));
+	std::fill(path_nodes, path_nodes + size, PathNode(-1, -1, iPoint(-1, -1), nullptr));
 
 	int ret = -1;
 	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
@@ -283,7 +279,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 		firstNode->SetPosition(map_origin);
 		firstNode->g = 0;
 
-		firstNode->h= map_origin.DistanceOctile(map_goal);
+		firstNode->h= map_origin.DistanceManhattan(map_goal);
 
 		open.list.push(firstNode);
 		PathNode* current=nullptr;
@@ -314,27 +310,29 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 				PathList neightbords;
 				current->FindWalkableAdjacents(&neightbords);
 				for (std::list<PathNode*>::iterator item = neightbords.list.begin(); item != neightbords.list.end(); item++) {
-					if (item._Mynode()->_Myval->on_close == true)
+					PathNode* temp = item._Mynode()->_Myval;
+
+					if (temp->on_close == true)
 					{
 						continue;
 					}
-					else if (item._Mynode()->_Myval->on_open == true)
+					else if (temp->on_open == true)
 					{
-						PathNode temp;
-						//	temp = open.Find(item->pos)._Ptr->_Myval;
-						item._Mynode()->_Myval->CalculateF(map_goal);
-						if (item._Mynode()->_Myval->g < temp.g)
+						int last_g_value = temp->g;
+						temp->CalculateF(map_goal);
+						if (last_g_value <temp->g)
 						{
-							//		open.Find(item->pos)->parent = item->parent;
+							temp->parent = GetPathNode(current->pos.x,current->pos.y);
+						}
+						else {
+							temp->g = last_g_value;
 						}
 					}
 					else
 					{
-						item._Mynode()->_Myval->on_open = true;
-						item._Mynode()->_Myval->CalculateF(map_goal);
-						open.list.push(item._Mynode()->_Myval);
-						App->pathfinding->SetMapOpen(item._Mynode()->_Myval->pos.x, item._Mynode()->_Myval->pos.y);
-
+						temp->on_open = true;
+						temp->CalculateF(map_goal);
+						open.list.push(temp);
 					}
 				}
 				
@@ -488,7 +486,7 @@ float PathNode::Score() const
 
 int PathNode::CalculateF(const iPoint & destination)
 {
-	switch (parent->pos.DistanceOctile(pos))
+	switch (parent->pos.DistanceManhattan(pos))
 	{
 	case 1:
 		g = parent->g + 10;
@@ -500,7 +498,7 @@ int PathNode::CalculateF(const iPoint & destination)
 		break;
 	}
 
-	h = pos.DistanceTo(destination) * 10;
+	h = pos.DistanceManhattan(destination) * 10;
 	return  g + h;
 }
 
