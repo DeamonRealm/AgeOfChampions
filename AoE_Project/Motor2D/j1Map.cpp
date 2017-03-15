@@ -300,8 +300,15 @@ iPoint j1Map::WorldToMap(int x, int y) const
 
 		float half_width = data.tile_width * 0.5f;
 		float half_height = data.tile_height * 0.5f;
-		ret.x = int((x / half_width + y / half_height) / 2);
-		ret.y = int((y / half_height - (x / half_width)) / 2);
+	
+		float pX = ((x / half_width + y / half_height) / 2);
+		float pY = ((y / half_height - (x / half_width)) / 2);
+	
+		pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+		pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+		ret.x = pX;
+		ret.y = pY;
+
 	}
 	else
 	{
@@ -310,6 +317,22 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	}
 
 	return ret;
+}
+
+iPoint j1Map::FixPointMap(int x, int y)
+{
+	iPoint ret(x,y);
+	
+		if (x < 0)
+			ret.x = 0;
+		else if (x > (data.width*data.tile_width))
+			ret.x = data.width*data.tile_width;
+		if(y<0)
+			ret.y = 0;
+		else if(y>(data.height*data.tile_height))
+			ret.y = data.height*data.tile_height;
+
+		return ret;
 }
 
 void j1Map::CollideLayer() {

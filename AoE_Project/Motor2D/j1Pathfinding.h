@@ -84,9 +84,9 @@ struct PathNode
 	bool operator !=(const PathNode& node)const;
 
 	// PathNode data --------
-	float			g = 0;
-	int				h = 0;
-	iPoint			pos = { 0,0 };
+	float			g = -1;
+	int				h = -1;
+	iPoint			pos = { -1,-1 };
 	bool			on_close = false;
 	bool			on_open = false;
 	const PathNode* parent = nullptr; // needed to reconstruct the path in the end

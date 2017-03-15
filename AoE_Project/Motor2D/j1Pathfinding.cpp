@@ -43,6 +43,7 @@ void j1Pathfinding::SetMap(uint width, uint height, uchar * data)
 	this->height = height;
 
 	RELEASE_ARRAY(logic_map);
+	RELEASE_ARRAY(path_nodes);
 	int size = width*height;
 	logic_map = new uchar[size];
 	path_nodes = new PathNode[size];
@@ -242,12 +243,20 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 
 std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPoint & destination)
 {
+	
 	int size = width*height;
 	std::fill(path_nodes, path_nodes + size, PathNode(-1, -1, iPoint(-1, -1), nullptr));
 
 	int ret = -1;
+	iPoint mouse_position = App->map->FixPointMap(destination.x, destination.y);
 	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
-	iPoint map_goal = App->map->WorldToMap(destination.x, destination.y);
+	iPoint map_goal = App->map->WorldToMap(mouse_position.x, mouse_position.y);
+	if (map_origin == map_goal)
+	{
+		std::vector<iPoint>* path = new std::vector<iPoint>;
+		path->push_back(mouse_position);
+		return path;
+	}
 	LOG("ORIGIN WORLD: X=%i Y=%i		ORIGIN MAP: X=%i Y=%i", origin.x, origin.y, map_origin.x, map_origin.y);
 	LOG("GOAL WORLD: X=%i Y=%i			GOAL MAP: X=%i Y=%i", destination.x, destination.y, map_goal.x, map_goal.y);
 	if (IsWalkable(map_origin) && IsWalkable(map_goal))
@@ -274,6 +283,8 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 				//std::list<PathNode>::const_iterator item = current;
 				std::vector<iPoint>* path = new std::vector<iPoint>;
 				last_path.clear();
+				path->push_back(mouse_position);
+
 				for (; current->parent != nullptr; current = GetPathNode(current->parent->pos.x, current->parent->pos.y))
 				{
 					last_path.push_back(current->pos);
@@ -396,7 +407,7 @@ uint PathNode::FindWalkableAdjacents(PathList* list_to_fill) const
 	}
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell) && cell.x != 25) 
+	if (App->pathfinding->IsWalkable(cell)) 
 	{
 		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
 		if (node->pos != cell) {
@@ -405,7 +416,6 @@ uint PathNode::FindWalkableAdjacents(PathList* list_to_fill) const
 		}
 		list_to_fill->list.push_back(node);
 	}
-		
 	else
 	{
 		westClose = true;

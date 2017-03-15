@@ -166,6 +166,8 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	//Transform world coordinates to map coordinates
 	iPoint WorldToMap(int x, int y) const;
+	
+	iPoint FixPointMap(int x, int y);
 	//Get Collide Layer
 	void CollideLayer();
 
