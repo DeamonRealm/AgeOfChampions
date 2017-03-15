@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include <math.h>
+#include "p2Log.h"
 
 ///Class Primitive ------------------------------
 //Constructors ==============
@@ -11,12 +12,12 @@ Primitive::Primitive()
 
 }
 
-Primitive::Primitive(const iPoint& position, const SDL_Color& color) :position(position), color(color)
+Primitive::Primitive(const iPoint& position, const iPoint& displacement, const SDL_Color& color) :position(position), displacement(displacement), color(color)
 {
 
 }
 
-Primitive::Primitive(const Primitive& copy) : position(copy.position), color(copy.color), x_angle(copy.x_angle)
+Primitive::Primitive(const Primitive& copy) : position(copy.position), displacement(copy.displacement), color(copy.color), x_angle(copy.x_angle)
 {
 
 }
@@ -36,6 +37,11 @@ bool Primitive::Draw()
 void Primitive::SetPosition(const iPoint & pos)
 {
 	position = pos;
+}
+
+void Primitive::SetDisplacement(const iPoint & desp)
+{
+	displacement = desp;
 }
 
 void Primitive::SetXAngle(float angle)
@@ -65,7 +71,7 @@ SDL_Color Primitive::GetColor() const
 
 ///Class Circle ---------------------------------
 //Constructors ==============
-Circle::Circle(const iPoint& position, uint rad) :Primitive(position), rad(rad)
+Circle::Circle(const iPoint& position, uint rad, const iPoint& desplacement) :Primitive(position, desplacement), rad(rad)
 {
 
 }
@@ -85,7 +91,7 @@ Circle::~Circle()
 bool Circle::Draw()
 {
 	//Just draw the circle mark
-	return App->render->DrawCircle(position.x, position.y, rad, color.r, color.g, color.b, color.a, x_angle, true);
+	return App->render->DrawCircle(position.x + displacement.x, position.y + displacement.y, rad, color.r, color.g, color.b, color.a, x_angle, true);
 }
 
 void Circle::SetRad(uint r)
@@ -102,12 +108,12 @@ uint Circle::GetRad() const
 
 ///Class Rectangle ------------------------------
 //Constructors ==============
-Rectng::Rectng(const iPoint& position, uint width, uint height) :Primitive(position), width(width), height(height)
+Rectng::Rectng(const iPoint& position, uint width, uint height, const iPoint& desplacement) :Primitive(position,desplacement), width(width), height(height)
 {
 
 }
 
-Rectng::Rectng(const Rectng & copy) : Primitive(copy.position, copy.color), width(copy.width), height(copy.height)
+Rectng::Rectng(const Rectng & copy) : Primitive(copy), width(copy.width), height(copy.height)
 {
 
 }
@@ -128,10 +134,11 @@ bool Rectng::Draw()
 	int diagonal_len = (int)floor(sqrt(((width*0.5f)*(width*0.5f)) + ((height*0.5f)*(height*0.5f))));
 	
 	//Draw lines with the correct angles and coordinates to form the rotated quad
-	ret = App->render->DrawLine(position.x, position.y - (int)(diagonal_len * sin(x_angle)), position.x + diagonal_len, position.y, color.r, color.g, color.b, color.a, true);
-	ret = App->render->DrawLine(position.x, position.y + (int)(diagonal_len * sin(x_angle)), position.x + diagonal_len, position.y, color.r, color.g, color.b, color.a, true);
-	ret = App->render->DrawLine(position.x - diagonal_len, position.y, position.x, position.y - (int)(diagonal_len * sin(x_angle)), color.r, color.g, color.b, color.a, true);
-	ret = App->render->DrawLine(position.x - diagonal_len, position.y, position.x, position.y + (int)(diagonal_len * sin(x_angle)), color.r, color.g, color.b, color.a, true);
+	iPoint draw_pos(position.x + displacement.x, position.y + displacement.y);
+	ret = App->render->DrawLine(draw_pos.x, draw_pos.y - (int)(diagonal_len * sin(x_angle)), draw_pos.x + diagonal_len, draw_pos.y, color.r, color.g, color.b, color.a, true);
+	ret = App->render->DrawLine(draw_pos.x, draw_pos.y + (int)(diagonal_len * sin(x_angle)), draw_pos.x + diagonal_len, draw_pos.y, color.r, color.g, color.b, color.a, true);
+	ret = App->render->DrawLine(draw_pos.x - diagonal_len, draw_pos.y, draw_pos.x, draw_pos.y - (int)(diagonal_len * sin(x_angle)), color.r, color.g, color.b, color.a, true);
+	ret = App->render->DrawLine(draw_pos.x - diagonal_len, draw_pos.y, draw_pos.x, draw_pos.y + (int)(diagonal_len * sin(x_angle)), color.r, color.g, color.b, color.a, true);
 	
 	return true;
 }
@@ -160,12 +167,12 @@ uint Rectng::GetHeight() const
 
 ///Class Line -----------------------------------
 //Constructors ==============
-Line::Line(const iPoint & position, const iPoint & position_2, const SDL_Color& color) :Primitive(position,color), position_2(position_2)
+Line::Line(const iPoint & position, const iPoint & position_2, const SDL_Color& color, const iPoint& desplacement) :Primitive(position, desplacement, color), position_2(position_2)
 {
 
 }
 
-Line::Line(const Rectng & copy) : Primitive(position, color), position_2(position_2)
+Line::Line(const Rectng & copy) : Primitive(position, displacement, color), position_2(position_2)
 {
 }
 
@@ -177,7 +184,7 @@ Line::~Line()
 //Functionality =============
 bool Line::Draw()
 {
-	return App->render->DrawLine(position.x, position.y, position_2.x, position_2.y, color.r, color.g, color.b, color.a);
+	return App->render->DrawLine(position.x + displacement.x, position.y + displacement.y, position_2.x, position_2.y, color.r, color.g, color.b, color.a);
 }
 
 void Line::SetP1(const iPoint & p1)
@@ -190,12 +197,12 @@ void Line::SetP2(const iPoint & p2)
 	position_2 = p2;
 }
 
-const iPoint & Line::GetP1() const
+const iPoint& Line::GetP1() const
 {
 	return position;
 }
 
-const iPoint & Line::GetP2() const
+const iPoint& Line::GetP2() const
 {
 	return position_2;
 }

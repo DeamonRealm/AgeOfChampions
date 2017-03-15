@@ -4,7 +4,7 @@
 #include <vector>
 #include <queue>
 #include "j1Map.h"
-#include "j1LogicMap.h"
+
 enum ClusterOrientation {
 	CLUSTER_HORIZONTAL,
 	CLUSTER_VERTICAL

@@ -219,20 +219,7 @@ bool Unit::Draw(bool debug)
 		y_axis.Draw();
 		x_axis.Draw();
 		if (path != nullptr)DrawPath();
-		
-		//This is bullshit for ram but is temporal
-		/*
-		char x_bff[8];
-		snprintf(x_bff, 8, "%.2f", position.x);
-		std::string x_str = x_bff;
-		char y_bff[8];
-		snprintf(y_bff, 8, "%.2f", position.y);
-		std::string y_str = y_bff;
-		std::string pos = "X:" + x_str + ",Y:" + y_str;
-		SDL_Color tex_color = {255,255,0,255 };
-		pos_texture = App->font->Print(pos.c_str(), tex_color, App->font->default);
-		App->render->CallBlit(pos_texture, position.x, position.y);
-		*/
+	
 	}
 	
 	//Draw Entity Current animation frame
@@ -250,7 +237,7 @@ bool Unit::DrawPath()
 	for (uint k = 0; k < size; k++)
 	{
 		iPoint cell = path->at(k);
-		App->render->CallBlit(App->pathfinding->path_texture, cell.x - App->map->data.tile_width * 0.5, cell.y);
+		App->render->CallBlit(App->pathfinding->path_texture, cell.x - App->map->data.tile_width * 0.5f, cell.y - App->map->data.tile_height * 0.5);
 	}
 	
 	return true;
@@ -685,7 +672,7 @@ bool Resource::Draw(bool debug)
 {
 	bool ret = false;
 	//Draw Resource Mark
-	if(selected)ret = mark.Draw();
+	ret = mark.Draw();
 
 	if (debug) {
 		//Draw Entity Selection Rect
@@ -748,11 +735,14 @@ bool Resource::ExtractResources(uint* value)
 
 void Resource::SetPosition(float x, float y)
 {
-	//Set resource position
-	position.x = x;
-	position.y = y;
-	//Set resource mark position
-	mark.SetPosition(iPoint( x,y ));
+	//Set building position fixing it in the tiles coordinates
+	iPoint coords = App->map->WorldToMap(x, y);
+	coords = App->map->MapToWorld(coords.x, coords.y);
+	position.x = coords.x;
+	position.y = coords.y;
+
+	//Set building mark position
+	mark.SetPosition(iPoint(position.x, position.y));
 }
 
 void Resource::SetMark(const Rectng & rectangle)
@@ -910,7 +900,7 @@ void Building::SetPosition(float x, float y)
 	mark.SetPosition(iPoint(position.x, position.y));
 }
 
-void Building::SetMark(const Rectng & rectangle)
+void Building::SetMark(const Rectng& rectangle)
 {
 	mark = rectangle;
 }

@@ -24,14 +24,15 @@ class Primitive
 public:
 
 	Primitive();
-	Primitive(const iPoint& position, const SDL_Color& color = {});
+	Primitive(const iPoint& position, const iPoint& displacement = { 0,0 } , const SDL_Color& color = { 0,0,0,255 });
 	Primitive(const Primitive& copy);
 	~Primitive();
 
 protected:
 
-	iPoint		position = {0,0};
-	float		x_angle = 10.0f;
+	iPoint		position = { 0,0 };
+	iPoint		displacement = { 0,0 };
+	float		x_angle = 0.5f;
 	SDL_Color	color = { 0,0,0,255 };
 
 public:
@@ -41,6 +42,7 @@ public:
 	virtual bool	Draw();
 	//Set Methods
 	void			SetPosition(const iPoint& pos);
+	void			SetDisplacement(const iPoint& desp);
 	void			SetXAngle(float angle);
 	void			SetColor(const SDL_Color& rgba);
 	//Get Methods
@@ -57,7 +59,7 @@ class Circle : public Primitive
 {
 public:
 
-	Circle(const iPoint& position = { 0,0 }, uint rad = 0);
+	Circle(const iPoint& position = { 0,0 }, uint rad = 0, const iPoint& displacement = { 0,0 });
 	Circle(const Circle& copy);
 	~Circle();
 
@@ -84,7 +86,7 @@ class Rectng : public Primitive
 {
 public:
 
-	Rectng(const iPoint& position = {0,0},uint width = 0, uint height = 0);
+	Rectng(const iPoint& position = {0,0},uint width = 0, uint height = 0, const iPoint& displacement = { 0,0 });
 	Rectng(const Rectng& copy);
 	~Rectng();
 
@@ -113,7 +115,7 @@ class Line : public Primitive
 {
 public:
 
-	Line(const iPoint& position , const iPoint& position_2, const SDL_Color& color);
+	Line(const iPoint& position , const iPoint& position_2, const SDL_Color& color , const iPoint& displacement = { 0,0 });
 	Line(const Rectng& copy);
 	~Line();
 

@@ -9,6 +9,7 @@
 #include "j1FileSystem.h"
 #include "j1Console.h"
 #include "j1Pathfinding.h"
+#include "j1Map.h"
 #include "p2Log.h"
 
 //Testing purposes only should be erased
@@ -301,7 +302,9 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	/*Mark*/			Rectng mark;
 	/*Mark Width*/		mark.SetWidth(building_node->attribute("mark_w").as_uint());
 	/*Mark Height*/		mark.SetHeight(building_node->attribute("mark_h").as_uint());
-	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
+	/*Mark Displace*/	iPoint displacement(building_node->attribute("mark_x").as_int(), building_node->attribute("mark_y").as_int());
+						mark.SetDisplacement(displacement);
+	/*Mark Color*/		mark.SetColor({ 55,255,255,255 });
 						new_def->SetMark(mark);
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = building_node->attribute("selection_x").as_int();
