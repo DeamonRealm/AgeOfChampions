@@ -10,7 +10,7 @@ Villager::Villager()
 
 }
 
-Villager::Villager(const Villager & copy) :Unit(copy), resources_capacity(copy.resources_capacity), current_resources(copy.current_resources), recollect_capacity(copy.recollect_capacity), recollect_rate(copy.recollect_rate)
+Villager::Villager(const Villager & copy) :Unit(copy), item_type(copy.item_type),resources_capacity(copy.resources_capacity), current_resources(copy.current_resources), recollect_capacity(copy.recollect_capacity), recollect_rate(copy.recollect_rate)
 {
 
 }
@@ -30,6 +30,28 @@ bool Villager::Update()
 }
 
 //Functionality =======================
+//Get Methods ----------
+ITEM_TYPE Villager::GetItemType() const
+{
+	return this->item_type;
+}
+//Set Methods ----------
+void Villager::SetItemType(ITEM_TYPE type)
+{
+	item_type = type;
+}
+void Villager::SetResourcesCapacity(uint value)
+{
+	resources_capacity = value;
+}
+void Villager::SetRecollectCapacity(uint value)
+{
+	recollect_capacity = value;
+}
+void Villager::SetRecollectRate(uint value)
+{
+	recollect_rate = value;
+}
 //Actions --------------
 bool Villager::Interact()
 {

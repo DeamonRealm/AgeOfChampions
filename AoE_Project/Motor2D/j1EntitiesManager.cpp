@@ -169,56 +169,76 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 {
 	if (unit_node == nullptr)return false;
 
-	//Generate a new unit definition from the node
-	Unit new_def;
+	//Generate a new unit definition from the node & check if is a villager to allocate villager class
+	Unit* new_def = nullptr;
+	UNIT_TYPE unit_type = App->animator->StrToUnitEnum(unit_node->attribute("unit_type").as_string());
+	if (unit_type == VILLAGER)
+	{
+		Villager* new_villager = new Villager();
+		new_def = new_villager;
+	}
+	else
+	{
+		new_def = new Unit();
+	}
 	
 	//Unit ID ---------------
-	/*Name*/			new_def.SetName(unit_node->attribute("name").as_string());
-	/*Entity Type*/		new_def.SetEntityType(UNIT);
-	/*Unit Type*/		new_def.SetUnitType(App->animator->StrToUnitEnum(unit_node->attribute("unit_type").as_string()));
-	/*Attack Type*/		new_def.SetAttackType(App->animator->StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
+	/*Name*/			new_def->SetName(unit_node->attribute("name").as_string());
+	/*Entity Type*/		new_def->SetEntityType(UNIT);
+	/*Unit Type*/		new_def->SetUnitType(unit_type);
+	/*Attack Type*/		new_def->SetAttackType(App->animator->StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
 	//Unit Primitives -------
 	/*Mark*/			Circle mark;
 	/*Mark Radius*/		mark.SetRad(unit_node->attribute("mark_rad").as_uint());
 	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
-						new_def.SetMark(mark);
+						new_def->SetMark(mark);
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = unit_node->attribute("selection_x").as_int();
 	/*S.Rect Y*/		selection_rect.y = unit_node->attribute("selection_y").as_int();
 	/*S.Rect W*/		selection_rect.w = unit_node->attribute("selection_w").as_int();
 	/*S.Rect H*/		selection_rect.h = unit_node->attribute("selection_h").as_int();
-						new_def.SetSelectionRect(selection_rect);
+						new_def->SetSelectionRect(selection_rect);
 	/*Icon Rect*/		SDL_Rect icon_rect;
 	/*I.Rect X*/		icon_rect.x = unit_node->attribute("icon_x").as_int();
 	/*I.Rect Y*/		icon_rect.y = unit_node->attribute("icon_y").as_int();
 	/*I.Rect W*/		icon_rect.w = unit_node->attribute("icon_w").as_int();
 	/*I.Rect H*/		icon_rect.h = unit_node->attribute("icon_h").as_int();
-						new_def.SetIcon(icon_rect);
+						new_def->SetIcon(icon_rect);
 
 	//Unit Metrics ----------
-	/*Max Life*/		new_def.SetMaxLife(unit_node->attribute("max_life").as_uint());
-	/*Life*/			new_def.SetLife(new_def.GetMaxLife());
-	/*View Area*/		new_def.SetViewArea(unit_node->attribute("view_area").as_uint());
-	/*Speed*/			new_def.SetSpeed(unit_node->attribute("speed").as_float());
-	/*Attack Delay*/	new_def.SetAttackDelay(unit_node->attribute("attack_delay").as_uint());
-	/*Attack Points*/	new_def.SetAttackHitPoints(unit_node->attribute("attack_hitpoints").as_uint());
-	/*Attack Bonus*/	new_def.SetAttackBonus(unit_node->attribute("attack_bonus").as_uint());
-	/*Siege Points*/	new_def.SetSiegeHitPoints(unit_node->attribute("siege_hitpoints").as_uint());
-	/*Attack Rate*/		new_def.SetAttackRate(unit_node->attribute("attack_rate").as_uint());
-	/*Attack Range*/	new_def.SetAttackRange(unit_node->attribute("attack_range").as_uint());
-	/*Defense*/			new_def.SetDefense(unit_node->attribute("defense").as_uint());
-	/*Defense Bonus*/	new_def.SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
-	/*Armor*/			new_def.SetArmor(unit_node->attribute("armor").as_uint());
-	/*Armor Bonus*/		new_def.SetArmorBonus(unit_node->attribute("armor_bomus").as_uint());
-	/*Food Cost*/		new_def.SetFoodCost(unit_node->attribute("food_cost").as_uint());
-	/*Wood Cost*/		new_def.SetWoodCost(unit_node->attribute("wood_cost").as_uint());
-	/*Gold Cost*/		new_def.SetGoldCost(unit_node->attribute("gold_cost").as_uint());
-	/*Population Cost*/	new_def.SetPopulationCost(unit_node->attribute("population_cost").as_uint());
-	/*Train Time*/		new_def.SetTrainTime(unit_node->attribute("train_time").as_uint());
+	/*Max Life*/		new_def->SetMaxLife(unit_node->attribute("max_life").as_uint());
+	/*Life*/			new_def->SetLife(new_def->GetMaxLife());
+	/*View Area*/		new_def->SetViewArea(unit_node->attribute("view_area").as_uint());
+	/*Speed*/			new_def->SetSpeed(unit_node->attribute("speed").as_float());
+	/*Attack Delay*/	new_def->SetAttackDelay(unit_node->attribute("attack_delay").as_uint());
+	/*Attack Points*/	new_def->SetAttackHitPoints(unit_node->attribute("attack_hitpoints").as_uint());
+	/*Attack Bonus*/	new_def->SetAttackBonus(unit_node->attribute("attack_bonus").as_uint());
+	/*Siege Points*/	new_def->SetSiegeHitPoints(unit_node->attribute("siege_hitpoints").as_uint());
+	/*Attack Rate*/		new_def->SetAttackRate(unit_node->attribute("attack_rate").as_uint());
+	/*Attack Range*/	new_def->SetAttackRange(unit_node->attribute("attack_range").as_uint());
+	/*Defense*/			new_def->SetDefense(unit_node->attribute("defense").as_uint());
+	/*Defense Bonus*/	new_def->SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
+	/*Armor*/			new_def->SetArmor(unit_node->attribute("armor").as_uint());
+	/*Armor Bonus*/		new_def->SetArmorBonus(unit_node->attribute("armor_bomus").as_uint());
+	/*Food Cost*/		new_def->SetFoodCost(unit_node->attribute("food_cost").as_uint());
+	/*Wood Cost*/		new_def->SetWoodCost(unit_node->attribute("wood_cost").as_uint());
+	/*Gold Cost*/		new_def->SetGoldCost(unit_node->attribute("gold_cost").as_uint());
+	/*Population Cost*/	new_def->SetPopulationCost(unit_node->attribute("population_cost").as_uint());
+	/*Train Time*/		new_def->SetTrainTime(unit_node->attribute("train_time").as_uint());
 
+
+	//Villager Data ---------
+	if (unit_type == VILLAGER)
+	{
+		/*Resources Capacity*/	((Villager*)new_def)->SetResourcesCapacity(unit_node->attribute("resources_capacity").as_uint());
+		/*Recollect Capacity*/	((Villager*)new_def)->SetRecollectCapacity(unit_node->attribute("recollect_capacity").as_uint());
+		/*Recollect Rate*/		((Villager*)new_def)->SetRecollectRate(unit_node->attribute("recollect_rate").as_uint());
+	}
+
+	//Add the generated unit in the units definitions entities manager array
 	units_defs.push_back(new_def);
-	
-	LOG("%s definition built!", new_def.GetName());
+
+	LOG("%s definition built!", new_def->GetName());
 	
 	return true;
 }
@@ -228,39 +248,39 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_no
 	if (resource_node == nullptr)return false;
 
 	//Generate a new resource definition from the node
-	Resource new_def;
+	Resource* new_def = new Resource();
 
 	//Resource ID -----------
-	/*Name*/			new_def.SetName(resource_node->attribute("name").as_string());
-	/*Entity Type*/		new_def.SetEntityType(RESOURCE);
-	/*Resource Type*/	new_def.SetResourceType(App->animator->StrToResourceEnum(resource_node->attribute("resource_type").as_string()));
+	/*Name*/			new_def->SetName(resource_node->attribute("name").as_string());
+	/*Entity Type*/		new_def->SetEntityType(RESOURCE);
+	/*Resource Type*/	new_def->SetResourceType(App->animator->StrToResourceEnum(resource_node->attribute("resource_type").as_string()));
 	
 	//Resource Primitives ---
 	/*Mark*/			Rectng mark;
 	/*Mark Width*/		mark.SetWidth(resource_node->attribute("mark_w").as_uint());
 	/*Mark Height*/		mark.SetHeight(resource_node->attribute("mark_h").as_uint());
 	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
-						new_def.SetMark(mark);
+						new_def->SetMark(mark);
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = resource_node->attribute("selection_x").as_int();
 	/*S.Rect Y*/		selection_rect.y = resource_node->attribute("selection_y").as_int();
 	/*S.Rect W*/		selection_rect.w = resource_node->attribute("selection_w").as_int();
 	/*S.Rect H*/		selection_rect.h = resource_node->attribute("selection_h").as_int();
-						new_def.SetSelectionRect(selection_rect);
+						new_def->SetSelectionRect(selection_rect);
 	/*Icon Rect*/		SDL_Rect icon_rect;
 	/*I.Rect X*/		icon_rect.x = resource_node->attribute("icon_x").as_int();
 	/*I.Rect Y*/		icon_rect.y = resource_node->attribute("icon_y").as_int();
 	/*I.Rect W*/		icon_rect.w = resource_node->attribute("icon_w").as_int();
 	/*I.Rect H*/		icon_rect.h = resource_node->attribute("icon_h").as_int();
-						new_def.SetIcon(icon_rect);
+						new_def->SetIcon(icon_rect);
 
 	//Resource Metrics ------
-	/*Max Resources*/	new_def.SetMaxResources(resource_node->attribute("max_resources").as_uint());
-	/*C.Resources*/		new_def.SetCurrentResources(new_def.GetMaxResources());
+	/*Max Resources*/	new_def->SetMaxResources(resource_node->attribute("max_resources").as_uint());
+	/*C.Resources*/		new_def->SetCurrentResources(new_def->GetMaxResources());
 
 	resources_defs.push_back(new_def);
 
-	LOG("%s definition built!", new_def.GetName());
+	LOG("%s definition built!", new_def->GetName());
 
 	return true;
 }
@@ -270,38 +290,38 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	if (building_node == nullptr)return false;
 
 	//Generate a new building definition from the node
-	Building new_def;
+	Building* new_def = new Building();
 
 	//Building ID -----------
-	/*Name*/			new_def.SetName(building_node->attribute("name").as_string());
-	/*Entity Type*/		new_def.SetEntityType(BUILDING);
-	/*Building Type*/	new_def.SetBuildingType(App->animator->StrToBuildingEnum(building_node->attribute("resource_type").as_string()));
+	/*Name*/			new_def->SetName(building_node->attribute("name").as_string());
+	/*Entity Type*/		new_def->SetEntityType(BUILDING);
+	/*Building Type*/	new_def->SetBuildingType(App->animator->StrToBuildingEnum(building_node->attribute("resource_type").as_string()));
 
 	//Building Primitives ---
 	/*Mark*/			Rectng mark;
 	/*Mark Width*/		mark.SetWidth(building_node->attribute("mark_w").as_uint());
 	/*Mark Height*/		mark.SetHeight(building_node->attribute("mark_h").as_uint());
 	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
-						new_def.SetMark(mark);
+						new_def->SetMark(mark);
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = building_node->attribute("selection_x").as_int();
 	/*S.Rect Y*/		selection_rect.y = building_node->attribute("selection_y").as_int();
 	/*S.Rect W*/		selection_rect.w = building_node->attribute("selection_w").as_int();
 	/*S.Rect H*/		selection_rect.h = building_node->attribute("selection_h").as_int();
-						new_def.SetSelectionRect(selection_rect);
+						new_def->SetSelectionRect(selection_rect);
 	/*Icon Rect*/		SDL_Rect icon_rect;
 	/*I.Rect X*/		icon_rect.x = building_node->attribute("icon_x").as_int();
 	/*I.Rect Y*/		icon_rect.y = building_node->attribute("icon_y").as_int();
 	/*I.Rect W*/		icon_rect.w = building_node->attribute("icon_w").as_int();
 	/*I.Rect H*/		icon_rect.h = building_node->attribute("icon_h").as_int();
-						new_def.SetIcon(icon_rect);
+						new_def->SetIcon(icon_rect);
 
 	//Building Metrics ------
 
 
 	buildings_defs.push_back(new_def);
 
-	LOG("%s definition built!", new_def.GetName());
+	LOG("%s definition built!", new_def->GetName());
 
 	return true;
 }
@@ -422,11 +442,19 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 	uint def_num = units_defs.size();
 	for (uint k = 0; k < def_num; k++)
 	{
-		if (units_defs[k].GetUnitType() == type)
+		if (units_defs[k]->GetUnitType() == type)
 		{
-			//Build unit
-			new_unit = new Unit(units_defs[k]);
-			
+			//If the unit to generate is a villager we need to generate a villager class 
+			if (type == VILLAGER)
+			{
+				Villager* new_villager = new Villager(*(Villager*)units_defs[k]);
+				new_unit = new_villager;
+			}
+			else
+			{
+				//Build unit
+				new_unit = new Unit(*units_defs[k]);
+			}
 			//Set unit animation
 			App->animator->UnitPlay(new_unit);
 			
@@ -446,10 +474,10 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 	uint def_num = buildings_defs.size();
 	for (uint k = 0; k < def_num; k++)
 	{
-		if (buildings_defs[k].GetBuildingType() == type)
+		if (buildings_defs[k]->GetBuildingType() == type)
 		{
 			//Build unit
-			new_building = new Building(buildings_defs[k]);
+			new_building = new Building(*buildings_defs[k]);
 
 			//Set unit animation
 			App->animator->BuildingPlay(new_building);
@@ -470,10 +498,10 @@ Resource* j1EntitiesManager::GenerateResource(RESOURCE_TYPE type,uint id_index)
 	uint def_num = resources_defs.size();
 	for (uint k = 0; k < def_num; k++)
 	{
-		if (resources_defs[k].GetResourceType() == type)
+		if (resources_defs[k]->GetResourceType() == type)
 		{
 			//Build unit
-			new_resource = new Resource(resources_defs[k]);
+			new_resource = new Resource(*resources_defs[k]);
 
 			//Set unit animation
 			App->animator->ResourcePlay(new_resource);

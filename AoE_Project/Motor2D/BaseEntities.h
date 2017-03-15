@@ -6,7 +6,7 @@
 #include "p2Defs.h"
 #include "p2Point.h"
 #include "Iso_Primitives.h"
-#include"SDL/include/SDL_rect.h"
+#include "SDL/include/SDL_rect.h"
 #include "j1Timer.h"
 
 struct Animation;
@@ -104,7 +104,11 @@ enum ITEM_TYPE
 	AXE,
 	BASKET,
 	BOW,
-	CARRY,
+	FISH,
+	GOLD,
+	STONE,
+	WOOD,
+	MEAT,
 	HAMMER,
 	PICK,
 	PLOW

@@ -9,7 +9,7 @@
 #include "j1Textures.h"
 #include "SDL/include/SDL_rect.h"
 #include "p2Log.h"
-#include "BaseEntities.h"
+#include "j1EntitiesManager.h"
 
 ///Animation Sprite Class -----------------------
 //Constructor ===============
@@ -313,10 +313,14 @@ ITEM_TYPE j1Animator::StrToItemEnum(const char* str) const
 	if (strcmp(str, "axe") == 0)		return AXE;
 	if (strcmp(str, "basket") == 0)		return BASKET;
 	if (strcmp(str, "bow") == 0)		return BOW;
-	if (strcmp(str, "carry") == 0)		return CARRY;
 	if (strcmp(str, "hammer") == 0)		return HAMMER;
 	if (strcmp(str, "pick") == 0)		return PICK;
 	if (strcmp(str, "plow") == 0)		return PLOW;
+	if (strcmp(str, "fish") == 0)		return FISH;
+	if (strcmp(str, "gold") == 0)		return GOLD;
+	if (strcmp(str, "stone") == 0)		return STONE;
+	if (strcmp(str, "wood") == 0)		return WOOD;
+	if (strcmp(str, "meat") == 0)		return MEAT;
 	return NO_ITEM;
 }
 
@@ -368,13 +372,10 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 	std::string load_folder = name + "/" + xml_folder;
 	pugi::xml_document animations_data;
 	if (!App->fs->LoadXML(load_folder.c_str(), &animations_data)) return false;
-	//Check if the loaded XML have villager structure
-	if (strcmp(animations_data.first_child().name(), "villager") == 0)
-	{
-		bool ret = LoadVillagerBlock(&animations_data);
-		animations_data.reset();
-		return ret;
-	}
+	
+	//Check if the loaded XML have villager structure & if true villager is loaded
+	if (strcmp(animations_data.first_child().name(), "villager") == 0) return LoadVillagerBlock(&animations_data);
+
 	//Texture load
 	load_folder = name + "/" + animations_data.child("TextureAtlas").attribute("imagePath").as_string();
 	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
@@ -469,8 +470,119 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 	return true;
 }
 
-bool j1Animator::LoadVillagerBlock(const pugi::xml_document* doc)
+bool j1Animator::LoadVillagerBlock(pugi::xml_document* doc)
 {
+	//Node pointing to the first villager item
+	pugi::xml_node item_node = doc->child("villager").first_child();
+	//Node for the action data
+	pugi::xml_node action_node;
+	//Node for the direction data
+	pugi::xml_node direction_node;
+	//Current sprite node 
+	pugi::xml_node sprite;
+
+	//String of the module data folder direction
+	std::string dir_str = name + "/";
+
+	//Build new unit animation block
+	Animation_Block* unit_anim_block = new Animation_Block();
+	//Get unit enum
+	unit_anim_block->SetId(VILLAGER);
+
+	//Iterate all items
+	while (item_node != NULL)
+	{
+		//Load the item animations texture
+		std::string folder = dir_str + item_node.first_child().attribute("imagePath").as_string();
+		SDL_Texture* texture = App->tex->Load(folder.c_str());
+
+		//Allocate the item animation block
+		Animation_Block* item_animation_block = new Animation_Block();
+
+		//Set item animation block id
+		item_animation_block->SetId(App->animator->StrToItemEnum(item_node.attribute("id").as_string()));
+
+		//Focus the action node at the first item action
+		action_node = item_node.child("action");
+
+		//Iterate all the actions
+		while (action_node != NULL)
+		{
+
+			//Build new action animation block
+			Animation_Block* action_anim_block = new Animation_Block();
+			//Get current action enum
+			action_anim_block->SetId(StrToActionEnum(action_node.attribute("enum").as_string()));
+			//Get current action animation speed
+			uint speed = action_node.attribute("speed").as_uint();
+
+			//Focus direction of the current action
+			direction_node = action_node.first_child();
+
+			while (direction_node != NULL) {
+
+				//Build new direction animation block
+				Animation_Block* direction_anim_block = new Animation_Block();
+				//Get direction block direction enum
+				direction_anim_block->SetId(StrToDirectionEnum(direction_node.attribute("enum").as_string()));
+
+				//Build direction block animation
+				Animation* animation = new Animation();
+				//Set animation speed
+				animation->SetSpeed(speed);
+				//Set animation texture
+				animation->SetTexture(texture);
+
+				//Focus sprite node at first sprite of direction node
+				sprite = direction_node.first_child();
+
+				while (sprite != NULL)
+				{
+					//Load sprite rect
+					SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
+					//Load sprite pivot
+					float pX = sprite.attribute("pX").as_float() * rect.w;
+					pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+					float pY = sprite.attribute("pY").as_float() * rect.h;
+					pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+
+					//Add built sprite at the current animation
+					animation->AddSprite(rect, iPoint((int)pX, (int)pY));
+
+					//Get next sprite node
+					sprite = sprite.next_sibling();
+				}
+
+				//Add built animation to the direction block
+				direction_anim_block->SetAnimation(animation);
+
+				//Add built direction block to the action block
+				action_anim_block->AddAnimationBlock(direction_anim_block);
+
+				//Get next direction node
+				direction_node = direction_node.next_sibling();
+
+			}
+			//Add action block in the item block
+			item_animation_block->AddAnimationBlock(action_anim_block);
+
+			//Get next action node
+			action_node = action_node.next_sibling();
+		}
+
+		//Add item animation block at the unit animation block
+		unit_anim_block->AddAnimationBlock(item_animation_block);
+
+		//Get next item node
+		item_node = item_node.next_sibling();
+	}
+
+	//Add unit animation block to module vector
+	unit_blocks.push_back(unit_anim_block);
+
+	//Release loaded document data
+	doc->reset();
+
 	return true;
 }
 
@@ -661,6 +773,11 @@ bool j1Animator::UnitPlay(Unit* target)
 		//Compare block unit id
 		if (block->GetId() == target->GetUnitType())
 		{
+			if (block->GetId() == VILLAGER)
+			{
+				//If the unit is a villager we need to check the item that is carrying
+				block = block->SearchId(((Villager*)target)->GetItemType());
+			}
 			//Compare block action id
 			block = block->SearchId(target->GetAction());
 			//If action block is found search the correct direction block

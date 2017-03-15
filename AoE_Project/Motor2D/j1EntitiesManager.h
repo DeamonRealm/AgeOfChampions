@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "BaseEntities.h"
+#include "Units.h"
 
 class j1EntitiesManager : public j1Module
 {
@@ -43,9 +44,9 @@ private:
 	std::vector<Entity*>	wasted_units;
 
 	//Vector of predefined units
-	std::vector<Unit>		units_defs;
-	std::vector<Resource>	resources_defs;
-	std::vector<Building>	buildings_defs;
+	std::vector<Unit*>		units_defs;
+	std::vector<Resource*>	resources_defs;
+	std::vector<Building*>	buildings_defs;
 
 	// Cvar that defines the console unit generator unit type
 	Cvar* unit_cvar;

@@ -112,7 +112,7 @@ private:
 	//Enum id of this block
 	uint							enum_id = 0;
 	//Pointer to a vector of animations 
-	Animation*		animation=nullptr;
+	Animation*		animation = nullptr;
 
 public:
 
@@ -182,7 +182,7 @@ public:
 
 	//Blocks Load Methods ---
 	bool		LoadUnitBlock(const char* xml_folder);
-	bool		LoadVillagerBlock(const pugi::xml_document* doc);
+	bool		LoadVillagerBlock(pugi::xml_document* doc);
 	bool		LoadBuildingBlock(const char* xml_folder);
 	bool		LoadResourceBlock(const char* xml_folder);
 

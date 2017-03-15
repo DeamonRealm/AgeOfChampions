@@ -14,6 +14,9 @@ public:
 	
 private:
 
+	//Item used id
+	ITEM_TYPE item_type = NO_ITEM;
+
 	//Resource related data
 	uint resources_capacity = 0;
 	uint current_resources = 0;
@@ -22,8 +25,18 @@ private:
 
 public:
 
-	//Game Loop ---
+	//Game Loop --------
 	bool Update();
+
+	//Functionality ----
+	//Get Methods -
+	ITEM_TYPE GetItemType()const;
+
+	//Set Methods -
+	void SetItemType(ITEM_TYPE type);
+	void SetResourcesCapacity(uint value);
+	void SetRecollectCapacity(uint value);
+	void SetRecollectRate(uint value);
 
 	//Actions -----
 	bool Interact();

@@ -482,6 +482,11 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8"
+      
+      resources_capacity ="200"
+      recollect_capacity ="10"
+      recollect_rate ="450"
+      
     />
   </unit>
 

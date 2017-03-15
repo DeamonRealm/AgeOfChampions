@@ -52,7 +52,7 @@ bool j1Scene::Start()
 
 
 	// Entities Build -------------------------------------
-	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::MILITIA); ///Don't use VILLAGER_CARRY animations are differently sorted and WILL break the code
+	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::VILLAGER); ///Don't use VILLAGER_CARRY animations are differently sorted and WILL break the code
 	arbalest->SetPosition(350, 280);
 	tree = App->entities_manager->GenerateResource(RESOURCE_TYPE::TREE);
 	tree->SetPosition(130, 650);
