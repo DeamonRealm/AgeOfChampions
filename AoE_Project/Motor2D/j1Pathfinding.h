@@ -24,11 +24,6 @@ public:
 	bool CleanUp();
 	void SetMap(uint width, uint height, uchar* data);
 	uchar GetValueMap(int x, int y) const;
-	void SetMapOpen(int x, int y);
-	void SetMapOClosed(int x, int y);
-
-	bool IsMapOnOpen(int x, int y);
-	bool IsMapOnClosed(int x, int y);
 	PathNode* GetPathNode(int x, int y);
 private:
 	uchar* logic_map;

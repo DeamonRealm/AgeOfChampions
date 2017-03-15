@@ -59,9 +59,6 @@ void j1Pathfinding::InitClusterAbstraction()
 //Methods used during the paths creation to work with map data
 bool j1Pathfinding::IsWalkable(const iPoint & destination) const
 {
-	//Temp while the map don't have collision mask
-	return true;
-
 	bool ret = false;
 	uchar t = GetTileAt(destination);
 	return (t != INVALID_WALK_CODE && t > 0);
@@ -69,7 +66,7 @@ bool j1Pathfinding::IsWalkable(const iPoint & destination) const
 
 bool j1Pathfinding::CheckBoundaries(const iPoint & pos) const
 {
-	return (pos.x >= 0 && pos.x <= (int)cluster_abstraction->width && pos.y >= 0 && pos.y <= (int)cluster_abstraction->height);
+	return (pos.x >= 0 && pos.x <= (int)width && pos.y >= 0 && pos.y <= (int)height);
 }
 
 uchar j1Pathfinding::GetTileAt(const iPoint & pos) const
@@ -166,6 +163,7 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
 	iPoint map_goal = App->map->WorldToMap(destination.x, destination.y);
 	SetMap(cluster_abstraction->width, cluster_abstraction->height, cluster_abstraction->logic_map);
+	
 
 	if (!IsWalkable(map_origin) || !IsWalkable(map_goal) || map_origin == map_goal);
 	{
@@ -250,6 +248,8 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 	int ret = -1;
 	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
 	iPoint map_goal = App->map->WorldToMap(destination.x, destination.y);
+	LOG("ORIGIN WORLD: X=%i Y=%i		ORIGIN MAP: X=%i Y=%i", origin.x, origin.y, map_origin.x, map_origin.y);
+	LOG("GOAL WORLD: X=%i Y=%i			GOAL MAP: X=%i Y=%i", destination.x, destination.y, map_goal.x, map_goal.y);
 	if (IsWalkable(map_origin) && IsWalkable(map_goal))
 	{
 		ret = 1;
@@ -333,7 +333,7 @@ PathNode::PathNode()
 
 }
 
-PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent) : g(g), h(h), pos(pos), parent(parent)
+PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent) : g(g), h(h), pos(pos), parent(parent),on_close(false),on_open(false)
 {
 
 }
