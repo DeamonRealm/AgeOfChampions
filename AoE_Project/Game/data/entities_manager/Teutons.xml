@@ -13,13 +13,6 @@
    <id xml = "pikeman.xml"/>
    <id xml = "spearman.xml"/>
    <id xml = "villager.xml"/>
-   <id xml = "villager_pick.xml"/>
-   <id xml = "villager_plow.xml"/>
-   <id xml = "villager_axe.xml"/>
-   <id xml = "villager_hammer.xml"/>
-   <id xml = "villager_basket.xml"/>
-   <id xml = "villager_bow.xml"/>
-   <id xml = "villager_carry.xml"/>
   </units>
   <buildings>
    <id xml = "town_center_feudal.xml"/>

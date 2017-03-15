@@ -295,13 +295,6 @@ UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 	if (strcmp(str, "arbalest") == 0)				return ARBALEST;
 	if (strcmp(str, "archer") == 0)					return ARCHER;
 	if (strcmp(str, "villager") == 0)				return VILLAGER;
-	if (strcmp(str, "villager_pick") == 0)			return VILLAGER_PICK;
-	if (strcmp(str, "villager_plow") == 0)			return VILLAGER_PLOW;
-	if (strcmp(str, "villager_bow") == 0)			return VILLAGER_BOW;
-	if (strcmp(str, "villager_basket") == 0)		return VILLAGER_BASKET;
-	if (strcmp(str, "villager_axe") == 0)			return VILLAGER_AXE;
-	if (strcmp(str, "villager_hammer") == 0)		return VILLAGER_HAMMER;
-	if (strcmp(str, "villager_carry") == 0)			return VILLAGER_CARRY;
 	return NO_UNIT;
 }
 
@@ -313,6 +306,18 @@ ACTION_TYPE j1Animator::StrToActionEnum(const char* str) const
 	if (strcmp(str, "idle") == 0)		return IDLE;
 	if (strcmp(str, "walk") == 0)		return WALK;
 	return NO_ACTION;
+}
+
+ITEM_TYPE j1Animator::StrToItemEnum(const char* str) const
+{
+	if (strcmp(str, "axe") == 0)		return AXE;
+	if (strcmp(str, "basket") == 0)		return BASKET;
+	if (strcmp(str, "bow") == 0)		return BOW;
+	if (strcmp(str, "carry") == 0)		return CARRY;
+	if (strcmp(str, "hammer") == 0)		return HAMMER;
+	if (strcmp(str, "pick") == 0)		return PICK;
+	if (strcmp(str, "plow") == 0)		return PLOW;
+	return NO_ITEM;
 }
 
 DIRECTION_TYPE j1Animator::StrToDirectionEnum(const char* str) const
@@ -363,6 +368,13 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 	std::string load_folder = name + "/" + xml_folder;
 	pugi::xml_document animations_data;
 	if (!App->fs->LoadXML(load_folder.c_str(), &animations_data)) return false;
+	//Check if the loaded XML have villager structure
+	if (strcmp(animations_data.first_child().name(), "villager") == 0)
+	{
+		bool ret = LoadVillagerBlock(&animations_data);
+		animations_data.reset();
+		return ret;
+	}
 	//Texture load
 	load_folder = name + "/" + animations_data.child("TextureAtlas").attribute("imagePath").as_string();
 	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
@@ -454,6 +466,11 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 	//Release loaded document data
 	animations_data.reset();
 
+	return true;
+}
+
+bool j1Animator::LoadVillagerBlock(const pugi::xml_document* doc)
+{
 	return true;
 }
 

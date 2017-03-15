@@ -16,6 +16,7 @@ enum BUILDING_TYPE;
 enum RESOURCE_TYPE;
 enum ATTACK_TYPE;
 enum ENTITY_TYPE;
+enum ITEM_TYPE;
 
 ///Animation Sprite Class -----------------------
 class Sprite
@@ -173,6 +174,7 @@ public:
 	ENTITY_TYPE		StrToEntityEnum(const char* str)const;
 	UNIT_TYPE		StrToUnitEnum(const char* str)const;
 	ACTION_TYPE		StrToActionEnum(const char* str)const;
+	ITEM_TYPE		StrToItemEnum(const char* str)const;
 	DIRECTION_TYPE	StrToDirectionEnum(const char* str)const;
 	BUILDING_TYPE	StrToBuildingEnum(const char* str)const;
 	ATTACK_TYPE		StrToAttackEnum(const char* str)const;
@@ -180,6 +182,7 @@ public:
 
 	//Blocks Load Methods ---
 	bool		LoadUnitBlock(const char* xml_folder);
+	bool		LoadVillagerBlock(const pugi::xml_document* doc);
 	bool		LoadBuildingBlock(const char* xml_folder);
 	bool		LoadResourceBlock(const char* xml_folder);
 
