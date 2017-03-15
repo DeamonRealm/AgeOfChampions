@@ -323,10 +323,10 @@ iPoint j1Map::FixPointMap(int x, int y)
 {
 	iPoint ret(x,y);
 	
-		if (x < 0)
-			ret.x = 0;
-		else if (x > (data.width*data.tile_width))
-			ret.x = data.width*data.tile_width;
+		if (x < ((data.width*data.tile_width) *-0.5))
+			ret.x = ((data.width*data.tile_width) *-0.5);
+		else if (x > ((data.width*data.tile_width)*0.5))
+			ret.x = ((data.width*data.tile_width)*0.5);
 		if(y<0)
 			ret.y = 0;
 		else if(y>(data.height*data.tile_height))
