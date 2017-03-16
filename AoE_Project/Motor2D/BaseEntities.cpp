@@ -903,7 +903,7 @@ void Building::SetPosition(float x, float y)
 	iPoint coords = App->map->WorldToMap(x, y);
 	coords = App->map->MapToWorld(coords.x, coords.y);
 	position.x = coords.x;
-	position.y = coords.y;
+	position.y = coords.y - App->map->data.tile_height * 0.5f;
 
 	//Set building mark position
 	mark.SetPosition(iPoint(position.x, position.y));

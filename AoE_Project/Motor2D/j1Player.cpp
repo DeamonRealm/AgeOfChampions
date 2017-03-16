@@ -182,7 +182,7 @@ bool j1Player::PreUpdate()
 		Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER);
 		center->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		center->SetDiplomacy(ALLY);
-		game_entityes.push_back(center);
+		//game_entityes.push_back(center);
 	}
 	//Generate Villager in the mouse coordinates
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
