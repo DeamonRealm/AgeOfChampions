@@ -43,7 +43,7 @@ public:
 private:
 
 	//Scene Test Entities
-
+	/*
 	//Building*	town_center = nullptr;
 	Resource*	tree = nullptr;
 	Resource*	chop = nullptr;
@@ -51,7 +51,7 @@ private:
 	Resource*	berry_bush = nullptr;
 	Resource*	gold_ore = nullptr;
 	Resource*	stone_ore = nullptr;
-	
+	*/
 
 	//Scene	UI
 	UI_Element* scene_1_screen;

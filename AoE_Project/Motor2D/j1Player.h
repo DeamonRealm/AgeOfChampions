@@ -44,6 +44,11 @@ enum SELECT_TYPE
 	ADD
 };
 
+enum ACTION
+{
+	LCLICK,
+	RCLICK
+};
 //Animator Module -------------------------------
 class j1Player : public j1Module
 {
@@ -99,9 +104,21 @@ private:
 	std::vector<UI_Image*>  group_profile;
 
 	Entity_Profile* Selected;
+	
+	//Resources test
+	std::list<Entity*> game_entityes;
 
 	//Used for mouse detection
 	Entity*			UpperEntity = nullptr;
+
+
+	// Just for testing Recolection;
+	Resource*	tree = nullptr;
+	Resource*	chop = nullptr;
+	Resource*   tree_cut = nullptr;
+	Resource*	berry_bush = nullptr;
+	Resource*	gold_ore = nullptr;
+	Resource*	stone_ore = nullptr;
 
 
 public:
@@ -126,5 +143,9 @@ public:
 
 	//Selction Panel (Group Functions)
 	void SetGroupProfile();
+
+	//Action Panel
+	bool DoAction(ACTION type);
+
 };
 #endif // !_J1PLAYER_H_

@@ -112,6 +112,20 @@ bool j1Player::Start()
 		i++;
 	}
 
+	// Entities Build ------------------------------------- only for testing recolection
+	tree = App->entities_manager->GenerateResource(RESOURCE_TYPE::TREE);
+	tree->SetPosition(130, 650);
+	game_entityes.push_back(tree);
+	berry_bush = App->entities_manager->GenerateResource(RESOURCE_TYPE::BERRY_BUSH);
+	berry_bush->SetPosition(440, 380);
+	game_entityes.push_back(berry_bush);
+	gold_ore = App->entities_manager->GenerateResource(RESOURCE_TYPE::GOLD_ORE);
+	gold_ore->SetPosition(300, 480);
+	game_entityes.push_back(gold_ore);
+	stone_ore = App->entities_manager->GenerateResource(RESOURCE_TYPE::STONE_ORE);
+	stone_ore->SetPosition(200, 480);
+	game_entityes.push_back(stone_ore);
+
 	double_clickon = false;
 
 	return true;
@@ -156,6 +170,9 @@ bool j1Player::PreUpdate()
 
 			App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(x - App->render->camera.x, y - App->render->camera.y));
 		}
+		
+		//test
+		if (selected_elements.size() == 1) DoAction(RCLICK);
 	}
 
 
@@ -165,7 +182,17 @@ bool j1Player::PreUpdate()
 		Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER);
 		center->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		center->SetDiplomacy(ALLY);
+		game_entityes.push_back(center);
 	}
+	//Generate Villager in the mouse coordinates
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
+		Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER);
+		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		new_unit->SetDiplomacy(ALLY);
+		actual_population.push_back(new_unit);
+	}
+
 	//Generate a Militia unit in the mouse coordinates
 	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
@@ -432,6 +459,29 @@ Entity * j1Player::GetUpperEntity(int x, int y)const
 		}
 		item++;
 	}
+	if(ret == nullptr)
+	{
+		std::list<Entity*>::const_iterator item = game_entityes.begin();
+		while (item != game_entityes.end())
+		{
+			width = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->w;
+			height = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->h;
+			pos = item._Ptr->_Myval->GetPosition();
+			item_position = iPoint(pos.x, pos.y);
+			item_pivot = { item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot(),item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot() };
+			item_position -= item_pivot;
+
+			if (x >= item_position.x && x <= item_position.x + width && y >= item_position.y && y <= item_position.y + height)
+			{
+				if (ret == nullptr) ret = item._Ptr->_Myval;
+				else if (ret->GetPosition().y <= item._Ptr->_Myval->GetPosition().y)
+				{
+					ret = item._Ptr->_Myval;
+				}
+			}
+			item++;
+		}
+	}
 	return ret;
 }
 
@@ -454,4 +504,23 @@ void j1Player::SetGroupProfile()
 		item++;
 		i++;
 	}
+}
+
+bool j1Player::DoAction(ACTION type)
+{
+	switch (type)
+	{
+	case LCLICK: 
+		break;
+	case RCLICK: 
+		if (Selected->GetEntity()->GetEntityType() == VILLAGER && UpperEntity->GetEntityType() == RESOURCE)
+		{
+		((Unit*)Selected->GetEntity())->SetInteractionTarget(UpperEntity);
+		return true;
+		}
+		break;
+	default: return false;
+		break;
+	}
+	return false;
 }
