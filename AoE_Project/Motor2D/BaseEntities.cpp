@@ -815,7 +815,16 @@ Building::~Building()
 //Units Generator -----------
 Unit * Building::CraftUnit(UNIT_TYPE new_unit_type) const
 {
-	return nullptr;
+	//Call entities manager to generate a new unit
+	Unit* new_unit = App->entities_manager->GenerateUnit(new_unit_type, false);
+	//Set the new unit position at the buiding spawn point
+	new_unit->SetPosition(position.x + (float)units_spawn_point.x, position.y + (float)units_spawn_point.y);
+
+	//Add the unit in the crafting units priority queue
+	//production_queue.emplace(new_unit);
+
+	
+	return new_unit;
 }
 
 bool Building::CoverUnit(const Unit * target)
@@ -939,6 +948,11 @@ void Building::SetUnitsCapacity(uint capacity)
 void Building::SetCurrentUnits(uint units)
 {
 	current_units = units;
+}
+
+void Building::SetUnitsSpawnPoint(const iPoint & point)
+{
+	units_spawn_point = point;
 }
 
 const Rectng & Building::GetMark() const

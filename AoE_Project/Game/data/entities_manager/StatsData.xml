@@ -583,7 +583,7 @@
   <unit civ="Teutons/English" id="building">
     <stats
       name="Town Center"
-      resource_type="town_center"
+      building_type="town_center"
       
       selection_x ="0"
       selection_y ="98"
@@ -597,6 +597,11 @@
       mark_y="47"
       mark_w="337"
       mark_h="337"
+      
+      max_life ="1500"
+      units_capacity ="15"
+      units_spawn_x ="0"
+      units_spawn_y="47"
       
       />
   </unit>

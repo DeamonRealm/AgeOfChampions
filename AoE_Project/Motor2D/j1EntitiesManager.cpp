@@ -296,7 +296,7 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	//Building ID -----------
 	/*Name*/			new_def->SetName(building_node->attribute("name").as_string());
 	/*Entity Type*/		new_def->SetEntityType(BUILDING);
-	/*Building Type*/	new_def->SetBuildingType(App->animator->StrToBuildingEnum(building_node->attribute("resource_type").as_string()));
+	/*Building Type*/	new_def->SetBuildingType(App->animator->StrToBuildingEnum(building_node->attribute("building_type").as_string()));
 
 	//Building Primitives ---
 	/*Mark*/			Rectng mark;
@@ -319,8 +319,11 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	/*I.Rect H*/		icon_rect.h = building_node->attribute("icon_h").as_int();
 						new_def->SetIcon(icon_rect);
 
-	//Building Metrics ------
-
+	//Building Stats --------
+	/*Max Life*/		new_def->SetMaxLife(building_node->attribute("max_life").as_uint());
+	/*Units Capacity*/	new_def->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
+	/*Units Spawn pnt*/	iPoint spawn(building_node->attribute("units_spawn_x").as_int(), building_node->attribute("units_spawn_y").as_int());
+						new_def->SetUnitsSpawnPoint(spawn);
 
 	buildings_defs.push_back(new_def);
 
@@ -438,7 +441,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	return ret;
 }
 
-Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
+Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, bool push_in_list)
 {
 	Unit* new_unit = nullptr;
 
@@ -462,7 +465,7 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type)
 			App->animator->UnitPlay(new_unit);
 			
 			//Add the new unit at the units manage list
-			units.push_back(new_unit);
+			if(push_in_list)units.push_back(new_unit);
 
 			return new_unit;
 		}
@@ -494,7 +497,7 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 	return nullptr;
 }
 
-Resource* j1EntitiesManager::GenerateResource(RESOURCE_TYPE type,uint id_index)
+Resource* j1EntitiesManager::GenerateResource(RESOURCE_TYPE type)
 {
 	Resource* new_resource = nullptr;
 

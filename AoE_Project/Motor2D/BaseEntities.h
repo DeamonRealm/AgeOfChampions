@@ -3,6 +3,7 @@
 
 #include <list>
 #include <vector>
+#include <queue>
 #include "p2Defs.h"
 #include "p2Point.h"
 #include "Iso_Primitives.h"
@@ -398,9 +399,11 @@ protected:
 	uint			life = 0;
 	uint			units_capacity = 0;
 	uint			current_units = 0;
+	iPoint			units_spawn_point = { 0,0 };
 
 	//List of the units placed inside the building
-	std::list<Unit*>	units_in;
+	std::list<Unit*>			units_in;
+	std::priority_queue<Unit*, std::vector<Unit*>>	production_queue;
 
 public:
 
@@ -426,6 +429,7 @@ public:
 	void	SetLife(uint life_val);
 	void	SetUnitsCapacity(uint capacity);
 	void	SetCurrentUnits(uint units);
+	void	SetUnitsSpawnPoint(const iPoint& point);
 
 	//Get Methods -----------
 	const Rectng&	GetMark()const;
