@@ -5,15 +5,18 @@
 #include <queue>
 #include "j1Map.h"
 
-enum ClusterOrientation {
+enum ClusterOrientation
+{
+	NO_CLUSTER,
 	CLUSTER_HORIZONTAL,
 	CLUSTER_VERTICAL
+	
 };
 enum EdgeType
 {
+NO_EDGE,
 INTER_EDGE,
 INTRA_EDGE
-
 };
 #define MAX_ENTRY_NUM 6
 #define INVALID_WALK_CODE 255
@@ -33,10 +36,10 @@ public:
 	EdgeType GetEdgeType();
 	Edge* RemoveParentNode();
 private:
-	int distance;
-	Node* nodeNum1;
-	Node* nodeNum2;
-	EdgeType type;
+	int distance = 0;
+	Node* nodeNum1 = nullptr;
+	Node* nodeNum2 = nullptr;
+	EdgeType type = NO_EDGE;
 };
 struct Node
 {
@@ -54,13 +57,14 @@ public:
 	int GetClusterId();
 	void RemoveParent(Edge* edge);
 	void ResetNode();
-	int nodeNum;
+
+	int nodeNum = 0;
 	bool visited = false;
 
 private:
-	int clusterID;
-	int posX;
-	int posY;
+	int clusterID = 0;
+	int posX = 0;
+	int posY = 0;
 	std::list<Edge*> parent;
 	Node* track_back = nullptr;
 
@@ -105,13 +109,13 @@ public:
 	void AddNode(int get);
 private:
 
-	int						posX;
-	int						posY;
-	int						width;
-	int						height;
-	int						row;
-	int						column;
-	int						id;
+	int						posX = 0;
+	int						posY = 0;
+	int						width = 0;
+	int						height = 0;
+	int						row = 0;
+	int						column = 0;
+	int						id=0;
 	std::vector<int>		nodes;
 	uchar*					logic_cluster_map = nullptr;
 
@@ -135,14 +139,14 @@ public:
 	void SetClusterID2(int clusterID2);
 
 private:
-	int						posX;
-	int						posY;
-	int						clusterID1;
-	int						clusterID2;
-	int						lenght;
-	int						row;
-	int						column;
-	ClusterOrientation		orientation;
+	int						posX=0;
+	int						posY=0;
+	int						clusterID1=0;
+	int						clusterID2=0;
+	int						lenght=0;
+	int						row=0;
+	int						column=0;
+	ClusterOrientation		orientation = NO_CLUSTER;
 
 private:
 

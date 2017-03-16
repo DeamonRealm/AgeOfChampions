@@ -50,8 +50,9 @@ void Cluster::AddNode(int get)
 ClusterAbstraction::ClusterAbstraction(j1Map * m, uint clusterSize):clusterSize(clusterSize)
 {
 	j1Timer ptimer;
-	if (m->CreateWalkabilityMap(width, height, &logic_map))
-		SetMap(width, height, logic_map);
+	uchar* data = nullptr;
+	if (m->CreateWalkabilityMap(width, height, &data))
+		SetMap(width, height, data);
 	LOG("SetMap %f", ptimer.ReadSec());
 	ptimer.Start();
 	CreateClusters();
@@ -307,6 +308,7 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 			}
 			y++;
 		}
+		App->pathfinding->SetMap(cluster_width, cluster_height, temp_map);
 
 		int distance = -1;
 		int node_size = temp_nodes.size();
@@ -320,7 +322,6 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 
 			if (!EdgeExist(cluster, node_num1, node_num2, &graph))
 			{
-				App->pathfinding->SetMap(cluster_width, cluster_height, temp_map);
 				distance = App->pathfinding->CreatePath(conector_node, temp_nodes[i]);
 				if (distance != -1)
 				{
@@ -579,6 +580,7 @@ void ClusterAbstraction::CreateIntraEdges(Graph * graph)
 			}
 			y++;
 		}
+		App->pathfinding->SetMap(cluster_width, cluster_height, temp_map);
 
 		int distance=-1;
 		int node_size = temp_nodes.size();
@@ -591,7 +593,6 @@ void ClusterAbstraction::CreateIntraEdges(Graph * graph)
 
 				if (!EdgeExist(item, temp_nodes[i]->nodeNum, temp_nodes[j]->nodeNum, graph))
 				{
-					App->pathfinding->SetMap(cluster_width, cluster_height, temp_map);
 					distance = App->pathfinding->CreatePath(temp_nodes[i], temp_nodes[j]);
 					if (distance != -1) {
 

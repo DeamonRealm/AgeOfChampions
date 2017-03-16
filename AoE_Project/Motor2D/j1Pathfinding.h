@@ -22,14 +22,14 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-	void SetMap(uint width, uint height, uchar* data);
+	void SetMap(uint width, uint height, uchar*& data);
 	uchar GetValueMap(int x, int y) const;
 	PathNode* GetPathNode(int x, int y);
 private:
-	uchar* logic_map;
-	PathNode* path_nodes;
-	int width;
-	int height;
+	uchar* logic_map=nullptr;
+	PathNode* path_nodes=nullptr;
+	int width=0;
+	int height=0;
 	//A pointer to the last path generated
 	std::vector<iPoint> last_path;
 	//Map cluster abstraction
@@ -126,7 +126,7 @@ public:
 	//PathNode* GetNodeLowestScore() const;
 
 	// PathList data --------
-	std::priority_queue<PathNode*, std::vector<PathNode*>, compare > list;
+	std::priority_queue<PathNode*, std::vector<PathNode*>, compare > queue;
 };
 
 /// -----------------------------------

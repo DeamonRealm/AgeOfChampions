@@ -34,10 +34,12 @@ bool j1Pathfinding::Start()
 bool j1Pathfinding::CleanUp()
 {
 	delete cluster_abstraction;
+	RELEASE_ARRAY(logic_map);
+	RELEASE_ARRAY(path_nodes);
 	return true;
 }
 
-void j1Pathfinding::SetMap(uint width, uint height, uchar * data)
+void j1Pathfinding::SetMap(uint width, uint height, uchar *& data)
 {
 	this->width = width;
 	this->height = height;
@@ -45,7 +47,7 @@ void j1Pathfinding::SetMap(uint width, uint height, uchar * data)
 	RELEASE_ARRAY(logic_map);
 	RELEASE_ARRAY(path_nodes);
 	int size = width*height;
-	logic_map = new uchar[size];
+	logic_map = data;
 	path_nodes = new PathNode[size];
 
 	memcpy(logic_map, data, width*height);
@@ -94,69 +96,77 @@ PathNode* j1Pathfinding::GetPathNode(int x, int y)
 int j1Pathfinding::CreatePath(Node * start, Node * goal)
 {
 	int ret = -1;
-	/*
-	
-	iPoint origin(start->GetPositionX(), start->GetPositionY());
-	iPoint destination(goal->GetPositionX(), goal->GetPositionY());
 
-	if (IsWalkable(origin) && IsWalkable(destination))
+
+	iPoint map_origin(start->GetPositionX(), start->GetPositionY());
+	iPoint map_goal(goal->GetPositionX(), goal->GetPositionY());
+
+	if (IsWalkable(map_origin) && IsWalkable(map_goal))
 	{
-		ret = 1;
-		OpenList open;
-		PathList close;
-		
-		open.list.push(PathNode(0, origin.DistanceManhattan(destination), origin, nullptr));
-		while (open.list.size() != 0)
+		if (IsWalkable(map_origin) && IsWalkable(map_goal))
 		{
-			close.list.push_back(open.list.top());
+			ret = 1;
+			OpenList open;
+			PathNode* firstNode = GetPathNode(map_origin.x, map_origin.y);
+			firstNode->SetPosition(map_origin);
+			firstNode->g = 0;
+			firstNode->h = map_origin.DistanceOctile(map_goal);
 
-			close.list.back().on_close = true;
-			open.list.pop();
-			if (close.list.back().pos == destination)
+			open.queue.push(firstNode);
+			PathNode* current = nullptr;
+			while (open.queue.size() != 0)
 			{
-				std::list<PathNode>::const_iterator item = close.list.end();
-				last_path.clear();
-				for (item--; item->parent != nullptr; item = close.Find(item->parent->pos))
+				current = open.queue.top();
+				open.queue.top()->on_close = true;
+				open.queue.pop();
+				if (current->pos == map_goal)
 				{
-					last_path.push_back(item->pos);
-				}
-				last_path.push_back(close.list.begin()->pos);
-
-				return ret = last_path.size();
-			}
-			else
-			{
-				PathList neightbords;
-				close.list.back().FindWalkableAdjacents(neightbords);
-				for (std::list<PathNode>::iterator item = neightbords.list.begin(); item != neightbords.list.end(); item++) {
-					if (item->on_close == true)
+					last_path.clear();
+					for (; current->parent != nullptr; current = GetPathNode(current->parent->pos.x, current->parent->pos.y))
 					{
-						continue;
+						last_path.push_back(current->pos);
 					}
-					else if (item->on_open == true)
-					{
-						PathNode temp;
-					//	temp = open.Find(item->pos)._Ptr->_Myval;
-						item->CalculateF(destination);
-						if (item->g < temp.g)
+					last_path.push_back(current->pos);
+					return last_path.size();
+				}
+				else
+				{
+					PathList neightbords;
+					current->FindWalkableAdjacents(&neightbords);
+					for (std::list<PathNode*>::iterator item = neightbords.list.begin(); item != neightbords.list.end(); item++) {
+						PathNode* temp = item._Mynode()->_Myval;
+
+						if (temp->on_close == true)
 						{
-					//		open.Find(item->pos)->parent = item->parent;
+							continue;
+						}
+						else if (temp->on_open == true)
+						{
+							int last_g_value = temp->g;
+							temp->CalculateF(map_goal);
+							if (last_g_value < temp->g)
+							{
+								temp->parent = GetPathNode(current->pos.x, current->pos.y);
+							}
+							else {
+								temp->g = last_g_value;
+							}
+						}
+						else
+						{
+							temp->on_open = true;
+							temp->CalculateF(map_goal);
+							open.queue.push(temp);
 						}
 					}
-					else
-					{
-						item->on_open = true;
-						item->CalculateF(destination);
-						open.list.push(item._Mynode()->_Myval);
-					}
+
+					neightbords.list.clear();
 				}
-				neightbords.list.clear();
 			}
 		}
 	}
-	*/
 	return ret;
-	
+
 }
 
 std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoint & destination)
@@ -263,20 +273,18 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 	{
 		ret = 1;
 		OpenList open;
-		PathList close;
 		PathNode* firstNode = GetPathNode(map_origin.x, map_origin.y);
 		firstNode->SetPosition(map_origin);
 		firstNode->g = 0;
-
 		firstNode->h= map_origin.DistanceOctile(map_goal);
 
-		open.list.push(firstNode);
+		open.queue.push(firstNode);
 		PathNode* current=nullptr;
-		while (open.list.size() != 0)
+		while (open.queue.size() != 0)
 		{
-			current = open.list.top();
-			open.list.top()->on_close = true;
-			open.list.pop();
+			current = open.queue.top();
+			open.queue.top()->on_close = true;
+			open.queue.pop();
 			if (current->pos == map_goal)
 			{
 				
@@ -323,7 +331,8 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 					{
 						temp->on_open = true;
 						temp->CalculateF(map_goal);
-						open.list.push(temp);
+						open.queue.push(temp);
+
 					}
 				}
 				
@@ -476,18 +485,21 @@ float PathNode::Score() const
 
 int PathNode::CalculateF(const iPoint & destination)
 {
-	switch (parent->pos.DistanceOctile(pos))
+	/*switch (parent->pos.DistanceOctile(pos))
 	{
-	case 1:
+	case 10:
 		g = parent->g + 10;
 		break;
-	case 2:
+	case 14:
 		g = parent->g + 14; // we assume here that our parent is in diagonal from us
 		break;
 	default:
+		g = parent->g + 14; // we assume here that our parent is in diagonal from us
+
 		break;
 	}
-
+	*/
+	g = parent->g + parent->pos.DistanceOctile(pos);
 	h = pos.DistanceOctile(destination) * 10;
 	return  g + h;
 }
