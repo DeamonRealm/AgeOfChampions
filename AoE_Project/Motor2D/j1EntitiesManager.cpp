@@ -521,6 +521,21 @@ Resource* j1EntitiesManager::GenerateResource(RESOURCE_TYPE type)
 	return nullptr;
 }
 
+const std::list<Unit*>* j1EntitiesManager::UnitsList() const
+{
+	return &units;
+}
+
+const std::list<Building*>* j1EntitiesManager::BuildingList() const
+{
+	return &buildings;
+}
+
+const std::list<Resource*>* j1EntitiesManager::ResourceList() const
+{
+	return &resources;
+}
+
 bool j1EntitiesManager::DeleteEntity(Entity * entity)
 {
 	//Check if the entity is really defined

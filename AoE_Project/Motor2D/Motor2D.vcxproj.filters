@@ -100,6 +100,9 @@
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="Resources.h">
       <Filter>Modules\EnititiesManager\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadtree.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

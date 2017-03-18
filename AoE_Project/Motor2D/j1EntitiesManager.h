@@ -69,6 +69,11 @@ public:
 	Building*	GenerateBuilding(BUILDING_TYPE type);
 	Resource*	GenerateResource(RESOURCE_TYPE type);
 
+	//Get Methods -----------
+	const std::list<Unit*>*		UnitsList()const;
+	const std::list<Building*>*	BuildingList()const;
+	const std::list<Resource*>*	ResourceList()const;
+
 	//Delete Methods --------
 	bool		DeleteEntity(Entity* entity);
 

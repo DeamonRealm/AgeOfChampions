@@ -7,6 +7,7 @@
 #include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "j1Window.h"
+#include "j1Timer.h"
 
 #include <math.h>
 
@@ -207,7 +208,7 @@ void j1Map::Draw(bool debug)
 	{
 		//Tiles size to locate the debug lines in the tiles vertex
 		uint tile_h_2 = floor(data.tile_height * 0.5);
-		uint tile_w = floor(data.tile_width);
+		uint tile_w = data.tile_width;
 
 		//X axis lines
 		for (uint x = 0; x < data.width; x++)
@@ -227,6 +228,7 @@ void j1Map::Draw(bool debug)
 			App->render->DrawLine(init.x, init.y + tile_h_2, end.x, end.y + tile_h_2, 0, 250, 0);
 		}
 
+		tiles_in_view.Draw();
 	}
 }
 
@@ -283,6 +285,28 @@ iPoint j1Map::MapToWorld(int x, int y) const
 		ret.x = x; ret.y = y;
 	}
 
+	return ret;
+}
+
+iPoint j1Map::MapToWordCenter(int x, int y)
+{
+	iPoint ret;
+
+	if (data.type == MAPTYPE_ORTHOGONAL)
+	{
+		ret.x = (x * data.tile_width) + data.tile_width * 0.5f;
+		ret.y = (y * data.tile_height) + data.tile_height * 0.5f;
+	}
+	else if (data.type == MAPTYPE_ISOMETRIC)
+	{
+		ret.x = (x - y) * (int)(data.tile_width * 0.5f) + data.tile_width * 0.5f;
+		ret.y = (x + y) * (int)(data.tile_height * 0.5f) + data.tile_height * 0.5f;
+	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.x = x; ret.y = y;
+	}
 	return ret;
 }
 
@@ -532,6 +556,26 @@ bool j1Map::LoadMap()
 		{
 			data.type = MAPTYPE_UNKNOWN;
 		}
+
+		j1Timer timer;
+		// Set map draw quad tree area
+		int v_x = ((data.width - 1) * data.tile_width) * -0.5;
+		int v_y = 0;
+		int v_w = data.width * data.tile_width;
+		int v_h = data.height * data.tile_height;
+		tiles_in_view.SetBoundaries({ v_x,v_y,v_w,v_h });
+
+		//Fill the draw quad tree with all the tiles coordinates
+		for (uint y = 0; y < data.height; y++)
+		{
+			for (uint x = 0; x < data.width; x++)
+			{
+				iPoint point = MapToWordCenter(x, y);
+				tiles_in_view.Insert(&point);
+			}
+		}
+
+		LOG("Time: %.3f", timer.ReadSec());
 	}
 
 	return ret;

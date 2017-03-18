@@ -4,7 +4,7 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "p2Point.h"
 #include "j1Module.h"
-
+#include "Quadtree.h"
 #include "SDL/include/SDL_rect.h"
 struct SDL_Texture;
 
@@ -164,6 +164,8 @@ public:
 	TileSet* GetTilesetFromTileId(int id) const;
 	//Transform map coordinates to world coordinates
 	iPoint MapToWorld(int x, int y) const;
+	//Transform map coordinates to word coordinates (in tile center)
+	iPoint MapToWordCenter(int x, int y);
 	//Transform world coordinates to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 	
@@ -173,9 +175,10 @@ public:
 
 private:
 
+	QuadTree			tiles_in_view;
 	pugi::xml_document	map_file;
 	std::string			folder;
-	bool				map_loaded;
+	bool				map_loaded = false;
 
 	bool collide_layer = false;
 
