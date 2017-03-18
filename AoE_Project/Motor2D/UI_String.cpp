@@ -50,12 +50,14 @@ uint UI_String::GetLenght()const
 
 void UI_String::SetString(char * new_text)
 {
+	if(text_texture != nullptr) App->font->DeleteTexture(text_texture);
 	text = new_text;
 	if(strlen(new_text) > 0)text_texture = App->font->Print(text.c_str(), text_color, text_font);
 }
 
 void UI_String::PushString(const char * new_text, uint position)
 {
+	if (text_texture != nullptr) App->font->DeleteTexture(text_texture);
 	text.insert(position, new_text);
 	text_texture = App->font->Print(text.c_str(), text_color, text_font);
 }

@@ -22,6 +22,9 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
+	// Called each loop iteration
+	bool PostUpdate();
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -32,11 +35,16 @@ public:
 	SDL_Texture* Print(const char* text, SDL_Color color = {255, 255, 255, 255}, _TTF_Font* font = NULL);
 
 	bool CalcSize(const char* text, int& width, int& height, _TTF_Font* font = NULL) const;
+	
+	//
+	void DeleteTexture(SDL_Texture* texture_to_delete);
 
 public:
 
-	std::list<_TTF_Font*>	fonts;
-	_TTF_Font*				default;
+	std::list<_TTF_Font*>			fonts;
+	std::list<SDL_Texture*>			texture_list;
+	std::vector<SDL_Texture*>		ready_to_texture;
+	_TTF_Font*						default = nullptr;
 };
 
 

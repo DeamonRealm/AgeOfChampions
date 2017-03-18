@@ -15,203 +15,9 @@
 #include "UI_Image.h"
 #include "UI_String.h"
 
-
-//Entity Profile Constructor =====================================================
-Entity_Profile::Entity_Profile() : element(nullptr), e_type(NO_ENTITY), isenemy(false), life_update(0), u_attack(0), u_deffence(0), u_range(0),
-u_capacity(0), u_resources(0), m_capacity(0), m_life(0)
-{
-	name = (UI_String*) App->gui->GenerateUI_Element(STRING);
-	name->SetColor({ 0,0,0,255 });
-
-	diplomacy = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	diplomacy->SetColor({ 255,0,0,0 });
-	diplomacy->SetString("Enemy");
-
-	//life
-	life = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	life->SetColor({ 0,0,0,255 });
-
-	//Units and Buildings
-	attack = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	attack->SetColor({ 0,0,0,255 });
-
-	deffence = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	deffence->SetColor({ 0,0,0,255 });
-
-	range = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	range->SetColor({ 0,0,0,255 });
-
-	//Buildings
-	capacity = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	capacity->SetColor({ 0,0,0,255 });
-
-	//resources
-	resources = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	resources->SetColor({ 0,0,0,255 });
-	
-}
-
-//Entity Profile Destructor ======================================================
-Entity_Profile::~Entity_Profile()
-{
-}
-
-//Functionality ==================================================================
-void Entity_Profile::SetEntity(Entity * entity_selected)
-{
-	element = entity_selected;
-
-	name->SetString((char*)element->GetName());
-
-	life_update = element->GetLife();
-	if (life_update > 0)
-	{
-		m_life = element->GetMaxLife();
-		profile_text.clear();
-		profile_text = App->gui->SetStringFromInt(life_update);
-		profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_life);
-		life->SetString((char*)profile_text.c_str());
-	}
-
-	if (element->GetDiplomacy() == ENEMY)
-	{
-		isenemy = true;
-	}
-	else isenemy = false;
-
-	e_type = element->GetEntityType();
-	if (e_type == UNIT)
-	{
-		u_attack = ((Unit*)element)->GetAttackHitPoints();
-		if (u_attack > 0)attack->SetString(App->gui->SetStringFromInt(u_attack));
-
-		u_deffence = ((Unit*)element)->GetDefense();
-		if (u_deffence > 0)deffence->SetString(App->gui->SetStringFromInt(u_deffence));
-		
-		u_range = ((Unit*)element)->GetAttackRange();
-		if (u_range > 0) range->SetString(App->gui->SetStringFromInt(u_range));
-	}
-	else if (e_type == BUILDING)
-	{
-		u_capacity = ((Building*)element)->GetCurrentUnits();
-		m_capacity = ((Building*)element)->GetUnitsCapacity();
-		profile_text.clear();
-		profile_text = App->gui->SetStringFromInt(u_capacity);
-		profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_capacity);
-		capacity->SetString((char*)profile_text.c_str());
-	}
-	else if (e_type = RESOURCE)
-	{
-		u_resources = ((Resource*)element)->GetMaxResources();
-		resources->SetString(App->gui->SetStringFromInt(u_resources));
-	}
-}
-
-Entity * Entity_Profile::GetEntity()
-{
-	return element;
-}
-
-void Entity_Profile::DrawProfile() const
-{
-	//Draw profile background
-	App->render->DrawQuad({ 338 - App->render->camera.x, 632 - App->render->camera.y, 39, 38 }, 148, 148, 148);
-
-	//Draw profile icon
-	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 634 - App->render->camera.y, &element->GetIcon());
-	
-	name->DrawAt(337, 610);
-	//civilization->DrawAt(472, 640)
-	if (isenemy) diplomacy->DrawAt(472, 660);
-
-	//Draw life
-	if (life_update != 0)
-	{
-		App->render->DrawQuad({ 340 - App->render->camera.x, 670 - App->render->camera.y, 36, 3 }, 255, 0, 0);
-		App->render->DrawQuad({ 340 - App->render->camera.x, 670 - App->render->camera.y, 36 * (m_life / life_update), 3 }, 0, 255, 0);
-
-		life->DrawAt(380, 660);
-	}
-	
-	SDL_Rect rect = { 0,0,0,0 };
-	if (e_type == UNIT)
-	{
-		if (u_attack > 0)
-		{
-			rect = { 372,287,36,23 };
-			App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 680 - App->render->camera.y, &rect);
-			attack->DrawAt(390, 680);
-		}
-		if (u_deffence > 0)
-		{
-			rect = { 336,287,36,23 };
-			App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 700 - App->render->camera.y, &rect);
-			deffence->DrawAt(390, 700);
-		}
-		if (u_range > 0)
-		{
-			rect = { 300,287,36,21 };
-			App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 720 - App->render->camera.y, &rect);
-			range->DrawAt(390, 720);
-		}
-	}
-	else if (e_type == BUILDING)
-	{
-		if (m_capacity != 0)
-		{
-			rect = { 624,287,36,21 };
-			App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 680 - App->render->camera.y, &rect);
-			capacity->DrawAt(390, 680);
-		}
-		if (u_attack > 0)
-		{
-			rect = { 372,287,36,23 };
-			App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 700 - App->render->camera.y, &rect);
-			attack->DrawAt(390, 700);
-		}
-		if (u_range > 0)
-		{
-			rect = { 300,287,36,21 };
-			App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 720 - App->render->camera.y, &rect);
-			range->DrawAt(390, 720);
-		}
-	}
-	else if (e_type == RESOURCE)
-	{
-		resources->DrawAt(390, 680);
-	}
-}
-
-void Entity_Profile::UpdateStats()
-{
-	if (element->GetLife() != life_update)
-	{
-		life_update = element->GetLife();
-		profile_text.clear();
-		profile_text = App->gui->SetStringFromInt(life_update);
-		profile_text = profile_text + "/" + App->gui->SetStringFromInt(element->GetMaxLife());
-		life->SetString((char*)profile_text.c_str());
-	}
-	if (e_type == BUILDING)
-	{
-		if (u_capacity != ((Building*)element)->GetCurrentUnits())
-		{
-			u_capacity = ((Building*)element)->GetCurrentUnits();
-			profile_text.clear();
-			profile_text = App->gui->SetStringFromInt(u_capacity);
-			profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_capacity);
-			capacity->SetString((char*)profile_text.c_str());
-		}
-	}
-	if (e_type == RESOURCE)
-	{
-		if (u_resources != ((Resource*)element)->GetMaxResources())
-		{
-			u_resources = ((Resource*)element)->GetMaxResources();
-			resources->SetString(App->gui->SetStringFromInt(u_resources));
-		}
-	}
-}
+//Hud Elements
+#include "Hud_SelectionPanel.h"
+#include "Hud_GamePanel.h"
 
 //j1Player Constructor ============================================================
 j1Player::j1Player()
@@ -241,8 +47,10 @@ bool j1Player::Start()
 	App->gui->PushScreen(game_hud);
 
 	selection_rect = { 0,0,0,0 };
-	Selected = new Entity_Profile();
+	//Selected = new Entity_Profile();
 	
+	//SelectionPanel = new Selection_Panel();
+
 	UI_Image*	profile;
 	group_profile.reserve(max_selected_units);
 	int i = 0;
@@ -272,7 +80,18 @@ bool j1Player::Start()
 	game_entityes.push_back(stone_ore);
 
 	double_clickon = false;
+	/*
+	// HUD Panels
+	game_panel = new Game_Panel();
 
+	// Setting Game Panel Resources
+	game_panel->AddResource(200, GP_WOOD);
+	game_panel->AddResource(200, GP_MEAT);
+	game_panel->AddResource(100, GP_GOLD);
+	game_panel->AddResource(200, GP_STONE);
+
+    game_panel->IncressPopulation(45, true);
+	*/
 	return true;
 }
 
@@ -327,32 +146,40 @@ bool j1Player::PreUpdate()
 		Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER);
 		center->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		center->SetDiplomacy(ALLY);
+		
+		//game_panel->IncressPopulation(15, true);
 		//game_entityes.push_back(center);
 	}
 	//Generate Villager in the mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
+
+		//game_panel->IncressPopulation(1, false);
 	}
 
 	//Generate a Militia unit in the mouse coordinates
-	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN/* && game_panel->CheckPopulation()*/)
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
+
+		//game_panel->IncressPopulation(1, false);
 	}
 	//Generate a Arbalest unit in the mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /* && game_panel->CheckPopulation()*/)
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
+
+		//game_panel->IncressPopulation(1, false);
 	}
 
 	return true;
@@ -382,12 +209,13 @@ bool j1Player::PostUpdate()
 
 	if (selected_elements.size() == 1)
 	{
-		Selected->UpdateStats();
-		Selected->DrawProfile();
+	//	Selected->UpdateStats();
+	//	Selected->DrawProfile();
 	}
 	else if (selected_elements.size() > 1) DrawGroup();
 
-
+	// Draw Game Panel (HUD)
+	//game_panel->Draw();
 
 	//Draw Mouse Last one
 	if (SDL_ShowCursor(-1) == 0) App->gui->DrawMouseTexture();
@@ -402,7 +230,10 @@ bool j1Player::CleanUp()
 	selected_elements.clear();
 	group_profile.clear();
 
-	delete Selected;
+	//delete Selected;
+
+	//Delete HUD
+	//delete game_panel;
 
 	return true;
 }
@@ -489,12 +320,13 @@ void j1Player::Select(SELECT_TYPE type)
 
 		if (type == DOUBLECLICK)
 		{
-			if (Selected->GetEntity() == nullptr) return;
-			else if (Selected->GetEntity()->GetEntityType() != UNIT) return;
+			//if (Selected->GetEntity() == nullptr) return;
+			return;
+			//else if (Selected->GetEntity()->GetEntityType() != UNIT) return;
 			App->win->GetWindowSize(width, height);
 
 			selection_rect = { 0, 32, (int)width, 560 };
-			unit_type = ((Unit*)Selected->GetEntity())->GetUnitType();
+			//unit_type = ((Unit*)Selected->GetEntity())->GetUnitType();
 		}
 		else if (selection_rect.w == 0 || selection_rect.h == 0) return;
 
@@ -547,7 +379,7 @@ void j1Player::Select(SELECT_TYPE type)
 	}
 	
 	//Configure Selection Panel
-	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+	if (selected_elements.size() == 1); //Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 	else if (selected_elements.size() > 1)
 	{
 		max_row_units = 16;
@@ -671,7 +503,7 @@ bool j1Player::DoAction(ACTION type)
 		{
 			if (UpperEntity->GetEntityType() == RESOURCE)
 			{
-				((Unit*)Selected->GetEntity())->SetInteractionTarget(UpperEntity);
+			//	((Unit*)Selected->GetEntity())->SetInteractionTarget(UpperEntity);
 				return true;
 			}
 			else if (UpperEntity->GetEntityType() == UNIT)

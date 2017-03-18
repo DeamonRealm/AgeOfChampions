@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "SDL\include\SDL_rect.h"
 
+
 struct SDL_Texture;
 
 
@@ -16,54 +17,11 @@ class Building;
 class UI_String;
 class UI_Image;
 
-enum ENTITY_TYPE;
+class Entity_Profile;
+class Selection_Panel;
+class Game_Panel;
 
-class Entity_Profile
-{
-public:
-	Entity_Profile();
-	~Entity_Profile();
 
-	void SetEntity(Entity* entity_selected);
-	Entity* GetEntity();
-	void DrawProfile() const;
-	void UpdateStats();
-
-private:
-
-	std::string		profile_text = "";
-
-	Entity*			element = nullptr;
-	ENTITY_TYPE		e_type;
-
-	//General
-	UI_String*		name;
-	//UI_String*		civilizacion;
-	UI_String*		diplomacy;
-	bool			isenemy;
-
-	int				life_update;
-	int				m_life;
-	UI_String*		life;
-	
-	//Units and Offensive Buildings
-	uint			u_attack;
-	UI_String*		attack;
-	uint			u_deffence;
-	UI_String*		deffence;
-
-	uint			u_range;
-	UI_String*		range;
-	
-	//Buildings
-	uint			u_capacity;
-	uint			m_capacity;
-	UI_String*		capacity;
-	
-	//Resources
-	uint			u_resources;
-	UI_String*		resources;
-};
 
 enum SELECT_TYPE
 {
@@ -108,12 +66,6 @@ public:
 private:
 
 	std::string		civilization;
-	uint			wood = 0;
-	uint			meat = 0;
-	uint			gold = 0;
-	uint			stone = 0;
-	uint			population = 0;
-	uint			max_population = 5;
 	
 	//group selection
 	uint			max_selected_units = 60;
@@ -132,7 +84,7 @@ private:
 
 	std::vector<UI_Image*>  group_profile;
 
-	Entity_Profile* Selected;
+	//Selection_Panel*		SelectionPanel;
 	
 	//Resources test
 	std::list<Entity*> game_entityes;
@@ -148,6 +100,11 @@ private:
 	Resource*	berry_bush = nullptr;
 	Resource*	gold_ore = nullptr;
 	Resource*	stone_ore = nullptr;
+
+	//HUD Panels
+	//Entity_Profile*		Selected = nullptr;
+	//Selection_Panel*		SelectionPanel;
+	Game_Panel*			game_panel = nullptr;
 
 
 public:
