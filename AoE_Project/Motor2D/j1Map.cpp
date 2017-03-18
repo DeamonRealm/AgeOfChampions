@@ -31,51 +31,37 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-bool j1Map::CreateWalkabilityMap(uint& width, uint & height, uchar** buffer) {
+bool j1Map::CreateWalkabilityMap(uint& width, uint & height, uchar** buffer) 
+{
+	if (navigation_layer == nullptr)return false;
 
-	bool ret = false;
+	uchar* map = new uchar[navigation_layer->width*navigation_layer->height];
+	memset(map, 1, navigation_layer->width*navigation_layer->height);
 
-
-	std::list<MapLayer*>::iterator item;
-	for (item = data.layers.begin(); item._Ptr->_Myval != NULL; item++)
+	for (int y = 0; y < data.height; ++y)
 	{
-		MapLayer* layer = item._Ptr->_Myval;
-
-		if (layer->properties.Get("Navigation") == false)
-			continue;
-
-		uchar* map = new uchar[layer->width*layer->height];
-		memset(map, 1, layer->width*layer->height);
-
-		for (int y = 0; y < data.height; ++y)
+		for (int x = 0; x < data.width; ++x)
 		{
-			for (int x = 0; x < data.width; ++x)
+			int i = (y*navigation_layer->width) + x;
+
+			int tile_id = navigation_layer->Get(x, y);
+			TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+			if (tileset != NULL)
 			{
-				int i = (y*layer->width) + x;
 
-				int tile_id = layer->Get(x, y);
-				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+				if (tile_id == 29)map[i] = 0;
+				else map[i] = 1;
 
-				if (tileset != NULL)
-				{
-
-					if (tile_id == 29)map[i] = 0;
-					else map[i] = 1;
-
-				}
 			}
 		}
-
-		*buffer = map;
-		width = data.width;
-		height = data.height;
-		ret = true;
-
-		break;
 	}
 
-	return ret;
+	*buffer = map;
+	width = data.width;
+	height = data.height;
 
+	return true;
 }
 
 bool j1Map::CreateWalkCostMap(int & width, int & height, uchar ** buffer) const
@@ -106,68 +92,53 @@ bool j1Map::CreateWalkCostMap(int & width, int & height, uchar ** buffer) const
 
 int j1Map::MovementCost(int x, int y) const
 {
-	int ret = -1;
-
-	if (x >= 0 && x < data.width && y >= 0 && y < data.height)
-	{
-		int id = data.layers.begin()._Ptr->_Next->_Myval->Get(x, y);
-
-		ret = id;
-
-		switch (id) {
-		case 26:
-			ret = 12;
-			break;
-		case 27:
-			ret = 20;
-			break;
-		case 28:
-			ret = 14;
-			break;
-		case 29:
-			ret = 0;
-			break;
-		case 30:
-			ret = 1;
-			break;
-		case 31:
-			ret = 2;
-			break;
-		case 32:
-			ret = 3;
-			break;
-		case 33:
-			ret = 4;
-			break;
-		case 34:
-			ret = 5;
-			break;
-
-		}
-	}
-
-	return ret;
+	return navigation_layer->Get(x, y);
 }
 
 void j1Map::Draw(bool debug)
 {
 	if (map_loaded == false) return;
 
-	//Iterators to iterate all the map layers
-	std::list<MapLayer*>::iterator item = data.layers.begin();
-	std::list<MapLayer*>::iterator end = data.layers.end();
+	/*//Iterators to iterate all the map layers
+	std::list<MapLayer*>::iterator item = data.layers.begin();*/
 
 	//Draw all map tiles
-	while(item != end)
+	uint size = data.layers.size();
+	for (uint k = 0; k < size; k++)
 	{
-		MapLayer* layer = item._Ptr->_Myval;
+		MapLayer* layer = data.layers[k];
 
-		if (layer->properties.Get("Draw") == false && (layer->properties.Get("Navigation") == true && collide_layer == false))
+		if (!layer->properties.Get("Draw"))
 		{
-			item++;
 			continue;
 		}
 
+		std::vector<iPoint*> points;
+		SDL_Rect viewport = { -App->render->camera.x - data.tile_width, -App->render->camera.y  - data.tile_height,App->render->camera.w + data.tile_width ,App->render->camera.h };
+
+		tiles_in_view.CollectCandidates(points, viewport);
+
+		uint size = points.size();
+		for (uint k = 0; k < size; k++)
+		{
+			iPoint map_point = WorldToMap(points[k]->x, points[k]->y);
+			//Get tile id
+			int tile_id = layer->Get(map_point.x, map_point.y);
+
+			//Get tileset from tile id
+			TileSet* tileset = GetTilesetFromTileId(tile_id);
+
+			//Get tile texture rect & blit position
+			SDL_Rect r = tileset->GetTileRect(tile_id);
+			map_point = MapToWorld(map_point.x, map_point.y);
+
+			//Blit the current tile
+			App->render->TileBlit(tileset->texture, map_point.x, map_point.y, &r);
+
+		}
+		points.clear();
+
+		/*
 		for (int y = 0; y < data.height; ++y)
 		{
 			for (int x = 0; x < data.width; ++x)
@@ -198,9 +169,8 @@ void j1Map::Draw(bool debug)
 					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
 			}
-		}
+		}*/
 
-		item++;
 	}
 
 	//Draw map tiles net
@@ -248,21 +218,17 @@ int Properties::Get(const char* value, bool default_value) const
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
-	std::list<TileSet*>::const_iterator item = data.tilesets.begin();
-	TileSet* set = item._Ptr->_Myval;
 
-	while (item != data.tilesets.end())
+	uint size = data.tilesets.size();
+	for (uint k = 0; k < size; k++)
 	{
-		if (id < item._Ptr->_Myval->firstgid)
+		if (id < data.tilesets[k]->firstgid)
 		{
-			set = item._Ptr->_Prev->_Myval;
-			break;
+			return data.tilesets[k-1];
 		}
-		set = item._Ptr->_Myval;
-		item++;
 	}
 
-	return set;
+	return data.tilesets[size - 1];
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const
@@ -328,10 +294,8 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		float pX = ((x / half_width + y / half_height) / 2);
 		float pY = ((y / half_height - (x / half_width)) / 2);
 	
-		pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
-		pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
-		ret.x = pX;
-		ret.y = pY;
+		ret.x = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+		ret.y = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
 
 	}
 	else
@@ -367,7 +331,7 @@ void j1Map::CollideLayer() {
 
 SDL_Rect TileSet::GetTileRect(int id) const
 {
-	int relative_id = id - firstgid;
+	int relative_id = id - this->firstgid;
 	SDL_Rect rect;
 	rect.w = tile_width;
 	rect.h = tile_height;
@@ -382,22 +346,18 @@ bool j1Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets
-	std::list<TileSet*>::iterator item = data.tilesets.begin();
-
-	while (item != data.tilesets.end())
+	uint size = data.tilesets.size();
+	for (uint k = 0; k < size; k++)
 	{
-		RELEASE(item._Ptr->_Myval);
-		item++;
+		RELEASE(data.tilesets[k]);
 	}
 	data.tilesets.clear();
 
 	// Remove all layers
-	std::list<MapLayer*>::iterator item2 = data.layers.begin();
-
-	while (item2 != data.layers.end())
+	size = data.layers.size();
+	for (uint k = 0; k < size; k++)
 	{
-		RELEASE(item2._Ptr->_Myval);
-		item2++;
+		RELEASE(data.layers[k]);
 	}
 	data.layers.clear();
 
@@ -468,25 +428,24 @@ bool j1Map::Load(const char* file_name)
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
-		std::list<TileSet*>::iterator item = data.tilesets.begin();
-		while (item != data.tilesets.end())
+
+		uint size = data.tilesets.size();
+		for (uint k = 0; k < size; k++)
 		{
-			TileSet* s = item._Ptr->_Myval;
+			TileSet* s = data.tilesets[k];
 			LOG("Tileset ----");
 			LOG("name: %s firstgid: %d", s->name.c_str(), s->firstgid);
 			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
-			item++;
 		}
 
-		std::list<MapLayer*>::iterator item_layer = data.layers.begin();
-		while (item_layer != data.layers.end())
+		size = data.layers.size();
+		for (uint k = 0; k < size; k++)
 		{
-			MapLayer* l = item_layer._Ptr->_Myval;
+			MapLayer* l = data.layers[k];
 			LOG("Layer ----");
 			LOG("name: %s", l->name.c_str());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
-			item_layer++;
 		}
 	}
 
@@ -570,7 +529,7 @@ bool j1Map::LoadMap()
 		{
 			for (uint x = 0; x < data.width; x++)
 			{
-				iPoint point = MapToWordCenter(x, y);
+				iPoint point = MapToWorld(x, y);
 				tiles_in_view.Insert(&point);
 			}
 		}
@@ -668,6 +627,14 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	//Load advanced properties
 	LoadProperties(node, layer->properties);
+	if (layer->properties.Get("Draw"))
+	{
+		draw_layer = layer;
+	}
+	else if (layer->properties.Get("Navigation"))
+	{
+		navigation_layer = layer;
+	}
 	pugi::xml_node layer_data = node.child("data");
 
 	if (layer_data == NULL)

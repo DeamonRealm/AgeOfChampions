@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#define MAX_ELEMENTS_IN_NODE 8
+#define MAX_ELEMENTS_IN_NODE 10
 #define NODE_SUBDIVISION 4
 
 

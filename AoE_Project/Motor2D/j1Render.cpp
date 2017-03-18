@@ -289,6 +289,23 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	return ret;
 }
 
+bool j1Render::TileBlit(SDL_Texture * texture, int x, int y, const SDL_Rect* section)
+{
+	uint scale = App->win->GetScale();
+
+	SDL_Rect rect = { camera.x + x * scale ,camera.y + y * scale ,section->w * scale ,section->h * scale };
+
+	SDL_Point p = { 0,0 };
+
+	if (SDL_RenderCopyEx(renderer, texture, section, &rect,0, &p,SDL_RendererFlip::SDL_FLIP_NONE))
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		return false;
+	}
+
+	return true;
+}
+
 bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;

@@ -106,28 +106,26 @@ int AABB::CollectCandidates(std::vector<iPoint*>& nodes, const SDL_Rect & rect)
 	uint ret = 0;
 
 	// If range is not in the quad-tree, return
-	if (!AABB(aabb).Intersects(&AABB(rect)))
-		return ret;
+	if (!SDL_HasIntersection(&rect, &aabb)) return 0;
 
 	// See if the points of this node are in range and pushback them to the vector
-	if (!objects.empty())
-		for (int i = 0; i < MAX_ELEMENTS_IN_NODE; i++)
+	if (children[0] != nullptr)
+	{
+		// Otherwise, add the points from the children
+		ret += children[0]->CollectCandidates(nodes, rect);
+		ret += children[1]->CollectCandidates(nodes, rect);
+		ret += children[2]->CollectCandidates(nodes, rect);
+		ret += children[3]->CollectCandidates(nodes, rect);
+	}
+	else if (!objects.empty())
+	{
+		uint size = objects.size();
+		for (uint k = 0; k < size; k++)
 		{
-			ret++;
-			if (AABB(rect).Contains(&objects[i]))
-				nodes.push_back(&objects[i]);
+			if (SDL_PointInRect((SDL_Point*)&objects[k], &rect))
+				nodes.push_back(&objects[k]);
 		}
-
-
-	// If there is no children, end
-	if (children[0] == nullptr)
-		return ret;
-
-	// Otherwise, add the points from the children
-	ret += children[0]->CollectCandidates(nodes, rect);
-	ret += children[1]->CollectCandidates(nodes, rect);
-	ret += children[2]->CollectCandidates(nodes, rect);
-	ret += children[3]->CollectCandidates(nodes, rect);
+	}
 
 	return ret;
 }
@@ -180,8 +178,8 @@ void QuadTree::Draw() const
 int QuadTree::CollectCandidates(std::vector<iPoint*>& nodes, const SDL_Rect & r) const
 {
 	int tests = 1;
-
-	if (root != NULL && AABB(root->aabb).Intersects(&AABB(r)))
+	
+	if (root != NULL && SDL_HasIntersection(&r, &root->aabb))
 		tests = root->CollectCandidates(nodes, r);
 	return tests;
 }
