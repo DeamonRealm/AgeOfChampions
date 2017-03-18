@@ -145,6 +145,10 @@ public:
 	//Gui taget funtions
 	void				SetDefaultInputTarget(j1Module* target);
 	j1Module*			GetDefaultInputTarget()const;
+
+	//Get String from format
+	char*				SetStringFromInt(int number);
+
 };
 
 #endif // __GUI_H__

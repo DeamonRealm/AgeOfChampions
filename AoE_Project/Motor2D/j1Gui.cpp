@@ -350,3 +350,10 @@ j1Module * j1Gui::GetDefaultInputTarget() const
 	return default_input_target;
 }
 
+char * j1Gui::SetStringFromInt(int number)
+{
+	static char buffer[128];
+	int ret = snprintf(buffer, sizeof(buffer), "%d", number);
+	return buffer;
+}
+

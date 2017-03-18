@@ -16,6 +16,8 @@ class Building;
 class UI_String;
 class UI_Image;
 
+enum ENTITY_TYPE;
+
 class Entity_Profile
 {
 public:
@@ -25,15 +27,42 @@ public:
 	void SetEntity(Entity* entity_selected);
 	Entity* GetEntity();
 	void DrawProfile() const;
+	void UpdateStats();
 
 private:
 
+	std::string		profile_text = "";
+
 	Entity*			element = nullptr;
+	ENTITY_TYPE		e_type;
 
+	//General
 	UI_String*		name;
+	//UI_String*		civilizacion;
 	UI_String*		diplomacy;
+	bool			isenemy;
 
+	int				life_update;
+	int				m_life;
+	UI_String*		life;
+	
+	//Units and Offensive Buildings
+	uint			u_attack;
+	UI_String*		attack;
+	uint			u_deffence;
+	UI_String*		deffence;
 
+	uint			u_range;
+	UI_String*		range;
+	
+	//Buildings
+	uint			u_capacity;
+	uint			m_capacity;
+	UI_String*		capacity;
+	
+	//Resources
+	uint			u_resources;
+	UI_String*		resources;
 };
 
 enum SELECT_TYPE
