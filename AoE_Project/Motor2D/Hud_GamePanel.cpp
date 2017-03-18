@@ -29,11 +29,14 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 // Destructor ==============================================
 Game_Panel::~Game_Panel()
 {
+	CleanUp();
 }
 
 // FUNCTIONALITY ===========================================
 bool Game_Panel::CleanUp()
 {
+	hud_game_text.clear();
+
 	player_resources.clear();
 
 	return true;

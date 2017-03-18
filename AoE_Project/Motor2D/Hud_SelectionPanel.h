@@ -5,7 +5,12 @@
 #include <vector>
 #include <list>
 
+#include "j1Timer.h"
+
+#include "SDL\include\SDL_rect.h"
+
 class UI_String;
+class UI_Image;
 
 class Entity;
 class Unit;
@@ -13,6 +18,16 @@ class Building;
 class Resource;
 
 enum ENTITY_TYPE;
+enum GUI_INPUT;
+
+
+enum SELECT_TYPE
+{
+	SINGLE,
+	GROUP,
+	DOUBLECLICK,
+	ADD
+};
 
 class Entity_Profile
 {
@@ -69,22 +84,62 @@ public:
 	~Selection_Panel();
 
 public:
-	// Called before the first frame
-	bool Start();
-
 	// Called before all Updates
 	bool PreUpdate();
-
-	// Called each loop iteration
-	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
 
+	// Handle Input
+	void Handle_Input(GUI_INPUT newevent);
+
 	// Draw Selection Panel
 	bool Draw();
+	void DrawGroup();
+
+	// Coordinates Methods
+	bool UnitisIn(int x, int y, int width, int height);
+	bool PointisIn(int x, int y) const;
+	bool PointisInViewport(int x = 0, int y = 0) ;
+
+	// Select Methods
+	void Select(SELECT_TYPE type);
+
+	// Clear Selected Elements List
+	void UnSelect_Entity();
+
+	void Expand_SelectionRect();
+	Entity*	GetUpperEntity(int x, int y)const;
+	 
+	// Selction Panel (Group Functions)
+	void SetGroupProfile();
 
 private:
+	// Mouse_pos
+	int mouse_x = 0;
+	int mouse_y = 0;
+
+	// Group selection
+	uint			max_selected_units = 60;
+	uint			max_row_units = 16;
+	uint			row_size = 608;
+
+	j1Timer			double_click;
+	bool			double_clickon;
+
+	bool			expand;
+	SDL_Rect		selection_rect;
+	SDL_Rect		map_viewport;
+
+
+	std::list<Entity*>	selected_elements;
+	std::vector<UI_Image*>  group_profile;
+
+	Entity_Profile*		Selected = nullptr;
+	
+	// Used for mouse detection
+	Entity*			UpperEntity = nullptr;
+
 	
 };
 
