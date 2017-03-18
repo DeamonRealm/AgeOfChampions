@@ -102,7 +102,7 @@ private:
 	Resource*	stone_ore = nullptr;
 
 	//HUD Panels
-	//Entity_Profile*		Selected = nullptr;
+	Entity_Profile*		Selected = nullptr;
 	//Selection_Panel*		SelectionPanel;
 	Game_Panel*			game_panel = nullptr;
 

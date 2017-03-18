@@ -47,7 +47,7 @@ bool j1Player::Start()
 	App->gui->PushScreen(game_hud);
 
 	selection_rect = { 0,0,0,0 };
-	//Selected = new Entity_Profile();
+	Selected = new Entity_Profile();
 	
 	//SelectionPanel = new Selection_Panel();
 
@@ -80,7 +80,7 @@ bool j1Player::Start()
 	game_entityes.push_back(stone_ore);
 
 	double_clickon = false;
-	/*
+	
 	// HUD Panels
 	game_panel = new Game_Panel();
 
@@ -91,7 +91,7 @@ bool j1Player::Start()
 	game_panel->AddResource(200, GP_STONE);
 
     game_panel->IncressPopulation(45, true);
-	*/
+	
 	return true;
 }
 
@@ -147,39 +147,39 @@ bool j1Player::PreUpdate()
 		center->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		center->SetDiplomacy(ALLY);
 		
-		//game_panel->IncressPopulation(15, true);
+		game_panel->IncressPopulation(15, true);
 		//game_entityes.push_back(center);
 	}
 	//Generate Villager in the mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && game_panel->CheckPopulation())
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
 
-		//game_panel->IncressPopulation(1, false);
+		game_panel->IncressPopulation(1, false);
 	}
 
 	//Generate a Militia unit in the mouse coordinates
-	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN/* && game_panel->CheckPopulation()*/)
+	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN && game_panel->CheckPopulation())
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
 
-		//game_panel->IncressPopulation(1, false);
+		game_panel->IncressPopulation(1, false);
 	}
 	//Generate a Arbalest unit in the mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /* && game_panel->CheckPopulation()*/)
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && game_panel->CheckPopulation())
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
 		actual_population.push_back(new_unit);
 
-		//game_panel->IncressPopulation(1, false);
+		game_panel->IncressPopulation(1, false);
 	}
 
 	return true;
@@ -209,13 +209,13 @@ bool j1Player::PostUpdate()
 
 	if (selected_elements.size() == 1)
 	{
-	//	Selected->UpdateStats();
-	//	Selected->DrawProfile();
+		Selected->UpdateStats();
+		Selected->DrawProfile();
 	}
 	else if (selected_elements.size() > 1) DrawGroup();
 
 	// Draw Game Panel (HUD)
-	//game_panel->Draw();
+	game_panel->Draw();
 
 	//Draw Mouse Last one
 	if (SDL_ShowCursor(-1) == 0) App->gui->DrawMouseTexture();
@@ -230,10 +230,10 @@ bool j1Player::CleanUp()
 	selected_elements.clear();
 	group_profile.clear();
 
-	//delete Selected;
+	delete Selected;
 
 	//Delete HUD
-	//delete game_panel;
+	delete game_panel;
 
 	return true;
 }
@@ -320,13 +320,12 @@ void j1Player::Select(SELECT_TYPE type)
 
 		if (type == DOUBLECLICK)
 		{
-			//if (Selected->GetEntity() == nullptr) return;
-			return;
-			//else if (Selected->GetEntity()->GetEntityType() != UNIT) return;
+			if (Selected->GetEntity() == nullptr) return;
+			else if (Selected->GetEntity()->GetEntityType() != UNIT) return;
 			App->win->GetWindowSize(width, height);
 
 			selection_rect = { 0, 32, (int)width, 560 };
-			//unit_type = ((Unit*)Selected->GetEntity())->GetUnitType();
+			unit_type = ((Unit*)Selected->GetEntity())->GetUnitType();
 		}
 		else if (selection_rect.w == 0 || selection_rect.h == 0) return;
 
@@ -379,7 +378,7 @@ void j1Player::Select(SELECT_TYPE type)
 	}
 	
 	//Configure Selection Panel
-	if (selected_elements.size() == 1); //Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 	else if (selected_elements.size() > 1)
 	{
 		max_row_units = 16;
@@ -413,10 +412,8 @@ void j1Player::Expand_SelectionRect()
 //Return Upper Entity
 Entity * j1Player::GetUpperEntity(int x, int y)const
 {
-//	int x = 0, y = 0;
 	int width = 0, height = 0;
 
-//	App->input->GetMousePosition(x, y);
 	x -= App->render->camera.x;
 	y -= App->render->camera.y;
 
@@ -503,7 +500,7 @@ bool j1Player::DoAction(ACTION type)
 		{
 			if (UpperEntity->GetEntityType() == RESOURCE)
 			{
-			//	((Unit*)Selected->GetEntity())->SetInteractionTarget(UpperEntity);
+				((Unit*)Selected->GetEntity())->SetInteractionTarget(UpperEntity);
 				return true;
 			}
 			else if (UpperEntity->GetEntityType() == UNIT)

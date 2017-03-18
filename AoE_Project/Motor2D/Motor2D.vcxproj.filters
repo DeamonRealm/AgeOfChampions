@@ -103,6 +103,15 @@
     <ClCompile Include="Quadtree.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Hud_ActionPanel.cpp">
+      <Filter>UserInteraface\Hud</Filter>
+    </ClCompile>
+    <ClCompile Include="Hud_GamePanel.cpp">
+      <Filter>UserInteraface\Hud</Filter>
+    </ClCompile>
+    <ClCompile Include="Hud_SelectionPanel.cpp">
+      <Filter>UserInteraface\Hud</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -224,6 +233,15 @@
     <ClInclude Include="Quadtree.h">
       <Filter>Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Hud_ActionPanel.h">
+      <Filter>UserInteraface\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud_GamePanel.h">
+      <Filter>UserInteraface\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud_SelectionPanel.h">
+      <Filter>UserInteraface\Hud</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -255,6 +273,9 @@
     </Filter>
     <Filter Include="Pathfinding">
       <UniqueIdentifier>{ea379160-4af9-4193-a358-27e9a38147db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserInteraface\Hud">
+      <UniqueIdentifier>{02d694a5-7c88-4ea6-9934-f272aad23985}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
