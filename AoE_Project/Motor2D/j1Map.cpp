@@ -99,9 +99,6 @@ void j1Map::Draw(bool debug)
 {
 	if (map_loaded == false) return;
 
-	/*//Iterators to iterate all the map layers
-	std::list<MapLayer*>::iterator item = data.layers.begin();*/
-
 	//Draw all map tiles
 	uint size = data.layers.size();
 	for (uint k = 0; k < size; k++)
@@ -113,15 +110,10 @@ void j1Map::Draw(bool debug)
 			continue;
 		}
 
-		std::vector<iPoint*> points;
-		SDL_Rect viewport = { -App->render->camera.x - data.tile_width, -App->render->camera.y,App->render->camera.w + data.tile_width * 2,App->render->camera.h - data.tile_height * 3 };
-		tiles_in_view.CollectCandidates(points, viewport);
-
-		uint size = points.size();
+		uint size = points_in_view.size();
 		for (uint k = 0; k < size; k++)
 		{
-			iPoint point = *points[k];
-			iPoint map_point = WorldCenterToMap(points[k]->x, points[k]->y);
+			iPoint map_point = WorldCenterToMap(points_in_view[k]->x, points_in_view[k]->y);
 			//Get tile id
 			int tile_id = layer->Get(map_point.x, map_point.y);
 
@@ -136,41 +128,6 @@ void j1Map::Draw(bool debug)
 			App->render->TileBlit(tileset->texture, map_point.x, map_point.y, &r);
 
 		}
-		points.clear();
-
-		/*
-		for (int y = 0; y < data.height; ++y)
-		{
-			for (int x = 0; x < data.width; ++x)
-			{
-				//Get tile id
-				int tile_id = layer->Get(x, y);
-
-				//Transform tile map coordinates to world coordinates
-				iPoint pos = MapToWorld(x, y);
-
-				//Check if the tile is inside the renderer view port
-				if (!(pos.x + data.tile_width * 0.9 >= -App->render->camera.x && pos.x <= -App->render->camera.x + App->render->camera.w) ||
-					!(pos.y + data.tile_height * 0.9 >= -App->render->camera.y && pos.y <= -App->render->camera.y + App->render->camera.h))
-				{
-					continue;
-				}
-
-				//Check if the tile is defined
-				if (tile_id > 0)
-				{
-					//Get tileset from tile id
-					TileSet* tileset = GetTilesetFromTileId(tile_id);
-
-					//Get tile texture rect
-					SDL_Rect r = tileset->GetTileRect(tile_id);
-					
-					//Blit the current tile
-					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
-				}
-			}
-		}*/
-
 	}
 
 	//Draw map tiles net
@@ -198,7 +155,7 @@ void j1Map::Draw(bool debug)
 			App->render->DrawLine(init.x, init.y + tile_h_2, end.x, end.y + tile_h_2, 0, 250, 0);
 		}
 
-		tiles_in_view.Draw();
+		map_quadtree.Draw();
 	}
 }
 
@@ -341,10 +298,11 @@ iPoint j1Map::FixPointMap(int x, int y)
 		return ret;
 }
 
-void j1Map::CollideLayer() {
-
-	collide_layer = !collide_layer;
-
+void j1Map::CalculateTilesInView()
+{
+	points_in_view.clear();
+	SDL_Rect viewport = { -App->render->camera.x - data.tile_width, -App->render->camera.y, App->render->camera.w + data.tile_width * 2, App->render->camera.h - data.tile_height * 3 };
+	map_quadtree.CollectCandidates(points_in_view, viewport);
 }
 
 SDL_Rect TileSet::GetTileRect(int id) const
@@ -468,6 +426,7 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	map_loaded = ret;
+	CalculateTilesInView();
 
 	return ret;
 }
@@ -541,14 +500,15 @@ bool j1Map::LoadMap()
 		int v_y = 0;
 		int v_w = data.width * data.tile_width;
 		int v_h = data.height * data.tile_height + (data.width + data.height);
-		tiles_in_view.SetBoundaries({ v_x,v_y,v_w,v_h });
+		map_quadtree.SetBoundaries({ v_x,v_y,v_w,v_h });
+		map_quadtree.SetMaxObjects(10);
 
 		//Fill the draw quad tree with all the tiles coordinates
 		for (uint y = 0; y < data.height; y++)
 		{
 			for (uint x = 0; x < data.width; x++)
 			{
-				if (!tiles_in_view.Insert(&MapToWordCenter(x, y)))fails++;
+				if (!map_quadtree.Insert(&MapToWordCenter(x, y)))fails++;
 			}
 		}
 

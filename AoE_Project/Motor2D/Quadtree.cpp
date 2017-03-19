@@ -5,7 +5,7 @@
 
 /// Class AABB ----------------------------------
 //Constructors ========================
-AABB::AABB(const SDL_Rect & aabb) :aabb(aabb)
+AABB::AABB(const SDL_Rect & aabb, uint max_objects) :aabb(aabb), max_objects(max_objects)
 {
 	for (uint i = 0; i < 4; i++)
 		children[i] = nullptr;
@@ -66,10 +66,10 @@ bool AABB::Insert(iPoint * new_point)
 
 	// If in this node there is space for the point, pushback it
 	uint size = objects.size();
-	if (size < MAX_ELEMENTS_IN_NODE)
+	if (size < max_objects)
 	{
 		objects.push_back(*new_point);
-		if (size + 1 == MAX_ELEMENTS_IN_NODE)
+		if (size + 1 == max_objects)
 		{
 			full = true;
 			Subdivide();
@@ -88,20 +88,20 @@ void AABB::Subdivide()
 
 	//Calculate new AABB center for each child
 	qCentre = { aabb.x,aabb.y };
-	children[0] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y });
+	children[0] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
 	children[0]->root = this;
 
 
 	qCentre = { aabb.x + qSize.x,aabb.y };
-	children[1] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y });
+	children[1] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
 	children[1]->root = this;
 
 	qCentre = { aabb.x,aabb.y + qSize.y };
-	children[2] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y });
+	children[2] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y },max_objects);
 	children[2]->root = this;
 	
 	qCentre = { aabb.x + qSize.x,aabb.y + qSize.y };
-	children[3] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y });
+	children[3] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
 	children[3]->root = this;
 
 	uint size = objects.size();
@@ -112,7 +112,7 @@ void AABB::Subdivide()
 			if (children[k]->Insert(&objects[h])) break;
 		}
 	}
-
+	objects.clear();
 }
 
 int AABB::CollectCandidates(std::vector<iPoint*>& nodes, const SDL_Rect & rect)
@@ -123,7 +123,7 @@ int AABB::CollectCandidates(std::vector<iPoint*>& nodes, const SDL_Rect & rect)
 	if (!SDL_HasIntersection(&rect, &aabb)) return 0;
 
 	// See if the points of this node are in range and pushback them to the vector
-	if (children[0] != nullptr)
+	if (full)
 	{
 		// Otherwise, add the points from the children
 		ret += children[0]->CollectCandidates(nodes, rect);
@@ -131,7 +131,7 @@ int AABB::CollectCandidates(std::vector<iPoint*>& nodes, const SDL_Rect & rect)
 		ret += children[2]->CollectCandidates(nodes, rect);
 		ret += children[3]->CollectCandidates(nodes, rect);
 	}
-	else if (!objects.empty())
+	else
 	{
 		uint size = objects.size();
 		for (uint k = 0; k < size; k++)
@@ -155,7 +155,7 @@ void AABB::CollectPoints(std::vector<AABB*>& nodes)
 
 /// Class QuadTree ---------------------------
 //Constructors ========================
-QuadTree::QuadTree(const SDL_Rect & rect)
+QuadTree::QuadTree(const SDL_Rect & rect, uint max_objects) : max_objects(max_objects)
 {
 	SetBoundaries(rect);
 }
@@ -172,7 +172,13 @@ void QuadTree::SetBoundaries(const SDL_Rect & r)
 	if (root != NULL)
 		delete root;
 
-	root = new AABB(r);
+	root = new AABB(r, max_objects);
+}
+
+void QuadTree::SetMaxObjects(uint max)
+{
+	max_objects = max;
+	root->max_objects = max;
 }
 
 bool QuadTree::Insert(iPoint* newpoint)

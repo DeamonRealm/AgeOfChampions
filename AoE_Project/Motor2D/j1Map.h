@@ -172,19 +172,18 @@ public:
 	iPoint WorldCenterToMap(int x, int y)const;
 	//Fix an external map point inside the map limits
 	iPoint FixPointMap(int x, int y);
-	//Get Collide Layer
-	void CollideLayer();
+	//Calculate the tiles that are in camera
+	void CalculateTilesInView();
 
 private:
 
-	QuadTree			tiles_in_view;
+	QuadTree			map_quadtree;
+	std::vector<iPoint*>points_in_view;
 	MapLayer*			draw_layer = nullptr;
 	MapLayer*			navigation_layer = nullptr;
 	pugi::xml_document	map_file;
 	std::string			folder;
 	bool				map_loaded = false;
-	bool				collide_layer = false;
-
 };
 
 #endif // __j1MAP_H__

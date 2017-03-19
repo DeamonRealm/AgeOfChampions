@@ -117,23 +117,32 @@ bool j1Scene::Update(float dt)
 	}
 	*/
 	//MAP MOVEMENT-----------------------------------------
+	bool moved = false;
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		App->render->camera.y += SDL_ceil(1500 * dt);
+		moved = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		App->render->camera.y -= SDL_ceil(1500 * dt);
+		moved = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
 		App->render->camera.x += SDL_ceil(1500 * dt);
+		moved = true;
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
 		App->render->camera.x -= SDL_ceil(1500 * dt);
+		moved = true;
+	}
 
-
+	if(moved)App->map->CalculateTilesInView();
 
 	//Test unit animations --------------
 	fPoint pos = arbalest->GetPosition();

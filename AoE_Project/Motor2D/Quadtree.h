@@ -3,7 +3,6 @@
 
 #include <vector>
 
-#define MAX_ELEMENTS_IN_NODE 10
 #define NODE_SUBDIVISION 4
 
 
@@ -16,13 +15,14 @@ class AABB
 {
 public:
 
-	AABB(const SDL_Rect& aabb);
+	AABB(const SDL_Rect& aabb, uint max_objects);
 	~AABB();
 
 public:
 
 	SDL_Rect				aabb = { 0,0,0,0 };
 	std::vector<iPoint>		objects;
+	uint					max_objects = 2;
 	bool					full = false;
 	AABB*					root = nullptr;
 	AABB*					children[NODE_SUBDIVISION];
@@ -47,17 +47,19 @@ class QuadTree
 {
 public:
 
-	QuadTree(const SDL_Rect& rect = { 0,0,0,0 });
+	QuadTree(const SDL_Rect& rect = { 0,0,0,0 }, uint max_objects = 0);
 	~QuadTree();
 
 private:
 
-	AABB* root = nullptr;
+	AABB*	root = nullptr;
+	uint max_objects = 2;
 
 public:
 
 	// Functionality --------
 	void	SetBoundaries(const SDL_Rect& r);
+	void	SetMaxObjects(uint max);
 	bool	Insert(iPoint* newpoint);
 	void	Draw()const;
 	int		CollectCandidates(std::vector< iPoint* >& nodes, const SDL_Rect& r) const;
