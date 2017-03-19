@@ -114,14 +114,14 @@ void j1Map::Draw(bool debug)
 		}
 
 		std::vector<iPoint*> points;
-		SDL_Rect viewport = { -App->render->camera.x - data.tile_width, -App->render->camera.y  - data.tile_height,App->render->camera.w + data.tile_width ,App->render->camera.h };
-
+		SDL_Rect viewport = { -App->render->camera.x - data.tile_width, -App->render->camera.y,App->render->camera.w + data.tile_width * 2,App->render->camera.h - data.tile_height * 3 };
 		tiles_in_view.CollectCandidates(points, viewport);
 
 		uint size = points.size();
 		for (uint k = 0; k < size; k++)
 		{
-			iPoint map_point = WorldToMap(points[k]->x, points[k]->y);
+			iPoint point = *points[k];
+			iPoint map_point = WorldCenterToMap(points[k]->x, points[k]->y);
 			//Get tile id
 			int tile_id = layer->Get(map_point.x, map_point.y);
 
@@ -218,7 +218,6 @@ int Properties::Get(const char* value, bool default_value) const
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
-
 	uint size = data.tilesets.size();
 	for (uint k = 0; k < size; k++)
 	{
@@ -243,7 +242,7 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
 		ret.x = (x - y) * (int)(data.tile_width * 0.5f);
-		ret.y = (x + y) * (int)(data.tile_height * 0.5f);
+		ret.y = (x + y) * (int)(data.tile_height * 0.5f) + (x + y);
 	}
 	else
 	{
@@ -256,23 +255,11 @@ iPoint j1Map::MapToWorld(int x, int y) const
 
 iPoint j1Map::MapToWordCenter(int x, int y)
 {
-	iPoint ret;
+	iPoint ret = MapToWorld(x,y);
 
-	if (data.type == MAPTYPE_ORTHOGONAL)
-	{
-		ret.x = (x * data.tile_width) + data.tile_width * 0.5f;
-		ret.y = (y * data.tile_height) + data.tile_height * 0.5f;
-	}
-	else if (data.type == MAPTYPE_ISOMETRIC)
-	{
-		ret.x = (x - y) * (int)(data.tile_width * 0.5f) + data.tile_width * 0.5f;
-		ret.y = (x + y) * (int)(data.tile_height * 0.5f) + data.tile_height * 0.5f;
-	}
-	else
-	{
-		LOG("Unknown map type");
-		ret.x = x; ret.y = y;
-	}
+	ret.x += data.tile_width * 0.5f;
+	ret.y += data.tile_height * 0.5f - 1;
+
 	return ret;
 }
 
@@ -291,9 +278,40 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		float half_width = data.tile_width * 0.5f;
 		float half_height = data.tile_height * 0.5f;
 	
-		float pX = ((x / half_width + y / half_height) / 2);
-		float pY = ((y / half_height - (x / half_width)) / 2);
+		float pX = ((x / half_width + y / half_height) * 0.5f);
+		float pY = ((y / half_height - (x / half_width)) * 0.5f);
 	
+		ret.x = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+		ret.y = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+
+	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.x = x; ret.y = y;
+	}
+
+	return ret;
+}
+
+iPoint j1Map::WorldCenterToMap(int x, int y) const
+{
+	iPoint ret(0, 0);
+
+	if (data.type == MAPTYPE_ORTHOGONAL)
+	{
+		ret.x = (x - (data.tile_width * 0.5)) / data.tile_width;
+		ret.y = (y - (data.tile_height * 0.5)) / data.tile_height;
+	}
+	else if (data.type == MAPTYPE_ISOMETRIC)
+	{
+
+		float half_width = data.tile_width * 0.5f;
+		float half_height = (data.tile_height + 1) * 0.5f;
+
+		float pX = ((x - half_width) / half_width + (y - half_height) / half_height) * 0.5f;
+		float pY = ((y - (half_height)) / half_height - ((x - half_width) / half_width)) * 0.5f;
+
 		ret.x = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
 		ret.y = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
 
@@ -331,7 +349,7 @@ void j1Map::CollideLayer() {
 
 SDL_Rect TileSet::GetTileRect(int id) const
 {
-	int relative_id = id - this->firstgid;
+	int relative_id = id - firstgid;
 	SDL_Rect rect;
 	rect.w = tile_width;
 	rect.h = tile_height;
@@ -516,12 +534,13 @@ bool j1Map::LoadMap()
 			data.type = MAPTYPE_UNKNOWN;
 		}
 
+		uint fails = 0;
 		j1Timer timer;
 		// Set map draw quad tree area
-		int v_x = ((data.width - 1) * data.tile_width) * -0.5;
+		int v_x = ((data.width) * data.tile_width - data.width) * -0.5;
 		int v_y = 0;
 		int v_w = data.width * data.tile_width;
-		int v_h = data.height * data.tile_height;
+		int v_h = data.height * data.tile_height + (data.width + data.height);
 		tiles_in_view.SetBoundaries({ v_x,v_y,v_w,v_h });
 
 		//Fill the draw quad tree with all the tiles coordinates
@@ -529,12 +548,11 @@ bool j1Map::LoadMap()
 		{
 			for (uint x = 0; x < data.width; x++)
 			{
-				iPoint point = MapToWorld(x, y);
-				tiles_in_view.Insert(&point);
+				if (!tiles_in_view.Insert(&MapToWordCenter(x, y)))fails++;
 			}
 		}
 
-		LOG("Time: %.3f", timer.ReadSec());
+		LOG("Map QuadTree generated in: %.3f & %i errors", timer.ReadSec(), fails);
 	}
 
 	return ret;

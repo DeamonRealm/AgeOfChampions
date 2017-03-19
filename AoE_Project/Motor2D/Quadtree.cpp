@@ -46,23 +46,36 @@ bool AABB::Intersects(const AABB* target) const
 bool AABB::Insert(iPoint * new_point)
 {
 	// If new point is not in the quad-tree AABB, return
-	if (!Contains(new_point))
-		return false;
-
-	// If in this node there is space for the point, pushback it
-	if (objects.size() < MAX_ELEMENTS_IN_NODE)
+	SDL_Point p = { new_point->x,new_point->y };
+	if (!SDL_PointInRect(&p, &this->aabb))
 	{
-		objects.push_back(*new_point);
-		return true;
+		return false;
 	}
 
-	// Otherwise, subdivide and add the point to one of the new nodes
-	if (children[0] == nullptr)
-		Subdivide();
+	if (full)
+	{
+		for (uint i = 0; i < NODE_SUBDIVISION; i++)
+		{
+			if (children[i]->Insert(new_point))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
-	for (uint i = 0; i < NODE_SUBDIVISION; i++)
-		if (children[i]->Insert(new_point))
-			return true;
+	// If in this node there is space for the point, pushback it
+	uint size = objects.size();
+	if (size < MAX_ELEMENTS_IN_NODE)
+	{
+		objects.push_back(*new_point);
+		if (size + 1 == MAX_ELEMENTS_IN_NODE)
+		{
+			full = true;
+			Subdivide();
+		}
+		return true;
+	}
 
 	return false;
 }
@@ -92,13 +105,14 @@ void AABB::Subdivide()
 	children[3]->root = this;
 
 	uint size = objects.size();
-	for (uint k = 0; k < NODE_SUBDIVISION; k++)
+	for (uint h = 0; h < size; h++)
 	{
-		for (uint h = 0; h < size; h++)
+		for (uint k = 0; k < NODE_SUBDIVISION; k++)
 		{
-			children[k]->Insert(&objects[h]);
+			if (children[k]->Insert(&objects[h])) break;
 		}
 	}
+
 }
 
 int AABB::CollectCandidates(std::vector<iPoint*>& nodes, const SDL_Rect & rect)

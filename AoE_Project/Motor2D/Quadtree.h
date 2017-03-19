@@ -21,10 +21,11 @@ public:
 
 public:
 
-	SDL_Rect aabb = { 0,0,0,0 };
-	std::vector<iPoint> objects;
-	AABB* root = nullptr;
-	AABB* children[NODE_SUBDIVISION];
+	SDL_Rect				aabb = { 0,0,0,0 };
+	std::vector<iPoint>		objects;
+	bool					full = false;
+	AABB*					root = nullptr;
+	AABB*					children[NODE_SUBDIVISION];
 	
 public:
 

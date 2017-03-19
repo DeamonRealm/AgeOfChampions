@@ -168,7 +168,9 @@ public:
 	iPoint MapToWordCenter(int x, int y);
 	//Transform world coordinates to map coordinates
 	iPoint WorldToMap(int x, int y) const;
-	
+	//Transform world coordinates to map coordinates (in tile center
+	iPoint WorldCenterToMap(int x, int y)const;
+	//Fix an external map point inside the map limits
 	iPoint FixPointMap(int x, int y);
 	//Get Collide Layer
 	void CollideLayer();
@@ -181,8 +183,7 @@ private:
 	pugi::xml_document	map_file;
 	std::string			folder;
 	bool				map_loaded = false;
-
-	bool collide_layer = false;
+	bool				collide_layer = false;
 
 };
 
