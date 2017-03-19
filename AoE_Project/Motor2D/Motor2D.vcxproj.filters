@@ -100,9 +100,6 @@
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="Quadtree.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Hud_ActionPanel.cpp">
       <Filter>UserInteraface\Hud</Filter>
     </ClCompile>

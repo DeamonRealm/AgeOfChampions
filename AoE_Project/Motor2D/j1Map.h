@@ -178,8 +178,8 @@ public:
 
 private:
 
-	QuadTree			map_quadtree;
-	std::vector<iPoint*>points_in_view;
+	QuadTree<iPoint>	map_quadtree;
+	std::vector<iPoint> points_in_view;
 	MapLayer*			draw_layer = nullptr;
 	MapLayer*			navigation_layer = nullptr;
 	pugi::xml_document	map_file;

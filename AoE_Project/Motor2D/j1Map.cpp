@@ -109,20 +109,19 @@ void j1Map::Draw(bool debug)
 		{
 			continue;
 		}
-
+		this->map_quadtree;
 		uint size = points_in_view.size();
 		for (uint k = 0; k < size; k++)
 		{
-			iPoint map_point = WorldCenterToMap(points_in_view[k]->x, points_in_view[k]->y);
 			//Get tile id
-			int tile_id = layer->Get(map_point.x, map_point.y);
+			int tile_id = layer->Get(points_in_view[k].x, points_in_view[k].y);
 
 			//Get tileset from tile id
 			TileSet* tileset = GetTilesetFromTileId(tile_id);
 
 			//Get tile texture rect & blit position
 			SDL_Rect r = tileset->GetTileRect(tile_id);
-			map_point = MapToWorld(map_point.x, map_point.y);
+			iPoint map_point = MapToWorld(points_in_view[k].x, points_in_view[k].y);
 
 			//Blit the current tile
 			App->render->TileBlit(tileset->texture, map_point.x, map_point.y, &r);
@@ -508,7 +507,8 @@ bool j1Map::LoadMap()
 		{
 			for (uint x = 0; x < data.width; x++)
 			{
-				if (!map_quadtree.Insert(&MapToWordCenter(x, y)))fails++;
+				iPoint loc = MapToWordCenter(x, y);
+				if (!map_quadtree.Insert(iPoint(x, y) , &loc)) fails++;
 			}
 		}
 
