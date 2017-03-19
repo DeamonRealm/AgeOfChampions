@@ -34,8 +34,8 @@ bool j1Pathfinding::Start()
 bool j1Pathfinding::CleanUp()
 {
 	delete cluster_abstraction;
-	RELEASE_ARRAY(logic_map);
-	RELEASE_ARRAY(path_nodes);
+//	RELEASE_ARRAY(logic_map);
+//	RELEASE_ARRAY(path_nodes);
 	return true;
 }
 
@@ -51,6 +51,14 @@ void j1Pathfinding::SetMap(uint width, uint height, uchar *& data)
 	path_nodes = new PathNode[size];
 
 	memcpy(logic_map, data, width*height);
+}
+
+void j1Pathfinding::SetMapLimits(int position_x, int position_y, int width, int height)
+{
+	map_min_x = position_x;
+	map_min_y = position_y;
+	map_max_x = position_x + width-1;//-1?
+	map_max_y = position_y + height-1;//-1?
 }
 
 void j1Pathfinding::InitClusterAbstraction()
@@ -69,7 +77,7 @@ bool j1Pathfinding::IsWalkable(const iPoint & destination) const
 
 bool j1Pathfinding::CheckBoundaries(const iPoint & pos) const
 {
-	return (pos.x >= 0 && pos.x <= (int)width && pos.y >= 0 && pos.y <= (int)height);
+	return (pos.x >= map_min_x && pos.x <= map_max_x && pos.y >= map_min_y && pos.y <= map_max_y);
 }
 
 uchar j1Pathfinding::GetTileAt(const iPoint & pos) const
@@ -100,9 +108,10 @@ int j1Pathfinding::CreatePath(Node * start, Node * goal)
 
 	iPoint map_origin(start->GetPositionX(), start->GetPositionY());
 	iPoint map_goal(goal->GetPositionX(), goal->GetPositionY());
+	int size = width*height;
+	std::fill(path_nodes, path_nodes + size, PathNode(-1, -1, iPoint(-1, -1), nullptr));
 
-	if (IsWalkable(map_origin) && IsWalkable(map_goal))
-	{
+	
 		if (IsWalkable(map_origin) && IsWalkable(map_goal))
 		{
 			ret = 1;
@@ -164,7 +173,7 @@ int j1Pathfinding::CreatePath(Node * start, Node * goal)
 				}
 			}
 		}
-	}
+	
 	return ret;
 
 }
@@ -173,19 +182,23 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 {
 	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
 	iPoint map_goal = App->map->WorldToMap(destination.x, destination.y);
-	SetMap(cluster_abstraction->width, cluster_abstraction->height, cluster_abstraction->logic_map);
-	
 
+	SetMapLimits(0, 0, width, height);
+	/*
 	if (!IsWalkable(map_origin) || !IsWalkable(map_goal) || map_origin == map_goal);
 	{
 		return nullptr;
 	}
+	*/
 
 	Node* start = nullptr;
 	Node* goal = nullptr;
 
 	start = cluster_abstraction->PutNode(map_origin);
 	goal = cluster_abstraction->PutNode(map_goal);
+
+	SetMapLimits(0, 0, width, height);
+
 	if (start->GetClusterId() == goal->GetClusterId()) 
 	{
 		CreatePath(start, goal);
@@ -196,7 +209,6 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 			path->push_back(App->map->MapToWorld(last_path[i].x, last_path[i].y));
 		}
 		
-		//std::reverse(path->begin(), path->end());
 
 		//Return the built path
 		return path;

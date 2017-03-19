@@ -51,8 +51,10 @@ ClusterAbstraction::ClusterAbstraction(j1Map * m, uint clusterSize):clusterSize(
 {
 	j1Timer ptimer;
 	uchar* data = nullptr;
-	if (m->CreateWalkabilityMap(width, height, &data))
+	if (m->CreateWalkabilityMap(width, height, &data)) {
 		SetMap(width, height, data);
+		App->pathfinding->SetMap(width, height, data);
+	}
 	LOG("SetMap %f", ptimer.ReadSec());
 	ptimer.Start();
 	CreateClusters();
@@ -267,7 +269,7 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 	Cluster& cluster= FindClusterID(pos);
 
 	int check_num = NodeExist(cluster, pos.x, pos.y, &graph);
-	int node_num = 0;
+	int node_num = check_num;
 	if (check_num == -1) {
 		Node* node = new Node();
 		node->SetPosition(pos.x , pos.y);
@@ -278,7 +280,6 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 		
 		std::vector<Node*> temp_nodes;
 		int map_size = cluster.GetHeight()*cluster.GetWidth();
-		uchar* temp_map = new uchar[map_size];
 
 		int x = 0;
 		int y = 0;
@@ -290,25 +291,23 @@ Node * ClusterAbstraction::PutNode(const iPoint& pos)
 		Node* conector_node = nullptr;
 		for (int i = cluster_pos_y; i < (cluster_pos_y + cluster_height); i++)
 		{
-			x = 0;
-			for (int j = cluster_pos_x; j < (cluster_pos_x + cluster_width); j++)
+			for (int j = cluster_pos_x; j <(cluster_pos_x + cluster_width); j++)
 			{
-				temp_map[(y*cluster_width + x)] = GetValueMap(j, i);
 				node_number = NodeExist(cluster, j, i, &graph);
 				if (node_number != -1) {
+					
 					Node* tmp_node = new Node();
-					tmp_node->SetPosition(x, y);
+					tmp_node->SetPosition(j, i);
 					tmp_node->nodeNum = node_number;
 					temp_nodes.push_back(tmp_node);
-					if (tmp_node->nodeNum == node_num) {
+					if (node_number == node_num) {
 						conector_node = tmp_node;
 					}
 				}
-				x++;
 			}
-			y++;
 		}
-		App->pathfinding->SetMap(cluster_width, cluster_height, temp_map);
+
+		App->pathfinding->SetMapLimits(cluster_pos_x, cluster_pos_y, cluster_width, cluster_height);
 
 		int distance = -1;
 		int node_size = temp_nodes.size();
@@ -541,46 +540,31 @@ void ClusterAbstraction::SetNodesOnClusters(Graph* graph)
 void ClusterAbstraction::CreateIntraEdges(Graph * graph)
 {
 	int new_size = clusterSize*clusterSize;
-	uchar* temp_map = new uchar[new_size];
 	std::vector<Node*> temp_nodes;
 
 	for (int i = 0; i < clusters.size(); i++)
 	{
 		Cluster& item = clusters[i];
 		int map_size = item.GetHeight()*item.GetWidth();
-
-		if (new_size != map_size) {
-			delete[] temp_map;
-			new_size = map_size;
-			temp_map = new uchar[new_size];
-		}
-		
-
-		int x = 0;
-		int y = 0;
 		int node_number = 0;
-	//	LOG("cluster %i", i);
 		int cluster_pos_y = item.GetPosisitionY(), cluster_pos_x = item.GetPosisitionX();
 		int cluster_height = item.GetHeight(), cluster_width = item.GetWidth();
 
 		for (int i = cluster_pos_y; i < (cluster_pos_y + cluster_height); i++)
 		{
-			x = 0;
 			for (int j = cluster_pos_x; j <(cluster_pos_x + cluster_width); j++)
 			{
-				temp_map[(y*cluster_width + x)] = GetValueMap(j, i);
 				node_number = NodeExist(item, j, i, graph);
 				if (node_number != -1) {
 					Node* tmp_node = new Node();
-					tmp_node->SetPosition(x, y);
+					tmp_node->SetPosition(j,i);
 					tmp_node->nodeNum = node_number;
 					temp_nodes.push_back(tmp_node);
 				}
-				x++;
 			}
-			y++;
 		}
-		App->pathfinding->SetMap(cluster_width, cluster_height, temp_map);
+
+		App->pathfinding->SetMapLimits(cluster_pos_x, cluster_pos_y, cluster_width, cluster_height);
 
 		int distance=-1;
 		int node_size = temp_nodes.size();
@@ -609,7 +593,7 @@ void ClusterAbstraction::CreateIntraEdges(Graph * graph)
 		temp_nodes.clear();
 
 	}
-
+	
 }
 int ClusterAbstraction::CreateBFS(Node * from, Node * to)
 {
@@ -727,6 +711,7 @@ int ClusterAbstraction::CreateBFS(Node * from, Node * to)
 			set_goal = set_goal->GetTrackBack();
 		}
 		best_path.push_back(set_goal);
+		std::reverse(best_path.begin(), best_path.end());
 		ret = best_path.size();
 	}
 	return ret;

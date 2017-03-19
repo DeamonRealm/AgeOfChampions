@@ -23,6 +23,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 	void SetMap(uint width, uint height, uchar*& data);
+	void SetMapLimits(int position_x, int position_y, int width, int height);
 	uchar GetValueMap(int x, int y) const;
 	PathNode* GetPathNode(int x, int y);
 private:
@@ -30,6 +31,10 @@ private:
 	PathNode* path_nodes=nullptr;
 	int width=0;
 	int height=0;
+	int map_min_x = 0;
+	int map_min_y = 0;
+	int map_max_x = 0;
+	int map_max_y = 0;
 	//A pointer to the last path generated
 	std::vector<iPoint> last_path;
 	//Map cluster abstraction
