@@ -43,7 +43,10 @@ void j1Pathfinding::SetMap(uint width, uint height, uchar *& data)
 {
 	this->width = width;
 	this->height = height;
-
+	map_min_x = 0;
+	map_min_y = 0;
+	map_max_x = width;
+	map_max_y = height;
 	RELEASE_ARRAY(logic_map);
 	RELEASE_ARRAY(path_nodes);
 	int size = width*height;
