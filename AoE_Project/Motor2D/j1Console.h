@@ -34,7 +34,8 @@ private:
 	UI_Text_Box*			console_input_box;
 
 	UI_Scroll*				console_labels_scroll;
-	std::vector<UI_String*>	console_labels;
+	std::list<UI_String*>	console_labels;
+	uint					lables_limit = 25;
 	bool					can_texturize_strings = false;
 	
 	std::vector<Cvar*>		console_variables;

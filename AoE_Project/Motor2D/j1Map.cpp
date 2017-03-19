@@ -496,11 +496,11 @@ bool j1Map::LoadMap()
 		uint fails = 0;
 		j1Timer timer;
 		// Set map draw quad tree area
-		int v_x = ((data.width) * data.tile_width - data.width) * -0.5;
-		int v_y = 0;
-		int v_w = data.width * data.tile_width;
-		int v_h = data.height * data.tile_height + (data.width + data.height);
-		map_quadtree.SetBoundaries({ v_x,v_y,v_w,v_h });
+		map_area.x = ((data.width) * data.tile_width - data.width) * -0.5;
+		map_area.y = 0;
+		map_area.w = data.width * data.tile_width;
+		map_area.h = data.height * data.tile_height + (data.width + data.height);
+		map_quadtree.SetBoundaries(map_area);
 		map_quadtree.SetMaxObjects(10);
 
 		//Fill the draw quad tree with all the tiles coordinates

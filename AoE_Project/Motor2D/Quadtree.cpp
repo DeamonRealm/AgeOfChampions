@@ -19,30 +19,20 @@ AABB::~AABB()
 			delete children[i];
 }
 
-void AABB::Draw() const
+void AABB::Draw(const SDL_Color& color) const
 {
-	App->render->DrawQuad(aabb, 255, 255, 255, 255, false);
+	App->render->DrawQuad(aabb, color.r, color.g, color.b, color.a, false);
+
 	for (uint k = 0; k < NODE_SUBDIVISION; k++)
 	{
 		if (children[k] != nullptr)
 		{
-			children[k]->Draw();
+			children[k]->Draw(color);
 		}
 	}
 }
 
 //Functionality =======================
-bool AABB::Contains(const iPoint* point) const
-{
-	SDL_Point p = { point->x,point->y };
-	return SDL_PointInRect(&p, &aabb);
-}
-
-bool AABB::Intersects(const AABB* target) const
-{
-	return SDL_HasIntersection(&aabb, &target->aabb);
-}
-
 bool AABB::Insert(iPoint * new_point)
 {
 	// If new point is not in the quad-tree AABB, return
@@ -181,6 +171,11 @@ void QuadTree::SetMaxObjects(uint max)
 	root->max_objects = max;
 }
 
+void QuadTree::SetDebugColor(const SDL_Color & new_color)
+{
+	color = new_color;
+}
+
 bool QuadTree::Insert(iPoint* newpoint)
 {
 	if (root != NULL)
@@ -192,7 +187,7 @@ bool QuadTree::Insert(iPoint* newpoint)
 
 void QuadTree::Draw() const
 {
-	root->Draw();
+	root->Draw(color);
 }
 
 int QuadTree::CollectCandidates(std::vector<iPoint*>& nodes, const SDL_Rect & r) const

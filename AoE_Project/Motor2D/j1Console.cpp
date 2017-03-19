@@ -132,11 +132,14 @@ bool j1Console::CleanUp()
 	{
 		delete console_variables[k];
 	}
-	uint labels_count = console_labels.size();
-	for (uint k = 0; k < labels_count; k++)
+
+	std::list<UI_String*>::const_iterator label = console_labels.begin();
+	while (label != console_labels.end())
 	{
-		delete console_labels[k];
+		delete label._Ptr->_Myval;
+		label++;
 	}
+
 	delete console_input_box;
 	delete console_labels_scroll;
 
@@ -231,6 +234,7 @@ void j1Console::ChangeConsoleState()
 		App->gui->ItemSelected = console_input_box;
 		console_input_box->Activate();
 		console_labels_scroll->Activate();
+		GoScrollBottom();
 	}
 	else
 	{
@@ -405,16 +409,20 @@ bool j1Console::AutoCompleteInputBox(char* input)
 //Console Output ----------------------------
 void j1Console::AddConsoleText(char* new_text)
 {
+	/*if (console_labels.size() == lables_limit)
+	{
+		delete console_labels.front();
+		console_labels.pop_front();
+		if (can_texturize_strings)
+		{
+			console_labels_scroll->PopFrontItem();
+		}
+	}*/
 	UI_String* label = new UI_String({ 0,0,0,0 }, new_text, font_color, font);
-	if (!can_texturize_strings)
+	console_labels.push_back(label);
+	if (can_texturize_strings)
 	{
-		console_labels.push_back(label);
-	}
-	else
-	{
-		console_labels.push_back(label);
 		UpdateConsoleLabels();
-		console_labels_scroll->GoBottom();
 	}
 }
 
@@ -427,6 +435,16 @@ char * j1Console::GenerateConsoleLabel(char * new_text,...)
 	vsprintf_s(tmp_string, 1000, new_text, ap);
 	va_end(ap);
 
+	/*if (console_labels.size() == lables_limit)
+	{
+		delete console_labels.front();
+		console_labels.pop_front();
+		if (can_texturize_strings)
+		{
+			console_labels_scroll->PopFrontItem();
+		}
+	}*/
+
 	UI_String* label = new UI_String({ 0,0,0,0 }, tmp_string, font_color, font);
 	console_labels.push_back(label);
 	UpdateConsoleLabels();
@@ -438,17 +456,25 @@ void j1Console::UpdateConsoleLabels()
 {
 	uint labels_num = console_labels.size();
 	uint scroll_labels_num = console_labels_scroll->GetScrollItemsNum();
+	
 	if (scroll_labels_num)scroll_labels_num--;
 
 	if (scroll_labels_num == labels_num)return;
 	
-	for (uint k = scroll_labels_num; k < labels_num; k++)
+	std::list<UI_String*>::const_iterator label = console_labels.begin();
+	uint index = 0;
+	while (label != console_labels.end())
 	{
-		console_labels_scroll->AddScrollItemAtBottom(console_labels.at(k));
-		console_labels[k]->SetFont(font);
-		console_labels[k]->SetColor(font_color);
-		console_labels[k]->GenerateTexture();
-		console_labels[k]->AdjustBox();
+		if (index >= scroll_labels_num)
+		{
+			console_labels_scroll->AddScrollItemAtBottom(label._Ptr->_Myval);
+			label._Ptr->_Myval->SetFont(font);
+			label._Ptr->_Myval->SetColor(font_color);
+			label._Ptr->_Myval->GenerateTexture();
+			label._Ptr->_Myval->AdjustBox();
+		}
+		index++;
+		label++;
 	}
 }
 

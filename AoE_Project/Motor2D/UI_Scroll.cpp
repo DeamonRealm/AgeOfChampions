@@ -302,6 +302,12 @@ void UI_Scroll::AddScrollItemAtBottom(UI_Element * new_item)
 	this->Items_location.push_back(iPoint(new_item->GetBox()->x, new_item->GetBox()->y));
 }
 
+void UI_Scroll::PopFrontItem()
+{
+	Items_location.pop_back();
+	Items.pop_front();
+}
+
 uint UI_Scroll::GetScrollItemsNum() const
 {
 	return uint(Items.size());

@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "BaseEntities.h"
 #include "Units.h"
+#include "Quadtree.h"
 
 class j1EntitiesManager : public j1Module
 {
@@ -37,8 +38,11 @@ private:
 
 	//Lists of current game entities
 	std::list<Unit*>		units;
+	QuadTree				units_quadtree;
 	std::list<Resource*>	resources;
+	QuadTree				resources_quadtree;
 	std::list<Building*>	buildings;
+	QuadTree				buildings_quadtree;
 
 	//Vector where all the killed/destroyed entities are placed
 	std::vector<Entity*>	wasted_units;

@@ -14,7 +14,7 @@ UI_Element::UI_Element() : box({0,0,0,0}), ui_type(UNDEFINED), IsActive(false), 
 //Destructor
 UI_Element::~UI_Element()
 {
-
+	CleanUpChilds();
 }
 
 

@@ -73,6 +73,7 @@ public:
 
 	void		AddScrollItem(UI_Element* new_item);
 	void		AddScrollItemAtBottom(UI_Element* new_item);
+	void		PopFrontItem();
 	uint		GetScrollItemsNum()const;
 	UI_Element*	GetScrollItem(uint index);
 
