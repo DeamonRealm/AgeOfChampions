@@ -38,11 +38,9 @@ private:
 
 	//Lists of current game entities
 	std::list<Unit*>		units;
-	QuadTree<Unit*>			units_quadtree;
 	std::list<Resource*>	resources;
-	QuadTree<Resource*>		resources_quadtree;
 	std::list<Building*>	buildings;
-	QuadTree<Building*>		buildings_quadtree;
+
 
 	//Vector where all the killed/destroyed entities are placed
 	std::vector<Entity*>	wasted_units;
@@ -64,6 +62,11 @@ private:
 	bool		CivilizationCheck(char* civs_str, const char* chosen_civ);
 
 public:
+
+	//Entities Quad Trees to help other modules work with enetities
+	m_QuadTree<Unit*>			units_quadtree;
+	m_QuadTree<Resource*>		resources_quadtree;
+	m_QuadTree<Building*>		buildings_quadtree;
 
 	//Functionality -------------------
 	//Load all chosen civilization data

@@ -301,8 +301,7 @@ bool Unit::Move()
 	float y_step = speed * (goal.y - location.y) / norm;
 
 	//Add the calculated values at the unit & mark position
-	position.x += x_step;
-	position.y += y_step;
+	SetPosition(position.x + x_step, position.y += y_step);
 	mark.SetPosition(iPoint(position.x,position.y));
 
 	return true;
@@ -396,11 +395,18 @@ void Unit::AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence)
 //Set Methods -----
 void Unit::SetPosition(float x, float y)
 {
+	//Extract the units to push it with the new position later
+	App->entities_manager->units_quadtree.Exteract(&iPoint(position.x, position.y));
+
 	//Set unit position
 	position.x = x;
 	position.y = y;
+	
 	//Set unit mark position
 	mark.SetPosition(iPoint( x, y ));
+
+	//Add the unit with the correct position in the correct quad tree
+	App->entities_manager->units_quadtree.Insert(this, &iPoint(position.x,position.y));
 }
 
 void Unit::SetUnitType(UNIT_TYPE type)
@@ -743,6 +749,9 @@ void Resource::SetPosition(float x, float y)
 
 	//Set building mark position
 	mark.SetPosition(iPoint(position.x, position.y));
+
+	//Add Resource at the correct quad tree
+	App->entities_manager->resources_quadtree.Insert(this, &iPoint(position.x, position.y));
 }
 
 void Resource::SetMark(const Rectng & rectangle)
@@ -907,6 +916,9 @@ void Building::SetPosition(float x, float y)
 
 	//Set building mark position
 	mark.SetPosition(iPoint(position.x, position.y));
+
+	//Add building at the correct quad tree
+	App->entities_manager->buildings_quadtree.Insert(this, &iPoint(position.x, position.y));
 }
 
 void Building::SetMark(const Rectng& rectangle)

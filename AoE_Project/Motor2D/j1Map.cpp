@@ -8,6 +8,7 @@
 #include "j1Textures.h"
 #include "j1Window.h"
 #include "j1Timer.h"
+#include "j1EntitiesManager.h"
 
 #include <math.h>
 
@@ -154,7 +155,7 @@ void j1Map::Draw(bool debug)
 			App->render->DrawLine(init.x, init.y + tile_h_2, end.x, end.y + tile_h_2, 0, 250, 0);
 		}
 
-		map_quadtree.Draw();
+		//map_quadtree.Draw();
 	}
 }
 
@@ -494,11 +495,20 @@ bool j1Map::LoadMap()
 
 		uint fails = 0;
 		j1Timer timer;
-		// Set map draw quad tree area
+
+		//Define map area 
+		SDL_Rect map_area;
 		map_area.x = ((data.width) * data.tile_width - data.width) * -0.5;
 		map_area.y = 0;
 		map_area.w = data.width * data.tile_width;
 		map_area.h = data.height * data.tile_height + (data.width + data.height);
+		
+		// Determine other modules quad trees map area 
+		App->entities_manager->units_quadtree.SetBoundaries(map_area);
+		App->entities_manager->buildings_quadtree.SetBoundaries(map_area);
+		App->entities_manager->resources_quadtree.SetBoundaries(map_area);
+
+		// Set map draw quad tree area
 		map_quadtree.SetBoundaries(map_area);
 		map_quadtree.SetMaxObjects(10);
 

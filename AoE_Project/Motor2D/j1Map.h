@@ -151,7 +151,6 @@ public:
 
 	//Class that allocate all the map data
 	MapData data;
-	SDL_Rect map_area = { 0,0,0,0 };
 
 	//Unload Current map
 	bool UnLoadMap();

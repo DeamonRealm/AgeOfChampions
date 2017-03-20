@@ -43,13 +43,12 @@ bool j1EntitiesManager::Start()
 	App->console->AddCommand("generate_unit", App->entities_manager);
 
 	//Built entities quad trees
-	units_quadtree.SetBoundaries(App->map->map_area);
 	units_quadtree.SetMaxObjects(5);
 	units_quadtree.SetDebugColor({ 255,0,255,255 });
-	resources_quadtree.SetBoundaries(App->map->map_area);
 	resources_quadtree.SetMaxObjects(8);
-	buildings_quadtree.SetBoundaries(App->map->map_area);
+	units_quadtree.SetDebugColor({ 0,255,255,255 });
 	buildings_quadtree.SetMaxObjects(3);
+	units_quadtree.SetDebugColor({ 255,255,0,255 });
 
 	return ret;
 }
@@ -98,6 +97,11 @@ bool j1EntitiesManager::Draw() const
 	{
 		ret = building_item._Ptr->_Myval->Draw(App->debug_mode);
 		building_item++;
+	}
+
+	if (App->debug_mode)
+	{
+		units_quadtree.Draw();
 	}
 
 	return ret;

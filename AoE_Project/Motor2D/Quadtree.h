@@ -21,6 +21,10 @@ struct TreeItem
 	iPoint location = { 0,0 };
 	DATA_TYPE data = NULL;
 
+	bool operator == (const TreeItem& target)
+	{
+		return (location == location && data == data);
+	}
 };
 /// ---------------------------------------------
 
@@ -261,44 +265,61 @@ public:
 
 	bool Extract(const iPoint* loc)
 	{
-		// If new point is not in the quad-tree AABB, return
-		SDL_Point p = { loc->x,loc->y };
-		if (!SDL_PointInRect(&p, &aabb))
-		{
-			return false;
-		}
+		bool found = false;
 
 		if (full)
 		{
 			for (uint i = 0; i < NODE_SUBDIVISION; i++)
 			{
-				if (children[i]->Extract(loc))
+				if (children[i]->full)
 				{
-					return true;
+					if (children[i]->Extract(loc))
+					{
+						found = true;
+						break;
+					}
+				}
+				else
+				{
+					std::list<TreeItem<DATA_TYPE>>::iterator object = children[i]->objects.begin();
+					while (object != children[i]->objects.end())
+					{
+						if (object._Ptr->_Myval.location == *loc)
+						{
+							children[i]->objects.remove(object._Ptr->_Myval);
+							found = true;
+							break;
+						}
+						object++;
+					}
 				}
 			}
-			return false;
+			if (found)
+			{
+				uint total_size = 0;
+				for (uint i = 0; i < NODE_SUBDIVISION; i++)
+				{
+					total_size += children[i]->objects.size();
+				}
+				if (total_size < max_objects)
+				{
+					Fuse();
+				}
+				return true;
+			}
 		}
-
-		// If in this node there is space for the point, pushback it
 		else
 		{
-			std::list<TreeItem<DATA_TYPE>>::const_iterator object = objects.begin();
+			std::list<TreeItem<DATA_TYPE>>::iterator object = objects.begin();
 			while (object != objects.end())
 			{
-				if (object._Ptr->_MyVal.location == pos)
+				if (object._Ptr->_Myval.location == *loc)
 				{
-					objects.remove(object._Ptr->_MyVal);
-					return object._Ptr->_MyVal.data;
+					objects.remove(object._Ptr->_Myval);
+					return true;
 				}
 				object++;
 			}
-			
-			if (size < max_objects && full)
-			{
-				//Fuse();
-			}
-			return true;
 		}
 
 		return false;
@@ -312,41 +333,49 @@ public:
 
 		//Calculate new AABB center for each child
 		qCentre = { aabb.x,aabb.y };
-		children[0] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
+		children[0] = new m_AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
 		children[0]->root = this;
 
 
 		qCentre = { aabb.x + qSize.x,aabb.y };
-		children[1] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
+		children[1] = new m_AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
 		children[1]->root = this;
 
 		qCentre = { aabb.x,aabb.y + qSize.y };
-		children[2] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
+		children[2] = new m_AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
 		children[2]->root = this;
 
 		qCentre = { aabb.x + qSize.x,aabb.y + qSize.y };
-		children[3] = new AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
+		children[3] = new m_AABB({ qCentre.x,qCentre.y,qSize.x,qSize.y }, max_objects);
 		children[3]->root = this;
 
-		for (uint h = 0; h < max_objects; h++)
+
+		std::list<TreeItem<DATA_TYPE>>::const_iterator object = objects.begin();
+		while (object != objects.end())
 		{
-			for (uint k = 0; k < NODE_SUBDIVISION; k++)
+			for (uint h = 0; h < NODE_SUBDIVISION; h++)
 			{
-				if (children[k]->Insert(objects[h].data, &objects[h].location)) break;
+				if (children[h]->Insert(object._Ptr->_Myval.data, &object._Ptr->_Myval.location))break;
 			}
+			object++;
 		}
 		objects.clear();
 	}
 
 	void Fuse()
 	{
-		if (full)
+		for (uint k = 0; k < NODE_SUBDIVISION; k++)
 		{
-			for (uint k = 0; k < NODE_SUBDIVISION; k++)
+			std::list<TreeItem<DATA_TYPE>>::const_iterator object = children[k]->objects.begin();
+			while (object != objects.end())
 			{
-
+				objects.push_back(object._Ptr->_Myval);
 			}
+			children[k]->objects.clear();
+			delete children[k];
+			children[k] = nullptr;
 		}
+
 	}
 
 	int CollectCandidates(std::vector<DATA_TYPE>& nodes, const SDL_Rect& rect)
@@ -381,7 +410,7 @@ public:
 /// ---------------------------------------------
 
 /// Class QuadTree ------------------------------
-// This class contains all the tree information & functionality
+// This class contains all the tree information & functionality (not mutable)
 template <class DATA_TYPE>
 class QuadTree
 {
@@ -460,6 +489,96 @@ public:
 	}
 
 };
+/// ---------------------------------------------
 
+/// Class m_QuadTree ----------------------------
+// This class contains all the tree information & functionality (mutable)
+template <class DATA_TYPE>
+class m_QuadTree
+{
+public:
+
+	//Constructors ========================
+	m_QuadTree(const SDL_Rect& rect = { 0,0,0,0 }, uint max_objects = 0)
+	{
+		SetBoundaries(rect);
+	}
+
+	//Destructors =========================
+	~m_QuadTree()
+	{
+		Clear();
+	}
+
+private:
+
+	m_AABB<DATA_TYPE>*		root = nullptr;
+	uint		max_objects = 0;
+	SDL_Color	color = { 255,255,255,255 };
+
+public:
+
+	// Functionality =======================
+	void SetBoundaries(const SDL_Rect& r)
+	{
+		if (root != NULL)
+			delete root;
+
+		root = new m_AABB<DATA_TYPE>(r, max_objects);
+	}
+
+	void SetMaxObjects(uint max)
+	{
+		max_objects = max;
+		root->max_objects = max;
+	}
+
+	void SetDebugColor(const SDL_Color& new_color)
+	{
+		color = new_color;
+	}
+
+	bool Insert(DATA_TYPE data, const iPoint* newpoint)
+	{
+		if (root != NULL)
+		{
+			return root->Insert(data, newpoint);
+		}
+		return false;
+	}
+
+	bool Exteract(const iPoint* loc)
+	{
+		if (root != NULL)
+		{
+			return root->Extract(loc);
+		}
+		return false;
+	}
+
+	void Draw()const
+	{
+		root->Draw(color);
+	}
+
+	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const SDL_Rect& r) const
+	{
+		int tests = 1;
+
+		if (root != NULL && SDL_HasIntersection(&r, &root->aabb))
+			tests = root->CollectCandidates(nodes, r);
+		return tests;
+	}
+
+	void Clear()
+	{
+		if (root != NULL)
+		{
+			delete root;
+			root = NULL;
+		}
+	}
+
+};
 /// ---------------------------------------------
 #endif // !_QUADTREE_
