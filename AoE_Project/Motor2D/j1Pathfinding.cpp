@@ -34,12 +34,11 @@ bool j1Pathfinding::Start()
 bool j1Pathfinding::CleanUp()
 {
 	delete cluster_abstraction;
-//	RELEASE_ARRAY(logic_map);
-//	RELEASE_ARRAY(path_nodes);
+	RELEASE_ARRAY(path_nodes);
 	return true;
 }
 
-void j1Pathfinding::SetMap(uint width, uint height, uchar *& data)
+void j1Pathfinding::SetMap(uint width, uint height)
 {
 	this->width = width;
 	this->height = height;
@@ -47,13 +46,10 @@ void j1Pathfinding::SetMap(uint width, uint height, uchar *& data)
 	map_min_y = 0;
 	map_max_x = width;
 	map_max_y = height;
-	RELEASE_ARRAY(logic_map);
 	RELEASE_ARRAY(path_nodes);
 	int size = width*height;
-	logic_map = data;
 	path_nodes = new PathNode[size];
 
-	memcpy(logic_map, data, width*height);
 }
 
 void j1Pathfinding::SetMapLimits(int position_x, int position_y, int width, int height)
@@ -93,7 +89,7 @@ uchar j1Pathfinding::GetTileAt(const iPoint & pos) const
 
 uchar j1Pathfinding::GetValueMap(int x, int y) const
 {
-	return logic_map[(y*width) + x];
+	return App->map->logic_map[(y*width) + x];
 }
 
 

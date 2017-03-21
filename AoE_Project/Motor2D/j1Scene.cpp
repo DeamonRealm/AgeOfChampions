@@ -98,8 +98,8 @@ bool j1Scene::Update(float dt)
 		uint height = 0;
 		uchar* logic_map = nullptr;
 		j1Timer ptimer;
-		App->map->CreateWalkabilityMap(width, height, &logic_map);
-		App->pathfinding->SetMap(width, height, logic_map);
+		App->map->CreateWalkabilityMap(width, height );
+		App->pathfinding->SetMap(width, height);
 		//App->pathfinding->InitClusterAbstraction();
 		LOG("TIME %f", ptimer.ReadSec());
 	}

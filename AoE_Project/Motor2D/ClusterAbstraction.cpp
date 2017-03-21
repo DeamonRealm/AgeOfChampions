@@ -37,12 +37,7 @@ int Cluster::GetClusterId()
 {
 	return id;
 }
-void Cluster::SetClusterMap(uchar* data)
-{
-	RELEASE_ARRAY(logic_cluster_map);
-	logic_cluster_map = new uchar[width*height];
-	memcpy(logic_cluster_map, data, width*height);
-}
+
 void Cluster::AddNode(int get) 
 {
 	nodes.push_back(get);
@@ -51,9 +46,9 @@ ClusterAbstraction::ClusterAbstraction(j1Map * m, uint clusterSize):clusterSize(
 {
 	j1Timer ptimer;
 	uchar* data = nullptr;
-	if (m->CreateWalkabilityMap(width, height, &data)) {
-		SetMap(width, height, data);
-		App->pathfinding->SetMap(width, height, data);
+	if (m->CreateWalkabilityMap(width, height)) {
+		SetMap(width, height);
+		App->pathfinding->SetMap(width, height);
 	}
 	LOG("SetMap %f", ptimer.ReadSec());
 	ptimer.Start();
@@ -73,7 +68,6 @@ ClusterAbstraction::ClusterAbstraction(j1Map * m, uint clusterSize):clusterSize(
 
 ClusterAbstraction::~ClusterAbstraction()
 {
-	RELEASE_ARRAY(logic_map);
 	clusters.clear();
 	best_path.clear();
 	entrys.clear();
@@ -108,16 +102,12 @@ void ClusterAbstraction::CreateClusters()
 }
 uchar ClusterAbstraction::GetValueMap(int x, int y)
 {
-	return logic_map[(y*width)+x];
+	return App->map->logic_map[(y*width)+x];
 }
-void ClusterAbstraction::SetMap(uint width, uint height, uchar* data)
+void ClusterAbstraction::SetMap(uint width, uint height)
 {
 	this->width = width;
 	this->height = height;
-
-	RELEASE_ARRAY(logic_map);
-	logic_map = new uchar[width*height];
-	memcpy(logic_map, data, width*height);
 }
 
 void ClusterAbstraction::AddCluster(Cluster add)
@@ -183,7 +173,7 @@ bool ClusterAbstraction::CheckBoundaries(const iPoint& pos) const
 uchar ClusterAbstraction::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
-		return logic_map[(pos.y*width) + pos.x];
+		return App->map->logic_map[(pos.y*width) + pos.x];
 
 	return INVALID_WALK_CODE;
 }

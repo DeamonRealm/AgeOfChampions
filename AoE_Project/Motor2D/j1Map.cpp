@@ -32,12 +32,12 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-bool j1Map::CreateWalkabilityMap(uint& width, uint & height, uchar** buffer) 
+bool j1Map::CreateWalkabilityMap(uint& width, uint & height) 
 {
 	if (navigation_layer == nullptr)return false;
 
-	uchar* map = new uchar[navigation_layer->width*navigation_layer->height];
-	memset(map, 1, navigation_layer->width*navigation_layer->height);
+	logic_map = new uchar[navigation_layer->width*navigation_layer->height];
+	memset(logic_map, 1, navigation_layer->width*navigation_layer->height);
 
 	for (int y = 0; y < data.height; ++y)
 	{
@@ -51,14 +51,13 @@ bool j1Map::CreateWalkabilityMap(uint& width, uint & height, uchar** buffer)
 			if (tileset != NULL)
 			{
 
-				if (tile_id == 29)map[i] = 0;
-				else map[i] = 1;
+				if (tile_id == 18)logic_map[i] = 0;
+				else logic_map[i] = 1;
 
 			}
 		}
 	}
 
-	*buffer = map;
 	width = data.width;
 	height = data.height;
 

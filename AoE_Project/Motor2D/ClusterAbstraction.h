@@ -105,7 +105,6 @@ public:
 	int GetWidth();
 	int GetHeight();
 	int GetClusterId();
-	void SetClusterMap(uchar* data);
 	void AddNode(int get);
 private:
 
@@ -117,7 +116,6 @@ private:
 	int						column = 0;
 	int						id=0;
 	std::vector<int>		nodes;
-	uchar*					logic_cluster_map = nullptr;
 
 };
 
@@ -160,7 +158,7 @@ public:
 
 	//Map extraction
 	uchar GetValueMap(int x, int y);
-	void SetMap(uint width, uint height, uchar* data);
+	void SetMap(uint width, uint height);
 	bool IsWalkable(int x, int y) const;
 	bool CheckBoundaries(const iPoint& pos) const;
 	uchar GetTileAt(const iPoint& pos) const;
@@ -205,7 +203,6 @@ public:
 
 
 	//This only works with a single level of terrain in case we have more than one unit size we will have to add a vector map
-	uchar* logic_map = nullptr;
 	int maxColumn = 0;
 	int maxRow = 0;
 

@@ -155,7 +155,7 @@ public:
 	//Unload Current map
 	bool UnLoadMap();
 	//Generate walkability map from map tiles id
-	bool CreateWalkabilityMap(uint& width, uint & height, uchar** buffer);
+	bool CreateWalkabilityMap(uint& width, uint & height);
 	//Generate walkability cost map from map tiles id
 	bool CreateWalkCostMap(int& width, int& height, uchar** buffer)const;
 	//Get Movement cost from x y coordinates
@@ -174,9 +174,9 @@ public:
 	iPoint FixPointMap(int x, int y);
 	//Calculate the tiles that are in camera
 	void CalculateTilesInView();
+	uchar*				logic_map = nullptr;
 
 private:
-
 	QuadTree<iPoint>	map_quadtree;
 	std::vector<iPoint> points_in_view;
 	MapLayer*			draw_layer = nullptr;

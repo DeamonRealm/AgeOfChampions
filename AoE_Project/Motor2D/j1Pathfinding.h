@@ -22,12 +22,11 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-	void SetMap(uint width, uint height, uchar*& data);
+	void SetMap(uint width, uint height);
 	void SetMapLimits(int position_x, int position_y, int width, int height);
 	uchar GetValueMap(int x, int y) const;
 	PathNode* GetPathNode(int x, int y);
 private:
-	uchar* logic_map=nullptr;
 	PathNode* path_nodes=nullptr;
 	int width=0;
 	int height=0;
