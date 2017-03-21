@@ -209,7 +209,7 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
-iPoint j1Map::MapToWordCenter(int x, int y)
+iPoint j1Map::MapToWorldCenter(int x, int y)
 {
 	iPoint ret = MapToWorld(x,y);
 
@@ -302,6 +302,16 @@ void j1Map::CalculateTilesInView()
 	points_in_view.clear();
 	SDL_Rect viewport = { -App->render->camera.x - data.tile_width, -App->render->camera.y, App->render->camera.w + data.tile_width * 2, App->render->camera.h - data.tile_height * 3 };
 	map_quadtree.CollectCandidates(points_in_view, viewport);
+}
+
+void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint element_height)
+{
+	iPoint map_position = WorldCenterToMap(position.x, position.y);
+	for (int i = map_position.y; i < map_position.y+element_height-1; i++) {
+		for (int j = map_position.x; j < map_position.x+element_width-1; j++) {
+			logic_map[i*data.width + j] = 0;
+		}
+	}
 }
 
 SDL_Rect TileSet::GetTileRect(int id) const
@@ -516,7 +526,7 @@ bool j1Map::LoadMap()
 		{
 			for (uint x = 0; x < data.width; x++)
 			{
-				iPoint loc = MapToWordCenter(x, y);
+				iPoint loc = MapToWorldCenter(x, y);
 				if (!map_quadtree.Insert(iPoint(x, y) , &loc)) fails++;
 			}
 		}

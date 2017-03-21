@@ -165,7 +165,7 @@ public:
 	//Transform map coordinates to world coordinates
 	iPoint MapToWorld(int x, int y) const;
 	//Transform map coordinates to word coordinates (in tile center)
-	iPoint MapToWordCenter(int x, int y);
+	iPoint MapToWorldCenter(int x, int y);
 	//Transform world coordinates to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 	//Transform world coordinates to map coordinates (in tile center
@@ -174,6 +174,8 @@ public:
 	iPoint FixPointMap(int x, int y);
 	//Calculate the tiles that are in camera
 	void CalculateTilesInView();
+	//Change walkability in target tiles
+	void ChangeLogicMap(const iPoint& position, uint width, uint height);
 	uchar*				logic_map = nullptr;
 
 private:
