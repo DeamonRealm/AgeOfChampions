@@ -148,16 +148,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
 
       <direction enum="north">
-        <sprite n="monk_die/040_monk_die.bmp" x="438" y="300" w="33" h="52" pX="0.727273" pY="0.480769"/>
-        <sprite n="monk_die/041_monk_die.bmp" x="473" y="300" w="28" h="49" pX="0.535714" pY="0.897959"/>
-        <sprite n="monk_die/042_monk_die.bmp" x="503" y="300" w="28" h="48" pX="0.535714" pY="0.895833"/>
-        <sprite n="monk_die/043_monk_die.bmp" x="533" y="300" w="32" h="50" pX="0.59375" pY="0.96"/>
-        <sprite n="monk_die/044_monk_die.bmp" x="567" y="300" w="32" h="52" pX="0.53125" pY="0.961538"/>
-        <sprite n="monk_die/045_monk_die.bmp" x="601" y="300" w="49" h="46" pX="0.693878" pY="0.956522"/>
-        <sprite n="monk_die/046_monk_die.bmp" x="1" y="354" w="52" h="35" pX="0.711538" pY="0.942857"/>
-        <sprite n="monk_die/047_monk_die.bmp" x="55" y="354" w="50" h="31" pX="0.7" pY="0.935484"/>
-        <sprite n="monk_die/048_monk_die.bmp" x="107" y="354" w="59" h="29" pX="0.745763" pY="1"/>
-        <sprite n="monk_die/049_monk_die.bmp" x="168" y="354" w="60" h="29" pX="0.75" pY="1"/>
+            <sprite n="monk_die/040_monk_die.bmp" x="438" y="300" w="33" h="52" pX="0.727273" pY="0.865385"/>
+    <sprite n="monk_die/041_monk_die.bmp" x="473" y="300" w="28" h="49" pX="0.535714" pY="0.897959"/>
+    <sprite n="monk_die/042_monk_die.bmp" x="503" y="300" w="28" h="48" pX="0.535714" pY="0.895833"/>
+    <sprite n="monk_die/043_monk_die.bmp" x="533" y="300" w="32" h="50" pX="0.59375" pY="0.96"/>
+    <sprite n="monk_die/044_monk_die.bmp" x="567" y="300" w="32" h="52" pX="0.53125" pY="0.961538"/>
+    <sprite n="monk_die/045_monk_die.bmp" x="601" y="300" w="49" h="46" pX="0.693878" pY="0.956522"/>
+    <sprite n="monk_die/046_monk_die.bmp" x="1" y="354" w="52" h="35" pX="0.711538" pY="0.942857"/>
+    <sprite n="monk_die/047_monk_die.bmp" x="55" y="354" w="50" h="31" pX="0.7" pY="0.935484"/>
+    <sprite n="monk_die/048_monk_die.bmp" x="107" y="354" w="59" h="29" pX="0.745763" pY="1"/>
+    <sprite n="monk_die/049_monk_die.bmp" x="168" y="354" w="60" h="29" pX="0.75" pY="1"/>
       </direction>
     </action>
 
