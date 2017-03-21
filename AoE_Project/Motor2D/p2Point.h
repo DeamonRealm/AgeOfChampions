@@ -152,6 +152,16 @@ public:
 	{
 		return abs(v.x - x) + abs(v.y - y);
 	}
+
+	// Round ----------------------------------------------
+	p2Point Round()
+	{
+		p2Point point(this->x,this->y);
+		point.x = (point.x > (floor(point.x) + 0.5f)) ? ceil(point.x) : floor(point.x);
+		point.y = (point.y > (floor(point.y) + 0.5f)) ? ceil(point.y) : floor(point.y);
+		return point;
+	}
+
 };
 
 typedef p2Point<int> iPoint;

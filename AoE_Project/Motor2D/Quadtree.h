@@ -364,13 +364,16 @@ public:
 
 	void Fuse()
 	{
+		this->full = false;
 		for (uint k = 0; k < NODE_SUBDIVISION; k++)
 		{
 			std::list<TreeItem<DATA_TYPE>>::const_iterator object = children[k]->objects.begin();
-			while (object != objects.end())
+			while (object != children[k]->objects.end())
 			{
 				objects.push_back(object._Ptr->_Myval);
+				object++;
 			}
+
 			children[k]->objects.clear();
 			delete children[k];
 			children[k] = nullptr;

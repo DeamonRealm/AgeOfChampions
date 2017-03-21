@@ -395,18 +395,24 @@ void Unit::AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence)
 //Set Methods -----
 void Unit::SetPosition(float x, float y)
 {
+	//Round current position
+	iPoint rounded_pos(position.Round().x,position.Round().y);
+
 	//Extract the units to push it with the new position later
-	App->entities_manager->units_quadtree.Exteract(&iPoint(position.x, position.y));
+	App->entities_manager->units_quadtree.Exteract(&rounded_pos);
 
 	//Set unit position
 	position.x = x;
 	position.y = y;
 	
+	//Round new position
+	rounded_pos = iPoint(position.Round().x, position.Round().y);
+
 	//Set unit mark position
-	mark.SetPosition(iPoint( x, y ));
+	mark.SetPosition(rounded_pos);
 
 	//Add the unit with the correct position in the correct quad tree
-	App->entities_manager->units_quadtree.Insert(this, &iPoint(position.x,position.y));
+	App->entities_manager->units_quadtree.Insert(this, &rounded_pos);
 }
 
 void Unit::SetUnitType(UNIT_TYPE type)
