@@ -8,6 +8,7 @@
 
 #include "SDL/include/SDL_rect.h"
 #include "p2Point.h"
+#include "p2Log.h"
 
 /// Class TreeItem ------------------------------
 //Class that contains the data & its location
@@ -22,6 +23,25 @@ struct TreeItem
 	DATA_TYPE data = NULL;
 
 	bool operator == (const TreeItem& target)
+	{
+		return (location == location && data == data);
+	}
+};
+/// ---------------------------------------------
+
+/// Class m_TreeItem ------------------------------
+//Class that contains the data & its location in float for mutable quad tree needs more precision
+template <class DATA_TYPE>
+struct m_TreeItem
+{
+
+	m_TreeItem() {}
+	m_TreeItem(const DATA_TYPE& data, const fPoint& location) : data(data), location(location) {}
+
+	fPoint location = { 0,0 };
+	DATA_TYPE data = NULL;
+
+	bool operator == (const m_TreeItem& target)
 	{
 		return (location == location && data == data);
 	}
@@ -66,12 +86,11 @@ public:
 	{
 		App->render->DrawQuad(aabb, color.r, color.g, color.b, color.a, false);
 
+
+		if (!full)return;
 		for (uint k = 0; k < NODE_SUBDIVISION; k++)
 		{
-			if (children[k] != nullptr)
-			{
-				children[k]->Draw(color);
-			}
+			children[k]->Draw(color);
 		}
 	}
 
@@ -203,7 +222,7 @@ public:
 public:
 
 	SDL_Rect							aabb = { 0,0,0,0 };
-	std::list<TreeItem<DATA_TYPE>>		objects;
+	std::list<m_TreeItem<DATA_TYPE>>	objects;
 	uint								max_objects = 0;
 	bool								full = false;
 	m_AABB*								root = nullptr;
@@ -216,16 +235,27 @@ public:
 	{
 		App->render->DrawQuad(aabb, color.r, color.g, color.b, color.a, false);
 
+		if (!full)return;
+
 		for (uint k = 0; k < NODE_SUBDIVISION; k++)
 		{
-			if (children[k] != nullptr)
-			{
-				children[k]->Draw(color);
-			}
+			children[k]->Draw(color);
 		}
 	}
 
-	bool Insert(DATA_TYPE data, const iPoint* point)
+	uint CountChildrenObjects()const
+	{
+		if (!full)return objects.size();
+
+		uint total_size = 0;
+		for (uint k = 0; k < NODE_SUBDIVISION; k++)
+		{
+			total_size += children[k]->CountChildrenObjects();
+		}
+		return total_size;
+	}
+
+	bool Insert(DATA_TYPE data, const fPoint* point)
 	{
 		// If new point is not in the quad-tree AABB, return
 		SDL_Point p = { point->x,point->y };
@@ -250,7 +280,7 @@ public:
 		uint size = objects.size();
 		if (size < max_objects)
 		{
-			TreeItem<DATA_TYPE> item(data, *point);
+			m_TreeItem<DATA_TYPE> item(data, *point);
 			objects.push_back(item);
 			if (size + 1 == max_objects)
 			{
@@ -263,7 +293,7 @@ public:
 		return false;
 	}
 
-	bool Extract(const iPoint* loc)
+	bool Extract(const fPoint* loc)
 	{
 		bool found = false;
 
@@ -271,6 +301,7 @@ public:
 		{
 			for (uint i = 0; i < NODE_SUBDIVISION; i++)
 			{
+				if (found)break;
 				if (children[i]->full)
 				{
 					if (children[i]->Extract(loc))
@@ -281,12 +312,12 @@ public:
 				}
 				else
 				{
-					std::list<TreeItem<DATA_TYPE>>::iterator object = children[i]->objects.begin();
+					std::list<m_TreeItem<DATA_TYPE>>::iterator object = children[i]->objects.begin();
 					while (object != children[i]->objects.end())
 					{
 						if (object._Ptr->_Myval.location == *loc)
 						{
-							children[i]->objects.remove(object._Ptr->_Myval);
+							children[i]->objects.erase(object);
 							found = true;
 							break;
 						}
@@ -296,12 +327,7 @@ public:
 			}
 			if (found)
 			{
-				uint total_size = 0;
-				for (uint i = 0; i < NODE_SUBDIVISION; i++)
-				{
-					total_size += children[i]->objects.size();
-				}
-				if (total_size < max_objects)
+				if (CountChildrenObjects() < max_objects)
 				{
 					Fuse();
 				}
@@ -310,12 +336,12 @@ public:
 		}
 		else
 		{
-			std::list<TreeItem<DATA_TYPE>>::iterator object = objects.begin();
+			std::list<m_TreeItem<DATA_TYPE>>::iterator object = objects.begin();
 			while (object != objects.end())
 			{
 				if (object._Ptr->_Myval.location == *loc)
 				{
-					objects.remove(object._Ptr->_Myval);
+					objects.erase(object);
 					return true;
 				}
 				object++;
@@ -350,7 +376,7 @@ public:
 		children[3]->root = this;
 
 
-		std::list<TreeItem<DATA_TYPE>>::const_iterator object = objects.begin();
+		std::list<m_TreeItem<DATA_TYPE>>::const_iterator object = objects.begin();
 		while (object != objects.end())
 		{
 			for (uint h = 0; h < NODE_SUBDIVISION; h++)
@@ -367,7 +393,7 @@ public:
 		this->full = false;
 		for (uint k = 0; k < NODE_SUBDIVISION; k++)
 		{
-			std::list<TreeItem<DATA_TYPE>>::const_iterator object = children[k]->objects.begin();
+			std::list<m_TreeItem<DATA_TYPE>>::const_iterator object = children[k]->objects.begin();
 			while (object != children[k]->objects.end())
 			{
 				objects.push_back(object._Ptr->_Myval);
@@ -541,7 +567,7 @@ public:
 		color = new_color;
 	}
 
-	bool Insert(DATA_TYPE data, const iPoint* newpoint)
+	bool Insert(DATA_TYPE data, const fPoint* newpoint)
 	{
 		if (root != NULL)
 		{
@@ -550,7 +576,7 @@ public:
 		return false;
 	}
 
-	bool Exteract(const iPoint* loc)
+	bool Exteract(const fPoint* loc)
 	{
 		if (root != NULL)
 		{

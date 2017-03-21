@@ -153,8 +153,6 @@ void j1Map::Draw(bool debug)
 
 			App->render->DrawLine(init.x, init.y + tile_h_2, end.x, end.y + tile_h_2, 0, 250, 0);
 		}
-
-		//map_quadtree.Draw();
 	}
 }
 

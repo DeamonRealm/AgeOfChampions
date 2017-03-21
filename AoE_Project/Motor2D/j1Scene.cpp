@@ -52,8 +52,8 @@ bool j1Scene::Start()
 
 
 	// Entities Build -------------------------------------
-	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::VILLAGER); ///Don't use VILLAGER_CARRY animations are differently sorted and WILL break the code
-	arbalest->SetPosition(App->map->MapToWorldCenter(0,0).x,App->map->MapToWorldCenter(0,0).y);
+	/*arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::VILLAGER); ///Don't use VILLAGER_CARRY animations are differently sorted and WILL break the code
+	arbalest->SetPosition(App->map->MapToWorldCenter(0,0).x,App->map->MapToWorldCenter(0,0).y);*/
 	/*tree = App->entities_manager->GenerateResource(RESOURCE_TYPE::TREE);
 	tree->SetPosition(130, 650);
 	berry_bush = App->entities_manager->GenerateResource(RESOURCE_TYPE::BERRY_BUSH);
@@ -145,7 +145,7 @@ bool j1Scene::Update(float dt)
 	if(moved)App->map->CalculateTilesInView();
 
 	//Test unit animations --------------
-	fPoint pos = arbalest->GetPosition();
+	/*fPoint pos = arbalest->GetPosition();
 	float speed = 95;
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
@@ -236,7 +236,7 @@ bool j1Scene::Update(float dt)
 	{
 		arbalest->SetPosition(pos.x + -speed * dt, pos.y);
 	}
-
+	*/
 	// ------------------------------------------
 
 	App->map->Draw(App->debug_mode);

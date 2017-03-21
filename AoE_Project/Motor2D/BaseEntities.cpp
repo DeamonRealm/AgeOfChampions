@@ -261,8 +261,7 @@ bool Unit::Move()
 		return false;
 	}
 
-	//Build location & goal path points
-	iPoint location = iPoint(position.x, position.y);
+	//Build goal path point
 	iPoint goal = path->back();
 
 	//Update goal node and animation direction
@@ -271,8 +270,7 @@ bool Unit::Move()
 		if (path->size() == 1)
 		{
 			//Set unit at the goal pixel position
-			position.x = (float)goal.x;
-			position.y = (float)goal.y;
+			SetPosition((float)goal.x, (float)goal.y);
 
 			//Stop idle walk animation
 			action_type = IDLE;
@@ -296,12 +294,13 @@ bool Unit::Move()
 
 	//Calculate the X/Y values that the unit have to move 
 	//checking the goal location and the unit movement speed
+	iPoint location = iPoint(position.x, position.y);
 	int norm = location.DistanceTo(goal);
 	float x_step = speed * (goal.x - location.x) / norm;
 	float y_step = speed * (goal.y - location.y) / norm;
 
 	//Add the calculated values at the unit & mark position
-	SetPosition(position.x + x_step, position.y += y_step);
+	SetPosition(position.x + x_step, position.y + y_step);
 	mark.SetPosition(iPoint(position.x,position.y));
 
 	return true;
@@ -381,7 +380,7 @@ bool Unit::Attack()
 
 bool Unit::Cover()
 {
-	return ((Building*)interaction_target)->CoverUnit(this);;
+	return ((Building*)interaction_target)->CoverUnit(this);
 }
 
 //Bonus -----------
@@ -395,24 +394,22 @@ void Unit::AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence)
 //Set Methods -----
 void Unit::SetPosition(float x, float y)
 {
-	//Round current position
-	iPoint rounded_pos(position.Round().x,position.Round().y);
-
 	//Extract the units to push it with the new position later
-	App->entities_manager->units_quadtree.Exteract(&rounded_pos);
+	if (!App->entities_manager->units_quadtree.Exteract(&position))
+	{
+		int k = 0; 
+		k++;
+	}
 
 	//Set unit position
 	position.x = x;
 	position.y = y;
 	
-	//Round new position
-	rounded_pos = iPoint(position.Round().x, position.Round().y);
-
 	//Set unit mark position
-	mark.SetPosition(rounded_pos);
+	mark.SetPosition(iPoint(position.x, position.y));
 
 	//Add the unit with the correct position in the correct quad tree
-	App->entities_manager->units_quadtree.Insert(this, &rounded_pos);
+	App->entities_manager->units_quadtree.Insert(this, &position);
 }
 
 void Unit::SetUnitType(UNIT_TYPE type)
@@ -757,7 +754,7 @@ void Resource::SetPosition(float x, float y)
 	mark.SetPosition(iPoint(position.x, position.y));
 
 	//Add Resource at the correct quad tree
-	App->entities_manager->resources_quadtree.Insert(this, &iPoint(position.x, position.y));
+	App->entities_manager->resources_quadtree.Insert(this, &position);
 }
 
 void Resource::SetMark(const Rectng & rectangle)
@@ -924,7 +921,7 @@ void Building::SetPosition(float x, float y)
 	mark.SetPosition(iPoint(position.x, position.y));
 
 	//Add building at the correct quad tree
-	App->entities_manager->buildings_quadtree.Insert(this, &iPoint(position.x, position.y));
+	App->entities_manager->buildings_quadtree.Insert(this, &position);
 }
 
 void Building::SetMark(const Rectng& rectangle)

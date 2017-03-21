@@ -43,7 +43,7 @@ bool j1EntitiesManager::Start()
 	App->console->AddCommand("generate_unit", App->entities_manager);
 
 	//Built entities quad trees
-	units_quadtree.SetMaxObjects(4);
+	units_quadtree.SetMaxObjects(2);
 	units_quadtree.SetDebugColor({ 255,0,255,255 });
 	resources_quadtree.SetMaxObjects(8);
 	units_quadtree.SetDebugColor({ 0,255,255,255 });
