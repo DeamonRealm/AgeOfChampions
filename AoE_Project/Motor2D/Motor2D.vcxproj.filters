@@ -109,6 +109,9 @@
     <ClCompile Include="Hud_SelectionPanel.cpp">
       <Filter>UserInteraface\Hud</Filter>
     </ClCompile>
+    <ClCompile Include="TaskManager.cpp">
+      <Filter>Modules\TasksMagament</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -239,6 +242,9 @@
     <ClInclude Include="Hud_SelectionPanel.h">
       <Filter>UserInteraface\Hud</Filter>
     </ClInclude>
+    <ClInclude Include="TaskManager.h">
+      <Filter>Modules\TasksMagament</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -273,6 +279,9 @@
     </Filter>
     <Filter Include="UserInteraface\Hud">
       <UniqueIdentifier>{02d694a5-7c88-4ea6-9934-f272aad23985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\TasksMagament">
+      <UniqueIdentifier>{0b086b82-d4b0-4f1c-871b-f1fa6dc611f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
