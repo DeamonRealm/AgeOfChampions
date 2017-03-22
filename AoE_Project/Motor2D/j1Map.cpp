@@ -195,7 +195,7 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.x = (x - y) * (int)(data.tile_width * 0.5f);
+		ret.x = (x - y) * (int)(data.tile_width * 0.5f) - data.tile_width * 0.5f;
 		ret.y = (x + y) * (int)(data.tile_height * 0.5f) + (x + y);
 	}
 	else
@@ -219,11 +219,11 @@ iPoint j1Map::MapToWorldCenter(int x, int y)
 
 iPoint j1Map::WorldToMap(int x, int y) const
 {
-	iPoint ret(0, 0);
+	iPoint ret(x + data.tile_width * 0.5f, y);
 
 	if (data.type == MAPTYPE_ORTHOGONAL)
 	{
-		ret.x = x / data.tile_width;
+		ret.x = ret.x / data.tile_width;
 		ret.y = y / data.tile_height;
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)
@@ -232,17 +232,19 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		float half_width = data.tile_width * 0.5f;
 		float half_height = (data.tile_height + MARGIN) * 0.5f;
 	
-		float pX = ((x / half_width + y / half_height) * 0.5f);
-		float pY = ((y / half_height - (x / half_width)) * 0.5f);
+		float pX = (((ret.x / half_width) + (ret.y / half_height)) * 0.5f);
+		float pY = (((ret.y / half_height) - (ret.x / half_width)) * 0.5f);
 	
 		ret.x = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
 		ret.y = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+
+		if (ret.x <= 0)ret.x = 1;
+		if (ret.y <= 0)ret.y = 0;
 
 	}
 	else
 	{
 		LOG("Unknown map type");
-		ret.x = x; ret.y = y;
 	}
 
 	return ret;
@@ -296,17 +298,6 @@ iPoint j1Map::FixPointMap(int x, int y)
 	float mid_map_width = (data.width * (data.tile_width)) * 0.5f;
 	float min_y = mid_map_height - ((mid_map_width - abs(ret.x)) * 0.5f);
 	float max_y = mid_map_height + ((mid_map_width - abs(ret.x)) * 0.5f);
-
-	if (x < 0)
-	{
-		min_y += data.tile_height * 0.5f;
-		max_y -= data.tile_height * 0.5f;
-	}
-	else
-	{
-		min_y -= data.tile_height * 0.5f;
-		max_y += data.tile_height * 0.5f;
-	}
 
 	if (y < min_y)ret.y = min_y;
 	else if (y > max_y)ret.y = max_y;
@@ -524,10 +515,10 @@ bool j1Map::LoadMap()
 
 		//Define map area 
 		SDL_Rect map_area;
-		map_area.x = ((data.width) * data.tile_width - data.width) * -0.5;
+		map_area.x = ((data.width) * data.tile_width) * -0.5;
 		map_area.y = 0;
 		map_area.w = data.width * data.tile_width;
-		map_area.h = data.height * data.tile_height + (data.width + data.height);
+		map_area.h = data.height * data.tile_height + (data.height);
 		
 		// Determine other modules quad trees map area 
 		App->entities_manager->units_quadtree.SetBoundaries(map_area);
