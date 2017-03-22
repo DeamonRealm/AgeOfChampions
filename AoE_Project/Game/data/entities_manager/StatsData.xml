@@ -466,7 +466,7 @@
       
       max_life="150"
       view_area="15"
-      speed="15.5"
+      speed="1.5"
       attack_delay ="50"
       attack_hitpoints="5"
       attack_bonus="2"

@@ -262,7 +262,7 @@ std::vector<iPoint>* j1Pathfinding::CreatePath(const iPoint & origin, const iPoi
 	//if not are in the same cluster set node2 parent of node1
 }
 
-std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPoint & destination)
+std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoint& destination)
 {
 	
 	int size = width*height;
@@ -278,8 +278,10 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 		path->push_back(mouse_position);
 		return path;
 	}
-	LOG("ORIGIN WORLD: X=%i Y=%i		ORIGIN MAP: X=%i Y=%i", origin.x, origin.y, map_origin.x, map_origin.y);
-	LOG("GOAL WORLD: X=%i Y=%i			GOAL MAP: X=%i Y=%i", destination.x, destination.y, map_goal.x, map_goal.y);
+	
+	/*LOG("ORIGIN WORLD: X=%i Y=%i		ORIGIN MAP: X=%i Y=%i", origin.x, origin.y, map_origin.x, map_origin.y);
+	LOG("GOAL WORLD: X=%i Y=%i			GOAL MAP: X=%i Y=%i", destination.x, destination.y, map_goal.x, map_goal.y);*/
+
 	if (IsWalkable(map_origin) && IsWalkable(map_goal))
 	{
 		ret = 1;
@@ -290,7 +292,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 		firstNode->h= map_origin.DistanceOctile(map_goal);
 
 		open.queue.push(firstNode);
-		PathNode* current=nullptr;
+		PathNode* current = nullptr;
 		while (open.queue.size() != 0)
 		{
 			current = open.queue.top();
@@ -311,7 +313,6 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint & origin, const iPo
 					
 				}
 				last_path.push_back(current->pos);
-				path->push_back(origin);
 				
 				return path;
 			}

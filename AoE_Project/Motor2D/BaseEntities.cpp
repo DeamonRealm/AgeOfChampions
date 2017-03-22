@@ -263,15 +263,14 @@ bool Unit::Move()
 
 	//Build goal path point
 	iPoint goal = path->back();
-
+	iPoint location = iPoint(position.x, position.y);
 	//Update goal node and animation direction
-	if ((iPoint(position.x, position.y) - goal) < iPoint(1, 1))
+	if (location.DistanceTo(goal) < 2)
 	{
 		if (path->size() == 1)
 		{
 			//Set unit at the goal pixel position
 			SetPosition((float)goal.x, (float)goal.y);
-
 			//Stop idle walk animation
 			action_type = IDLE;
 			App->animator->UnitPlay(this);
@@ -294,7 +293,6 @@ bool Unit::Move()
 
 	//Calculate the X/Y values that the unit have to move 
 	//checking the goal location and the unit movement speed
-	iPoint location = iPoint(position.x, position.y);
 	int norm = location.DistanceTo(goal);
 	float x_step = speed * (goal.x - location.x) / norm;
 	float y_step = speed * (goal.y - location.y) / norm;

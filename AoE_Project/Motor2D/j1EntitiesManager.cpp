@@ -573,10 +573,14 @@ bool j1EntitiesManager::DeleteEntity(Entity * entity)
 
 bool j1EntitiesManager::SetUnitPath(Unit* target, const iPoint& goal)
 {
-	fPoint target_pos = target->GetPosition();
+	fPoint target_pos = target->GetPosition().Round();
+	iPoint int_target_pos(target_pos.x, target_pos.y);
+
+	//Check if the position and the goal are the same
+	if (goal == int_target_pos)return false;
 
 	//Create path from unit position to the goal
-	std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(target_pos.x, target_pos.y) , goal);
+	std::vector<iPoint>* path = App->pathfinding->SimpleAstar(int_target_pos, goal);
 	
 	if (path == nullptr)return false;
 
@@ -591,7 +595,7 @@ bool j1EntitiesManager::SetUnitPath(Unit* target, const iPoint& goal)
 	return true;
 }
 
-bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iPoint & goal)
+bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal)
 {
 	if(targets.size() > 0)return false;
 

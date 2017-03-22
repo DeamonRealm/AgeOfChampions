@@ -328,7 +328,6 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 	case MOUSE_RIGHT_BUTTON:
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 		{
-		//	LOG("World x%i y%i", x - App->render->camera.x, y - App->render->camera.y);
 			App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 		}
 		break;

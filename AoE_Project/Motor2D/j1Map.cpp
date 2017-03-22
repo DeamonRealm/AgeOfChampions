@@ -230,7 +230,7 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	{
 
 		float half_width = data.tile_width * 0.5f;
-		float half_height = data.tile_height * 0.5f;
+		float half_height = (data.tile_height + MARGIN) * 0.5f;
 	
 		float pX = ((x / half_width + y / half_height) * 0.5f);
 		float pY = ((y / half_height - (x / half_width)) * 0.5f);
@@ -261,7 +261,7 @@ iPoint j1Map::WorldCenterToMap(int x, int y) const
 	{
 
 		float half_width = data.tile_width * 0.5f;
-		float half_height = (data.tile_height + 1) * 0.5f;
+		float half_height = (data.tile_height + MARGIN) * 0.5f;
 
 		float pX = ((x - half_width) / half_width + (y - half_height) / half_height) * 0.5f;
 		float pY = ((y - (half_height)) / half_height - ((x - half_width) / half_width)) * 0.5f;
@@ -282,17 +282,36 @@ iPoint j1Map::WorldCenterToMap(int x, int y) const
 iPoint j1Map::FixPointMap(int x, int y)
 {
 	iPoint ret(x,y);
-	
-		if (x < ((data.width*data.tile_width) *-0.5))
-			ret.x = ((data.width*data.tile_width) *-0.5);
-		else if (x > ((data.width*data.tile_width)*0.5))
-			ret.x = ((data.width*data.tile_width)*0.5);
-		if(y<0)
-			ret.y = 0;
-		else if(y>(data.height*data.tile_height))
-			ret.y = data.height*data.tile_height;
 
-		return ret;
+	if (ret.x < ((data.width * data.tile_width) * -0.5))
+	{
+		ret.x = (data.width * data.tile_width) * -0.5;
+	}
+	else if (ret.x >((data.width * data.tile_width) * 0.5))
+	{
+		ret.x = (data.width * data.tile_width) * 0.5;
+	}
+
+	float mid_map_height = (data.height * (data.tile_height + MARGIN)) * 0.5f;
+	float mid_map_width = (data.width * (data.tile_width)) * 0.5f;
+	float min_y = mid_map_height - ((mid_map_width - abs(ret.x)) * 0.5f);
+	float max_y = mid_map_height + ((mid_map_width - abs(ret.x)) * 0.5f);
+
+	if (x < 0)
+	{
+		min_y += data.tile_height * 0.5f;
+		max_y -= data.tile_height * 0.5f;
+	}
+	else
+	{
+		min_y -= data.tile_height * 0.5f;
+		max_y += data.tile_height * 0.5f;
+	}
+
+	if (y < min_y)ret.y = min_y;
+	else if (y > max_y)ret.y = max_y;
+
+	return ret;
 }
 
 void j1Map::CalculateTilesInView()

@@ -130,6 +130,11 @@ public:
 		return sqrtf((fx*fx) + (fy*fy));
 	}
 
+	TYPE DirectionalDistanceTo(const p2Point& v, const p2Point& dir)
+	{
+
+	}
+
 	TYPE DistanceNoSqrt(const p2Point& v) const
 	{
 		TYPE fx = x - v.x;
@@ -154,7 +159,7 @@ public:
 	}
 
 	// Round ----------------------------------------------
-	p2Point Round()
+	p2Point Round()const
 	{
 		p2Point point(this->x,this->y);
 		point.x = (point.x > (floor(point.x) + 0.5f)) ? ceil(point.x) : floor(point.x);

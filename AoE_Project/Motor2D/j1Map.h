@@ -1,6 +1,8 @@
 #ifndef __j1MAP_H__
 #define __j1MAP_H__
 
+#define MARGIN 1
+
 #include "PugiXml/src/pugixml.hpp"
 #include "p2Point.h"
 #include "j1Module.h"
