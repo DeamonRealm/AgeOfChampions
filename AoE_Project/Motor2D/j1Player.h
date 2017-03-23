@@ -20,6 +20,7 @@ class UI_Image;
 class Entity_Profile;
 class Selection_Panel;
 class Game_Panel;
+class Action_Panel;
 
 
 enum ACTION
@@ -71,6 +72,7 @@ private:
 	//HUD Panels
 	Selection_Panel*		selection_panel = nullptr;
 	Game_Panel*				game_panel = nullptr;
+	Action_Panel*			action_panel = nullptr;
 
 
 public:

@@ -118,6 +118,8 @@ public:
 	// Selction Panel (Group Functions)
 	void SetGroupProfile();
 
+	Entity* GetSelected() const;
+
 private:
 	// Mouse_pos
 	int mouse_x = 0;
