@@ -228,7 +228,7 @@ protected:
 	SDL_Texture*	pos_texture = nullptr;
 	Entity*			interaction_target = nullptr;
 	//Movement ---------
-	float			view_area = 0;
+	uint			view_area = 0;
 	float			speed = 0;
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = SOUTH;
@@ -242,9 +242,9 @@ protected:
 	ATTACK_TYPE		attack_type = NO_ATTACK;
 	float			attack_range = 0;
 	//Defense/Armor ----
-	uint			defense = 0;
+	uint			defense = 0; /*Used in melee damage*/
 	uint			defense_bonus = 0;
-	uint			armor = 0;
+	uint			armor = 0; /*Used in distance damage*/
 	uint			armor_bonus = 0;
 	//Resources --------
 	uint			food_cost = 0;
@@ -286,7 +286,7 @@ public:
 	void	SetUnitType(UNIT_TYPE type);
 	void	SetInteractionTarget(const Entity* target);
 	void	SetMark(const Circle& new_mark);
-	void	SetViewArea(float area_val);
+	void	SetViewArea(uint area_val);
 	void	SetSpeed(float speed_val);
 	void	SetAction(ACTION_TYPE action_val);
 	void	SetDirection(DIRECTION_TYPE direction_val);
@@ -313,7 +313,7 @@ public:
 	UNIT_TYPE		GetUnitType()const;
 	const Circle&	GetMark()const;
 	const Entity*	GetInteractionTarget();
-	float			GetViewArea()const;
+	uint			GetViewArea()const;
 	float			GetSpeed()const;
 	ACTION_TYPE		GetAction()const;
 	DIRECTION_TYPE	GetDirection()const;

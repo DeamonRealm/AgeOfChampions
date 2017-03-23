@@ -249,7 +249,7 @@ bool Selection_Panel::PreUpdate()
 {	
 	App->input->GetMousePosition(mouse_x, mouse_y);
 
-	if (PointisInViewport(mouse_x, mouse_y) == false) return false;
+	if (selected_elements.size() == 0 && PointisInViewport(mouse_x, mouse_y) == false ) return false;
 	// Calculate upper entity
 	UpperEntity = GetUpperEntity(mouse_x, mouse_y);
 	if (UpperEntity != nullptr) App->gui->ChangeMouseTexture(SELECT);
@@ -503,7 +503,7 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	int count = 0, size = 0;
 	int width = 0, height = 0;
 	Sprite* current_sprite = nullptr;
-	SDL_Rect* rect = nullptr;
+	SDL_Rect rect;
 
 	x -= App->render->camera.x;
 	y -= App->render->camera.y;
@@ -521,12 +521,12 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	for (int count = 0; count < size; count++)
 	{
 		current_sprite = (Sprite*) unit_quad_selection[count]->GetAnimation()->GetCurrentSprite();
-		rect = (SDL_Rect*) current_sprite->GetFrame();
+		rect = *current_sprite->GetFrame();
 		pos = unit_quad_selection[count]->GetPosition();
-		rect->x = (int)pos.x - current_sprite->GetXpivot();
-		rect->y = (int)pos.y - current_sprite->GetYpivot();
+		rect.x = (int)pos.x - current_sprite->GetXpivot();
+		rect.y = (int)pos.y - current_sprite->GetYpivot();
 	
-		if (x >= rect->x && x <= rect->x + rect->w && y >= rect->y && y <= rect->y + rect->h)
+		if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h)
 		{
 			if (ret == nullptr) ret =unit_quad_selection[count];
 			else if (ret->GetPosition().y < unit_quad_selection[count]->GetPosition().y)
@@ -541,12 +541,12 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	size = building_quad_selection.size();
 	for (int count = 0; count < size; count++)
 	{
-		rect = (SDL_Rect*) building_quad_selection[count]->GetSelectionRect();
+		rect = *building_quad_selection[count]->GetSelectionRect();
 		pos = building_quad_selection[count]->GetPosition();
-		rect->x = (int)pos.x - rect->w / 2;
-		rect->y = (int)pos.y - rect->h / 2;
+		rect.x = (int)pos.x - rect.w / 2;
+		rect.y = (int)pos.y - rect.h / 2;
 		
-		if (x >= rect->x && x <= rect->x + rect->w && y >= rect->y && y <= rect->y + rect->h)
+		if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h)
 		{
 			if (ret == nullptr) ret = building_quad_selection[count];
 			else if (ret->GetPosition().y < building_quad_selection[count]->GetPosition().y)
@@ -562,12 +562,12 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	for (int count = 0; count < size; count++)
 	{
 		current_sprite = (Sprite*) resource_quad_selection[count]->GetAnimation()->GetCurrentSprite();
-		rect = (SDL_Rect*)current_sprite->GetFrame();
+		rect = *current_sprite->GetFrame();
 		pos = resource_quad_selection[count]->GetPosition();
-		rect->x = (int)pos.x - current_sprite->GetXpivot();
-		rect->y = (int)pos.y - current_sprite->GetYpivot();
+		rect.x = (int)pos.x - current_sprite->GetXpivot();
+		rect.y = (int)pos.y - current_sprite->GetYpivot();
 
-		if (x >= rect->x && x <= rect->x + rect->w && y >= rect->y && y <= rect->y + rect->h)
+		if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h)
 		{
 			if (ret == nullptr) ret = resource_quad_selection[count];
 			else if (ret->GetPosition().y <= resource_quad_selection[count]->GetPosition().y)

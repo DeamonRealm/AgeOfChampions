@@ -107,6 +107,7 @@ public:
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, float x_angle = 0, bool use_camera = true) const;
+	bool DrawCone(int x1, int y1, int x2, int y2, uint lenght, uint width, float x_angle, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255);
 
 	// Set background color -
 	void SetBackgroundColor(SDL_Color color);

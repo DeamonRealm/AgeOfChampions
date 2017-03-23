@@ -425,7 +425,7 @@ void Unit::SetMark(const Circle & new_mark)
 	mark = new_mark;
 }
 
-void Unit::SetViewArea(float area_val)
+void Unit::SetViewArea(uint area_val)
 {
 	view_area = area_val;
 }
@@ -549,7 +549,7 @@ const Entity * Unit::GetInteractionTarget()
 	return interaction_target;
 }
 
-float Unit::GetViewArea()const
+uint Unit::GetViewArea()const
 {
 	return view_area;
 }

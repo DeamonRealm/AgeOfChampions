@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseEntities.cpp" />
+    <ClCompile Include="Champions.cpp" />
     <ClCompile Include="Hud_ActionPanel.cpp" />
     <ClCompile Include="Hud_GamePanel.cpp" />
     <ClCompile Include="Hud_SelectionPanel.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="Units.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Champions.h" />
     <ClInclude Include="Hud_ActionPanel.h" />
     <ClInclude Include="Hud_GamePanel.h" />
     <ClInclude Include="Hud_SelectionPanel.h" />

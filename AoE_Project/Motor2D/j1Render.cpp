@@ -5,6 +5,8 @@
 #include "j1Window.h"
 #include "j1Console.h"
 
+#include <math.h>
+
 ///Class Blit_Call ------------------------------
 //Constructors ========================
 Blit_Call::Blit_Call()
@@ -397,6 +399,48 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
 	}
+
+	return ret;
+}
+
+bool j1Render::DrawCone(int x1, int y1, int x2, int y2, uint lenght, uint width, float x_angle, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+	bool ret = true;
+	uint scale = App->win->GetScale();
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+	/*
+	A----------B
+	 -        -
+	  -      -
+	   -    -
+	    -  -
+	     --
+	*/
+	//Calculate cone point A
+	iPoint vector(x2 - x1, y2 - y1);
+	/*float angle = RADTODEG(atan2(vector.x, vector.y));
+	int result = -1;
+	SDL_Point points[360];
+
+	float factor = (float)M_PI / 180.0f;
+
+
+	for (uint i = 0; i < 360; ++i)
+	{
+		points[i].x = (int)(x + radius * cos(i * factor)) + camera.x;
+		points[i].y = (int)((y + radius * sin(i * factor) * sin(x_angle))) + camera.y;
+	}
+	
+	result = SDL_RenderDrawPoints(renderer, points, 360);
+
+	if (result != 0)
+	{
+		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		ret = false;
+	}*/
 
 	return ret;
 }
