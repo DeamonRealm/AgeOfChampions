@@ -3,7 +3,8 @@
 //Action class---------------------
 Action::Action()
 {
-	App->entities_manager->entity_actions.push_back(this);
+	//App->entities_manager->entity_actions.push_back(this);
+	App->entities_manager->unit_actions->Add(this); //CHANGE THAT!
 }
 Action::~Action()
 {
@@ -23,7 +24,7 @@ ActionManager::~ActionManager()
 {
 }
 
-void ActionManager::Add(Action * new_action)
+void ActionManager::Add(Action* new_action)
 {
 	all_actions.push_back(new_action);
 }
@@ -37,5 +38,6 @@ void ActionManager::CleanUp()
 		RELEASE(action_item._Ptr->_Myval);
 		action_item++;
 	}
+	all_actions.clear();
 }
 

@@ -15,6 +15,9 @@
 //Testing purposes only should be erased
 #include "j1Scene.h"
 
+//Test Action Manager
+#include "ActionManager.h"
+
 //Constructors ========================
 j1EntitiesManager::j1EntitiesManager()
 {
@@ -49,6 +52,9 @@ bool j1EntitiesManager::Start()
 	units_quadtree.SetDebugColor({ 0,255,255,255 });
 	buildings_quadtree.SetMaxObjects(3);
 	units_quadtree.SetDebugColor({ 255,255,0,255 });
+
+	//Load ActionManager
+	unit_actions = new ActionManager;
 
 	return ret;
 }
@@ -146,13 +152,16 @@ bool j1EntitiesManager::CleanUp()
 	buildings_defs.clear();
 
 	//Clean Up all unit actions;
-	std::list<Action*>::iterator action_item = entity_actions.begin();
+	/*std::list<Action*>::iterator action_item = entity_actions.begin();
 	while (action_item != entity_actions.end())
 	{
 		RELEASE(action_item._Ptr->_Myval);
 		action_item++;
 	}
-	entity_actions.clear();
+	entity_actions.clear();*/
+
+	unit_actions->CleanUp();
+
 
 	return true;
 }

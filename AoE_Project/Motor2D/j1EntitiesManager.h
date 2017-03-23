@@ -7,6 +7,7 @@
 #include "Quadtree.h"
 
 class Action;
+class ActionManager;
 
 class j1EntitiesManager : public j1Module
 {
@@ -97,8 +98,8 @@ public:
 
 
 	//Action list
-	std::list<Action*> entity_actions;
-
+	//std::list<Action*> entity_actions;
+	ActionManager* unit_actions = nullptr;
 	
 
 };
