@@ -597,6 +597,8 @@
       mark_y="47"
       mark_w="273"
       mark_h="273"
+      width_in_tiles="4"
+      height_in_tiles="4"
       
       max_life ="1500"
       units_capacity ="15"

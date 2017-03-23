@@ -152,13 +152,13 @@ public:
 	//Select/Deselect ------
 	void			Select();
 	void			Deselect();
-	
+
 	//Update ----------------
 	virtual bool	Update();
 
 	//Draw ------------------
 	virtual bool	Draw(bool debug);
-	
+
 	//Set Methods -----------
 	void			SetName(const char* name_str);
 	virtual void	SetPosition(float x, float y);
@@ -392,6 +392,8 @@ public:
 protected:
 
 	Rectng			mark;
+	uint			width_in_tiles = 0;
+	uint			height_in_tiles = 0;
 	BUILDING_TYPE	building_type = NO_BUILDING;
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = NO_DIRECTION;
@@ -422,6 +424,8 @@ public:
 	//Set Methods -----------
 	void	SetPosition(float x, float y);
 	void	SetMark(const Rectng& rectangle);
+	void	SetWidthInTiles(uint width);
+	void	SetHeightInTiles(uint height);
 	void	SetBuildingType(BUILDING_TYPE type);
 	void	SetActionType(ACTION_TYPE type);
 	void	SetDirectionType(DIRECTION_TYPE type);
