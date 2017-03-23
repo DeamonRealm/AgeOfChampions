@@ -1,4 +1,5 @@
 #include "Hud_SelectionPanel.h"
+#include "Hud_ActionPanel.h"
 
 //Modules
 #include "j1App.h"
@@ -8,6 +9,7 @@
 #include "j1Window.h"
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
+
 
 #include "SDL\include\SDL_rect.h"
 
@@ -253,7 +255,7 @@ bool Selection_Panel::PreUpdate()
 {	
 	App->input->GetMousePosition(mouse_x, mouse_y);
 
-	if (selected_elements.size() == 0 && PointisInViewport(mouse_x, mouse_y) == false ) return false;
+	if (selected_elements.size() == 0 || PointisInViewport(mouse_x, mouse_y) == false ) return false;
 	// Calculate upper entity
 	UpperEntity = GetUpperEntity(mouse_x, mouse_y);
 	if (UpperEntity != nullptr) App->gui->ChangeMouseTexture(SELECT);
@@ -425,7 +427,19 @@ void Selection_Panel::Select(SELECT_TYPE type)
 
 		}
 		else if (selection_rect.w == 0 || selection_rect.h == 0) return;
-
+		else
+		{
+			if (selection_rect.w < 0)
+			{
+				selection_rect.x += selection_rect.w;
+				selection_rect.w = -selection_rect.w;
+			}
+			if (selection_rect.h < 0)
+			{
+				selection_rect.y += selection_rect.h;
+				selection_rect.h = -selection_rect.h;
+			}
+		}
 
 		selection_rect.x -= App->render->camera.x;
 		selection_rect.y -= App->render->camera.y;
@@ -454,6 +468,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 	{
 		if (type == SINGLE) UnSelect_Entity();
 
+		UpperEntity = GetUpperEntity(mouse_x,mouse_y);
 		if (UpperEntity == nullptr) return;
 		UpperEntity->Select();
 
@@ -472,7 +487,10 @@ void Selection_Panel::Select(SELECT_TYPE type)
 	}
 
 	//Configure Selection Panel
-	if (selected_elements.size() == 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+	if (selected_elements.size() == 1)
+	{
+		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+	}
 	else if (selected_elements.size() > 1)
 	{
 		max_row_units = 16;
@@ -507,25 +525,32 @@ void Selection_Panel::Expand_SelectionRect()
 // Change to quads
 Entity * Selection_Panel::GetUpperEntity(int x, int y) 
 {
+	Entity* ret = nullptr;
+
 	int count = 0, size = 0;
 	int width = 0, height = 0;
 	Sprite* current_sprite = nullptr;
 	SDL_Rect rect;
+	fPoint pos;
 
 	x -= App->render->camera.x;
 	y -= App->render->camera.y;
+
+	rect = map_viewport;
+	rect.x -= App->render->camera.x;
+	rect.y -= App->render->camera.y;
 
 	unit_quad_selection.clear();
 	building_quad_selection.clear();
 	resource_quad_selection.clear();
 
-	Entity* ret = nullptr;
-	App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, map_viewport);
+	App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, rect);
+	App->entities_manager->buildings_quadtree.CollectCandidates(building_quad_selection, rect);
+	App->entities_manager->resources_quadtree.CollectCandidates(resource_quad_selection, rect);
 
-	fPoint pos;
-	
+	// Search Units
 	size = unit_quad_selection.size();
-	for (int count = 0; count < size; count++)
+	for (count = 0; count < size; count++)
 	{
 		current_sprite = (Sprite*) unit_quad_selection[count]->GetAnimation()->GetCurrentSprite();
 		rect = *current_sprite->GetFrame();
@@ -543,16 +568,15 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 		}
 	}
 	
-	App->entities_manager->buildings_quadtree.CollectCandidates(building_quad_selection, map_viewport);
-
+	// Search Buildings
 	size = building_quad_selection.size();
-	for (int count = 0; count < size; count++)
+	for (count = 0; count < size; count++)
 	{
 		rect = *building_quad_selection[count]->GetSelectionRect();
 		pos = building_quad_selection[count]->GetPosition();
 		rect.x = (int)pos.x - rect.w / 2;
 		rect.y = (int)pos.y - rect.h / 2;
-		
+
 		if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h)
 		{
 			if (ret == nullptr) ret = building_quad_selection[count];
@@ -562,17 +586,14 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 			}
 		}
 	}
-	
-	App->entities_manager->resources_quadtree.CollectCandidates(resource_quad_selection, map_viewport);
-	
+	// Search Resources;
 	size = resource_quad_selection.size();
-	for (int count = 0; count < size; count++)
+	for (count = 0; count < size; count++)
 	{
-		current_sprite = (Sprite*) resource_quad_selection[count]->GetAnimation()->GetCurrentSprite();
-		rect = *current_sprite->GetFrame();
+		rect = *resource_quad_selection[count]->GetSelectionRect();
 		pos = resource_quad_selection[count]->GetPosition();
-		rect.x = (int)pos.x - current_sprite->GetXpivot();
-		rect.y = (int)pos.y - current_sprite->GetYpivot();
+		rect.x = (int)pos.x - rect.w / 2;
+		rect.y = (int)pos.y - rect.h / 2;
 
 		if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h)
 		{
@@ -605,4 +626,9 @@ void Selection_Panel::SetGroupProfile()
 		item++;
 		i++;
 	}
+}
+
+Entity * Selection_Panel::GetSelected() const
+{
+	return Selected->GetEntity();
 }
