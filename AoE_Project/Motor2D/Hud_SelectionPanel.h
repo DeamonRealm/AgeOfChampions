@@ -9,6 +9,8 @@
 
 #include "SDL\include\SDL_rect.h"
 
+#include "Quadtree.h"
+
 class UI_String;
 class UI_Image;
 
@@ -98,8 +100,6 @@ public:
 	void DrawGroup();
 
 	// Coordinates Methods
-	bool UnitisIn(int x, int y, int width, int height);
-	bool PointisIn(int x, int y) const;
 	bool PointisInViewport(int x = 0, int y = 0) ;
 
 	// Select Methods
@@ -109,7 +109,7 @@ public:
 	void UnSelect_Entity();
 
 	void Expand_SelectionRect();
-	Entity*	GetUpperEntity(int x, int y)const;
+	Entity*	GetUpperEntity(int x, int y);
 	 
 	// Selction Panel (Group Functions)
 	void SetGroupProfile();
@@ -129,11 +129,15 @@ private:
 
 	bool			expand;
 	SDL_Rect		selection_rect;
-	SDL_Rect		map_viewport;
+	const SDL_Rect	map_viewport;
 
 
-	std::list<Entity*>	selected_elements;
+	std::list<Entity*>		selected_elements;
 	std::vector<UI_Image*>  group_profile;
+
+	std::vector<Unit*>		unit_quad_selection;
+	std::vector<Building*>  building_quad_selection;
+	std::vector<Resource*>	resource_quad_selection;
 
 	Entity_Profile*		Selected = nullptr;
 	

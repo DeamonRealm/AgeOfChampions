@@ -51,7 +51,6 @@ u_capacity(0), u_resources(0), m_capacity(0), m_life(0)
 	//resources
 	resources = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	resources->SetColor({ 0,0,0,255 });
-
 }
 
 //Entity Profile Destructor ======================================================
@@ -223,6 +222,10 @@ Selection_Panel::Selection_Panel() : selection_rect({0,0,0,0}), map_viewport({ 0
 
 	UI_Image*	profile;
 	group_profile.reserve(max_selected_units);
+	unit_quad_selection.reserve(max_selected_units);
+	building_quad_selection.reserve(max_selected_units);
+	resource_quad_selection.reserve(max_selected_units);
+
 	int i = 0;
 
 	while (i < max_selected_units)
@@ -389,50 +392,10 @@ void Selection_Panel::DrawGroup()
 	}
 }
 
-//Selection Functions
-bool Selection_Panel::UnitisIn(int x, int y, int width, int height)
-{
-	if (selection_rect.w < 0)
-	{
-		selection_rect.x += selection_rect.w;
-		selection_rect.w = -selection_rect.w;
-	}
-	if (selection_rect.h < 0)
-	{
-		selection_rect.y += selection_rect.h;
-		selection_rect.h = -selection_rect.h;
-	}
-	int camera_x, camera_y;
-	camera_x = App->render->camera.x;
-	camera_y = App->render->camera.y;
-
-	if (PointisIn(x, y)) return true;
-	if (PointisIn(x + width, y + height)) return true;
-	if (PointisIn(x + width, y)) return true;
-	if (PointisIn(x, y + height)) return true;
-
-	return false;
-}
-
-bool Selection_Panel::PointisIn(int x, int y) const
-{
-	int camera_x, camera_y;
-	camera_x = App->render->camera.x;
-	camera_y = App->render->camera.y;
-
-	if (selection_rect.x - camera_x < x && selection_rect.x - camera_x + selection_rect.w > x && selection_rect.y - camera_y < y && selection_rect.y - camera_y + selection_rect.h > y) return true;
-	else return false;
-	return false;
-}
-
 bool Selection_Panel::PointisInViewport(int x, int y) 
 {
-	if (x == 0 && y == 0) App->input->GetMousePosition(mouse_x, mouse_y);
-	// Continue PreUpdate if mouse is inside map
-	if (map_viewport.x< mouse_x && map_viewport.x + map_viewport.w > mouse_x
-		&& map_viewport.y< mouse_y && map_viewport.y + map_viewport.h > mouse_y) return true;
-	else return false;
-
+	SDL_Point p = { x,y };
+	return SDL_PointInRect(&p, &map_viewport);
 }
 
 // Change to quads
@@ -449,37 +412,30 @@ void Selection_Panel::Select(SELECT_TYPE type)
 			if (Selected->GetEntity() == nullptr) return;
 			else if (Selected->GetEntity()->GetEntityType() != UNIT) return;
 			App->win->GetWindowSize(width, height);
-
+			
 			selection_rect = { 0, 32, (int)width, 560 };
 			unit_type = ((Unit*)Selected->GetEntity())->GetUnitType();
+
 		}
 		else if (selection_rect.w == 0 || selection_rect.h == 0) return;
 
+		unit_quad_selection.clear();
 		UnSelect_Entity();
 
-		//Select Entity
-		std::list<Unit*>::const_iterator item = App->entities_manager->UnitsList()->begin();
-		while (item != App->entities_manager->UnitsList()->end())
-		{
-			if (item._Ptr->_Myval->GetDiplomacy() != ALLY);
-			else if (item._Ptr->_Myval->GetEntityType() != UNIT);
-			else if (type == DOUBLECLICK && unit_type != item._Ptr->_Myval->GetUnitType());
-			else if (item._Ptr->_Myval->GetDiplomacy() == ALLY && selected_elements.size() < 60)
-			{
-				x = item._Ptr->_Myval->GetPosition().x;
-				x -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot();
-				y = item._Ptr->_Myval->GetPosition().y;
-				y -= item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot();
-				width = item._Ptr->_Myval->GetSelectionRect()->w;
-				height = item._Ptr->_Myval->GetSelectionRect()->h;
+		//App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, selection_rect);
 
-				if (UnitisIn(x, y, width, height))
-				{
-					selected_elements.push_back(item._Ptr->_Myval);
-					item._Ptr->_Myval->Select();
-				}
+		//Select Entity
+		int size = unit_quad_selection.size();
+		for(int count = 0; count < size; count++)
+		{
+			if (unit_quad_selection[count]->GetDiplomacy() != ALLY);
+			else if (unit_quad_selection[count]->GetEntityType() != UNIT);
+			else if (type == DOUBLECLICK && unit_type != unit_quad_selection[count]->GetUnitType());
+			else 
+			{
+					selected_elements.push_back(unit_quad_selection[count]);
+					unit_quad_selection[count]->Select();
 			}
-			item++;
 		}
 	}
 	else
@@ -537,79 +493,83 @@ void Selection_Panel::Expand_SelectionRect()
 }
 
 // Change to quads
-Entity * Selection_Panel::GetUpperEntity(int x, int y) const
+Entity * Selection_Panel::GetUpperEntity(int x, int y) 
 {
+	int count = 0, size = 0;
 	int width = 0, height = 0;
+	Sprite* current_sprite = nullptr;
+	SDL_Rect* rect = nullptr;
 
 	x -= App->render->camera.x;
 	y -= App->render->camera.y;
 
-	fPoint pos;
-	iPoint item_position;
-	iPoint item_pivot;
+	unit_quad_selection.clear();
+	building_quad_selection.clear();
+	resource_quad_selection.clear();
 
 	Entity* ret = nullptr;
-	std::list<Unit*>::const_iterator unit = App->entities_manager->UnitsList()->begin();
-	while (unit != App->entities_manager->UnitsList()->end())
-	{
-		width = unit._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->w;
-		height = unit._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->h;
-		pos = unit._Ptr->_Myval->GetPosition();
-		item_position = iPoint(pos.x, pos.y);
-		item_pivot = { unit._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot(),unit._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot() };
-		item_position -= item_pivot;
+	//App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, map_viewport);
 
-		if (x >= item_position.x && x <= item_position.x + width && y >= item_position.y && y <= item_position.y + height)
+	fPoint pos;
+	
+	size = unit_quad_selection.size();
+	for (int count = 0; count < size; count++)
+	{
+		current_sprite = (Sprite*) unit_quad_selection[count]->GetAnimation()->GetCurrentSprite();
+		rect = (SDL_Rect*) current_sprite->GetFrame();
+		pos = unit_quad_selection[count]->GetPosition();
+		rect->x = (int)pos.x - current_sprite->GetXpivot();
+		rect->y = (int)pos.y - current_sprite->GetYpivot();
+	
+		if (x >= rect->x && x <= rect->x + rect->w && y >= rect->y && y <= rect->y + rect->h)
 		{
-			if (ret == nullptr) ret = unit._Ptr->_Myval;
-			else if (ret->GetPosition().y <= unit._Ptr->_Myval->GetPosition().y)
+			if (ret == nullptr) ret =unit_quad_selection[count];
+			else if (ret->GetPosition().y < unit_quad_selection[count]->GetPosition().y)
 			{
-				ret = unit._Ptr->_Myval;
+				ret = unit_quad_selection[count];
 			}
 		}
-		unit++;
 	}
 	
-	std::list<Building*>::const_iterator building = App->entities_manager->BuildingList()->begin();
-	while (building != App->entities_manager->BuildingList()->end())
-	{
-		width = building._Ptr->_Myval->GetSelectionRect()->w;
-		height = building._Ptr->_Myval->GetSelectionRect()->h;
-		pos = building._Ptr->_Myval->GetPosition();
-		item_position = iPoint(pos.x, pos.y);
-		item_pivot = {width/2,height/2 };
-		item_position -= item_pivot;
+	//App->entities_manager->buildings_quadtree.CollectCandidates(building_quad_selection, map_viewport);
 
-		if (x >= item_position.x && x <= item_position.x + width && y >= item_position.y && y <= item_position.y + height)
+	size = building_quad_selection.size();
+	for (int count = 0; count < size; count++)
+	{
+		rect = (SDL_Rect*) building_quad_selection[count]->GetSelectionRect();
+		pos = building_quad_selection[count]->GetPosition();
+		rect->x = (int)pos.x - rect->w / 2;
+		rect->y = (int)pos.y - rect->h / 2;
+		
+		if (x >= rect->x && x <= rect->x + rect->w && y >= rect->y && y <= rect->y + rect->h)
 		{
-			if (ret == nullptr) ret = building._Ptr->_Myval;
-			else if (ret->GetPosition().y <= building._Ptr->_Myval->GetPosition().y)
+			if (ret == nullptr) ret = building_quad_selection[count];
+			else if (ret->GetPosition().y < building_quad_selection[count]->GetPosition().y)
 			{
-				ret = building._Ptr->_Myval;
+				ret = building_quad_selection[count];
 			}
 		}
-		building++;
 	}
-
-	std::list<Resource*>::const_iterator item = App->entities_manager->ResourceList()->begin();
-	while (item != App->entities_manager->ResourceList()->end())
+	
+	//App->entities_manager->resources_quadtree.CollectCandidates(resource_quad_selection, map_viewport);
+	
+	size = resource_quad_selection.size();
+	for (int count = 0; count < size; count++)
 	{
-		width = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->w;
-		height = item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetFrame()->h;
-		pos = item._Ptr->_Myval->GetPosition();
-		item_position = iPoint(pos.x, pos.y);
-		item_pivot = { item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetXpivot(),item._Ptr->_Myval->GetAnimation()->GetCurrentSprite()->GetYpivot() };
-		item_position -= item_pivot;
+		current_sprite = (Sprite*) resource_quad_selection[count]->GetAnimation()->GetCurrentSprite();
+		rect = (SDL_Rect*)current_sprite->GetFrame();
+		pos = resource_quad_selection[count]->GetPosition();
+		rect->x = (int)pos.x - current_sprite->GetXpivot();
+		rect->y = (int)pos.y - current_sprite->GetYpivot();
 
-		if (x >= item_position.x && x <= item_position.x + width && y >= item_position.y && y <= item_position.y + height)
+		if (x >= rect->x && x <= rect->x + rect->w && y >= rect->y && y <= rect->y + rect->h)
 		{
-			if (ret == nullptr) ret = item._Ptr->_Myval;
-			else if (ret->GetPosition().y <= item._Ptr->_Myval->GetPosition().y)
+			if (ret == nullptr) ret = resource_quad_selection[count];
+			else if (ret->GetPosition().y <= resource_quad_selection[count]->GetPosition().y)
 			{
-				ret = item._Ptr->_Myval;
+				ret = resource_quad_selection[count];
 			}
 		}
-		item++;
 	}
 	return ret;
 }
