@@ -252,6 +252,7 @@ bool Unit::Update()
 }
 
 //Actions ---------
+///Returns ture when path has ended, returns false otherwise.
 bool Unit::Move()
 {
 	//Check if the unit have an assigned path
@@ -301,7 +302,7 @@ bool Unit::Move()
 	SetPosition(position.x + x_step, position.y + y_step);
 	mark.SetPosition(iPoint(position.x,position.y));
 
-	return true;
+	return false;
 }
 
 bool Unit::Interact()

@@ -244,14 +244,17 @@
     <ClInclude Include="Hud_SelectionPanel.h">
       <Filter>UserInteraface\Hud</Filter>
     </ClInclude>
-    <ClInclude Include="TaskManager.h">
-      <Filter>Modules\TasksMagament</Filter>
-    </ClInclude>
     <ClInclude Include="Units.h">
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Champions.h">
       <Filter>Modules\EnititiesManager\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Action.h">
+      <Filter>Modules\TasksMagament</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions_Unit.h">
+      <Filter>Modules\TasksMagament</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

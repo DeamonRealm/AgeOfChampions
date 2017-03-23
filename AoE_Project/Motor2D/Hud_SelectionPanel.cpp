@@ -19,6 +19,10 @@
 //Entityes Elements
 #include "BaseEntities.h"
 
+
+//Action Unit
+#include "Actions_Unit.h"
+
 //Entity Profile Constructor =====================================================
 Entity_Profile::Entity_Profile() : element(nullptr), e_type(NO_ENTITY), isenemy(false), life_update(0), u_attack(0), u_deffence(0), u_range(0),
 u_capacity(0), u_resources(0), m_capacity(0), m_life(0)
@@ -331,7 +335,9 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 	case MOUSE_RIGHT_BUTTON:
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 		{
-			App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
+			action1 = new MoveUnitAction((Unit*)selected_elements.begin()._Ptr->_Myval, mouse_x - App->render->camera.x, mouse_y - App->render->camera.y);
+			action1->execute();
+		//	App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 		}
 		break;
 	case MOUSE_IN:

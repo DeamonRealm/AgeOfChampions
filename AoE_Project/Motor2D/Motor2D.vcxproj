@@ -155,7 +155,7 @@
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Resources.h" />
-    <ClInclude Include="TaskManager.h" />
+    <ClInclude Include="Action.h" />
     <ClInclude Include="UI_Button.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="UI_Fixed_Button.h" />
@@ -164,6 +164,7 @@
     <ClInclude Include="UI_Scroll.h" />
     <ClInclude Include="UI_String.h" />
     <ClInclude Include="UI_Text_Box.h" />
+    <ClInclude Include="Actions_Unit.h" />
     <ClInclude Include="Units.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
