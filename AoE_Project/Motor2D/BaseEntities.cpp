@@ -124,7 +124,7 @@ const fPoint& Entity::GetPosition() const
 
 iPoint Entity::GetPositionRounded() const
 {
-	return iPoint(position.x,position.y);
+	return iPoint(position.x, position.y);
 }
 
 ENTITY_TYPE Entity::GetEntityType() const
@@ -197,34 +197,34 @@ Unit::~Unit()
 bool Unit::Draw(bool debug)
 {
 	bool ret = false;
-	
-	//Draw Entity Mark
-	if(selected)ret = mark.Draw();
-	
-	if (debug) {
-		//Draw Entity Selection Rect
-		App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
 
-		//Draw axis lines to check the center of the unit (tool used during the sprites allocation)
-		int length = 55;
-		iPoint p1 = { (int)position.x, (int)position.y - length };
-		iPoint p2 = { (int)position.x, (int)position.y + length };
-		SDL_Color color = { 50,255,200,255 };
-		Line y_axis(p1, p2, color);
-		p1.x -= length;
-		p1.y += length;
-		p2.x += length;
-		p2.y -= length;
-		Line x_axis(p1, p2, color);
-		y_axis.Draw();
-		x_axis.Draw();
-		if (path != nullptr)DrawPath();
-	
-	}
-	
+	//Draw Entity Mark
+	if (selected)ret = mark.Draw();
+
+	/*if (debug) {
+	//Draw Entity Selection Rect
+	App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
+
+	//Draw axis lines to check the center of the unit (tool used during the sprites allocation)
+	int length = 55;
+	iPoint p1 = { (int)position.x, (int)position.y - length };
+	iPoint p2 = { (int)position.x, (int)position.y + length };
+	SDL_Color color = { 50,255,200,255 };
+	Line y_axis(p1, p2, color);
+	p1.x -= length;
+	p1.y += length;
+	p2.x += length;
+	p2.y -= length;
+	Line x_axis(p1, p2, color);
+	y_axis.Draw();
+	x_axis.Draw();
+	if (path != nullptr)DrawPath();
+
+	}*/
+
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(),sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
 
 	return ret;
 }
@@ -239,7 +239,7 @@ bool Unit::DrawPath()
 		iPoint cell = path->at(k);
 		App->render->CallBlit(App->pathfinding->path_texture, cell.x - App->map->data.tile_width * 0.5f, cell.y - App->map->data.tile_height * 0.5);
 	}
-	
+
 	return true;
 }
 
@@ -274,7 +274,7 @@ bool Unit::Move()
 			//Stop idle walk animation
 			action_type = IDLE;
 			App->animator->UnitPlay(this);
-			
+
 			//Delete unit path
 			delete path;
 			path = nullptr;
@@ -299,9 +299,9 @@ bool Unit::Move()
 
 	//Add the calculated values at the unit & mark position
 	SetPosition(position.x + x_step, position.y + y_step);
-	mark.SetPosition(iPoint(position.x,position.y));
+	mark.SetPosition(iPoint(position.x, position.y));
 
-	return true;
+	return false;
 }
 
 bool Unit::Interact()
@@ -318,7 +318,7 @@ bool Unit::Interact()
 	//If the target is in the interaction area the unit do the correct action with it
 	switch (interaction_target->GetEntityType())
 	{
-	case UNIT:			if(action_timer.Read() > attack_rate)Attack();		break;
+	case UNIT:			if (action_timer.Read() > attack_rate)Attack();		break;
 	case BUILDING:		Cover();											break;
 	}
 	return true;
@@ -356,7 +356,7 @@ void Unit::Focus(const iPoint & target)
 	{
 		direction_type = DIRECTION_TYPE::NORTH_WEST;
 	}
-	
+
 	//Set the unit animation with the new direction
 	App->animator->UnitPlay(this);
 }
@@ -395,14 +395,14 @@ void Unit::SetPosition(float x, float y)
 	//Extract the units to push it with the new position later
 	if (!App->entities_manager->units_quadtree.Exteract(&position))
 	{
-		int k = 0; 
+		int k = 0;
 		k++;
 	}
 
 	//Set unit position
 	position.x = x;
 	position.y = y;
-	
+
 	//Set unit mark position
 	mark.SetPosition(iPoint(position.x, position.y));
 
@@ -681,24 +681,24 @@ bool Resource::Draw(bool debug)
 	//Draw Resource Mark
 	ret = mark.Draw();
 
-	if (debug) {
-		//Draw Entity Selection Rect
-		App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
+	/*if (debug) {
+	//Draw Entity Selection Rect
+	App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
 
-		//Draw axis lines to check the center of the unit (tool used during the sprites allocation)
-		int length = 55;
-		iPoint p1 = { (int)position.x, (int)position.y - length };
-		iPoint p2 = { (int)position.x, (int)position.y + length };
-		SDL_Color color = { 50,255,200,255 };
-		Line y_axis(p1, p2, color);
-		p1.x -= length;
-		p1.y += length;
-		p2.x += length;
-		p2.y -= length;
-		Line x_axis(p1, p2, color);
-		y_axis.Draw();
-		x_axis.Draw();
-	}
+	//Draw axis lines to check the center of the unit (tool used during the sprites allocation)
+	int length = 55;
+	iPoint p1 = { (int)position.x, (int)position.y - length };
+	iPoint p2 = { (int)position.x, (int)position.y + length };
+	SDL_Color color = { 50,255,200,255 };
+	Line y_axis(p1, p2, color);
+	p1.x -= length;
+	p1.y += length;
+	p2.x += length;
+	p2.y -= length;
+	Line x_axis(p1, p2, color);
+	y_axis.Draw();
+	x_axis.Draw();
+	}*/
 
 	const std::vector<Sprite>* sprites = current_animation->GetAllSprites();
 
@@ -804,7 +804,8 @@ Building::Building() :Entity()
 
 }
 
-Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), building_type(copy.building_type), max_life(copy.max_life), life(copy.life), units_capacity(units_capacity), current_units(copy.current_units)
+Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), building_type(copy.building_type), max_life(copy.max_life),
+life(copy.life), units_capacity(units_capacity), current_units(copy.current_units), width_in_tiles(copy.width_in_tiles), height_in_tiles(copy.height_in_tiles)
 {
 
 }
@@ -833,7 +834,7 @@ Unit * Building::CraftUnit(UNIT_TYPE new_unit_type) const
 	//Add the unit in the crafting units priority queue
 	//production_queue.emplace(new_unit);
 
-	
+
 	return new_unit;
 }
 
@@ -875,24 +876,24 @@ bool Building::Draw(bool debug)
 	//Debug Draw
 	ret = mark.Draw();
 
-	if (debug) {
-		//Draw Entity Selection Rect
-		App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
+	/*if (debug) {
+	//Draw Entity Selection Rect
+	App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
 
-		//Draw axis lines to check the center of the unit (tool used during the sprites allocation)
-		int length = 200;
-		iPoint p1 = { (int)position.x, (int)position.y - length };
-		iPoint p2 = { (int)position.x, (int)position.y + length };
-		SDL_Color color = { 50,255,200,255 };
-		Line y_axis(p1, p2, color);
-		p1.x -= length;
-		p1.y += length;
-		p2.x += length;
-		p2.y -= length;
-		Line x_axis(p1, p2, color);
-		y_axis.Draw();
-		x_axis.Draw();
-	}
+	//Draw axis lines to check the center of the unit (tool used during the sprites allocation)
+	int length = 200;
+	iPoint p1 = { (int)position.x, (int)position.y - length };
+	iPoint p2 = { (int)position.x, (int)position.y + length };
+	SDL_Color color = { 50,255,200,255 };
+	Line y_axis(p1, p2, color);
+	p1.x -= length;
+	p1.y += length;
+	p2.x += length;
+	p2.y -= length;
+	Line x_axis(p1, p2, color);
+	y_axis.Draw();
+	x_axis.Draw();
+	}*/
 
 	//Get all sprites of the current animation
 	const std::vector<Sprite>*	sprites = current_animation->GetAllSprites();
@@ -900,8 +901,8 @@ bool Building::Draw(bool debug)
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(),sprites->at(k).GetOpacity());
-		if(!ret)break;
+		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity());
+		if (!ret)break;
 	}
 
 	return ret;
@@ -909,25 +910,51 @@ bool Building::Draw(bool debug)
 
 void Building::SetPosition(float x, float y)
 {
-	//Set building position fixing it in the tiles coordinates
-	iPoint coords = App->map->WorldToMap(x, y);
-	coords = App->map->MapToWorld(coords.x, coords.y);
-	position.x = coords.x;
-	position.y = coords.y - App->map->data.tile_height * 0.5f;
+	//Set building position fixing it in the tiles coordinates ( center position in the selected tile)
+	iPoint map_coords = App->map->WorldToMap(x, y);
+	iPoint world_coords = App->map->MapToWorld(map_coords.x, map_coords.y);
+	position.x = world_coords.x;
+	position.y = world_coords.y - (App->map->data.tile_height + 1) * 0.5f;
 
 	//Set building mark position
 	mark.SetPosition(iPoint(position.x, position.y));
+
+	//Calculate the upper tile of the building zone
+	iPoint upper_tile(map_coords.x - 2, map_coords.y - 1);
+
+	//Update the logic & construction map
+	//Check if the building is a town center to respect the build exception
+	if (building_type == TOWN_CENTER)
+	{
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2);
+	}
+	else
+	{
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles);
+	}
+
+	App->map->ChangeConstructionMap(upper_tile, width_in_tiles, height_in_tiles);
 
 	//Add building at the correct quad tree
 	App->entities_manager->buildings_quadtree.Insert(this, &position);
 }
 
+//Set Methods ---------------
 void Building::SetMark(const Rectng& rectangle)
 {
 	mark = rectangle;
 }
 
-//Set Methods ---------------
+void Building::SetWidthInTiles(uint width)
+{
+	width_in_tiles = width;
+}
+
+void Building::SetHeightInTiles(uint height)
+{
+	height_in_tiles = height;
+}
+
 void Building::SetBuildingType(BUILDING_TYPE type)
 {
 	building_type = type;

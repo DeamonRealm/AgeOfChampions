@@ -420,9 +420,33 @@ bool j1Render::DrawCone(int x1, int y1, int x2, int y2, uint lenght, uint width,
 	     --
 	*/
 	//Calculate cone point A
-	iPoint vector(x2 - x1, y2 - y1);
-	/*float angle = RADTODEG(atan2(vector.x, vector.y));
-	int result = -1;
+	fPoint vector(x2 - x1, y2 - y1);
+	float len = sqrt(vector.x*vector.x + vector.y*vector.y);
+	float vec_angle = acos(((vector.x * 1 + vector.y * 0) / (len * 1))) * 180.0f/ 3.1415;
+	LOG("Angle: %.2f", vec_angle);
+	fPoint A_vector(vector.x, vector.y);
+	A_vector.x = lenght * cos((vec_angle - 20)* 0.01745329);
+	A_vector.y = lenght * sin((vec_angle - 20)* 0.01745329);
+
+	float A_len = sqrt(A_vector.x*A_vector.x + A_vector.y*A_vector.y);
+	if (len != lenght)
+	{
+		vector.x/=len;
+		vector.y /= len;
+		vector.x *= lenght;
+		vector.y *= lenght;
+		A_vector.x /= A_len;
+		A_vector.y /= A_len;
+		A_vector.x *= lenght;
+		A_vector.y *= lenght;
+	}
+	vector.y *= -sin(10);
+	A_vector.y *= -sin(10);
+	
+	App->render->DrawLine(x1, y1, x1 + vector.x, y1 + vector.y, 255, 255, 255, 255);
+	App->render->DrawLine(x1, y1, x1 + A_vector.x, y1 + A_vector.y, 255, 0, 255, 255);
+	//float angle = atan2(vector.x, vector.y);
+	/*int result = -1;
 	SDL_Point points[360];
 
 	float factor = (float)M_PI / 180.0f;

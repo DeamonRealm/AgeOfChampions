@@ -4,6 +4,8 @@
 #include "p2Defs.h"
 #include <vector>
 
+
+
 class UI_String;
 
 enum PLAYER_RESOURCES
@@ -65,6 +67,8 @@ private:
 	std::vector<UI_String*>		player_resources;
 
 	// Game Menu
+
+
 
 };
 

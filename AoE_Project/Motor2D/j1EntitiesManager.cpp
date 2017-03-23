@@ -145,6 +145,15 @@ bool j1EntitiesManager::CleanUp()
 	//Clean Up buildings_defs vector
 	buildings_defs.clear();
 
+	//Clean Up all unit actions;
+	std::list<Action*>::iterator action_item = entity_actions.begin();
+	while (action_item != entity_actions.end())
+	{
+		RELEASE(action_item._Ptr->_Myval);
+		action_item++;
+	}
+	entity_actions.clear();
+
 	return true;
 }
 
@@ -319,6 +328,8 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 						mark.SetDisplacement(displacement);
 	/*Mark Color*/		mark.SetColor({ 55,255,255,255 });
 						new_def->SetMark(mark);
+	/*W. in Tiles*/		new_def->SetWidthInTiles(building_node->attribute("width_in_tiles").as_uint());
+	/*H. in Tiles*/		new_def->SetHeightInTiles(building_node->attribute("height_in_tiles").as_uint());
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = building_node->attribute("selection_x").as_int();
 	/*S.Rect Y*/		selection_rect.y = building_node->attribute("selection_y").as_int();
@@ -501,7 +512,7 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 			//Set unit animation
 			App->animator->BuildingPlay(new_building);
 
-			//Add the new unit at the units manage list
+			//Add the new building at the buildings manage list
 			buildings.push_back(new_building);
 
 			return new_building;

@@ -11,6 +11,10 @@
 
 #include "Quadtree.h"
 
+//Units/Bukdings Actions
+#include "Action.h"
+
+
 class UI_String;
 class UI_Image;
 
@@ -144,6 +148,10 @@ private:
 	// Used for mouse detection
 	Entity*			UpperEntity = nullptr;
 
+
+
+	//
+	Action* action_command = nullptr;
 	
 };
 

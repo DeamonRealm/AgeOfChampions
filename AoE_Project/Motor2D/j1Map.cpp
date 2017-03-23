@@ -103,16 +103,18 @@ void j1Map::Draw(bool debug)
 	{
 		MapLayer* layer = data.layers[k];
 
-		if (!layer->properties.Get("Draw"))
+		if (!layer->properties.Get("Draw") && !debug)
 		{
 			continue;
 		}
+
 		this->map_quadtree;
 		uint size = points_in_view.size();
 		for (uint k = 0; k < size; k++)
 		{
 			//Get tile id
 			int tile_id = layer->Get(points_in_view[k].x, points_in_view[k].y);
+			if (tile_id == 0)continue;
 
 			//Get tileset from tile id
 			TileSet* tileset = GetTilesetFromTileId(tile_id);
@@ -314,20 +316,21 @@ void j1Map::CalculateTilesInView()
 
 void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint element_height)
 {
-	iPoint map_position = WorldCenterToMap(position.x, position.y);
-	for (int i = map_position.y; i < map_position.y+element_height-1; i++) {
-		for (int j = map_position.x; j < map_position.x+element_width-1; j++) {
+	for (int i = position.y; i < position.y + element_height; i++) {
+		for (int j = position.x; j < position.x + element_width; j++) {
 			logic_map[i*data.width + j] = 0;
+			navigation_layer->data[i * data.width + j] = 18;
 		}
 	}
+	
 }
 
 void j1Map::ChangeConstructionMap(const iPoint & position, uint element_width, uint element_height)
 {
-	iPoint map_position = WorldCenterToMap(position.x, position.y);
-	for (int i = map_position.y; i < map_position.y + element_height - 1; i++) {
-		for (int j = map_position.x; j < map_position.x + element_width - 1; j++) {
+	for (int i = position.y; i < position.y + element_height; i++) {
+		for (int j = position.x; j < position.x + element_width; j++) {
 			construction_map[i*data.width + j] = 0;
+			construction_layer->data[i*data.width + j] = 19;
 		}
 	}
 }
@@ -652,6 +655,11 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	{
 		navigation_layer = layer;
 	}
+	else if (!layer->properties.Get("Navigation") && !layer->properties.Get("Draw"))
+	{
+		construction_layer = layer;
+	}
+
 	pugi::xml_node layer_data = node.child("data");
 
 	if (layer_data == NULL)
