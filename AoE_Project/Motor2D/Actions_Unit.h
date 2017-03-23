@@ -8,8 +8,8 @@
 class MoveUnitAction : public Action
 {
 public:
-	MoveUnitAction(Unit* actor, int x, int y)
-		: actor(actor), x_new(x), y_new(y)
+	MoveUnitAction(Unit* actor, int x, int y): Action(),
+		 actor(actor), x_new(x), y_new(y)
 	{};
 
 

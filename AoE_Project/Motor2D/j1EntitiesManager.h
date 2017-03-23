@@ -6,6 +6,8 @@
 #include "Units.h"
 #include "Quadtree.h"
 
+class Action;
+
 class j1EntitiesManager : public j1Module
 {
 public:
@@ -91,5 +93,13 @@ public:
 	//Units lists movement units used in buildings cover
 	void		AddUnit(const Unit* unit);
 	Unit*		PopUnit(const Unit* unit);
+
+
+
+	//Action list
+	std::list<Action*> entity_actions;
+
+	
+
 };
 #endif // _ENTITIES_MANAGER_

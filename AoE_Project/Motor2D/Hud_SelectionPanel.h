@@ -151,7 +151,7 @@ private:
 
 
 	//
-	Action* action1 = nullptr;
+	Action* action_command = nullptr;
 	
 };
 
