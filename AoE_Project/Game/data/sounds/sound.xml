@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundAtlas>
+
+    <sound soundPath="sword_01.wav" name="sword"/>
+    <sound soundPath="sword_02.wav" name="sword"/>
+    <sound soundPath="sword_03.wav" name="sword"/>
+    <sound soundPath="villager_created.wav" name="villager"/>
+    <sound soundPath="barracks.wav" name="barrack"/>
+
+
+</SoundAtlas>
