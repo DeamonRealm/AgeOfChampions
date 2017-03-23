@@ -239,7 +239,9 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		ret.y = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
 
 		if (ret.x <= 0)ret.x = 1;
+		else if (ret.x >= 120)ret.x = 119;
 		if (ret.y <= 0)ret.y = 0;
+		else if (ret.y >= 120)ret.y = 119;
 
 	}
 	else

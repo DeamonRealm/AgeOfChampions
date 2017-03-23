@@ -76,7 +76,7 @@ bool j1Pathfinding::IsWalkable(const iPoint & destination) const
 
 bool j1Pathfinding::CheckBoundaries(const iPoint & pos) const
 {
-	return (pos.x >= map_min_x && pos.x <= map_max_x && pos.y >= map_min_y && pos.y <= map_max_y);
+	return (pos.x >= map_min_x && pos.x < map_max_x && pos.y >= map_min_y && pos.y < map_max_y);
 }
 
 uchar j1Pathfinding::GetTileAt(const iPoint & pos) const
@@ -301,11 +301,14 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 			if (current->pos == map_goal)
 			{
 				
-				//std::list<PathNode>::const_iterator item = current;
 				std::vector<iPoint>* path = new std::vector<iPoint>;
 				last_path.clear();
+				
 				path->push_back(mouse_position);
-
+				iPoint mouse_cell = App->map->WorldToMap(mouse_position.x, mouse_position.y);
+				if (mouse_cell == current->pos)
+					current = GetPathNode(current->parent->pos.x, current->parent->pos.y);
+				
 				for (; current->parent != nullptr; current = GetPathNode(current->parent->pos.x, current->parent->pos.y))
 				{
 					last_path.push_back(current->pos);

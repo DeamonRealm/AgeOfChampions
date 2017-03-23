@@ -596,8 +596,7 @@ bool j1EntitiesManager::SetUnitPath(Unit* target, const iPoint& goal)
 }
 
 bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal)
-{
-	/*
+{/*
 	if(targets.size() > 0)return false;
 
 	uint size = targets.size();
