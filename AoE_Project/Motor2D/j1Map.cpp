@@ -35,10 +35,10 @@ bool j1Map::Awake(pugi::xml_node& config)
 bool j1Map::CreateWalkabilityMap(uint& width, uint & height) 
 {
 	if (navigation_layer == nullptr)return false;
-
-	logic_map = new uchar[navigation_layer->width*navigation_layer->height];
-	memset(logic_map, 1, navigation_layer->width*navigation_layer->height);
-
+	int size = navigation_layer->width*navigation_layer->height;
+	logic_map = new uchar[size];
+	construction_map = new uchar[size];
+	memset(logic_map, 1, size);
 	for (int y = 0; y < data.height; ++y)
 	{
 		for (int x = 0; x < data.width; ++x)
@@ -50,21 +50,12 @@ bool j1Map::CreateWalkabilityMap(uint& width, uint & height)
 
 			if (tileset != NULL)
 			{
-
-				if (tile_id == 18)
-				{
-					logic_map[i] = 0;
-					construction_map[i] = 0;
-				}
-				else {
-					logic_map[i] = 1;
-					construction_map[i] = 1;
-
-				}
+				if (tile_id == 18)logic_map[i] = 0;	
+				else logic_map[i] = 1;
 			}
 		}
 	}
-
+	memcpy(construction_map, logic_map, size);
 	width = data.width;
 	height = data.height;
 
@@ -375,6 +366,8 @@ bool j1Map::CleanUp()
 
 	// Clean up the pugui tree
 	map_file.reset();
+	RELEASE_ARRAY(logic_map);
+	RELEASE_ARRAY(construction_map);
 
 	return true;
 }
