@@ -178,7 +178,10 @@ public:
 	void CalculateTilesInView();
 	//Change walkability in target tiles
 	void ChangeLogicMap(const iPoint& position, uint width, uint height);
+	void ChangeConstructionMap(const iPoint& position, uint width, uint height);
+
 	uchar*				logic_map = nullptr;
+	uchar*				construction_map = nullptr;
 
 private:
 	QuadTree<iPoint>	map_quadtree;

@@ -56,8 +56,8 @@ void j1Pathfinding::SetMapLimits(int position_x, int position_y, int width, int 
 {
 	map_min_x = position_x;
 	map_min_y = position_y;
-	map_max_x = position_x + width-1;//-1?
-	map_max_y = position_y + height-1;//-1?
+	map_max_x = position_x + width;
+	map_max_y = position_y + height;
 }
 
 void j1Pathfinding::InitClusterAbstraction()

@@ -51,9 +51,16 @@ bool j1Map::CreateWalkabilityMap(uint& width, uint & height)
 			if (tileset != NULL)
 			{
 
-				if (tile_id == 18)logic_map[i] = 0;
-				else logic_map[i] = 1;
+				if (tile_id == 18)
+				{
+					logic_map[i] = 0;
+					construction_map[i] = 0;
+				}
+				else {
+					logic_map[i] = 1;
+					construction_map[i] = 1;
 
+				}
 			}
 		}
 	}
@@ -320,6 +327,16 @@ void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint ele
 	for (int i = map_position.y; i < map_position.y+element_height-1; i++) {
 		for (int j = map_position.x; j < map_position.x+element_width-1; j++) {
 			logic_map[i*data.width + j] = 0;
+		}
+	}
+}
+
+void j1Map::ChangeConstructionMap(const iPoint & position, uint element_width, uint element_height)
+{
+	iPoint map_position = WorldCenterToMap(position.x, position.y);
+	for (int i = map_position.y; i < map_position.y + element_height - 1; i++) {
+		for (int j = map_position.x; j < map_position.x + element_width - 1; j++) {
+			construction_map[i*data.width + j] = 0;
 		}
 	}
 }
