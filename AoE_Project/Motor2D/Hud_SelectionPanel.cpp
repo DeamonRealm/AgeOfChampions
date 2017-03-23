@@ -413,16 +413,21 @@ void Selection_Panel::Select(SELECT_TYPE type)
 			else if (Selected->GetEntity()->GetEntityType() != UNIT) return;
 			App->win->GetWindowSize(width, height);
 			
-			selection_rect = { 0, 32, (int)width, 560 };
+			selection_rect = { 0, 32 , (int)width, 560 };
 			unit_type = ((Unit*)Selected->GetEntity())->GetUnitType();
 
 		}
 		else if (selection_rect.w == 0 || selection_rect.h == 0) return;
 
+
+		selection_rect.x -= App->render->camera.x;
+		selection_rect.y -= App->render->camera.y;
+		
+
 		unit_quad_selection.clear();
 		UnSelect_Entity();
 
-		//App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, selection_rect);
+		App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, selection_rect);
 
 		//Select Entity
 		int size = unit_quad_selection.size();
@@ -508,7 +513,7 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	resource_quad_selection.clear();
 
 	Entity* ret = nullptr;
-	//App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, map_viewport);
+	App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, map_viewport);
 
 	fPoint pos;
 	
@@ -531,7 +536,7 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 		}
 	}
 	
-	//App->entities_manager->buildings_quadtree.CollectCandidates(building_quad_selection, map_viewport);
+	App->entities_manager->buildings_quadtree.CollectCandidates(building_quad_selection, map_viewport);
 
 	size = building_quad_selection.size();
 	for (int count = 0; count < size; count++)
@@ -551,7 +556,7 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 		}
 	}
 	
-	//App->entities_manager->resources_quadtree.CollectCandidates(resource_quad_selection, map_viewport);
+	App->entities_manager->resources_quadtree.CollectCandidates(resource_quad_selection, map_viewport);
 	
 	size = resource_quad_selection.size();
 	for (int count = 0; count < size; count++)

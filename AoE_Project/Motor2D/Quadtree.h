@@ -425,11 +425,18 @@ public:
 		}
 		else
 		{
-			uint size = objects.size();
-			for (uint k = 0; k < size; k++)
+			std::list<m_TreeItem<DATA_TYPE>>::const_iterator object = objects.begin();
+			while (object != objects.end())
 			{
-				if (SDL_PointInRect((SDL_Point*)&objects[k], &rect))
-					nodes.push_back(objects[k].data);
+				fPoint loc = object._Ptr->_Myval.location;
+				SDL_Point point;
+				point.x = loc.x;
+				point.y = loc.y;
+
+				if (SDL_PointInRect((SDL_Point*)&point, &rect))
+					nodes.push_back(object._Ptr->_Myval.data);
+
+				object++;
 			}
 		}
 
