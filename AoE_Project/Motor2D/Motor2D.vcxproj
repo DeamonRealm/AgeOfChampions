@@ -107,7 +107,7 @@
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="TaskManager.cpp" />
+    <ClCompile Include="ActionManager.cpp" />
     <ClCompile Include="UI_Button.cpp" />
     <ClCompile Include="UI_Element.cpp" />
     <ClCompile Include="UI_Fixed_Button.cpp" />
@@ -155,7 +155,7 @@
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Resources.h" />
-    <ClInclude Include="Action.h" />
+    <ClInclude Include="ActionManager.h" />
     <ClInclude Include="UI_Button.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="UI_Fixed_Button.h" />

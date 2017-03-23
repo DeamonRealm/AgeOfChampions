@@ -1,7 +1,7 @@
 #ifndef __ACTION_UNIT_H__
 #define __ACTION_UNIT_H__
 
-#include "Action.h"
+#include "ActionManager.h"
 
 
 //Move the character
@@ -9,7 +9,7 @@ class MoveUnitAction : public Action
 {
 public:
 	MoveUnitAction(Unit* actor, int x, int y): Action(),
-		 actor(actor), x_new(x), y_new(y)
+		 actor(actor), x_new(x), y_new(y), completed(false)
 	{};
 
 
@@ -18,12 +18,17 @@ public:
 		//Try changing so is SetPath from unit??? Maybe a ->SetPath overwrite??
 		App->entities_manager->SetUnitPath(actor, iPoint(x_new, y_new));
 		//-------
-		actor->Move();
+	//	actor->Move();
 	};
+	virtual bool IsDone()
+	{
+		return completed;
+	}
 
 private:
 	Unit* actor;
 	int x_new, y_new;
+	bool completed;
 };
 
 
