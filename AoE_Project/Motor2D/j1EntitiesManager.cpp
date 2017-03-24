@@ -531,11 +531,24 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, bool push_in_list)
 	{
 		if (units_defs[k]->GetUnitType() == type)
 		{
-			//If the unit to generate is a villager we need to generate a villager class 
+			//If the unit to generate is a special unit we need to allocate extra stats
 			if (type == VILLAGER)
 			{
 				Villager* new_villager = new Villager(*(Villager*)units_defs[k]);
 				new_unit = new_villager;
+			}
+			else if (type == WARRIOR_CHMP)
+			{
+				Warrior* new_warrior = new Warrior(*(Warrior*)units_defs[k]);
+				new_unit = new_warrior;
+			}
+			else if (type == ARCHER_CHMP)
+			{
+
+			}
+			else if (type == WIZARD_CHMP)
+			{
+
 			}
 			else
 			{
