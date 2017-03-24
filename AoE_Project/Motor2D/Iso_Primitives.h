@@ -143,7 +143,7 @@ class Triangle : public Primitive
 {
 public:
 
-	Triangle(const iPoint& position, const iPoint& base, uint length, float width_angle, const SDL_Color& color, const iPoint& displacement = { 0,0 });
+	Triangle(const iPoint& position = { 0,0 } , const iPoint& base = { 0,0 }, uint length = 0, float width_angle = 0, const iPoint& displacement = { 0,0 });
 	Triangle(const Triangle& copy);
 	~Triangle();
 
@@ -161,7 +161,7 @@ public:
 	//Set Methods
 	void			SetBase(const iPoint& new_base);
 	void			SetLength(uint new_length);
-	void			SetAngle(float new_angle);
+	void			SetWidthAngle(float new_angle);
 	//Get Methods
 	const iPoint&	GetBase()const;
 	uint			GetLength()const;

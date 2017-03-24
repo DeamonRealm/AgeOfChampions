@@ -295,6 +295,7 @@ UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 	if (strcmp(str, "arbalest") == 0)				return ARBALEST;
 	if (strcmp(str, "archer") == 0)					return ARCHER;
 	if (strcmp(str, "villager") == 0)				return VILLAGER;
+	if (strcmp(str, "warrior_chmp") == 0)			return WARRIOR_CHMP;
 	return NO_UNIT;
 }
 

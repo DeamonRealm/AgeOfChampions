@@ -202,7 +202,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 {
 	if (unit_node == nullptr)return false;
 
-	//Generate a new unit definition from the node & check if is a villager to allocate villager class
+	//Generate a new unit definition from the node & check if is a special unit to allocate extra stats
 	Unit* new_def = nullptr;
 	UNIT_TYPE unit_type = App->animator->StrToUnitEnum(unit_node->attribute("unit_type").as_string());
 	if (unit_type == VILLAGER)
@@ -210,11 +210,24 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		Villager* new_villager = new Villager();
 		new_def = new_villager;
 	}
+	else if (unit_type == WARRIOR_CHMP)
+	{
+		Warrior* new_warrior = new Warrior();
+		new_def = new_warrior;
+	}
+	else if (unit_type == ARCHER_CHMP)
+	{
+
+	}
+	else if (unit_type == WIZARD_CHMP)
+	{
+
+	}
 	else
 	{
 		new_def = new Unit();
 	}
-	
+
 	//Unit ID ---------------
 	/*Name*/			new_def->SetName(unit_node->attribute("name").as_string());
 	/*Entity Type*/		new_def->SetEntityType(UNIT);
@@ -260,12 +273,39 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Train Time*/		new_def->SetTrainTime(unit_node->attribute("train_time").as_uint());
 
 
-	//Villager Data ---------
+	//Fill the extra allocated special unit stats
+	bool chmp = false;
 	if (unit_type == VILLAGER)
 	{
 		/*Resources Capacity*/	((Villager*)new_def)->SetResourcesCapacity(unit_node->attribute("resources_capacity").as_uint());
 		/*Recollect Capacity*/	((Villager*)new_def)->SetRecollectCapacity(unit_node->attribute("recollect_capacity").as_uint());
 		/*Recollect Rate*/		((Villager*)new_def)->SetRecollectRate(unit_node->attribute("recollect_rate").as_uint());
+	}
+	else if (unit_type == WARRIOR_CHMP)
+	{
+		/*Attakc Triangle*/		Triangle atk_triangle;
+		/*Atk Triangle Length*/	atk_triangle.SetLength(unit_node->attribute("atk_triangle_length").as_uint());
+		/*Atk Triangle Width*/	atk_triangle.SetWidthAngle(unit_node->attribute("atk_triangle_width_angle").as_float());
+								((Warrior*)new_def)->SetSpecialAttackArea(atk_triangle);
+								chmp = true;
+	}
+	else if (unit_type == ARCHER_CHMP)
+	{
+
+	}
+	else if (unit_type == WIZARD_CHMP)
+	{
+
+	}
+
+	if (chmp)
+	{
+		/*Attack for level*/	((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("attack_for_level").as_uint());
+		/*Range for level*/		((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("range_for_level").as_uint());
+		/*Defense for level*/	((Champion*)new_def)->SetDefenseForLevel(unit_node->attribute("defense_for_level").as_float());
+		/*Armor for level*/		((Champion*)new_def)->SetArmorForLevel(unit_node->attribute("armor_for_level").as_float());
+		/*Speed for level*/		((Champion*)new_def)->SetSpeedForLevel(unit_node->attribute("speed_for_level").as_float());
+		/*View Area for level*/	((Champion*)new_def)->SetViewAreaForLevel(unit_node->attribute("view_area_for_level").as_uint());
 	}
 
 	//Add the generated unit in the units definitions entities manager array

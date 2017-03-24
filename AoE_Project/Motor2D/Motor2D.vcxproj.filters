@@ -118,7 +118,7 @@
       <Filter>Modules\TasksMagament</Filter>
     </ClCompile>
     <ClCompile Include="j1SoundManager.cpp">
-      <Filter>Modules\EnititiesManager</Filter>
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,7 +260,7 @@
       <Filter>Modules\TasksMagament</Filter>
     </ClInclude>
     <ClInclude Include="j1SoundManager.h">
-      <Filter>Modules\EnititiesManager</Filter>
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

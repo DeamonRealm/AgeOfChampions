@@ -2,9 +2,11 @@
 #define _ENTITIES_MANAGER_
 
 #include "j1Module.h"
+#include "Quadtree.h"
+
 #include "BaseEntities.h"
 #include "Units.h"
-#include "Quadtree.h"
+#include "Champions.h"
 
 class Action;
 class ActionManager;

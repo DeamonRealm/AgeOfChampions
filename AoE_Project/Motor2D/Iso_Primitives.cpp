@@ -210,7 +210,7 @@ const iPoint& Line::GetP2() const
 ///Class Triangle -------------------------------
 //Triangle isometric primitive
 //Constructors ==============
-Triangle::Triangle(const iPoint & position, const iPoint & base, uint length, float width_angle, const SDL_Color & color, const iPoint & displacement) :Primitive(position, displacement, color), base(base), length(length), width_angle(width_angle)
+Triangle::Triangle(const iPoint & position, const iPoint & base, uint length, float width_angle, const iPoint & displacement) :Primitive(position, displacement), base(base), length(length), width_angle(width_angle)
 {
 
 }
@@ -242,7 +242,7 @@ void Triangle::SetLength(uint new_length)
 	length = new_length;
 }
 
-void Triangle::SetAngle(float new_angle)
+void Triangle::SetWidthAngle(float new_angle)
 {
 	width_angle = new_angle;
 }

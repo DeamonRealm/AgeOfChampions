@@ -10,7 +10,7 @@ Champion::Champion() : Unit()
 }
 
 Champion::Champion(const Champion & copy) : Unit(copy), level(copy.level), attack_for_level(copy.attack_for_level), range_for_level(copy.range_for_level),
-defence_for_level(copy.defence_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level)
+defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level)
 {
 
 }
@@ -23,12 +23,12 @@ Champion::~Champion()
 
 //Functionality =======================
 //Actions -------------------
-void Champion::Hability_A(const iPoint zone)
+void Champion::Hability_A(...)
 {
 
 }
 
-void Champion::Hability_B(const iPoint zone)
+void Champion::Hability_B(...)
 {
 
 }
@@ -49,9 +49,9 @@ void Champion::SetRangeForLevel(uint rng_for_lvl)
 	range_for_level = rng_for_lvl;
 }
 
-void Champion::SetDefenceForLevel(float def_for_lvl)
+void Champion::SetDefenseForLevel(float def_for_lvl)
 {
-	defence_for_level = def_for_lvl;
+	defense_for_level = def_for_lvl;
 }
 
 void Champion::SetArmorForLevel(float arm_for_lvl)
@@ -85,9 +85,9 @@ uint Champion::GetRangeForLevel() const
 	return range_for_level;
 }
 
-float Champion::GetDefenceForLevel() const
+float Champion::GetDefenseForLevel() const
 {
-	return defence_for_level;
+	return defense_for_level;
 }
 
 float Champion::GetArmorForLevel() const
@@ -105,3 +105,38 @@ uint Champion::GetViewAreaForLevel() const
 	return view_area_for_level;
 }
 /// ---------------------------------------------
+
+/// Class Warrior -------------------------------
+// Class that defines the warrior champion states
+//Constructors ========================
+Warrior::Warrior() :Champion()
+{
+
+}
+
+Warrior::Warrior(const Warrior & copy): Champion(copy),special_attack_area(copy.special_attack_area)
+{
+
+}
+
+//Destructors =========================
+Warrior::~Warrior()
+{
+
+}
+
+//Functionality =======================
+//Actions -------------------
+void Warrior::Hability_A(...)
+{
+	special_attack_area.Draw();
+}
+
+//Set Methods ---------------
+void Warrior::SetSpecialAttackArea(const Triangle & tri)
+{
+	special_attack_area = tri;
+}
+/// ---------------------------------------------
+
+
