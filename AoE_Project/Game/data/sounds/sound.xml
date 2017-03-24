@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundAtlas>
 
+  <type enum="sword_solo">
     <sound soundPath="sword_01.wav" name="sword"/>
     <sound soundPath="sword_02.wav" name="sword"/>
     <sound soundPath="sword_03.wav" name="sword"/>
-    <sound soundPath="villager_created.wav" name="villager"/>
+  </type>
+  <type enum="barracks_create_select">
     <sound soundPath="barracks.wav" name="barrack"/>
+  </type>
+
+   
 
 
 </SoundAtlas>
