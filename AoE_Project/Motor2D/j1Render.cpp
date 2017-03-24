@@ -4,7 +4,6 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Console.h"
-
 #include <math.h>
 
 ///Class Blit_Call ------------------------------
@@ -403,70 +402,51 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	return ret;
 }
 
-bool j1Render::DrawCone(int x1, int y1, int x2, int y2, uint lenght, uint width, float x_angle, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+bool j1Render::DrawTriangle(int x1, int y1, int x2, int y2, uint length, float angle, float x_angle, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
-	bool ret = true;
-	uint scale = App->win->GetScale();
-
+	//Prepare render
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
 	/*
-	A----------B
-	 -        -
-	  -      -
-	   -    -
-	    -  -
-	     --
+	A-----M-----B
+	 -		   -
+	  -       -
+	   -     -
+	    -   -
+	     - -
+		  0
 	*/
-	//Calculate cone point A
-	fPoint vector(x2 - x1, y2 - y1);
-	float len = sqrt(vector.x*vector.x + vector.y*vector.y);
-	float vec_angle = acos(((vector.x * 1 + vector.y * 0) / (len * 1))) * 180.0f/ 3.1415;
-	LOG("Angle: %.2f", vec_angle);
-	fPoint A_vector(vector.x, vector.y);
-	A_vector.x = lenght * cos((vec_angle - 20)* 0.01745329);
-	A_vector.y = lenght * sin((vec_angle - 20)* 0.01745329);
+	//Calculate 0 -> M vector
+	fPoint mid_vector(x2 - x1, y2 - y1);
+	mid_vector.Norm();
+	mid_vector *= length * 0.5;
+	//mid_vector.y *= -sin(x_angle);
 
-	float A_len = sqrt(A_vector.x*A_vector.x + A_vector.y*A_vector.y);
-	if (len != lenght)
-	{
-		vector.x/=len;
-		vector.y /= len;
-		vector.x *= lenght;
-		vector.y *= lenght;
-		A_vector.x /= A_len;
-		A_vector.y /= A_len;
-		A_vector.x *= lenght;
-		A_vector.y *= lenght;
-	}
-	vector.y *= -sin(10);
-	A_vector.y *= -sin(10);
-	
-	App->render->DrawLine(x1, y1, x1 + vector.x, y1 + vector.y, 255, 255, 255, 255);
+	//Calculate 0 -> A vector
+	fPoint A_vector;
+	A_vector.x = mid_vector.x * cos((angle * 0.5)) - mid_vector.y * sin((angle * 0.5));
+	A_vector.y = mid_vector.x * sin((angle * 0.5)) + mid_vector.y * cos((angle * 0.5));
+	A_vector.Norm();
+	A_vector *= length;
+	A_vector.y *= -sin(x_angle);
+
+	//Calculate 0 -> B vector
+	fPoint B_vector;
+	B_vector.x = mid_vector.x * cos((-angle * 0.5)) - mid_vector.y * sin((-angle * 0.5));
+	B_vector.y = mid_vector.x * sin((-angle * 0.5)) + mid_vector.y * cos((-angle * 0.5));
+	B_vector.Norm();
+	B_vector *= length;
+	B_vector.y *= -sin(x_angle);
+
+	//Draw all the calculated vectors
+	App->render->DrawLine(x1, y1, x1 + mid_vector.x, y1 + mid_vector.y, 255, 255, 255, 255);
 	App->render->DrawLine(x1, y1, x1 + A_vector.x, y1 + A_vector.y, 255, 0, 255, 255);
-	//float angle = atan2(vector.x, vector.y);
-	/*int result = -1;
-	SDL_Point points[360];
-
-	float factor = (float)M_PI / 180.0f;
-
-
-	for (uint i = 0; i < 360; ++i)
-	{
-		points[i].x = (int)(x + radius * cos(i * factor)) + camera.x;
-		points[i].y = (int)((y + radius * sin(i * factor) * sin(x_angle))) + camera.y;
-	}
+	App->render->DrawLine(x1, y1, x1 + B_vector.x, y1 + B_vector.y, 255, 0, 255, 255);
+	App->render->DrawLine(x1 + A_vector.x, y1 + A_vector.y, x1 + B_vector.x, y1 + B_vector.y, 255, 0, 255, 255);
 	
-	result = SDL_RenderDrawPoints(renderer, points, 360);
 
-	if (result != 0)
-	{
-		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
-		ret = false;
-	}*/
-
-	return ret;
+	return true;
 }
 
 void j1Render::Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string * input)

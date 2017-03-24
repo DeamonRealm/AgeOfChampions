@@ -206,3 +206,60 @@ const iPoint& Line::GetP2() const
 {
 	return position_2;
 }
+
+///Class Triangle -------------------------------
+//Triangle isometric primitive
+//Constructors ==============
+Triangle::Triangle(const iPoint & position, const iPoint & base, uint length, float width_angle, const SDL_Color & color, const iPoint & displacement) :Primitive(position, displacement, color), base(base), length(length), width_angle(width_angle)
+{
+
+}
+
+Triangle::Triangle(const Triangle & copy):Primitive(copy), base(copy.base), length(copy.length), width_angle(copy.width_angle)
+{
+
+}
+
+//Destructors ===============
+Triangle::~Triangle()
+{
+
+}
+
+//Functionality =============
+bool Triangle::Draw()
+{
+	return App->render->DrawTriangle(position.x, position.y, base.x, base.y, length, width_angle, x_angle, color.r, color.g, color.b, color.a);
+}
+
+void Triangle::SetBase(const iPoint & new_base)
+{
+	base = new_base;
+}
+
+void Triangle::SetLength(uint new_length)
+{
+	length = new_length;
+}
+
+void Triangle::SetAngle(float new_angle)
+{
+	width_angle = new_angle;
+}
+
+const iPoint & Triangle::GetBase() const
+{
+	return base;
+}
+
+uint Triangle::GetLength() const
+{
+	return length;
+}
+
+float Triangle::GetWidthAngle() const
+{
+	return width_angle;
+}
+
+/// ---------------------------------------------

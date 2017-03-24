@@ -61,7 +61,7 @@ public:
 	//Map Folders
 	std::vector <std::string> map_folder;
 
-	uint current_map=0;
+	uint current_map = 0;
 
 
 	//Troops for testing

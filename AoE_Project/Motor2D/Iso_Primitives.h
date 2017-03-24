@@ -110,7 +110,7 @@ public:
 /// ---------------------------------------------
 
 ///Class Line -----------------------------------
-//Rectangle isometric primitive
+//Line isometric primitive
 class Line : public Primitive
 {
 public:
@@ -134,6 +134,39 @@ public:
 	//Get Methods
 	const iPoint&	GetP1()const;
 	const iPoint& 	GetP2()const;
+};
+/// ---------------------------------------------
+
+///Class Triangle -------------------------------
+//Triangle isometric primitive
+class Triangle : public Primitive
+{
+public:
+
+	Triangle(const iPoint& position, const iPoint& base, uint length, float width_angle, const SDL_Color& color, const iPoint& displacement = { 0,0 });
+	Triangle(const Triangle& copy);
+	~Triangle();
+
+private:
+
+	iPoint base = { 0,0 };
+	uint length = 0;
+	float width_angle = 0;
+
+public:
+
+	//Functionality ---------
+	//Draw
+	bool			Draw();
+	//Set Methods
+	void			SetBase(const iPoint& new_base);
+	void			SetLength(uint new_length);
+	void			SetAngle(float new_angle);
+	//Get Methods
+	const iPoint&	GetBase()const;
+	uint			GetLength()const;
+	float			GetWidthAngle()const;
+
 };
 /// ---------------------------------------------
 #endif // _ISO_PRIMITVES_

@@ -243,7 +243,9 @@ bool j1Scene::Update(float dt)
 	App->entities_manager->Draw();
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	App->render->DrawCone(arbalest->GetPosition().x, arbalest->GetPosition().y, x - App->render->camera.x, y - App->render->camera.y, 250, 200, 10, 255, 255, 255, 255);
+	App->render->DrawTriangle(arbalest->GetPosition().x, arbalest->GetPosition().y, x - App->render->camera.x, y - App->render->camera.y, 350, 100, 12, 255, 255, 255, 255);
+	
+	
 	return true;
 }
 

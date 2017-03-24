@@ -75,6 +75,14 @@ public:
 		return(*this);
 	}
 
+	const p2Point& operator *=(const int num)
+	{
+		x *= num;
+		y *= num;
+
+		return(*this);
+	}
+
 	bool operator ==(const p2Point& v) const
 	{
 		return (x == v.x && y == v.y);
@@ -158,13 +166,19 @@ public:
 		return abs(v.x - x) + abs(v.y - y);
 	}
 
-	// Round ----------------------------------------------
+	// Maths ----------------------------------------------
 	p2Point Round()const
 	{
 		p2Point point(this->x,this->y);
 		point.x = (point.x > (floor(point.x) + 0.5f)) ? ceil(point.x) : floor(point.x);
 		point.y = (point.y > (floor(point.y) + 0.5f)) ? ceil(point.y) : floor(point.y);
 		return point;
+	}
+	void Norm()
+	{
+		float len = sqrt(x*x + y*y);
+		x /= len;
+		y /= len;
 	}
 
 };
