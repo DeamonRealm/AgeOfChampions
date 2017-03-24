@@ -26,10 +26,11 @@ class j1Gui;
 class j1Console;
 class j1Module;
 class j1Animator;
+class j1SoundManager;
+
 class j1EntitiesManager;
 class j1Player;
 class j1Pathfinding;
-
 class Command;
 class Cvar;
 
@@ -108,6 +109,8 @@ public:
 	j1Gui*				gui = NULL;
 	j1Console*			console = NULL;
 	j1Animator*			animator = NULL;
+	j1SoundManager*		sound = NULL;
+
 	j1EntitiesManager*	entities_manager = NULL;
 	j1Player*			player = NULL;
 	j1Pathfinding*		pathfinding = NULL;

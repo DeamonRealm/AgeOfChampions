@@ -117,6 +117,9 @@
     <ClCompile Include="ActionManager.cpp">
       <Filter>Modules\TasksMagament</Filter>
     </ClCompile>
+    <ClCompile Include="j1SoundManager.cpp">
+      <Filter>Modules\EnititiesManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -256,6 +259,9 @@
     <ClInclude Include="ActionManager.h">
       <Filter>Modules\TasksMagament</Filter>
     </ClInclude>
+    <ClInclude Include="j1SoundManager.h">
+      <Filter>Modules\EnititiesManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -294,5 +300,8 @@
     <Filter Include="Modules\TasksMagament">
       <UniqueIdentifier>{0b086b82-d4b0-4f1c-871b-f1fa6dc611f9}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\data\sounds\sound.xml" />
   </ItemGroup>
 </Project>

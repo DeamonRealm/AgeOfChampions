@@ -11,6 +11,7 @@
 #include "j1Pathfinding.h"
 #include "j1Map.h"
 #include "p2Log.h"
+#include "j1SoundManager.h"
 
 //Testing purposes only should be erased
 #include "j1Scene.h"
@@ -465,6 +466,13 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	}
 	// ------------------------------------------
 
+	//Load xml sounds
+	load_folder.clear();
+
+	load_folder = name + "/" + "SoundsData.xml";
+	App->sound->LoadSoundBlock(load_folder.c_str());
+
+	// ------------------------------------------
 
 	//Clean loaded xml
 	civilization_data.reset();

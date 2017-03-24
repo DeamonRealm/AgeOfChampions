@@ -3,19 +3,16 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include "j1App.h"
 #include "j1FileSystem.h"
-#include "j1Render.h"
-#include "j1Textures.h"
-#include "SDL/include/SDL_rect.h"
 #include "p2Log.h"
-#include "j1EntitiesManager.h"
 #include "j1Audio.h"
+#include "j1EntitiesManager.h"
+#include "j1App.h"
 
 
 /// Sound Block Class -----------------------
 //Constructor =========================
-Sound_Block::Sound_Block(uint enum_id) :enum_id(enum_id)
+Sound_Block::Sound_Block(SOUND_TYPE type) :type(type)
 {
 
 }
@@ -33,9 +30,9 @@ void Sound_Block::ClearSound()
 	sound.clear();
 }
 
-void Sound_Block::SetId(uint id)
+void Sound_Block::SetType(SOUND_TYPE set)
 {
-	enum_id = id;
+	type = set;
 }
 
 void Sound_Block::SetSound(const int value)
@@ -55,9 +52,9 @@ int Sound_Block::GetSoundSize()
 	return sound.size();
 }
 
-uint Sound_Block::GetId() const
+SOUND_TYPE Sound_Block::GetType() const
 {
-	return enum_id;
+	return type;
 }
 
 
@@ -108,11 +105,12 @@ bool j1SoundManager::CleanUp()
 
 
 //Methods that transform strings to enums (used when loading data from xml)
-SOUND_ATTACK_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
+SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 {
-	if (strcmp(str, "sword") == 0)		return SWORD_ATTACK;
+	if (strcmp(str, "sword") == 0)			return SWORD_ATTACK_SOUND;
+	if (strcmp(str, "barrack") == 0)		return BARRACK_SOUND;
 
-	return NO_ATTACK_SOUND;
+	return NO_SOUND;
 }
 
 
@@ -125,11 +123,6 @@ bool j1SoundManager::LoadSoundBlock(const char* xml_folder)
 	std::string load_folder = name + "/" + xml_folder;
 	pugi::xml_document sound_data;
 	if (!App->fs->LoadXML(load_folder.c_str(), &sound_data)) return false;
-
-
-	//Texture load
-	load_folder = name + "/" + sound_data.child("SoundAtlas").attribute("imagePath").as_string();
-	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
 
 	//Load Animations data
 	//Node focused at any unit node
@@ -147,7 +140,7 @@ bool j1SoundManager::LoadSoundBlock(const char* xml_folder)
 	{
 		Sound_Block* sound_block = new Sound_Block();
 
-		sound_block->SetId(StrToSoundEnum(type_node.attribute("enum").as_string()));
+		sound_block->SetType(StrToSoundEnum(type_node.attribute("enum").as_string()));
 
 		sound_node = type_node.first_child();
 		int fx = 0;
@@ -180,7 +173,7 @@ bool j1SoundManager::PlayAudio(SOUND_TYPE sound)
 		block = sound_blocks[k];
 
 		//Compare block unit id
-		if (block->GetId() == sound)
+		if (block->GetType() == sound)
 		{
 			uint rand_sound = rand() % block->GetSoundSize();
 			ret=App->audio->PlayFx(rand_sound);

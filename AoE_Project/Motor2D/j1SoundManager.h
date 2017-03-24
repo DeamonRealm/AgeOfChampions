@@ -3,13 +3,7 @@
 
 #include "j1Module.h"
 #include "j1Timer.h"
-#include "p2Point.h"
-#include "SDL/include/SDL_rect.h"
-struct SDL_Texture;
-class Unit;
-class Building;
-class Resource;
-enum SOUND_ATTACK_TYPE;
+#include "BaseEntities.h"
 enum SOUND_TYPE;
 
 
@@ -19,14 +13,14 @@ class Sound_Block
 {
 public:
 
-	Sound_Block(uint enum_id = 0);
+	Sound_Block(SOUND_TYPE type = NO_SOUND);
 
 	~Sound_Block();
 
 private:
 
 	//Enum id of this block
-	uint						enum_id = 0;
+	SOUND_TYPE				type = NO_SOUND;
 	//Pointer to a vector of animations 
 	std::vector<int>		sound;
 
@@ -35,13 +29,13 @@ public:
 	//Functionality -------------------
 	void	ClearSound();
 	//Set Methods -----------
-	void	SetId(uint id);
+	void	SetType(SOUND_TYPE type);
 	void	SetSound(const int value);
 	//Get Methods -----------
 	int					GetAudio(int index);
 
 	int					GetSoundSize();
-	uint				GetId()const;
+	SOUND_TYPE				GetType()const;
 	
 };
 /// ---------------------------------------------
@@ -78,7 +72,7 @@ public:
 
 	//Functionality -------------------
 	//Methods that transform strings to enums (used when loading data from xml)
-	SOUND_ATTACK_TYPE		StrToSoundEnum(const char* str)const;
+	SOUND_TYPE		StrToSoundEnum(const char* str)const;
 
 
 	//Blocks Load Methods ---

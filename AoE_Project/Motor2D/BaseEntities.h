@@ -117,18 +117,10 @@ enum ITEM_TYPE
 enum SOUND_TYPE
 {
 	NO_SOUND,
-	ATTACK_SOUND
+	SWORD_ATTACK_SOUND,
+	BARRACK_SOUND
 };
-enum SOUND_ATTACK_TYPE
-{
-	NO_ATTACK_SOUND,
-	SWORD_ATTACK
-};
-enum SOUND_BUILDING_TYPE
-{
-	NO_BUILDING_SOUND,
-	
-};
+
 // --------------------------
 
 ///Class Entity ---------------------------------
