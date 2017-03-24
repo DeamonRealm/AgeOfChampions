@@ -107,8 +107,12 @@ bool j1SoundManager::CleanUp()
 //Methods that transform strings to enums (used when loading data from xml)
 SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 {
-	if (strcmp(str, "sword") == 0)			return SWORD_ATTACK_SOUND;
-	if (strcmp(str, "barrack") == 0)		return BARRACK_SOUND;
+	if (strcmp(str, "sword_solo") == 0)			return SWORD_ATTACK_SOUND;
+	else if (strcmp(str, "barracks_create_select") == 0)		return BARRACK_SOUND;
+	else if (strcmp(str, "town_center_select") == 0)		return TOWN_CENTER_SELECTED_SOUND;
+	else if (strcmp(str, "villager_create") == 0)		return VILLAGER_CREATED_SOUND;
+	else if (strcmp(str, "unit_death") == 0)		return DEATH_SOUND;
+
 
 	return NO_SOUND;
 }
@@ -145,7 +149,7 @@ bool j1SoundManager::LoadSoundBlock(const char* xml_folder)
 		sound_node = type_node.first_child();
 		int fx = 0;
 		while (sound_node != NULL) {
-			load_folder = name + "/" + sound_node.attribute("name").as_string();
+			load_folder = name + "/" + sound_node.attribute("soundPath").as_string();
 			sound_block->SetSound(App->audio->LoadFx(load_folder.c_str()));
 			sound_node = sound_node.next_sibling();
 

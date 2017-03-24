@@ -9,8 +9,21 @@
   <type enum="barracks_create_select">
     <sound soundPath="barracks.wav" name="barrack"/>
   </type>
+  <type enum="town_center_select">
+    <sound soundPath="town_center_selected.wav" name="town_center_selected"/>
+  </type>
+  <type enum="villager_create">
+    <sound soundPath="villager_created.wav" name="villager_created"/>
+  </type>
+  <type enum="unit_death">
+    <sound soundPath="unit_death_01.wav" name="death"/>
+    <sound soundPath="unit_death_02.wav" name="death"/>
+    <sound soundPath="unit_death_03.wav" name="death"/>
+    <sound soundPath="unit_death_04.wav" name="death"/>
+    <sound soundPath="unit_death_05.wav" name="death"/>
+    <sound soundPath="unit_death_06.wav" name="death"/>
 
-   
+  </type>
 
 
 </SoundAtlas>
