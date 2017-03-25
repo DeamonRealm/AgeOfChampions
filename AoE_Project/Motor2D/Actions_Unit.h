@@ -1,7 +1,7 @@
 #ifndef __ACTION_UNIT_H__
 #define __ACTION_UNIT_H__
 
-#include "ActionManager.h"
+#include "j1ActionManager.h"
 
 
 //Move the character
@@ -15,10 +15,8 @@ public:
 
 	virtual void execute()
 	{
-		//Try changing so is SetPath from unit??? Maybe a ->SetPath overwrite??
+		//Set path so the unit starts moving
 		App->entities_manager->SetUnitPath(actor, iPoint(x_new, y_new));
-		//-------
-	//	actor->Move();
 	};
 	virtual bool IsDone()
 	{

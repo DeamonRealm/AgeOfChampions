@@ -1,7 +1,8 @@
-#ifndef __ACTION_MANAGER_H__
-#define __ACTION_MANAGER_H__
+#ifndef __J1ACTION_MANAGER_H__
+#define __J1ACTION_MANAGER_H__
 
 #include "j1App.h"
+#include "j1Module.h"
 #include "j1EntitiesManager.h"
 
 //Action virtual class (are commands but not for the console)
@@ -10,7 +11,6 @@ class Action
 public:
 	//Set all the Actions to a list on the Entities manager to clean them up at closing the app.
 	Action();
-
 	~Action();
 public:
 	//This function defines the action taking place
@@ -24,21 +24,18 @@ public:
 
 
 
-//Action management class
-///Should act like a list, but with simplified methods
-class ActionManager
+//Action Manager Module
+class j1ActionManager : public j1Module
 {
 public:
-	ActionManager();
-	~ActionManager();
+	j1ActionManager();
+	~j1ActionManager();
 
-	void Add(Action* new_action);
-
-	//Delete all actions in the list
-	void CleanUp();
 
 private:
+	//List of all action JUST for CLEANUP
 	std::list<Action*> all_actions;
+
 };
 
 

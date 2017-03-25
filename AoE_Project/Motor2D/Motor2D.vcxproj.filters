@@ -114,11 +114,11 @@
     <ClCompile Include="Champions.cpp">
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="ActionManager.cpp">
-      <Filter>Modules\TasksMagament</Filter>
-    </ClCompile>
     <ClCompile Include="j1SoundManager.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1ActionManager.cpp">
+      <Filter>Modules\TasksMagament</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,11 +256,11 @@
     <ClInclude Include="Actions_Unit.h">
       <Filter>Modules\TasksMagament</Filter>
     </ClInclude>
-    <ClInclude Include="ActionManager.h">
-      <Filter>Modules\TasksMagament</Filter>
-    </ClInclude>
     <ClInclude Include="j1SoundManager.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1ActionManager.h">
+      <Filter>Modules\TasksMagament</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

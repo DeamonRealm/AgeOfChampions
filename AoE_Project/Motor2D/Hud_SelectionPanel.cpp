@@ -340,7 +340,6 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			action_command = new MoveUnitAction((Unit*)selected_elements.begin()._Ptr->_Myval, mouse_x - App->render->camera.x, mouse_y - App->render->camera.y);
 			action_command->execute();
 			action_command = nullptr;
-			//App->entities_manager->SetUnitPath((Unit*)selected_elements.begin()._Ptr->_Myval, iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 		}
 		break;
 	case MOUSE_IN:

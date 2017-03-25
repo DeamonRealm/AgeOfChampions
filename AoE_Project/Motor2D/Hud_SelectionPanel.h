@@ -152,7 +152,7 @@ private:
 
 
 
-	//
+	//Action inputs
 	Action* action_command = nullptr;
 	
 };

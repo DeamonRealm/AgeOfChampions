@@ -100,8 +100,8 @@ public:
 
 
 	//Action list
-	//std::list<Action*> entity_actions;
-	ActionManager* unit_actions = nullptr;
+	std::list<Action*> entity_actions;
+	
 	
 
 };
