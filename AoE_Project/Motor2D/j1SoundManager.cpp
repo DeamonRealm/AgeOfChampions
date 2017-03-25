@@ -112,6 +112,9 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "town_center_select") == 0)		return TOWN_CENTER_SELECTED_SOUND;
 	else if (strcmp(str, "villager_create") == 0)		return VILLAGER_CREATED_SOUND;
 	else if (strcmp(str, "unit_death") == 0)		return DEATH_SOUND;
+	else if (strcmp(str, "unit_attack") == 0)		return ATTACK_SOUND;
+	else if (strcmp(str, "unit_click") == 0)		return CLICK_SOUND;
+	else if (strcmp(str, "unit_move") == 0)		return MOVE_SOUND;
 
 
 	return NO_SOUND;
@@ -124,7 +127,7 @@ bool j1SoundManager::LoadSoundBlock(const char* xml_folder)
 	//Load animations data from folders
 	//XML load
 	LOG("Loading: %s", xml_folder);
-	std::string load_folder = name + "/" + xml_folder;
+	std::string load_folder = xml_folder;
 	pugi::xml_document sound_data;
 	if (!App->fs->LoadXML(load_folder.c_str(), &sound_data)) return false;
 

@@ -22,8 +22,21 @@
     <sound soundPath="unit_death_04.wav" name="death"/>
     <sound soundPath="unit_death_05.wav" name="death"/>
     <sound soundPath="unit_death_06.wav" name="death"/>
-
   </type>
-
-
+  <type enum="unit_attack">
+    <sound soundPath="male_01_attack_01.wav" name="attack"/>
+    <sound soundPath="male_01_attack_02.wav" name="attack"/>
+    <sound soundPath="male_01_attack_03.wav" name="attack"/>
+    <sound soundPath="male_01_attack_04.wav" name="attack"/>
+  </type>
+  <type enum="unit_click">
+    <sound soundPath="male_01_click_01.wav" name="click"/>
+    <sound soundPath="male_01_click_02.wav" name="click"/>
+    <sound soundPath="male_01_click_03.wav" name="click"/>
+  </type>
+  <type enum="unit_move">
+    <sound soundPath="male_01_move_01.wav" name="move"/>
+    <sound soundPath="male_01_move_02.wav" name="move"/>
+    <sound soundPath="male_01_move_03.wav" name="move"/>
+  </type>
 </SoundAtlas>
