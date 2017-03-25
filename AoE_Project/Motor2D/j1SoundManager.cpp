@@ -150,10 +150,9 @@ bool j1SoundManager::LoadSoundBlock(const char* xml_folder)
 		sound_block->SetType(StrToSoundEnum(type_node.attribute("enum").as_string()));
 
 		sound_node = type_node.first_child();
-		int fx = 0;
 		while (sound_node != NULL) {
 			load_folder = name + "/" + sound_node.attribute("soundPath").as_string();
-			sound_block->SetSound(App->audio->LoadFx(load_folder.c_str()));
+			sound_block->SetSound(App->audio->LoadFx(load_folder.c_str())-1);
 			sound_node = sound_node.next_sibling();
 
 		}
@@ -183,7 +182,7 @@ bool j1SoundManager::PlayAudio(SOUND_TYPE sound)
 		if (block->GetType() == sound)
 		{
 			uint rand_sound = rand() % block->GetSoundSize();
-			ret=App->audio->PlayFx(rand_sound);
+			ret=App->audio->PlayFx(block->GetAudio(rand_sound));
 			return ret;
 		}
 	}
