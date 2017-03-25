@@ -150,16 +150,6 @@ bool j1EntitiesManager::CleanUp()
 	//Clean Up buildings_defs vector
 	buildings_defs.clear();
 
-	//Clean Up all unit actions;--> Wi
-	std::list<Action*>::iterator action_item = entity_actions.begin();
-	while (action_item != entity_actions.end())
-	{
-		RELEASE(action_item._Ptr->_Myval);
-		action_item++;
-	}
-	entity_actions.clear();
-
-
 
 	return true;
 }

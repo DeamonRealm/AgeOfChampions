@@ -99,8 +99,7 @@ public:
 
 
 
-	//Action list
-	std::list<Action*> entity_actions;
+
 	
 	
 

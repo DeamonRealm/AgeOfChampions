@@ -3,7 +3,7 @@
 
 #include "j1App.h"
 #include "j1Module.h"
-#include "j1EntitiesManager.h"
+//#include "j1EntitiesManager.h"
 
 //Action virtual class (are commands but not for the console)
 class Action
@@ -16,7 +16,6 @@ public:
 	//This function defines the action taking place
 	virtual void execute() {}
 	virtual bool IsDone() { return true; };
-
 	///Each diferent action inheriting from this class should have custom
 	///properties to do its actions.
 };
@@ -32,8 +31,11 @@ public:
 	~j1ActionManager();
 
 
-private:
-	//List of all action JUST for CLEANUP
+	// Called before quitting
+	bool CleanUp();
+
+public:
+	//List of all action JUST for CLEANUP 
 	std::list<Action*> all_actions;
 
 };

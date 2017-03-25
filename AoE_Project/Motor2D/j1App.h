@@ -29,6 +29,7 @@ class j1Animator;
 class j1SoundManager;
 
 class j1EntitiesManager;
+class j1ActionManager;
 class j1Player;
 class j1Pathfinding;
 class Command;
@@ -112,6 +113,7 @@ public:
 	j1SoundManager*		sound = NULL;
 
 	j1EntitiesManager*	entities_manager = NULL;
+	j1ActionManager*	action_manager = NULL;
 	j1Player*			player = NULL;
 	j1Pathfinding*		pathfinding = NULL;
 
