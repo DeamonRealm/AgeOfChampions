@@ -3,6 +3,8 @@
 
 #include "j1ActionManager.h"
 #include "BaseEntities.h"
+#include "j1App.h"
+#include "j1EntitiesManager.h"
 
 /// Move Unit Action ----------------------------
 //Move the character
@@ -22,11 +24,6 @@ public:
 		//Set path so the unit starts moving
 		App->entities_manager->SetUnitPath((Unit*)actor, iPoint(x_new, y_new));
 	};
-
-	virtual bool IsDone()
-	{
-		return completed;
-	}
 
 private:
 

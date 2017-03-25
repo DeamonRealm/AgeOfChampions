@@ -340,9 +340,11 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			//Set entity target to the selected unit
 			if(Selected->GetEntity() != nullptr)((Unit*)Selected->GetEntity())->SetInteractionTarget(UpperEntity);
 			
-			action_command = new MoveUnitAction((Unit*)selected_elements.begin()._Ptr->_Myval, mouse_x - App->render->camera.x, mouse_y - App->render->camera.y);
+			
+
+			/*action_command = new MoveUnitAction((Unit*)selected_elements.begin()._Ptr->_Myval, mouse_x - App->render->camera.x, mouse_y - App->render->camera.y);
 			action_command->execute();
-			action_command = nullptr;
+			action_command = nullptr;*/
 		}
 		break;
 	case MOUSE_IN:

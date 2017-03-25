@@ -163,8 +163,6 @@ protected:
 
 public:
 
-
-
 	//Functionality -------------------
 	//Select/Deselect ------
 	void			Select();
