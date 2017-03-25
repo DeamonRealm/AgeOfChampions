@@ -17,7 +17,7 @@
 #include "j1Scene.h"
 
 //Test Action Manager
-#include "ActionManager.h"
+#include "j1ActionManager.h"
 
 //Constructors ========================
 j1EntitiesManager::j1EntitiesManager()
@@ -150,7 +150,7 @@ bool j1EntitiesManager::CleanUp()
 	//Clean Up buildings_defs vector
 	buildings_defs.clear();
 
-	//Clean Up all unit actions;
+	//Clean Up all unit actions;--> Wi
 	std::list<Action*>::iterator action_item = entity_actions.begin();
 	while (action_item != entity_actions.end())
 	{

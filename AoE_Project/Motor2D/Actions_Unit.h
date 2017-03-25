@@ -24,10 +24,13 @@ public:
 	}
 
 private:
-	Unit* actor;
-	int x_new, y_new;
-	bool completed;
+	Unit* actor = nullptr;
+	int x_new = 0, y_new = 0;
+	bool completed = false;
 };
+
+
+
 
 
 
