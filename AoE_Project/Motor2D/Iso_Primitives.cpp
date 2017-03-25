@@ -94,6 +94,14 @@ bool Circle::Draw()
 	return App->render->DrawCircle(position.x + displacement.x, position.y + displacement.y, rad, color.r, color.g, color.b, color.a, x_angle, true);
 }
 
+bool Circle::IsIn(const fPoint * loc)
+{
+	fPoint cpy(*loc);
+	cpy.x -= position.x;
+	cpy.y -= position.y;
+	return (abs(cpy.x) <= rad && abs(cpy.y) <= rad * sin(x_angle));
+}
+
 void Circle::SetRad(uint r)
 {
 	rad = r;
@@ -229,7 +237,59 @@ Triangle::~Triangle()
 //Functionality =============
 bool Triangle::Draw()
 {
-	return App->render->DrawTriangle(position.x, position.y, base.x, base.y, length, width_angle, x_angle, color.r, color.g, color.b, color.a);
+	return App->render->DrawTriangle(&position, &v_A, &v_B, color.r, color.g, color.b, color.a);
+}
+
+bool Triangle::IsIn(const fPoint* loc)
+{
+	//Point to check
+	fPoint cpy(*loc);
+
+
+
+	return false;
+}
+
+void Triangle::CalculateVertex()
+{
+	/*
+	A-----M-----B
+	 -		   -
+	  -       -
+	   -     -
+	    -   -
+	     - -
+	      0
+	*/
+	//Calculate 0 -> M vector
+	fPoint mid_vector(base.x - this->position.x, base.y - this->position.y);
+	mid_vector.Norm();
+	mid_vector *= length * 0.5;
+
+	//Calculate 0 -> A vector
+	fPoint A_vector;
+	A_vector.x = mid_vector.x * cos((width_angle * 0.5)) - mid_vector.y * sin((width_angle * 0.5));
+	A_vector.y = mid_vector.x * sin((width_angle * 0.5)) + mid_vector.y * cos((width_angle * 0.5));
+	A_vector.Norm();
+	A_vector *= length;
+	A_vector.y *= -sin(x_angle);
+
+	//Calculate 0 -> B vector
+	fPoint B_vector;
+	B_vector.x = mid_vector.x * cos((-width_angle * 0.5)) - mid_vector.y * sin((-width_angle * 0.5));
+	B_vector.y = mid_vector.x * sin((-width_angle * 0.5)) + mid_vector.y * cos((-width_angle * 0.5));
+	B_vector.Norm();
+	B_vector *= length;
+	B_vector.y *= -sin(x_angle);
+
+	//Calculate v_A vertex with vector 0 -> A
+	v_A.x = position.x + A_vector.x;
+	v_A.y = position.y + A_vector.y;
+
+	//Calculate v_B vertex with vector 0 -> B
+	v_B.x = position.x + B_vector.x;
+	v_B.y = position.y + B_vector.y;
+
 }
 
 void Triangle::SetBase(const iPoint & new_base)

@@ -72,6 +72,8 @@ public:
 	//Functionality ---------
 	//Draw
 	bool	Draw();
+	//Is inside
+	bool	IsIn(const fPoint* loc);
 	//Set Methods
 	void	SetRad(uint r);
 	//Get Methods
@@ -149,15 +151,21 @@ public:
 
 private:
 
-	iPoint base = { 0,0 };
+	iPoint base = { 0,0 }; /*Used for calculate the other vertex*/
 	uint length = 0;
 	float width_angle = 0;
+	
+	iPoint v_A = { 0,0 };	
+	iPoint v_B = { 0,0 };
 
 public:
 
 	//Functionality ---------
 	//Draw
 	bool			Draw();
+	//Shape functions
+	bool			IsIn(const fPoint* loc);
+	void			CalculateVertex();
 	//Set Methods
 	void			SetBase(const iPoint& new_base);
 	void			SetLength(uint new_length);

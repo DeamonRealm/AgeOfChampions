@@ -421,7 +421,6 @@ bool j1Render::DrawTriangle(int x1, int y1, int x2, int y2, uint length, float a
 	fPoint mid_vector(x2 - x1, y2 - y1);
 	mid_vector.Norm();
 	mid_vector *= length * 0.5;
-	//mid_vector.y *= -sin(x_angle);
 
 	//Calculate 0 -> A vector
 	fPoint A_vector;
@@ -439,12 +438,35 @@ bool j1Render::DrawTriangle(int x1, int y1, int x2, int y2, uint length, float a
 	B_vector *= length;
 	B_vector.y *= -sin(x_angle);
 
+	iPoint v_A, v_B;
+	iPoint position(x1, y1);
+
+	//Calculate v_A vertex with vector 0 -> A
+	v_A.x = position.x + A_vector.x;
+	v_A.y = position.y + A_vector.y;
+
+	//Calculate v_B vertex with vector 0 -> B
+	v_B.x = position.x + B_vector.x;
+	v_B.y = position.y + B_vector.y;
+
+	DrawTriangle(&position, &v_A, &v_B, 25, 255, 255, 255);
+
 	//Draw all the calculated vectors
-	App->render->DrawLine(x1, y1, x1 + mid_vector.x, y1 + mid_vector.y, 255, 255, 255, 255);
+	/*App->render->DrawLine(x1, y1, x1 + mid_vector.x, y1 + mid_vector.y, 255, 255, 255, 255);
 	App->render->DrawLine(x1, y1, x1 + A_vector.x, y1 + A_vector.y, 255, 0, 255, 255);
 	App->render->DrawLine(x1, y1, x1 + B_vector.x, y1 + B_vector.y, 255, 0, 255, 255);
 	App->render->DrawLine(x1 + A_vector.x, y1 + A_vector.y, x1 + B_vector.x, y1 + B_vector.y, 255, 0, 255, 255);
-	
+	*/
+
+	return true;
+}
+
+bool j1Render::DrawTriangle(const iPoint* pick, const iPoint* v_A, const iPoint* v_B, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+	//Draw all the calculated vectors
+	App->render->DrawLine(pick->x, pick->y, v_A->x, v_A->y, 255, 0, 255, 255);
+	App->render->DrawLine(pick->x, pick->y, v_B->x, v_B->y, 255, 0, 255, 255);
+	App->render->DrawLine(v_A->x, v_A->y, v_B->x, v_B->y, 255, 0, 255, 255);
 
 	return true;
 }

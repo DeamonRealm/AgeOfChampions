@@ -532,8 +532,8 @@
       speed_for_level="1.5"
       view_area_for_level="2"
       
-      atk_triangle_length="300"
-      atk_triangle_width_angle="35"
+      atk_triangle_length="400"
+      atk_triangle_width_angle="100"
       
     />
   </unit>

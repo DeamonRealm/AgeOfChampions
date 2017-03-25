@@ -73,10 +73,15 @@ private:
 public:
 
 	//Functionality ---------
+	//Draw --------
+	bool	Draw(bool debug);
 	//Actions -----
-	void Hability_A(...);
+	void	Hability_A(...);
+	void	CalculateSpecialAttackArea(const iPoint& base);
 
-	void SetSpecialAttackArea(const Triangle& tri);
+	//Set Methods -
+	void	SetPosition(float x, float y);
+	void	SetSpecialAttackArea(const Triangle& tri);
 
 
 };

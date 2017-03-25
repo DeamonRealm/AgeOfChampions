@@ -1,5 +1,10 @@
 #include "Champions.h"
 
+#include "j1App.h"
+#include "j1Animator.h"
+#include "j1Render.h"
+#include "j1Input.h" /*This is temporal*/
+
 ///Class Champion -------------------------------
 //Base class that define the champions bases
 
@@ -125,18 +130,58 @@ Warrior::~Warrior()
 
 }
 
+bool Warrior::Draw(bool debug)
+{
+	bool ret = false;
+
+	//Draw Entity Mark
+	if (selected)ret = mark.Draw();
+
+	//Draw warrior special attack area
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	this->CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y));
+	special_attack_area.Draw();
+
+	//Draw Entity Current animation frame
+	const Sprite* sprite = current_animation->GetCurrentSprite();
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+
+	return ret;
+}
+
 //Functionality =======================
 //Actions -------------------
 void Warrior::Hability_A(...)
 {
-	special_attack_area.Draw();
+
+}
+
+void Warrior::CalculateSpecialAttackArea(const iPoint & base)
+{
+	//Update the triangle base
+	special_attack_area.SetBase(base);
+	//Recalculate the triangle vertex with the new base
+	special_attack_area.CalculateVertex();
 }
 
 //Set Methods ---------------
+void Warrior::SetPosition(float x, float y)
+{
+	//Set Warrior position 
+	position.x = x;
+	position.y = y;
+	//Set mark position
+	mark.SetPosition(iPoint(x, y));
+	//Set attack area position
+	special_attack_area.SetPosition(iPoint(x, y));
+}
 void Warrior::SetSpecialAttackArea(const Triangle & tri)
 {
 	special_attack_area = tri;
 }
+
+
 /// ---------------------------------------------
 
 
