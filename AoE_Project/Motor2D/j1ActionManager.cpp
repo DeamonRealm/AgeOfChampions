@@ -61,3 +61,41 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, int x, int y)
 
 	return action;
 }
+
+
+
+
+///Action Worker---------------------------------
+//Construcor
+ActionWorker::ActionWorker()
+{
+}
+
+//Destructor
+ActionWorker::~ActionWorker()
+{
+}
+
+//Worker methods
+void ActionWorker::Update()
+{
+	if (current_action != nullptr)
+	{
+		if (current_action->execute())
+		{
+			delete current_action;
+			current_action = nullptr;
+		}
+	}
+	else if (!action_queue.empty())
+	{
+		current_action = action_queue.front();
+		action_queue.pop();
+	}
+
+}
+void ActionWorker::AddAction(Action * action)
+{
+	action_queue.push(action);
+}
+///----------------------------------------------

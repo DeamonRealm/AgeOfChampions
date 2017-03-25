@@ -8,16 +8,17 @@
 #include "j1Map.h"
 #include "p2Log.h"
 #include "j1EntitiesManager.h"
+#include "j1ActionManager.h"
 
 ///Class Entity ---------------------------------
 //Constructors ========================
-Entity::Entity() :name("")
+Entity::Entity() :name(""), action_worker(new ActionWorker())
 {
-
+	
 }
 
 Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), selection_rect(copy.selection_rect),
-icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_animation(copy.current_animation)
+icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_animation(copy.current_animation), action_worker(new ActionWorker())
 {
 
 }
@@ -44,6 +45,7 @@ void Entity::Deselect()
 //Update ----------
 bool Entity::Update()
 {
+	action_worker->Update();
 	return true;
 }
 
@@ -58,6 +60,13 @@ bool Entity::Draw(bool debug)
 
 	return ret;
 }
+
+//Add Action ------------
+void Entity::AddAction(Action * action)
+{
+	action_worker->AddAction(action);
+}
+
 //Set Methods -----
 void Entity::SetName(const char * name_str)
 {
@@ -243,22 +252,14 @@ bool Unit::DrawPath()
 	return true;
 }
 
-//Update ----------
-bool Unit::Update()
-{
-	if (path != nullptr)return Move();
-	if (interaction_target != nullptr)Interact();
-	return false;
-}
-
 //Actions ---------
-bool Unit::Move()
+bool Unit::Move() ///Returns true when it ends
 {
 	//Check if the unit have an assigned path
 	if (path == nullptr)
 	{
 		LOG("Error path not found!");
-		return false;
+		return true;
 	}
 
 	//Build goal path point
@@ -279,7 +280,6 @@ bool Unit::Move()
 			delete path;
 			path = nullptr;
 
-			if (interaction_target != nullptr)Interact();
 			return true;
 		}
 

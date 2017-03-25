@@ -10,6 +10,8 @@
 #include "SDL/include/SDL_rect.h"
 #include "j1Timer.h"
 
+class Action;
+class ActionWorker;
 struct Animation;
 struct SDL_Texture;
 struct PathNode;
@@ -160,6 +162,9 @@ protected:
 	bool			flip_sprite = false;
 	SDL_Rect		selection_rect = { 0,0,0,0 };
 	SDL_Rect		icon_rect = { 0,0,0,0 };
+	//Worker -----------
+	ActionWorker*	action_worker = nullptr;
+
 
 public:
 
@@ -173,6 +178,9 @@ public:
 
 	//Draw ------------------
 	virtual bool	Draw(bool debug);
+
+	//Add Action ------------
+	void			AddAction(Action* action);
 
 	//Set Methods -----------
 	void			SetName(const char* name_str);
@@ -282,9 +290,6 @@ public:
 	//Draw ------------------
 	bool	Draw(bool debug);
 	bool	DrawPath();
-
-	//Update ----------------
-	bool	Update();
 
 	//Actions ---------------
 	bool			Move();

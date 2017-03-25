@@ -2,6 +2,7 @@
 #define __J1ACTION_MANAGER_H__
 
 #include "j1Module.h"
+#include <queue>
 
 class Entity;
 class Unit;
@@ -26,14 +27,35 @@ public:
 public:
 
 	//This function defines the action taking place
-	virtual void execute() {}
-	virtual bool IsDone() { return true; }
+	//Retruns TRUE when execute is finished
+	virtual bool execute()	{ return true; }
+	virtual bool IsDone()	{ return true; }
 	///Each different action inheriting from this class should have custom
 	///properties to do its actions.
 
 };
 /// ---------------------------------------------
 
+
+///Action Worker---------------------------------
+class ActionWorker
+{
+public:
+	ActionWorker();
+	~ActionWorker();
+
+private:
+	std::queue<Action*> action_queue;
+	Action* current_action = nullptr;
+
+public:
+	void Update();
+	void AddAction(Action* action);
+
+};
+
+
+///----------------------------------------------
 
 /// Action Manager ------------------------------
 //Action Manager Module

@@ -15,14 +15,14 @@ public:
 	//Constructor -----------
 	MoveUnitAction(Unit* actor, int x, int y) : Action(actor), x_new(x), y_new(y)
 	{
-
+		//Set path so the unit starts moving
+		App->entities_manager->SetUnitPath((Unit*)actor, iPoint(x_new, y_new));
 	}
 
 	//Functionality ---------
-	virtual void execute()
+	virtual bool execute()
 	{
-		//Set path so the unit starts moving
-		App->entities_manager->SetUnitPath((Unit*)actor, iPoint(x_new, y_new));
+		return ((Unit*)actor)->Move();
 	};
 
 private:
@@ -47,7 +47,7 @@ public:
 	}
 
 	//Functionality ---------
-	virtual void execute()
+	virtual bool execute()
 	{
 		//Set actor interaction target
 		((Unit*)actor)->SetInteractionTarget(target);
