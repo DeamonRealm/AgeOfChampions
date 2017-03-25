@@ -164,7 +164,8 @@ public:
 	//Draw
 	bool			Draw();
 	//Shape functions
-	bool			IsIn(const fPoint* loc);
+	bool			IsIn(const fPoint* loc) const;
+	bool			Intersects(const SDL_Rect* rect) const;
 	void			CalculateVertex();
 	//Set Methods
 	void			SetBase(const iPoint& new_base);

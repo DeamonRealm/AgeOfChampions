@@ -241,11 +241,6 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw(App->debug_mode);
 	App->entities_manager->Draw();
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	App->render->DrawTriangle(arbalest->GetPosition().x, arbalest->GetPosition().y, x - App->render->camera.x, y - App->render->camera.y, 350, 100, 12, 255, 255, 255, 255);
-	
 	
 	return true;
 }

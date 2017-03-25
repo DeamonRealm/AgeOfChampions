@@ -451,13 +451,6 @@ bool j1Render::DrawTriangle(int x1, int y1, int x2, int y2, uint length, float a
 
 	DrawTriangle(&position, &v_A, &v_B, 25, 255, 255, 255);
 
-	//Draw all the calculated vectors
-	/*App->render->DrawLine(x1, y1, x1 + mid_vector.x, y1 + mid_vector.y, 255, 255, 255, 255);
-	App->render->DrawLine(x1, y1, x1 + A_vector.x, y1 + A_vector.y, 255, 0, 255, 255);
-	App->render->DrawLine(x1, y1, x1 + B_vector.x, y1 + B_vector.y, 255, 0, 255, 255);
-	App->render->DrawLine(x1 + A_vector.x, y1 + A_vector.y, x1 + B_vector.x, y1 + B_vector.y, 255, 0, 255, 255);
-	*/
-
 	return true;
 }
 

@@ -283,6 +283,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Attakc Triangle*/		Triangle atk_triangle;
 		/*Atk Triangle Length*/	atk_triangle.SetLength(unit_node->attribute("atk_triangle_length").as_uint());
 		/*Atk Triangle Width*/	atk_triangle.SetWidthAngle(unit_node->attribute("atk_triangle_width_angle").as_float());
+								atk_triangle.SetXAngle(12.0);
 								((Warrior*)new_def)->SetSpecialAttackArea(atk_triangle);
 								chmp = true;
 	}

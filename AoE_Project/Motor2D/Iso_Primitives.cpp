@@ -240,14 +240,23 @@ bool Triangle::Draw()
 	return App->render->DrawTriangle(&position, &v_A, &v_B, color.r, color.g, color.b, color.a);
 }
 
-bool Triangle::IsIn(const fPoint* loc)
+bool Triangle::IsIn(const fPoint* loc) const
 {
 	//Point to check
 	fPoint cpy(*loc);
+	
+	bool condition_a = (loc->x - v_A.x) * (position.y - v_A.y) - (position.x - v_A.x) * (loc->y - v_A.y) < 0.0f;
+	bool condition_b = (loc->x - v_B.x) * (v_A.y - v_B.y) - (v_A.x - v_B.x) * (loc->y - v_B.y) < 0.0f;
+	bool condition_c = (loc->x - position.x) * (v_B.y - position.y) - (v_B.x - position.x) * (loc->y - position.y) < 0.0f;
+	
+	return ((condition_a == condition_b) && (condition_b == condition_c));
+}
 
-
-
-	return false;
+bool Triangle::Intersects(const SDL_Rect * rect) const
+{
+	return (IsIn(&fPoint(rect->x, rect->y)) || IsIn(&fPoint(rect->x + rect->w, rect->y))
+		|| IsIn(&fPoint(rect->x, rect->y + rect->h)) || IsIn(&fPoint(rect->x + rect->w, rect->y + rect->h))
+		|| SDL_PointInRect((SDL_Point*)&position, rect) || SDL_PointInRect((SDL_Point*)&v_A, rect) || SDL_PointInRect((SDL_Point*)&v_B, rect));
 }
 
 void Triangle::CalculateVertex()

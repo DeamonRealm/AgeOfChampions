@@ -9,6 +9,7 @@
 #include "SDL/include/SDL_rect.h"
 #include "p2Point.h"
 #include "p2Log.h"
+#include "Iso_Primitives.h"
 
 /// Class TreeItem ------------------------------
 //Class that contains the data & its location
@@ -442,6 +443,39 @@ public:
 
 		return ret;
 	}
+
+	int CollectCandidates(std::vector<DATA_TYPE>& nodes, const Triangle& tri)
+	{
+		uint ret = 0;
+
+		// If range is not in the quad-tree, return
+		if (!tri.Intersects(&aabb))return 0;
+
+		// See if the points of this node are in range and pushback them to the vector
+		if (full)
+		{
+			// Otherwise, add the points from the children
+			ret += children[0]->CollectCandidates(nodes, tri);
+			ret += children[1]->CollectCandidates(nodes, tri);
+			ret += children[2]->CollectCandidates(nodes, tri);
+			ret += children[3]->CollectCandidates(nodes, tri);
+		}
+		else
+		{
+			std::list<m_TreeItem<DATA_TYPE>>::const_iterator object = objects.begin();
+			while (object != objects.end())
+			{
+				fPoint loc = object._Ptr->_Myval.location;
+
+				if (tri.IsIn(&loc))
+					nodes.push_back(object._Ptr->_Myval.data);
+
+				object++;
+			}
+		}
+
+		return ret;
+	}
 };
 /// ---------------------------------------------
 
@@ -603,6 +637,16 @@ public:
 
 		if (root != NULL && SDL_HasIntersection(&r, &root->aabb))
 			tests = root->CollectCandidates(nodes, r);
+		return tests;
+	}
+
+	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const Triangle& tri) const
+	{
+		int tests = 1;
+
+		if (root != NULL && tri.Intersects(&root->aabb))
+			tests = root->CollectCandidates(nodes, tri);
+
 		return tests;
 	}
 
