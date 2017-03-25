@@ -5,7 +5,6 @@
 #include "j1Render.h"
 
 #include "j1Input.h" /*This is temporal*/
-#include "j1EntitiesManager.h"
 
 ///Class Champion -------------------------------
 //Base class that define the champions bases
@@ -137,18 +136,13 @@ bool Warrior::Draw(bool debug)
 	bool ret = false;
 
 	//Draw Entity Mark
-	if (selected)ret = mark.Draw();
+	mark.Draw();
 
 	//Draw warrior special attack area
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y));
 	special_attack_area.Draw();
-	std::vector<Unit*> collected;
-	App->entities_manager->units_quadtree.CollectCandidates(collected, special_attack_area);
-	
-	LOG("num %i", collected.size());
-	collected.clear();
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();

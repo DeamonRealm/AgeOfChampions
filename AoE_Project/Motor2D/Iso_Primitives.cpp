@@ -94,12 +94,33 @@ bool Circle::Draw()
 	return App->render->DrawCircle(position.x + displacement.x, position.y + displacement.y, rad, color.r, color.g, color.b, color.a, x_angle, true);
 }
 
-bool Circle::IsIn(const fPoint * loc)
+bool Circle::IsIn(const fPoint* loc) const
 {
-	fPoint cpy(*loc);
-	cpy.x -= position.x;
-	cpy.y -= position.y;
-	return (abs(cpy.x) <= rad && abs(cpy.y) <= rad * sin(x_angle));
+	float dx = abs(loc->x - position.x);
+	float dy = abs(loc->y - position.y);
+
+	return (dx <= rad && dy <= rad * sin(x_angle));
+}
+
+bool Circle::Intersects(const SDL_Rect * rect) const
+{
+	float dx = abs(position.x - (rect->x + rect->w * 0.5));
+	float dy = abs(position.y - (rect->y + rect->h * 0.5));
+
+	//Case the rect is out the circle limits in axis
+	if (dx > rect->w * 0.5 + rad) return false;
+	if (dy > rect->h * (0.5 + rad * sin(x_angle))) return false;
+	
+	//Case the rect is in the circle limits in axis
+	if (dx <= rect->w * 0.5) return true;
+	if (dx <= rect->w * 0.5) return true;
+
+	//Case the rect intersects or not in the circle mid curves
+	float a = (dx - rect->w * 0.5);
+	float b = (dy - rect->h * 0.5);
+	float corner_distance = a * a + b * b;
+
+	return corner_distance <= rad ^ 2;
 }
 
 void Circle::SetRad(uint r)
@@ -242,21 +263,23 @@ bool Triangle::Draw()
 
 bool Triangle::IsIn(const fPoint* loc) const
 {
-	//Point to check
-	fPoint cpy(*loc);
 	
-	bool condition_a = (loc->x - v_A.x) * (position.y - v_A.y) - (position.x - v_A.x) * (loc->y - v_A.y) < 0.0f;
-	bool condition_b = (loc->x - v_B.x) * (v_A.y - v_B.y) - (v_A.x - v_B.x) * (loc->y - v_B.y) < 0.0f;
-	bool condition_c = (loc->x - position.x) * (v_B.y - position.y) - (v_B.x - position.x) * (loc->y - position.y) < 0.0f;
+	bool condition_a = ((loc->x - v_A.x) * (position.y - v_A.y) - (position.x - v_A.x) * (loc->y - v_A.y)) < 0.0f;
+	bool condition_b = ((loc->x - v_B.x) * (v_A.y - v_B.y) - (v_A.x - v_B.x) * (loc->y - v_B.y)) < 0.0f;
+	bool condition_c = ((loc->x - position.x) * (v_B.y - position.y) - (v_B.x - position.x) * (loc->y - position.y)) < 0.0f;
 	
 	return ((condition_a == condition_b) && (condition_b == condition_c));
 }
 
 bool Triangle::Intersects(const SDL_Rect * rect) const
 {
+	SDL_Point pos = { position.x,position.y };
+	SDL_Point A = { v_A.x,v_A.y };
+	SDL_Point B = { v_B.x,v_B.y };
+
 	return (IsIn(&fPoint(rect->x, rect->y)) || IsIn(&fPoint(rect->x + rect->w, rect->y))
 		|| IsIn(&fPoint(rect->x, rect->y + rect->h)) || IsIn(&fPoint(rect->x + rect->w, rect->y + rect->h))
-		|| SDL_PointInRect((SDL_Point*)&position, rect) || SDL_PointInRect((SDL_Point*)&v_A, rect) || SDL_PointInRect((SDL_Point*)&v_B, rect));
+		|| SDL_PointInRect(&pos, rect) || SDL_PointInRect(&A, rect) || SDL_PointInRect(&B, rect));
 }
 
 void Triangle::CalculateVertex()

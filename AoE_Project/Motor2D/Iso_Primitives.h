@@ -72,8 +72,9 @@ public:
 	//Functionality ---------
 	//Draw
 	bool	Draw();
-	//Is inside
-	bool	IsIn(const fPoint* loc);
+	//Shape functions
+	bool	IsIn(const fPoint* loc) const;
+	bool	Intersects(const SDL_Rect* rect) const;
 	//Set Methods
 	void	SetRad(uint r);
 	//Get Methods

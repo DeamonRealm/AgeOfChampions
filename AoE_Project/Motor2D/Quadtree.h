@@ -188,7 +188,8 @@ public:
 			uint size = objects.size();
 			for (uint k = 0; k < size; k++)
 			{
-				if (SDL_PointInRect((SDL_Point*)&objects[k], &rect))
+				SDL_Point pos = { objects[k].location.x,objects[k].location.y };
+				if (SDL_PointInRect(&pos, &rect))
 					nodes.push_back(objects[k].data);
 			}
 		}
@@ -430,11 +431,9 @@ public:
 			while (object != objects.end())
 			{
 				fPoint loc = object._Ptr->_Myval.location;
-				SDL_Point point;
-				point.x = loc.x;
-				point.y = loc.y;
+				SDL_Point point = { loc.x,loc.y };
 
-				if (SDL_PointInRect((SDL_Point*)&point, &rect))
+				if (SDL_PointInRect(&point, &rect))
 					nodes.push_back(object._Ptr->_Myval.data);
 
 				object++;
@@ -449,7 +448,7 @@ public:
 		uint ret = 0;
 
 		// If range is not in the quad-tree, return
-		if (!tri.Intersects(&aabb))return 0;
+		if (!tri.Intersects(&this->aabb))return 0;
 
 		// See if the points of this node are in range and pushback them to the vector
 		if (full)
@@ -468,6 +467,39 @@ public:
 				fPoint loc = object._Ptr->_Myval.location;
 
 				if (tri.IsIn(&loc))
+					nodes.push_back(object._Ptr->_Myval.data);
+
+				object++;
+			}
+		}
+
+		return ret;
+	}
+
+	int CollectCandidates(std::vector<DATA_TYPE>& nodes, const Circle& circle)
+	{
+		uint ret = 0;
+
+		// If range is not in the quad-tree, return
+		if (!circle.Intersects(&aabb))return 0;
+
+		// See if the points of this node are in range and pushback them to the vector
+		if (full)
+		{
+			// Otherwise, add the points from the children
+			ret += children[0]->CollectCandidates(nodes, circle);
+			ret += children[1]->CollectCandidates(nodes, circle);
+			ret += children[2]->CollectCandidates(nodes, circle);
+			ret += children[3]->CollectCandidates(nodes, circle);
+		}
+		else
+		{
+			std::list<m_TreeItem<DATA_TYPE>>::const_iterator object = objects.begin();
+			while (object != objects.end())
+			{
+				fPoint loc = object._Ptr->_Myval.location;
+
+				if (circle.IsIn(&loc))
 					nodes.push_back(object._Ptr->_Myval.data);
 
 				object++;
@@ -646,6 +678,16 @@ public:
 
 		if (root != NULL && tri.Intersects(&root->aabb))
 			tests = root->CollectCandidates(nodes, tri);
+
+		return tests;
+	}
+
+	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const Circle& circle) const
+	{
+		int tests = 1;
+
+		if (root != NULL && circle.Intersects(&root->aabb))
+			tests = root->CollectCandidates(nodes, circle);
 
 		return tests;
 	}
