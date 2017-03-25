@@ -1,15 +1,20 @@
 #include "j1ActionManager.h"
 
-//Action class---------------------
-Action::Action()
+///Class Action ---------------------------------
+//Base class to build action definitions
+//Constructors ========================
+Action::Action(Entity* actor) :actor(actor)
 {
-	//Added to Manager all list to be safly erased later
+	//Added to Manager all list to be safely erased later
 	App->action_manager->all_actions.push_back(this);	
 }
+
+//Destructors =========================
 Action::~Action()
 {
+
 }
-//---------------------------------
+/// ---------------------------------------------
 
 
 

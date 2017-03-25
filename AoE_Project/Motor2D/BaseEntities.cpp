@@ -280,7 +280,6 @@ bool Unit::Move()
 			path = nullptr;
 
 			if (interaction_target != nullptr)Interact();
-			LOG("Path completed!");
 			return true;
 		}
 

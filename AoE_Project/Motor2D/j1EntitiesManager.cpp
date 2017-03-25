@@ -660,7 +660,10 @@ bool j1EntitiesManager::SetUnitPath(Unit* target, const iPoint& goal)
 		target->SetAction(WALK);
 		target->Focus(path->front());
 	}
+
+	//Play move fx
 	App->sound->PlayAudio(MOVE_SOUND);
+	
 	return true;
 }
 

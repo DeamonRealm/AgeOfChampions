@@ -54,38 +54,39 @@ private:
 	ENTITY_TYPE		e_type;
 
 	//General
-	UI_String*		name;
-	//UI_String*		civilizacion;
-	UI_String*		diplomacy;
+	UI_String*		name = nullptr;
+	//UI_String*		civilization;
+	UI_String*		diplomacy = nullptr;
 	bool			isenemy;
 
 	int				life_update;
 	int				m_life;
-	UI_String*		life;
+	UI_String*		life = nullptr;
 
 	//Units and Offensive Buildings
 	uint			u_attack;
-	UI_String*		attack;
+	UI_String*		attack = nullptr;
 	uint			u_deffence;
-	UI_String*		deffence;
+	UI_String*		deffence = nullptr;
 
 	uint			u_range;
-	UI_String*		range;
+	UI_String*		range = nullptr;
 
 	//Buildings
 	uint			u_capacity;
 	uint			m_capacity;
-	UI_String*		capacity;
+	UI_String*		capacity = nullptr;
 
 	//Resources
 	uint			u_resources;
-	UI_String*		resources;
+	UI_String*		resources = nullptr;
 };
 
 
 class Selection_Panel
 {
 public:
+
 	Selection_Panel();
 	~Selection_Panel();
 
@@ -115,7 +116,7 @@ public:
 	void Expand_SelectionRect();
 	Entity*	GetUpperEntity(int x, int y);
 	 
-	// Selction Panel (Group Functions)
+	// Selection Panel (Group Functions)
 	void SetGroupProfile();
 
 	Entity* GetSelected() const;
