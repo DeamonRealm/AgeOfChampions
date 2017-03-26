@@ -19,26 +19,57 @@ class Entity;
 enum ENTITY_TYPE;
 enum GUI_INPUT;
 
-/*
+
 class Action_Panel_Elements
 {
 public:
 	Action_Panel_Elements();
 	~Action_Panel_Elements();
+	
+	virtual bool ActivateCell(int i) { return false; };
+
+	void AddIcon(SDL_Rect icon_rect, uint position);
+	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const;
+
+	void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
+
+	void LoadPanel();
+
+protected:
+	std::vector<SDL_Rect>		panel_icons;
+
+	Entity*						entitis_panel = nullptr;
+};
+
+class TownCenterPanel : public Action_Panel_Elements
+{
+public:
+	TownCenterPanel() : Action_Panel_Elements() 
+	{
+		panel_icons[0] = { 576,585,36,36 };
+
+	};
+	~TownCenterPanel();
+
+	bool ActivateCell(int i);
 
 private:
-	//point 37,624. cell (40x41) w = 200, h = 123
 
 };
 
-Action_Panel_Elements::Action_Panel_Elements()
+class UnitPanel : public Action_Panel_Elements
 {
-}
+public:
+	UnitPanel() : Action_Panel_Elements() { panel_icons[0] = { 0,76,36,36 }; };
+	~UnitPanel();
 
-Action_Panel_Elements::~Action_Panel_Elements()
-{
-}
-*/
+	bool ActivateCell(int i);
+
+private:
+
+};
+
+
 class Action_Panel
 {
 public:
@@ -78,9 +109,17 @@ private:
 
 	// Action 
 	int							cell;
-
 	iPoint						panel_pos;
+	
 	std::vector<UI_Image*>		panel_cells;
+
+	Entity*						actual_entity = nullptr;
+
+	// Panels
+	Action_Panel_Elements*		actualpanel = nullptr;
+
+	TownCenterPanel*			towncenter = nullptr;
+	UnitPanel*					unitpanel = nullptr;
 
 };
 #endif // !HUD_ACTION_PANEL

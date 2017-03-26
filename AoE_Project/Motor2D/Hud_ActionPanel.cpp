@@ -12,6 +12,84 @@
 
 #include "UI_Image.h"
 
+Action_Panel_Elements::Action_Panel_Elements() 
+{
+	panel_icons.reserve(MAX_PANEL_CELLS);
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons[i] = { 0,0,1,1 };
+	}
+};
+
+Action_Panel_Elements::~Action_Panel_Elements()
+{
+	panel_icons.clear();
+};
+
+void Action_Panel_Elements::AddIcon(SDL_Rect icon_rect, uint position)
+{
+	if (position < MAX_PANEL_CELLS)	panel_icons[position] = icon_rect;
+}
+
+void Action_Panel_Elements::ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const
+{
+	for (uint i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		actual_panel[i]->ChangeTextureRect(panel_icons[i]);
+	}
+}
+
+bool TownCenterPanel::ActivateCell(int i)
+{
+	if (entitis_panel == nullptr) return false;
+	switch (i)
+	{
+	case 0: {Unit* villager = App->entities_manager->GenerateUnit(VILLAGER);
+		villager->SetPosition(entitis_panel->GetPosition().x + 100, entitis_panel->GetPosition().y + 100);
+		villager->SetDiplomacy(ALLY);
+	}
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4: 
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	default:
+		break;
+	}
+	return true;
+}
+
+bool UnitPanel::ActivateCell(int i)
+{
+	if (entitis_panel == nullptr) return false;
+	switch (i)
+	{
+	case 0: {
+		((Unit*)entitis_panel)->Die();
+		entitis_panel = nullptr;
+		}
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	default:
+		break;
+	}
+	return true;
+}
 
 Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 {
@@ -19,6 +97,9 @@ Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 	panel_pos.y = 624;
 
 	panel_cells.reserve(MAX_PANEL_CELLS);
+
+	towncenter = new TownCenterPanel();
+	unitpanel = new UnitPanel();
 
 	UI_Image* cell = nullptr;
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
@@ -61,7 +142,10 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 
 	switch (newevent)
 	{
-	case MOUSE_LEFT_BUTTON_DOWN: cell = GetCell();
+	case MOUSE_LEFT_BUTTON_DOWN:
+	{cell = GetCell();
+	if (actualpanel != nullptr) actualpanel->ActivateCell(cell);
+ 	}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;
@@ -78,6 +162,7 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 
 bool Action_Panel::Draw()
 {
+	if (actualpanel == nullptr) return false;
 	for (int count = 0; count < 1; count++)
 	{
 		panel_cells[count]->Draw(false);
@@ -97,6 +182,7 @@ int Action_Panel::GetCell() const
 			return count;
 		}
 	}
+
 	return ret;
 }
 
@@ -107,7 +193,14 @@ bool Action_Panel::GetIsIn() const
 
 void Action_Panel::SetPanelType(Entity * selected)
 {
-	if (selected == nullptr) return;
+	if (selected == nullptr)
+	{
+		actual_entity = nullptr;
+		actualpanel = nullptr;
+		return;
+	}
+
+	actual_entity = selected;
 	ENTITY_TYPE selected_type = selected->GetEntityType();
 	
 	switch (selected_type)
@@ -117,13 +210,15 @@ void Action_Panel::SetPanelType(Entity * selected)
 	case UNIT:
 		for (int count = 0; count < MAX_PANEL_CELLS; count++)
 		{
-			panel_cells[count]->ChangeTextureRect({ 0,0,0,0 });
+			unitpanel->ChangePanelIcons(panel_cells);
+			actualpanel = unitpanel;
 		}
 		break;
 	case RESOURCE:
 		for (int count = 0; count < MAX_PANEL_CELLS; count++)
 		{
 			panel_cells[count]->ChangeTextureRect({ 0,0,1,1 });
+			actualpanel = nullptr;
 		}
 		break;
 	case BUILDING:
@@ -131,7 +226,8 @@ void Action_Panel::SetPanelType(Entity * selected)
 		BUILDING_TYPE building_type = ((Building*)selected)->GetBuildingType();
 		if (building_type == TOWN_CENTER)
 		{
-			panel_cells[0]->ChangeTextureRect({ 576,585,36,36 });
+			towncenter->ChangePanelIcons(panel_cells); 
+			actualpanel = towncenter;
 		}
 		else
 		{
@@ -142,11 +238,9 @@ void Action_Panel::SetPanelType(Entity * selected)
 		}
 		}
 		break;
-	default:
-		for (int count = 0; count < MAX_PANEL_CELLS; count++)
-		{
-			panel_cells[count]->ChangeTextureRect({ 0,0,1,1 });
-		}
+	default:	actualpanel = nullptr;
 		break;
 	}
+	
+	if (actualpanel != nullptr) actualpanel->ChangePanelTarget(actual_entity);
 }

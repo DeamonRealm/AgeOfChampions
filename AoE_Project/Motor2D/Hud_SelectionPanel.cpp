@@ -10,7 +10,6 @@
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
 
-
 #include "SDL\include\SDL_rect.h"
 
 //GUI Elements
@@ -644,5 +643,6 @@ void Selection_Panel::SetGroupProfile()
 
 Entity * Selection_Panel::GetSelected() const
 {
-	return Selected->GetEntity();
+	if (selected_elements.size() > 0) return selected_elements.begin()._Ptr->_Myval;
+	else return nullptr;
 }
