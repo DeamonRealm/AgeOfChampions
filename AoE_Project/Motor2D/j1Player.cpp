@@ -97,9 +97,6 @@ bool j1Player::PreUpdate()
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (selection_panel->PointisInViewport(x, y)) selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);		
-		//test
-		
-		//if (selected_elements.size() == 1) DoAction(RCLICK);
 	}
 
 	//Generate a town center in the mouse coordinates

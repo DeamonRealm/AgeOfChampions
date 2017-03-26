@@ -500,15 +500,12 @@ void Selection_Panel::Select(SELECT_TYPE type)
 	}
 
 	//Configure Selection Panel
-	if (selected_elements.size() == 1)
-	{
-		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
-	}
-	else if (selected_elements.size() > 1)
+	if (selected_elements.size() > 1)
 	{
 		max_row_units = 16;
 		SetGroupProfile();
 	}
+	Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 }
 
 void Selection_Panel::UnSelect_Entity()

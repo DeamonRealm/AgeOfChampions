@@ -7,6 +7,10 @@
 
 #include "BaseEntities.h"
 
+#include "j1ActionManager.h"
+#include "Actions_Building.h"
+#include "Actions_Unit.h"
+
 
 #include "Hud_SelectionPanel.h"
 
@@ -44,10 +48,9 @@ bool TownCenterPanel::ActivateCell(int i)
 	if (entitis_panel == nullptr) return false;
 	switch (i)
 	{
-	case 0: {Unit* villager = App->entities_manager->GenerateUnit(VILLAGER);
-		villager->SetPosition(entitis_panel->GetPosition().x + 100, entitis_panel->GetPosition().y + 100);
-		villager->SetDiplomacy(ALLY);
-	}
+	case 0: {
+		entitis_panel->AddAction(new SpawnUnitAction((Building*)entitis_panel, VILLAGER));
+		}
 		break;
 	case 2:
 		break;
@@ -71,11 +74,11 @@ bool UnitPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		((Unit*)entitis_panel)->Die();
+		((Unit*)entitis_panel)->AddAction(new DieUnitAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
 		}
 		break;
-	case 2:
+	case 2: 
 		break;
 	case 3:
 		break;
@@ -205,7 +208,7 @@ void Action_Panel::SetPanelType(Entity * selected)
 	
 	switch (selected_type)
 	{
-	case NO_ENTITY:
+	case NO_ENTITY: actualpanel = nullptr;
 		break;
 	case UNIT:
 		for (int count = 0; count < MAX_PANEL_CELLS; count++)
@@ -215,11 +218,7 @@ void Action_Panel::SetPanelType(Entity * selected)
 		}
 		break;
 	case RESOURCE:
-		for (int count = 0; count < MAX_PANEL_CELLS; count++)
-		{
-			panel_cells[count]->ChangeTextureRect({ 0,0,1,1 });
 			actualpanel = nullptr;
-		}
 		break;
 	case BUILDING:
 		{
