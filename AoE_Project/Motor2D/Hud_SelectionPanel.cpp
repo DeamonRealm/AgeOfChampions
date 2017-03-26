@@ -338,12 +338,11 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 		{
 			//Set entity target to the selected unit
-
-			//Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
+			Selected->GetEntity()->GetWorker()->Reset();
+			Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 			
-			Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
-
-
+			//Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
+		
 		}
 		break;
 	case MOUSE_IN:

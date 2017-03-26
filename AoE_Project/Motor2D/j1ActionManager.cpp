@@ -136,8 +136,23 @@ void ActionWorker::Update()
 	}
 
 }
+
 void ActionWorker::AddAction(Action * action)
 {
 	action_queue.push(action);
+}
+
+void ActionWorker::Reset()
+{
+	delete current_action;
+	current_action = nullptr;
+
+	Action* to_erase;
+
+	while (!action_queue.empty())
+	{
+		to_erase = action_queue.front();
+		action_queue.pop();
+	}
 }
 ///----------------------------------------------

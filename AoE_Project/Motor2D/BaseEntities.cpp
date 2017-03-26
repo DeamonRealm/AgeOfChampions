@@ -176,6 +176,11 @@ const SDL_Rect& Entity::GetIcon()const
 	return icon_rect;
 }
 
+ActionWorker * Entity::GetWorker() const
+{
+	return action_worker;
+}
+
 // ----------------
 ///----------------------------------------------
 

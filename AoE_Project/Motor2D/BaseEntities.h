@@ -206,6 +206,7 @@ public:
 	bool			GetFlipSprite()const;
 	const SDL_Rect*	GetSelectionRect()const;
 	const SDL_Rect&	GetIcon()const;
+	ActionWorker*	GetWorker()const;
 };
 /// ---------------------------------------------
 
