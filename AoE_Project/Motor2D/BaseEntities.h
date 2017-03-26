@@ -293,7 +293,7 @@ public:
 	bool	DrawPath();
 
 	//Actions ---------------
-	bool			Move();
+	bool			Move(std::vector<iPoint>* path);
 	void			Focus(const iPoint& target);
 	bool			AttackUnit();
 	bool			AttackBuilding();

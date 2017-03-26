@@ -258,7 +258,7 @@ bool Unit::DrawPath()
 }
 
 //Actions ---------
-bool Unit::Move() ///Returns true when it ends
+bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 {
 	//Check if the unit have an assigned path
 	if (path == nullptr)

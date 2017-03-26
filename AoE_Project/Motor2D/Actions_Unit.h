@@ -5,6 +5,7 @@
 #include "BaseEntities.h"
 #include "j1App.h"
 #include "j1EntitiesManager.h"
+#include "j1Pathfinding.h"
 
 /// Move Unit Action ----------------------------
 //Move the character
@@ -16,17 +17,20 @@ public:
 	MoveUnitAction(Unit* actor, int x, int y) : Action(actor), x_new(x), y_new(y)
 	{
 		//Set path so the unit starts moving
-		App->entities_manager->SetUnitPath((Unit*)actor, iPoint(x_new, y_new));
+		//App->entities_manager->SetUnitPath((Unit*)actor, iPoint(x_new, y_new));
+
+		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
+		path = App->pathfinding->SimpleAstar(origin, iPoint(x_new, y_new));
 	}
 
 	//Functionality ---------
 	bool execute()
 	{
-		return ((Unit*)actor)->Move();
+		return ((Unit*)actor)->Move(path);
 	}
 
 private:
-
+	std::vector<iPoint>* path = nullptr;
 	int x_new = 0;
 	int y_new = 0;
 

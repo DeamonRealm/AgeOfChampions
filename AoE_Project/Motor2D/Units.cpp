@@ -24,7 +24,7 @@ Villager::~Villager()
 //Game Loop ===========================
 bool Villager::Update()
 {
-	if (path != nullptr)return Move();
+//	if (path != nullptr)return Move();
 	if (interaction_target != nullptr)return Recollect();
 	return false;
 }
