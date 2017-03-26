@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:8c0c176f17c7a71492188b64f9fed205:84899e3454c67c33072ec3a8087b007a:71c33cc79df4927bcd5ed2d2d1003995$ -->
+<!-- $TexturePacker:SmartUpdate:db1ea4cf818c80f6d785f1f6dd9e312d:903c776033eaf436005a5476e67b53dc:e5f85de8d1a36c1e2bfa2a587cb8909b$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,7 +19,7 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="warrior_chmp.png" width="763" height="763">
+<TextureAtlas imagePath="warrior_chmp.png" width="689" height="689">
   <!-- Define the unit type-->
   <unit id ="warrior_chmp">
 
@@ -27,326 +27,295 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <!-- Attack Action-->
     <action enum="attack" speed="200">
       <direction enum="south">
-        <sprite n="ElitSkirmisher_attack/000_ElitSkirmisher_attack.bmp" x="1" y="1" w="25" h="66" pX="0.6" pY="0.893939"/>
-        <sprite n="ElitSkirmisher_attack/001_ElitSkirmisher_attack.bmp" x="28" y="1" w="26" h="51" pX="0.615385" pY="0.803922"/>
-        <sprite n="ElitSkirmisher_attack/002_ElitSkirmisher_attack.bmp" x="56" y="1" w="30" h="49" pX="0.3" pY="0.755102"/>
-        <sprite n="ElitSkirmisher_attack/003_ElitSkirmisher_attack.bmp" x="88" y="1" w="38" h="41" pX="0.394737" pY="0.585366"/>
-        <sprite n="ElitSkirmisher_attack/004_ElitSkirmisher_attack.bmp" x="128" y="1" w="29" h="39" pX="0.206897" pY="0.512821"/>
-        <sprite n="ElitSkirmisher_attack/005_ElitSkirmisher_attack.bmp" x="159" y="1" w="29" h="40" pX="0.275862" pY="0.525"/>
-        <sprite n="ElitSkirmisher_attack/006_ElitSkirmisher_attack.bmp" x="190" y="1" w="31" h="47" pX="0.354839" pY="0.595745"/>
-        <sprite n="ElitSkirmisher_attack/007_ElitSkirmisher_attack.bmp" x="223" y="1" w="31" h="47" pX="0.419355" pY="0.659574"/>
-        <sprite n="ElitSkirmisher_attack/008_ElitSkirmisher_attack.bmp" x="256" y="1" w="31" h="45" pX="0.516129" pY="0.711111"/>
-        <sprite n="ElitSkirmisher_attack/009_ElitSkirmisher_attack.bmp" x="289" y="1" w="28" h="45" pX="0.535714" pY="0.777778"/>
-        <sprite n="ElitSkirmisher_attack/010_ElitSkirmisher_attack.bmp" x="319" y="1" w="23" h="48" pX="0.521739" pY="0.8125"/>
-        <sprite n="ElitSkirmisher_attack/011_ElitSkirmisher_attack.bmp" x="344" y="1" w="21" h="48" pX="0.52381" pY="0.854167"/>
+        <sprite n="warrior_attack/000_warrior_attack.bmp" x="1" y="1" w="27" h="47" pX="0.296296" pY="0.829787"/>
+        <sprite n="warrior_attack/001_warrior_attack.bmp" x="30" y="1" w="37" h="42" pX="0.189189" pY="0.809524"/>
+        <sprite n="warrior_attack/002_warrior_attack.bmp" x="69" y="1" w="45" h="39" pX="0.133333" pY="0.820513"/>
+        <sprite n="warrior_attack/003_warrior_attack.bmp" x="116" y="1" w="29" h="57" pX="0.206897" pY="0.877193"/>
+        <sprite n="warrior_attack/004_warrior_attack.bmp" x="147" y="1" w="45" h="39" pX="0.133333" pY="0.769231"/>
+        <sprite n="warrior_attack/005_warrior_attack.bmp" x="194" y="1" w="25" h="55" pX="0.48" pY="0.563636"/>
+        <sprite n="warrior_attack/006_warrior_attack.bmp" x="221" y="1" w="47" h="39" pX="0.765957" pY="0.794872"/>
+        <sprite n="warrior_attack/007_warrior_attack.bmp" x="270" y="1" w="50" h="39" pX="0.76" pY="0.820513"/>
+        <sprite n="warrior_attack/008_warrior_attack.bmp" x="322" y="1" w="31" h="53" pX="0.580645" pY="0.622642"/>
+        <sprite n="warrior_attack/009_warrior_attack.bmp" x="355" y="1" w="26" h="46" pX="0.346154" pY="0.717391"/>
       </direction>
 
       <direction enum="south-west">
-        <sprite n="ElitSkirmisher_attack/012_ElitSkirmisher_attack.bmp" x="367" y="1" w="34" h="64" pX="0.558824" pY="0.90625"/>
-        <sprite n="ElitSkirmisher_attack/013_ElitSkirmisher_attack.bmp" x="403" y="1" w="55" h="47" pX="0.4" pY="0.808511"/>
-        <sprite n="ElitSkirmisher_attack/014_ElitSkirmisher_attack.bmp" x="460" y="1" w="35" h="51" pX="0.428571" pY="0.72549"/>
-        <sprite n="ElitSkirmisher_attack/015_ElitSkirmisher_attack.bmp" x="497" y="1" w="37" h="38" pX="0.702703" pY="0.552632"/>
-        <sprite n="ElitSkirmisher_attack/016_ElitSkirmisher_attack.bmp" x="536" y="1" w="28" h="40" pX="1" pY="0.55"/>
-        <sprite n="ElitSkirmisher_attack/017_ElitSkirmisher_attack.bmp" x="566" y="1" w="28" h="44" pX="1.07143" pY="0.568182"/>
-        <sprite n="ElitSkirmisher_attack/018_ElitSkirmisher_attack.bmp" x="596" y="1" w="25" h="48" pX="1.08" pY="0.625"/>
-        <sprite n="ElitSkirmisher_attack/019_ElitSkirmisher_attack.bmp" x="623" y="1" w="20" h="47" pX="1.1" pY="0.680851"/>
-        <sprite n="ElitSkirmisher_attack/020_ElitSkirmisher_attack.bmp" x="645" y="1" w="24" h="45" pX="0.875" pY="0.733333"/>
-        <sprite n="ElitSkirmisher_attack/021_ElitSkirmisher_attack.bmp" x="671" y="1" w="25" h="45" pX="0.72" pY="0.8"/>
-        <sprite n="ElitSkirmisher_attack/022_ElitSkirmisher_attack.bmp" x="698" y="1" w="26" h="46" pX="0.692308" pY="0.826087"/>
-        <sprite n="ElitSkirmisher_attack/023_ElitSkirmisher_attack.bmp" x="726" y="1" w="26" h="46" pX="0.615385" pY="0.869565"/>
+        <sprite n="warrior_attack/010_warrior_attack.bmp" x="383" y="1" w="32" h="46" pX="0.71875" pY="0.826087"/>
+        <sprite n="warrior_attack/011_warrior_attack.bmp" x="417" y="1" w="23" h="61" pX="0.565217" pY="0.901639"/>
+        <sprite n="warrior_attack/012_warrior_attack.bmp" x="442" y="1" w="35" h="61" pX="0.371429" pY="0.918033"/>
+        <sprite n="warrior_attack/013_warrior_attack.bmp" x="479" y="1" w="38" h="45" pX="0.289474" pY="0.911111"/>
+        <sprite n="warrior_attack/014_warrior_attack.bmp" x="519" y="1" w="38" h="63" pX="0.473684" pY="0.873016"/>
+        <sprite n="warrior_attack/015_warrior_attack.bmp" x="559" y="1" w="45" h="49" pX="0.777778" pY="0.632653"/>
+        <sprite n="warrior_attack/016_warrior_attack.bmp" x="606" y="1" w="44" h="44" pX="0.795455" pY="0.590909"/>
+        <sprite n="warrior_attack/017_warrior_attack.bmp" x="1" y="66" w="42" h="44" pX="0.785714" pY="0.613636"/>
+        <sprite n="warrior_attack/018_warrior_attack.bmp" x="45" y="66" w="45" h="48" pX="0.8" pY="0.645833"/>
+        <sprite n="warrior_attack/019_warrior_attack.bmp" x="92" y="66" w="41" h="47" pX="0.780488" pY="0.723404"/>
       </direction>
 
       <direction enum="west">
-        <sprite n="ElitSkirmisher_attack/024_ElitSkirmisher_attack.bmp" x="1" y="69" w="43" h="55" pX="0.418605" pY="0.927273"/>
-        <sprite n="ElitSkirmisher_attack/025_ElitSkirmisher_attack.bmp" x="46" y="69" w="69" h="45" pX="0.333333" pY="0.911111"/>
-        <sprite n="ElitSkirmisher_attack/026_ElitSkirmisher_attack.bmp" x="117" y="69" w="65" h="49" pX="0.446154" pY="0.816327"/>
-        <sprite n="ElitSkirmisher_attack/027_ElitSkirmisher_attack.bmp" x="184" y="69" w="34" h="37" pX="1.05882" pY="0.72973"/>
-        <sprite n="ElitSkirmisher_attack/028_ElitSkirmisher_attack.bmp" x="220" y="69" w="29" h="42" pX="1.34483" pY="0.761905"/>
-        <sprite n="ElitSkirmisher_attack/029_ElitSkirmisher_attack.bmp" x="251" y="69" w="30" h="45" pX="1.36667" pY="0.8"/>
-        <sprite n="ElitSkirmisher_attack/030_ElitSkirmisher_attack.bmp" x="283" y="69" w="29" h="45" pX="1.37931" pY="0.822222"/>
-        <sprite n="ElitSkirmisher_attack/031_ElitSkirmisher_attack.bmp" x="314" y="69" w="26" h="44" pX="1.34615" pY="0.840909"/>
-        <sprite n="ElitSkirmisher_attack/032_ElitSkirmisher_attack.bmp" x="342" y="69" w="34" h="43" pX="0.882353" pY="0.860465"/>
-        <sprite n="ElitSkirmisher_attack/033_ElitSkirmisher_attack.bmp" x="378" y="69" w="33" h="42" pX="0.757576" pY="0.880952"/>
-        <sprite n="ElitSkirmisher_attack/034_ElitSkirmisher_attack.bmp" x="413" y="69" w="31" h="42" pX="0.677419" pY="0.904762"/>
-        <sprite n="ElitSkirmisher_attack/035_ElitSkirmisher_attack.bmp" x="446" y="69" w="31" h="43" pX="0.580645" pY="0.906977"/>
+        <sprite n="warrior_attack/020_warrior_attack.bmp" x="135" y="66" w="28" h="46" pX="0.642857" pY="0.804348"/>
+        <sprite n="warrior_attack/021_warrior_attack.bmp" x="165" y="66" w="28" h="46" pX="0.642857" pY="0.673913"/>
+        <sprite n="warrior_attack/022_warrior_attack.bmp" x="195" y="66" w="24" h="49" pX="0.541667" pY="0.591837"/>
+        <sprite n="warrior_attack/023_warrior_attack.bmp" x="221" y="66" w="36" h="44" pX="0.388889" pY="0.727273"/>
+        <sprite n="warrior_attack/024_warrior_attack.bmp" x="259" y="66" w="30" h="50" pX="0.6" pY="0.58"/>
+        <sprite n="warrior_attack/025_warrior_attack.bmp" x="291" y="66" w="55" h="38" pX="0.8" pY="0.815789"/>
+        <sprite n="warrior_attack/026_warrior_attack.bmp" x="348" y="66" w="27" h="40" pX="0.592593" pY="0.85"/>
+        <sprite n="warrior_attack/027_warrior_attack.bmp" x="377" y="66" w="26" h="42" pX="0.576923" pY="0.833333"/>
+        <sprite n="warrior_attack/028_warrior_attack.bmp" x="405" y="66" w="49" h="41" pX="0.795918" pY="0.829268"/>
+        <sprite n="warrior_attack/029_warrior_attack.bmp" x="456" y="66" w="39" h="42" pX="0.74359" pY="0.809524"/>
       </direction>
 
       <direction enum="north-west">
-        <sprite n="ElitSkirmisher_attack/036_ElitSkirmisher_attack.bmp" x="479" y="69" w="40" h="47" pX="0.425" pY="0.914894"/>
-        <sprite n="ElitSkirmisher_attack/037_ElitSkirmisher_attack.bmp" x="521" y="69" w="51" h="46" pX="0.352941" pY="0.891304"/>
-        <sprite n="ElitSkirmisher_attack/038_ElitSkirmisher_attack.bmp" x="574" y="69" w="65" h="45" pX="0.492308" pY="0.955556"/>
-        <sprite n="ElitSkirmisher_attack/039_ElitSkirmisher_attack.bmp" x="641" y="69" w="33" h="42" pX="1.09091" pY="0.904762"/>
-        <sprite n="ElitSkirmisher_attack/040_ElitSkirmisher_attack.bmp" x="676" y="69" w="26" h="40" pX="1.38462" pY="1.05"/>
-        <sprite n="ElitSkirmisher_attack/041_ElitSkirmisher_attack.bmp" x="704" y="69" w="28" h="44" pX="1.39286" pY="1.04545"/>
-        <sprite n="ElitSkirmisher_attack/042_ElitSkirmisher_attack.bmp" x="734" y="69" w="28" h="43" pX="1.32143" pY="1.04651"/>
-        <sprite n="ElitSkirmisher_attack/043_ElitSkirmisher_attack.bmp" x="1" y="126" w="32" h="41" pX="1" pY="1.04878"/>
-        <sprite n="ElitSkirmisher_attack/044_ElitSkirmisher_attack.bmp" x="35" y="126" w="35" h="43" pX="0.771429" pY="0.976744"/>
-        <sprite n="ElitSkirmisher_attack/045_ElitSkirmisher_attack.bmp" x="72" y="126" w="34" h="42" pX="0.647059" pY="0.928571"/>
-        <sprite n="ElitSkirmisher_attack/046_ElitSkirmisher_attack.bmp" x="108" y="126" w="33" h="43" pX="0.575758" pY="0.930233"/>
-        <sprite n="ElitSkirmisher_attack/047_ElitSkirmisher_attack.bmp" x="143" y="126" w="32" h="45" pX="0.53125" pY="0.911111"/>
+        <sprite n="warrior_attack/030_warrior_attack.bmp" x="497" y="66" w="29" h="59" pX="0.689655" pY="0.898305"/>
+        <sprite n="warrior_attack/031_warrior_attack.bmp" x="528" y="66" w="26" h="63" pX="0.538462" pY="0.904762"/>
+        <sprite n="warrior_attack/032_warrior_attack.bmp" x="556" y="66" w="34" h="53" pX="0.352941" pY="0.773585"/>
+        <sprite n="warrior_attack/033_warrior_attack.bmp" x="592" y="66" w="32" h="54" pX="0.34375" pY="0.722222"/>
+        <sprite n="warrior_attack/034_warrior_attack.bmp" x="626" y="66" w="26" h="53" pX="0.653846" pY="0.811321"/>
+        <sprite n="warrior_attack/035_warrior_attack.bmp" x="1" y="131" w="46" h="64" pX="0.847826" pY="0.90625"/>
+        <sprite n="warrior_attack/036_warrior_attack.bmp" x="49" y="131" w="39" h="44" pX="0.820513" pY="0.863636"/>
+        <sprite n="warrior_attack/037_warrior_attack.bmp" x="90" y="131" w="37" h="43" pX="0.783784" pY="0.883721"/>
+        <sprite n="warrior_attack/038_warrior_attack.bmp" x="129" y="131" w="39" h="44" pX="0.794872" pY="0.886364"/>
+        <sprite n="warrior_attack/039_warrior_attack.bmp" x="170" y="131" w="35" h="54" pX="0.8" pY="0.907407"/>
       </direction>
 
       <direction enum="north">
-        <sprite n="ElitSkirmisher_attack/048_ElitSkirmisher_attack.bmp" x="177" y="126" w="28" h="48" pX="0.392857" pY="0.875"/>
-        <sprite n="ElitSkirmisher_attack/049_ElitSkirmisher_attack.bmp" x="207" y="126" w="27" h="50" pX="0.333333" pY="0.84"/>
-        <sprite n="ElitSkirmisher_attack/050_ElitSkirmisher_attack.bmp" x="236" y="126" w="35" h="50" pX="0.657143" pY="0.9"/>
-        <sprite n="ElitSkirmisher_attack/051_ElitSkirmisher_attack.bmp" x="273" y="126" w="40" h="43" pX="0.575" pY="1.06977"/>
-        <sprite n="ElitSkirmisher_attack/052_ElitSkirmisher_attack.bmp" x="315" y="126" w="26" h="42" pX="0.807692" pY="1.14286"/>
-        <sprite n="ElitSkirmisher_attack/053_ElitSkirmisher_attack.bmp" x="343" y="126" w="29" h="45" pX="0.689655" pY="1.13333"/>
-        <sprite n="ElitSkirmisher_attack/054_ElitSkirmisher_attack.bmp" x="374" y="126" w="32" h="43" pX="0.625" pY="1.13953"/>
-        <sprite n="ElitSkirmisher_attack/055_ElitSkirmisher_attack.bmp" x="408" y="126" w="33" h="40" pX="0.545455" pY="1.15"/>
-        <sprite n="ElitSkirmisher_attack/056_ElitSkirmisher_attack.bmp" x="443" y="126" w="33" h="45" pX="0.454545" pY="0.955556"/>
-        <sprite n="ElitSkirmisher_attack/057_ElitSkirmisher_attack.bmp" x="478" y="126" w="30" h="44" pX="0.433333" pY="0.909091"/>
-        <sprite n="ElitSkirmisher_attack/058_ElitSkirmisher_attack.bmp" x="510" y="126" w="25" h="46" pX="0.44" pY="0.913043"/>
-        <sprite n="ElitSkirmisher_attack/059_ElitSkirmisher_attack.bmp" x="537" y="126" w="24" h="47" pX="0.458333" pY="0.893617"/>
+        <sprite n="warrior_attack/040_warrior_attack.bmp" x="207" y="131" w="30" h="56" pX="0.733333" pY="0.875"/>
+        <sprite n="warrior_attack/041_warrior_attack.bmp" x="239" y="131" w="41" h="52" pX="0.804878" pY="0.865385"/>
+        <sprite n="warrior_attack/042_warrior_attack.bmp" x="282" y="131" w="44" h="44" pX="0.818182" pY="0.840909"/>
+        <sprite n="warrior_attack/043_warrior_attack.bmp" x="328" y="131" w="36" h="46" pX="0.777778" pY="0.76087"/>
+        <sprite n="warrior_attack/044_warrior_attack.bmp" x="366" y="131" w="50" h="43" pX="0.84" pY="0.837209"/>
+        <sprite n="warrior_attack/045_warrior_attack.bmp" x="418" y="131" w="24" h="49" pX="0.583333" pY="0.857143"/>
+        <sprite n="warrior_attack/046_warrior_attack.bmp" x="444" y="131" w="48" h="44" pX="0.270833" pY="0.840909"/>
+        <sprite n="warrior_attack/047_warrior_attack.bmp" x="494" y="131" w="49" h="45" pX="0.265306" pY="0.844444"/>
+        <sprite n="warrior_attack/048_warrior_attack.bmp" x="545" y="131" w="29" h="50" pX="0.482759" pY="0.88"/>
+        <sprite n="warrior_attack/049_warrior_attack.bmp" x="576" y="131" w="28" h="59" pX="0.714286" pY="0.881356"/>
       </direction>
     </action>
-
-
+    
     <!-- Die Action-->
     <action enum="die" speed="200">
       <direction enum="south">
-        <sprite n="ElitSkirmisher_die/000_ElitSkirmisher_die.bmp" x="563" y="126" w="37" h="42" pX="0.540541" pY="0.761905"/>
-        <sprite n="ElitSkirmisher_die/001_ElitSkirmisher_die.bmp" x="602" y="126" w="49" h="38" pX="0.408163" pY="0.684211"/>
-        <sprite n="ElitSkirmisher_die/002_ElitSkirmisher_die.bmp" x="653" y="126" w="49" h="53" pX="0.408163" pY="0.54717"/>
-        <sprite n="ElitSkirmisher_die/003_ElitSkirmisher_die.bmp" x="704" y="126" w="49" h="44" pX="0.428571" pY="0.613636"/>
-        <sprite n="ElitSkirmisher_die/004_ElitSkirmisher_die.bmp" x="1" y="181" w="52" h="50" pX="0.403846" pY="0.52"/>
-        <sprite n="ElitSkirmisher_die/005_ElitSkirmisher_die.bmp" x="55" y="181" w="72" h="44" pX="0.291667" pY="0.454545"/>
-        <sprite n="ElitSkirmisher_die/006_ElitSkirmisher_die.bmp" x="129" y="181" w="88" h="29" pX="0.238636" pY="0.172414"/>
-        <sprite n="ElitSkirmisher_die/007_ElitSkirmisher_die.bmp" x="219" y="181" w="87" h="29" pX="0.241379" pY="0.172414"/>
-        <sprite n="ElitSkirmisher_die/008_ElitSkirmisher_die.bmp" x="308" y="181" w="89" h="29" pX="0.235955" pY="0.172414"/>
-        <sprite n="ElitSkirmisher_die/009_ElitSkirmisher_die.bmp" x="399" y="181" w="89" h="29" pX="0.235955" pY="0.172414"/>
+        <sprite n="warrior_die/000_warrior_die.bmp" x="606" y="131" w="46" h="46" pX="0.173913" pY="0.782609"/>
+        <sprite n="warrior_die/001_warrior_die.bmp" x="1" y="197" w="52" h="44" pX="0.115385" pY="0.772727"/>
+        <sprite n="warrior_die/002_warrior_die.bmp" x="55" y="197" w="51" h="43" pX="0.0588235" pY="0.744186"/>
+        <sprite n="warrior_die/003_warrior_die.bmp" x="108" y="197" w="48" h="45" pX="0.0208333" pY="0.733333"/>
+        <sprite n="warrior_die/004_warrior_die.bmp" x="158" y="197" w="45" h="44" pX="-0.0444444" pY="0.704545"/>
+        <sprite n="warrior_die/005_warrior_die.bmp" x="205" y="197" w="46" h="37" pX="-0.0217391" pY="0.648649"/>
+        <sprite n="warrior_die/006_warrior_die.bmp" x="253" y="197" w="50" h="25" pX="-0.02" pY="0.48"/>
+        <sprite n="warrior_die/007_warrior_die.bmp" x="305" y="197" w="51" h="25" pX="-0.0196078" pY="0.48"/>
+        <sprite n="warrior_die/008_warrior_die.bmp" x="358" y="197" w="50" h="25" pX="-0.06" pY="0.48"/>
+        <sprite n="warrior_die/009_warrior_die.bmp" x="410" y="197" w="52" h="25" pX="-0.0769231" pY="0.44"/>
       </direction>
 
       <direction enum="south-west">
-        <!-- This unit has 1 more frame for the south-west die movement-->
-        <sprite n="ElitSkirmisher_die/010_ElitSkirmisher_die.bmp" x="490" y="181" w="45" h="44" pX="0.6" pY="0.886364"/>
-        <sprite n="ElitSkirmisher_die/011_ElitSkirmisher_die.bmp" x="537" y="181" w="40" h="49" pX="0.6" pY="0.877551"/>
-        <sprite n="ElitSkirmisher_die/012_ElitSkirmisher_die.bmp" x="579" y="181" w="34" h="48" pX="0.705882" pY="0.895833"/>
-        <sprite n="ElitSkirmisher_die/013_ElitSkirmisher_die.bmp" x="615" y="181" w="34" h="49" pX="0.676471" pY="0.795918"/>
-        <sprite n="ElitSkirmisher_die/014_ElitSkirmisher_die.bmp" x="651" y="181" w="34" h="45" pX="0.705882" pY="0.777778"/>
-        <sprite n="ElitSkirmisher_die/015_ElitSkirmisher_die.bmp" x="687" y="181" w="35" h="48" pX="0.714286" pY="0.770833"/>
-        <sprite n="ElitSkirmisher_die/016_ElitSkirmisher_die.bmp" x="724" y="181" w="34" h="49" pX="0.764706" pY="0.755102"/>
-        <sprite n="ElitSkirmisher_die/017_ElitSkirmisher_die.bmp" x="1" y="233" w="33" h="53" pX="0.787879" pY="0.735849"/>
-        <sprite n="ElitSkirmisher_die/018_ElitSkirmisher_die.bmp" x="36" y="233" w="58" h="54" pX="0.706897" pY="0.685185"/>
-        <sprite n="ElitSkirmisher_die/019_ElitSkirmisher_die.bmp" x="96" y="233" w="87" h="29" pX="0.770115" pY="0.413793"/>
-        <sprite n="ElitSkirmisher_die/020_ElitSkirmisher_die.bmp" x="185" y="233" w="103" h="32" pX="0.786408" pY="0.125"/>
+        <sprite n="warrior_die/010_warrior_die.bmp" x="464" y="197" w="27" h="46" pX="0.592593" pY="0.804348"/>
+        <sprite n="warrior_die/011_warrior_die.bmp" x="493" y="197" w="32" h="49" pX="0.6875" pY="0.836735"/>
+        <sprite n="warrior_die/012_warrior_die.bmp" x="527" y="197" w="31" h="50" pX="0.709677" pY="0.8"/>
+        <sprite n="warrior_die/013_warrior_die.bmp" x="560" y="197" w="28" h="51" pX="0.75" pY="0.764706"/>
+        <sprite n="warrior_die/014_warrior_die.bmp" x="590" y="197" w="30" h="53" pX="0.8" pY="0.773585"/>
+        <sprite n="warrior_die/015_warrior_die.bmp" x="622" y="197" w="41" h="48" pX="0.902439" pY="0.729167"/>
+        <sprite n="warrior_die/016_warrior_die.bmp" x="1" y="252" w="38" h="37" pX="0.842105" pY="0.675676"/>
+        <sprite n="warrior_die/017_warrior_die.bmp" x="41" y="252" w="39" h="35" pX="0.820513" pY="0.657143"/>
+        <sprite n="warrior_die/018_warrior_die.bmp" x="82" y="252" w="40" h="36" pX="0.85" pY="0.666667"/>
+        <sprite n="warrior_die/019_warrior_die.bmp" x="124" y="252" w="41" h="37" pX="0.853659" pY="0.675676"/>
       </direction>
 
       <direction enum="west">
-        <sprite n="ElitSkirmisher_die/021_ElitSkirmisher_die.bmp" x="290" y="233" w="45" h="55" pX="0.555556" pY="0.872727"/>
-        <sprite n="ElitSkirmisher_die/022_ElitSkirmisher_die.bmp" x="337" y="233" w="43" h="55" pX="0.604651" pY="0.854545"/>
-        <sprite n="ElitSkirmisher_die/023_ElitSkirmisher_die.bmp" x="382" y="233" w="42" h="51" pX="0.714286" pY="0.843137"/>
-        <sprite n="ElitSkirmisher_die/024_ElitSkirmisher_die.bmp" x="426" y="233" w="39" h="46" pX="0.794872" pY="0.826087"/>
-        <sprite n="ElitSkirmisher_die/025_ElitSkirmisher_die.bmp" x="467" y="233" w="40" h="44" pX="0.775" pY="0.818182"/>
-        <sprite n="ElitSkirmisher_die/026_ElitSkirmisher_die.bmp" x="509" y="233" w="43" h="41" pX="0.72093" pY="0.780488"/>
-        <sprite n="ElitSkirmisher_die/027_ElitSkirmisher_die.bmp" x="554" y="233" w="48" h="37" pX="0.645833" pY="0.756757"/>
-        <sprite n="ElitSkirmisher_die/028_ElitSkirmisher_die.bmp" x="604" y="233" w="54" h="32" pX="0.555556" pY="0.71875"/>
-        <sprite n="ElitSkirmisher_die/029_ElitSkirmisher_die.bmp" x="660" y="233" w="67" h="25" pX="0.462687" pY="0.56"/>
-        <sprite n="ElitSkirmisher_die/030_ElitSkirmisher_die.bmp" x="1" y="290" w="67" h="24" pX="0.432836" pY="0.583333"/>
+        <sprite n="warrior_die/020_warrior_die.bmp" x="167" y="252" w="32" h="55" pX="0.6875" pY="0.636364"/>
+        <sprite n="warrior_die/021_warrior_die.bmp" x="201" y="252" w="30" h="56" pX="0.666667" pY="0.571429"/>
+        <sprite n="warrior_die/022_warrior_die.bmp" x="233" y="252" w="32" h="54" pX="0.59375" pY="0.537037"/>
+        <sprite n="warrior_die/023_warrior_die.bmp" x="267" y="252" w="36" h="49" pX="0.583333" pY="0.489796"/>
+        <sprite n="warrior_die/024_warrior_die.bmp" x="305" y="252" w="39" h="42" pX="0.564103" pY="0.428571"/>
+        <sprite n="warrior_die/025_warrior_die.bmp" x="346" y="252" w="39" h="31" pX="0.564103" pY="0.193548"/>
+        <sprite n="warrior_die/026_warrior_die.bmp" x="387" y="252" w="39" h="30" pX="0.564103" pY="0.1"/>
+        <sprite n="warrior_die/027_warrior_die.bmp" x="428" y="252" w="40" h="32" pX="0.55" pY="0.125"/>
+        <sprite n="warrior_die/028_warrior_die.bmp" x="470" y="252" w="41" h="33" pX="0.560976" pY="0.121212"/>
+        <sprite n="warrior_die/029_warrior_die.bmp" x="513" y="252" w="42" h="31" pX="0.571429" pY="0.0322581"/>
       </direction>
 
       <direction enum="north-west">
-        <sprite n="ElitSkirmisher_die/031_ElitSkirmisher_die.bmp" x="70" y="290" w="43" h="46" pX="0.488372" pY="0.956522"/>
-        <sprite n="ElitSkirmisher_die/032_ElitSkirmisher_die.bmp" x="115" y="290" w="57" h="46" pX="0.596491" pY="0.869565"/>
-        <sprite n="ElitSkirmisher_die/033_ElitSkirmisher_die.bmp" x="174" y="290" w="53" h="47" pX="0.584906" pY="0.808511"/>
-        <sprite n="ElitSkirmisher_die/034_ElitSkirmisher_die.bmp" x="229" y="290" w="53" h="46" pX="0.566038" pY="0.782609"/>
-        <sprite n="ElitSkirmisher_die/035_ElitSkirmisher_die.bmp" x="284" y="290" w="53" h="43" pX="0.566038" pY="0.72093"/>
-        <sprite n="ElitSkirmisher_die/036_ElitSkirmisher_die.bmp" x="339" y="290" w="65" h="41" pX="0.646154" pY="0.560976"/>
-        <sprite n="ElitSkirmisher_die/037_ElitSkirmisher_die.bmp" x="406" y="290" w="80" h="44" pX="0.7125" pY="0.522727"/>
-        <sprite n="ElitSkirmisher_die/038_ElitSkirmisher_die.bmp" x="488" y="290" w="79" h="46" pX="0.708861" pY="0.5"/>
-        <sprite n="ElitSkirmisher_die/039_ElitSkirmisher_die.bmp" x="569" y="290" w="83" h="45" pX="0.722892" pY="0.511111"/>
-        <sprite n="ElitSkirmisher_die/040_ElitSkirmisher_die.bmp" x="654" y="290" w="81" h="45" pX="0.716049" pY="0.511111"/>
+        <sprite n="warrior_die/030_warrior_die.bmp" x="557" y="252" w="32" h="56" pX="0.71875" pY="0.875"/>
+        <sprite n="warrior_die/031_warrior_die.bmp" x="591" y="252" w="36" h="54" pX="0.527778" pY="0.888889"/>
+        <sprite n="warrior_die/032_warrior_die.bmp" x="629" y="252" w="46" h="44" pX="0.478261" pY="0.886364"/>
+        <sprite n="warrior_die/033_warrior_die.bmp" x="1" y="310" w="53" h="34" pX="0.433962" pY="0.852941"/>
+        <sprite n="warrior_die/034_warrior_die.bmp" x="56" y="310" w="56" h="40" pX="0.375" pY="0.925"/>
+        <sprite n="warrior_die/035_warrior_die.bmp" x="114" y="310" w="59" h="35" pX="0.338983" pY="0.914286"/>
+        <sprite n="warrior_die/036_warrior_die.bmp" x="175" y="310" w="63" h="24" pX="0.31746" pY="0.833333"/>
+        <sprite n="warrior_die/037_warrior_die.bmp" x="240" y="310" w="66" h="23" pX="0.30303" pY="0.826087"/>
+        <sprite n="warrior_die/038_warrior_die.bmp" x="308" y="310" w="66" h="25" pX="0.30303" pY="0.84"/>
+        <sprite n="warrior_die/039_warrior_die.bmp" x="376" y="310" w="66" h="25" pX="0.30303" pY="0.84"/>
       </direction>
 
       <direction enum="north">
-        <sprite n="ElitSkirmisher_die/041_ElitSkirmisher_die.bmp" x="1" y="339" w="40" h="41" pX="0.4" pY="0.926829"/>
-        <sprite n="ElitSkirmisher_die/042_ElitSkirmisher_die.bmp" x="43" y="339" w="33" h="39" pX="0.454545" pY="0.923077"/>
-        <sprite n="ElitSkirmisher_die/043_ElitSkirmisher_die.bmp" x="78" y="339" w="28" h="36" pX="0.535714" pY="0.916667"/>
-        <sprite n="ElitSkirmisher_die/044_ElitSkirmisher_die.bmp" x="108" y="339" w="28" h="36" pX="0.535714" pY="0.916667"/>
-        <sprite n="ElitSkirmisher_die/045_ElitSkirmisher_die.bmp" x="138" y="339" w="28" h="36" pX="0.535714" pY="0.888889"/>
-        <sprite n="ElitSkirmisher_die/046_ElitSkirmisher_die.bmp" x="168" y="339" w="31" h="32" pX="0.548387" pY="0.84375"/>
-        <sprite n="ElitSkirmisher_die/047_ElitSkirmisher_die.bmp" x="201" y="339" w="38" h="28" pX="0.473684" pY="0.714286"/>
-        <sprite n="ElitSkirmisher_die/048_ElitSkirmisher_die.bmp" x="241" y="339" w="38" h="28" pX="0.5" pY="0.571429"/>
-        <sprite n="ElitSkirmisher_die/049_ElitSkirmisher_die.bmp" x="281" y="339" w="44" h="35" pX="0.477273" pY="0.485714"/>
-        <sprite n="ElitSkirmisher_die/050_ElitSkirmisher_die.bmp" x="327" y="339" w="46" h="35" pX="0.413043" pY="0.457143"/>
+        <sprite n="warrior_die/040_warrior_die.bmp" x="444" y="310" w="48" h="44" pX="0.833333" pY="0.840909"/>
+        <sprite n="warrior_die/041_warrior_die.bmp" x="494" y="310" w="50" h="41" pX="0.84" pY="0.878049"/>
+        <sprite n="warrior_die/042_warrior_die.bmp" x="546" y="310" w="49" h="41" pX="0.897959" pY="0.829268"/>
+        <sprite n="warrior_die/043_warrior_die.bmp" x="597" y="310" w="46" h="38" pX="0.956522" pY="0.789474"/>
+        <sprite n="warrior_die/044_warrior_die.bmp" x="1" y="356" w="44" h="36" pX="1" pY="0.777778"/>
+        <sprite n="warrior_die/045_warrior_die.bmp" x="47" y="356" w="47" h="31" pX="0.978723" pY="0.709677"/>
+        <sprite n="warrior_die/046_warrior_die.bmp" x="96" y="356" w="50" h="21" pX="0.98" pY="0.52381"/>
+        <sprite n="warrior_die/047_warrior_die.bmp" x="148" y="356" w="52" h="21" pX="0.980769" pY="0.52381"/>
+        <sprite n="warrior_die/048_warrior_die.bmp" x="202" y="356" w="52" h="22" pX="1" pY="0.545455"/>
+        <sprite n="warrior_die/049_warrior_die.bmp" x="256" y="356" w="52" h="22" pX="1.03846" pY="0.545455"/>
       </direction>
     </action>
-
-
+    
     <!-- Disappear Action-->
     <action enum="disappear" speed="200">
       <direction enum="south">
-        <sprite n="ElitSkirmisher_dissapear/000_ElitSkirmisher_dissapear.bmp" x="375" y="339" w="87" h="27" pX="0.229885" pY="0.148148"/>
-        <sprite n="ElitSkirmisher_dissapear/001_ElitSkirmisher_dissapear.bmp" x="464" y="339" w="86" h="27" pX="0.232558" pY="0.148148"/>
-        <sprite n="ElitSkirmisher_dissapear/002_ElitSkirmisher_dissapear.bmp" x="552" y="339" w="85" h="27" pX="0.235294" pY="0.148148"/>
-        <sprite n="ElitSkirmisher_dissapear/003_ElitSkirmisher_dissapear.bmp" x="639" y="339" w="85" h="27" pX="0.235294" pY="0.148148"/>
-        <sprite n="ElitSkirmisher_dissapear/004_ElitSkirmisher_dissapear.bmp" x="1" y="382" w="83" h="22" pX="0.228916" pY="0.0909091"/>
+        <sprite n="warrior_dissapear/000_warrior_dissapear.bmp" x="310" y="356" w="50" h="23" pX="-0.1" pY="0.434783"/>
+        <sprite n="warrior_dissapear/001_warrior_dissapear.bmp" x="362" y="356" w="48" h="22" pX="-0.125" pY="0.409091"/>
+        <sprite n="warrior_dissapear/002_warrior_dissapear.bmp" x="412" y="356" w="45" h="21" pX="-0.177778" pY="0.428571"/>
+        <sprite n="warrior_dissapear/003_warrior_dissapear.bmp" x="459" y="356" w="43" h="14" pX="-0.186047" pY="0.571429"/>
+        <sprite n="warrior_dissapear/004_warrior_dissapear.bmp" x="504" y="356" w="41" h="12" pX="-0.195122" pY="0.583333"/>
       </direction>
 
       <direction enum="south-west">
-        <sprite n="ElitSkirmisher_dissapear/005_ElitSkirmisher_dissapear.bmp" x="86" y="382" w="101" h="30" pX="0.792079" pY="0.1"/>
-        <sprite n="ElitSkirmisher_dissapear/006_ElitSkirmisher_dissapear.bmp" x="189" y="382" w="100" h="30" pX="0.8" pY="0.1"/>
-        <sprite n="ElitSkirmisher_dissapear/007_ElitSkirmisher_dissapear.bmp" x="291" y="382" w="99" h="29" pX="0.808081" pY="0.0689655"/>
-        <sprite n="ElitSkirmisher_dissapear/008_ElitSkirmisher_dissapear.bmp" x="392" y="382" w="86" h="25" pX="0.790698" pY="0.08"/>
-        <sprite n="ElitSkirmisher_dissapear/009_ElitSkirmisher_dissapear.bmp" x="480" y="382" w="84" h="25" pX="0.809524" pY="0.08"/>
+        <sprite n="warrior_dissapear/005_warrior_dissapear.bmp" x="547" y="356" w="39" h="35" pX="0.871795" pY="0.685714"/>
+        <sprite n="warrior_dissapear/006_warrior_dissapear.bmp" x="588" y="356" w="39" h="35" pX="0.871795" pY="0.685714"/>
+        <sprite n="warrior_dissapear/007_warrior_dissapear.bmp" x="629" y="356" w="38" h="34" pX="0.868421" pY="0.676471"/>
+        <sprite n="warrior_dissapear/008_warrior_dissapear.bmp" x="1" y="394" w="36" h="33" pX="0.916667" pY="0.666667"/>
+        <sprite n="warrior_dissapear/009_warrior_dissapear.bmp" x="39" y="394" w="33" h="33" pX="0.909091" pY="0.666667"/>
       </direction>
 
       <direction enum="west">
-        <sprite n="ElitSkirmisher_dissapear/010_ElitSkirmisher_dissapear.bmp" x="566" y="382" w="65" h="22" pX="0.430769" pY="0.590909"/>
-        <sprite n="ElitSkirmisher_dissapear/011_ElitSkirmisher_dissapear.bmp" x="633" y="382" w="55" h="21" pX="0.327273" pY="0.619048"/>
-        <sprite n="ElitSkirmisher_dissapear/012_ElitSkirmisher_dissapear.bmp" x="690" y="382" w="54" h="20" pX="0.333333" pY="0.65"/>
-        <sprite n="ElitSkirmisher_dissapear/013_ElitSkirmisher_dissapear.bmp" x="1" y="414" w="53" h="19" pX="0.339623" pY="0.684211"/>
-        <sprite n="ElitSkirmisher_dissapear/014_ElitSkirmisher_dissapear.bmp" x="56" y="414" w="53" h="17" pX="0.339623" pY="0.647059"/>
+        <sprite n="warrior_dissapear/010_warrior_dissapear.bmp" x="74" y="394" w="40" h="29" pX="0.575" pY="0"/>
+        <sprite n="warrior_dissapear/011_warrior_dissapear.bmp" x="116" y="394" w="37" h="27" pX="0.594595" pY="-0.037037"/>
+        <sprite n="warrior_dissapear/012_warrior_dissapear.bmp" x="155" y="394" w="32" h="24" pX="0.5625" pY="-0.0833333"/>
+        <sprite n="warrior_dissapear/013_warrior_dissapear.bmp" x="189" y="394" w="31" h="19" pX="0.580645" pY="-0.263158"/>
+        <sprite n="warrior_dissapear/014_warrior_dissapear.bmp" x="222" y="394" w="25" h="18" pX="0.6" pY="-0.277778"/>
       </direction>
 
       <direction enum="north-west">
-        <sprite n="ElitSkirmisher_dissapear/015_ElitSkirmisher_dissapear.bmp" x="111" y="414" w="79" h="43" pX="0.721519" pY="0.511628"/>
-        <sprite n="ElitSkirmisher_dissapear/016_ElitSkirmisher_dissapear.bmp" x="192" y="414" w="76" h="41" pX="0.723684" pY="0.536585"/>
-        <sprite n="ElitSkirmisher_dissapear/017_ElitSkirmisher_dissapear.bmp" x="270" y="414" w="74" h="41" pX="0.743243" pY="0.536585"/>
-        <sprite n="ElitSkirmisher_dissapear/018_ElitSkirmisher_dissapear.bmp" x="346" y="414" w="74" h="41" pX="0.743243" pY="0.536585"/>
-        <sprite n="ElitSkirmisher_dissapear/019_ElitSkirmisher_dissapear.bmp" x="422" y="414" w="74" h="40" pX="0.743243" pY="0.55"/>
+        <sprite n="warrior_dissapear/015_warrior_dissapear.bmp" x="249" y="394" w="64" h="23" pX="0.296875" pY="0.869565"/>
+        <sprite n="warrior_dissapear/016_warrior_dissapear.bmp" x="315" y="394" w="62" h="21" pX="0.290323" pY="0.904762"/>
+        <sprite n="warrior_dissapear/017_warrior_dissapear.bmp" x="379" y="394" w="62" h="20" pX="0.290323" pY="0.95"/>
+        <sprite n="warrior_dissapear/018_warrior_dissapear.bmp" x="443" y="394" w="60" h="19" pX="0.3" pY="0.947368"/>
+        <sprite n="warrior_dissapear/019_warrior_dissapear.bmp" x="505" y="394" w="60" h="19" pX="0.3" pY="0.947368"/>
       </direction>
 
       <direction enum="north">
-        <sprite n="ElitSkirmisher_dissapear/020_ElitSkirmisher_dissapear.bmp" x="498" y="414" w="44" h="33" pX="0.409091" pY="0.454545"/>
-        <sprite n="ElitSkirmisher_dissapear/021_ElitSkirmisher_dissapear.bmp" x="544" y="414" w="43" h="33" pX="0.395349" pY="0.454545"/>
-        <sprite n="ElitSkirmisher_dissapear/022_ElitSkirmisher_dissapear.bmp" x="589" y="414" w="42" h="33" pX="0.380952" pY="0.454545"/>
-        <sprite n="ElitSkirmisher_dissapear/023_ElitSkirmisher_dissapear.bmp" x="633" y="414" w="42" h="32" pX="0.380952" pY="0.46875"/>
-        <sprite n="ElitSkirmisher_dissapear/024_ElitSkirmisher_dissapear.bmp" x="677" y="414" w="41" h="32" pX="0.365854" pY="0.46875"/>
+        <sprite n="warrior_dissapear/020_warrior_dissapear.bmp" x="567" y="394" w="50" h="20" pX="1.06" pY="0.55"/>
+        <sprite n="warrior_dissapear/021_warrior_dissapear.bmp" x="619" y="394" w="49" h="16" pX="1.08163" pY="0.5625"/>
+        <sprite n="warrior_dissapear/022_warrior_dissapear.bmp" x="1" y="429" w="48" h="13" pX="1.08333" pY="0.538462"/>
+        <sprite n="warrior_dissapear/023_warrior_dissapear.bmp" x="51" y="429" w="48" h="12" pX="1.08333" pY="0.5"/>
+        <sprite n="warrior_dissapear/024_warrior_dissapear.bmp" x="101" y="429" w="47" h="10" pX="1.10638" pY="0.5"/>
       </direction>
     </action>
-
-
-    <!-- Idle Action-->
+    
+        <!-- Idle Action-->
     <action enum="idle" speed="200">
       <direction enum="south">
-        <sprite n="ElitSkirmisher_idle/000_ElitSkirmisher_idle.bmp" x="720" y="414" w="26" h="51" pX="0.461538" pY="0.862745"/>
-        <sprite n="ElitSkirmisher_idle/001_ElitSkirmisher_idle.bmp" x="1" y="467" w="26" h="49" pX="0.461538" pY="0.877551"/>
-        <sprite n="ElitSkirmisher_idle/002_ElitSkirmisher_idle.bmp" x="29" y="467" w="26" h="52" pX="0.461538" pY="0.865385"/>
-        <sprite n="ElitSkirmisher_idle/003_ElitSkirmisher_idle.bmp" x="57" y="467" w="26" h="50" pX="0.461538" pY="0.88"/>
-        <sprite n="ElitSkirmisher_idle/004_ElitSkirmisher_idle.bmp" x="85" y="467" w="26" h="49" pX="0.461538" pY="0.877551"/>
-        <sprite n="ElitSkirmisher_idle/005_ElitSkirmisher_idle.bmp" x="113" y="467" w="26" h="51" pX="0.461538" pY="0.862745"/>
-        <sprite n="ElitSkirmisher_idle/006_ElitSkirmisher_idle.bmp" x="141" y="467" w="26" h="52" pX="0.461538" pY="0.865385"/>
-        <sprite n="ElitSkirmisher_idle/007_ElitSkirmisher_idle.bmp" x="169" y="467" w="26" h="52" pX="0.461538" pY="0.865385"/>
-        <sprite n="ElitSkirmisher_idle/008_ElitSkirmisher_idle.bmp" x="720" y="414" w="26" h="51" pX="0.461538" pY="0.862745"/>
+        <sprite n="warrior_idle/000_warrior_idle.bmp" x="150" y="429" w="37" h="42" pX="0.540541" pY="0.833333"/>
+        <sprite n="warrior_idle/001_warrior_idle.bmp" x="189" y="429" w="40" h="42" pX="0.55" pY="0.833333"/>
+        <sprite n="warrior_idle/002_warrior_idle.bmp" x="231" y="429" w="36" h="43" pX="0.5" pY="0.813953"/>
+        <sprite n="warrior_idle/003_warrior_idle.bmp" x="269" y="429" w="37" h="44" pX="0.513514" pY="0.795455"/>
+        <sprite n="warrior_idle/004_warrior_idle.bmp" x="308" y="429" w="38" h="43" pX="0.526316" pY="0.813953"/>
+        <sprite n="warrior_idle/005_warrior_idle.bmp" x="348" y="429" w="40" h="42" pX="0.55" pY="0.833333"/>
       </direction>
 
       <direction enum="south-west">
-        <sprite n="ElitSkirmisher_idle/009_ElitSkirmisher_idle.bmp" x="197" y="467" w="38" h="44" pX="0.657895" pY="0.886364"/>
-        <sprite n="ElitSkirmisher_idle/010_ElitSkirmisher_idle.bmp" x="237" y="467" w="39" h="44" pX="0.666667" pY="0.886364"/>
-        <sprite n="ElitSkirmisher_idle/011_ElitSkirmisher_idle.bmp" x="278" y="467" w="38" h="44" pX="0.657895" pY="0.886364"/>
-        <sprite n="ElitSkirmisher_idle/012_ElitSkirmisher_idle.bmp" x="318" y="467" w="38" h="44" pX="0.657895" pY="0.886364"/>
-        <sprite n="ElitSkirmisher_idle/013_ElitSkirmisher_idle.bmp" x="358" y="467" w="40" h="44" pX="0.675" pY="0.886364"/>
-        <sprite n="ElitSkirmisher_idle/014_ElitSkirmisher_idle.bmp" x="400" y="467" w="40" h="44" pX="0.675" pY="0.886364"/>
-        <sprite n="ElitSkirmisher_idle/015_ElitSkirmisher_idle.bmp" x="442" y="467" w="40" h="44" pX="0.675" pY="0.886364"/>
-        <sprite n="ElitSkirmisher_idle/016_ElitSkirmisher_idle.bmp" x="484" y="467" w="40" h="44" pX="0.675" pY="0.886364"/>
-        <sprite n="ElitSkirmisher_idle/017_ElitSkirmisher_idle.bmp" x="197" y="467" w="38" h="44" pX="0.657895" pY="0.886364"/>
+        <sprite n="warrior_idle/006_warrior_idle.bmp" x="390" y="429" w="30" h="45" pX="0.7" pY="0.8"/>
+        <sprite n="warrior_idle/007_warrior_idle.bmp" x="422" y="429" w="32" h="45" pX="0.6875" pY="0.8"/>
+        <sprite n="warrior_idle/008_warrior_idle.bmp" x="456" y="429" w="34" h="44" pX="0.617647" pY="0.818182"/>
+        <sprite n="warrior_idle/009_warrior_idle.bmp" x="492" y="429" w="37" h="43" pX="0.621622" pY="0.837209"/>
+        <sprite n="warrior_idle/010_warrior_idle.bmp" x="531" y="429" w="36" h="44" pX="0.638889" pY="0.818182"/>
+        <sprite n="warrior_idle/011_warrior_idle.bmp" x="569" y="429" w="31" h="44" pX="0.677419" pY="0.818182"/>
       </direction>
 
       <direction enum="west">
-        <sprite n="ElitSkirmisher_idle/018_ElitSkirmisher_idle.bmp" x="526" y="467" w="53" h="50" pX="0.566038" pY="0.88"/>
-        <sprite n="ElitSkirmisher_idle/019_ElitSkirmisher_idle.bmp" x="581" y="467" w="52" h="53" pX="0.576923" pY="0.886792"/>
-        <sprite n="ElitSkirmisher_idle/020_ElitSkirmisher_idle.bmp" x="635" y="467" w="51" h="53" pX="0.568627" pY="0.886792"/>
-        <sprite n="ElitSkirmisher_idle/021_ElitSkirmisher_idle.bmp" x="688" y="467" w="53" h="53" pX="0.584906" pY="0.886792"/>
-        <sprite n="ElitSkirmisher_idle/022_ElitSkirmisher_idle.bmp" x="1" y="522" w="53" h="51" pX="0.584906" pY="0.882353"/>
-        <sprite n="ElitSkirmisher_idle/023_ElitSkirmisher_idle.bmp" x="56" y="522" w="53" h="50" pX="0.584906" pY="0.88"/>
-        <sprite n="ElitSkirmisher_idle/024_ElitSkirmisher_idle.bmp" x="111" y="522" w="54" h="50" pX="0.592593" pY="0.88"/>
-        <sprite n="ElitSkirmisher_idle/025_ElitSkirmisher_idle.bmp" x="167" y="522" w="54" h="50" pX="0.574074" pY="0.88"/>
-        <sprite n="ElitSkirmisher_idle/026_ElitSkirmisher_idle.bmp" x="223" y="522" w="53" h="50" pX="0.566038" pY="0.88"/>
+        <sprite n="warrior_idle/012_warrior_idle.bmp" x="602" y="429" w="45" h="43" pX="0.777778" pY="0.860465"/>
+        <sprite n="warrior_idle/013_warrior_idle.bmp" x="1" y="476" w="45" h="44" pX="0.777778" pY="0.840909"/>
+        <sprite n="warrior_idle/014_warrior_idle.bmp" x="48" y="476" w="46" h="43" pX="0.782609" pY="0.860465"/>
+        <sprite n="warrior_idle/015_warrior_idle.bmp" x="96" y="476" w="45" h="42" pX="0.777778" pY="0.880952"/>
+        <sprite n="warrior_idle/016_warrior_idle.bmp" x="143" y="476" w="46" h="42" pX="0.782609" pY="0.880952"/>
+        <sprite n="warrior_idle/017_warrior_idle.bmp" x="191" y="476" w="44" h="42" pX="0.772727" pY="0.880952"/>
       </direction>
 
       <direction enum="north-west">
-        <sprite n="ElitSkirmisher_idle/027_ElitSkirmisher_idle.bmp" x="278" y="522" w="21" h="56" pX="0.571429" pY="0.928571"/>
-        <sprite n="ElitSkirmisher_idle/028_ElitSkirmisher_idle.bmp" x="301" y="522" w="22" h="58" pX="0.590909" pY="0.931034"/>
-        <sprite n="ElitSkirmisher_idle/029_ElitSkirmisher_idle.bmp" x="325" y="522" w="22" h="57" pX="0.590909" pY="0.929825"/>
-        <sprite n="ElitSkirmisher_idle/030_ElitSkirmisher_idle.bmp" x="349" y="522" w="23" h="56" pX="0.608696" pY="0.928571"/>
-        <sprite n="ElitSkirmisher_idle/031_ElitSkirmisher_idle.bmp" x="374" y="522" w="23" h="58" pX="0.608696" pY="0.931034"/>
-        <sprite n="ElitSkirmisher_idle/032_ElitSkirmisher_idle.bmp" x="399" y="522" w="23" h="55" pX="0.608696" pY="0.927273"/>
-        <sprite n="ElitSkirmisher_idle/033_ElitSkirmisher_idle.bmp" x="424" y="522" w="23" h="57" pX="0.608696" pY="0.929825"/>
-        <sprite n="ElitSkirmisher_idle/034_ElitSkirmisher_idle.bmp" x="449" y="522" w="22" h="58" pX="0.590909" pY="0.931034"/>
-        <sprite n="ElitSkirmisher_idle/035_ElitSkirmisher_idle.bmp" x="278" y="522" w="21" h="56" pX="0.571429" pY="0.928571"/>
+        <sprite n="warrior_idle/018_warrior_idle.bmp" x="237" y="476" w="37" h="50" pX="0.783784" pY="0.88"/>
+        <sprite n="warrior_idle/019_warrior_idle.bmp" x="276" y="476" w="40" h="49" pX="0.8" pY="0.877551"/>
+        <sprite n="warrior_idle/020_warrior_idle.bmp" x="318" y="476" w="42" h="50" pX="0.809524" pY="0.88"/>
+        <sprite n="warrior_idle/021_warrior_idle.bmp" x="362" y="476" w="38" h="50" pX="0.789474" pY="0.88"/>
+        <sprite n="warrior_idle/022_warrior_idle.bmp" x="402" y="476" w="37" h="50" pX="0.783784" pY="0.88"/>
+        <sprite n="warrior_idle/023_warrior_idle.bmp" x="441" y="476" w="39" h="50" pX="0.794872" pY="0.88"/>
       </direction>
 
       <direction enum="north">
-        <sprite n="ElitSkirmisher_idle/036_ElitSkirmisher_idle.bmp" x="473" y="522" w="26" h="60" pX="0.538462" pY="0.95"/>
-        <sprite n="ElitSkirmisher_idle/037_ElitSkirmisher_idle.bmp" x="501" y="522" w="26" h="60" pX="0.538462" pY="0.95"/>
-        <sprite n="ElitSkirmisher_idle/038_ElitSkirmisher_idle.bmp" x="529" y="522" w="25" h="60" pX="0.52" pY="0.95"/>
-        <sprite n="ElitSkirmisher_idle/039_ElitSkirmisher_idle.bmp" x="556" y="522" w="25" h="60" pX="0.52" pY="0.95"/>
-        <sprite n="ElitSkirmisher_idle/040_ElitSkirmisher_idle.bmp" x="583" y="522" w="25" h="60" pX="0.52" pY="0.95"/>
-        <sprite n="ElitSkirmisher_idle/041_ElitSkirmisher_idle.bmp" x="610" y="522" w="26" h="58" pX="0.538462" pY="0.948276"/>
-        <sprite n="ElitSkirmisher_idle/042_ElitSkirmisher_idle.bmp" x="638" y="522" w="26" h="59" pX="0.538462" pY="0.949153"/>
-        <sprite n="ElitSkirmisher_idle/043_ElitSkirmisher_idle.bmp" x="666" y="522" w="26" h="60" pX="0.538462" pY="0.95"/>
-        <sprite n="ElitSkirmisher_idle/044_ElitSkirmisher_idle.bmp" x="473" y="522" w="26" h="60" pX="0.538462" pY="0.95"/>
+        <sprite n="warrior_idle/024_warrior_idle.bmp" x="482" y="476" w="39" h="44" pX="0.435897" pY="0.863636"/>
+        <sprite n="warrior_idle/025_warrior_idle.bmp" x="523" y="476" w="39" h="44" pX="0.461538" pY="0.863636"/>
+        <sprite n="warrior_idle/026_warrior_idle.bmp" x="564" y="476" w="37" h="44" pX="0.486486" pY="0.863636"/>
+        <sprite n="warrior_idle/027_warrior_idle.bmp" x="603" y="476" w="36" h="44" pX="0.5" pY="0.863636"/>
+        <sprite n="warrior_idle/028_warrior_idle.bmp" x="641" y="476" w="36" h="44" pX="0.5" pY="0.863636"/>
+        <sprite n="warrior_idle/029_warrior_idle.bmp" x="1" y="528" w="36" h="44" pX="0.472222" pY="0.863636"/>
       </direction>
     </action>
-
-
-    <!-- Walk Action-->
+    
+        <!-- Walk Action-->
     <action enum="walk" speed="200">
       <direction enum="south">
-        <sprite n="ElitSkirmisher_walk/000_ElitSkirmisher_walk.bmp" x="694" y="522" w="37" h="54" pX="0.648649" pY="0.62963"/>
-        <sprite n="ElitSkirmisher_walk/001_ElitSkirmisher_walk.bmp" x="1" y="584" w="37" h="56" pX="0.648649" pY="0.625"/>
-        <sprite n="ElitSkirmisher_walk/002_ElitSkirmisher_walk.bmp" x="40" y="584" w="36" h="56" pX="0.638889" pY="0.625"/>
-        <sprite n="ElitSkirmisher_walk/003_ElitSkirmisher_walk.bmp" x="78" y="584" w="35" h="56" pX="0.628571" pY="0.625"/>
-        <sprite n="ElitSkirmisher_walk/004_ElitSkirmisher_walk.bmp" x="115" y="584" w="33" h="56" pX="0.606061" pY="0.625"/>
-        <sprite n="ElitSkirmisher_walk/005_ElitSkirmisher_walk.bmp" x="150" y="584" w="32" h="55" pX="0.59375" pY="0.618182"/>
-        <sprite n="ElitSkirmisher_walk/006_ElitSkirmisher_walk.bmp" x="184" y="584" w="32" h="55" pX="0.59375" pY="0.636364"/>
-        <sprite n="ElitSkirmisher_walk/007_ElitSkirmisher_walk.bmp" x="218" y="584" w="34" h="56" pX="0.617647" pY="0.625"/>
-        <sprite n="ElitSkirmisher_walk/008_ElitSkirmisher_walk.bmp" x="254" y="584" w="34" h="55" pX="0.617647" pY="0.636364"/>
-        <sprite n="ElitSkirmisher_walk/009_ElitSkirmisher_walk.bmp" x="290" y="584" w="35" h="55" pX="0.628571" pY="0.636364"/>
+        <sprite n="warrior_walk/000_warrior_walk.bmp" x="39" y="528" w="23" h="53" pX="0.565217" pY="0.830189"/>
+        <sprite n="warrior_walk/001_warrior_walk.bmp" x="64" y="528" w="24" h="48" pX="0.625" pY="0.854167"/>
+        <sprite n="warrior_walk/002_warrior_walk.bmp" x="90" y="528" w="23" h="49" pX="0.608696" pY="0.877551"/>
+        <sprite n="warrior_walk/003_warrior_walk.bmp" x="115" y="528" w="24" h="52" pX="0.625" pY="0.884615"/>
+        <sprite n="warrior_walk/004_warrior_walk.bmp" x="141" y="528" w="25" h="51" pX="0.6" pY="0.901961"/>
+        <sprite n="warrior_walk/005_warrior_walk.bmp" x="168" y="528" w="24" h="53" pX="0.583333" pY="0.830189"/>
+        <sprite n="warrior_walk/006_warrior_walk.bmp" x="194" y="528" w="25" h="50" pX="0.56" pY="0.86"/>
+        <sprite n="warrior_walk/007_warrior_walk.bmp" x="221" y="528" w="23" h="50" pX="0.565217" pY="0.9"/>
+        <sprite n="warrior_walk/008_warrior_walk.bmp" x="246" y="528" w="23" h="52" pX="0.565217" pY="0.884615"/>
+        <sprite n="warrior_walk/009_warrior_walk.bmp" x="271" y="528" w="23" h="51" pX="0.565217" pY="0.862745"/>
       </direction>
 
       <direction enum="south-west">
-        <sprite n="ElitSkirmisher_walk/010_ElitSkirmisher_walk.bmp" x="327" y="584" w="54" h="45" pX="0.685185" pY="0.755556"/>
-        <sprite n="ElitSkirmisher_walk/011_ElitSkirmisher_walk.bmp" x="383" y="584" w="55" h="45" pX="0.709091" pY="0.777778"/>
-        <sprite n="ElitSkirmisher_walk/012_ElitSkirmisher_walk.bmp" x="440" y="584" w="55" h="45" pX="0.709091" pY="0.777778"/>
-        <sprite n="ElitSkirmisher_walk/013_ElitSkirmisher_walk.bmp" x="497" y="584" w="55" h="45" pX="0.690909" pY="0.777778"/>
-        <sprite n="ElitSkirmisher_walk/014_ElitSkirmisher_walk.bmp" x="554" y="584" w="52" h="46" pX="0.730769" pY="0.76087"/>
-        <sprite n="ElitSkirmisher_walk/015_ElitSkirmisher_walk.bmp" x="608" y="584" w="53" h="45" pX="0.679245" pY="0.755556"/>
-        <sprite n="ElitSkirmisher_walk/016_ElitSkirmisher_walk.bmp" x="663" y="584" w="55" h="45" pX="0.690909" pY="0.755556"/>
-        <sprite n="ElitSkirmisher_walk/017_ElitSkirmisher_walk.bmp" x="1" y="642" w="56" h="46" pX="0.696429" pY="0.76087"/>
-        <sprite n="ElitSkirmisher_walk/018_ElitSkirmisher_walk.bmp" x="59" y="642" w="51" h="46" pX="0.72549" pY="0.76087"/>
-        <sprite n="ElitSkirmisher_walk/019_ElitSkirmisher_walk.bmp" x="112" y="642" w="56" h="45" pX="0.696429" pY="0.777778"/>
+        <sprite n="warrior_walk/010_warrior_walk.bmp" x="296" y="528" w="28" h="54" pX="0.607143" pY="0.87037"/>
+        <sprite n="warrior_walk/011_warrior_walk.bmp" x="326" y="528" w="33" h="51" pX="0.606061" pY="0.882353"/>
+        <sprite n="warrior_walk/012_warrior_walk.bmp" x="361" y="528" w="29" h="53" pX="0.62069" pY="0.886792"/>
+        <sprite n="warrior_walk/013_warrior_walk.bmp" x="392" y="528" w="24" h="54" pX="0.625" pY="0.888889"/>
+        <sprite n="warrior_walk/014_warrior_walk.bmp" x="418" y="528" w="21" h="53" pX="0.52381" pY="0.886792"/>
+        <sprite n="warrior_walk/015_warrior_walk.bmp" x="441" y="528" w="23" h="54" pX="0.565217" pY="0.851852"/>
+        <sprite n="warrior_walk/016_warrior_walk.bmp" x="466" y="528" w="25" h="53" pX="0.64" pY="0.867925"/>
+        <sprite n="warrior_walk/017_warrior_walk.bmp" x="493" y="528" w="25" h="54" pX="0.64" pY="0.888889"/>
+        <sprite n="warrior_walk/018_warrior_walk.bmp" x="520" y="528" w="24" h="54" pX="0.625" pY="0.888889"/>
+        <sprite n="warrior_walk/019_warrior_walk.bmp" x="546" y="528" w="25" h="53" pX="0.64" pY="0.886792"/>
       </direction>
 
       <direction enum="west">
-        <sprite n="ElitSkirmisher_walk/020_ElitSkirmisher_walk.bmp" x="170" y="642" w="58" h="52" pX="0.603448" pY="0.788462"/>
-        <sprite n="ElitSkirmisher_walk/021_ElitSkirmisher_walk.bmp" x="230" y="642" w="55" h="52" pX="0.6" pY="0.788462"/>
-        <sprite n="ElitSkirmisher_walk/022_ElitSkirmisher_walk.bmp" x="287" y="642" w="57" h="52" pX="0.614035" pY="0.788462"/>
-        <sprite n="ElitSkirmisher_walk/023_ElitSkirmisher_walk.bmp" x="346" y="642" w="59" h="52" pX="0.627119" pY="0.788462"/>
-        <sprite n="ElitSkirmisher_walk/024_ElitSkirmisher_walk.bmp" x="407" y="642" w="58" h="51" pX="0.62069" pY="0.784314"/>
-        <sprite n="ElitSkirmisher_walk/025_ElitSkirmisher_walk.bmp" x="467" y="642" w="61" h="50" pX="0.639344" pY="0.78"/>
-        <sprite n="ElitSkirmisher_walk/026_ElitSkirmisher_walk.bmp" x="530" y="642" w="60" h="52" pX="0.633333" pY="0.788462"/>
-        <sprite n="ElitSkirmisher_walk/027_ElitSkirmisher_walk.bmp" x="592" y="642" w="57" h="53" pX="0.614035" pY="0.792453"/>
-        <sprite n="ElitSkirmisher_walk/028_ElitSkirmisher_walk.bmp" x="651" y="642" w="56" h="53" pX="0.607143" pY="0.792453"/>
-        <sprite n="ElitSkirmisher_walk/029_ElitSkirmisher_walk.bmp" x="1" y="697" w="57" h="53" pX="0.614035" pY="0.792453"/>
+        <sprite n="warrior_walk/020_warrior_walk.bmp" x="573" y="528" w="26" h="55" pX="0.538462" pY="0.909091"/>
+        <sprite n="warrior_walk/021_warrior_walk.bmp" x="601" y="528" w="31" h="55" pX="0.548387" pY="0.909091"/>
+        <sprite n="warrior_walk/022_warrior_walk.bmp" x="634" y="528" w="26" h="56" pX="0.538462" pY="0.910714"/>
+        <sprite n="warrior_walk/023_warrior_walk.bmp" x="662" y="528" w="22" h="56" pX="0.590909" pY="0.910714"/>
+        <sprite n="warrior_walk/024_warrior_walk.bmp" x="1" y="586" w="21" h="55" pX="0.571429" pY="0.909091"/>
+        <sprite n="warrior_walk/025_warrior_walk.bmp" x="24" y="586" w="27" h="53" pX="0.481481" pY="0.90566"/>
+        <sprite n="warrior_walk/026_warrior_walk.bmp" x="53" y="586" w="29" h="54" pX="0.551724" pY="0.907407"/>
+        <sprite n="warrior_walk/027_warrior_walk.bmp" x="84" y="586" w="25" h="56" pX="0.56" pY="0.910714"/>
+        <sprite n="warrior_walk/028_warrior_walk.bmp" x="111" y="586" w="21" h="56" pX="0.619048" pY="0.910714"/>
+        <sprite n="warrior_walk/029_warrior_walk.bmp" x="134" y="586" w="23" h="55" pX="0.565217" pY="0.909091"/>
       </direction>
 
       <direction enum="north-west">
-        <sprite n="ElitSkirmisher_walk/030_ElitSkirmisher_walk.bmp" x="60" y="697" w="32" h="61" pX="0.46875" pY="0.786885"/>
-        <sprite n="ElitSkirmisher_walk/031_ElitSkirmisher_walk.bmp" x="94" y="697" w="31" h="61" pX="0.483871" pY="0.803279"/>
-        <sprite n="ElitSkirmisher_walk/032_ElitSkirmisher_walk.bmp" x="127" y="697" w="32" h="62" pX="0.5" pY="0.790323"/>
-        <sprite n="ElitSkirmisher_walk/033_ElitSkirmisher_walk.bmp" x="161" y="697" w="32" h="62" pX="0.53125" pY="0.790323"/>
-        <sprite n="ElitSkirmisher_walk/034_ElitSkirmisher_walk.bmp" x="195" y="697" w="32" h="62" pX="0.5625" pY="0.790323"/>
-        <sprite n="ElitSkirmisher_walk/035_ElitSkirmisher_walk.bmp" x="229" y="697" w="33" h="60" pX="0.575758" pY="0.783333"/>
-        <sprite n="ElitSkirmisher_walk/036_ElitSkirmisher_walk.bmp" x="264" y="697" w="33" h="62" pX="0.575758" pY="0.790323"/>
-        <sprite n="ElitSkirmisher_walk/037_ElitSkirmisher_walk.bmp" x="299" y="697" w="32" h="63" pX="0.5625" pY="0.793651"/>
-        <sprite n="ElitSkirmisher_walk/038_ElitSkirmisher_walk.bmp" x="333" y="697" w="32" h="63" pX="0.53125" pY="0.793651"/>
-        <sprite n="ElitSkirmisher_walk/039_ElitSkirmisher_walk.bmp" x="367" y="697" w="31" h="63" pX="0.483871" pY="0.793651"/>
+        <sprite n="warrior_walk/030_warrior_walk.bmp" x="159" y="586" w="24" h="59" pX="0.5" pY="0.881356"/>
+        <sprite n="warrior_walk/031_warrior_walk.bmp" x="185" y="586" w="24" h="58" pX="0.5" pY="0.87931"/>
+        <sprite n="warrior_walk/032_warrior_walk.bmp" x="211" y="586" w="25" h="60" pX="0.52" pY="0.883333"/>
+        <sprite n="warrior_walk/033_warrior_walk.bmp" x="238" y="586" w="25" h="57" pX="0.52" pY="0.912281"/>
+        <sprite n="warrior_walk/034_warrior_walk.bmp" x="265" y="586" w="25" h="56" pX="0.52" pY="0.910714"/>
+        <sprite n="warrior_walk/035_warrior_walk.bmp" x="292" y="586" w="24" h="56" pX="0.5" pY="0.910714"/>
+        <sprite n="warrior_walk/036_warrior_walk.bmp" x="318" y="586" w="25" h="57" pX="0.52" pY="0.912281"/>
+        <sprite n="warrior_walk/037_warrior_walk.bmp" x="345" y="586" w="25" h="57" pX="0.52" pY="0.912281"/>
+        <sprite n="warrior_walk/038_warrior_walk.bmp" x="372" y="586" w="25" h="56" pX="0.52" pY="0.910714"/>
+        <sprite n="warrior_walk/039_warrior_walk.bmp" x="399" y="586" w="24" h="57" pX="0.5" pY="0.912281"/>
       </direction>
 
       <direction enum="north">
-        <sprite n="ElitSkirmisher_walk/040_ElitSkirmisher_walk.bmp" x="400" y="697" w="32" h="62" pX="0.46875" pY="0.741935"/>
-        <sprite n="ElitSkirmisher_walk/041_ElitSkirmisher_walk.bmp" x="434" y="697" w="33" h="63" pX="0.484848" pY="0.746032"/>
-        <sprite n="ElitSkirmisher_walk/042_ElitSkirmisher_walk.bmp" x="469" y="697" w="32" h="62" pX="0.5" pY="0.758065"/>
-        <sprite n="ElitSkirmisher_walk/043_ElitSkirmisher_walk.bmp" x="503" y="697" w="32" h="64" pX="0.5" pY="0.75"/>
-        <sprite n="ElitSkirmisher_walk/044_ElitSkirmisher_walk.bmp" x="537" y="697" w="30" h="65" pX="0.533333" pY="0.753846"/>
-        <sprite n="ElitSkirmisher_walk/045_ElitSkirmisher_walk.bmp" x="569" y="697" w="29" h="63" pX="0.551724" pY="0.761905"/>
-        <sprite n="ElitSkirmisher_walk/046_ElitSkirmisher_walk.bmp" x="600" y="697" w="29" h="64" pX="0.551724" pY="0.75"/>
-        <sprite n="ElitSkirmisher_walk/047_ElitSkirmisher_walk.bmp" x="631" y="697" w="30" h="65" pX="0.533333" pY="0.753846"/>
-        <sprite n="ElitSkirmisher_walk/048_ElitSkirmisher_walk.bmp" x="663" y="697" w="30" h="65" pX="0.533333" pY="0.753846"/>
-        <sprite n="ElitSkirmisher_walk/049_ElitSkirmisher_walk.bmp" x="695" y="697" w="32" h="64" pX="0.5" pY="0.75"/>
+        <sprite n="warrior_walk/040_warrior_walk.bmp" x="425" y="586" w="24" h="58" pX="0.5" pY="0.87931"/>
+        <sprite n="warrior_walk/041_warrior_walk.bmp" x="451" y="586" w="24" h="58" pX="0.458333" pY="0.862069"/>
+        <sprite n="warrior_walk/042_warrior_walk.bmp" x="477" y="586" w="24" h="59" pX="0.458333" pY="0.881356"/>
+        <sprite n="warrior_walk/043_warrior_walk.bmp" x="503" y="586" w="25" h="57" pX="0.48" pY="0.912281"/>
+        <sprite n="warrior_walk/044_warrior_walk.bmp" x="530" y="586" w="25" h="57" pX="0.48" pY="0.894737"/>
+        <sprite n="warrior_walk/045_warrior_walk.bmp" x="557" y="586" w="25" h="58" pX="0.48" pY="0.862069"/>
+        <sprite n="warrior_walk/046_warrior_walk.bmp" x="584" y="586" w="26" h="60" pX="0.5" pY="0.866667"/>
+        <sprite n="warrior_walk/047_warrior_walk.bmp" x="612" y="586" w="24" h="59" pX="0.5" pY="0.881356"/>
+        <sprite n="warrior_walk/048_warrior_walk.bmp" x="638" y="586" w="24" h="57" pX="0.5" pY="0.912281"/>
+        <sprite n="warrior_walk/049_warrior_walk.bmp" x="664" y="586" w="24" h="57" pX="0.5" pY="0.894737"/>
       </direction>
     </action>
   </unit>
