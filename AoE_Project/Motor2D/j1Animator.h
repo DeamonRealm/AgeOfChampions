@@ -90,6 +90,8 @@ public:
 
 	//Check if the animation is end
 	bool IsEnd();
+	//Reset the animation frame
+	void Reset();
 
 	//Add New sprite
 	void AddSprite(const SDL_Rect& rect, const iPoint& point, const int z = 0, const uint opacity = 255);

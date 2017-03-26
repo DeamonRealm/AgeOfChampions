@@ -165,7 +165,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Disappear Action-->
-    <action enum ="disappear" speed="200">
+    <action enum ="disappear" speed="500">
       <direction enum="south">
         <sprite n="arbalest_dissapear/000_Arbalest_dissapear.bmp" x="51" y="344" w="47" h="45" pX="0.531915" pY="0.355556"/>
         <sprite n="arbalest_dissapear/001_Arbalest_dissapear.bmp" x="100" y="344" w="47" h="45" pX="0.531915" pY="0.355556"/>

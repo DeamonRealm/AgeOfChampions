@@ -158,7 +158,7 @@ protected:
 	uint			max_life = 0;
 	float			life = 0;
 	//Visual -----------
-	Animation*		current_animation = nullptr;
+	Animation		current_animation;
 	bool			flip_sprite = false;
 	SDL_Rect		selection_rect = { 0,0,0,0 };
 	SDL_Rect		icon_rect = { 0,0,0,0 };
@@ -202,7 +202,7 @@ public:
 	DIPLOMACY		GetDiplomacy()const;
 	uint			GetMaxLife()const;
 	virtual uint	GetLife()const;
-	Animation*		GetAnimation()const;
+	Animation*		GetAnimation();
 	bool			GetFlipSprite()const;
 	const SDL_Rect*	GetSelectionRect()const;
 	const SDL_Rect&	GetIcon()const;

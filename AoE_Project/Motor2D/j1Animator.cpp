@@ -99,7 +99,7 @@ uint Animation::GetSpeed() const
 
 const Sprite* Animation::GetCurrentSprite()
 {
-	if (current_frame == -1)return &sprites[0];
+	if (current_frame == -1)return &sprites[sprites.size() - 1];
 
 	current_frame = (float)floor(timer.Read() / speed);
 	if (current_frame >= sprites.size())
@@ -134,6 +134,12 @@ uint Animation::GetId() const
 bool Animation::IsEnd()
 {
 	return (current_frame == -1);
+}
+
+void Animation::Reset()
+{
+	timer.Start();
+	current_frame = 0;
 }
 
 void Animation::AddSprite(const SDL_Rect & rect, const iPoint & point, const int z, const uint opacity)
@@ -811,6 +817,7 @@ bool j1Animator::UnitPlay(Unit* target)
 			if (block != nullptr)
 			{
 				target->SetAnimation(block->GetAnimation());
+				target->GetAnimation()->Reset();
 
 				return true;
 			}

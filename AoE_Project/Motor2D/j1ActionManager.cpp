@@ -29,6 +29,7 @@ j1ActionManager::j1ActionManager()
 //Destructors =========================
 j1ActionManager::~j1ActionManager()
 {
+
 }
 
 //Game Loop ===========================
@@ -36,13 +37,13 @@ bool j1ActionManager::CleanUp()
 {
 
 	//Freeing space of all actions created
-	std::list<Action*>::iterator action_item = all_actions.begin();
+	/*std::list<Action*>::iterator action_item = all_actions.begin();
 	while (action_item != all_actions.end())
 	{
 		RELEASE(action_item._Ptr->_Myval);
 		action_item++;
-	}
-	all_actions.clear();
+	}*/
+	all_actions.clear(); /*Actions are deleted by the worker so this don't make sense*/
 
 	return false;
 }
