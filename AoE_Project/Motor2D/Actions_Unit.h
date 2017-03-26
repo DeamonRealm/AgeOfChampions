@@ -5,6 +5,8 @@
 #include "BaseEntities.h"
 #include "j1App.h"
 #include "j1EntitiesManager.h"
+
+//Needed to have the MoveUnitAction with the path
 #include "j1Pathfinding.h"
 
 /// Move Unit Action ----------------------------

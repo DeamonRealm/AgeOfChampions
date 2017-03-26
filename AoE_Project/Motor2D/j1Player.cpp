@@ -136,7 +136,7 @@ bool j1Player::PreUpdate()
 		Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		new_unit->SetDiplomacy(ALLY);
-		
+
 		game_panel->IncressPopulation(1, false);
 	}
 

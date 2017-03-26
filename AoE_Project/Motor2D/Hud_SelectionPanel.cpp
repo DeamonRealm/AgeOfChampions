@@ -22,8 +22,9 @@
 #include "BaseEntities.h"
 
 
-//Action Unit
+//Actions headers
 #include "Actions_Unit.h"
+#include "Actions_Building.h"
 
 //Entity Profile Constructor =====================================================
 Entity_Profile::Entity_Profile() : element(nullptr), e_type(NO_ENTITY), isenemy(false), life_update(0), u_attack(0), u_deffence(0), u_range(0),
@@ -341,9 +342,17 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			Selected->GetEntity()->GetWorker()->Reset();
 			Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 			
-			//Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
-		
+		//	Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
 		}
+
+
+		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == BUILDING)
+		{
+			//Set entity target to the selected unit
+			//Selected->GetEntity()->GetWorker()->Reset();
+			Selected->GetEntity()->AddAction(new SpawnUnitAction((Building*)Selected->GetEntity(), ARBALEST));
+		}
+
 		break;
 	case MOUSE_IN:
 		break;

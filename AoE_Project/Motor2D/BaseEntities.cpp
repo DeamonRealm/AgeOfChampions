@@ -829,7 +829,7 @@ Building::Building() :Entity()
 }
 
 Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), building_type(copy.building_type), max_life(copy.max_life),
-life(copy.life), units_capacity(units_capacity), current_units(copy.current_units), width_in_tiles(copy.width_in_tiles), height_in_tiles(copy.height_in_tiles)
+life(copy.life), units_capacity(units_capacity), current_units(copy.current_units), width_in_tiles(copy.width_in_tiles), height_in_tiles(copy.height_in_tiles), units_spawn_point(copy.units_spawn_point)
 {
 
 }
@@ -1057,5 +1057,9 @@ uint Building::GetUnitsCapacity() const
 uint Building::GetCurrentUnits() const
 {
 	return current_units;
+}
+iPoint Building::GetSpawnPoint() const
+{
+	return units_spawn_point;
 }
 ///----------------------------------------------

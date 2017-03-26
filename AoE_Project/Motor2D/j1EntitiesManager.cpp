@@ -72,6 +72,18 @@ bool j1EntitiesManager::Update(float dt)
 		item++;
 	}
 
+
+	std::list<Building*>::const_iterator item_build = buildings.begin();
+	ret = true;
+
+	while (item_build != buildings.end())
+	{
+
+		ret = item_build._Ptr->_Myval->Update();
+
+		item_build++;
+	}
+
 	//Clean all the wasted entities
 	if (wasted_units.size() > 0) wasted_units.clear();
 

@@ -467,6 +467,7 @@ public:
 	uint			GetLife()const;
 	uint			GetUnitsCapacity()const;
 	uint			GetCurrentUnits()const;
+	iPoint			GetSpawnPoint()const;
 };
 /// ---------------------------------------------
 #endif // _ENTITY_

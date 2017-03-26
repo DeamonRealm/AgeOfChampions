@@ -120,6 +120,7 @@
     <ClCompile Include="Units.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actions_Building.h" />
     <ClInclude Include="Champions.h" />
     <ClInclude Include="Hud_ActionPanel.h" />
     <ClInclude Include="Hud_GamePanel.h" />

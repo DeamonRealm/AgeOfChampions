@@ -262,6 +262,9 @@
     <ClInclude Include="j1ActionManager.h">
       <Filter>Modules\TasksMagament</Filter>
     </ClInclude>
+    <ClInclude Include="Actions_Building.h">
+      <Filter>Modules\TasksMagament</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
