@@ -9,10 +9,10 @@
 #include "Iso_Primitives.h"
 #include "SDL/include/SDL_rect.h"
 #include "j1Timer.h"
+#include "j1Animator.h"
 
 class Action;
 class ActionWorker;
-struct Animation;
 struct SDL_Texture;
 struct PathNode;
 enum CURSOR_TARGET;
@@ -293,10 +293,12 @@ public:
 
 	//Actions ---------------
 	bool			Move();
-	virtual bool	Interact();
 	void			Focus(const iPoint& target);
-	bool			Attack();
+	bool			AttackUnit();
+	bool			AttackBuilding();
+	bool			AttackResource();
 	bool			Cover();
+	bool			Die();
 
 	//Bonus -----------------
 	void	AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence);

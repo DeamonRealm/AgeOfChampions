@@ -7,8 +7,13 @@
 class Entity;
 class Unit;
 class Resource;
+class Building;
 
 class MoveUnitAction;
+class AttackUnitAction;
+class AttackBuildingAction;
+class AttackResourceAction;
+class DieUnitAction;
 
 /// Class Action --------------------------------
 //Action virtual class (are commands but not for the console)
@@ -23,11 +28,12 @@ public:
 public:
 
 	Entity* actor = nullptr;
+	bool completed = false;
 
 public:
 
 	//This function defines the action taking place
-	//Retruns TRUE when execute is finished
+	//Returns TRUE when execute is finished
 	virtual bool execute()	{ return true; }
 	virtual bool IsDone()	{ return true; }
 	///Each different action inheriting from this class should have custom
@@ -41,20 +47,21 @@ public:
 class ActionWorker
 {
 public:
+
 	ActionWorker();
 	~ActionWorker();
 
 private:
+
 	std::queue<Action*> action_queue;
 	Action* current_action = nullptr;
 
 public:
+
 	void Update();
 	void AddAction(Action* action);
 
 };
-
-
 ///----------------------------------------------
 
 /// Action Manager ------------------------------
@@ -72,9 +79,13 @@ public:
 public:
 
 	//Action Calls --------------------
-	MoveUnitAction*	MoveAction(Unit* actor, int x, int y);
-	bool	AttackAction(Entity* target);
-	bool	RecollectAction(Resource* target);
+	MoveUnitAction*			MoveAction(Unit* actor, int x, int y);
+	AttackUnitAction*		AttackToUnitAction(Unit* actor, Unit *target);
+	AttackBuildingAction*	AttackToBuildingAction(Unit* actor, Building* target);
+	DieUnitAction*			DieAction(Unit* actor);
+	
+	/*AttackResourceAction*	AttackToResourceAction(Unit* actor, Resource* target);
+	bool	RecollectAction(Resource* target);*/
 
 private:
 

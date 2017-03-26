@@ -53,33 +53,6 @@ void Villager::SetRecollectRate(uint value)
 	recollect_rate = value;
 }
 //Actions --------------
-bool Villager::Interact()
-{
-	if (interaction_target == nullptr)
-	{
-		LOG("Error Interacting: Target NULL");
-		return false;
-	}
-
-	//Calculate the distance between the unit and the resource 
-	double distance = sqrt(abs(interaction_target->GetPositionRounded().DistanceNoSqrt(iPoint(position.x, position.y))));
-	//Check if the resource is in the action area of the villager
-	if (view_area < distance)
-	{
-		App->entities_manager->SetUnitPath(this, interaction_target->GetPositionRounded());
-		return false;
-	}
-
-	//If the target is in the interaction area the unit do the correct action with it
-	switch (interaction_target->GetEntityType())
-	{
-		case UNIT:		if (action_timer.Read() > attack_rate)Attack();			break;
-		case RESOURCE:	if (action_timer.Read() > recollect_rate)Recollect();	break;
-		case BUILDING:	Cover();												break;
-	}
-	return true;
-}
-
 bool Villager::Recollect()
 {
 	//Get resources from the target resource

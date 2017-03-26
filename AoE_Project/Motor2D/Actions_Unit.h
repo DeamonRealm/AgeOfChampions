@@ -20,16 +20,15 @@ public:
 	}
 
 	//Functionality ---------
-	virtual bool execute()
+	bool execute()
 	{
 		return ((Unit*)actor)->Move();
-	};
+	}
 
 private:
 
 	int x_new = 0;
 	int y_new = 0;
-	bool completed = false;
 
 };
 /// ---------------------------------------------
@@ -41,26 +40,71 @@ class AttackUnitAction : public Action
 public:
 
 	//Constructor -----------
-	AttackUnitAction(Unit* actor,Unit* target) : Action(target)
+	AttackUnitAction(Unit* actor,Unit* target) : Action(actor), target(target)
+	{
+		//Set actor interaction target
+		((Unit*)actor)->SetInteractionTarget(target);
+	}
+
+	//Functionality ---------
+	bool execute()
+	{
+		//Actor attack the target
+		return ((Unit*)actor)->AttackUnit();
+	}
+
+private:
+
+	Entity* target = nullptr;
+
+};
+/// ---------------------------------------------
+
+/// Attack Building Action ----------------------------
+//Move the character
+class AttackBuildingAction : public Action
+{
+public:
+
+	//Constructor -----------
+	AttackBuildingAction(Unit* actor, Building* target) : Action(actor), target(target)
+	{
+		//Set actor interaction target
+		((Unit*)actor)->SetInteractionTarget(target);
+	}
+
+	//Functionality ---------
+	bool execute()
+	{
+		//Actor attack the target
+		return ((Unit*)actor)->AttackBuilding();
+	}
+
+private:
+
+	Building* target = nullptr;
+
+};
+/// ---------------------------------------------
+
+/// Die Action ----------------------------
+//Move the character
+class DieUnitAction : public Action
+{
+public:
+
+	//Constructor -----------
+	DieUnitAction(Unit* actor) : Action(actor)
 	{
 
 	}
 
 	//Functionality ---------
-	virtual bool execute()
+	bool execute()
 	{
-		//Set actor interaction target
-		((Unit*)actor)->SetInteractionTarget(target);
 		//Actor attack the target
-		((Unit*)actor)->Attack();
-		
-	};
-
-private:
-
-	Entity* target = nullptr;
-	bool completed = false;
-
+		return ((Unit*)actor)->Die();
+	}
 };
 /// ---------------------------------------------
 #endif // !__ACTION_UNIT_H__

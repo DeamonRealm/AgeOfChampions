@@ -53,7 +53,6 @@ class Animation
 public:
 
 	Animation();
-
 	~Animation();
 
 private:
@@ -88,6 +87,9 @@ public:
 	const Sprite*					GetCurrentSprite();
 	const std::vector<Sprite>*		GetAllSprites()const;
 	uint							GetId()const;
+
+	//Check if the animation is end
+	bool IsEnd();
 
 	//Add New sprite
 	void AddSprite(const SDL_Rect& rect, const iPoint& point, const int z = 0, const uint opacity = 255);
@@ -179,6 +181,8 @@ public:
 	BUILDING_TYPE	StrToBuildingEnum(const char* str)const;
 	ATTACK_TYPE		StrToAttackEnum(const char* str)const;
 	RESOURCE_TYPE	StrToResourceEnum(const char* str)const;
+	//Get the loop boolean from the action animation type
+	bool			AnimationLoopFromActionType(ACTION_TYPE type);
 
 	//Blocks Load Methods ---
 	bool		LoadUnitBlock(const char* xml_folder);

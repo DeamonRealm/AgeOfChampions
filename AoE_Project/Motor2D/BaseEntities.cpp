@@ -303,26 +303,6 @@ bool Unit::Move() ///Returns true when it ends
 	return false;
 }
 
-bool Unit::Interact()
-{
-	//Calculate the distance between the unit and the resource 
-	double distance = sqrt(abs(interaction_target->GetPositionRounded().DistanceNoSqrt(iPoint(position.x, position.y))));
-	//Check if the resource is in the action area of the villager
-	if (view_area < distance)
-	{
-		App->entities_manager->SetUnitPath(this, interaction_target->GetPositionRounded());
-		return false;
-	}
-
-	//If the target is in the interaction area the unit do the correct action with it
-	switch (interaction_target->GetEntityType())
-	{
-	case UNIT:			if (action_timer.Read() > attack_rate)Attack();		break;
-	case BUILDING:		Cover();											break;
-	}
-	return true;
-}
-
 void Unit::Focus(const iPoint & target)
 {
 	//Calculate the directional vector
@@ -360,12 +340,13 @@ void Unit::Focus(const iPoint & target)
 	App->animator->UnitPlay(this);
 }
 
-bool Unit::Attack()
+bool Unit::AttackUnit()
 {
 	if (interaction_target->GetLife() == 0)
 	{
-		App->entities_manager->DeleteEntity(interaction_target);
-		return false;
+		ACTION_TYPE act = ((Unit*)interaction_target)->action_type;
+		if(act != DIE && act != DISAPPEAR)interaction_target->AddAction((Action*)App->action_manager->DieAction((Unit*)interaction_target));
+		return true;
 	}
 	//Calculate the attack & apply the value at the target life points
 	((Unit*)interaction_target)->life -= MIN(((Unit*)interaction_target)->life, attack_hitpoints);
@@ -375,9 +356,37 @@ bool Unit::Attack()
 	return false;
 }
 
+bool Unit::AttackBuilding()
+{
+	return true;
+}
+
 bool Unit::Cover()
 {
 	return ((Building*)interaction_target)->CoverUnit(this);
+}
+
+bool Unit::Die()
+{
+	if (action_type != DIE && action_type != DISAPPEAR)
+	{
+		action_type = DIE;
+		App->animator->UnitPlay(this);
+	}
+	else if (current_animation->IsEnd())
+	{
+		if (action_type == DIE)
+		{
+			action_type = DISAPPEAR;
+			App->animator->UnitPlay(this);
+		}
+		else
+		{
+			App->entities_manager->DeleteEntity(this);
+			return true;
+		}
+	}
+	return false;
 }
 
 //Bonus -----------
@@ -861,7 +870,6 @@ void Building::ReleaseAllUnits()
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (units_in.back()->GetUnitType() == VILLAGER)units_in.back()->Interact();
 		App->entities_manager->AddUnit(units_in.back());
 		units_in.pop_back();
 	}

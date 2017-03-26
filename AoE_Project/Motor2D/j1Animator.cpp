@@ -131,6 +131,11 @@ uint Animation::GetId() const
 	return enum_id;
 }
 
+bool Animation::IsEnd()
+{
+	return (current_frame == -1);
+}
+
 void Animation::AddSprite(const SDL_Rect & rect, const iPoint & point, const int z, const uint opacity)
 {
 	sprites.push_back(Sprite(rect, point, z, opacity));
@@ -364,6 +369,19 @@ RESOURCE_TYPE j1Animator::StrToResourceEnum(const char * str) const
 	return NO_RESOURCE;
 }
 
+bool j1Animator::AnimationLoopFromActionType(ACTION_TYPE type)
+{
+	switch (type)
+	{
+	case ATTATCK:		return true;	
+	case DIE:			return false;	
+	case DISAPPEAR:		return false;	
+	case IDLE:			return true;
+	case WALK:			return true;
+	default:			return false;
+	}
+}
+
 //Functionality =======================
 bool j1Animator::LoadUnitBlock(const char* xml_folder)
 {
@@ -403,7 +421,11 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 		//Build new action animation block
 		Animation_Block* action_anim_block = new Animation_Block();
 		//Get current action enum
-		action_anim_block->SetId(StrToActionEnum(action_node.attribute("enum").as_string()));
+		ACTION_TYPE act_type = StrToActionEnum(action_node.attribute("enum").as_string());
+		action_anim_block->SetId(act_type);
+		//Set animation loop from action enum
+		bool loop = AnimationLoopFromActionType(act_type);
+
 		//Get current action animation speed
 		uint speed = action_node.attribute("speed").as_uint();
 
@@ -421,6 +443,8 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 			Animation* animation = new Animation();
 			//Set animation speed
 			animation->SetSpeed(speed);
+			//Set animation loop from action type
+			animation->SetLoop(loop);
 			//Set animation texture
 			animation->SetTexture(texture);
 
@@ -787,6 +811,7 @@ bool j1Animator::UnitPlay(Unit* target)
 			if (block != nullptr)
 			{
 				target->SetAnimation(block->GetAnimation());
+
 				return true;
 			}
 		}

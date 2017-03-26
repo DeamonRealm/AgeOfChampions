@@ -39,7 +39,6 @@ public:
 	void SetRecollectRate(uint value);
 
 	//Actions -----
-	bool Interact();
 	bool Recollect();
 
 };
