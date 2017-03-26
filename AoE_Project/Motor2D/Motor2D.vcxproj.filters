@@ -120,6 +120,9 @@
     <ClCompile Include="j1ActionManager.cpp">
       <Filter>Modules\TasksMagament</Filter>
     </ClCompile>
+    <ClCompile Include="j1GroupMovement.cpp">
+      <Filter>Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -264,6 +267,9 @@
     </ClInclude>
     <ClInclude Include="Actions_Building.h">
       <Filter>Modules\TasksMagament</Filter>
+    </ClInclude>
+    <ClInclude Include="j1GroupMovement.h">
+      <Filter>Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
