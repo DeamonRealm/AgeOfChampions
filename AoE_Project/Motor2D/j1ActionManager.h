@@ -8,12 +8,14 @@ class Entity;
 class Unit;
 class Resource;
 class Building;
+class Villager;
 
 class MoveUnitAction;
 class AttackUnitAction;
 class AttackBuildingAction;
 class AttackResourceAction;
 class DieUnitAction;
+class RecollectVillagerAction;
 
 /// Class Action --------------------------------
 //Action virtual class (are commands but not for the console)
@@ -79,11 +81,12 @@ public:
 public:
 
 	//Action Calls --------------------
-	MoveUnitAction*			MoveAction(Unit* actor, int x, int y);
-	AttackUnitAction*		AttackToUnitAction(Unit* actor, Unit *target);
-	AttackBuildingAction*	AttackToBuildingAction(Unit* actor, Building* target);
-	DieUnitAction*			DieAction(Unit* actor);
-	
+	MoveUnitAction*				MoveAction(Unit* actor, int x, int y);
+	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit *target);
+	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target);
+	DieUnitAction*				DieAction(Unit* actor);
+	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource* target);
+
 	/*AttackResourceAction*	AttackToResourceAction(Unit* actor, Resource* target);
 	bool	RecollectAction(Resource* target);*/
 

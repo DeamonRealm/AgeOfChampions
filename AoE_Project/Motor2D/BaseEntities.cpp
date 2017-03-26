@@ -342,6 +342,16 @@ void Unit::Focus(const iPoint & target)
 
 bool Unit::AttackUnit()
 {
+	//Control action rate
+	if (action_timer.Read() < attack_rate)return false;
+	
+	//Set unit attack animation
+	if (action_type != ATTATCK)
+	{
+		action_type = ATTATCK;
+		App->animator->UnitPlay(this);
+	}
+
 	if (interaction_target->GetLife() == 0)
 	{
 		ACTION_TYPE act = ((Unit*)interaction_target)->action_type;
@@ -353,6 +363,7 @@ bool Unit::AttackUnit()
 
 	//Reset action timer
 	action_timer.Start();
+
 	return false;
 }
 

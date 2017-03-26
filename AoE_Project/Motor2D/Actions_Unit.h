@@ -107,5 +107,32 @@ public:
 	}
 };
 /// ---------------------------------------------
+
+/// Recollect Action ----------------------------
+//Move the character
+class RecollectVillagerAction : public Action
+{
+public:
+
+	//Constructor -----------
+	RecollectVillagerAction(Villager* actor, Resource* target) : Action(actor), target(target)
+	{
+		//Set actor interaction target
+		((Unit*)actor)->SetInteractionTarget(target);
+	}
+
+	//Functionality ---------
+	bool execute()
+	{
+		//Actor attack the target
+		return ((Villager*)actor)->Recollect();
+	}
+
+private:
+
+	Resource* target = nullptr;
+
+};
+/// ---------------------------------------------
 #endif // !__ACTION_UNIT_H__
 

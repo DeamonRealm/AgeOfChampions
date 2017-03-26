@@ -62,7 +62,7 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, int x, int y)
 
 AttackUnitAction* j1ActionManager::AttackToUnitAction(Unit * actor, Unit * target)
 {
-	//Generate a new move action definition
+	//Generate a new attack action definition
 	AttackUnitAction* action = new AttackUnitAction(actor, target);
 
 	//Add the new action at the action manager
@@ -84,8 +84,19 @@ AttackBuildingAction * j1ActionManager::AttackToBuildingAction(Unit * actor, Bui
 
 DieUnitAction * j1ActionManager::DieAction(Unit * actor)
 {
-	//Generate a new move action definition
+	//Generate a new die action definition
 	DieUnitAction* action = new DieUnitAction(actor);
+
+	//Add the new action at the action manager
+	all_actions.push_back(action);
+
+	return action;
+}
+
+RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resource* target)
+{
+	//Generate a new move action definition
+	RecollectVillagerAction* action = new RecollectVillagerAction(actor, target);
 
 	//Add the new action at the action manager
 	all_actions.push_back(action);
@@ -97,7 +108,7 @@ DieUnitAction * j1ActionManager::DieAction(Unit * actor)
 
 
 ///Action Worker---------------------------------
-//Construcor
+//Constructor
 ActionWorker::ActionWorker()
 {
 }
