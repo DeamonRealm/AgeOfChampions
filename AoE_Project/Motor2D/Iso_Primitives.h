@@ -75,6 +75,8 @@ public:
 	//Shape functions
 	bool	IsIn(const fPoint* loc) const;
 	bool	Intersects(const SDL_Rect* rect) const;
+	bool	Intersects(const iPoint* point)const;
+	iPoint  NearestPoint(const Circle* target)const;
 	//Set Methods
 	void	SetRad(uint r);
 	//Get Methods

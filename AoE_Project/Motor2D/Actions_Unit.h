@@ -32,6 +32,7 @@ public:
 	}
 
 private:
+
 	std::vector<iPoint>* path = nullptr;
 	int x_new = 0;
 	int y_new = 0;

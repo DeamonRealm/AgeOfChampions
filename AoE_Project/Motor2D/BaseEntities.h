@@ -165,7 +165,6 @@ protected:
 	//Worker -----------
 	ActionWorker*	action_worker = nullptr;
 
-
 public:
 
 	//Functionality -------------------
@@ -181,6 +180,7 @@ public:
 
 	//Add Action ------------
 	void			AddAction(Action* action);
+	void			AddPriorizedAction(Action* action);
 
 	//Set Methods -----------
 	void			SetName(const char* name_str);
@@ -264,7 +264,6 @@ protected:
 	uint			siege_hitpoints = 0;
 	uint			attack_rate = 0;
 	ATTACK_TYPE		attack_type = NO_ATTACK;
-	float			attack_range = 0;
 	//Defense/Armor ----
 	uint			defense = 0; /*Used in melee damage*/
 	uint			defense_bonus = 0;
@@ -281,6 +280,8 @@ protected:
 	//Bonuses data
 	std::vector<Bonus*> attack_bonuses;
 	std::vector<Bonus*> defence_bonuses;
+	// Attack area
+	Circle	attack_area;
 
 	//Path to follow
 	std::vector<iPoint>* path = nullptr;
@@ -319,7 +320,7 @@ public:
 	void	SetSiegeHitPoints(uint siege_val);
 	void	SetAttackRate(uint atk_rate);
 	void	SetAttackType(ATTACK_TYPE atk_type);
-	void	SetAttackRange(float atk_range);
+	void	SetAttackArea(const Circle& atk_area);
 	void	SetDefense(uint def);
 	void	SetDefenseBonus(uint def_bonus);
 	void	SetArmor(uint arm);
@@ -346,7 +347,8 @@ public:
 	uint			GetSiegeHitPoints()const;
 	uint			GetAttackRate()const;
 	ATTACK_TYPE		GetAttackType()const;
-	float			GetAttackRange()const;
+	uint			GetAttackRange()const;
+	const Circle*	GetAttackArea()const;
 	uint			GetDefense()const;
 	uint			GetDefenseBonus()const;
 	uint			GetArmor()const;

@@ -67,6 +67,11 @@ void Entity::AddAction(Action * action)
 	action_worker->AddAction(action);
 }
 
+void Entity::AddPriorizedAction(Action * action)
+{
+	action_worker->AddPriorizedAction(action);
+}
+
 //Set Methods -----
 void Entity::SetName(const char * name_str)
 {
@@ -194,7 +199,7 @@ Unit::Unit() :Entity()
 
 Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), view_area(copy.view_area),
 speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
-attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_range(copy.attack_range), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
+attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time)
 {
 
@@ -214,7 +219,7 @@ bool Unit::Draw(bool debug)
 
 	//Draw Entity Mark
 	if (selected)ret = mark.Draw();
-
+	attack_area.Draw();
 	/*if (debug) {
 	//Draw Entity Selection Rect
 	App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
@@ -347,6 +352,13 @@ void Unit::Focus(const iPoint & target)
 
 bool Unit::AttackUnit()
 {
+	if (!attack_area.Intersects(&interaction_target->GetPositionRounded()))
+	{
+		iPoint goal = attack_area.NearestPoint(((Unit*)interaction_target)->GetAttackArea());
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal.x, goal.y));
+		return false;
+	}
+
 	//Control action rate
 	if (action_timer.Read() < attack_rate)return false;
 	
@@ -354,12 +366,18 @@ bool Unit::AttackUnit()
 	if (action_type != ATTATCK)
 	{
 		action_type = ATTATCK;
+		Focus(interaction_target->GetPositionRounded());
 		App->animator->UnitPlay(this);
 	}
 
 	if (interaction_target->GetLife() == 0)
 	{
 		ACTION_TYPE act = ((Unit*)interaction_target)->action_type;
+		if (this->action_type == ATTATCK)
+		{
+			action_type = IDLE;
+			App->animator->UnitPlay(this);
+		}
 		if(act != DIE && act != DISAPPEAR)interaction_target->AddAction((Action*)App->action_manager->DieAction((Unit*)interaction_target));
 		return true;
 	}
@@ -429,6 +447,8 @@ void Unit::SetPosition(float x, float y)
 
 	//Set unit mark position
 	mark.SetPosition(iPoint(position.x, position.y));
+	//Set unit attack area position
+	attack_area.SetPosition(iPoint(position.x, position.y));
 
 	//Add the unit with the correct position in the correct quad tree
 	App->entities_manager->units_quadtree.Insert(this, &position);
@@ -499,9 +519,9 @@ void Unit::SetAttackType(ATTACK_TYPE atk_type)
 	attack_type = atk_type;
 }
 
-void Unit::SetAttackRange(float atk_range)
+void Unit::SetAttackArea(const Circle & atk_area)
 {
-	attack_range = atk_range;
+	attack_area = atk_area;
 }
 
 void Unit::SetDefense(uint def)
@@ -623,9 +643,14 @@ ATTACK_TYPE Unit::GetAttackType()const
 	return attack_type;
 }
 
-float Unit::GetAttackRange()const
+uint Unit::GetAttackRange()const
 {
-	return attack_range;
+	return attack_area.GetRad();
+}
+
+const Circle * Unit::GetAttackArea() const
+{
+	return &attack_area;
 }
 
 uint Unit::GetDefense()const

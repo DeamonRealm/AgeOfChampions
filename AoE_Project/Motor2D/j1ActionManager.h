@@ -62,6 +62,7 @@ public:
 
 	void Update();
 	void AddAction(Action* action);
+	void AddPriorizedAction(Action* action);
 	void Reset();
 
 };

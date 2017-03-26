@@ -260,7 +260,9 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Attack Bonus*/	new_def->SetAttackBonus(unit_node->attribute("attack_bonus").as_uint());
 	/*Siege Points*/	new_def->SetSiegeHitPoints(unit_node->attribute("siege_hitpoints").as_uint());
 	/*Attack Rate*/		new_def->SetAttackRate(unit_node->attribute("attack_rate").as_uint());
-	/*Attack Range*/	new_def->SetAttackRange(unit_node->attribute("attack_range").as_uint());
+	/*Attack Area*/		Circle area({ 0,0 }, unit_node->attribute("attack_range").as_uint(), { 0,0 });
+						area.SetColor({ 0, 0, 255, 255 });
+						new_def->SetAttackArea(area);
 	/*Defense*/			new_def->SetDefense(unit_node->attribute("defense").as_uint());
 	/*Defense Bonus*/	new_def->SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
 	/*Armor*/			new_def->SetArmor(unit_node->attribute("armor").as_uint());

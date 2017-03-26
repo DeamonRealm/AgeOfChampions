@@ -142,6 +142,15 @@ void ActionWorker::AddAction(Action * action)
 	action_queue.push(action);
 }
 
+void ActionWorker::AddPriorizedAction(Action * action)
+{
+	if (current_action != nullptr)
+	{
+		action_queue.push(current_action);
+		current_action = action;
+	}
+}
+
 void ActionWorker::Reset()
 {
 	delete current_action;
