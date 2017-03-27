@@ -65,7 +65,7 @@
       attack_bonus="2"
       siege_hitpoints="10"
       attack_rate="2030"
-      attack_range="0"
+      attack_range="50"
       defense="0"
       defense_bonus="5"
       armor="0"
@@ -558,6 +558,7 @@
       mark_y="0"
       mark_w="70"
       mark_h="70"
+      interaction_rad ="10"
       max_resources="250"
       />
   </unit>
@@ -579,6 +580,7 @@
       mark_y="0"
       mark_w="70"
       mark_h="70"
+     interaction_rad ="10"
       max_resources="250"
       />
   </unit>
@@ -600,6 +602,7 @@
       mark_y="0"
       mark_w="70"
       mark_h="70"
+      interaction_rad ="10"
       max_resources="500"
       />
   </unit>
@@ -621,6 +624,7 @@
       mark_y="0"
       mark_w="70"
       mark_h="70"
+      interaction_rad ="10"
       max_resources="350"
       />
   </unit>

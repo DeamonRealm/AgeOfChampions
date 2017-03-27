@@ -37,7 +37,8 @@ public:
 
 	//Actions -----
 	bool Recollect();
-
+	bool SaveResources();
+	void CheckRecollectAnimation(RESOURCE_TYPE type);
 };
 /// -------------------------
 #endif // !__UNITS_H__

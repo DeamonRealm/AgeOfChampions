@@ -111,7 +111,7 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	}
 	else if (e_type = RESOURCE)
 	{
-		u_resources = ((Resource*)element)->GetMaxResources();
+		u_resources = ((Resource*)element)->GetMaxLife();
 		resources->SetString(App->gui->SetStringFromInt(u_resources));
 	}
 }
@@ -221,9 +221,9 @@ void Entity_Profile::UpdateStats()
 	}
 	if (e_type == RESOURCE)
 	{
-		if (u_resources != ((Resource*)element)->GetMaxResources())
+		if (u_resources != ((Resource*)element)->GetMaxLife())
 		{
-			u_resources = ((Resource*)element)->GetMaxResources();
+			u_resources = ((Resource*)element)->GetLife();
 			resources->SetString(App->gui->SetStringFromInt(u_resources));
 		}
 	}
@@ -353,7 +353,8 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			/*Selected->GetEntity()->GetWorker()->Reset();
 			Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));*/
 			
-			Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
+			//Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
+			Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource*)UpperEntity));
 
 		}
 

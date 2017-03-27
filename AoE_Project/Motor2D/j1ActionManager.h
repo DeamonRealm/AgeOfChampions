@@ -16,6 +16,7 @@ class AttackBuildingAction;
 class AttackResourceAction;
 class DieUnitAction;
 class RecollectVillagerAction;
+class SaveResourcesVillagerAction;
 
 /// Class Action --------------------------------
 //Action virtual class (are commands but not for the console)
@@ -88,9 +89,7 @@ public:
 	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target);
 	DieUnitAction*				DieAction(Unit* actor);
 	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource* target);
-
-	/*AttackResourceAction*	AttackToResourceAction(Unit* actor, Resource* target);
-	bool	RecollectAction(Resource* target);*/
+	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building* target);
 
 private:
 
