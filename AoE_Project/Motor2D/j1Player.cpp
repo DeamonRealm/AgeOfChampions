@@ -61,19 +61,6 @@ bool j1Player::Start()
 
 	game_panel->IncressPopulation(45, true);
 
-	// Entities Build ------------------------------------- only for testing recolection
-	tree = App->entities_manager->GenerateResource(RESOURCE_TYPE::TREE);
-	tree->SetPosition(130, 650);
-	
-	berry_bush = App->entities_manager->GenerateResource(RESOURCE_TYPE::BERRY_BUSH);
-	berry_bush->SetPosition(440, 380);
-
-	gold_ore = App->entities_manager->GenerateResource(RESOURCE_TYPE::GOLD_ORE);
-	gold_ore->SetPosition(300, 480);
-
-	stone_ore = App->entities_manager->GenerateResource(RESOURCE_TYPE::STONE_ORE);
-	stone_ore->SetPosition(200, 480);
-
 	return true;
 }
 
@@ -136,7 +123,30 @@ bool j1Player::PreUpdate()
 
 		game_panel->IncressPopulation(1, false);
 	}
-
+	//Generate Tree resource in mouse coordinates
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && game_panel->CheckPopulation())
+	{
+		Entity* new_unit = App->entities_manager->GenerateResource(TREE);
+		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+	}
+	//Generate Tree resource in mouse coordinates
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && game_panel->CheckPopulation())
+	{
+		Entity* new_unit = App->entities_manager->GenerateResource(BERRY_BUSH);
+		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+	}
+	//Generate Tree resource in mouse coordinates
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && game_panel->CheckPopulation())
+	{
+		Entity* new_unit = App->entities_manager->GenerateResource(STONE_ORE);
+		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+	}
+	//Generate Tree resource in mouse coordinates
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN && game_panel->CheckPopulation())
+	{
+		Entity* new_unit = App->entities_manager->GenerateResource(GOLD_ORE);
+		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+	}
 	return true;
 }
 

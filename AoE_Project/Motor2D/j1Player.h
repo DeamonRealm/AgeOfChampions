@@ -61,14 +61,6 @@ private:
 
 	UI_Image*				game_hud = nullptr;
 
-	// Just for testing Recolection;
-	Resource*				tree = nullptr;
-	Resource*				chop = nullptr;
-	Resource*				tree_cut = nullptr;
-	Resource*				berry_bush = nullptr;
-	Resource*				gold_ore = nullptr;
-	Resource*				stone_ore = nullptr;
-
 	//HUD Panels
 	Selection_Panel*		selection_panel = nullptr;
 	Game_Panel*				game_panel = nullptr;

@@ -134,10 +134,10 @@ void Entity_Profile::DrawProfile() const
 	if (isenemy) diplomacy->DrawAt(472, 660);
 
 	//Draw life
-	if (life_update != 0)
+	if (life_update >= 0 && e_type == UNIT)
 	{
 		App->render->DrawQuad({ 340 - App->render->camera.x, 670 - App->render->camera.y, 36, 3 }, 255, 0, 0);
-		App->render->DrawQuad({ 340 - App->render->camera.x, 670 - App->render->camera.y, 36 * (m_life / life_update), 3 }, 0, 255, 0);
+		App->render->DrawQuad({ 340 - App->render->camera.x, 670 - App->render->camera.y, 36 * life_update / m_life, 3 }, 0, 255, 0);
 
 		life->DrawAt(380, 660);
 	}
@@ -406,7 +406,7 @@ void Selection_Panel::DrawGroup()
 
 		//Draw life
 		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36, 3 }, 255, 0, 0);
-		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36 * (max_life / life), 3 }, 0, 255, 0);
+		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36 * life/max_life, 3 }, 0, 255, 0);
 
 		//Draw icon
 		group_profile[i]->Draw(App->debug_mode);

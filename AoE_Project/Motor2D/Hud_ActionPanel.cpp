@@ -49,7 +49,7 @@ bool TownCenterPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		entitis_panel->AddAction(new SpawnUnitAction((Building*)entitis_panel, VILLAGER));
+		//entitis_panel->AddAction(new SpawnUnitAction((Building*)entitis_panel, VILLAGER));
 		}
 		break;
 	case 2:
@@ -74,7 +74,7 @@ bool UnitPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		((Unit*)entitis_panel)->AddAction(new DieUnitAction((Unit*)entitis_panel));
+		((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
 		}
 		break;
