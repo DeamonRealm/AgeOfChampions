@@ -47,7 +47,7 @@ bool j1EntitiesManager::Start()
 	App->console->AddCommand("generate_unit", App->entities_manager);
 
 	//Built entities quad trees
-	units_quadtree.SetMaxObjects(2);
+	units_quadtree.SetMaxObjects(4);
 	units_quadtree.SetDebugColor({ 255,0,255,255 });
 	resources_quadtree.SetMaxObjects(8);
 	units_quadtree.SetDebugColor({ 0,255,255,255 });
@@ -85,7 +85,12 @@ bool j1EntitiesManager::Update(float dt)
 	}
 
 	//Clean all the wasted entities
-	if (wasted_units.size() > 0) wasted_units.clear();
+	uint size = wasted_units.size();
+	for(uint k=0; k < size;k++)
+	{
+		RELEASE(wasted_units[k]);
+	}
+	wasted_units.clear();
 
 	return ret;
 }
@@ -635,21 +640,35 @@ const std::list<Resource*>* j1EntitiesManager::ResourceList() const
 bool j1EntitiesManager::DeleteEntity(Entity * entity)
 {
 	//Check if the entity is really defined
-	if (entity == nullptr || entity->GetEntityType() == NO_ENTITY)
+	if (entity == nullptr)
 	{
 		return false;
 	}
 	
+	//Add the entity at the wasted entities list 
+	wasted_units.push_back(entity);
+
 	//Get the entity type
 	ENTITY_TYPE type = entity->GetEntityType();
 	
 	//Remove the entity from the correct list
-	if (type == RESOURCE) resources.remove((Resource*)entity);
-	else if (type == BUILDING) buildings.remove((Building*)entity);
-	else units.remove((Unit*)entity);
+	if (type == RESOURCE)
+	{
+		resources.remove((Resource*)entity);
+		resources_quadtree.Exteract(&entity->GetPosition());
+	}
+	else if (type == BUILDING)
+	{
+		buildings.remove((Building*)entity);
+		buildings_quadtree.Exteract(&entity->GetPosition());
+	}
+	else
+	{
+		units.remove((Unit*)entity);
+		units_quadtree.Exteract(&entity->GetPosition());
+	}
 
-	//Add the entity at the wasted entities list 
-	wasted_units.push_back(entity);
+
 
 	return true;
 }

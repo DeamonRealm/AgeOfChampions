@@ -149,6 +149,10 @@ void ActionWorker::AddPriorizedAction(Action * action)
 		action_queue.push(current_action);
 		current_action = action;
 	}
+	else
+	{
+		current_action = action;
+	}
 }
 
 void ActionWorker::Reset()

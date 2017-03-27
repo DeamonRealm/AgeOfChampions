@@ -134,8 +134,8 @@ iPoint Circle::NearestPoint(const Circle * target) const
 	iPoint vec(target->position.x - position.x, target->position.y - position.y);
 	fPoint cpy(vec.x,vec.y);
 	cpy.Norm();
-	vec.x -= target->rad * cpy.x;
-	vec.y -= target->rad * cpy.y;
+	vec.x -= rad * cpy.x;
+	vec.y -= rad * cpy.y;
 
 	return iPoint(position.x + vec.x, position.y + vec.y);
 }

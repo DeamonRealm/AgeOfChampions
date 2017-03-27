@@ -1,6 +1,7 @@
 #include "Units.h"
 #include "j1App.h"
 #include "j1EntitiesManager.h"
+#include "j1ActionManager.h"
 #include "p2Log.h"
 
 /// Class Villager --------------------
@@ -19,14 +20,6 @@ Villager::Villager(const Villager & copy) :Unit(copy), item_type(copy.item_type)
 Villager::~Villager()
 {
 
-}
-
-//Game Loop ===========================
-bool Villager::Update()
-{
-//	if (path != nullptr)return Move();
-	if (interaction_target != nullptr)return Recollect();
-	return false;
 }
 
 //Functionality =======================
@@ -55,6 +48,15 @@ void Villager::SetRecollectRate(uint value)
 //Actions --------------
 bool Villager::Recollect()
 {
+
+	//Check if the target resource is in the "attack" (in this case used for recollect) area
+	if (!attack_area.Intersects(&interaction_target->GetPositionRounded()))
+	{
+		iPoint goal = attack_area.NearestPoint(((Unit*)interaction_target)->GetAttackArea());
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal.x, goal.y));
+		return false;
+	}
+
 	//Get resources from the target resource
 	uint recolect_value = MIN(recollect_capacity, resources_capacity - current_resources);
 	

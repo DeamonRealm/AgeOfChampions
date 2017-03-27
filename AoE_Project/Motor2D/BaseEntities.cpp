@@ -352,6 +352,8 @@ void Unit::Focus(const iPoint & target)
 
 bool Unit::AttackUnit()
 {
+
+	//Check if the target is in the attack area
 	if (!attack_area.Intersects(&interaction_target->GetPositionRounded()))
 	{
 		iPoint goal = attack_area.NearestPoint(((Unit*)interaction_target)->GetAttackArea());

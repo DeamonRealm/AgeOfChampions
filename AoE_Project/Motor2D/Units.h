@@ -25,9 +25,6 @@ private:
 
 public:
 
-	//Game Loop --------
-	bool Update();
-
 	//Functionality ----
 	//Get Methods -
 	ITEM_TYPE GetItemType()const;
