@@ -27,6 +27,10 @@ public:
 		//leader path on middle_point other units path around the middle_point
 		//leader do path to destination other units copy the path with minor modifications
 		//return the path to units
+	iPoint GetMiddlePoint();
+	void CreateFirstDestination();
+	void LeaderPath();
+
 private:
 	// list of units selected
 	// Pointer first unit "leader"
