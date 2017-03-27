@@ -107,14 +107,14 @@ bool j1SoundManager::CleanUp()
 //Methods that transform strings to enums (used when loading data from xml)
 SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 {
-	if (strcmp(str, "sword_solo") == 0)			return SWORD_ATTACK_SOUND;
+	if		(strcmp(str, "sword_solo") == 0)					return SWORD_ATTACK_SOUND;
 	else if (strcmp(str, "barracks_create_select") == 0)		return BARRACK_SOUND;
-	else if (strcmp(str, "town_center_select") == 0)		return TOWN_CENTER_SELECTED_SOUND;
-	else if (strcmp(str, "villager_create") == 0)		return VILLAGER_CREATED_SOUND;
-	else if (strcmp(str, "unit_death") == 0)		return DEATH_SOUND;
-	else if (strcmp(str, "unit_attack") == 0)		return ATTACK_SOUND;
-	else if (strcmp(str, "unit_click") == 0)		return CLICK_SOUND;
-	else if (strcmp(str, "unit_move") == 0)		return MOVE_SOUND;
+	else if (strcmp(str, "town_center_select") == 0)			return TOWN_CENTER_SELECTED_SOUND;
+	else if (strcmp(str, "villager_create") == 0)				return VILLAGER_CREATED_SOUND;
+	else if (strcmp(str, "unit_death") == 0)					return DEATH_SOUND;
+	else if (strcmp(str, "unit_attack") == 0)					return ATTACK_SOUND;
+	else if (strcmp(str, "unit_click") == 0)					return CLICK_SOUND;
+	else if (strcmp(str, "unit_move") == 0)						return MOVE_SOUND;
 
 
 	return NO_SOUND;
