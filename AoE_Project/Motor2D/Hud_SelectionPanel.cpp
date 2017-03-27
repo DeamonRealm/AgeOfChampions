@@ -67,6 +67,7 @@ Entity_Profile::~Entity_Profile()
 //Functionality ==================================================================
 void Entity_Profile::SetEntity(Entity * entity_selected)
 {
+	if (entity_selected == nullptr) return;
 	element = entity_selected;
 
 	name->SetString((char*)element->GetName());
@@ -505,7 +506,8 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		max_row_units = 16;
 		SetGroupProfile();
 	}
-	Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+	if(selected_elements.size() >= 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+	else Selected->SetEntity(nullptr);
 }
 
 void Selection_Panel::UnSelect_Entity()
@@ -621,16 +623,17 @@ void Selection_Panel::SetGroupProfile()
 {
 	int i = 0;
 	int j = 0;
+	int size = selected_elements.size();
+	max_row_units = 16;
+	for (; max_row_units < 20; max_row_units++)
+	{
+		if ((float)size / max_row_units <= 3) break;
+	}
 
 	std::list<Entity*>::const_iterator item = selected_elements.begin();
 	while (item != selected_elements.end())
 	{
 		if (i%max_row_units == 0 && i != 0) j++;
-		if (j == 3) {
-			max_row_units++;
-			SetGroupProfile();
-			return;
-		}
 		group_profile[i]->ChangeTextureRect(item._Ptr->_Myval->GetIcon());
 		group_profile[i]->SetBoxPosition(340 + (i%max_row_units) * (row_size / max_row_units), 630 + j * 42);
 		item++;

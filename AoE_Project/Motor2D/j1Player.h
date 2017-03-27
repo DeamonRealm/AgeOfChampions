@@ -79,8 +79,5 @@ public:
 
 	//Functionality -------------------
 
-	//Action Panel
-	bool DoAction(ACTION type);
-
 };
 #endif // !_J1PLAYER_H_

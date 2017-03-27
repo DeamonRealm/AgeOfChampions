@@ -178,28 +178,3 @@ bool j1Player::CleanUp()
 
 	return true;
 }
-
-bool j1Player::DoAction(ACTION type)
-{
-	switch (type)
-	{
-	case LCLICK: 
-		break;
-	case RCLICK:
-	/*	if (UpperEntity != nullptr)
-		{
-			if (UpperEntity->GetEntityType() == RESOURCE)
-			{
-				((Unit*)Selected->GetEntity())->SetInteractionTarget(UpperEntity);
-				return true;
-			}
-			else if (UpperEntity->GetEntityType() == UNIT)
-			{
-				//((Unit*)Selected->GetEntity())->SetInteractionTarget(UpperEntity);
-				return true;
-			}
-		}*/
-		break;
-	}
-	return false;
-}
