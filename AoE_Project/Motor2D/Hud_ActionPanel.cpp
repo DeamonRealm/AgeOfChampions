@@ -240,6 +240,17 @@ void Action_Panel::SetPanelType(Entity * selected)
 	default:	actualpanel = nullptr;
 		break;
 	}
-	
+
 	if (actualpanel != nullptr) actualpanel->ChangePanelTarget(actual_entity);
 }
+
+void Action_Panel::CheckSelected(int selected)
+{
+	if (selected == 0)
+	{
+		actual_entity = nullptr;
+		actualpanel = nullptr;
+		return;
+	}
+}
+

@@ -33,7 +33,7 @@ public:
 
 	void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
 
-	void LoadPanel();
+	void LoadPanel() {};
 
 protected:
 	std::vector<SDL_Rect>		panel_icons;
@@ -49,7 +49,7 @@ public:
 		panel_icons[0] = { 576,585,36,36 };
 
 	};
-	~TownCenterPanel();
+	~TownCenterPanel() {};
 
 	bool ActivateCell(int i);
 
@@ -61,7 +61,7 @@ class UnitPanel : public Action_Panel_Elements
 {
 public:
 	UnitPanel() : Action_Panel_Elements() { panel_icons[0] = { 0,76,36,36 }; };
-	~UnitPanel();
+	~UnitPanel() {};
 
 	bool ActivateCell(int i);
 
@@ -98,7 +98,9 @@ public:
 	// Get isin bool
 	bool GetIsIn() const;
 
+	// Panel Settings
 	void SetPanelType(Entity* selected);
+	void CheckSelected(int size);
 
 private:
 	

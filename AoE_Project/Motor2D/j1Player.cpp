@@ -86,6 +86,9 @@ bool j1Player::PreUpdate()
 		if (selection_panel->PointisInViewport(x, y)) selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);		
 	}
 
+	// Action Panel Check Selected
+	action_panel->CheckSelected(selection_panel->GetSelectedSize());
+
 	//Generate a town center in the mouse coordinates
 	if(App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
@@ -129,19 +132,19 @@ bool j1Player::PreUpdate()
 		Entity* new_unit = App->entities_manager->GenerateResource(TREE);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 	}
-	//Generate Tree resource in mouse coordinates
+	//Generate BerryBush resource in mouse coordinates
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && game_panel->CheckPopulation())
 	{
 		Entity* new_unit = App->entities_manager->GenerateResource(BERRY_BUSH);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 	}
-	//Generate Tree resource in mouse coordinates
+	//Generate Stone Ore resource in mouse coordinates
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && game_panel->CheckPopulation())
 	{
 		Entity* new_unit = App->entities_manager->GenerateResource(STONE_ORE);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 	}
-	//Generate Tree resource in mouse coordinates
+	//Generate Gold Ore resource in mouse coordinates
 	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN && game_panel->CheckPopulation())
 	{
 		Entity* new_unit = App->entities_manager->GenerateResource(GOLD_ORE);

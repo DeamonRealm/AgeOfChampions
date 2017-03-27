@@ -123,6 +123,7 @@ Entity * Entity_Profile::GetEntity()
 
 void Entity_Profile::DrawProfile() const
 {
+	if (element == nullptr) return;
 	//Draw profile background
 	App->render->DrawQuad({ 338 - App->render->camera.x, 632 - App->render->camera.y, 39, 38 }, 148, 148, 148);
 
@@ -196,6 +197,12 @@ void Entity_Profile::UpdateStats()
 	if (element->GetLife() != life_update)
 	{
 		life_update = element->GetLife();
+		if (life_update == 0)
+		{
+			element->Deselect();
+			element = nullptr;
+			return;
+		}
 		profile_text.clear();
 		profile_text = App->gui->SetStringFromInt(life_update);
 		profile_text = profile_text + "/" + App->gui->SetStringFromInt(element->GetMaxLife());
@@ -255,6 +262,8 @@ Selection_Panel::~Selection_Panel()
 bool Selection_Panel::PreUpdate()
 {	
 	App->input->GetMousePosition(mouse_x, mouse_y);
+
+	
 
 	if (selected_elements.size() == 0 || PointisInViewport(mouse_x, mouse_y) == false ) return false;
 	// Calculate upper entity
@@ -380,6 +389,7 @@ bool Selection_Panel::Draw()
 	{
 		Selected->UpdateStats();
 		Selected->DrawProfile();
+		if (Selected->GetEntity() == nullptr) selected_elements.clear();
 	}
 	else if (selected_elements.size() > 1) DrawGroup();
 
@@ -398,6 +408,12 @@ void Selection_Panel::DrawGroup()
 		item--;
 
 		life = item._Ptr->_Myval->GetLife();
+		if (life <= 0)
+		{
+			item._Ptr->_Myval->Deselect();
+			selected_elements.remove(item._Ptr->_Myval);
+			continue;
+		}
 		max_life = item._Ptr->_Myval->GetMaxLife();
 
 		box = group_profile[i]->GetBox();
@@ -645,4 +661,9 @@ Entity * Selection_Panel::GetSelected() const
 {
 	if (selected_elements.size() > 0) return selected_elements.begin()._Ptr->_Myval;
 	else return nullptr;
+}
+
+uint Selection_Panel::GetSelectedSize() const
+{
+	return selected_elements.size();
 }
