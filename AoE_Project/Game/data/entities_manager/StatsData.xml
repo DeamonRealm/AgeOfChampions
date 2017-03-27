@@ -649,6 +649,10 @@
       mark_y="47"
       mark_w="273"
       mark_h="273"
+      interaction_area_x="0"
+      intaraction_area_y="47"
+      interaction_area_w="250"
+      intaraction_area_h="250"
       width_in_tiles="4"
       height_in_tiles="4"
       

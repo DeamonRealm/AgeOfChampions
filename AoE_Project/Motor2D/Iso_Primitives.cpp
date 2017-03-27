@@ -129,7 +129,7 @@ bool Circle::Intersects(const iPoint* point) const
 	return (abs(loc.x) <= rad && abs(loc.y) <= rad);
 }
 
-iPoint Circle::NearestPoint(const Circle * target) const
+iPoint Circle::NearestPoint(const Circle* target) const
 {
 	iPoint vec(target->position.x - position.x, target->position.y - position.y);
 	fPoint cpy(vec.x,vec.y);
@@ -138,6 +138,16 @@ iPoint Circle::NearestPoint(const Circle * target) const
 	vec.y -= rad * cpy.y;
 
 	return iPoint(position.x + vec.x, position.y + vec.y);
+}
+
+iPoint Circle::NearestPoint(const Rectng* target) const
+{
+	iPoint target_pos = target->GetPosition();
+	iPoint vec(target_pos.x - position.x, target_pos.y - position.y);
+	/*float angle = sqrt(vec.x*vec.x + vec.y*vec.y);
+	vec.x -= target->GetWidth() * cos(angle);
+	vec.y -= target->GetHeight() * sin(angle);*/
+	return iPoint(position.x + vec.x,position.y + vec.y);
 }
 
 void Circle::SetRad(uint r)
@@ -159,7 +169,7 @@ Rectng::Rectng(const iPoint& position, uint width, uint height, const iPoint& de
 
 }
 
-Rectng::Rectng(const Rectng & copy) : Primitive(copy), width(copy.width), height(copy.height)
+Rectng::Rectng(const Rectng& copy) : Primitive(copy), width(copy.width), height(copy.height)
 {
 
 }

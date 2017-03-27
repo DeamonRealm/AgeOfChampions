@@ -77,8 +77,9 @@ bool Villager::Recollect()
 	{
 		//Go to the nearest download point
 		Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
+		if (save_point == nullptr)return true;
 		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, save_point));
-		return true;
+		return false;
 	}
 
 	//Reset interaction timer
@@ -89,6 +90,13 @@ bool Villager::Recollect()
 
 bool Villager::SaveResources()
 {
+	//Check if the target building is in the "attack" (in this case used for save resources) area
+	iPoint intersect_point = attack_area.NearestPoint(&((Building*)interaction_target)->GetInteractArea());
+	if (!attack_area.Intersects(&intersect_point))
+	{
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, intersect_point.x, intersect_point.y));
+		return false;
+	}
 
 	return true;
 }

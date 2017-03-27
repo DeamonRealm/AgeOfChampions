@@ -415,6 +415,7 @@ public:
 protected:
 
 	Rectng			mark;
+	Rectng			interact_area;
 	uint			width_in_tiles = 0;
 	uint			height_in_tiles = 0;
 	BUILDING_TYPE	building_type = NO_BUILDING;
@@ -433,9 +434,6 @@ protected:
 public:
 
 	//Functionality -------------------
-	//Factory that generates any type of unit supported by the building
-	virtual Unit* CraftUnit(UNIT_TYPE new_unit_type)const;
-
 	//Cover / Release units
 	bool	CoverUnit(const Unit* target);
 	void	ReleaseUnit(const Unit* target);
@@ -447,6 +445,7 @@ public:
 	//Set Methods -----------
 	void	SetPosition(float x, float y);
 	void	SetMark(const Rectng& rectangle);
+	void	SetInteractArea(const Rectng& rectangle);
 	void	SetWidthInTiles(uint width);
 	void	SetHeightInTiles(uint height);
 	void	SetBuildingType(BUILDING_TYPE type);
@@ -460,6 +459,7 @@ public:
 
 	//Get Methods -----------
 	const Rectng&	GetMark()const;
+	const Rectng&	GetInteractArea()const;
 	BUILDING_TYPE	GetBuildingType()const;
 	ACTION_TYPE		GetActionType()const;
 	DIRECTION_TYPE	GetDirectionType()const;

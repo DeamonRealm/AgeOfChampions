@@ -308,7 +308,6 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 
 	//Add the calculated values at the unit & mark position
 	SetPosition(position.x + x_step, position.y + y_step);
-	mark.SetPosition(iPoint(position.x, position.y));
 
 	return false;
 }
@@ -850,7 +849,8 @@ Building::Building() :Entity()
 }
 
 Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), building_type(copy.building_type), max_life(copy.max_life),
-life(copy.life), units_capacity(units_capacity), current_units(copy.current_units), width_in_tiles(copy.width_in_tiles), height_in_tiles(copy.height_in_tiles), units_spawn_point(copy.units_spawn_point)
+life(copy.life), units_capacity(units_capacity), current_units(copy.current_units), width_in_tiles(copy.width_in_tiles), height_in_tiles(copy.height_in_tiles),
+units_spawn_point(copy.units_spawn_point), interact_area(copy.interact_area)
 {
 
 }
@@ -868,21 +868,6 @@ Building::~Building()
 }
 
 //Functionality =======================
-//Units Generator -----------
-Unit * Building::CraftUnit(UNIT_TYPE new_unit_type) const
-{
-	//Call entities manager to generate a new unit
-	Unit* new_unit = App->entities_manager->GenerateUnit(new_unit_type, false);
-	//Set the new unit position at the building spawn point
-	new_unit->SetPosition(position.x + (float)units_spawn_point.x, position.y + (float)units_spawn_point.y);
-
-	//Add the unit in the crafting units priority queue
-	//production_queue.emplace(new_unit);
-
-
-	return new_unit;
-}
-
 bool Building::CoverUnit(const Unit * target)
 {
 	if (units_capacity == current_units)
@@ -960,6 +945,9 @@ void Building::SetPosition(float x, float y)
 	position.x = world_coords.x;
 	position.y = world_coords.y - (App->map->data.tile_height + 1) * 0.5f;
 
+	//Set interaction area rectangle position
+	interact_area.SetPosition(iPoint(position.x,position.y));
+	
 	//Set building mark position
 	mark.SetPosition(iPoint(position.x, position.y));
 
@@ -987,6 +975,11 @@ void Building::SetPosition(float x, float y)
 void Building::SetMark(const Rectng& rectangle)
 {
 	mark = rectangle;
+}
+
+void Building::SetInteractArea(const Rectng& rectangle)
+{
+	interact_area = rectangle;
 }
 
 void Building::SetWidthInTiles(uint width)
@@ -1042,6 +1035,11 @@ void Building::SetUnitsSpawnPoint(const iPoint & point)
 const Rectng & Building::GetMark() const
 {
 	return mark;
+}
+
+const Rectng & Building::GetInteractArea() const
+{
+	return interact_area;
 }
 
 //Get Methods ---------------

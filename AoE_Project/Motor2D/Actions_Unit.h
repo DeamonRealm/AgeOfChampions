@@ -131,7 +131,8 @@ public:
 	//Functionality ---------
 	bool execute()
 	{
-		//Actor attack the target
+		//Actor recollect
+		((Unit*)actor)->SetInteractionTarget(target);
 		return ((Villager*)actor)->Recollect();
 	}
 
@@ -158,7 +159,7 @@ public:
 	//Functionality ---------
 	bool execute()
 	{
-		//Actor attack the target
+		//Actor save resources
 		return ((Villager*)actor)->SaveResources();
 	}
 

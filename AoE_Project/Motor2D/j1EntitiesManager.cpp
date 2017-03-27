@@ -388,6 +388,13 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 						mark.SetDisplacement(displacement);
 	/*Mark Color*/		mark.SetColor({ 55,255,255,255 });
 						new_def->SetMark(mark);
+	/*Interaction Area*/Rectng area;
+	/*I.Area Width*/	area.SetWidth(building_node->attribute("interaction_area_w").as_uint());
+	/*I.Area Height*/	area.SetHeight(building_node->attribute("intaraction_area_h").as_uint());
+	/*I.Area Displace*/	displacement.create(building_node->attribute("interaction_area_x").as_int(), building_node->attribute("intaraction_area_y").as_int());
+						area.SetDisplacement(displacement);
+	/*I.Area Color*/	area.SetColor({ 0,0,255,255 });
+						new_def->SetInteractArea(area);
 	/*W. in Tiles*/		new_def->SetWidthInTiles(building_node->attribute("width_in_tiles").as_uint());
 	/*H. in Tiles*/		new_def->SetHeightInTiles(building_node->attribute("height_in_tiles").as_uint());
 	/*Selection Rect*/	SDL_Rect selection_rect;
@@ -737,6 +744,24 @@ Unit * j1EntitiesManager::PopUnit(const Unit * unit)
 
 Building * j1EntitiesManager::SearchNearestSavePoint(const iPoint & point)
 {
+	std::list<Building*>::const_iterator building = buildings.begin();
+	uint distance = 120 * 120 * 50;
+	Building* nearest_building = nullptr;
+	while (building != buildings.end())
+	{
+		//Check building type
+		if (building._Ptr->_Myval->GetBuildingType() != TOWN_CENTER)continue;
+		//Calculate distance between building pos & point
+		uint dist = abs(building._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
+		//Check if is the nearest building from the point 
+		if ( dist < distance)
+		{
+			distance = dist;
+			nearest_building = building._Ptr->_Myval;
+		}
 
-	return nullptr;
+		building++;
+	}
+
+	return nearest_building;
 }
