@@ -11,7 +11,7 @@ class SpawnUnitAction : public Action
 public:
 	SpawnUnitAction(Building* actor, UNIT_TYPE type) : Action(actor), type(type)
 	{
-			new_unit = App->entities_manager->GenerateUnit(type);
+			new_unit = App->entities_manager->GenerateUnit(type, false);
 			//timer = new_unit->GetTrainTime();
 			time = new_unit->GetTrainTime();
 	}
@@ -25,6 +25,8 @@ public:
 			int x = ((Building*)actor)->GetSpawnPoint().x + actor->GetPosition().x;
 			int y = ((Building*)actor)->GetSpawnPoint().y + actor->GetPosition().y;
 
+			App->entities_manager->AddUnit(new_unit);
+		
 			new_unit->SetPosition(x, y);
 			new_unit->SetDiplomacy(ALLY);
 			return true;
