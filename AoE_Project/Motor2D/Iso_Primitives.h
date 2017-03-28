@@ -5,6 +5,8 @@
 #include "p2Point.h"
 #include"SDL_image/include/SDL_image.h"
 
+class Rectng;
+
 enum COLLIDER_TYPE
 {
 	COLLIDER_NO_UI,
@@ -77,6 +79,8 @@ public:
 	bool	Intersects(const SDL_Rect* rect) const;
 	bool	Intersects(const iPoint* point)const;
 	iPoint  NearestPoint(const Circle* target)const;
+	iPoint	NearestPoint(const Rectng* target)const;
+
 	//Set Methods
 	void	SetRad(uint r);
 	//Get Methods

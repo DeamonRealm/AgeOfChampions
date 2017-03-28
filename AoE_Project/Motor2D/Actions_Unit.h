@@ -116,7 +116,7 @@ public:
 /// ---------------------------------------------
 
 /// Recollect Action ----------------------------
-//Move the character
+//Recollect resources
 class RecollectVillagerAction : public Action
 {
 public:
@@ -131,13 +131,41 @@ public:
 	//Functionality ---------
 	bool execute()
 	{
-		//Actor attack the target
+		//Actor recollect
+		((Unit*)actor)->SetInteractionTarget(target);
 		return ((Villager*)actor)->Recollect();
 	}
 
 private:
 
 	Resource* target = nullptr;
+
+};
+/// ---------------------------------------------
+
+/// Recollect Action ----------------------------
+//Save the unit resources in a building
+class SaveResourcesVillagerAction : public Action
+{
+public:
+
+	//Constructor -----------
+	SaveResourcesVillagerAction(Villager* actor, Building* target) : Action(actor), target(target)
+	{
+		//Set actor interaction target
+		((Unit*)actor)->SetInteractionTarget(target);
+	}
+
+	//Functionality ---------
+	bool execute()
+	{
+		//Actor save resources
+		return ((Villager*)actor)->SaveResources();
+	}
+
+private:
+
+	Building* target = nullptr;
 
 };
 /// ---------------------------------------------

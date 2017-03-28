@@ -52,30 +52,94 @@ bool Villager::Recollect()
 	//Check if the target resource is in the "attack" (in this case used for recollect) area
 	if (!attack_area.Intersects(&interaction_target->GetPositionRounded()))
 	{
-		iPoint goal = attack_area.NearestPoint(((Unit*)interaction_target)->GetAttackArea());
+		iPoint goal = attack_area.NearestPoint(((Resource*)interaction_target)->GetInteractArea());
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal.x, goal.y));
 		return false;
 	}
 
+	//Check the action rate
+	if (action_timer.Read() < attack_rate) return false;
+
+	//Check unit animation
+	CheckRecollectAnimation(((Resource*)interaction_target)->GetResourceType());
+
 	//Get resources from the target resource
-	uint recolect_value = MIN(recollect_capacity, resources_capacity - current_resources);
+	uint recollect_value = MIN(recollect_capacity, resources_capacity - current_resources);
 	
-	//Extract resource material, if it fails return false
-	if (!((Resource*)interaction_target)->ExtractResources(&recolect_value)) return false;
+	//Extract resource material, if it fails return true to end the recollect action
+	if (!((Resource*)interaction_target)->ExtractResources(&recollect_value)) return true;
 	
 	//Add extracted resources at the villager
-	current_resources += recolect_value;
+	current_resources += recollect_value;
 
 	//If villager is full let's find a place to download
 	if (current_resources == resources_capacity)
 	{
 		//Go to the nearest download point
+		Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
+		if (save_point == nullptr)return true;
+		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, save_point));
+		return false;
 	}
 
 	//Reset interaction timer
 	action_timer.Start();
 
+	return false;
+}
+
+bool Villager::SaveResources()
+{
+	//Check if the target building is in the "attack" (in this case used for save resources) area
+	iPoint intersect_point = attack_area.NearestPoint(&((Building*)interaction_target)->GetInteractArea());
+	if (!attack_area.Intersects(&intersect_point))
+	{
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, intersect_point.x, intersect_point.y));
+		return false;
+	}
+
 	return true;
+}
+
+void Villager::CheckRecollectAnimation(RESOURCE_TYPE type)
+{
+	bool changed = false;
+	switch (type)
+	{
+	case NO_RESOURCE:
+		break;
+	case TREE:
+	case TREE_CUT:
+	case CHOP:
+		if (item_type != ITEM_TYPE::AXE)
+		{
+			item_type = AXE;
+			action_type = ATTATCK;
+			changed = true;
+		}
+		break;
+	case BERRY_BUSH:
+		if (item_type != ITEM_TYPE::BASKET)
+		{
+			item_type = BASKET;
+			action_type = ATTATCK;
+			changed = true;
+		}
+		break;
+	case GOLD_ORE:
+	case TINY_GOLD_ORE:
+	case STONE_ORE:
+	case TINY_STONE_ORE:
+		if (item_type != ITEM_TYPE::PICK)
+		{
+			item_type = PICK;
+			action_type = ATTATCK;
+			changed = true;
+		}
+		break;
+	}
+
+	if (changed)App->animator->UnitPlay(this);
 }
 
 /// -----------------------------------

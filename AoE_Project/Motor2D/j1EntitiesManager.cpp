@@ -271,7 +271,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Defense*/			new_def->SetDefense(unit_node->attribute("defense").as_uint());
 	/*Defense Bonus*/	new_def->SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
 	/*Armor*/			new_def->SetArmor(unit_node->attribute("armor").as_uint());
-	/*Armor Bonus*/		new_def->SetArmorBonus(unit_node->attribute("armor_bomus").as_uint());
+	/*Armor Bonus*/		new_def->SetArmorBonus(unit_node->attribute("armor_bonus").as_uint());
 	/*Food Cost*/		new_def->SetFoodCost(unit_node->attribute("food_cost").as_uint());
 	/*Wood Cost*/		new_def->SetWoodCost(unit_node->attribute("wood_cost").as_uint());
 	/*Gold Cost*/		new_def->SetGoldCost(unit_node->attribute("gold_cost").as_uint());
@@ -329,7 +329,7 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_no
 
 	//Generate a new resource definition from the node
 	Resource* new_def = new Resource();
-
+	
 	//Resource ID -----------
 	/*Name*/			new_def->SetName(resource_node->attribute("name").as_string());
 	/*Entity Type*/		new_def->SetEntityType(RESOURCE);
@@ -341,6 +341,9 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_no
 	/*Mark Height*/		mark.SetHeight(resource_node->attribute("mark_h").as_uint());
 	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
 						new_def->SetMark(mark);
+	/*Interaction Area*/Circle area({ 0,0 }, resource_node->attribute("interaction_rad").as_uint(), { 0,0 });
+						area.SetColor({ 0, 0, 255, 255 });
+						new_def->SetInteractArea(area);
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = resource_node->attribute("selection_x").as_int();
 	/*S.Rect Y*/		selection_rect.y = resource_node->attribute("selection_y").as_int();
@@ -355,8 +358,8 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_no
 						new_def->SetIcon(icon_rect);
 
 	//Resource Metrics ------
-	/*Max Resources*/	new_def->SetMaxResources(resource_node->attribute("max_resources").as_uint());
-	/*C.Resources*/		new_def->SetCurrentResources(new_def->GetMaxResources());
+	/*Max Resources*/	new_def->SetMaxLife(resource_node->attribute("max_resources").as_uint());
+	/*C.Resources*/		new_def->SetLife(new_def->GetMaxLife());
 
 	resources_defs.push_back(new_def);
 
@@ -385,6 +388,13 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 						mark.SetDisplacement(displacement);
 	/*Mark Color*/		mark.SetColor({ 55,255,255,255 });
 						new_def->SetMark(mark);
+	/*Interaction Area*/Rectng area;
+	/*I.Area Width*/	area.SetWidth(building_node->attribute("interaction_area_w").as_uint());
+	/*I.Area Height*/	area.SetHeight(building_node->attribute("intaraction_area_h").as_uint());
+	/*I.Area Displace*/	displacement.create(building_node->attribute("interaction_area_x").as_int(), building_node->attribute("intaraction_area_y").as_int());
+						area.SetDisplacement(displacement);
+	/*I.Area Color*/	area.SetColor({ 0,0,255,255 });
+						new_def->SetInteractArea(area);
 	/*W. in Tiles*/		new_def->SetWidthInTiles(building_node->attribute("width_in_tiles").as_uint());
 	/*H. in Tiles*/		new_def->SetHeightInTiles(building_node->attribute("height_in_tiles").as_uint());
 	/*Selection Rect*/	SDL_Rect selection_rect;
@@ -730,4 +740,28 @@ Unit * j1EntitiesManager::PopUnit(const Unit * unit)
 {
 	units.remove((Unit*)unit);
 	return (Unit*)unit;
+}
+
+Building * j1EntitiesManager::SearchNearestSavePoint(const iPoint & point)
+{
+	std::list<Building*>::const_iterator building = buildings.begin();
+	uint distance = 120 * 120 * 50;
+	Building* nearest_building = nullptr;
+	while (building != buildings.end())
+	{
+		//Check building type
+		if (building._Ptr->_Myval->GetBuildingType() != TOWN_CENTER)continue;
+		//Calculate distance between building pos & point
+		uint dist = abs(building._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
+		//Check if is the nearest building from the point 
+		if ( dist < distance)
+		{
+			distance = dist;
+			nearest_building = building._Ptr->_Myval;
+		}
+
+		building++;
+	}
+
+	return nearest_building;
 }

@@ -111,7 +111,7 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	}
 	else if (e_type = RESOURCE)
 	{
-		u_resources = ((Resource*)element)->GetMaxResources();
+		u_resources = ((Resource*)element)->GetMaxLife();
 		resources->SetString(App->gui->SetStringFromInt(u_resources));
 	}
 }
@@ -221,9 +221,9 @@ void Entity_Profile::UpdateStats()
 	}
 	if (e_type == RESOURCE)
 	{
-		if (u_resources != ((Resource*)element)->GetMaxResources())
+		if (u_resources != ((Resource*)element)->GetMaxLife())
 		{
-			u_resources = ((Resource*)element)->GetMaxResources();
+			u_resources = ((Resource*)element)->GetLife();
 			resources->SetString(App->gui->SetStringFromInt(u_resources));
 		}
 	}
@@ -351,7 +351,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 
 			//Set entity target to the selected unit
 			Selected->GetEntity()->GetWorker()->Reset();
-			
+
 			if (UpperEntity != nullptr)
 			{
 				if(UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));

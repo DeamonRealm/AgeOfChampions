@@ -17,6 +17,7 @@ class AttackResourceAction;
 class DieUnitAction;
 class RecollectVillagerAction;
 class SpawnUnitAction;
+class SaveResourcesVillagerAction;
 
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
@@ -99,6 +100,9 @@ public:
 
 	/*AttackResourceAction*	AttackToResourceAction(Unit* actor, Resource* target);
 	bool	RecollectAction(Resource* target);*/
+
+	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building* target);
+
 
 private:
 

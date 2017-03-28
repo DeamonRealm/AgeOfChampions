@@ -104,9 +104,22 @@ RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resou
 
 	return action;
 }
+
 SpawnUnitAction * j1ActionManager::SpawnAction(Building * actor, UNIT_TYPE type)
 {
 	SpawnUnitAction* action = new SpawnUnitAction(actor, type);
+
+	all_actions.push_back(action);
+
+	return action;
+}
+
+SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * actor, Building * target)
+{
+	//Generate a new move action definition
+	SaveResourcesVillagerAction* action = new SaveResourcesVillagerAction(actor, target);
+
+	//Add the new action at the action manager
 
 	all_actions.push_back(action);
 

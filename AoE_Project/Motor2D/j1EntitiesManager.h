@@ -97,6 +97,8 @@ public:
 	void		AddUnit(const Unit* unit);
 	Unit*		PopUnit(const Unit* unit);
 
+	//Get the nearest resource save point from the coordinate
+	Building* SearchNearestSavePoint(const iPoint& point);
 
 
 
