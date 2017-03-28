@@ -347,13 +347,18 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 	case MOUSE_RIGHT_BUTTON:
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 		{
-			if (Selected->GetEntity() == nullptr || UpperEntity == nullptr)break;
+			if (Selected->GetEntity() == nullptr)break;
 
 			//Set entity target to the selected unit
-			/*Selected->GetEntity()->GetWorker()->Reset();
-			Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));*/
+			Selected->GetEntity()->GetWorker()->Reset();
 			
-			Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
+			if (UpperEntity != nullptr)
+			{
+				if(UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
+				else if(UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
+				else if(((Unit*)UpperEntity)->GetUnitType() == VILLAGER) Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource*)UpperEntity));
+			}
+			else Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 
 		}
 
@@ -410,6 +415,7 @@ void Selection_Panel::DrawGroup()
 		life = item._Ptr->_Myval->GetLife();
 		if (life <= 0)
 		{
+			item++;
 			item._Ptr->_Myval->Deselect();
 			selected_elements.remove(item._Ptr->_Myval);
 			continue;
@@ -484,8 +490,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		int size = unit_quad_selection.size();
 		for(int count = 0; count < size; count++)
 		{
-			if (unit_quad_selection[count]->GetDiplomacy() != ALLY);
-			else if (unit_quad_selection[count]->GetEntityType() != UNIT);
+			if (unit_quad_selection[count]->GetDiplomacy() != ALLY || unit_quad_selection[count]->GetLife() == 0) continue;
 			else if (type == DOUBLECLICK && unit_type != unit_quad_selection[count]->GetUnitType());
 			else 
 			{
@@ -580,6 +585,7 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	size = unit_quad_selection.size();
 	for (count = 0; count < size; count++)
 	{
+		if (unit_quad_selection[count]->GetLife() == 0) continue;
 		current_sprite = (Sprite*) unit_quad_selection[count]->GetAnimation()->GetCurrentSprite();
 		rect = *current_sprite->GetFrame();
 		pos = unit_quad_selection[count]->GetPosition();
@@ -600,6 +606,7 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	size = building_quad_selection.size();
 	for (count = 0; count < size; count++)
 	{
+		if (building_quad_selection[count]->GetMaxLife() == 0) continue;
 		rect = *building_quad_selection[count]->GetSelectionRect();
 		pos = building_quad_selection[count]->GetPosition();
 		rect.x = (int)pos.x - rect.w / 2;

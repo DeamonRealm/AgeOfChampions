@@ -14,6 +14,7 @@
 #define CELL_HEIGHT		41
 
 class UI_Image;
+class UI_Button;
 class Entity;
 
 enum ENTITY_TYPE;
@@ -69,6 +70,21 @@ private:
 
 };
 
+class HeroPanel : public Action_Panel_Elements
+{
+public:
+	HeroPanel();
+	~HeroPanel();
+
+	bool ActivateCell(int i);
+
+private:
+	UI_Image*					skill_tree = nullptr;
+	std::vector<UI_Button*>		skills;
+
+	// Champions Skills;
+	std::vector<SDL_Rect>		mele_champion;
+};
 
 class Action_Panel
 {
@@ -101,6 +117,7 @@ public:
 	// Panel Settings
 	void SetPanelType(Entity* selected);
 	void CheckSelected(int size);
+	//void HeroPanel_SkillTree(GUI_INPUT input, uint i);
 
 private:
 	
@@ -122,6 +139,6 @@ private:
 
 	TownCenterPanel*			towncenter = nullptr;
 	UnitPanel*					unitpanel = nullptr;
-
+	HeroPanel*					heropanel = nullptr;
 };
 #endif // !HUD_ACTION_PANEL

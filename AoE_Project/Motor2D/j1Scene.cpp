@@ -12,12 +12,7 @@
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
 #include "j1Pathfinding.h"
-//UI Elements
-#include "UI_Text_Box.h"
-#include "UI_Button.h"
-#include "UI_String.h"
-#include "UI_Scroll.h"
-#include "UI_Popup_Menu.h"
+
 
 
 j1Scene::j1Scene() : j1Module()
@@ -48,34 +43,16 @@ bool j1Scene::Start()
 {
 	//Map build -------------------------------------------
 	Load_Current_Map();
+
+	//Load Logic Map --------------------------------------
+	uint width = 0;
+	uint height = 0;
+	uchar* logic_map = nullptr;
+	j1Timer ptimer;
+	App->map->CreateWalkabilityMap(width, height);
+	App->pathfinding->SetMap(width, height);
 	// ----------------------------------------------------
 
-
-	// Entities Build -------------------------------------
-	arbalest = App->entities_manager->GenerateUnit(UNIT_TYPE::WARRIOR_CHMP); ///Don't use VILLAGER_CARRY animations are differently sorted and WILL break the code
-	arbalest->SetPosition(App->map->MapToWorldCenter(10,10).x,App->map->MapToWorldCenter(10,10).y);
-	/*tree = App->entities_manager->GenerateResource(RESOURCE_TYPE::TREE);
-	tree->SetPosition(130, 650);
-	berry_bush = App->entities_manager->GenerateResource(RESOURCE_TYPE::BERRY_BUSH);
-	berry_bush->SetPosition(440, 380);
-	gold_ore = App->entities_manager->GenerateResource(RESOURCE_TYPE::GOLD_ORE);
-	gold_ore->SetPosition(300, 480);
-	stone_ore = App->entities_manager->GenerateResource(RESOURCE_TYPE::STONE_ORE);
-	stone_ore->SetPosition(200, 480);*/
-	// ----------------------------------------------------
-
-
-	//UI Scene build --------------------------------------
-	App->gui->SetDefaultInputTarget(this);
-
-	scene_1_screen = App->gui->GenerateUI_Element(UNDEFINED);
-	scene_1_screen->SetBox({ 0,0,App->win->screen_surface->w, App->win->screen_surface->h });
-	scene_1_screen->Activate();
-	scene_1_screen->SetInputTarget(this);
-
-	App->gui->PushScreen(scene_1_screen);
-	// ----------------------------------------------------
-	
 	return true;
 }
 
@@ -88,34 +65,6 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	// Gui Upper Element ---------------------------
-	
-
-	App->gui->CalculateUpperElement(scene_1_screen);
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{
-		uint width = 0;
-		uint height = 0;
-		uchar* logic_map = nullptr;
-		j1Timer ptimer;
-		App->map->CreateWalkabilityMap(width, height );
-		App->pathfinding->SetMap(width, height);
-		//App->pathfinding->InitClusterAbstraction();
-		LOG("TIME %f", ptimer.ReadSec());
-	}
-	
-	/*
-	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
-	{
-		j1Timer ptimer;
-		YOLO->CreateBFS(YOLO->graph.GetNode(4), YOLO->graph.GetNode(200));
-		for (int i = 0; i < YOLO->best_path.size(); i++) {
-			LOG("node pass by %i", YOLO->best_path[i]->nodeNum);
-		}
-		LOG("TIME %f", ptimer.ReadSec());
-
-	}
-	*/
 	//MAP MOVEMENT-----------------------------------------
 	bool moved = false;
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -143,99 +92,6 @@ bool j1Scene::Update(float dt)
 	}
 
 	if(moved)App->map->CalculateTilesInView();
-
-	//Test unit animations --------------
-	fPoint pos = arbalest->GetPosition();
-	float speed = 95;
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		arbalest->SetDirection(DIRECTION_TYPE::NORTH);
-		App->animator->UnitPlay(arbalest);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
-	{
-		arbalest->SetDirection(DIRECTION_TYPE::NORTH_EAST);
-		App->animator->UnitPlay(arbalest);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
-	{
-		arbalest->SetDirection(DIRECTION_TYPE::NORTH_WEST);
-		App->animator->UnitPlay(arbalest);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		arbalest->SetDirection(DIRECTION_TYPE::SOUTH);
-		App->animator->UnitPlay(arbalest);
-	}
-
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		arbalest->SetDirection(DIRECTION_TYPE::WEST);
-		App->animator->UnitPlay(arbalest);
-	}
-
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		arbalest->SetDirection(DIRECTION_TYPE::EAST);
-		App->animator->UnitPlay(arbalest);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
-	{
-		arbalest->SetDirection(DIRECTION_TYPE::SOUTH_WEST);
-		App->animator->UnitPlay(arbalest);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT)
-	{
-		arbalest->SetDirection(DIRECTION_TYPE::SOUTH_EAST);
-		App->animator->UnitPlay(arbalest);
-	}
-	
-
-	///Change unit animation
-	else if (App->input->GetKey(SDL_SCANCODE_1) == KEY_REPEAT)
-	{
-		arbalest->SetAction(ACTION_TYPE::IDLE);
-		App->animator->UnitPlay(arbalest);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_REPEAT)
-	{
-		arbalest->SetAction(ACTION_TYPE::WALK);
-		App->animator->UnitPlay(arbalest);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_REPEAT)
-	{
-		arbalest->SetAction(ACTION_TYPE::ATTATCK);
-		App->animator->UnitPlay(arbalest);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_4) == KEY_REPEAT)
-	{
-		arbalest->SetAction(ACTION_TYPE::DIE);
-		App->animator->UnitPlay(arbalest);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_5) == KEY_REPEAT)
-	{
-		arbalest->SetAction(ACTION_TYPE::DISAPPEAR);
-		App->animator->UnitPlay(arbalest);
-	}
-
-
-	///Movement
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT)
-	{
-		arbalest->SetPosition(pos.x, pos.y + -speed * dt);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-	{
-		arbalest->SetPosition(pos.x, pos.y + speed * dt);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
-	{
-		arbalest->SetPosition(pos.x + speed * dt, pos.y );
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
-	{
-		arbalest->SetPosition(pos.x + -speed * dt, pos.y);
-	}
 	
 	// ------------------------------------------
 
@@ -250,8 +106,6 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 	
-	scene_1_screen->Draw(false);
-
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		ret = false;
@@ -266,41 +120,6 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
-}
-
-void j1Scene::GUI_Input(UI_Element* target, GUI_INPUT input)
-{
-	int x, y;
-	App->input->GetMouseMotion(x, y);
-	switch (input)
-	{
-	case UP_ARROW:
-		break;
-	case DOWN_ARROW:
-		break;
-	case LEFT_ARROW:
-		break;
-	case RIGHT_ARROW:
-		break;
-	case MOUSE_LEFT_BUTTON_DOWN:
-		break;
-	case MOUSE_LEFT_BUTTON_REPEAT:
-		break;
-	case MOUSE_LEFT_BUTTON_UP:
-		break;
-	case MOUSE_RIGHT_BUTTON:
-		break;
-	case BACKSPACE:
-		break;
-	case SUPR:
-		break;
-	case MOUSE_IN:
-		break;
-	case MOUSE_OUT:
-		break;
-	case ENTER:
-		break;
-	}
 }
 
 void j1Scene::Change_Map()

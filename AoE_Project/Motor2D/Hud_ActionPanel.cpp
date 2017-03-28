@@ -15,6 +15,7 @@
 #include "Hud_SelectionPanel.h"
 
 #include "UI_Image.h"
+#include "UI_Button.h"
 
 Action_Panel_Elements::Action_Panel_Elements() 
 {
@@ -49,8 +50,10 @@ bool TownCenterPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		//entitis_panel->AddAction(new SpawnUnitAction((Building*)entitis_panel, VILLAGER));
+		entitis_panel->AddAction(App->action_manager->SpawnAction((Building*)entitis_panel, VILLAGER));
 		}
+		break;
+	case 1: //entitis_panel->AddAction(App->action_manager->)
 		break;
 	case 2:
 		break;
@@ -61,6 +64,14 @@ bool TownCenterPanel::ActivateCell(int i)
 	case 5:
 		break;
 	case 6:
+		break;
+	case 7:
+		break;
+	case 8: 
+		break;
+	case 9:
+		break;
+	case 10:	
 		break;
 	default:
 		break;
@@ -93,6 +104,68 @@ bool UnitPanel::ActivateCell(int i)
 	}
 	return true;
 }
+
+HeroPanel::HeroPanel() : Action_Panel_Elements() 
+{
+	panel_icons[0] = { 504,441,36,36 };
+	panel_icons[14] = { 0,76,36,36 };
+
+	skill_tree = new UI_Image();
+	skill_tree->SetBoxPosition(10, 200);
+	skill_tree->SetBox({ 10, 200, 150, 200 });
+	skill_tree->ChangeTextureId(STANDARD);
+	skill_tree->ChangeTextureRect({ 1200, 20, 150, 200 });
+
+	skills.reserve(6);
+
+	mele_champion.reserve(6);
+	mele_champion.push_back({ 360,441,36,36 });
+	mele_champion.push_back({ 396,441,36,36 });
+	mele_champion.push_back({ 360,441,36,36 });
+	mele_champion.push_back({ 396,441,36,36 });
+	mele_champion.push_back({ 360,441,36,36 });
+	mele_champion.push_back({ 396,441,36,36 });
+}
+
+HeroPanel::~HeroPanel()
+{
+}
+
+bool HeroPanel::ActivateCell(int i)
+{
+	if (entitis_panel == nullptr) return false;
+	switch (i)
+	{
+	case 0: {
+		//open skill tree;
+		}
+		break;
+	case 1: 
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	case 7:
+		break;
+	case 8:
+		break;
+	case 9:
+		break;
+	case 10:
+		break;
+	default:
+		break;
+	}
+	return true;
+}
+
 
 Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 {
@@ -253,4 +326,16 @@ void Action_Panel::CheckSelected(int selected)
 		return;
 	}
 }
+/*
+void Action_Panel::HeroPanel_SkillTree(GUI_INPUT input, uint i)
+{
+	if (input == MOUSE_LEFT_BUTTON_DOWN)
+	{
 
+	}
+	if (input == MOUSE_IN)
+	{
+
+	}
+}
+*/

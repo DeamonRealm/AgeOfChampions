@@ -16,6 +16,11 @@ class AttackBuildingAction;
 class AttackResourceAction;
 class DieUnitAction;
 class RecollectVillagerAction;
+class SpawnUnitAction;
+
+enum UNIT_TYPE;
+enum BUILDING_TYPE;
+enum RESOURCE_TYPE;
 
 /// Class Action --------------------------------
 //Action virtual class (are commands but not for the console)
@@ -88,6 +93,9 @@ public:
 	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target);
 	DieUnitAction*				DieAction(Unit* actor);
 	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource* target);
+
+	// Building Functions
+	SpawnUnitAction*			SpawnAction(Building* actor, UNIT_TYPE type);
 
 	/*AttackResourceAction*	AttackToResourceAction(Unit* actor, Resource* target);
 	bool	RecollectAction(Resource* target);*/

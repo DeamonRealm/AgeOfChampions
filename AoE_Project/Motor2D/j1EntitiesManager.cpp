@@ -175,7 +175,7 @@ void j1EntitiesManager::Console_Command_Input(Command * command, Cvar * cvar, st
 {
 	if (*command->GetCommandStr() == "generate_unit")
 	{
-		UNIT_TYPE type = App->animator->StrToUnitEnum(unit_cvar->GetValueString()->c_str());
+		/*UNIT_TYPE type = App->animator->StrToUnitEnum(unit_cvar->GetValueString()->c_str());
 		if (type != NO_UNIT)
 		{
 			Unit* unit = GenerateUnit(type);
@@ -184,7 +184,7 @@ void j1EntitiesManager::Console_Command_Input(Command * command, Cvar * cvar, st
 			unit->SetPosition((float)x, (float)y);
 			App->scene->arbalest = unit;
 		}
-		else LOG("Unit type undefined!");
+		else LOG("Unit type undefined!");*/
 	}
 }
 
