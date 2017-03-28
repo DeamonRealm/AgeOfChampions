@@ -294,8 +294,29 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 		}
 
 		//Set the unit next tile goal
+		iPoint next_update = *(path->rbegin() + 1);
+		if (!App->pathfinding->IsWalkable(App->map->WorldToMap(next_update.x, next_update.y)))
+		{
+			std::vector<iPoint>* new_path;
+			path->pop_back();
+
+			iPoint next_goal;
+			for (int i = path->size() - 1; i >= 0; i--) {
+				if (App->pathfinding->IsWalkable(App->map->WorldToMap(path->at(i).x, path->at(i).y))) {
+					next_goal = path->at(i);
+					break;
+				}
+				else
+					path->pop_back();
+
+			}
+			new_path=App->pathfinding->SimpleAstar(location, next_goal);
+			
+			path->insert(path->end(), new_path->begin(), new_path->end());
+		}
 		path->pop_back();
 		goal = path->back();
+		
 		//Focus the unit at the next goal
 		Focus(goal);
 	}
