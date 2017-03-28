@@ -361,6 +361,15 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			else Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 
 		}
+		else if (selected_elements.size() > 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT) {
+			for (std::list<Entity*>::iterator item = selected_elements.begin(); item != selected_elements.end(); item++)
+			{
+				Entity* single_unit = item._Ptr->_Myval;
+				
+				single_unit->AddAction(App->action_manager->MoveAction((Unit*)single_unit, mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
+			}
+			
+		}
 
 
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == BUILDING)

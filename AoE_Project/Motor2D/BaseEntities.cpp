@@ -310,6 +310,10 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 					path->pop_back();
 
 			}
+			if (path->empty())
+			{
+				return true;
+			}
 			new_path=App->pathfinding->SimpleAstar(location, next_goal);
 			
 			path->insert(path->end(), new_path->begin(), new_path->end());
