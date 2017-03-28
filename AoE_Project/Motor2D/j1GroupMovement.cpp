@@ -48,7 +48,7 @@ std::vector<iPoint>* GroupMovement::CreateFirstDestination()
 {
 	middle_point = GetMiddlePoint();
 	std::vector<iPoint>* path = nullptr;
-	//App->pathfinding->SimpleAstar(lead.pos,middle_point);
+	path = App->pathfinding->SimpleAstar(lead->GetPositionRounded(),middle_point);
 
 	//first leader do the path to the middle point
 	//then other units do the path

@@ -3,13 +3,26 @@
 
 #include "j1Module.h"
 #include "p2Point.h"
+#include "j1EntitiesManager.h"
+
 #define FORMATION_WIDTH_LIMIT 5
 #define FORMATION_HEIGHT_LIMIT 5
 enum FormationType {
 	NO_FORMATION,
-	SQUARE_FORMATION
+	SQUARE_CLOSE_FORMATION,
+	SQUARE_SEPARATE_FORMATION
 };
-
+enum LeadOrientation {
+	NO_LEAD_ORIENTATION,
+	LEAD_NORTH,
+	LEAD_NORTH_EAST,
+	LEAD_EAST,
+	LEAD_SOUTH_EAST,
+	LEAD_SOUTH,
+	LEAD_SOUTH_WEST,
+	LEAD_WEST,
+	LEAD_NORTH_WEST
+};
 struct Formation
 {
 	int formationSize = 0;
@@ -40,6 +53,8 @@ public:
 private:
 	// list of units selected
 	// Pointer first unit "leader"
+	std::list<Entity*>* units =nullptr;
+	Entity* lead = nullptr;
 	iPoint middle_point;
 	Formation* formation = nullptr;
 	int group_size = 0;
