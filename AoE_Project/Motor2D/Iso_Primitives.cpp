@@ -144,9 +144,9 @@ iPoint Circle::NearestPoint(const Rectng* target) const
 {
 	iPoint target_pos = target->GetPosition();
 	iPoint vec(target_pos.x - position.x, target_pos.y - position.y);
-	/*float angle = sqrt(vec.x*vec.x + vec.y*vec.y);
+	float angle = acos((vec.x * 1)/sqrt(vec.x*vec.x + vec.y*vec.y));
 	vec.x -= target->GetWidth() * cos(angle);
-	vec.y -= target->GetHeight() * sin(angle);*/
+	vec.y -= target->GetHeight() * sin(angle);
 	return iPoint(position.x + vec.x,position.y + vec.y);
 }
 

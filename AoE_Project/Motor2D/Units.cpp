@@ -98,7 +98,8 @@ bool Villager::SaveResources()
 		return false;
 	}
 
-	return true;
+	//((Building*)interaction_target)->
+	return false;
 }
 
 void Villager::CheckRecollectAnimation(RESOURCE_TYPE type)

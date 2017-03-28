@@ -466,7 +466,7 @@
       
       max_life="150"
       view_area="15"
-      speed="1.5"
+      speed="0.5"
       attack_delay ="50"
       attack_hitpoints="5"
       attack_bonus="2"
@@ -603,7 +603,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="10"
-      max_resources="500"
+      max_resources="5000"
       />
   </unit>
   <!--Stone Ore-->
@@ -625,7 +625,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="10"
-      max_resources="350"
+      max_resources="3500"
       />
   </unit>
   

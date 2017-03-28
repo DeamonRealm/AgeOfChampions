@@ -356,7 +356,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			{
 				if(UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
 				else if(UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
-				else if(((Unit*)UpperEntity)->GetUnitType() == VILLAGER) Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource*)UpperEntity));
+				else if(UpperEntity->GetEntityType() == RESOURCE) Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource*)UpperEntity));
 			}
 			else Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 
