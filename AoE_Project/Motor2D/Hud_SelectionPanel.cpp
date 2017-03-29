@@ -25,6 +25,8 @@
 #include "Actions_Unit.h"
 #include "Actions_Building.h"
 
+/*This is temp*/ #include "j1BuffManager.h"
+
 //Entity Profile Constructor =====================================================
 Entity_Profile::Entity_Profile() : element(nullptr), e_type(NO_ENTITY), isenemy(false), life_update(0), u_attack(0), u_deffence(0), u_range(0),
 u_capacity(0), u_resources(0), m_capacity(0), m_life(0)
@@ -351,7 +353,11 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 
 			//Set entity target to the selected unit
 			Selected->GetEntity()->GetWorker()->Reset();
-
+			if (Selected->GetEntity()->GetEntityType() == UNIT)
+			{
+				App->buff_manager->CallBuff((Unit*)Selected->GetEntity(), PASSIVE_BUFF, ATTACK_BUFF);
+				
+			}
 			if (UpperEntity != nullptr)
 			{
 				if(UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));

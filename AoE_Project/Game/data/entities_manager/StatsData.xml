@@ -641,8 +641,8 @@
       
       selection_x ="0"
       selection_y ="0"
-      selection_w="190"
-      selection_h="140"
+      selection_w="0"
+      selection_h="0"
       icon_x="108"
       icon_y="36"
       icon_w="36"

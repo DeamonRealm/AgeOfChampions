@@ -10,48 +10,83 @@ class Unit;
 enum BUFF_TYPE
 {
 	NO_BUFF = 0,
+	PASSIVE_BUFF,
+	TIMED_BUFF
+};
+
+enum BUFF_ATTRIBUTE_TYPE
+{
+	NO_ATTRIBUTE = 0,
 	ATTACK_BUFF,
 	DEFENSE_BUFF
 };
 
-class Buff
+/// Class Passive Buff ----------------
+class PassiveBuff
 {
 public:
 
-	Buff();
+	PassiveBuff();
+	PassiveBuff(const PassiveBuff& copy);
+	~PassiveBuff();
 
-	Buff(const Buff& copy);
+protected:
 
-	~Buff();
-
-private:
-	
-	BUFF_TYPE	type = NO_BUFF;
-	float		value = 0;
-	j1Timer		timer;
-	uint		buff_duration = 0;
-	Unit*		target = nullptr;
+	BUFF_TYPE			buff_type = NO_BUFF;
+	BUFF_ATTRIBUTE_TYPE	attribute_type = NO_ATTRIBUTE;
+	float				value = 0;
+	Unit*				target = nullptr;
 
 public:
 
 	//setter
-	void SetType(BUFF_TYPE type);
+	void SetBuffType(BUFF_TYPE type);
+	void SetAttributeType(BUFF_ATTRIBUTE_TYPE type);
 	void SetValue(float value);
-	void SetBuffDuration(uint buff_duration);
 	void SetTarget(Unit* target);
 
 	//getters
-	BUFF_TYPE	GetBuffType()const;
-	float		GetValue()const;
-	uint		GetBuffDuration()const;
-	Unit*		GetTarget()const;
+	BUFF_TYPE			GetBuffType()const;
+	BUFF_ATTRIBUTE_TYPE	GetAttributeType()const;
+	float				GetValue()const;
+	Unit*				GetTarget()const;
 
 	//Utils
+	virtual bool ApplyBuff();
+	virtual bool RemoveBuff(); //remove buff from target when time it's over.
 
-	bool ApplyBuff();
-	bool RemoveBuff(); //remove buff from target when time it's over.
-	bool IsActive()const;
 };
+/// -----------------------------------
+
+/// Class Buff ------------------------
+class Buff : public PassiveBuff
+{
+public:
+
+	Buff();
+	Buff(const Buff& copy);
+	~Buff();
+
+private:
+	
+	j1Timer		timer;
+	uint		buff_duration = 0;
+
+public:
+
+	//setter ----------------
+	void SetBuffDuration(uint buff_duration);
+
+	//getters ---------------
+	uint GetBuffDuration()const;
+
+	//Functionality ---------
+	bool ApplyBuff();
+	bool IsActive()const;
+
+};
+/// -----------------------------------
+
 
 class j1BuffManager: public j1Module
 {
@@ -70,21 +105,20 @@ public:
 	// Called before quitting
 	virtual bool CleanUp();
 
-	bool CallBuff(Unit* target, BUFF_TYPE type);
 
 
 private:
 
-	std::vector<Buff*> buff_definitions;
-	std::list<Buff*> active_buffs;
+	//Methods to transform loaded string to buffs enums
+	BUFF_TYPE			StrToBuffType(const char* str)const;
+	BUFF_ATTRIBUTE_TYPE StrToBuffAttributeType(const char* str)const;
+
+	std::vector<PassiveBuff*>	buff_definitions;
+	std::list<Buff*>			active_buffs;
+
+public:
+
+	bool CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type);
 
 };
-
-
-
-
-
-
-
-
 #endif //_J1_BUFF_MANAGER_H_

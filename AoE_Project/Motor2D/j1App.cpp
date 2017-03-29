@@ -23,6 +23,7 @@
 #include "j1Pathfinding.h"
 #include "j1SoundManager.h"
 #include "j1ActionManager.h"
+#include "j1BuffManager.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -45,6 +46,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	animator = new j1Animator();
 	sound = new j1SoundManager();
 	entities_manager = new j1EntitiesManager();
+	buff_manager = new j1BuffManager();
 	player = new j1Player();
 	pathfinding = new j1Pathfinding();
 	action_manager = new j1ActionManager();
@@ -64,6 +66,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(animator);
 	AddModule(action_manager);
 	AddModule(entities_manager);
+	AddModule(buff_manager);
 	AddModule(player);
 	
 

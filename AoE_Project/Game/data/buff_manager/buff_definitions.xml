@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<data>
+  <buff
+    buff_type ="passive"
+    attribute_type="attack"
+    value="0.2"
+  />
+  <buff
+    buff_type ="passive"
+    attribute_type="defense"
+    value="0.2"
+  />
+ </data>
