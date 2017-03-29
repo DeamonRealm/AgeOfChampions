@@ -197,7 +197,7 @@ Unit::Unit() :Entity()
 
 }
 
-Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), view_area(copy.view_area),
+Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), vision(copy.vision), mark(copy.mark),soft_collider(copy.soft_collider),hard_collider(copy.hard_collider), view_area(copy.view_area),
 speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
 attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time)
@@ -220,6 +220,14 @@ bool Unit::Draw(bool debug)
 	//Draw Entity Mark
 	if (selected)ret = mark.Draw();
 	attack_area.Draw();
+	/*
+	if (debug) {
+		if (selected)
+			soft_collider.Draw();
+			hard_collider.Draw();
+			vision.Draw();
+	}
+	*/
 	/*if (debug) {
 	//Draw Entity Selection Rect
 	App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
@@ -294,8 +302,9 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 
 			return true;
 		}
+		//if we have a colision with other unit and we have lower priority reduction of spped
 
-		//Set the unit next tile goal
+		//Look in the next update if there is an error
 		iPoint next_update = *(path->rbegin() + 1);
 		if (!App->pathfinding->IsWalkable(App->map->WorldToMap(next_update.x, next_update.y)))
 		{
@@ -320,6 +329,7 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 			
 			path->insert(path->end(), new_path->begin(), new_path->end());
 		}
+		//Set the unit next tile goal
 
 		path->pop_back();
 		goal = path->back();
@@ -383,7 +393,42 @@ void Unit::Focus(const iPoint & target)
 	//Set the unit animation with the new direction
 	App->animator->UnitPlay(this);
 }
+DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
+{
+	//Calculate the directional vector
+	iPoint dir_point = from - to;
 
+	//Find the correct direction in relation of the goal and the location
+	if (abs(dir_point.x) < 4)
+	{
+		if (dir_point.y > 0)return SOUTH;
+		else return NORTH;
+	}
+	else if (abs(dir_point.y) < 4)
+	{
+		if (dir_point.x > 0)return EAST;
+		else return WEST;
+	}
+	else if (dir_point.x >= 0 && dir_point.y >= 0)
+	{
+		return SOUTH_EAST;
+	}
+	else if (dir_point.x <= 0 && dir_point.y >= 0)
+	{
+		return SOUTH_WEST;
+	}
+	else if (dir_point.x >= 0 && dir_point.y <= 0)
+	{
+		return NORTH_EAST;
+	}
+	else if (dir_point.x <= 0 && dir_point.y <= 0)
+	{
+		return NORTH_WEST;
+	}
+	else {
+		return NO_DIRECTION;
+	}
+}
 bool Unit::AttackUnit()
 {
 
@@ -480,9 +525,14 @@ void Unit::SetPosition(float x, float y)
 	//Set unit position
 	position.x = x;
 	position.y = y;
-
+	//Set unit vision position
+	vision.SetPosition(iPoint(position.x, position.y));
 	//Set unit mark position
 	mark.SetPosition(iPoint(position.x, position.y));
+	//Set soft_collider mark position
+	soft_collider.SetPosition(iPoint(position.x, position.y));
+	//Set hard_collider mark position
+	hard_collider.SetPosition(iPoint(position.x, position.y));
 	//Set unit attack area position
 	attack_area.SetPosition(iPoint(position.x, position.y));
 
@@ -500,9 +550,24 @@ void Unit::SetInteractionTarget(const Entity * target)
 	interaction_target = (Entity*)target;
 }
 
+void Unit::SetVision(const Circle & new_vision)
+{
+	vision = new_vision;
+}
+
 void Unit::SetMark(const Circle & new_mark)
 {
 	mark = new_mark;
+}
+
+void Unit::SetSoftCollider(const Circle & new_soft_collider)
+{
+	soft_collider = new_soft_collider;
+}
+
+void Unit::SetHardCollider(const Circle & new_hard_collider)
+{
+	hard_collider = new_hard_collider;
 }
 
 void Unit::SetViewArea(uint area_val)

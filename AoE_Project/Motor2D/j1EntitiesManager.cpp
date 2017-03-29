@@ -238,10 +238,22 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Unit Type*/		new_def->SetUnitType(unit_type);
 	/*Attack Type*/		new_def->SetAttackType(App->animator->StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
 	//Unit Primitives -------
+	/*Mark*/			Circle vision;
+	/*Mark Radius*/		vision.SetRad(unit_node->attribute("vision_rad").as_uint());
+	/*Mark Color*/		vision.SetColor({ 0,255,255,255 });
+						new_def->SetVision(vision);
 	/*Mark*/			Circle mark;
 	/*Mark Radius*/		mark.SetRad(unit_node->attribute("mark_rad").as_uint());
 	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
 						new_def->SetMark(mark);
+	/*Soft.C*/			Circle soft_collider;
+	/*Soft.C Radius*/	soft_collider.SetRad(unit_node->attribute("soft_rad").as_uint());
+	/*Soft.C Color*/	soft_collider.SetColor({ 255,0,255,255 });
+						new_def->SetSoftCollider(soft_collider);
+	/*Hard.C*/			Circle hard_collider;
+	/*Hard.C Radius*/	hard_collider.SetRad(unit_node->attribute("hard_rad").as_uint());
+	/*Hard.C Color*/	hard_collider.SetColor({ 255,0,0,255 });
+						new_def->SetHardCollider(hard_collider);
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = unit_node->attribute("selection_x").as_int();
 	/*S.Rect Y*/		selection_rect.y = unit_node->attribute("selection_y").as_int();
