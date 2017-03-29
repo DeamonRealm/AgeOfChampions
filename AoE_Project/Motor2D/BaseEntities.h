@@ -423,13 +423,6 @@ protected:
 	DIRECTION_TYPE	direction_type = NO_DIRECTION;
 	uint			max_life = 0;
 	uint			life = 0;
-	uint			units_capacity = 0;
-	uint			current_units = 0;
-	iPoint			units_spawn_point = { 0,0 };
-
-	//List of the units placed inside the building
-	std::list<Unit*>			units_in;
-	std::priority_queue<Unit*, std::vector<Unit*>>	production_queue;
 
 public:
 
@@ -453,9 +446,6 @@ public:
 	void	SetDirectionType(DIRECTION_TYPE type);
 	void	SetMaxLife(uint max_life_val);
 	void	SetLife(uint life_val);
-	void	SetUnitsCapacity(uint capacity);
-	void	SetCurrentUnits(uint units);
-	void	SetUnitsSpawnPoint(const iPoint& point);
 
 	//Get Methods -----------
 	const Rectng&	GetMark()const;
@@ -465,9 +455,7 @@ public:
 	DIRECTION_TYPE	GetDirectionType()const;
 	uint			GetMaxLife()const;
 	uint			GetLife()const;
-	uint			GetUnitsCapacity()const;
-	uint			GetCurrentUnits()const;
-	iPoint			GetSpawnPoint()const;
+
 };
 /// ---------------------------------------------
 #endif // _ENTITY_

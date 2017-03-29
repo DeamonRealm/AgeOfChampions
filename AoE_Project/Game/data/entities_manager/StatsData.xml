@@ -660,6 +660,7 @@
       units_capacity ="15"
       units_spawn_x ="30"
       units_spawn_y="47"
+      production_capacity ="25"
       
       />
   </unit>

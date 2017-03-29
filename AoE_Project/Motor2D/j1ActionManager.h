@@ -8,6 +8,7 @@ class Entity;
 class Unit;
 class Resource;
 class Building;
+class ProductiveBuilding;
 class Villager;
 
 class MoveUnitAction;
@@ -96,7 +97,7 @@ public:
 	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource* target);
 
 	// Building Functions
-	SpawnUnitAction*			SpawnAction(Building* actor, UNIT_TYPE type);
+	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type);
 
 	/*AttackResourceAction*	AttackToResourceAction(Unit* actor, Resource* target);
 	bool	RecollectAction(Resource* target);*/

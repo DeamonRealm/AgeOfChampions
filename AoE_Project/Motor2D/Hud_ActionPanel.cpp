@@ -50,7 +50,7 @@ bool TownCenterPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		entitis_panel->AddAction(App->action_manager->SpawnAction((Building*)entitis_panel, VILLAGER));
+		entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER));
 		}
 		break;
 	case 1: //entitis_panel->AddAction(App->action_manager->)

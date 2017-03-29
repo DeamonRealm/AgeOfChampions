@@ -6,6 +6,7 @@
 
 #include "BaseEntities.h"
 #include "Units.h"
+#include "Buildings.h"
 #include "Champions.h"
 
 class Action;

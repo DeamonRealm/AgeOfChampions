@@ -9,7 +9,8 @@
 class SpawnUnitAction : public Action
 {
 public:
-	SpawnUnitAction(Building* actor, UNIT_TYPE type) : Action(actor), type(type)
+	
+	SpawnUnitAction(HabitableBuilding* actor, UNIT_TYPE type) : Action(actor), type(type)
 	{
 			new_unit = App->entities_manager->GenerateUnit(type, false);
 			//timer = new_unit->GetTrainTime();
@@ -22,8 +23,8 @@ public:
 	{
 		if (timer.Read() >= time)
 		{
-			int x = ((Building*)actor)->GetSpawnPoint().x + actor->GetPosition().x;
-			int y = ((Building*)actor)->GetSpawnPoint().y + actor->GetPosition().y;
+			int x = ((HabitableBuilding*)actor)->GetSpawnPoint().x + actor->GetPosition().x;
+			int y = ((HabitableBuilding*)actor)->GetSpawnPoint().y + actor->GetPosition().y;
 
 			App->entities_manager->AddUnit(new_unit);
 		

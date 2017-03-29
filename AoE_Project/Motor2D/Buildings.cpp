@@ -20,7 +20,13 @@ HabitableBuilding::HabitableBuilding(const HabitableBuilding & copy) : Building(
 //Destructors =========================
 HabitableBuilding::~HabitableBuilding()
 {
-
+	std::list<Unit*>::iterator item = units_in.begin();
+	while (item != units_in.end())
+	{
+		RELEASE(item._Ptr->_Myval);
+		item++;
+	}
+	units_in.clear();
 }
 
 //Functionality =======================
@@ -104,4 +110,17 @@ ProductiveBuilding::ProductiveBuilding(const ProductiveBuilding & copy) :Habitab
 ProductiveBuilding::~ProductiveBuilding()
 {
 
+}
+
+// Functionality ======================
+//Set Methods -----------
+void ProductiveBuilding::SetProductionCapacity(uint capacity)
+{
+	production_capacity = capacity;
+}
+
+//Get Methods -----------
+uint ProductiveBuilding::GetProductionCapacity() const
+{
+	return production_capacity;
 }

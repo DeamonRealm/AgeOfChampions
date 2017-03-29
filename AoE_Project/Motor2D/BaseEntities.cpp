@@ -433,7 +433,7 @@ bool Unit::AttackBuilding()
 
 bool Unit::Cover()
 {
-	return ((Building*)interaction_target)->CoverUnit(this);
+	return ((HabitableBuilding*)interaction_target)->CoverUnit(this);
 }
 
 bool Unit::Die()
@@ -884,8 +884,7 @@ Building::Building() :Entity()
 }
 
 Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), building_type(copy.building_type), max_life(copy.max_life),
-life(copy.life), units_capacity(units_capacity), current_units(copy.current_units), width_in_tiles(copy.width_in_tiles), height_in_tiles(copy.height_in_tiles),
-units_spawn_point(copy.units_spawn_point), interact_area(copy.interact_area)
+life(copy.life), width_in_tiles(copy.width_in_tiles), height_in_tiles(copy.height_in_tiles), interact_area(copy.interact_area)
 {
 
 }
@@ -893,44 +892,10 @@ units_spawn_point(copy.units_spawn_point), interact_area(copy.interact_area)
 //Destructors =========================
 Building::~Building()
 {
-	std::list<Unit*>::iterator item = units_in.begin();
-	while (item != units_in.end())
-	{
-		RELEASE(item._Ptr->_Myval);
-		item++;
-	}
-	units_in.clear();
+
 }
 
 //Functionality =======================
-bool Building::CoverUnit(const Unit * target)
-{
-	if (units_capacity == current_units)
-	{
-		LOG("Building is full!");
-		return false;
-	}
-
-	units_in.push_back(App->entities_manager->PopUnit(target));
-
-	return true;
-}
-
-void Building::ReleaseUnit(const Unit * target)
-{
-	units_in.remove((Unit*)target);
-	App->entities_manager->AddUnit(target);
-}
-
-void Building::ReleaseAllUnits()
-{
-	uint size = units_in.size();
-	for (uint k = 0; k < size; k++)
-	{
-		App->entities_manager->AddUnit(units_in.back());
-		units_in.pop_back();
-	}
-}
 
 //Draw ----------------------
 bool Building::Draw(bool debug)
@@ -1052,21 +1017,6 @@ void Building::SetLife(uint life_val)
 	life = life_val;
 }
 
-void Building::SetUnitsCapacity(uint capacity)
-{
-	units_capacity = capacity;
-}
-
-void Building::SetCurrentUnits(uint units)
-{
-	current_units = units;
-}
-
-void Building::SetUnitsSpawnPoint(const iPoint & point)
-{
-	units_spawn_point = point;
-}
-
 const Rectng & Building::GetMark() const
 {
 	return mark;
@@ -1101,19 +1051,5 @@ uint Building::GetMaxLife() const
 uint Building::GetLife() const
 {
 	return life;
-}
-
-uint Building::GetUnitsCapacity() const
-{
-	return units_capacity;
-}
-
-uint Building::GetCurrentUnits() const
-{
-	return current_units;
-}
-iPoint Building::GetSpawnPoint() const
-{
-	return units_spawn_point;
 }
 ///----------------------------------------------

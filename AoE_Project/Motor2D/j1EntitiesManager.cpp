@@ -381,7 +381,7 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	//Allocate the correct class
 	if(building_type == TOWN_CENTER)
 	{
-		new_def = new Building();
+		new_def = new ProductiveBuilding();
 	}
 
 	//Building ID -----------
@@ -424,9 +424,10 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 
 	if (building_type == TOWN_CENTER)
 	{
-		/*Units Capacity*/	new_def->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
+		/*Units Capacity*/	((ProductiveBuilding*)new_def)->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
 		/*Units Spawn pnt*/	iPoint spawn(building_node->attribute("units_spawn_x").as_int(), building_node->attribute("units_spawn_y").as_int());
-							new_def->SetUnitsSpawnPoint(spawn);
+							((ProductiveBuilding*)new_def)->SetUnitsSpawnPoint(spawn);
+		/*Production Cap*/	((ProductiveBuilding*)new_def)->SetProductionCapacity(building_node->attribute("production_capacity").as_uint());
 
 	}
 	buildings_defs.push_back(new_def);

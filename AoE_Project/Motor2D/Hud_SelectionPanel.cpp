@@ -102,8 +102,8 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	}
 	else if (e_type == BUILDING)
 	{
-		u_capacity = ((Building*)element)->GetCurrentUnits();
-		m_capacity = ((Building*)element)->GetUnitsCapacity();
+		u_capacity = ((HabitableBuilding*)element)->GetCurrentUnits();
+		m_capacity = ((HabitableBuilding*)element)->GetUnitsCapacity();
 		profile_text.clear();
 		profile_text = App->gui->SetStringFromInt(u_capacity);
 		profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_capacity);
@@ -210,9 +210,9 @@ void Entity_Profile::UpdateStats()
 	}
 	if (e_type == BUILDING)
 	{
-		if (u_capacity != ((Building*)element)->GetCurrentUnits())
+		if (u_capacity != ((HabitableBuilding*)element)->GetCurrentUnits())
 		{
-			u_capacity = ((Building*)element)->GetCurrentUnits();
+			u_capacity = ((HabitableBuilding*)element)->GetCurrentUnits();
 			profile_text.clear();
 			profile_text = App->gui->SetStringFromInt(u_capacity);
 			profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_capacity);
@@ -376,7 +376,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		{
 			//Set entity target to the selected unit
 			//Selected->GetEntity()->GetWorker()->Reset();
-			Selected->GetEntity()->AddAction(new SpawnUnitAction((Building*)Selected->GetEntity(), ARBALEST));
+			Selected->GetEntity()->AddAction(new SpawnUnitAction((HabitableBuilding*)Selected->GetEntity(), ARBALEST));
 		}
 
 		break;

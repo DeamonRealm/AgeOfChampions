@@ -105,7 +105,7 @@ RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resou
 	return action;
 }
 
-SpawnUnitAction * j1ActionManager::SpawnAction(Building * actor, UNIT_TYPE type)
+SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type)
 {
 	SpawnUnitAction* action = new SpawnUnitAction(actor, type);
 
