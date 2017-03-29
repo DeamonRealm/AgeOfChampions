@@ -248,7 +248,10 @@ protected:
 
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
+	Circle			vision;
 	Circle			mark;
+	Circle			soft_collider;
+	Circle			hard_collider;
 	SDL_Texture*	pos_texture = nullptr;
 	Entity*			interaction_target = nullptr;
 	//Movement ---------
@@ -297,6 +300,7 @@ public:
 	//Actions ---------------
 	bool			Move(std::vector<iPoint>* path);
 	void			Focus(const iPoint& target);
+	DIRECTION_TYPE	LookDirection(const iPoint & from, const iPoint & to);
 	bool			AttackUnit();
 	bool			AttackBuilding();
 	bool			AttackResource();
@@ -310,7 +314,10 @@ public:
 	void	SetPosition(float x, float y);
 	void	SetUnitType(UNIT_TYPE type);
 	void	SetInteractionTarget(const Entity* target);
+	void	SetVision(const Circle& new_mark);
 	void	SetMark(const Circle& new_mark);
+	void	SetSoftCollider(const Circle& new_soft_collider);
+	void	SetHardCollider(const Circle& new_hard_collider);
 	void	SetViewArea(uint area_val);
 	void	SetSpeed(float speed_val);
 	void	SetAction(ACTION_TYPE action_val);

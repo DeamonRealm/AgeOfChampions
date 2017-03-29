@@ -11,7 +11,13 @@ GroupMovement::~GroupMovement()
 
 iPoint GroupMovement::GetMiddlePoint()
 {
-	iPoint ret;
+	iPoint ret = { 0,0 };
+	for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
+	{
+		Entity* single_unit = item._Ptr->_Myval;
+		ret += single_unit->GetPositionRounded();
+	}
+	ret /= units->size();
 	//Get all positions and add them on one ipoint and then divide them with the size of the units 
 	// if that position is walkable return that position if is not look destination and get values 
 	while (!App->pathfinding->IsWalkable(ret)) {
