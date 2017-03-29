@@ -86,6 +86,7 @@
     <ClCompile Include="Iso_Primitives.cpp" />
     <ClCompile Include="j1Animator.cpp" />
     <ClCompile Include="ClusterAbstraction.cpp" />
+    <ClCompile Include="j1BuffManager.cpp" />
     <ClCompile Include="j1Console.cpp" />
     <ClCompile Include="j1EntitiesManager.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="C_var.h" />
     <ClInclude Include="BaseEntities.h" />
     <ClInclude Include="j1Animator.h" />
+    <ClInclude Include="j1BuffManager.h" />
     <ClInclude Include="j1Console.h" />
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1Fonts.h" />
