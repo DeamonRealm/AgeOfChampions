@@ -540,6 +540,11 @@ void Unit::SetPosition(float x, float y)
 	App->entities_manager->units_quadtree.Insert(this, &position);
 }
 
+void Unit::SetAttackBuff(float atk_buff)
+{
+	attack_buff = atk_buff;
+}
+
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
@@ -635,6 +640,11 @@ void Unit::SetDefenseBonus(uint def_bonus)
 	defense_bonus = def_bonus;
 }
 
+void Unit::SetDefenseBuff(float def_buff)
+{
+	defense_buff = def_buff;
+}
+
 void Unit::SetArmor(uint arm)
 {
 	armor = arm;
@@ -643,6 +653,11 @@ void Unit::SetArmor(uint arm)
 void Unit::SetArmorBonus(uint arm_bonus)
 {
 	armor_bonus = arm_bonus;
+}
+
+void Unit::SetArmorBuff(float arm_buff)
+{
+	armor_buff = arm_buff;
 }
 
 void Unit::SetFoodCost(uint food_cst)
@@ -729,6 +744,11 @@ uint Unit::GetAttackBonus()const
 	return attack_bonus;
 }
 
+float Unit::GetAttackBuff() const
+{
+	return attack_buff;
+}
+
 uint Unit::GetSiegeHitPoints()const
 {
 	return siege_hitpoints;
@@ -764,6 +784,11 @@ uint Unit::GetDefenseBonus() const
 	return defense_bonus;
 }
 
+float Unit::GetDefenseBuff() const
+{
+	return defense_buff;
+}
+
 uint Unit::GetArmor() const
 {
 	return armor;
@@ -772,6 +797,11 @@ uint Unit::GetArmor() const
 uint Unit::GetArmorBonus() const
 {
 	return armor_bonus;
+}
+
+float Unit::GetArmorBuff() const
+{
+	return armor_buff;
 }
 
 uint Unit::GetFoodCost() const

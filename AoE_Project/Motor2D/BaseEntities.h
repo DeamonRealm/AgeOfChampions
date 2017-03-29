@@ -264,14 +264,17 @@ protected:
 	uint			attack_delay = 0;
 	uint			attack_hitpoints = 0;
 	uint			attack_bonus = 0;
+	float			attack_buff = 0;
 	uint			siege_hitpoints = 0;
 	uint			attack_rate = 0;
 	ATTACK_TYPE		attack_type = NO_ATTACK;
 	//Defense/Armor ----
 	uint			defense = 0; /*Used in melee damage*/
 	uint			defense_bonus = 0;
+	float			defense_buff = 0;
 	uint			armor = 0; /*Used in distance damage*/
 	uint			armor_bonus = 0;
+	float			armor_buff = 0;
 	//Resources --------
 	uint			food_cost = 0;
 	uint			wood_cost = 0;
@@ -325,14 +328,17 @@ public:
 	void	SetAttackDelay(uint atk_delay);
 	void	SetAttackHitPoints(uint atk_val);
 	void	SetAttackBonus(uint atk_bonus);
+	void	SetAttackBuff(float atk_buff);
 	void	SetSiegeHitPoints(uint siege_val);
 	void	SetAttackRate(uint atk_rate);
 	void	SetAttackType(ATTACK_TYPE atk_type);
 	void	SetAttackArea(const Circle& atk_area);
 	void	SetDefense(uint def);
 	void	SetDefenseBonus(uint def_bonus);
+	void	SetDefenseBuff(float def_buff);
 	void	SetArmor(uint arm);
 	void	SetArmorBonus(uint arm_bonus);
+	void	SetArmorBuff(float arm_buff);
 	void	SetFoodCost(uint food_cst);
 	void	SetWoodCost(uint wood_cst);
 	void	SetGoldCost(uint coin_cst);
@@ -352,6 +358,7 @@ public:
 	uint			GetAttackDelay()const;
 	uint			GetAttackHitPoints()const;
 	uint			GetAttackBonus()const;
+	float			GetAttackBuff()const;
 	uint			GetSiegeHitPoints()const;
 	uint			GetAttackRate()const;
 	ATTACK_TYPE		GetAttackType()const;
@@ -359,8 +366,10 @@ public:
 	const Circle*	GetAttackArea()const;
 	uint			GetDefense()const;
 	uint			GetDefenseBonus()const;
+	float			GetDefenseBuff()const;
 	uint			GetArmor()const;
 	uint			GetArmorBonus()const;
+	float			GetArmorBuff()const;
 	uint			GetFoodCost()const;
 	uint			GetWoodCost()const;
 	uint			GetGoldCost()const;
