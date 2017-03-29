@@ -305,8 +305,48 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 		//if we have a colision with other unit and we have lower priority reduction of spped
 
 		//Look in the next update if there is an error
-		iPoint next_update = *(path->rbegin() + 1);
-		if (!App->pathfinding->IsWalkable(App->map->WorldToMap(next_update.x, next_update.y)))
+		future_position = *(path->rbegin() + 1);
+		std::vector<Unit*> other_units;
+		App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
+		other_units.size();
+		int collisions = 0;
+		while (!other_units.empty()) {
+			Unit* other_unit = other_units.back();
+			if (other_unit != this) {
+
+				switch (CheckColision(this, other_unit))
+				{
+				case NO_COLLISION:
+					break;
+				case COLLISION_IDLE:
+				{
+					//temporal code
+					action_type = IDLE;
+					
+					delete path;
+					path = nullptr;
+					return true;
+				}
+					break;
+				case COLLISION_MOVE:
+					if (mutable_speed == 0 && other_unit->mutable_speed == 0)
+					{
+						if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+							other_unit->mutable_speed -= 1.8;
+						else
+							mutable_speed -= 1.8;
+					}
+					collisions++;
+					break;
+
+				}
+			}
+			other_units.pop_back();
+		}
+		if (collisions == 0 && mutable_speed!=0.0f) {
+			mutable_speed = 0.0f;
+		}
+		if (!App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
 		{
 			std::vector<iPoint>* new_path;
 			path->pop_back();
@@ -348,8 +388,8 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 	//Calculate the X/Y values that the unit have to move 
 	//checking the goal location and the unit movement speed
 	int norm = location.DistanceTo(goal);
-	float x_step = speed * (goal.x - location.x) / norm;
-	float y_step = speed * (goal.y - location.y) / norm;
+	float x_step = GetSpeed() * (goal.x - location.x) / norm;
+	float y_step = GetSpeed() * (goal.y - location.y) / norm;
 
 	//Add the calculated values at the unit & mark position
 	SetPosition(position.x + x_step, position.y + y_step);
@@ -502,6 +542,26 @@ bool Unit::Die()
 		}
 	}
 	return false;
+}
+
+COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
+{
+	if(other->action_type== IDLE)
+	{
+		if (sqrt((other->GetPosition().x - current->future_position.x) * (other->GetPosition().x - current->future_position.x) + (other->GetPosition().y - current->future_position.y) * (other->GetPosition().y - current->future_position.y)) < (current->soft_collider.GetRad() + other->soft_collider.GetRad()))
+		{
+			return COLLISION_IDLE;
+		}
+		return NO_COLLISION;
+	}
+	else if (other->action_type == WALK) {
+		if (sqrt((other->future_position.x - current->future_position.x) * (other->future_position.x - current->future_position.x) + (other->future_position.y - current->future_position.y) * (other->future_position.y - current->future_position.y)) < (current->soft_collider.GetRad() + other->soft_collider.GetRad()))
+		{
+			return COLLISION_MOVE;
+		}
+		return NO_COLLISION;
+	}
+	return NO_COLLISION;
 }
 
 //Bonus -----------
@@ -716,7 +776,7 @@ uint Unit::GetViewArea()const
 
 float Unit::GetSpeed()const
 {
-	return speed;
+	return speed+mutable_speed;
 }
 
 ACTION_TYPE Unit::GetAction()const
@@ -1047,7 +1107,7 @@ void Building::SetPosition(float x, float y)
 	mark.SetPosition(iPoint(position.x, position.y));
 
 	//Calculate the upper tile of the building zone
-	iPoint upper_tile(map_coords.x - 2, map_coords.y - 1);
+	iPoint upper_tile(map_coords.x - 1, map_coords.y - 1);
 
 	//Update the logic & construction map
 	//Check if the building is a town center to respect the build exception

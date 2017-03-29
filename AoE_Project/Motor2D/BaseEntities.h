@@ -133,6 +133,12 @@ enum SOUND_TYPE
 
 };
 
+enum COLLISION_TYPE
+{
+	NO_COLLISION,
+	COLLISION_IDLE,
+	COLLISION_MOVE
+};
 // --------------------------
 
 ///Class Entity ---------------------------------
@@ -256,9 +262,11 @@ protected:
 	Entity*			interaction_target = nullptr;
 	//Movement ---------
 	uint			view_area = 0;
-	float			speed = 0;
+	float			speed = 0.0f;
+	float			mutable_speed = 0.0f;
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = SOUTH;
+	iPoint			future_position = { 0,0 };
 	//Attack -----------
 	j1Timer			action_timer;
 	uint			attack_delay = 0;
@@ -309,7 +317,7 @@ public:
 	bool			AttackResource();
 	bool			Cover();
 	bool			Die();
-
+	COLLISION_TYPE	CheckColision(const Unit* current, const Unit* other);
 	//Bonus -----------------
 	void	AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence);
 
