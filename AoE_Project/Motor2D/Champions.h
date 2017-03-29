@@ -2,6 +2,7 @@
 #define _CHAMPIONS_
 
 #include "Units.h"
+class PassiveBuff;
 
 ///Class Champion -------------------------------
 //Base class that define the champions bases
@@ -18,6 +19,10 @@ protected:
 	//Hero level
 	uint	level = 1;
 	
+	//Buff area
+	Circle			buff_area;
+	PassiveBuff*	buff_to_apply = nullptr;
+
 	//Stats bonus for level
 	uint	attack_for_level = 0;
 	uint	range_for_level = 0;
@@ -30,10 +35,13 @@ public:
 
 	//Functionality ---------
 	//Actions -----
-	virtual void Hability_A(...);
-	virtual void Hability_B(...);
+	virtual void Hability_A();
+	virtual void Hability_B();
 
 	//Set Methods -
+	void	SetPosition(float x, float y);
+	void	SetBuffArea(const Circle& area);
+	void	SetBuffToApply(const PassiveBuff* buff);
 	void	SetLevel(uint lvl);
 	void	SetAttackForLevel(uint atk_for_lvl);
 	void	SetRangeForLevel(uint rng_for_lvl);
@@ -43,13 +51,15 @@ public:
 	void	SetViewAreaForLevel(uint view_for_level);
 
 	//Get Methods -
-	uint	GetLevel()const;
-	uint	GetAttackForLevel()const;
-	uint	GetRangeForLevel()const;
-	float	GetDefenseForLevel()const;
-	float	GetArmorForLevel()const;
-	float	GetSpeedForLevel()const;
-	uint	GetViewAreaForLevel()const;
+	Circle			GetBuffArea()const;
+	PassiveBuff*	GetBuffToApply()const;
+	uint			GetLevel()const;
+	uint			GetAttackForLevel()const;
+	uint			GetRangeForLevel()const;
+	float			GetDefenseForLevel()const;
+	float			GetArmorForLevel()const;
+	float			GetSpeedForLevel()const;
+	uint			GetViewAreaForLevel()const;
 
 };
 /// ---------------------------------------------
@@ -68,7 +78,8 @@ public:
 private:
 
 	/* extra data */
-	Triangle special_attack_area;
+	Triangle			special_attack_area;
+	std::list<Unit*>	buffed_units;
 
 public:
 
@@ -76,7 +87,7 @@ public:
 	//Draw --------
 	bool	Draw(bool debug);
 	//Actions -----
-	void	Hability_A(...);
+	void	Hability_A();
 	void	CalculateSpecialAttackArea(const iPoint& base);
 
 	//Set Methods -

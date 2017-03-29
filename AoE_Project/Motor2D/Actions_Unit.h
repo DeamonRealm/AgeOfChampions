@@ -18,9 +18,7 @@ public:
 	//Constructor -----------
 	MoveUnitAction(Unit* actor, int x, int y) : Action(actor), x_new(x), y_new(y)
 	{
-		//Set path so the unit starts moving
-		//App->entities_manager->SetUnitPath((Unit*)actor, iPoint(x_new, y_new));
-
+		//Calculate the path
 		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
 		path = App->pathfinding->SimpleAstar(origin, iPoint(x_new, y_new));
 	}

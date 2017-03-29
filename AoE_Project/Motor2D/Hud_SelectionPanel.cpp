@@ -353,9 +353,10 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 
 			//Set entity target to the selected unit
 			Selected->GetEntity()->GetWorker()->Reset();
-			if (Selected->GetEntity()->GetEntityType() == UNIT)
+			if (Selected->GetEntity()->GetEntityType() == UNIT && ((Unit*)Selected->GetEntity())->GetUnitType() == WARRIOR_CHMP)
 			{
-				App->buff_manager->CallBuff((Unit*)Selected->GetEntity(), PASSIVE_BUFF, ATTACK_BUFF);
+				((Warrior*)Selected->GetEntity())->Hability_A();
+				//App->buff_manager->CallBuff((Unit*)Selected->GetEntity(), PASSIVE_BUFF, ATTACK_BUFF);
 				
 			}
 			if (UpperEntity != nullptr)

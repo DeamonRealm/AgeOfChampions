@@ -55,6 +55,9 @@ public:
 	virtual bool ApplyBuff();
 	virtual bool RemoveBuff(); //remove buff from target when time it's over.
 
+	//Compare operator
+	bool operator == (const PassiveBuff& tar)const;
+
 };
 /// -----------------------------------
 
@@ -115,10 +118,12 @@ private:
 
 	std::vector<PassiveBuff*>	buff_definitions;
 	std::list<Buff*>			active_buffs;
+	std::list<PassiveBuff*>		static_buffs;
 
 public:
 
-	bool CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type);
+	bool	CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type);
+	void	RemoveTargetBuff(Unit* target, PassiveBuff* buff);
 
 };
 #endif //_J1_BUFF_MANAGER_H_

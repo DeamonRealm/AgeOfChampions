@@ -42,6 +42,12 @@ void Entity::Deselect()
 	selected = false;
 }
 
+//Operators -------------
+bool Entity::operator == (const Entity& tar)
+{
+	return (position == tar.position && entity_type == tar.entity_type);
+}
+
 //Update ----------
 bool Entity::Update()
 {
@@ -219,15 +225,15 @@ bool Unit::Draw(bool debug)
 
 	//Draw Entity Mark
 	if (selected)ret = mark.Draw();
-	attack_area.Draw();
-	/*
+	
 	if (debug) {
 		if (selected)
+			attack_area.Draw();
 			soft_collider.Draw();
 			hard_collider.Draw();
 			vision.Draw();
 	}
-	*/
+	
 	/*if (debug) {
 	//Draw Entity Selection Rect
 	App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
@@ -279,8 +285,6 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 		LOG("Error path not found!");
 		return true;
 	}
-
-
 
 	//Build goal path point
 	iPoint goal = path->back();
@@ -388,8 +392,8 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 	//Calculate the X/Y values that the unit have to move 
 	//checking the goal location and the unit movement speed
 	int norm = location.DistanceTo(goal);
-	float x_step = GetSpeed() * (goal.x - location.x) / norm;
-	float y_step = GetSpeed() * (goal.y - location.y) / norm;
+	float x_step = GetSpeed() * (App->GetDT() * 100) * (goal.x - location.x) / norm;
+	float y_step = GetSpeed() * (App->GetDT() * 100) * (goal.y - location.y) / norm;
 
 	//Add the calculated values at the unit & mark position
 	SetPosition(position.x + x_step, position.y + y_step);
@@ -401,37 +405,57 @@ void Unit::Focus(const iPoint & target)
 {
 	//Calculate the directional vector
 	iPoint dir_point = target - iPoint(position.x, position.y);
-
+	bool directed = false;
 	//Find the correct direction in relation of the goal and the location
 	if (abs(dir_point.x) < 4)
 	{
-		if (dir_point.y > 0)direction_type = DIRECTION_TYPE::SOUTH;
-		else direction_type = DIRECTION_TYPE::NORTH;
+		if (dir_point.y > 0 && direction_type != SOUTH)
+		{
+			direction_type = DIRECTION_TYPE::SOUTH;
+			directed = true;
+		}
+		else if (direction_type != NORTH)
+		{
+			direction_type = DIRECTION_TYPE::NORTH;
+			directed = true;
+		}
 	}
 	else if (abs(dir_point.y) < 4)
 	{
-		if (dir_point.x > 0)direction_type = DIRECTION_TYPE::EAST;
-		else direction_type = DIRECTION_TYPE::WEST;
+		if (dir_point.x > 0 && direction_type != EAST)
+		{
+			direction_type = DIRECTION_TYPE::EAST;
+			directed = true;
+		}
+		else if (direction_type != WEST)
+		{
+			direction_type = DIRECTION_TYPE::WEST;
+			directed = true;
+		}
 	}
-	else if (dir_point.x >= 0 && dir_point.y >= 0)
+	else if (dir_point.x >= 0 && dir_point.y >= 0 && direction_type != SOUTH_EAST)
 	{
 		direction_type = DIRECTION_TYPE::SOUTH_EAST;
+		directed = true;
 	}
-	else if (dir_point.x <= 0 && dir_point.y >= 0)
+	else if (dir_point.x <= 0 && dir_point.y >= 0 && direction_type != SOUTH_WEST)
 	{
 		direction_type = DIRECTION_TYPE::SOUTH_WEST;
+		directed = true;
 	}
-	else if (dir_point.x >= 0 && dir_point.y <= 0)
+	else if (dir_point.x >= 0 && dir_point.y <= 0 && direction_type != NORTH_EAST)
 	{
 		direction_type = DIRECTION_TYPE::NORTH_EAST;
+		directed = true;
 	}
-	else if (dir_point.x <= 0 && dir_point.y <= 0)
+	else if (dir_point.x <= 0 && dir_point.y <= 0 && direction_type != NORTH_WEST)
 	{
 		direction_type = DIRECTION_TYPE::NORTH_WEST;
+		directed = true;
 	}
 
 	//Set the unit animation with the new direction
-	App->animator->UnitPlay(this);
+	if(directed)App->animator->UnitPlay(this);
 }
 DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
 {
@@ -576,25 +600,22 @@ void Unit::AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence)
 void Unit::SetPosition(float x, float y)
 {
 	//Extract the units to push it with the new position later
-	if (!App->entities_manager->units_quadtree.Exteract(&position))
-	{
-		int k = 0;
-		k++;
-	}
+	App->entities_manager->units_quadtree.Exteract(&position);
 
 	//Set unit position
 	position.x = x;
 	position.y = y;
+	iPoint pos(position.x, position.y);
 	//Set unit vision position
-	vision.SetPosition(iPoint(position.x, position.y));
+	vision.SetPosition(pos);
 	//Set unit mark position
-	mark.SetPosition(iPoint(position.x, position.y));
+	mark.SetPosition(pos);
 	//Set soft_collider mark position
-	soft_collider.SetPosition(iPoint(position.x, position.y));
+	soft_collider.SetPosition(pos);
 	//Set hard_collider mark position
-	hard_collider.SetPosition(iPoint(position.x, position.y));
+	hard_collider.SetPosition(pos);
 	//Set unit attack area position
-	attack_area.SetPosition(iPoint(position.x, position.y));
+	attack_area.SetPosition(pos);
 
 	//Add the unit with the correct position in the correct quad tree
 	App->entities_manager->units_quadtree.Insert(this, &position);

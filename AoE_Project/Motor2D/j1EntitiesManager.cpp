@@ -50,9 +50,9 @@ bool j1EntitiesManager::Start()
 	units_quadtree.SetMaxObjects(4);
 	units_quadtree.SetDebugColor({ 255,0,255,255 });
 	resources_quadtree.SetMaxObjects(8);
-	units_quadtree.SetDebugColor({ 0,255,255,255 });
+	resources_quadtree.SetDebugColor({ 0,255,255,255 });
 	buildings_quadtree.SetMaxObjects(3);
-	units_quadtree.SetDebugColor({ 255,255,0,255 });
+	buildings_quadtree.SetDebugColor({ 255,255,0,255 });
 
 
 	return ret;
@@ -319,6 +319,9 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 
 	if (chmp)
 	{
+		/*Buff Area*/			Circle buff_area({ 0,0 }, unit_node->attribute("buff_area_rad").as_uint());
+								buff_area.SetColor({ 255,50,50,255 });
+								((Champion*)new_def)->SetBuffArea(buff_area);
 		/*Attack for level*/	((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("attack_for_level").as_uint());
 		/*Range for level*/		((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("range_for_level").as_uint());
 		/*Defense for level*/	((Champion*)new_def)->SetDefenseForLevel(unit_node->attribute("defense_for_level").as_float());
@@ -602,7 +605,10 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, bool push_in_list)
 			App->animator->UnitPlay(new_unit);
 			
 			//Add the new unit at the units manage list
-			if(push_in_list)units.push_back(new_unit);
+			if (push_in_list)
+			{
+				units.push_back(new_unit);
+			}
 
 			return new_unit;
 		}

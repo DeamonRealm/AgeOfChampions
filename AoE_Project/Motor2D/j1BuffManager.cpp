@@ -124,6 +124,10 @@ bool PassiveBuff::RemoveBuff()
 	return true;
 }
 
+bool PassiveBuff::operator==(const PassiveBuff& tar)const
+{
+	return (value == tar.value && buff_type == tar.buff_type && attribute_type == tar.attribute_type);
+}
 /// -----------------------------------
 
 /// Class Buff ------------------------
@@ -325,12 +329,36 @@ bool j1BuffManager::CallBuff(Unit * target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_
 
 			//Add the buff at the active buffs list if is a timed buff
 			if (buff_type == TIMED_BUFF)active_buffs.push_back(((Buff*)buff));
+			else static_buffs.push_back(buff);
 
 			return true;
 		}
 	}
 
 	return false;
+}
+
+void j1BuffManager::RemoveTargetBuff(Unit * target, PassiveBuff * buff)
+{
+	std::list<PassiveBuff*>::iterator item = static_buffs.begin();
+	while (item != static_buffs.end())
+	{
+		if (item._Ptr->_Myval->GetTarget() == target /*&& item._Ptr->_Myval == buff*/)
+		{
+			PassiveBuff* bf = item._Ptr->_Myval;
+
+			//Clean the target buff effects
+			bf->RemoveBuff();
+
+			//Delete the buff
+			static_buffs.remove(bf);
+			RELEASE(bf);
+
+			return;
+		}
+
+		item++;
+	}
 }
 
 

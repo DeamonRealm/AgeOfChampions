@@ -178,6 +178,9 @@ public:
 	void			Select();
 	void			Deselect();
 
+	//Operators -------------
+	bool operator == (const Entity& tar);
+
 	//Update ----------------
 	virtual bool	Update();
 

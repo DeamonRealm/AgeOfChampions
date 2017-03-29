@@ -150,6 +150,13 @@ bool j1Player::PreUpdate()
 		Entity* new_unit = App->entities_manager->GenerateResource(GOLD_ORE);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 	}
+
+	//Generate Warrior unit in mouse coordinates
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && game_panel->CheckPopulation())
+	{
+		Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP);
+		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+	}
 	return true;
 }
 

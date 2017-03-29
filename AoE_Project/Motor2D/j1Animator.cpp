@@ -543,9 +543,12 @@ bool j1Animator::LoadVillagerBlock(pugi::xml_document* doc)
 			//Build new action animation block
 			Animation_Block* action_anim_block = new Animation_Block();
 			//Get current action enum
-			action_anim_block->SetId(StrToActionEnum(action_node.attribute("enum").as_string()));
+			ACTION_TYPE act_type = StrToActionEnum(action_node.attribute("enum").as_string());
+			action_anim_block->SetId(act_type);
 			//Get current action animation speed
 			uint speed = action_node.attribute("speed").as_uint();
+			//Set animation loop from action enum
+			bool loop = AnimationLoopFromActionType(act_type);
 
 			//Focus direction of the current action
 			direction_node = action_node.first_child();
@@ -561,6 +564,8 @@ bool j1Animator::LoadVillagerBlock(pugi::xml_document* doc)
 				Animation* animation = new Animation();
 				//Set animation speed
 				animation->SetSpeed(speed);
+				//Set animation loop from action type
+				animation->SetLoop(loop);
 				//Set animation texture
 				animation->SetTexture(texture);
 
