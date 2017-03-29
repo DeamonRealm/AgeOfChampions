@@ -85,3 +85,23 @@ iPoint HabitableBuilding::GetSpawnPoint() const
 {
 	return units_spawn_point;
 }
+
+/// Procudtive Building ------------------------
+//Base class that define the productive buildings attributes
+
+//Constructors ========================
+ProductiveBuilding::ProductiveBuilding()
+{
+
+}
+
+ProductiveBuilding::ProductiveBuilding(const ProductiveBuilding & copy) :HabitableBuilding(copy), production_capacity(copy.production_capacity)
+{
+
+}
+
+//Destructors =========================
+ProductiveBuilding::~ProductiveBuilding()
+{
+
+}

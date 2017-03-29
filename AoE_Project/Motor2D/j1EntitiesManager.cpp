@@ -372,13 +372,22 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 {
 	if (building_node == nullptr)return false;
 
+	//Get building type to allocate the necessary attributes
+	BUILDING_TYPE building_type = App->animator->StrToBuildingEnum(building_node->attribute("building_type").as_string());
+
 	//Generate a new building definition from the node
-	Building* new_def = new Building();
+	Building* new_def = nullptr;
+
+	//Allocate the correct class
+	if(building_type == TOWN_CENTER)
+	{
+		new_def = new Building();
+	}
 
 	//Building ID -----------
 	/*Name*/			new_def->SetName(building_node->attribute("name").as_string());
 	/*Entity Type*/		new_def->SetEntityType(BUILDING);
-	/*Building Type*/	new_def->SetBuildingType(App->animator->StrToBuildingEnum(building_node->attribute("building_type").as_string()));
+	/*Building Type*/	new_def->SetBuildingType(building_type);
 
 	//Building Primitives ---
 	/*Mark*/			Rectng mark;
@@ -412,10 +421,14 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 
 	//Building Stats --------
 	/*Max Life*/		new_def->SetMaxLife(building_node->attribute("max_life").as_uint());
-	/*Units Capacity*/	new_def->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
-	/*Units Spawn pnt*/	iPoint spawn(building_node->attribute("units_spawn_x").as_int(), building_node->attribute("units_spawn_y").as_int());
-						new_def->SetUnitsSpawnPoint(spawn);
 
+	if (building_type == TOWN_CENTER)
+	{
+		/*Units Capacity*/	new_def->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
+		/*Units Spawn pnt*/	iPoint spawn(building_node->attribute("units_spawn_x").as_int(), building_node->attribute("units_spawn_y").as_int());
+							new_def->SetUnitsSpawnPoint(spawn);
+
+	}
 	buildings_defs.push_back(new_def);
 
 	LOG("%s definition built!", new_def->GetName());

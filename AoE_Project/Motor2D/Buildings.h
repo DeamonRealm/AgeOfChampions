@@ -41,18 +41,29 @@ public:
 };
 /// ---------------------------------------------
 
-/// Town Center Building ------------------------
-class TownCenter :public HabitableBuilding
+/// Procudtive Building ------------------------
+//Base class that define the productive buildings attributes
+class ProductiveBuilding :public HabitableBuilding
 {
 public:
 
-	TownCenter();
-	TownCenter(const TownCenter& copy);
-	~TownCenter();
+	ProductiveBuilding();
+	ProductiveBuilding(const ProductiveBuilding& copy);
+	~ProductiveBuilding();
 
 private:
 
-	std::priority_queue<Unit*, std::vector<Unit*>>	production_queue;
+	std::priority_queue<Unit*>	production_queue;
+	uint						production_capacity = 10;
+
+public:
+
+	//Functionality ----------------------
+	//Set Methods -----------
+	void SetProductionCapacity(uint capacity);
+
+	//Get Methods -----------
+	uint GetProductionCapacity()const;
 
 };
 /// ---------------------------------------------

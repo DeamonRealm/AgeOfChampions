@@ -272,6 +272,8 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 		return true;
 	}
 
+
+
 	//Build goal path point
 	iPoint goal = path->back();
 	iPoint location = iPoint(position.x, position.y);
@@ -318,10 +320,18 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 			
 			path->insert(path->end(), new_path->begin(), new_path->end());
 		}
+
 		path->pop_back();
 		goal = path->back();
 		
 		//Focus the unit at the next goal
+		Focus(goal);
+	}
+
+	//Check actor animation
+	if (action_type != WALK)
+	{
+		action_type = WALK;
 		Focus(goal);
 	}
 
