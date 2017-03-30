@@ -383,7 +383,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		{
 			//Set entity target to the selected unit
 			//Selected->GetEntity()->GetWorker()->Reset();
-			Selected->GetEntity()->AddAction(new SpawnUnitAction((HabitableBuilding*)Selected->GetEntity(), ARBALEST, ALLY));
+			Selected->GetEntity()->AddAction(new SpawnUnitAction((ProductiveBuilding*)Selected->GetEntity(), ARBALEST, ALLY));
 		}
 
 		break;
@@ -396,6 +396,13 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 	case BACKSPACE:
 		break;
 	case ENTER:
+		if (Selected->GetEntity() == nullptr)break;
+
+		if (Selected->GetEntity()->GetEntityType() == BUILDING)
+		{
+			Selected->GetEntity()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)Selected->GetEntity(), ARBALEST, ALLY));
+		}
+
 		break;
 	case TAB:
 		break;

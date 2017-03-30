@@ -479,7 +479,7 @@ public:
 
 	//Get Methods -----------
 	const Rectng&	GetMark()const;
-	const Rectng&	GetInteractArea()const;
+	const Rectng*	GetInteractArea()const;
 	BUILDING_TYPE	GetBuildingType()const;
 	ACTION_TYPE		GetActionType()const;
 	DIRECTION_TYPE	GetDirectionType()const;

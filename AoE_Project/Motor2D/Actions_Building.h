@@ -10,7 +10,7 @@ class SpawnUnitAction : public Action
 {
 public:
 	
-	SpawnUnitAction(HabitableBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy) : Action(actor,TASK_B_SPAWN_UNITS), type(type), diplomacy(diplomacy)
+	SpawnUnitAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy) : Action(actor,TASK_B_SPAWN_UNITS), type(type), diplomacy(diplomacy)
 	{
 		new_unit = App->entities_manager->GenerateUnit(type, diplomacy, false);
 		new_unit->SetDiplomacy(diplomacy);
@@ -29,15 +29,15 @@ public:
 	}
 
 
-	bool execute()
+	bool Execute()
 	{
 		if (timer.Read() >= time)
 		{
-			int x = ((HabitableBuilding*)actor)->GetSpawnPoint().x + actor->GetPosition().x;
-			int y = ((HabitableBuilding*)actor)->GetSpawnPoint().y + actor->GetPosition().y;
+			int x = ((ProductiveBuilding*)actor)->GetSpawnPoint().x + actor->GetPosition().x;
+			int y = ((ProductiveBuilding*)actor)->GetSpawnPoint().y + actor->GetPosition().y + 80;
 			App->entities_manager->AddUnit(new_unit);
 			new_unit->SetPosition(x, y);
-			
+			App->animator->UnitPlay(new_unit);
 			return true;
 		}
 

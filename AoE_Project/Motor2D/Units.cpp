@@ -87,10 +87,12 @@ bool Villager::Recollect()
 
 bool Villager::SaveResources()
 {
+	return true; /*Temporal for just end the loop*/
+
 	//Check if the target building is in the "attack" (in this case used for save resources) area
-	iPoint intersect_point = attack_area.NearestPoint(&((Building*)interaction_target)->GetInteractArea());
-	if (!attack_area.Intersects(&intersect_point))
+	if (!attack_area.Intersects(((Building*)interaction_target)->GetInteractArea()))
 	{
+		iPoint intersect_point = attack_area.NearestPoint(((Building*)interaction_target)->GetInteractArea());
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, intersect_point.x, intersect_point.y));
 		return false;
 	}

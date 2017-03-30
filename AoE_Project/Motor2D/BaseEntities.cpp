@@ -1230,8 +1230,14 @@ bool Building::Draw(bool debug)
 	bool ret = false;
 
 	//Debug Draw
-	ret = mark.Draw();
-
+	if (selected)
+	{
+		ret = mark.Draw();
+	}
+	if (debug)
+	{
+		interact_area.Draw();
+	}
 	/*if (debug) {
 	//Draw Entity Selection Rect
 	App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
@@ -1349,9 +1355,9 @@ const Rectng & Building::GetMark() const
 	return mark;
 }
 
-const Rectng & Building::GetInteractArea() const
+const Rectng* Building::GetInteractArea() const
 {
-	return interact_area;
+	return &interact_area;
 }
 
 //Get Methods ---------------

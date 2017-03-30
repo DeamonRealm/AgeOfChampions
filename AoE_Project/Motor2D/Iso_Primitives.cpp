@@ -132,6 +132,11 @@ bool Circle::Intersects(const Circle * target) const
 	return (len <= (rad + target->rad));
 }
 
+bool Circle::Intersects(const Rectng * target) const
+{
+	return false;
+}
+
 bool Circle::Intersects(const iPoint* point) const
 {
 	iPoint loc(point->x - position.x, point->y - position.y);

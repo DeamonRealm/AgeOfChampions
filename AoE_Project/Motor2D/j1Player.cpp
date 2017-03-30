@@ -89,6 +89,11 @@ bool j1Player::PreUpdate()
 	// Action Panel Check Selected
 	action_panel->CheckSelected(selection_panel->GetSelectedSize());
 
+	//Building spawn unit
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		if (selection_panel->PointisInViewport(x, y)) selection_panel->Handle_Input(ENTER);
+	}
 	//Generate a town center in the mouse coordinates
 	if(App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
