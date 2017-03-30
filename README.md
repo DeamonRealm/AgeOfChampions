@@ -53,7 +53,7 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ##Changelog
-#### v0.3
+#### v0.3 (soon to be released)
 * Removed: Movement keys
 * Removed: Animation type and direction controls
 * Removed: HPA pathfinding method (should be replaced with JPS in future updates)
