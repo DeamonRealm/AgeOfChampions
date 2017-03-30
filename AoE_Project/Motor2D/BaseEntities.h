@@ -309,15 +309,18 @@ public:
 	bool	Draw(bool debug);
 
 	//Actions ---------------
-	bool			Move(std::vector<iPoint>* path);
-	void			Focus(const iPoint& target);
-	DIRECTION_TYPE	LookDirection(const iPoint & from, const iPoint & to);
-	bool			AttackUnit();
-	bool			AttackBuilding();
-	bool			AttackResource();
-	bool			Cover();
-	bool			Die();
-	COLLISION_TYPE	CheckColision(const Unit* current, const Unit* other);
+	bool					Move(std::vector<iPoint>* path);
+	void					Repath(std::vector<iPoint>* path);
+	iPoint					FindWalkableCell(const iPoint& center);
+	bool					UnitHere();
+	void					Focus(const iPoint& target);
+	DIRECTION_TYPE			LookDirection(const iPoint & from, const iPoint & to);
+	bool					AttackUnit();
+	bool					AttackBuilding();
+	bool					AttackResource();
+	bool					Cover();
+	bool					Die();
+	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
 	//Bonus -----------------
 	void	AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence);
 

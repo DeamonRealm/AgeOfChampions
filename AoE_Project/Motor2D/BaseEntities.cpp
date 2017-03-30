@@ -290,20 +290,7 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 	//Update goal node and animation direction
 	if (location.DistanceTo(goal) < 2)
 	{
-		if (path->size() == 1)
-		{
-			//Set unit at the goal pixel position
-			SetPosition((float)goal.x, (float)goal.y);
-			//Stop idle walk animation
-			action_type = IDLE;
-			App->animator->UnitPlay(this);
-
-			//Delete unit path
-			delete path;
-			path = nullptr;
-
-			return true;
-		}
+	
 		//if we have a collision with other unit and we have lower priority reduction of speed
 
 		//Look in the next update if there is an error
@@ -322,33 +309,25 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 					break;
 				case COLLISION_IDLE:
 				{
-					//temporal code
-					action_type = IDLE;
-					
-					delete path;
-					path = nullptr;
-					return true;
+					if(GetPath()->size() <= 2)
+					Repath(path);
 				}
 					break;
 				case COLLISION_MOVE:
-				
-					if (mutable_speed == 0 && other_unit->mutable_speed == 0)
-					{
-						if (path->size() == 2)
-						{
-							action_type = IDLE;
-
-							delete path;
-							path = nullptr;
-							return true;
-
-						}
+					if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
+						if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+							other_unit->Repath(other_unit->GetPath());
 						else
+							Repath(path);
+					}
+					else
+					{
+						if (mutable_speed == 0 && other_unit->mutable_speed == 0)
 						{
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-								other_unit->mutable_speed -= 1.8;
+								other_unit->mutable_speed -= 0.2;
 							else
-								mutable_speed -= 1.8;
+								mutable_speed -= 0.2;
 						}
 					}
 					collisions++;
@@ -360,6 +339,25 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 		}
 		if (collisions == 0 && mutable_speed!=0.0f) {
 			mutable_speed = 0.0f;
+		}
+		if (path->size() == 1 && UnitHere())
+		{
+		
+			//Set unit at the goal pixel position
+			SetPosition((float)goal.x, (float)goal.y);
+			//Stop idle walk animation
+			action_type = IDLE;
+			App->animator->UnitPlay(this);
+
+			//Delete unit path
+			delete path;
+			path = nullptr;
+
+			return true;
+		}
+		else if (path->size() == 1 && !UnitHere())
+		{
+			Repath(path);
 		}
 		if (!App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
 		{
@@ -384,6 +382,7 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 			
 			path->insert(path->end(), new_path->begin(), new_path->end());
 		}
+
 		//Set the unit next tile goal
 
 		path->pop_back();
@@ -410,6 +409,93 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 	SetPosition(position.x + x_step, position.y + y_step);
 
 	return false;
+}
+
+void Unit::Repath(std::vector<iPoint>* path)
+{
+	iPoint new_destination = FindWalkableCell(*(path->begin()));
+	std::vector<iPoint>* new_path;
+	new_path=App->pathfinding->SimpleAstar(GetPositionRounded(), new_destination);
+	path->clear();
+	path->insert(path->end(), new_path->begin(), new_path->end());
+
+}
+
+iPoint Unit::FindWalkableCell(const iPoint & center)
+{
+	iPoint cell;
+	iPoint pos = App->map->WorldToMap(GetPositionRounded().x, GetPositionRounded().y);
+	// south
+	cell.create(pos.x, pos.y + 1);
+	if (App->pathfinding->IsWalkable(cell)&& UnitHere())
+	{
+		
+		return App->map->MapToWorld(cell.x, cell.y);;
+	}
+
+	// north
+	cell.create(pos.x, pos.y - 1);
+	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	{
+
+		return App->map->MapToWorld(cell.x, cell.y);;
+	}
+
+	// east
+	cell.create(pos.x + 1, pos.y);
+	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	{
+
+		return App->map->MapToWorld(cell.x, cell.y);;
+	}
+
+	// west
+	cell.create(pos.x - 1, pos.y);
+	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	{
+
+		return App->map->MapToWorld(cell.x, cell.y);;
+	}
+
+	// south-east
+	cell.create(pos.x + 1, pos.y + 1);
+	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	{
+
+		return App->map->MapToWorld(cell.x, cell.y);;
+	}
+	// south-west
+	cell.create(pos.x - 1, pos.y + 1);
+	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	{
+
+		return App->map->MapToWorld(cell.x, cell.y);;
+	}
+	// north-east
+	cell.create(pos.x + 1, pos.y - 1);
+	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	{
+
+		return App->map->MapToWorld(cell.x, cell.y);;
+	}
+	// north-west
+	cell.create(pos.x - 1, pos.y - 1);
+	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	{
+
+		return App->map->MapToWorld(cell.x, cell.y);;
+	}
+}
+
+bool Unit::UnitHere()
+{
+	std::vector<Unit*> other_units;
+
+	App->entities_manager->units_quadtree.CollectCandidates(other_units, hard_collider);
+	if (other_units.size() != 1) {
+		return false;
+	}
+	return true;
 }
 
 void Unit::Focus(const iPoint & target)
@@ -587,6 +673,7 @@ COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 		{
 			return COLLISION_IDLE;
 		}
+	
 		return NO_COLLISION;
 	}
 	else if (other->action_type == WALK) {
