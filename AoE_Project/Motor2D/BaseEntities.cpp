@@ -619,10 +619,12 @@ bool Unit::AttackUnit()
 {
 
 	//Check if the target is in the attack area
-	if (!attack_area.Intersects(&interaction_target->GetPositionRounded()))
+	if (!attack_area.Intersects(((Unit*)interaction_target)->GetAttackArea()))
 	{
 		iPoint goal = attack_area.NearestPoint(((Unit*)interaction_target)->GetAttackArea());
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal.x, goal.y));
+		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
+		if (path == nullptr)return true;
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
 		return false;
 	}
 
@@ -1078,7 +1080,14 @@ bool Resource::Draw(bool debug)
 {
 	bool ret = false;
 	//Draw Resource Mark
-	ret = mark.Draw();
+	if (selected)
+	{
+		ret = mark.Draw();
+	}
+	if (debug)
+	{
+		interact_area.Draw();
+	}
 
 	/*if (debug) {
 	//Draw Entity Selection Rect
@@ -1143,8 +1152,8 @@ bool Resource::ExtractResources(uint* value)
 void Resource::SetPosition(float x, float y)
 {
 	//Set resource position fixing it in the tiles coordinates
-	iPoint coords = App->map->WorldToMap(x, y);
-	coords = App->map->MapToWorld(coords.x, coords.y);
+	iPoint world_coords = App->map->WorldToMap(x, y);
+	iPoint coords = App->map->MapToWorld(world_coords.x, world_coords.y);
 	position.x = coords.x;
 	position.y = coords.y;
 
@@ -1153,6 +1162,10 @@ void Resource::SetPosition(float x, float y)
 
 	//Set resource mark position
 	mark.SetPosition(iPoint(position.x, position.y));
+
+	//Change walk & construction logic maps
+	App->map->ChangeConstructionMap(world_coords, 1, 1);
+	App->map->ChangeLogicMap(world_coords, 1, 1);
 
 	//Add Resource at the correct quad tree
 	App->entities_manager->resources_quadtree.Insert(this, &position);

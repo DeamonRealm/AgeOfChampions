@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include <queue>
+#include "p2Point.h"
 
 class Entity;
 class Unit;
@@ -79,7 +80,7 @@ public:
 
 private:
 
-	std::queue<Action*> action_queue;
+	std::list<Action*> action_queue;
 	Action* current_action = nullptr;
 
 public:
@@ -111,6 +112,7 @@ public:
 
 	//Action Calls --------------------
 	MoveUnitAction*				MoveAction(Unit* actor, int x, int y);
+	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor);
 	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit *target);
 	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target);
 	DieUnitAction*				DieAction(Unit* actor);

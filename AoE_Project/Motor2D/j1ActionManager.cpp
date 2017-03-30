@@ -65,6 +65,17 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, int x, int y)
 	return action;
 }
 
+MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor)
+{
+	//Generate a new move action definition
+	MoveUnitAction* action = new MoveUnitAction(actor, path);
+
+	//Add the new action at the action manager
+	all_actions.push_back(action);
+
+	return action;
+}
+
 AttackUnitAction* j1ActionManager::AttackToUnitAction(Unit * actor, Unit * target)
 {
 	//Generate a new attack action definition
@@ -158,7 +169,7 @@ void ActionWorker::Update()
 	else if (!action_queue.empty())
 	{
 		current_action = action_queue.front();
-		action_queue.pop();
+		action_queue.pop_front();
 		//Delete action if it can't be activated
 		if (!current_action->Activation())
 		{
@@ -171,14 +182,14 @@ void ActionWorker::Update()
 
 void ActionWorker::AddAction(Action * action)
 {
-	action_queue.push(action);
+	action_queue.push_back(action);
 }
 
 void ActionWorker::AddPriorizedAction(Action * action)
 {
 	if (current_action != nullptr)
 	{
-		action_queue.push(current_action);
+		action_queue.push_front(current_action);
 		current_action = action;
 		current_action->Activation();
 	}
@@ -199,7 +210,8 @@ void ActionWorker::Reset()
 	while (!action_queue.empty())
 	{
 		to_erase = action_queue.front();
-		action_queue.pop();
+		action_queue.pop_front();
+		RELEASE(to_erase);
 	}
 }
 

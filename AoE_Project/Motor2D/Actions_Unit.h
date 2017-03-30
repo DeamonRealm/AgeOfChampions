@@ -19,18 +19,28 @@ public:
 	//Constructor -----------
 	MoveUnitAction(Unit* actor, int x, int y) : Action(actor, TASK_U_MOVE), x_new(x), y_new(y)
 	{
+
+	}
+
+	MoveUnitAction(Unit* actor, std::vector<iPoint>* path) : Action(actor, TASK_U_MOVE), path(path)
+	{
+
 	}
 
 	//Functionality ---------
 	bool Activation()
 	{
-		//Calculate the path
-		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
-		path = App->pathfinding->SimpleAstar(origin, iPoint(x_new, y_new));
+		if (path == nullptr)
+		{
+			//Calculate the path
+			iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
+			path = App->pathfinding->SimpleAstar(origin, iPoint(x_new, y_new));
+			if (path == nullptr)return false;
+		}
+		((Unit*)actor)->SetAction(WALK);
 		((Unit*)actor)->Focus(path->back());
 		((Unit*)actor)->SetFutureAction(*(path->rbegin()+1));
 
-	//	App->sound->PlayAudio(MOVE_SOUND);
 		return true;
 	}
 
@@ -142,8 +152,15 @@ public:
 	//Functionality ---------
 	bool Activation()
 	{
+		if (target == nullptr)return false;
+
 		//Set actor interaction target
 		((Unit*)actor)->SetInteractionTarget(target);
+
+		//Set actor animation
+		((Villager*)actor)->CheckRecollectAnimation(((Resource*)target)->GetResourceType());
+		((Villager*)actor)->Focus(target->GetPositionRounded());
+
 		return true;
 	}
 

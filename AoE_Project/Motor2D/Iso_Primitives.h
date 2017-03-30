@@ -77,6 +77,7 @@ public:
 	//Shape functions
 	bool	IsIn(const fPoint* loc) const;
 	bool	Intersects(const SDL_Rect* rect) const;
+	bool	Intersects(const Circle* target)const;
 	bool	Intersects(const iPoint* point)const;
 	iPoint  NearestPoint(const Circle* target)const;
 	iPoint	NearestPoint(const Rectng* target)const;

@@ -110,7 +110,7 @@ bool j1Player::PreUpdate()
 	//Generate a Militia unit in the mouse coordinates
 	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN && game_panel->CheckPopulation())
 	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY);
+		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ALLY);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 
 		game_panel->IncressPopulation(1, false);

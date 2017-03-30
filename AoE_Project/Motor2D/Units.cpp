@@ -50,7 +50,7 @@ bool Villager::Recollect()
 {
 
 	//Check if the target resource is in the "attack" (in this case used for recollect) area
-	if (!attack_area.Intersects(&interaction_target->GetPositionRounded()))
+	if (!attack_area.Intersects(((Resource*)interaction_target)->GetInteractArea()))
 	{
 		iPoint goal = attack_area.NearestPoint(((Resource*)interaction_target)->GetInteractArea());
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal.x, goal.y));
@@ -59,9 +59,6 @@ bool Villager::Recollect()
 
 	//Check the action rate
 	if (action_timer.Read() < attack_rate) return false;
-
-	//Check unit animation
-	CheckRecollectAnimation(((Resource*)interaction_target)->GetResourceType());
 
 	//Get resources from the target resource
 	uint recollect_value = MIN(recollect_capacity, resources_capacity - current_resources);
@@ -98,7 +95,8 @@ bool Villager::SaveResources()
 		return false;
 	}
 
-	//((Building*)interaction_target)->
+	((Building*)interaction_target);
+
 	return false;
 }
 

@@ -123,6 +123,15 @@ bool Circle::Intersects(const SDL_Rect * rect) const
 	return corner_distance <= rad ^ 2;
 }
 
+bool Circle::Intersects(const Circle * target) const
+{
+	int x_len = target->position.x - position.x;
+	int y_len = (target->position.y - position.y);
+	float len = sqrt(x_len*x_len + y_len*y_len);
+
+	return (len <= (rad + target->rad));
+}
+
 bool Circle::Intersects(const iPoint* point) const
 {
 	iPoint loc(point->x - position.x, point->y - position.y);
@@ -134,8 +143,8 @@ iPoint Circle::NearestPoint(const Circle* target) const
 	iPoint vec(target->position.x - position.x, target->position.y - position.y);
 	fPoint cpy(vec.x,vec.y);
 	cpy.Norm();
-	vec.x -= rad * cpy.x;
-	vec.y -= rad * cpy.y;
+	vec.x -= ((rad * cpy.x) + target->rad * cpy.x);
+	vec.y -= (((target->rad + rad) * sin(x_angle) * cpy.y));
 
 	return iPoint(position.x + vec.x, position.y + vec.y);
 }
