@@ -7,18 +7,28 @@ Tribute game to Age of Empires II developed by DemonRealm.
 
 
 ## How to play
-Right now there are only prototype releases to test the functionallity of our game.    
-Controls for v.0.2.1 (protoype to test correct animation and draw order)   
+Right now there are only prototype releases to test the functionality of our game dute to this fact all debug controlls can be activated without the need of being on the debug mode (F1).  
+Controls for v.0.3 (Vertical Slice prototype)   
+v0.3 is quite similar to the AoE editor but with far less options, you can spawn difernt units, resources and bulding and test some of their functionality.   
 
-* Mouse Double Click to select unit
+* Mouse Left Click to select a unit, building or resource
+* Mouse Right Click to Make the unit do actions (Move/Attack/Recolect)
+* Mouse Double Click to select all units of the same type
 * Mouse Drag to select unit groups
 
+
 #### Debug controls
-* JIKL to move the character
-* WASDQEZX to change the orientation of the character
-* 1,2,3,4,5 to change animation type
 * GRAVE to activate/deactivate console (enter "help" in the console to see all the commands)
-* F1 to activate debug draw
+* [F1]:Activate debug mode     
+* [F2]:Generate Building  
+* [F3]: Generate Villager
+* [N]: Generate Arbalest
+* [M]: Generate Milita
+* [Z]: Generete Tree
+* [X]: Generete Berry Bush
+* [C]: Generate Stone quarry
+* [V]: Generate Gold ore
+* [W]: Generate Warrior
 * Arrows to move the camera
 
 ##Media 
@@ -43,20 +53,36 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ##Changelog
+#### v0.3
+* Removed: Movement keys
+* Removed: Animation type and direction controls
+* Removed: HPA pathfinding method (should be replaced with JPS in future updates)
+* Added: Mouse controls the unit movement
+* Added: Predefined movement (doesn't have any indicators)
+* Added: Multiple troops movement
+* Added: Attack action (right now it can attack any unit be allies, foes or even himself)
+* Added: Unit creation (Town center can spawn arbalest units)
+* Added: Recollection ability
+* Added: Map logic (units sould pass trough obstacles)
+* Changed: Almost all controls (see "How to play" for more info)
+* Integration of the Quadtree optimitzation with units search and map draw (should improve the framerate)
+* Improved troops actions
+
+
 #### v.0.2.1
-* Changed movenet keys
-* Control to change animation type
+* Changed: movenet keys
+* Added: Control to change animation type
 * Better control over the direction of the animations
 
 ####v.0.2
-* Buidings shadows
-* Console Units Factory
-* Main Menu & HUB sprite
-* Map Tiles debug mode
+* Added: Buildings shadows
+* Added: Console Units Factory
+* Added: Main Menu & HUB sprite
+* Added: Map Tiles debug mode
 
 ####v.0.1
-* A controllable villager moving around.
-* Correct render order that simulates the third dimension in builds
-* Tiled map 
-* A basic console
-* Simple UI test for scroll selection
+* Added: A controllable villager moving around.
+* Added: Correct render order that simulates the third dimension in builds
+* Added: Tiled map 
+* Added: A basic console
+* Added: Simple UI test for scroll selection
