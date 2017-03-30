@@ -9,6 +9,7 @@
 #include "p2Log.h"
 #include "j1EntitiesManager.h"
 #include "j1ActionManager.h"
+#include "Actions_Unit.h"
 
 ///Class Entity ---------------------------------
 //Constructors ========================
@@ -271,19 +272,6 @@ bool Unit::Draw(bool debug)
 	return ret;
 }
 
-bool Unit::DrawPath()
-{
-	if (path == nullptr) return false;
-
-	uint size = path->size();
-	for (uint k = 0; k < size; k++)
-	{
-		iPoint cell = path->at(k);
-		App->render->CallBlit(App->pathfinding->path_texture, cell.x - App->map->data.tile_width * 0.5f, cell.y - App->map->data.tile_height * 0.5);
-	}
-
-	return true;
-}
 
 //Actions ---------
 bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
@@ -792,10 +780,7 @@ void Unit::SetExp(uint experience)
 {
 	exp = experience;
 }
-void Unit::SetPath(const std::vector<iPoint>* new_path)
-{
-	path = (std::vector<iPoint>*)new_path;
-}
+
 // ----------------
 //Get Methods -----
 UNIT_TYPE Unit::GetUnitType()const
@@ -932,9 +917,18 @@ uint Unit::GetTrainTime() const
 {
 	return train_time;
 }
+
 uint Unit::GetExp() const
 {
 	return exp;
+}
+
+std::vector<iPoint>* Unit::GetPath() const
+{
+	if (action_worker->GetCurrentActionType() != TASK_U_MOVE)
+		return nullptr;
+
+	return ((MoveUnitAction*)action_worker->GetCurrentAction())->GetPath();
 }
 // ----------------
 ///----------------------------------------------

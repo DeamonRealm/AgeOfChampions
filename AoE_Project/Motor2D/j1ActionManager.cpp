@@ -5,7 +5,7 @@
 ///Class Action ---------------------------------
 //Base class to build action definitions
 //Constructors ========================
-Action::Action(Entity* actor) :actor(actor)
+Action::Action(Entity* actor, TASK_TYPE type) : actor(actor), type (type)
 {
 
 }
@@ -14,6 +14,10 @@ Action::Action(Entity* actor) :actor(actor)
 Action::~Action()
 {
 
+}
+TASK_TYPE Action::GetType()
+{
+	return type;
 }
 /// ---------------------------------------------
 
@@ -54,7 +58,7 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, int x, int y)
 {
 	//Generate a new move action definition
 	MoveUnitAction* action = new MoveUnitAction(actor, x, y);
-	
+
 	//Add the new action at the action manager
 	all_actions.push_back(action);
 
@@ -145,7 +149,7 @@ void ActionWorker::Update()
 {
 	if (current_action != nullptr)
 	{
-		if (current_action->execute())
+		if (current_action->Execute())
 		{
 			delete current_action;
 			current_action = nullptr;
@@ -155,6 +159,12 @@ void ActionWorker::Update()
 	{
 		current_action = action_queue.front();
 		action_queue.pop();
+		//Delete action if it can't be activated
+		if (!current_action->Activation())
+		{
+			delete current_action;
+			current_action = nullptr;
+		}
 	}
 
 }
@@ -170,10 +180,12 @@ void ActionWorker::AddPriorizedAction(Action * action)
 	{
 		action_queue.push(current_action);
 		current_action = action;
+		current_action->Activation();
 	}
 	else
 	{
 		current_action = action;
+		current_action->Activation();
 	}
 }
 
@@ -189,5 +201,15 @@ void ActionWorker::Reset()
 		to_erase = action_queue.front();
 		action_queue.pop();
 	}
+}
+
+TASK_TYPE ActionWorker::GetCurrentActionType() const
+{
+	return current_action->GetType();
+}
+
+Action * ActionWorker::GetCurrentAction() const
+{
+	return current_action;
 }
 ///----------------------------------------------

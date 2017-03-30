@@ -10,7 +10,7 @@ class SpawnUnitAction : public Action
 {
 public:
 	
-	SpawnUnitAction(HabitableBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy) : Action(actor), type(type), diplomacy(diplomacy)
+	SpawnUnitAction(HabitableBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy) : Action(actor,TASK_B_SPAWN_UNITS), type(type), diplomacy(diplomacy)
 	{
 		new_unit = App->entities_manager->GenerateUnit(type, diplomacy, false);
 		new_unit->SetDiplomacy(diplomacy);
@@ -21,6 +21,13 @@ public:
 	{
 	
 	}
+
+	bool Activation()
+	{
+		timer.Start();
+		return true;
+	}
+
 
 	bool execute()
 	{

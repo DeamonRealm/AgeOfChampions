@@ -47,7 +47,7 @@ bool j1EntitiesManager::Start()
 	App->console->AddCommand("generate_unit", App->entities_manager);
 
 	//Built entities quad trees
-	units_quadtree.SetMaxObjects(4);
+	units_quadtree.SetMaxObjects(8);
 	units_quadtree.SetDebugColor({ 255,0,255,255 });
 	resources_quadtree.SetMaxObjects(8);
 	resources_quadtree.SetDebugColor({ 0,255,255,255 });
@@ -733,7 +733,6 @@ bool j1EntitiesManager::SetUnitPath(Unit* target, const iPoint& goal)
 	if (path == nullptr)return false;
 
 	//Set target path
-	target->SetPath(path);
 	if (target->GetAction() != WALK)
 	{
 		target->SetAction(WALK);
@@ -741,7 +740,7 @@ bool j1EntitiesManager::SetUnitPath(Unit* target, const iPoint& goal)
 	}
 
 	//Play move fx
-	App->sound->PlayAudio(MOVE_SOUND);
+
 	
 	return true;
 }

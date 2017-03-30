@@ -5,6 +5,7 @@
 #include "BaseEntities.h"
 #include "j1App.h"
 #include "j1EntitiesManager.h"
+#include "j1SoundManager.h"
 
 //Needed to have the MoveUnitAction with the path
 #include "j1Pathfinding.h"
@@ -16,18 +17,31 @@ class MoveUnitAction : public Action
 public:
 
 	//Constructor -----------
-	MoveUnitAction(Unit* actor, int x, int y) : Action(actor), x_new(x), y_new(y)
+	MoveUnitAction(Unit* actor, int x, int y) : Action(actor, TASK_U_MOVE), x_new(x), y_new(y)
+	{
+	}
+
+	//Functionality ---------
+	bool Activation()
 	{
 		//Calculate the path
 		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
 		path = App->pathfinding->SimpleAstar(origin, iPoint(x_new, y_new));
+		((Unit*)actor)->Focus(path->back());
+	//	App->sound->PlayAudio(MOVE_SOUND);
+		return true;
 	}
 
-	//Functionality ---------
-	bool execute()
+	bool Execute()
 	{
 		return ((Unit*)actor)->Move(path);
 	}
+
+	//Returns the path 
+	std::vector<iPoint>* GetPath() const
+	{
+		return path;
+	};
 
 private:
 
@@ -45,14 +59,14 @@ class AttackUnitAction : public Action
 public:
 
 	//Constructor -----------
-	AttackUnitAction(Unit* actor,Unit* target) : Action(actor), target(target)
+	AttackUnitAction(Unit* actor,Unit* target) : Action(actor, TASK_U_ATTACK_U), target(target)
 	{
 		//Set actor interaction target
 		((Unit*)actor)->SetInteractionTarget(target);
 	}
 
 	//Functionality ---------
-	bool execute()
+	bool Execute()
 	{
 		//Actor attack the target
 		return ((Unit*)actor)->AttackUnit();
@@ -72,14 +86,14 @@ class AttackBuildingAction : public Action
 public:
 
 	//Constructor -----------
-	AttackBuildingAction(Unit* actor, Building* target) : Action(actor), target(target)
+	AttackBuildingAction(Unit* actor, Building* target) : Action(actor, TASK_U_ATTACK_B), target(target)
 	{
 		//Set actor interaction target
 		((Unit*)actor)->SetInteractionTarget(target);
 	}
 
 	//Functionality ---------
-	bool execute()
+	bool Execute()
 	{
 		//Actor attack the target
 		return ((Unit*)actor)->AttackBuilding();
@@ -99,13 +113,12 @@ class DieUnitAction : public Action
 public:
 
 	//Constructor -----------
-	DieUnitAction(Unit* actor) : Action(actor)
+	DieUnitAction(Unit* actor) : Action(actor, TASK_U_DIE)
 	{
-
 	}
 
 	//Functionality ---------
-	bool execute()
+	bool Execute()
 	{
 		//Actor attack the target
 		return ((Unit*)actor)->Die();
@@ -120,14 +133,19 @@ class RecollectVillagerAction : public Action
 public:
 
 	//Constructor -----------
-	RecollectVillagerAction(Villager* actor, Resource* target) : Action(actor), target(target)
+	RecollectVillagerAction(Villager* actor, Resource* target) : Action(actor, TASK_U_RECOLLECT), target(target)
 	{
-		//Set actor interaction target
-		((Unit*)actor)->SetInteractionTarget(target);
 	}
 
 	//Functionality ---------
-	bool execute()
+	bool Activation()
+	{
+		//Set actor interaction target
+		((Unit*)actor)->SetInteractionTarget(target);
+		return true;
+	}
+
+	bool Execute()
 	{
 		//Actor recollect
 		((Unit*)actor)->SetInteractionTarget(target);
@@ -148,14 +166,24 @@ class SaveResourcesVillagerAction : public Action
 public:
 
 	//Constructor -----------
-	SaveResourcesVillagerAction(Villager* actor, Building* target) : Action(actor), target(target)
+	SaveResourcesVillagerAction(Villager* actor, Building* target) : Action(actor,TASK_U_SAVE_RESOURCES), target(target)
 	{
-		//Set actor interaction target
-		((Unit*)actor)->SetInteractionTarget(target);
 	}
 
 	//Functionality ---------
-	bool execute()
+	bool Activation()
+	{
+		//Set actor interaction target
+		if (target != nullptr)
+		{
+			((Unit*)actor)->SetInteractionTarget(target);
+			return true;
+		}
+		else
+			return false;
+	}
+
+	bool Execute()
 	{
 		//Actor save resources
 		return ((Villager*)actor)->SaveResources();

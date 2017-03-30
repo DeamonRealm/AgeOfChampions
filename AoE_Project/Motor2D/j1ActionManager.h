@@ -25,6 +25,20 @@ enum BUILDING_TYPE;
 enum RESOURCE_TYPE;
 enum DIPLOMACY;
 
+
+enum TASK_TYPE
+{
+	TASK_NONE = 0,
+	TASK_U_MOVE,
+	TASK_U_ATTACK_U,
+	TASK_U_ATTACK_B,
+	TASK_U_DIE,
+	TASK_U_RECOLLECT,
+	TASK_U_SAVE_RESOURCES,
+	TASK_B_SPAWN_UNITS
+
+};
+
 /// Class Action --------------------------------
 //Action virtual class (are commands but not for the console)
 class Action
@@ -32,23 +46,25 @@ class Action
 public:
 
 	//Set all the Actions to a list on the Entities manager to clean them up at closing the app.
-	Action(Entity* actor);
+	Action(Entity* actor, TASK_TYPE type);
 	~Action();
 
-public:
+protected:
 
 	Entity* actor = nullptr;
-	bool completed = false;
+	TASK_TYPE type = TASK_NONE;
 
 public:
 
 	//This function defines the action taking place
+	//Retruns false if Action was unable to initialize
+	virtual bool Activation() { return true; }
 	//Returns TRUE when execute is finished
-	virtual bool execute()	{ return true; }
-	virtual bool IsDone()	{ return true; }
+	virtual bool Execute()	{ return true; }
 	///Each different action inheriting from this class should have custom
 	///properties to do its actions.
 
+	TASK_TYPE GetType();
 };
 /// ---------------------------------------------
 
@@ -72,6 +88,9 @@ public:
 	void AddAction(Action* action);
 	void AddPriorizedAction(Action* action);
 	void Reset();
+
+	TASK_TYPE GetCurrentActionType() const;
+	Action* GetCurrentAction() const;
 
 };
 ///----------------------------------------------

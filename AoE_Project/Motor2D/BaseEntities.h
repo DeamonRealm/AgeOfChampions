@@ -302,15 +302,11 @@ protected:
 	// Attack area
 	Circle	attack_area;
 
-	//Path to follow
-	std::vector<iPoint>* path = nullptr;
-
 public:
 
 	//Functionality -------------------
 	//Draw ------------------
 	bool	Draw(bool debug);
-	bool	DrawPath();
 
 	//Actions ---------------
 	bool			Move(std::vector<iPoint>* path);
@@ -357,7 +353,6 @@ public:
 	void	SetPopulationCost(uint poblation_cst);
 	void	SetTrainTime(uint train_time_val);
 	void	SetExp(uint experience);
-	void	SetPath(const std::vector<iPoint>* new_path);
 
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
@@ -388,6 +383,8 @@ public:
 	uint			GetPopulationCost()const;
 	uint			GetTrainTime()const;
 	uint			GetExp()const;
+	std::vector<iPoint>* GetPath() const;
+
 };
 /// ---------------------------------------------
 
