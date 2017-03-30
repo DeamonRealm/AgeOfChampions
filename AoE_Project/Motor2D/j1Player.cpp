@@ -101,9 +101,8 @@ bool j1Player::PreUpdate()
 	//Generate Villager in the mouse coordinates
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && game_panel->CheckPopulation())
 	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER);
+		Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER, ALLY);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		new_unit->SetDiplomacy(ALLY);
 		
 		game_panel->IncressPopulation(1, false);
 	}
@@ -111,18 +110,16 @@ bool j1Player::PreUpdate()
 	//Generate a Militia unit in the mouse coordinates
 	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN && game_panel->CheckPopulation())
 	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA);
+		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		new_unit->SetDiplomacy(ALLY);
-		
+
 		game_panel->IncressPopulation(1, false);
 	}
 	//Generate a Arbalest unit in the mouse coordinates
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && game_panel->CheckPopulation())
 	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST);
+		Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST, ALLY);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		new_unit->SetDiplomacy(ALLY);
 
 		game_panel->IncressPopulation(1, false);
 	}
@@ -154,7 +151,7 @@ bool j1Player::PreUpdate()
 	//Generate Warrior unit in mouse coordinates
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && game_panel->CheckPopulation())
 	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP);
+		Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP, ALLY);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 	}
 	return true;

@@ -78,7 +78,7 @@ public:
 	//Load all chosen civilization data
 	bool		LoadCivilization(const char* folder);
 	//Factory Methods -------
-	Unit*		GenerateUnit(UNIT_TYPE type, bool push_in_list = true);
+	Unit*		GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool push_in_list = true);
 	Building*	GenerateBuilding(BUILDING_TYPE type);
 	Resource*	GenerateResource(RESOURCE_TYPE type);
 

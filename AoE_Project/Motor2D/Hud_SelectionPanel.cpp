@@ -383,7 +383,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		{
 			//Set entity target to the selected unit
 			//Selected->GetEntity()->GetWorker()->Reset();
-			Selected->GetEntity()->AddAction(new SpawnUnitAction((HabitableBuilding*)Selected->GetEntity(), ARBALEST));
+			Selected->GetEntity()->AddAction(new SpawnUnitAction((HabitableBuilding*)Selected->GetEntity(), ARBALEST, ALLY));
 		}
 
 		break;

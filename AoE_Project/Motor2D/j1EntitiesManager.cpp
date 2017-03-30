@@ -568,7 +568,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	return ret;
 }
 
-Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, bool push_in_list)
+Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool push_in_list)
 {
 	Unit* new_unit = nullptr;
 
@@ -601,6 +601,10 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, bool push_in_list)
 				//Build unit
 				new_unit = new Unit(*units_defs[k]);
 			}
+
+			//Set generated unit diplomacy
+			new_unit->SetDiplomacy(diplomacy);
+
 			//Set unit animation
 			App->animator->UnitPlay(new_unit);
 			

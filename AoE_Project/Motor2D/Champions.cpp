@@ -203,8 +203,8 @@ bool Warrior::Draw(bool debug)
 	if(debug && selected) special_attack_area.Draw();
 
 	//Draw Entity Current animation frame
-	const Sprite* sprite = current_animation.GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+	const Sprite* sprite = current_animation->GetCurrentSprite();
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
 
 	return ret;
 }

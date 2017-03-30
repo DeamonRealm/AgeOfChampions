@@ -105,9 +105,9 @@ RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resou
 	return action;
 }
 
-SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type)
+SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type, DIPLOMACY diplomacy)
 {
-	SpawnUnitAction* action = new SpawnUnitAction(actor, type);
+	SpawnUnitAction* action = new SpawnUnitAction(actor, type, diplomacy);
 
 	all_actions.push_back(action);
 

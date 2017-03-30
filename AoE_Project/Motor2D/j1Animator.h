@@ -17,6 +17,7 @@ enum RESOURCE_TYPE;
 enum ATTACK_TYPE;
 enum ENTITY_TYPE;
 enum ITEM_TYPE;
+enum DIPLOMACY;
 
 ///Animation Sprite Class -----------------------
 class Sprite
@@ -55,7 +56,7 @@ public:
 	Animation();
 	~Animation();
 
-private:
+protected:
 
 	//Vector that storage the frames rect & pivot & z dimension
 	std::vector<Sprite>		sprites;
@@ -141,6 +142,74 @@ public:
 };
 /// ---------------------------------------------
 
+///Diplomatic Animation Class ------------------------------
+//Class that contains the animation basic necessary data
+class DiplomaticAnimation : public Animation
+{
+public:
+
+	DiplomaticAnimation();
+	~DiplomaticAnimation();
+
+private:
+
+	//Pointer to the animation different diplomacy texture
+	SDL_Texture*			red_texture = nullptr;
+
+public:
+
+	//Functionality -------------------
+	//Set Methods -----------
+	void	SetRedTexture(const SDL_Texture* tex);
+
+	//Get Methods -----------
+	SDL_Texture*					GetTexture(DIPLOMACY target_diplomacy)const;
+	SDL_Texture*					GetRedTexture()const;
+
+};
+/// ---------------------------------------------
+
+/// Animation Block Class -----------------------
+//Block that contains a vector of animations 
+class DiplomaticAnimation_Block
+{
+public:
+
+	DiplomaticAnimation_Block(uint enum_id = 0);
+
+	~DiplomaticAnimation_Block();
+
+private:
+
+	//Vector of other animation blocks
+	std::vector<DiplomaticAnimation_Block*>	childs;
+	//Enum id of this block
+	uint						enum_id = 0;
+	//Pointer to a vector of animations 
+	DiplomaticAnimation*		animation = nullptr;
+
+public:
+
+	//Functionality -------------------
+	//Delete all contained blocks data
+	void	ClearAnimationBlocks();
+
+	//Set Methods -----------
+	void	SetId(uint id);
+
+	//Get Methods -----------
+	uint						GetId()const;
+	DiplomaticAnimation*		GetAnimation()const;
+	DiplomaticAnimation_Block*	GetBlock(int index)const;
+	uint						GetChildsNum()const;
+	DiplomaticAnimation_Block*	SearchId(uint id)const;
+
+	//Add Methods -----------
+	void	SetAnimation(const DiplomaticAnimation* new_animation);
+	void	AddAnimationBlock(DiplomaticAnimation_Block* new_animation_block);
+
+};
+/// ---------------------------------------------
 
 //Animator Module -------------------------------
 class j1Animator : public j1Module
@@ -167,9 +236,9 @@ public:
 private:
 
 	//Vectors that define all the entities animations
-	std::vector<Animation_Block*> unit_blocks;
-	std::vector<Animation_Block*> building_blocks;
-	std::vector<Animation_Block*> resource_blocks;
+	std::vector<DiplomaticAnimation_Block*> unit_blocks;
+	std::vector<Animation_Block*>			building_blocks;
+	std::vector<Animation_Block*>			resource_blocks;
 
 public:
 
@@ -183,6 +252,7 @@ public:
 	BUILDING_TYPE	StrToBuildingEnum(const char* str)const;
 	ATTACK_TYPE		StrToAttackEnum(const char* str)const;
 	RESOURCE_TYPE	StrToResourceEnum(const char* str)const;
+
 	//Get the loop boolean from the action animation type
 	bool			AnimationLoopFromActionType(ACTION_TYPE type);
 

@@ -19,7 +19,8 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="warrior_chmp.png" width="689" height="689">
+
+<TextureAtlas blue_texture="warrior_chmp.png" red_texture="warrior_chmp.png" width="689" height="689">
   <!-- Define the unit type-->
   <unit id ="warrior_chmp">
 

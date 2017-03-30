@@ -23,6 +23,7 @@ class SaveResourcesVillagerAction;
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
 enum RESOURCE_TYPE;
+enum DIPLOMACY;
 
 /// Class Action --------------------------------
 //Action virtual class (are commands but not for the console)
@@ -97,7 +98,7 @@ public:
 	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource* target);
 
 	// Building Functions
-	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type);
+	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy);
 
 	/*AttackResourceAction*	AttackToResourceAction(Unit* actor, Resource* target);
 	bool	RecollectAction(Resource* target);*/

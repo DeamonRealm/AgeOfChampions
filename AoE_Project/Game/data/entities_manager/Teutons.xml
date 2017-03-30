@@ -1,8 +1,8 @@
 <data civilization ="Teutons">
   <units>
+   <id xml = "militia.xml"/>
    <id xml = "archer.xml"/>
    <id xml = "arbalest.xml"/>
-   <id xml = "militia.xml"/>
    <id xml = "cavalier.xml"/>
    <id xml = "cavalry_archer.xml"/>
    <id xml = "elite_skirmisher.xml"/>

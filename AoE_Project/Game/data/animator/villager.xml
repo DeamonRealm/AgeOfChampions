@@ -21,7 +21,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <villager>
 <item id="no_item">
-<TextureAtlas imagePath="villager.png" width="677" height="677"/>
+<TextureAtlas   blue_texture="villager.png" red_texture="villager.png" width="677" height="677"/>
   <!-- Attack Action-->
   <action enum= "attack" speed="200">
     <direction enum="south">
@@ -442,7 +442,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 </item>
 <item id="axe">
-  <TextureAtlas imagePath="villager_axe.png" width="854" height="854"/>
+  <TextureAtlas  blue_texture="villager_axe.png" red_texture="villager_axe.png" width="854" height="854"/>
   <!--Chopping Action-->
   <action enum ="attack" speed="200">
     <direction enum="south">
@@ -953,7 +953,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
   
 <item id="basket">
-  <TextureAtlas imagePath="villager_basket.png" width="942" height="942"/>
+  <TextureAtlas blue_texture="villager_basket.png" red_texture="villager_basket.png" width="942" height="942"/>
   <!--Attack Action-->
   <action enum ="attack" speed="200">
     <direction enum="south">
@@ -1562,7 +1562,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
 
 <item id="bow">
-  <TextureAtlas imagePath="villager_bow.png" width="863" height="863"/>
+  <TextureAtlas blue_texture="villager_bow.png" red_texture="villager_bow.png" width="863" height="863"/>
   <!--Attack Action-->
   <action enum ="attack" speed="200">
     <direction enum="south">
@@ -2074,7 +2074,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
 
 <item id="fish">
-<TextureAtlas imagePath="villager_carry.png" width="723" height="723"/>
+<TextureAtlas   blue_texture="villager_carry.png" red_texture="villager_carry.png" width="723" height="723"/>
   <!--Walk Action-->
   <action enum ="walk" speed="200">
     <direction enum="south">
@@ -2170,7 +2170,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
 
 <item id="gold">
-  <TextureAtlas imagePath="villager_carry.png" width="723" height="723"/>
+  <TextureAtlas blue_texture="villager_carry.png" red_texture="villager_carry.png" width="723" height="723"/>
   <!--Walk Action-->
   <action enum ="walk" speed="200">
     <direction enum="south">
@@ -2266,7 +2266,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
 
 <item id="meat">
-  <TextureAtlas imagePath="villager_carry.png" width="723" height="723"/>
+  <TextureAtlas blue_texture="villager_carry.png" red_texture="villager_carry.png" width="723" height="723"/>
   <!--Walk Action-->
   <action enum ="walk" speed="200">
     <direction enum="south">
@@ -2362,7 +2362,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
 
 <item id="stone">
-  <TextureAtlas imagePath="villager_carry.png" width="723" height="723"/>
+  <TextureAtlas blue_texture="villager_carry.png" red_texture="villager_carry.png" width="723" height="723"/>
   <!--Walk Action-->
   <action enum ="walk" speed="200">
     <direction enum="south">
@@ -2458,7 +2458,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
 
 <item id="wood">
-  <TextureAtlas imagePath="villager_carry.png" width="723" height="723"/>
+  <TextureAtlas blue_texture="villager_carry.png" red_texture="villager_carry.png" width="723" height="723"/>
   <!--Walk Action-->
   <action enum ="walk" speed="200">
     <direction enum="south">
@@ -2554,7 +2554,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
 
 <item id="hammer">
-  <TextureAtlas imagePath="villager_hammer.png" width="663" height="663"/>
+  <TextureAtlas blue_texture="villager_hammer.png" red_texture="villager_hammer.png" width="663" height="663"/>
   <!-- Construction Action-->
   <action enum= "construction" speed="200">
     <direction enum="south">
@@ -2972,7 +2972,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
 
 <item id="pick">
-  <TextureAtlas imagePath="villager_pick.png" width="748" height="748"/>
+  <TextureAtlas blue_texture="villager_pick.png" red_texture="villager_pick.png" width="748" height="748"/>
   <!--Die Action-->
   <action enum ="die" speed="300">
     <direction enum="south">
@@ -3390,7 +3390,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 </item>
 
 <item id="plow">
-  <TextureAtlas imagePath="villager_plow.png" width="862" height="862"/>
+  <TextureAtlas blue_texture="villager_plow.png" red_texture="villager_plow.png" width="862" height="862"/>
   <!-- Plowing Action-->
   <action enum= "plowing" speed="200">
     <direction enum="south">

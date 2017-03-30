@@ -222,6 +222,116 @@ void Animation_Block::AddAnimationBlock(Animation_Block* new_animation_block)
 }
 /// ---------------------------------------------
 
+///Diplomatic Animation Class ------------------------------
+//Constructor =========================
+DiplomaticAnimation::DiplomaticAnimation()
+{
+
+}
+
+//Destructor ==========================
+DiplomaticAnimation::~DiplomaticAnimation()
+{
+
+}
+
+void DiplomaticAnimation::SetRedTexture(const SDL_Texture * tex)
+{
+	red_texture = (SDL_Texture*)tex;
+}
+
+SDL_Texture * DiplomaticAnimation::GetTexture(DIPLOMACY target_diplomacy) const
+{
+	
+	//Ally case
+	if (target_diplomacy == DIPLOMACY::ALLY)return texture;
+	//Enemy case
+	if (target_diplomacy == DIPLOMACY::ENEMY) return red_texture;
+	//No diplomatic case
+	return texture;
+}
+
+SDL_Texture* DiplomaticAnimation::GetRedTexture()const
+{
+	return red_texture;
+}
+
+/// ---------------------------------------------
+
+
+/// Diplomatic Animation Block Class -----------------------
+//Constructor =========================
+DiplomaticAnimation_Block::DiplomaticAnimation_Block(uint enum_id) :enum_id(enum_id)
+{
+
+}
+
+//Destructor ==========================
+DiplomaticAnimation_Block::~DiplomaticAnimation_Block()
+{
+	ClearAnimationBlocks();
+}
+
+//Functionality =======================
+void DiplomaticAnimation_Block::ClearAnimationBlocks()
+{
+	while (childs.size() > 0)
+	{
+		childs.back()->ClearAnimationBlocks();
+		childs.pop_back();
+
+	}
+
+	if (animation != nullptr)delete animation;
+}
+
+void DiplomaticAnimation_Block::SetId(uint id)
+{
+	enum_id = id;
+}
+
+uint DiplomaticAnimation_Block::GetId() const
+{
+	return enum_id;
+}
+
+DiplomaticAnimation* DiplomaticAnimation_Block::GetAnimation() const
+{
+	return animation;
+}
+
+DiplomaticAnimation_Block * DiplomaticAnimation_Block::GetBlock(int index) const
+{
+	return childs.at(index);
+}
+
+uint DiplomaticAnimation_Block::GetChildsNum() const
+{
+	return childs.size();
+}
+
+DiplomaticAnimation_Block * DiplomaticAnimation_Block::SearchId(uint id) const
+{
+	uint size = childs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		if (childs[k]->GetId() == id)return childs[k];
+	}
+
+	return nullptr;
+}
+
+void DiplomaticAnimation_Block::SetAnimation(const DiplomaticAnimation * new_animation)
+{
+	if (new_animation != nullptr)animation = (DiplomaticAnimation*)new_animation;
+}
+
+void DiplomaticAnimation_Block::AddAnimationBlock(DiplomaticAnimation_Block* new_animation_block)
+{
+	if (new_animation_block != nullptr)childs.push_back(new_animation_block);
+}
+/// ---------------------------------------------
+
 
 //Animator Module -------------------------------
 //Constructor =========================
@@ -401,9 +511,11 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 	//Check if the loaded XML have villager structure & if true villager is loaded
 	if (strcmp(animations_data.first_child().name(), "villager") == 0) return LoadVillagerBlock(&animations_data);
 
-	//Texture load
-	load_folder = name + "/" + animations_data.child("TextureAtlas").attribute("imagePath").as_string();
-	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
+	//Textures load
+	load_folder = name + "/" + animations_data.child("TextureAtlas").attribute("red_texture").as_string();
+	SDL_Texture* red_texture = App->tex->Load(load_folder.c_str());
+	load_folder = name + "/" + animations_data.child("TextureAtlas").attribute("blue_texture").as_string();
+	SDL_Texture* blue_texture = App->tex->Load(load_folder.c_str());
 
 	//Load Animations data
 	//Node focused at any unit node
@@ -416,7 +528,7 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 	pugi::xml_node sprite;
 
 	//Build new unit animation block
-	Animation_Block* unit_anim_block = new Animation_Block();
+	DiplomaticAnimation_Block* unit_anim_block = new DiplomaticAnimation_Block();
 	//Get unit enum
 	unit_anim_block->SetId(StrToUnitEnum(unit_node.attribute("id").as_string()));
 
@@ -425,7 +537,7 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 	while (action_node != NULL)
 	{
 		//Build new action animation block
-		Animation_Block* action_anim_block = new Animation_Block();
+		DiplomaticAnimation_Block* action_anim_block = new DiplomaticAnimation_Block();
 		//Get current action enum
 		ACTION_TYPE act_type = StrToActionEnum(action_node.attribute("enum").as_string());
 		action_anim_block->SetId(act_type);
@@ -441,18 +553,19 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 		while (direction_node != NULL) {
 			
 			//Build new direction animation block
-			Animation_Block* direction_anim_block = new Animation_Block();
+			DiplomaticAnimation_Block* direction_anim_block = new DiplomaticAnimation_Block();
 			//Get direction block direction enum
 			direction_anim_block->SetId(StrToDirectionEnum(direction_node.attribute("enum").as_string()));
 
 			//Build direction block animation
-			Animation* animation = new Animation();
+			DiplomaticAnimation* animation = new DiplomaticAnimation();
 			//Set animation speed
 			animation->SetSpeed(speed);
 			//Set animation loop from action type
 			animation->SetLoop(loop);
 			//Set animation texture
-			animation->SetTexture(texture);
+			animation->SetTexture(blue_texture);
+			animation->SetRedTexture(red_texture);
 
 			//Focus sprite node at first sprite of direction node
 			sprite = direction_node.first_child();
@@ -516,19 +629,21 @@ bool j1Animator::LoadVillagerBlock(pugi::xml_document* doc)
 	std::string dir_str = name + "/";
 
 	//Build new unit animation block
-	Animation_Block* unit_anim_block = new Animation_Block();
+	DiplomaticAnimation_Block* unit_anim_block = new DiplomaticAnimation_Block();
 	//Get unit enum
 	unit_anim_block->SetId(VILLAGER);
 
 	//Iterate all items
 	while (item_node != NULL)
 	{
-		//Load the item animations texture
-		std::string folder = dir_str + item_node.first_child().attribute("imagePath").as_string();
-		SDL_Texture* texture = App->tex->Load(folder.c_str());
+		//Load the item animations textures
+		std::string folder = dir_str + item_node.first_child().attribute("blue_texture").as_string();
+		SDL_Texture* blue_texture = App->tex->Load(folder.c_str());
+		folder = dir_str + item_node.first_child().attribute("red_texture").as_string();
+		SDL_Texture* red_texture = App->tex->Load(folder.c_str());
 
 		//Allocate the item animation block
-		Animation_Block* item_animation_block = new Animation_Block();
+		DiplomaticAnimation_Block* item_animation_block = new DiplomaticAnimation_Block();
 
 		//Set item animation block id
 		item_animation_block->SetId(App->animator->StrToItemEnum(item_node.attribute("id").as_string()));
@@ -541,7 +656,7 @@ bool j1Animator::LoadVillagerBlock(pugi::xml_document* doc)
 		{
 
 			//Build new action animation block
-			Animation_Block* action_anim_block = new Animation_Block();
+			DiplomaticAnimation_Block* action_anim_block = new DiplomaticAnimation_Block();
 			//Get current action enum
 			ACTION_TYPE act_type = StrToActionEnum(action_node.attribute("enum").as_string());
 			action_anim_block->SetId(act_type);
@@ -556,18 +671,19 @@ bool j1Animator::LoadVillagerBlock(pugi::xml_document* doc)
 			while (direction_node != NULL) {
 
 				//Build new direction animation block
-				Animation_Block* direction_anim_block = new Animation_Block();
+				DiplomaticAnimation_Block* direction_anim_block = new DiplomaticAnimation_Block();
 				//Get direction block direction enum
 				direction_anim_block->SetId(StrToDirectionEnum(direction_node.attribute("enum").as_string()));
 
 				//Build direction block animation
-				Animation* animation = new Animation();
+				DiplomaticAnimation* animation = new DiplomaticAnimation();
 				//Set animation speed
 				animation->SetSpeed(speed);
 				//Set animation loop from action type
 				animation->SetLoop(loop);
 				//Set animation texture
-				animation->SetTexture(texture);
+				animation->SetTexture(blue_texture);
+				animation->SetRedTexture(red_texture);
 
 				//Focus sprite node at first sprite of direction node
 				sprite = direction_node.first_child();
@@ -797,7 +913,7 @@ bool j1Animator::UnitPlay(Unit* target)
 	case NORTH_WEST:	target->SetFlipSprite(false);	break;
 
 	}
-	Animation_Block* block = nullptr;
+	DiplomaticAnimation_Block* block = nullptr;
 
 	//Iterate all blocks of childs vector
 	uint size = unit_blocks.size();
@@ -821,7 +937,9 @@ bool j1Animator::UnitPlay(Unit* target)
 			//If direction block is found returns the block animation
 			if (block != nullptr)
 			{
-				target->SetAnimation(block->GetAnimation());
+				target->CleanAnimation();
+				DiplomaticAnimation* anim = new DiplomaticAnimation(*block->GetAnimation());
+				target->SetAnimation((Animation*)anim);
 				target->GetAnimation()->Reset();
 
 				return true;

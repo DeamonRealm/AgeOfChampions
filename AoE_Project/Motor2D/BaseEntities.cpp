@@ -61,10 +61,19 @@ bool Entity::Draw(bool debug)
 	bool ret = false;
 
 	//Draw Entity Current animation frame
-	const Sprite* sprite = current_animation.GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetXpivot(), sprite->GetYpivot());
+	const Sprite* sprite = current_animation->GetCurrentSprite();
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetXpivot(), sprite->GetYpivot());
 
 	return ret;
+}
+
+void Entity::CleanAnimation()
+{
+	if (current_animation != nullptr)
+	{
+		delete current_animation;
+		current_animation = nullptr;
+	}
 }
 
 //Add Action ------------
@@ -112,7 +121,7 @@ void Entity::SetLife(uint life_val)
 
 void Entity::SetAnimation(Animation * anim)
 {
-	current_animation = *anim;
+	current_animation = anim;
 }
 
 void Entity::SetFlipSprite(bool flip)
@@ -169,7 +178,7 @@ uint Entity::GetLife() const
 
 Animation* Entity::GetAnimation() 
 {
-	return &current_animation;
+	return current_animation;
 }
 
 bool Entity::GetFlipSprite() const
@@ -256,8 +265,8 @@ bool Unit::Draw(bool debug)
 	}*/
 
 	//Draw Entity Current animation frame
-	const Sprite* sprite = current_animation.GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+	const Sprite* sprite = current_animation->GetCurrentSprite();
+	ret = App->render->CallBlit(((DiplomaticAnimation*)current_animation)->GetTexture(entity_diplomacy), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
 
 	return ret;
 }
@@ -307,7 +316,7 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 
 			return true;
 		}
-		//if we have a colision with other unit and we have lower priority reduction of spped
+		//if we have a collision with other unit and we have lower priority reduction of speed
 
 		//Look in the next update if there is an error
 		future_position = *(path->rbegin() + 1);
@@ -566,7 +575,7 @@ bool Unit::Die()
 		action_type = DIE;
 		App->animator->UnitPlay(this);
 	}
-	else if (current_animation.IsEnd())
+	else if (current_animation->IsEnd())
 	{
 		if (action_type == DIE)
 		{
@@ -975,12 +984,12 @@ bool Resource::Draw(bool debug)
 	x_axis.Draw();
 	}*/
 
-	const std::vector<Sprite>* sprites = current_animation.GetAllSprites();
+	const std::vector<Sprite>* sprites = current_animation->GetAllSprites();
 
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		ret = App->render->CallBlit(current_animation.GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity());
+		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity());
 		if (!ret)break;
 	}
 
@@ -1115,12 +1124,12 @@ bool Building::Draw(bool debug)
 	}*/
 
 	//Get all sprites of the current animation
-	const std::vector<Sprite>*	sprites = current_animation.GetAllSprites();
+	const std::vector<Sprite>*	sprites = current_animation->GetAllSprites();
 
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		ret = App->render->CallBlit(current_animation.GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity());
+		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity());
 		if (!ret)break;
 	}
 
