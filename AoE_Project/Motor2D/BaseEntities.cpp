@@ -316,6 +316,27 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 				}
 					break;
 				case COLLISION_MOVE:
+						if (other_unit->GetPath()->size() < 2 && GetPath()->size() < 2) {
+							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+								other_unit->Repath(other_unit->GetPath());
+							else
+								Repath(path);
+
+						}
+						else
+						{
+							if (mutable_speed == 0 && other_unit->mutable_speed == 0)
+							{
+								if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+									other_unit->mutable_speed -= 0.2;
+								else
+									mutable_speed -= 0.2;
+							}
+						}
+					
+					collisions++;
+					break;
+				case FUTURE_COLLISION_MOVE:
 					if (future_position == other_unit->future_position) {
 						if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
@@ -682,6 +703,10 @@ COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 	}
 	else if (other->action_type == WALK) {
 		if (sqrt((other->future_position.x - current->future_position.x) * (other->future_position.x - current->future_position.x) + (other->future_position.y - current->future_position.y) * (other->future_position.y - current->future_position.y)) < (current->soft_collider.GetRad() + other->soft_collider.GetRad()))
+		{
+			return FUTURE_COLLISION_MOVE;
+		}
+		if (sqrt((other->GetPosition().x - current->GetPosition().x) * (other->GetPosition().x - current->GetPosition().x) + (other->GetPosition().y - current->GetPosition().y) * (other->GetPosition().y - current->GetPosition().y)) < (current->soft_collider.GetRad() + other->soft_collider.GetRad()))
 		{
 			return COLLISION_MOVE;
 		}

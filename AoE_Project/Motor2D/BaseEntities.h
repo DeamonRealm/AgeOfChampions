@@ -137,6 +137,7 @@ enum COLLISION_TYPE
 {
 	NO_COLLISION,
 	COLLISION_IDLE,
+	FUTURE_COLLISION_MOVE,
 	COLLISION_MOVE
 };
 // --------------------------
