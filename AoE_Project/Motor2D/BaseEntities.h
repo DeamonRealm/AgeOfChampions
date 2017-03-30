@@ -326,6 +326,7 @@ public:
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y);
+	void	SetFutureAction(const iPoint& future_position);
 	void	SetUnitType(UNIT_TYPE type);
 	void	SetInteractionTarget(const Entity* target);
 	void	SetVision(const Circle& new_mark);

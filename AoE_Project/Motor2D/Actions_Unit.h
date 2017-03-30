@@ -28,6 +28,8 @@ public:
 		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
 		path = App->pathfinding->SimpleAstar(origin, iPoint(x_new, y_new));
 		((Unit*)actor)->Focus(path->back());
+		((Unit*)actor)->SetFutureAction(*(path->rbegin()+1));
+
 	//	App->sound->PlayAudio(MOVE_SOUND);
 		return true;
 	}

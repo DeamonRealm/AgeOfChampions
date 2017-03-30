@@ -294,7 +294,6 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 		//if we have a collision with other unit and we have lower priority reduction of speed
 
 		//Look in the next update if there is an error
-		future_position = *(path->rbegin() + 1);
 		std::vector<Unit*> other_units;
 		App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
 		other_units.size();
@@ -309,25 +308,31 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 					break;
 				case COLLISION_IDLE:
 				{
-					if(GetPath()->size() <= 2)
-					Repath(path);
+					if (future_position == other_unit->GetPositionRounded()) {
+
+						if (GetPath()->size() <= 2)
+							Repath(path);
+					}
 				}
 					break;
 				case COLLISION_MOVE:
-					if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
-						if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-							other_unit->Repath(other_unit->GetPath());
-						else
-							Repath(path);
-					}
-					else
-					{
-						if (mutable_speed == 0 && other_unit->mutable_speed == 0)
-						{
+					if (future_position == other_unit->future_position) {
+						if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-								other_unit->mutable_speed -= 0.2;
+								other_unit->Repath(other_unit->GetPath());
 							else
-								mutable_speed -= 0.2;
+								Repath(path);
+
+						}
+						else
+						{
+							if (mutable_speed == 0 && other_unit->mutable_speed == 0)
+							{
+								if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+									other_unit->mutable_speed -= 0.2;
+								else
+									mutable_speed -= 0.2;
+							}
 						}
 					}
 					collisions++;
@@ -340,7 +345,8 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 		if (collisions == 0 && mutable_speed!=0.0f) {
 			mutable_speed = 0.0f;
 		}
-		if (path->size() == 1 && UnitHere())
+
+		if (path->size() == 1)
 		{
 		
 			//Set unit at the goal pixel position
@@ -355,10 +361,7 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 
 			return true;
 		}
-		else if (path->size() == 1 && !UnitHere())
-		{
-			Repath(path);
-		}
+	
 		if (!App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
 		{
 			std::vector<iPoint>* new_path;
@@ -387,7 +390,8 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 
 		path->pop_back();
 		goal = path->back();
-		
+		future_position = *(path->rbegin() + 1);
+
 		//Focus the unit at the next goal
 		Focus(goal);
 	}
@@ -427,7 +431,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 	iPoint pos = App->map->WorldToMap(GetPositionRounded().x, GetPositionRounded().y);
 	// south
 	cell.create(pos.x, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell)&& UnitHere())
+	if (App->pathfinding->IsWalkable(cell))
 	{
 		
 		return App->map->MapToWorld(cell.x, cell.y);;
@@ -435,7 +439,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 
 	// north
 	cell.create(pos.x, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	if (App->pathfinding->IsWalkable(cell))
 	{
 
 		return App->map->MapToWorld(cell.x, cell.y);;
@@ -443,7 +447,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	if (App->pathfinding->IsWalkable(cell))
 	{
 
 		return App->map->MapToWorld(cell.x, cell.y);;
@@ -451,7 +455,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	if (App->pathfinding->IsWalkable(cell))
 	{
 
 		return App->map->MapToWorld(cell.x, cell.y);;
@@ -459,28 +463,28 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 
 	// south-east
 	cell.create(pos.x + 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	if (App->pathfinding->IsWalkable(cell))
 	{
 
 		return App->map->MapToWorld(cell.x, cell.y);;
 	}
 	// south-west
 	cell.create(pos.x - 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	if (App->pathfinding->IsWalkable(cell))
 	{
 
 		return App->map->MapToWorld(cell.x, cell.y);;
 	}
 	// north-east
 	cell.create(pos.x + 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	if (App->pathfinding->IsWalkable(cell))
 	{
 
 		return App->map->MapToWorld(cell.x, cell.y);;
 	}
 	// north-west
 	cell.create(pos.x - 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell) && UnitHere())
+	if (App->pathfinding->IsWalkable(cell))
 	{
 
 		return App->map->MapToWorld(cell.x, cell.y);;
@@ -717,6 +721,11 @@ void Unit::SetPosition(float x, float y)
 
 	//Add the unit with the correct position in the correct quad tree
 	App->entities_manager->units_quadtree.Insert(this, &position);
+}
+
+void Unit::SetFutureAction(const iPoint & position)
+{
+	future_position = position;
 }
 
 void Unit::SetAttackBuff(float atk_buff)
