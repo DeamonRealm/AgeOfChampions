@@ -285,6 +285,7 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 		LOG("Error path not found!");
 		return true;
 	}
+	
 
 	//Build goal path point
 	iPoint goal = path->back();
@@ -333,12 +334,25 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 				}
 					break;
 				case COLLISION_MOVE:
+				
 					if (mutable_speed == 0 && other_unit->mutable_speed == 0)
 					{
-						if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-							other_unit->mutable_speed -= 1.8;
+						if (path->size() == 2)
+						{
+							action_type = IDLE;
+
+							delete path;
+							path = nullptr;
+							return true;
+
+						}
 						else
-							mutable_speed -= 1.8;
+						{
+							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+								other_unit->mutable_speed -= 1.8;
+							else
+								mutable_speed -= 1.8;
+						}
 					}
 					collisions++;
 					break;
