@@ -33,8 +33,9 @@ public:
 	{
 		if (timer.Read() >= time)
 		{
+			iPoint spawn_point = ((ProductiveBuilding*)actor)->GetSpawnPoint();
 			int x = ((ProductiveBuilding*)actor)->GetSpawnPoint().x + actor->GetPosition().x;
-			int y = ((ProductiveBuilding*)actor)->GetSpawnPoint().y + actor->GetPosition().y + 80;
+			int y = ((ProductiveBuilding*)actor)->GetSpawnPoint().y + actor->GetPosition().y;
 			App->entities_manager->AddUnit(new_unit);
 			new_unit->SetPosition(x, y);
 			App->animator->UnitPlay(new_unit);

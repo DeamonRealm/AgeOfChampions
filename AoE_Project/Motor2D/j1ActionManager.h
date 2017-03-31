@@ -82,6 +82,7 @@ private:
 
 	std::list<Action*> action_queue;
 	Action* current_action = nullptr;
+	bool paused = false;
 
 public:
 
@@ -92,6 +93,9 @@ public:
 
 	TASK_TYPE GetCurrentActionType() const;
 	Action* GetCurrentAction() const;
+
+	void Pause();
+	void Restart();
 
 };
 ///----------------------------------------------

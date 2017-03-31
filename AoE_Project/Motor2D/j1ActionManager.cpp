@@ -158,6 +158,9 @@ ActionWorker::~ActionWorker()
 //Worker methods
 void ActionWorker::Update()
 {
+	if (paused)
+		return;
+
 	if (current_action != nullptr)
 	{
 		if (current_action->Execute())
@@ -213,6 +216,8 @@ void ActionWorker::Reset()
 		action_queue.pop_front();
 		RELEASE(to_erase);
 	}
+
+	paused = false;
 }
 
 TASK_TYPE ActionWorker::GetCurrentActionType() const
@@ -223,5 +228,14 @@ TASK_TYPE ActionWorker::GetCurrentActionType() const
 Action * ActionWorker::GetCurrentAction() const
 {
 	return current_action;
+}
+
+void ActionWorker::Pause()
+{
+	paused = true;
+}
+void ActionWorker::Restart()
+{
+	paused = false;
 }
 ///----------------------------------------------

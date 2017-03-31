@@ -19,8 +19,8 @@ public:
 private:
 	
 	std::string			text;
-	_TTF_Font*			text_font;
-	SDL_Texture*		text_texture;
+	_TTF_Font*			text_font = nullptr;
+	SDL_Texture*		text_texture = nullptr;
 	SDL_Color			text_color;
 
 public:

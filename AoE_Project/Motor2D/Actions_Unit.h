@@ -167,7 +167,6 @@ public:
 	bool Execute()
 	{
 		//Actor recollect
-		((Unit*)actor)->SetInteractionTarget(target);
 		return ((Villager*)actor)->Recollect();
 	}
 

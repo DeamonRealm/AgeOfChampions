@@ -629,9 +629,17 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 	{
 		if (buildings_defs[k]->GetBuildingType() == type)
 		{
-			//Build unit
-			new_building = new Building(*buildings_defs[k]);
+			if(type == TOWN_CENTER)
+			{
+				new_building = new ProductiveBuilding(*(ProductiveBuilding*)buildings_defs[k]);
+				
+			}
+			else
+			{
+				//Build unit
+				new_building = new Building(*buildings_defs[k]);
 
+			}
 			//Set unit animation
 			App->animator->BuildingPlay(new_building);
 

@@ -165,7 +165,7 @@ protected:
 	uint			max_life = 0;
 	float			life = 0;
 	//Visual -----------
-	Animation*		current_animation;
+	Animation*		current_animation = nullptr;
 	bool			flip_sprite = false;
 	SDL_Rect		selection_rect = { 0,0,0,0 };
 	SDL_Rect		icon_rect = { 0,0,0,0 };

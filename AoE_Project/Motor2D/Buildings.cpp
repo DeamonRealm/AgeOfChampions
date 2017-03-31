@@ -73,6 +73,7 @@ void HabitableBuilding::SetCurrentUnits(uint units)
 
 void HabitableBuilding::SetUnitsSpawnPoint(const iPoint & point)
 {
+	LOG("Set Spawn point x:%i   Spawn Point y:%i ", units_spawn_point.x, units_spawn_point.y);
 	units_spawn_point = point;
 }
 
@@ -89,6 +90,7 @@ uint HabitableBuilding::GetCurrentUnits() const
 
 iPoint HabitableBuilding::GetSpawnPoint() const
 {
+	LOG("Get Spawn point x:%i   Spawn Point y:%i ", units_spawn_point.x, units_spawn_point.y);
 	return units_spawn_point;
 }
 
