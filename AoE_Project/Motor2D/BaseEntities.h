@@ -19,6 +19,8 @@ struct SDL_Texture;
 struct PathNode;
 enum CURSOR_TARGET;
 
+#define FOCUS_MARGIN 12
+
 // ENTITIES ENUMS -----------
 enum ENTITY_TYPE
 {

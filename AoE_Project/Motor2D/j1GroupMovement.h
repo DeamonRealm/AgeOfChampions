@@ -15,6 +15,7 @@ enum FormationType {
 
 struct Formation
 {
+	void SetFormation(int size);
 	int formationSize = 0;
 	int height = 0;
 	int width = 0;
@@ -42,6 +43,7 @@ private:
 	iPoint GetMiddlePoint();
 	void OtherUnitsPath();
 	bool GroupCanWalk(const iPoint& position);
+	bool PlaceTaken(const std::vector<iPoint> positions, const iPoint& check);
 	std::vector<iPoint>* CreatePath();
 	std::vector<iPoint>* CreateFirstDestination();
 	std::vector<iPoint>* LeaderPath();
@@ -51,7 +53,7 @@ private:
 	std::list<Entity*>* units =nullptr;
 	Entity* lead = nullptr;
 	iPoint middle_point;
-	Formation* formation = nullptr;
+	Formation formation;
 	int group_size = 0;
 	DIRECTION_TYPE lead_direcction;
 };

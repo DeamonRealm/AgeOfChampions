@@ -450,6 +450,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 {
 	iPoint cell;
 	iPoint pos = App->map->WorldToMap(GetPositionRounded().x, GetPositionRounded().y);
+
 	// south
 	cell.create(pos.x, pos.y + 1);
 	if (App->pathfinding->IsWalkable(cell))
