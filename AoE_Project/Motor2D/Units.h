@@ -43,6 +43,7 @@ public:
 	bool Recollect();
 	bool SaveResources();
 	void CheckRecollectResource(RESOURCE_TYPE type);
+	void CheckCarryResource();
 	void ResetResourcesData();
 };
 /// -------------------------

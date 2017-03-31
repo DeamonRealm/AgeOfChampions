@@ -120,15 +120,6 @@ RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resou
 	return action;
 }
 
-SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type, DIPLOMACY diplomacy)
-{
-	SpawnUnitAction* action = new SpawnUnitAction(actor, type, diplomacy);
-
-	all_actions.push_back(action);
-
-	return action;
-}
-
 SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * actor, Building * target)
 {
 	//Generate a new move action definition
@@ -139,6 +130,29 @@ SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * ac
 	all_actions.push_back(action);
 
 	return action;
+}
+
+SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type, DIPLOMACY diplomacy)
+{
+	SpawnUnitAction* action = new SpawnUnitAction(actor, type, diplomacy);
+
+	all_actions.push_back(action);
+
+	return action;
+}
+
+void j1ActionManager::CleanRelatedActions(const Entity * target)
+{
+	std::list<Action*>::iterator act = all_actions.begin();
+	while (act != all_actions.end())
+	{
+		if (act._Ptr->_Myval->Related(target))
+		{
+			all_actions.remove(act._Ptr->_Myval);
+			act = all_actions.begin();
+		}
+		else act++;
+	}
 }
 /// ---------------------------------------------
 
@@ -200,6 +214,24 @@ void ActionWorker::AddPriorizedAction(Action * action)
 	{
 		current_action = action;
 		current_action->Activation();
+	}
+}
+
+void ActionWorker::PopAction(Action * action)
+{
+	if (current_action == action)current_action = nullptr;
+	else
+	{
+		std::list<Action*>::iterator act = action_queue.begin();
+		while (act != action_queue.end())
+		{
+			if (act._Ptr->_Myval == action)
+			{
+				action_queue.remove(action);
+				return;
+			}
+			act++;
+		}
 	}
 }
 

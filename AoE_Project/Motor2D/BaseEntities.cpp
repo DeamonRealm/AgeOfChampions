@@ -88,6 +88,11 @@ void Entity::AddPriorizedAction(Action * action)
 	action_worker->AddPriorizedAction(action);
 }
 
+void Entity::PopAction(Action * action)
+{
+	action_worker->PopAction(action);
+}
+
 //Set Methods -----
 void Entity::SetName(const char * name_str)
 {
@@ -578,7 +583,14 @@ void Unit::Focus(const iPoint & target, bool play)
 	}
 
 	//Set the unit animation with the new direction
-	if(directed && play)App->animator->UnitPlay(this);
+	if (play)
+	{
+		App->animator->UnitPlay(this);
+	}
+	else if (directed)
+	{
+		App->animator->UnitPlay(this);
+	}
 }
 
 DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
@@ -1124,24 +1136,28 @@ bool Resource::Draw(bool debug)
 
 bool Resource::ExtractResources(uint* value)
 {
-	if (life == 0)return false;
+	if (life <= 0)
+	{
+		return false;
+	}
 	if (life <= *value)
 	{
 		*value = life;
 		life = 0;
 		App->entities_manager->DeleteEntity(this);
 		App->entities_manager->resources_quadtree.Exteract(&position);
-		return true;
+		App->action_manager->CleanRelatedActions(this);
+		return false;
 	}
 	else
 	{
 		life -= *value;
-		if (resource_type == GOLD_ORE && life < 50)
+		if (resource_type == GOLD_ORE && life < 500)
 		{
 			resource_type = TINY_GOLD_ORE;
 			App->animator->ResourcePlay(this);
 		}
-		else if (resource_type == STONE_ORE && life < 50)
+		else if (resource_type == STONE_ORE && life < 500)
 		{
 			resource_type = TINY_STONE_ORE;
 			App->animator->ResourcePlay(this);

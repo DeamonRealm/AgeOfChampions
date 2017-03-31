@@ -196,6 +196,7 @@ public:
 	//Add Action ------------
 	void			AddAction(Action* action);
 	void			AddPriorizedAction(Action* action);
+	void			PopAction(Action* action);
 
 	//Set Methods -----------
 	void			SetName(const char* name_str);

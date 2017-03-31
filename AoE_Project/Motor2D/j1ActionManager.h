@@ -52,20 +52,27 @@ public:
 
 protected:
 
-	Entity* actor = nullptr;
-	TASK_TYPE type = TASK_NONE;
+	Entity*		actor = nullptr;
+	TASK_TYPE	type = TASK_NONE;
 
 public:
 
 	//This function defines the action taking place
-	//Retruns false if Action was unable to initialize
+	//Returns false if Action was unable to initialize
 	virtual bool Activation() { return true; }
 	//Returns TRUE when execute is finished
 	virtual bool Execute()	{ return true; }
+	//Returns true if the action is related with the target
+	virtual bool Related(const Entity* tar)const { return(actor == tar); }
 	///Each different action inheriting from this class should have custom
 	///properties to do its actions.
 
+	//Get methods -----------
 	TASK_TYPE GetType();
+
+	//Operators -------------
+	bool operator == (const Action& tar) { return (actor == tar.actor && type == tar.type); }
+
 };
 /// ---------------------------------------------
 
@@ -89,6 +96,7 @@ public:
 	void Update();
 	void AddAction(Action* action);
 	void AddPriorizedAction(Action* action);
+	void PopAction(Action* action);
 	void Reset();
 
 	TASK_TYPE GetCurrentActionType() const;
@@ -115,21 +123,24 @@ public:
 public:
 
 	//Action Calls --------------------
+	//Move Functions
 	MoveUnitAction*				MoveAction(Unit* actor, int x, int y);
 	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor);
+	
+	//Attack Functions
 	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit *target);
 	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target);
 	DieUnitAction*				DieAction(Unit* actor);
+	
+	//Recollect Functions
 	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource* target);
+	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building* target);
 
 	// Building Functions
 	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy);
-
-	/*AttackResourceAction*	AttackToResourceAction(Unit* actor, Resource* target);
-	bool	RecollectAction(Resource* target);*/
-
-	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building* target);
-
+	
+	//Clean all actions related with the entity
+	void CleanRelatedActions(const Entity* target);
 
 private:
 

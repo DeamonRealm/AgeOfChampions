@@ -38,7 +38,7 @@ public:
 			if (path == nullptr)return false;
 		}
 		((Unit*)actor)->SetAction(WALK);
-		((Unit*)actor)->Focus(path->back());
+		((Unit*)actor)->Focus(path->back(),true);
 		((Unit*)actor)->SetFutureAction(*(path->rbegin()+1));
 
 		return true;
@@ -84,6 +84,11 @@ public:
 		return ((Unit*)actor)->AttackUnit();
 	}
 
+	bool Related(const Entity* tar)const
+	{
+		return (actor == tar || target == tar);
+	}
+
 private:
 
 	Entity* target = nullptr;
@@ -109,6 +114,11 @@ public:
 	{
 		//Actor attack the target
 		return ((Unit*)actor)->AttackBuilding();
+	}
+
+	bool Related(const Entity* tar)const
+	{
+		return (actor == tar || target == tar);
 	}
 
 private:
@@ -159,7 +169,7 @@ public:
 
 		//Set actor animation
 		((Villager*)actor)->ResetResourcesData();
-		((Villager*)actor)->Focus(target->GetPositionRounded(), false);
+		((Villager*)actor)->Focus(target->GetPositionRounded(), true);
 		((Villager*)actor)->CheckRecollectResource(((Resource*)target)->GetResourceType());
 
 		return true;
@@ -169,6 +179,11 @@ public:
 	{
 		//Actor recollect
 		return ((Villager*)actor)->Recollect();
+	}
+
+	bool Related(const Entity* tar)const
+	{
+		return (actor == tar || target == tar);
 	}
 
 private:
@@ -193,19 +208,22 @@ public:
 	bool Activation()
 	{
 		//Set actor interaction target
-		if (target != nullptr)
-		{
-			((Unit*)actor)->SetInteractionTarget(target);
-			return true;
-		}
-		else
-			return false;
+		if (target == nullptr)return false;
+
+		((Unit*)actor)->SetInteractionTarget(target);
+		((Villager*)actor)->CheckCarryResource();
+		return true;
 	}
 
 	bool Execute()
 	{
 		//Actor save resources
 		return ((Villager*)actor)->SaveResources();
+	}
+
+	bool Related(const Entity* tar)const
+	{
+		return (actor == tar || target == tar);
 	}
 
 private:

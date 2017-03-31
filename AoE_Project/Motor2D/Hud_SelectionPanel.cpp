@@ -223,7 +223,7 @@ void Entity_Profile::UpdateStats()
 	}
 	if (e_type == RESOURCE)
 	{
-		if (u_resources != ((Resource*)element)->GetMaxLife())
+		if (u_resources != ((Resource*)element)->GetLife())
 		{
 			u_resources = ((Resource*)element)->GetLife();
 			resources->SetString(App->gui->SetStringFromInt(u_resources));

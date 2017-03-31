@@ -4,6 +4,7 @@
 #include "j1ActionManager.h"
 #include "p2Log.h"
 #include "Hud_GamePanel.h"
+#include "j1Player.h"
 
 /// Class Villager --------------------
 //Constructors ========================
@@ -72,7 +73,19 @@ bool Villager::Recollect()
 	uint recollect_value = MIN(recollect_capacity, resources_capacity - current_resources);
 	
 	//Extract resource material, if it fails return true to end the recollect action
-	if (!((Resource*)interaction_target)->ExtractResources(&recollect_value)) return true;
+	if (!((Resource*)interaction_target)->ExtractResources(&recollect_value))
+	{
+		if (current_resources > 0)
+		{
+			//Go to the nearest download point
+			Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
+			if (save_point == nullptr)return true;
+			//Set the carry action animation type
+			AddAction((Action*)App->action_manager->SaveResourcesAction(this, save_point));
+			return true;
+		}
+		return true;
+	}
 	
 	//Add extracted resources at the villager
 	current_resources += recollect_value;
@@ -83,6 +96,7 @@ bool Villager::Recollect()
 		//Go to the nearest download point
 		Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
 		if (save_point == nullptr)return true;
+		//Set the carry action animation type
 		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, save_point));
 		return false;
 	}
@@ -103,12 +117,13 @@ bool Villager::SaveResources()
 		return false;
 	}
 
-	//Check the action rate
-	if (action_timer.Read() < attack_rate) return false;
+	//Store all the resources collected in the player bag
+	App->player->game_panel->AddResource(current_resources, resource_collected_type);
 
-	
+	//Reset all the resources data so the next action will not be affected for it
+	this->ResetResourcesData();
 
-	return false;
+	return true;
 }
 
 void Villager::CheckRecollectResource(RESOURCE_TYPE type)
@@ -159,6 +174,28 @@ void Villager::CheckRecollectResource(RESOURCE_TYPE type)
 	}
 
 	App->animator->UnitPlay(this);
+}
+
+void Villager::CheckCarryResource()
+{
+	switch (resource_collected_type)
+	{
+	case GP_NO_RESOURCE:
+		item_type = NO_ITEM;
+		break;
+	case GP_WOOD:
+		item_type = ITEM_TYPE::WOOD;
+		break;
+	case GP_MEAT:
+		item_type = ITEM_TYPE::MEAT;
+		break;
+	case GP_GOLD:
+		item_type = ITEM_TYPE::GOLD;
+		break;
+	case GP_STONE:
+		item_type = ITEM_TYPE::STONE;
+		break;
+	}
 }
 
 void Villager::ResetResourcesData()

@@ -144,7 +144,7 @@ bool Circle::Intersects(const Rectng * target) const
 	fPoint norm(vec.x,vec.y);
 	norm.Norm();
 	vec.x -= ceil((target->GetWidth() * 0.5) * norm.x);
-	vec.y -= ceil(((target->GetHeight() * sin(x_angle)) * 0.5) * norm.y);
+	vec.y -= ceil(((target->GetHeight()) * 0.5) * norm.y);
 	float len = sqrt(vec.x * vec.x + vec.y * vec.y);
 	return (len <= rad);
 }
@@ -172,7 +172,7 @@ iPoint Circle::NearestPoint(const Rectng* target) const
 	fPoint norm(vec.x, vec.y);
 	norm.Norm();
 	vec.x -= ceil((target->GetWidth() * 0.5) * norm.x);
-	vec.y -= ceil(((target->GetHeight()* sin(x_angle)) * 0.5) * norm.y);
+	vec.y -= ceil((target->GetHeight() * 0.5) * norm.y);
 	return iPoint(position.x + vec.x,position.y + vec.y);
 }
 
