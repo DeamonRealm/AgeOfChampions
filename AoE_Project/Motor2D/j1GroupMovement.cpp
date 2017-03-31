@@ -68,26 +68,34 @@ void j1GroupMovement::OtherUnitsPath()
 {
 	iPoint new_middle_point;
 	iPoint new_destination;
-	int i = 1;
-
+	int i = 0;
+	bool left = true;
 	switch (lead_direcction)
 	{
 	case NORTH:
 		//iterate list of units
+		
 		for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 		{
 			//get the unit if is the lead continue
+
 			Entity* single_unit = item._Ptr->_Myval;
+
 			if (single_unit == lead) {
 				continue;
 			}
+			if (left == true) {
+				i *= -1;
+				i++;
+			}
+
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
 			new_destination.create(destination.x + 20 * i, destination.y);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			i++;
-
+			left != left;
+			i *= -1;
 		}
 		break;
 	case NORTH_EAST:
@@ -95,17 +103,24 @@ void j1GroupMovement::OtherUnitsPath()
 		for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 		{
 			//get the unit if is the lead continue
+
 			Entity* single_unit = item._Ptr->_Myval;
+
 			if (single_unit == lead) {
 				continue;
 			}
+			if (left == true) {
+				i *= -1;
+				i++;
+			}
+			
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
 			new_destination.create(destination.x + 20 * i, destination.y + 20 * i);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			i++;
-
+			left != left;
+			i *= -1;
 		}
 		break;
 	case EAST:
@@ -113,17 +128,24 @@ void j1GroupMovement::OtherUnitsPath()
 		for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 		{
 			//get the unit if is the lead continue
+
 			Entity* single_unit = item._Ptr->_Myval;
+
 			if (single_unit == lead) {
 				continue;
 			}
+			if (left == true) {
+				i *= -1;
+				i++;
+			}
+
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
 			new_destination.create(destination.x, destination.y + 20 * i);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			i++;
-
+			left != left;
+			i *= -1;
 		}
 		break;
 	case SOUTH_EAST:
@@ -131,85 +153,120 @@ void j1GroupMovement::OtherUnitsPath()
 		for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 		{
 			//get the unit if is the lead continue
+
 			Entity* single_unit = item._Ptr->_Myval;
+
 			if (single_unit == lead) {
 				continue;
 			}
+			if (left == true) {
+				i *= -1;
+				i++;
+			}
+
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
 			new_destination.create(destination.x - 20 * i, destination.y + 20 * i);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			i++;
-
+			left != left;
+			i *= -1;
 		}
 		break;
 	case SOUTH:
 		for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 		{
 			//get the unit if is the lead continue
+
 			Entity* single_unit = item._Ptr->_Myval;
+
 			if (single_unit == lead) {
 				continue;
 			}
+			if (left == true) {
+				i *= -1;
+				i++;
+			}
+
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(destination.x - 20 * i, destination.y);
+			new_destination.create(destination.x + 20 * i, destination.y);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			i++;
-
+			left != left;
+			i *= -1;
 		}
 		break;
 	case SOUTH_WEST:
 		for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 		{
 			//get the unit if is the lead continue
+
 			Entity* single_unit = item._Ptr->_Myval;
+
 			if (single_unit == lead) {
 				continue;
 			}
+			if (left == true) {
+				i *= -1;
+				i++;
+			}
+
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
 			new_destination.create(destination.x + 20 * i, destination.y + 20 * i);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			i++;
-
+			left != left;
+			i *= -1;
 		}
 		break;
 	case WEST:
 		for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 		{
 			//get the unit if is the lead continue
+
 			Entity* single_unit = item._Ptr->_Myval;
+
 			if (single_unit == lead) {
 				continue;
 			}
+			if (left == true) {
+				i *= -1;
+				i++;
+			}
+
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(destination.x, destination.y - 20 * i);
+			new_destination.create(destination.x, destination.y + 20 * i);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			i++;
-
+			left != left;
+			i *= -1;
 		}
 		break;
 	case NORTH_WEST:
 		for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 		{
 			//get the unit if is the lead continue
+
 			Entity* single_unit = item._Ptr->_Myval;
+
 			if (single_unit == lead) {
 				continue;
 			}
+			if (left == true) {
+				i *= -1;
+				i++;
+			}
+
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
 			new_destination.create(destination.x + 20 * i, destination.y - 20 * i);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			i++;
-
+			left != left;
+			i *= -1;
 		}
 		break;
 	default:
