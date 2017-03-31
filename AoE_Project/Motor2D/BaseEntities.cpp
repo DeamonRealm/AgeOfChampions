@@ -316,7 +316,7 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 				}
 					break;
 				case COLLISION_MOVE:
-						if (other_unit->GetPath()->size() < 2 && GetPath()->size() < 2) {
+						if (other_unit->GetPath()->size() < 2 && GetPath()->size() < 2 && future_position == other_unit->GetPositionRounded()) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
 								other_unit->Repath(other_unit->GetPath());
 							else
@@ -341,8 +341,8 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 						if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
 								other_unit->Repath(other_unit->GetPath());
-							else
-								Repath(path);
+							//else
+							//	Repath(path);
 
 						}
 						else

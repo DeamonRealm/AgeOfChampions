@@ -9,7 +9,7 @@
 #include "j1Window.h"
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
-
+#include "j1GroupMovement.h"
 #include "SDL\include\SDL_rect.h"
 
 //GUI Elements
@@ -369,13 +369,8 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 
 		}
 		else if (selected_elements.size() > 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT) {
-			for (std::list<Entity*>::iterator item = selected_elements.begin(); item != selected_elements.end(); item++)
-			{
-				Entity* single_unit = item._Ptr->_Myval;
-				
-				single_unit->AddAction(App->action_manager->MoveAction((Unit*)single_unit, mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
-			}
-			
+		
+			App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y);
 		}
 
 

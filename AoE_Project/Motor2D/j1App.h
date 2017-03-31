@@ -27,7 +27,7 @@ class j1Console;
 class j1Module;
 class j1Animator;
 class j1SoundManager;
-
+class j1GroupMovement;
 class j1EntitiesManager;
 class j1BuffManager;
 class j1ActionManager;
@@ -112,7 +112,7 @@ public:
 	j1Console*			console = NULL;
 	j1Animator*			animator = NULL;
 	j1SoundManager*		sound = NULL;
-
+	j1GroupMovement*	group_move = NULL;
 	j1EntitiesManager*	entities_manager = NULL;
 	j1BuffManager*		buff_manager = NULL;
 	j1ActionManager*	action_manager = NULL;

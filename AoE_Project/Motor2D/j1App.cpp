@@ -22,6 +22,7 @@
 #include "j1Player.h"
 #include "j1Pathfinding.h"
 #include "j1SoundManager.h"
+#include "j1GroupMovement.h"
 #include "j1ActionManager.h"
 #include "j1BuffManager.h"
 
@@ -45,6 +46,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	console = new j1Console();
 	animator = new j1Animator();
 	sound = new j1SoundManager();
+	group_move = new j1GroupMovement();
 	entities_manager = new j1EntitiesManager();
 	buff_manager = new j1BuffManager();
 	player = new j1Player();
@@ -62,7 +64,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(font);
 	AddModule(pathfinding);
 	AddModule(gui);
-
 	AddModule(animator);
 	AddModule(action_manager);
 	AddModule(entities_manager);
