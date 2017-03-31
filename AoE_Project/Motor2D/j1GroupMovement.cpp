@@ -83,7 +83,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(destination.x + 20 * i, destination.y - 20 * i);
+			new_destination.create(destination.x + 20 * i, destination.y);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			i++;
@@ -154,7 +154,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(destination.x - 20 * i, destination.y + 20 * i);
+			new_destination.create(destination.x - 20 * i, destination.y);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			i++;
