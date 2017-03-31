@@ -3,6 +3,8 @@
 
 #include "BaseEntities.h"
 
+enum PLAYER_RESOURCES;
+
 ///Class Villager -----------
 class Villager : public Unit
 {
@@ -18,6 +20,7 @@ private:
 	ITEM_TYPE item_type = NO_ITEM;
 
 	//Resource related data
+	PLAYER_RESOURCES resource_collected_type;
 	uint resources_capacity = 0;
 	uint current_resources = 0;
 	uint recollect_capacity = 0;
@@ -31,6 +34,7 @@ public:
 
 	//Set Methods -
 	void SetItemType(ITEM_TYPE type);
+	void SetResourceCollectedType(PLAYER_RESOURCES type);
 	void SetResourcesCapacity(uint value);
 	void SetRecollectCapacity(uint value);
 	void SetRecollectRate(uint value);
@@ -38,7 +42,8 @@ public:
 	//Actions -----
 	bool Recollect();
 	bool SaveResources();
-	void CheckRecollectAnimation(RESOURCE_TYPE type);
+	void CheckRecollectResource(RESOURCE_TYPE type);
+	void ResetResourcesData();
 };
 /// -------------------------
 #endif // !__UNITS_H__

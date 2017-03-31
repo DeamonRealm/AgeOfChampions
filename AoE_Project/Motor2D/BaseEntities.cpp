@@ -523,13 +523,13 @@ bool Unit::UnitHere()
 	return true;
 }
 
-void Unit::Focus(const iPoint & target)
+void Unit::Focus(const iPoint & target, bool play)
 {
 	//Calculate the directional vector
 	iPoint dir_point = target - iPoint(position.x, position.y);
 	bool directed = false;
 	//Find the correct direction in relation of the goal and the location
-	if (abs(dir_point.x) < 4)
+	if (abs(dir_point.x) < FOCUS_MARGIN)
 	{
 		if (dir_point.y > 0 && direction_type != SOUTH)
 		{
@@ -542,7 +542,7 @@ void Unit::Focus(const iPoint & target)
 			directed = true;
 		}
 	}
-	else if (abs(dir_point.y) < 4)
+	else if (abs(dir_point.y) < FOCUS_MARGIN)
 	{
 		if (dir_point.x > 0 && direction_type != EAST)
 		{
@@ -577,20 +577,21 @@ void Unit::Focus(const iPoint & target)
 	}
 
 	//Set the unit animation with the new direction
-	if(directed)App->animator->UnitPlay(this);
+	if(directed && play)App->animator->UnitPlay(this);
 }
+
 DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
 {
 	//Calculate the directional vector
 	iPoint dir_point = from - to;
 
 	//Find the correct direction in relation of the goal and the location
-	if (abs(dir_point.x) < 4)
+	if (abs(dir_point.x) < FOCUS_MARGIN)
 	{
 		if (dir_point.y > 0)return SOUTH;
 		else return NORTH;
 	}
-	else if (abs(dir_point.y) < 4)
+	else if (abs(dir_point.y) < FOCUS_MARGIN)
 	{
 		if (dir_point.x > 0)return EAST;
 		else return WEST;

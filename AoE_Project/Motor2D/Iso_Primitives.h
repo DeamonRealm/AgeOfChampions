@@ -49,6 +49,7 @@ public:
 	void			SetColor(const SDL_Color& rgba);
 	//Get Methods
 	iPoint			GetPosition()const;
+	iPoint			GetDisplacement()const;
 	float			GetXAngle()const;
 	SDL_Color		GetColor()const;
 };

@@ -1,6 +1,8 @@
 #ifndef _BASE_ENTITIES_
 #define _BASE_ENTITIES_
 
+#define FOCUS_MARGIN 10
+
 #include <list>
 #include <vector>
 #include <queue>
@@ -314,8 +316,8 @@ public:
 	void					Repath(std::vector<iPoint>* path);
 	iPoint					FindWalkableCell(const iPoint& center);
 	bool					UnitHere();
-	void					Focus(const iPoint& target);
-	DIRECTION_TYPE			LookDirection(const iPoint & from, const iPoint & to);
+	void					Focus(const iPoint& target, bool play = true);
+	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
 	bool					AttackUnit();
 	bool					AttackBuilding();
 	bool					AttackResource();

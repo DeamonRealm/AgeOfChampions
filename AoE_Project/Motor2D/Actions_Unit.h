@@ -158,8 +158,9 @@ public:
 		((Unit*)actor)->SetInteractionTarget(target);
 
 		//Set actor animation
-		((Villager*)actor)->CheckRecollectAnimation(((Resource*)target)->GetResourceType());
-		((Villager*)actor)->Focus(target->GetPositionRounded());
+		((Villager*)actor)->ResetResourcesData();
+		((Villager*)actor)->Focus(target->GetPositionRounded(), false);
+		((Villager*)actor)->CheckRecollectResource(((Resource*)target)->GetResourceType());
 
 		return true;
 	}

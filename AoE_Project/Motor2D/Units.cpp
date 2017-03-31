@@ -3,15 +3,16 @@
 #include "j1EntitiesManager.h"
 #include "j1ActionManager.h"
 #include "p2Log.h"
+#include "Hud_GamePanel.h"
 
 /// Class Villager --------------------
 //Constructors ========================
-Villager::Villager()
+Villager::Villager(): resource_collected_type(PLAYER_RESOURCES::GP_NO_RESOURCE)
 {
 
 }
 
-Villager::Villager(const Villager & copy) :Unit(copy), item_type(copy.item_type),resources_capacity(copy.resources_capacity), current_resources(copy.current_resources), recollect_capacity(copy.recollect_capacity), recollect_rate(copy.recollect_rate)
+Villager::Villager(const Villager & copy) :Unit(copy), item_type(copy.item_type),resource_collected_type(copy.resource_collected_type), resources_capacity(copy.resources_capacity), current_resources(copy.current_resources), recollect_capacity(copy.recollect_capacity), recollect_rate(copy.recollect_rate)
 {
 
 }
@@ -28,11 +29,18 @@ ITEM_TYPE Villager::GetItemType() const
 {
 	return this->item_type;
 }
+
 //Set Methods ----------
 void Villager::SetItemType(ITEM_TYPE type)
 {
 	item_type = type;
 }
+
+void Villager::SetResourceCollectedType(PLAYER_RESOURCES type)
+{
+	resource_collected_type = type;
+}
+
 void Villager::SetResourcesCapacity(uint value)
 {
 	resources_capacity = value;
@@ -87,8 +95,6 @@ bool Villager::Recollect()
 
 bool Villager::SaveResources()
 {
-	return true; /*Temporal for just end the loop*/
-
 	//Check if the target building is in the "attack" (in this case used for save resources) area
 	if (!attack_area.Intersects(((Building*)interaction_target)->GetInteractArea()))
 	{
@@ -97,18 +103,19 @@ bool Villager::SaveResources()
 		return false;
 	}
 
-	((Building*)interaction_target);
+	//Check the action rate
+	if (action_timer.Read() < attack_rate) return false;
+
+	
 
 	return false;
 }
 
-void Villager::CheckRecollectAnimation(RESOURCE_TYPE type)
+void Villager::CheckRecollectResource(RESOURCE_TYPE type)
 {
 	bool changed = false;
 	switch (type)
 	{
-	case NO_RESOURCE:
-		break;
 	case TREE:
 	case TREE_CUT:
 	case CHOP:
@@ -116,6 +123,7 @@ void Villager::CheckRecollectAnimation(RESOURCE_TYPE type)
 		{
 			item_type = AXE;
 			action_type = ATTATCK;
+			resource_collected_type = GP_WOOD;
 			changed = true;
 		}
 		break;
@@ -124,23 +132,40 @@ void Villager::CheckRecollectAnimation(RESOURCE_TYPE type)
 		{
 			item_type = BASKET;
 			action_type = ATTATCK;
+			resource_collected_type = GP_MEAT;
 			changed = true;
 		}
 		break;
 	case GOLD_ORE:
 	case TINY_GOLD_ORE:
+		if (item_type != ITEM_TYPE::PICK)
+		{
+			item_type = PICK;
+			action_type = ATTATCK;
+			resource_collected_type = GP_GOLD;
+			changed = true;
+		}
+		break;
 	case STONE_ORE:
 	case TINY_STONE_ORE:
 		if (item_type != ITEM_TYPE::PICK)
 		{
 			item_type = PICK;
 			action_type = ATTATCK;
+			resource_collected_type = GP_STONE;
 			changed = true;
 		}
 		break;
 	}
 
-	if (changed)App->animator->UnitPlay(this);
+	App->animator->UnitPlay(this);
+}
+
+void Villager::ResetResourcesData()
+{
+	item_type = NO_ITEM;
+	resource_collected_type = GP_NO_RESOURCE;
+	current_resources = 0;
 }
 
 /// -----------------------------------

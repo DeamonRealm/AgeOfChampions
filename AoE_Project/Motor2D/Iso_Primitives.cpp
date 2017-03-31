@@ -58,6 +58,10 @@ iPoint Primitive::GetPosition() const
 {
 	return position;
 }
+iPoint Primitive::GetDisplacement() const
+{
+	return displacement;
+}
 float Primitive::GetXAngle() const
 {
 	return x_angle;
@@ -125,16 +129,24 @@ bool Circle::Intersects(const SDL_Rect * rect) const
 
 bool Circle::Intersects(const Circle * target) const
 {
-	int x_len = target->position.x - position.x;
-	int y_len = (target->position.y - position.y);
-	float len = sqrt(x_len*x_len + y_len*y_len);
-
-	return (len <= (rad + target->rad));
+	iPoint vec(target->position.x - position.x, target->position.y - position.y);
+	fPoint cpy(vec.x, vec.y);
+	cpy.Norm();
+	vec.x -= ((rad * cpy.x) + target->rad * cpy.x);
+	vec.y -= (((target->rad + rad) * sin(x_angle) * cpy.y));
+	float vec_len = sqrt(vec.x * vec.x + vec.y * vec.y);
+	return (rad >= vec_len);
 }
 
 bool Circle::Intersects(const Rectng * target) const
 {
-	return false;
+	iPoint vec = (target->GetPosition() + target->GetDisplacement()) - position;
+	fPoint norm(vec.x,vec.y);
+	norm.Norm();
+	vec.x -= ceil((target->GetWidth() * 0.5) * norm.x);
+	vec.y -= ceil(((target->GetHeight() * sin(x_angle)) * 0.5) * norm.y);
+	float len = sqrt(vec.x * vec.x + vec.y * vec.y);
+	return (len <= rad);
 }
 
 bool Circle::Intersects(const iPoint* point) const
@@ -156,11 +168,11 @@ iPoint Circle::NearestPoint(const Circle* target) const
 
 iPoint Circle::NearestPoint(const Rectng* target) const
 {
-	iPoint target_pos = target->GetPosition();
-	iPoint vec(target_pos.x - position.x, target_pos.y - position.y);
-	float angle = acos((vec.x * 1)/sqrt(vec.x*vec.x + vec.y*vec.y));
-	vec.x -= target->GetWidth() * cos(angle);
-	vec.y -= target->GetHeight() * sin(angle);
+	iPoint vec = (target->GetPosition() + target->GetDisplacement()) - position;
+	fPoint norm(vec.x, vec.y);
+	norm.Norm();
+	vec.x -= ceil((target->GetWidth() * 0.5) * norm.x);
+	vec.y -= ceil(((target->GetHeight()* sin(x_angle)) * 0.5) * norm.y);
 	return iPoint(position.x + vec.x,position.y + vec.y);
 }
 
