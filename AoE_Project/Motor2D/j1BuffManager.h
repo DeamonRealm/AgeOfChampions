@@ -24,13 +24,13 @@ enum BUFF_ATTRIBUTE_TYPE
 };
 
 /// Class Buff Particle ---------------
-class BuffParticle
+class Particle
 {
 public:
 
-	BuffParticle();
-	BuffParticle(const BuffParticle& copy);
-	~BuffParticle();
+	Particle();
+	Particle(const Particle& copy);
+	~Particle();
 
 public:
 
@@ -65,7 +65,7 @@ protected:
 	float				value = 0;
 	Unit*				target = nullptr;
 	bool				actor = false;
-	BuffParticle		particle;
+	Particle			particle;
 
 public:
 
@@ -77,7 +77,7 @@ public:
 	void SetValue(float value);
 	void SetTarget(Unit* target);
 	void SetActor(bool act);
-	void SetParticle(BuffParticle part);
+	void SetParticle(Particle part);
 
 	//getters
 	BUFF_TYPE			GetBuffType()const;
@@ -152,17 +152,18 @@ private:
 	BUFF_ATTRIBUTE_TYPE StrToBuffAttributeType(const char* str)const;
 
 	std::vector<PassiveBuff*>	buff_definitions;
-	std::vector<BuffParticle*>	buff_particle_definitions;
+	std::vector<Particle*>		buff_particle_definitions;
 	std::list<Buff*>			active_buffs;
 	std::list<PassiveBuff*>		static_buffs;
 
 	//Get a buff particle looking the types and the actor
-	BuffParticle GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TYPE atr_type, bool act);
+	Particle GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TYPE atr_type, bool act);
 
 public:
 
-	bool	CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor = false);
-	void	RemoveTargetBuff(Unit* target, PassiveBuff* buff);
+	bool			CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor = false);
+	PassiveBuff*	GetPassiveBuff(BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor);
+	void			RemoveTargetBuff(Unit* target, PassiveBuff* buff);
 
 };
 #endif //_J1_BUFF_MANAGER_H_

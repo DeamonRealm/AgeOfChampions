@@ -10,24 +10,24 @@
 
 /// Class Buff Particle ---------------
 //Constructors ==============
-BuffParticle::BuffParticle()
+Particle::Particle()
 {
 
 }
 
-BuffParticle::BuffParticle(const BuffParticle & copy) :position(copy.position), actor(copy.actor), buff_type(copy.buff_type), attribute_type(copy.attribute_type), draw_rate(copy.draw_rate), animation(copy.animation)
+Particle::Particle(const Particle & copy) :position(copy.position), actor(copy.actor), buff_type(copy.buff_type), attribute_type(copy.attribute_type), draw_rate(copy.draw_rate), animation(copy.animation)
 {
 
 }
 
 //Destructors ===============
-BuffParticle::~BuffParticle()
+Particle::~Particle()
 {
 
 }
 
 //Functionality =============
-void BuffParticle::Draw()
+void Particle::Draw()
 {
 	if (animation.IsEnd() && draw_timer.Read() < draw_rate)return;
 	else if(animation.IsEnd())
@@ -95,7 +95,7 @@ void PassiveBuff::SetActor(bool act)
 	actor = act;
 }
 
-void PassiveBuff::SetParticle(BuffParticle part)
+void PassiveBuff::SetParticle(Particle part)
 {
 	particle = part;
 }
@@ -305,7 +305,7 @@ bool j1BuffManager::Start()
 		//Iterate all the particles in the loaded document
 		while (particle_node != NULL)
 		{
-			BuffParticle* buff_particle_deff = new BuffParticle();
+			Particle* buff_particle_deff = new Particle();
 
 			/*Set Buff Type*/		buff_particle_deff->buff_type = StrToBuffType(particle_node.attribute("buff_type").as_string());
 			/*Set Attribute Type*/	buff_particle_deff->attribute_type = StrToBuffAttributeType(particle_node.attribute("attribute_type").as_string());
@@ -455,17 +455,17 @@ BUFF_ATTRIBUTE_TYPE j1BuffManager::StrToBuffAttributeType(const char * str) cons
 	return NO_ATTRIBUTE;
 }
 
-BuffParticle j1BuffManager::GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TYPE atr_type, bool act)
+Particle j1BuffManager::GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TYPE atr_type, bool act)
 {
 	uint size = buff_particle_definitions.size();
 	for (uint k = 0; k < size; k++)
 	{
 		if (buff_particle_definitions[k]->buff_type == bf_type && buff_particle_definitions[k]->attribute_type == atr_type && buff_particle_definitions[k]->actor == act)
 		{
-			return BuffParticle(*buff_particle_definitions[k]);
+			return Particle(*buff_particle_definitions[k]);
 		}
 	}
-	return BuffParticle(*buff_particle_definitions[0]);
+	return Particle(*buff_particle_definitions[0]);
 }
 
 bool j1BuffManager::CallBuff(Unit * target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor)
@@ -507,12 +507,26 @@ bool j1BuffManager::CallBuff(Unit * target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_
 	return false;
 }
 
+PassiveBuff * j1BuffManager::GetPassiveBuff(BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor)
+{
+	uint size = buff_definitions.size();
+
+	for (uint k = 0; k < size; k++)
+	{
+		if (buff_definitions[k]->GetBuffType() == buff_type && buff_definitions[k]->GetAttributeType() == buff_atr_type && buff_definitions[k]->GetActor() == actor)
+		{
+			return buff_definitions[k];
+		}
+	}
+	return nullptr;
+}
+
 void j1BuffManager::RemoveTargetBuff(Unit * target, PassiveBuff * buff)
 {
 	std::list<PassiveBuff*>::iterator item = static_buffs.begin();
 	while (item != static_buffs.end())
 	{
-		if (item._Ptr->_Myval->GetTarget() == target /*&& item._Ptr->_Myval == buff*/)
+		if (item._Ptr->_Myval->GetTarget() == target && *item._Ptr->_Myval == *buff)
 		{
 			PassiveBuff* bf = item._Ptr->_Myval;
 

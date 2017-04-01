@@ -39,7 +39,9 @@ public:
 	//Functionality ---------
 	//Actions -----
 	virtual void Hability_A();
+	virtual void CheckHability_A();
 	virtual void Hability_B();
+	virtual void CheckHability_B();
 
 	//Set Methods -
 	void	SetPosition(float x, float y);
@@ -82,14 +84,19 @@ private:
 
 	/* extra data */
 	Triangle			special_attack_area;
+	//Particle			slash_particle;
 
 public:
 
 	//Functionality ---------
+	//Game Loop ---
+	bool Update();
 	//Draw --------
 	bool	Draw(bool debug);
 	//Actions -----
 	void	Hability_A();
+	void	CheckHability_A();
+	void	Hability_B();
 	void	CalculateSpecialAttackArea(const iPoint& base);
 
 	//Set Methods -

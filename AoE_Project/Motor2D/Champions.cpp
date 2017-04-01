@@ -6,6 +6,7 @@
 #include "j1EntitiesManager.h"
 #include "j1Input.h"
 #include "j1BuffManager.h"
+#include "j1ActionManager.h"
 
 ///Class Champion -------------------------------
 //Base class that define the champions bases
@@ -35,7 +36,17 @@ void Champion::Hability_A()
 
 }
 
+void Champion::CheckHability_A()
+{
+
+}
+
 void Champion::Hability_B()
+{
+
+}
+
+void Champion::CheckHability_B()
 {
 
 }
@@ -168,13 +179,20 @@ Warrior::Warrior() :Champion()
 
 Warrior::Warrior(const Warrior & copy): Champion(copy),special_attack_area(copy.special_attack_area)
 {
-
+	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
 }
 
 //Destructors =========================
 Warrior::~Warrior()
 {
 
+}
+
+bool Warrior::Update()
+{
+	this->action_worker->Update();
+	CheckHability_A();
+	return true;
 }
 
 bool Warrior::Draw(bool debug)
@@ -219,27 +237,6 @@ void Warrior::Hability_A()
 	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
 	uint size = units_around.size();
 
-	//Deactivate all the units buffs that are not in the buff area
-	std::list<Unit*>::const_iterator unit = buffed_units.begin();
-	while (unit != buffed_units.end())
-	{
-		bool found = false;
-		for (uint k = 0; k < size; k++)
-		{
-			if (unit._Ptr->_Myval == units_around[k])
-			{
-				found = true;
-				break;
-			}
-		}
-
-		if (!found)
-		{
-			App->buff_manager->RemoveTargetBuff(unit._Ptr->_Myval, buff_to_apply);
-		}
-		unit++;
-	}
-
 	//Update units buffs (check for new units and old ones)
 	for (uint k = 0; k < size; k++)
 	{
@@ -257,6 +254,56 @@ void Warrior::Hability_A()
 			}
 		}
 	}
+}
+
+void Warrior::CheckHability_A()
+{
+	//Collect all the units in the buff area
+	std::vector<Unit*> units_around;
+	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
+	uint size = units_around.size();
+
+	//Deactivate all the units buffs that are not in the buff area
+	std::list<Unit*>::iterator unit = buffed_units.begin();
+	while (unit != buffed_units.end())
+	{
+		bool found = false;
+		for (uint k = 0; k < size; k++)
+		{
+			if (unit._Ptr->_Myval == units_around[k])
+			{
+				units_around[k] = nullptr;
+				found = true;
+				break;
+			}
+		}
+
+		if (!found)
+		{
+			App->buff_manager->RemoveTargetBuff(unit._Ptr->_Myval, buff_to_apply);
+			buffed_units.remove(unit._Ptr->_Myval);
+		}
+		unit++;
+	}
+
+	//Update units buffs (check for new units and old ones)
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_around[k] == nullptr)continue;
+		if (units_around[k]->GetDiplomacy() == entity_diplomacy && units_around[k]->GetPosition() != position)
+		{
+			App->buff_manager->CallBuff(units_around[k], PASSIVE_BUFF, ATTACK_BUFF, false);
+			buffed_units.push_back(units_around[k]);
+		}
+	}
+}
+
+void Warrior::Hability_B()
+{
+	//Collect all the units in the buff area
+	std::vector<Unit*> units_around;
+	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
+	uint size = units_around.size();
 }
 
 void Warrior::CalculateSpecialAttackArea(const iPoint & base)

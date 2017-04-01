@@ -45,7 +45,7 @@ void Entity::Deselect()
 //Operators -------------
 bool Entity::operator == (const Entity& tar)
 {
-	return (position == tar.position && entity_type == tar.entity_type);
+	return (myself == tar.myself && position == tar.position && entity_type == tar.entity_type);
 }
 
 //Update ----------
