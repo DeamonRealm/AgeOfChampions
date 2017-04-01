@@ -7,6 +7,8 @@
 
 #include "SDL\include\SDL_rect.h"
 
+#include "Hud_SelectionPanel.h"
+
 
 #define MAX_PANEL_CELLS 15
 #define PANEL_COLUMNS	5
@@ -18,6 +20,8 @@ class UI_Button;
 class Entity;
 
 enum ENTITY_TYPE;
+enum BUILDING_TYPE;
+enum UNIT_TYPE;
 enum GUI_INPUT;
 
 
@@ -33,6 +37,7 @@ public:
 	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const;
 
 	void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
+	Entity* GetActualEntity();
 
 	void LoadPanel() {};
 
@@ -82,6 +87,8 @@ private:
 	UI_Image*					skill_tree = nullptr;
 	std::vector<UI_Button*>		skills;
 
+	std::vector<int>			champion_skills_learned;
+
 	// Champions Skills;
 	std::vector<SDL_Rect>		mele_champion;
 };
@@ -114,13 +121,20 @@ public:
 	// Get isin bool
 	bool GetIsIn() const;
 
+	// Set Pointer To Selection Panel
+	void SetSelectionPanelPointer(Selection_Panel* selection_panel);
+	void GetEntitySelected();
+
 	// Panel Settings
-	void SetPanelType(Entity* selected);
+	void SetPanelType();
 	void CheckSelected(int size);
 	//void HeroPanel_SkillTree(GUI_INPUT input, uint i);
 
 private:
 	
+	// HUD_Selection Panel Pointer
+	Selection_Panel*			player_selection_panel = nullptr;
+
 	bool						isin;
 
 	SDL_Point					mouse_pos;
@@ -140,5 +154,7 @@ private:
 	TownCenterPanel*			towncenter = nullptr;
 	UnitPanel*					unitpanel = nullptr;
 	HeroPanel*					heropanel = nullptr;
+
+
 };
 #endif // !HUD_ACTION_PANEL

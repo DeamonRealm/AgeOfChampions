@@ -57,28 +57,28 @@ private:
 	UI_String*		name = nullptr;
 	//UI_String*		civilization;
 	UI_String*		diplomacy = nullptr;
-	bool			isenemy;
+	bool			isenemy = false;
 
-	int				life_update;
-	int				m_life;
+	int				life_update = 0;
+	int				m_life = 0;
 	UI_String*		life = nullptr;
 
 	//Units and Offensive Buildings
-	uint			u_attack;
+	uint			u_attack = 0;
 	UI_String*		attack = nullptr;
-	uint			u_deffence;
+	uint			u_deffence = 0;
 	UI_String*		deffence = nullptr;
 
-	uint			u_range;
+	uint			u_range = 0;
 	UI_String*		range = nullptr;
 
 	//Buildings
-	uint			u_capacity;
-	uint			m_capacity;
+	uint			u_capacity = 0;
+	uint			m_capacity = 0;
 	UI_String*		capacity = nullptr;
 
 	//Resources
-	uint			u_resources;
+	uint			u_resources = 0;
 	UI_String*		resources = nullptr;
 };
 
@@ -121,6 +121,10 @@ public:
 
 	Entity* GetSelected() const;
 	uint	GetSelectedSize() const;
+
+	void    GetSelectedType(DIPLOMACY &d_type, ENTITY_TYPE &e_type, UNIT_TYPE &u_type, BUILDING_TYPE &b_type);
+	void	ResetSelectedType(SELECT_TYPE select_type);
+
 private:
 	// Mouse_pos
 	int mouse_x = 0;
@@ -132,9 +136,9 @@ private:
 	uint			row_size = 608;
 
 	j1Timer			double_click;
-	bool			double_clickon;
+	bool			double_clickon = false;
 
-	bool			expand;
+	bool			expand = false;
 	SDL_Rect		selection_rect;
 	const SDL_Rect	map_viewport;
 
@@ -151,7 +155,11 @@ private:
 	// Used for mouse detection
 	Entity*			UpperEntity = nullptr;
 
-
+	// Selected Types;
+	DIPLOMACY		selected_diplomacy;
+	ENTITY_TYPE		selected_entity_type;
+	UNIT_TYPE		selected_unit_type;
+	BUILDING_TYPE   selected_building_type;
 
 	//Action inputs
 	Action* action_command = nullptr;

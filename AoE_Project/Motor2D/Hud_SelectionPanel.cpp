@@ -265,12 +265,15 @@ bool Selection_Panel::PreUpdate()
 {	
 	App->input->GetMousePosition(mouse_x, mouse_y);
 
-	
 
 	if (selected_elements.size() == 0 || PointisInViewport(mouse_x, mouse_y) == false ) return false;
 	// Calculate upper entity
 	UpperEntity = GetUpperEntity(mouse_x, mouse_y);
-	if (UpperEntity != nullptr) App->gui->ChangeMouseTexture(SELECT);
+	if (UpperEntity != nullptr)
+	{
+		if(selected_diplomacy == ALLY && UpperEntity->GetDiplomacy() == ENEMY) App->gui->ChangeMouseTexture(ATTACK);
+		else App->gui->ChangeMouseTexture(DEFAULT);
+	}
 	else App->gui->ChangeMouseTexture(DEFAULT); 
 
 	return true;
@@ -361,9 +364,13 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			}
 			if (UpperEntity != nullptr)
 			{
-				if(UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
-				else if(UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
-				else if(UpperEntity->GetEntityType() == RESOURCE) Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource*)UpperEntity));
+				if (UpperEntity->GetDiplomacy() == ALLY && Selected->GetEntity()->GetDiplomacy() != ENEMY)
+				{
+					if (UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
+					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
+				}
+//				else if (UpperEntity->GetEntityType() == RESOURCE) Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
+
 			}
 			else Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 
@@ -408,13 +415,13 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 
 bool Selection_Panel::Draw()
 {
-	if (selected_elements.size() == 1)
+	if (selected_elements.size() > 1) DrawGroup();
+	else if (selected_elements.size() == 1)
 	{
 		Selected->UpdateStats();
 		Selected->DrawProfile();
 		if (Selected->GetEntity() == nullptr) selected_elements.clear();
 	}
-	else if (selected_elements.size() > 1) DrawGroup();
 
 	return true;
 }
@@ -433,9 +440,11 @@ void Selection_Panel::DrawGroup()
 		life = item._Ptr->_Myval->GetLife();
 		if (life <= 0)
 		{
-			item++;
 			item._Ptr->_Myval->Deselect();
 			selected_elements.remove(item._Ptr->_Myval);
+			item++;
+			if(item != selected_elements.end()) Selected->SetEntity(item._Ptr->_Myval);
+			else Selected->SetEntity(nullptr);
 			continue;
 		}
 		max_life = item._Ptr->_Myval->GetMaxLife();
@@ -466,19 +475,16 @@ void Selection_Panel::Select(SELECT_TYPE type)
 {
 	if (type == GROUP || type == DOUBLECLICK)
 	{
-		UNIT_TYPE unit_type = NO_UNIT;
 		int x = 0, y = 0;
 		uint width = 0, height = 0;
 
 		if (type == DOUBLECLICK)
 		{
 			if (Selected->GetEntity() == nullptr) return;
-			else if (Selected->GetEntity()->GetEntityType() != UNIT) return;
-			App->win->GetWindowSize(width, height);
+			else if (selected_entity_type != UNIT || selected_diplomacy != ALLY) return;
 			
+			App->win->GetWindowSize(width, height);
 			selection_rect = { 0, 32 , (int)width, 560 };
-			unit_type = ((Unit*)Selected->GetEntity())->GetUnitType();
-
 		}
 		else if (selection_rect.w == 0 || selection_rect.h == 0) return;
 		else
@@ -503,18 +509,30 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		UnSelect_Entity();
 
 		App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, selection_rect);
-
+		
+		int selected_amount = 0;
 		//Select Entity
 		int size = unit_quad_selection.size();
 		for(int count = 0; count < size; count++)
 		{
 			if (unit_quad_selection[count]->GetDiplomacy() != ALLY || unit_quad_selection[count]->GetLife() == 0) continue;
-			else if (type == DOUBLECLICK && unit_type != unit_quad_selection[count]->GetUnitType());
-			else 
+			else if (type == DOUBLECLICK && selected_unit_type != unit_quad_selection[count]->GetUnitType());
+			else
 			{
-					selected_elements.push_back(unit_quad_selection[count]);
-					unit_quad_selection[count]->Select();
+				selected_amount++;
+				UpperEntity = unit_quad_selection[count];
+				UpperEntity->Select();
+				selected_elements.push_back(UpperEntity);
+				if (selected_elements.size() == 1)
+				{
+					ResetSelectedType(SINGLE);
+				}
+				else if (type != DOUBLECLICK && selected_unit_type != NO_UNIT)
+				{
+					ResetSelectedType(GROUP);
+				}
 			}
+			if (selected_amount == max_selected_units) break;
 		}
 	}
 	else
@@ -525,16 +543,19 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		if (UpperEntity == nullptr) return;
 		UpperEntity->Select();
 
+
 		if (type == SINGLE)
 		{
 			UnSelect_Entity();
 			selected_elements.push_back(UpperEntity);
+			ResetSelectedType(SINGLE);
 		}
-		else if (UpperEntity->GetEntityType() == UNIT)
+		else if (UpperEntity->GetEntityType() == UNIT && selected_elements.size() < max_selected_units)
 		{
 			if (std::find(selected_elements.begin(), selected_elements.end(), UpperEntity) == selected_elements.end())
 			{
 				selected_elements.push_back(UpperEntity);
+				if (selected_elements.size() == 1 || selected_unit_type != NO_UNIT) ResetSelectedType(ADD);
 			}
 		}
 	}
@@ -544,6 +565,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 	{
 		max_row_units = 16;
 		SetGroupProfile();
+		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 	}
 	if(selected_elements.size() >= 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 	else Selected->SetEntity(nullptr);
@@ -684,11 +706,52 @@ void Selection_Panel::SetGroupProfile()
 
 Entity * Selection_Panel::GetSelected() const
 {
-	if (selected_elements.size() > 0) return selected_elements.begin()._Ptr->_Myval;
-	else return nullptr;
+	return Selected->GetEntity();
 }
 
 uint Selection_Panel::GetSelectedSize() const
 {
 	return selected_elements.size();
+}
+
+void Selection_Panel::GetSelectedType(DIPLOMACY & d_type, ENTITY_TYPE & e_type, UNIT_TYPE & u_type, BUILDING_TYPE & b_type)
+{
+	d_type = selected_diplomacy;
+	e_type = selected_entity_type;
+	u_type = selected_unit_type;
+	b_type = selected_building_type;
+}
+
+void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
+{
+	switch (select_type)
+	{
+	case SINGLE: {
+		selected_diplomacy = UpperEntity->GetDiplomacy();
+		selected_entity_type = UpperEntity->GetEntityType();
+		if (selected_entity_type == UNIT)
+		{
+			selected_unit_type = ((Unit*)UpperEntity)->GetUnitType();
+			selected_building_type = NO_BUILDING;
+		}
+		else if (selected_entity_type == BUILDING)
+		{
+			selected_building_type = ((Building*)UpperEntity)->GetBuildingType();
+			selected_unit_type = NO_UNIT;
+		}
+	}
+		break;
+	case GROUP: {
+		if (selected_unit_type != ((Unit*)UpperEntity)->GetUnitType()) selected_unit_type = NO_UNIT;
+		}
+		break;
+	case DOUBLECLICK: break;
+	case ADD: {
+		if (selected_unit_type != ((Unit*)UpperEntity)->GetUnitType()) selected_unit_type = NO_UNIT;
+		}
+		break;
+	default:
+		break;
+	}
+
 }

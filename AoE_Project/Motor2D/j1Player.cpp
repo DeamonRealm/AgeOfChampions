@@ -52,6 +52,7 @@ bool j1Player::Start()
 	game_panel = new Game_Panel();
 	selection_panel = new Selection_Panel();
 	action_panel = new Action_Panel();
+	action_panel->SetSelectionPanelPointer(selection_panel);
 
 	// Setting Game Panel Resources
 	game_panel->AddResource(200, GP_WOOD);
@@ -77,7 +78,7 @@ bool j1Player::PreUpdate()
 		if (selection_panel->PointisInViewport(x, y))
 		{
 			selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
-			action_panel->SetPanelType(selection_panel->GetSelected());
+			action_panel->SetPanelType();
 		}
 		if (action_panel->GetIsIn()) action_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 	}
@@ -115,10 +116,10 @@ bool j1Player::PreUpdate()
 	//Generate a Militia unit in the mouse coordinates
 	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN && game_panel->CheckPopulation())
 	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ALLY);
+		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 
-		game_panel->IncressPopulation(1, false);
+		//game_panel->IncressPopulation(1, false);
 	}
 	//Generate a Arbalest unit in the mouse coordinates
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && game_panel->CheckPopulation())
@@ -174,6 +175,7 @@ bool j1Player::PostUpdate()
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
 		selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_UP);
+		action_panel->SetPanelType();
 	}
 
 	// Draw Game Panel (HUD)

@@ -44,6 +44,11 @@ void Action_Panel_Elements::ChangePanelIcons(std::vector<UI_Image*> & actual_pan
 	}
 }
 
+Entity * Action_Panel_Elements::GetActualEntity()
+{
+	return entitis_panel;
+}
+
 bool TownCenterPanel::ActivateCell(int i)
 {
 	if (entitis_panel == nullptr) return false;
@@ -85,6 +90,7 @@ bool UnitPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
+		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
 		}
@@ -118,6 +124,12 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 
 	skills.reserve(6);
 
+	//champion
+	champion_skills_learned.reserve(3);
+	champion_skills_learned.push_back(-1);
+	champion_skills_learned.push_back(-1);
+	champion_skills_learned.push_back(-1);
+
 	mele_champion.reserve(6);
 	mele_champion.push_back({ 360,441,36,36 });
 	mele_champion.push_back({ 396,441,36,36 });
@@ -129,6 +141,10 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 
 HeroPanel::~HeroPanel()
 {
+	skills.clear();
+	
+	champion_skills_learned.clear();
+	mele_champion.clear();
 }
 
 bool HeroPanel::ActivateCell(int i)
@@ -219,9 +235,9 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 	switch (newevent)
 	{
 	case MOUSE_LEFT_BUTTON_DOWN:
-	{cell = GetCell();
-	if (actualpanel != nullptr) actualpanel->ActivateCell(cell);
- 	}
+		{cell = GetCell();
+			if (actualpanel != nullptr) actualpanel->ActivateCell(cell);
+		}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;
@@ -267,49 +283,69 @@ bool Action_Panel::GetIsIn() const
 	return isin;
 }
 
-void Action_Panel::SetPanelType(Entity * selected)
+void Action_Panel::SetSelectionPanelPointer(Selection_Panel * selection_panel)
 {
-	if (selected == nullptr)
+	player_selection_panel = selection_panel;
+}
+
+void Action_Panel::GetEntitySelected()
+{
+	actual_entity = player_selection_panel->GetSelected();
+	if (actual_entity == nullptr)
 	{
-		actual_entity = nullptr;
 		actualpanel = nullptr;
 		return;
 	}
+}
 
-	actual_entity = selected;
-	ENTITY_TYPE selected_type = selected->GetEntityType();
-	
-	switch (selected_type)
+void Action_Panel::SetPanelType()
+{
+	GetEntitySelected();
+
+	if (actual_entity == nullptr) return;
+
+	DIPLOMACY	d_type = NEUTRAL;
+	ENTITY_TYPE e_type = NO_ENTITY; 
+	UNIT_TYPE u_type = NO_UNIT; 
+	BUILDING_TYPE b_type = NO_BUILDING;
+
+	player_selection_panel->GetSelectedType(d_type, e_type, u_type, b_type);
+
+	if (d_type != ALLY)
+	{
+		actualpanel = nullptr;
+		actual_entity = nullptr;
+		return;
+	}
+
+	switch (e_type)
 	{
 	case NO_ENTITY: actualpanel = nullptr;
 		break;
 	case UNIT:
-		for (int count = 0; count < MAX_PANEL_CELLS; count++)
-		{
-			unitpanel->ChangePanelIcons(panel_cells);
-			actualpanel = unitpanel;
-		}
-		break;
-	case RESOURCE:
-			actualpanel = nullptr;
-		break;
-	case BUILDING:
-		{
-		BUILDING_TYPE building_type = ((Building*)selected)->GetBuildingType();
-		if (building_type == TOWN_CENTER)
-		{
-			towncenter->ChangePanelIcons(panel_cells); 
-			actualpanel = towncenter;
-		}
-		else
+		if (u_type == VILLAGER);
+		else 
 		{
 			for (int count = 0; count < MAX_PANEL_CELLS; count++)
 			{
-				panel_cells[count]->ChangeTextureRect({ 0,0,1,1 });
+				unitpanel->ChangePanelIcons(panel_cells);
+				actualpanel = unitpanel;
 			}
 		}
-		}
 		break;
+	case RESOURCE:
+		actualpanel = nullptr;
+		break;
+	case BUILDING:
+	{
+		if (b_type == TOWN_CENTER)
+		{
+			towncenter->ChangePanelIcons(panel_cells);
+			actualpanel = towncenter;
+		}
+		else actualpanel = nullptr;
+	}
+	break;
 	default:	actualpanel = nullptr;
 		break;
 	}
@@ -324,6 +360,13 @@ void Action_Panel::CheckSelected(int selected)
 		actual_entity = nullptr;
 		actualpanel = nullptr;
 		return;
+	}
+	if (actualpanel != nullptr)
+	{
+		if (actualpanel->GetActualEntity() == nullptr)
+		{
+			actualpanel->ChangePanelTarget(player_selection_panel->GetSelected());
+		}
 	}
 }
 /*
