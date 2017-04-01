@@ -320,7 +320,7 @@ public:
 
 	//Actions ---------------
 	bool					Move(std::vector<iPoint>* path);
-	void					Repath(std::vector<iPoint>* path);
+	void					Repath(const iPoint & destination);
 	iPoint					FindWalkableCell(const iPoint& center);
 	bool					UnitHere();
 	void					Focus(const iPoint& target, bool play = true);
