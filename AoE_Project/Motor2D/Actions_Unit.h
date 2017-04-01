@@ -15,7 +15,6 @@
 class MoveUnitAction : public Action
 {
 public:
-
 	//Constructor -----------
 	MoveUnitAction(Unit* actor, int x, int y) : Action(actor, TASK_U_MOVE), x_new(x), y_new(y)
 	{
@@ -23,7 +22,6 @@ public:
 
 	MoveUnitAction(Unit* actor, std::vector<iPoint>* path) : Action(actor, TASK_U_MOVE), path(path)
 	{
-
 	}
 
 	//Functionality ---------
@@ -83,15 +81,9 @@ public:
 		return ((Unit*)actor)->AttackUnit();
 	}
 
-	bool Related(const Entity* tar)const
-	{
-		return (actor == tar || target == tar);
-	}
-
 private:
 
 	Entity* target = nullptr;
-
 };
 /// ---------------------------------------------
 
@@ -123,7 +115,6 @@ public:
 private:
 
 	Building* target = nullptr;
-
 };
 /// ---------------------------------------------
 
@@ -161,13 +152,10 @@ public:
 	//Functionality ---------
 	bool Activation()
 	{
+		//Check it the resource hasn't been yet depleted
 		if (*target == nullptr)return false;
 
-		//Set actor interaction target
-	//	((Unit*)actor)->SetInteractionTarget(target);
-		
 		//Set actor animation
-		((Villager*)actor)->ResetResourcesData();
 		((Villager*)actor)->Focus((*target)->GetPositionRounded(), true);
 		((Villager*)actor)->CheckRecollectResource(((Resource*)(*target))->GetResourceType());
 

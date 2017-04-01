@@ -136,40 +136,56 @@ void Villager::CheckRecollectResource(RESOURCE_TYPE type)
 	case TREE:
 	case TREE_CUT:
 	case CHOP:
+		if (resource_collected_type != GP_WOOD)
+		{
+			ResetResourcesData();
+			resource_collected_type = GP_WOOD;
+		}
 		if (item_type != ITEM_TYPE::AXE)
 		{
 			item_type = AXE;
 			action_type = ATTATCK;
-			resource_collected_type = GP_WOOD;
 			changed = true;
 		}
 		break;
 	case BERRY_BUSH:
+		if (resource_collected_type != GP_MEAT)
+		{
+			ResetResourcesData();
+			resource_collected_type = GP_MEAT;
+		}
 		if (item_type != ITEM_TYPE::BASKET)
 		{
 			item_type = BASKET;
 			action_type = ATTATCK;
-			resource_collected_type = GP_MEAT;
 			changed = true;
 		}
 		break;
 	case GOLD_ORE:
 	case TINY_GOLD_ORE:
+		if (resource_collected_type != GP_GOLD)
+		{
+			ResetResourcesData();
+			resource_collected_type = GP_GOLD;
+		}
 		if (item_type != ITEM_TYPE::PICK)
 		{
 			item_type = PICK;
 			action_type = ATTATCK;
-			resource_collected_type = GP_GOLD;
 			changed = true;
 		}
 		break;
 	case STONE_ORE:
 	case TINY_STONE_ORE:
+		if (resource_collected_type != GP_STONE)
+		{
+			ResetResourcesData();
+			resource_collected_type = GP_STONE;
+		}
 		if (item_type != ITEM_TYPE::PICK)
 		{
 			item_type = PICK;
 			action_type = ATTATCK;
-			resource_collected_type = GP_STONE;
 			changed = true;
 		}
 		break;

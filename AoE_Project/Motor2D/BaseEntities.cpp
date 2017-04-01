@@ -636,7 +636,6 @@ DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
 }
 bool Unit::AttackUnit()
 {
-
 	//Check if the target is in the attack area
 	if (!attack_area.Intersects(((Unit*)interaction_target)->GetAttackArea()))
 	{
