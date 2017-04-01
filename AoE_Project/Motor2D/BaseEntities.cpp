@@ -284,7 +284,7 @@ bool Unit::Draw(bool debug)
 
 
 //Actions ---------
-bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
+bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true when it ends
 {
 	//Check if the unit have an assigned path
 	if (path == nullptr)
@@ -319,8 +319,12 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 				case COLLISION_IDLE:
 				{
 					if (GetPath()->size() <= 2) {
-						Repath(*(path->begin()));
-						
+						if(target != iPoint(-1,-1))
+							Repath(target);
+						else
+							Repath(*(path->begin()));
+					
+
 						return false;
 					}
 					
@@ -462,7 +466,7 @@ void Unit::Repath(const iPoint & destination)
 iPoint Unit::FindWalkableCell(const iPoint & center)
 {
 	iPoint cell;
-	iPoint pos = App->map->WorldToMap(GetPositionRounded().x, GetPositionRounded().y);
+	iPoint pos = App->map->WorldToMap(center.x, center.y);
 
 	// south
 	cell.create(pos.x, pos.y + 1);

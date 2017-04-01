@@ -319,7 +319,7 @@ public:
 	bool	Draw(bool debug);
 
 	//Actions ---------------
-	bool					Move(std::vector<iPoint>* path);
+	bool					Move(std::vector<iPoint>* path, const iPoint& target = { -1,-1 });
 	void					Repath(const iPoint & destination);
 	iPoint					FindWalkableCell(const iPoint& center);
 	bool					UnitHere();

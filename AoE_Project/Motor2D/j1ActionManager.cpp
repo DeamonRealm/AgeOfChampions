@@ -49,10 +49,10 @@ bool j1ActionManager::CleanUp()
 }
 
 //Action Calls ========================
-MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, int x, int y)
+MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destination, const iPoint& target)
 {
 	//Generate a new move action definition
-	MoveUnitAction* action = new MoveUnitAction(actor, x, y);
+	MoveUnitAction* action = new MoveUnitAction(actor, destination, target);
 
 	//Add the new action at the action manager
 	all_actions.push_back(action);
@@ -60,10 +60,10 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, int x, int y)
 	return action;
 }
 
-MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor)
+MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor, const iPoint& target )
 {
 	//Generate a new move action definition
-	MoveUnitAction* action = new MoveUnitAction(actor, path);
+	MoveUnitAction* action = new MoveUnitAction(actor, path,target);
 
 	//Add the new action at the action manager
 	all_actions.push_back(action);

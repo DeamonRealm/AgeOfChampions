@@ -62,7 +62,7 @@ bool Villager::Recollect(Resource** target)
 	if (!attack_area.Intersects((*target)->GetInteractArea()))
 	{
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal.x, goal.y));
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
 		return false;
 	}
 
@@ -114,7 +114,7 @@ bool Villager::SaveResources()
 	if (!attack_area.Intersects(((Building*)interaction_target)->GetInteractArea()))
 	{
 		iPoint intersect_point = attack_area.NearestPoint(((Building*)interaction_target)->GetInteractArea());
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, intersect_point.x, intersect_point.y));
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, iPoint(intersect_point.x, intersect_point.y)));
 		return false;
 	}
 

@@ -124,8 +124,8 @@ public:
 
 	//Action Calls --------------------
 	//Move Functions
-	MoveUnitAction*				MoveAction(Unit* actor, int x, int y);
-	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor);
+	MoveUnitAction*				MoveAction(Unit* actor, const iPoint& destination, const iPoint& target = { -1,-1 });
+	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor, const iPoint& target = { -1,-1 });
 	
 	//Attack Functions
 	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit *target);

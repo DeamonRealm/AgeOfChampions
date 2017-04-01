@@ -16,11 +16,11 @@ class MoveUnitAction : public Action
 {
 public:
 	//Constructor -----------
-	MoveUnitAction(Unit* actor, int x, int y) : Action(actor, TASK_U_MOVE), x_new(x), y_new(y)
+	MoveUnitAction(Unit* actor, const iPoint& destination, const iPoint& target) : Action(actor, TASK_U_MOVE), destination(destination), target(target)
 	{
 	}
 
-	MoveUnitAction(Unit* actor, std::vector<iPoint>* path) : Action(actor, TASK_U_MOVE), path(path)
+	MoveUnitAction(Unit* actor, std::vector<iPoint>* path, const iPoint& target) : Action(actor, TASK_U_MOVE), path(path),target(target)
 	{
 	}
 
@@ -31,7 +31,7 @@ public:
 		{
 			//Calculate the path
 			iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
-			path = App->pathfinding->SimpleAstar(origin, iPoint(x_new, y_new));
+			path = App->pathfinding->SimpleAstar(origin, destination);
 			if (path == nullptr)return false;
 		}
 		((Unit*)actor)->SetAction(WALK);
@@ -43,7 +43,7 @@ public:
 
 	bool Execute()
 	{
-		return ((Unit*)actor)->Move(path);
+		return ((Unit*)actor)->Move(path,target);
 	}
 
 	//Returns the path 
@@ -55,9 +55,9 @@ public:
 private:
 
 	std::vector<iPoint>* path = nullptr;
-	int x_new = 0;
-	int y_new = 0;
 
+	iPoint destination;
+	iPoint target;
 };
 /// ---------------------------------------------
 
