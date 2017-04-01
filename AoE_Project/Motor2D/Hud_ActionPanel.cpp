@@ -119,30 +119,31 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	panel_icons[14] = { 0,76,36,36 };
 
 	skill_tree = new UI_Image();
-	skill_tree->SetBox({ 0, 23, 372, 576 });
+	skill_tree->SetBox({ 30, 100, 243, 345 });
 	skill_tree->ChangeTextureId(CHAMPION_SKILL);
-	skill_tree->ChangeTextureRect({ 0,0,  372, 576  });
+	skill_tree->ChangeTextureRect({ 0,0, 243, 345 });
 	skill_tree->SetLayer(15);
 	skill_tree->AdjustBox();
 	skill_tree->Desactivate();
 
 	mele_champion.reserve(6);
-	mele_champion.push_back({ 376,174,67,61 });
-	mele_champion.push_back({ 376,237,67,61 });
-	mele_champion.push_back({ 376,300,67,61 });
-	mele_champion.push_back({ 376,364,67,61 });
-	mele_champion.push_back({ 376,428,67,61 });
-	mele_champion.push_back({ 376,495,67,61 });
+	mele_champion.push_back({ 243,80,36,36 });
+	mele_champion.push_back({ 243,118,36,36 });
+	mele_champion.push_back({ 243,156,36,36 });
+	mele_champion.push_back({ 243,194,36,36 });
+	mele_champion.push_back({ 243,232,36,36 });
+	mele_champion.push_back({ 243,270,36,36 });
+
 
 	skills.reserve(6);
 	for (int i = 0; i < 6; i++)
 	{
 		skills.push_back(new UI_Button());
+		skills[i]->SetBox({ 0, 0, 67, 61 });
 		skills[i]->SetTexON(mele_champion[i], CHAMPION_SKILL);
 		skills[i]->SetTexOFF(mele_champion[i], CHAMPION_SKILL);
 		skills[i]->SetTexOVER(mele_champion[i], CHAMPION_SKILL);
-		skills[i]->AdjustBox();
-		skills[i]->SetBoxPosition(50 + 50 * i, 500);
+		skills[i]->SetBoxPosition(97 + 67 * (i%2), 177 + 55*(i/2));
 		skills[i]->Activate();
 		skill_tree->AddChild(skills[i]);
 	}

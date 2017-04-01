@@ -100,6 +100,9 @@ public:
 	// Handle Input
 	void Handle_Input(GUI_INPUT newevent);
 
+	// GUI Handle Input
+	void Handle_Input(UI_Element* target, GUI_INPUT input);
+
 	// Draw Selection Panel
 	bool Draw();
 	void DrawGroup();
@@ -125,7 +128,15 @@ public:
 	void    GetSelectedType(DIPLOMACY &d_type, ENTITY_TYPE &e_type, UNIT_TYPE &u_type, BUILDING_TYPE &b_type);
 	void	ResetSelectedType(SELECT_TYPE select_type);
 
+	UI_Element*	GetViewport();
+	bool	GetInViewport()const;
+
 private:
+
+	// SelectionPanel Viewport
+	UI_Element*		viewport = nullptr;
+	bool			inviewport = false;
+
 	// Mouse_pos
 	int mouse_x = 0;
 	int mouse_y = 0;

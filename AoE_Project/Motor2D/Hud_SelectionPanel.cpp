@@ -233,8 +233,15 @@ void Entity_Profile::UpdateStats()
 }
 
 
-Selection_Panel::Selection_Panel() : selection_rect({0,0,0,0}), map_viewport({ 0, 32, 1366, 560 }), double_clickon(false), expand(false)
+Selection_Panel::Selection_Panel() : selection_rect({ 0,0,0,0 }), map_viewport({ 0, 32, 1366, 560 }), double_clickon(false), expand(false), inviewport(false)
 {
+	App->gui->SetDefaultInputTarget((j1Module*)App->player);
+
+	viewport = App->gui->GenerateUI_Element(UNDEFINED);
+	viewport->SetBox({ 0, 23,1366,560 });
+	viewport->Activate();
+	viewport->SetInputTarget((j1Module*)App->player);
+
 	Selected = new Entity_Profile();
 
 	UI_Image*	profile;
@@ -267,7 +274,8 @@ bool Selection_Panel::PreUpdate()
 	App->input->GetMousePosition(mouse_x, mouse_y);
 
 
-	if (selected_elements.size() == 0 || PointisInViewport(mouse_x, mouse_y) == false ) return false;
+	if (selected_elements.size() == 0 || inviewport == false) return false;
+
 	// Calculate upper entity
 	UpperEntity = GetUpperEntity(mouse_x, mouse_y);
 	if (UpperEntity != nullptr)
@@ -293,6 +301,7 @@ bool Selection_Panel::CleanUp()
 
 void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 {
+	if (inviewport == false)return;
 	switch (newevent)
 	{
 	case UP_ARROW:	if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
@@ -430,6 +439,12 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 	default:
 		break;
 	}
+}
+
+void Selection_Panel::Handle_Input(UI_Element * target, GUI_INPUT input)
+{
+	if (target == viewport && input == MOUSE_IN) inviewport = true;
+	else if (target == viewport && input == MOUSE_OUT) inviewport = false;
 }
 
 bool Selection_Panel::Draw()
@@ -773,4 +788,14 @@ void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
 		break;
 	}
 
+}
+
+UI_Element * Selection_Panel::GetViewport()
+{
+	return viewport;
+}
+
+bool Selection_Panel::GetInViewport() const
+{
+	return inviewport;
 }

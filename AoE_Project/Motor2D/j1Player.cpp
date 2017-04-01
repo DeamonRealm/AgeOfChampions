@@ -62,7 +62,9 @@ bool j1Player::Start()
 
 	game_panel->IncressPopulation(45, true);
 
+	game_hud->AddChild(selection_panel->GetViewport());
 	game_hud->AddChild(action_panel->GetHeroSkillTree());
+	action_panel->GetHeroSkillTree()->SetLayer(5);
 	game_hud->AddChild(game_panel->GetExitMenu());
 	App->gui->PushScreen(game_hud);
 	return true;
@@ -81,7 +83,7 @@ bool j1Player::PreUpdate()
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		if (selection_panel->PointisInViewport(x, y))
+		if (selection_panel->GetInViewport())
 		{
 			selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 			action_panel->SetPanelType();
@@ -91,7 +93,7 @@ bool j1Player::PreUpdate()
 	
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
-		if (selection_panel->PointisInViewport(x, y)) selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);		
+		if (selection_panel->GetInViewport()) selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
@@ -235,13 +237,7 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
 	{
-		if (target == action_panel->GetHeroSkillTree())
-		{
 			action_panel->Handle_Input(target, MOUSE_LEFT_BUTTON_DOWN);
-		}
-		
-		//game_panel->Handle_Input(target, MOUSE_LEFT_BUTTON_DOWN);
-
 	}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
@@ -251,10 +247,15 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 		break;
 	case MOUSE_RIGHT_BUTTON:
 		break;
-	case MOUSE_IN:
-		break;
-	case MOUSE_OUT:
-		break;
+	case MOUSE_IN: if (App->gui->upper_element == selection_panel->GetViewport()->GetLayer() && selection_panel->GetInViewport() != true)
+	{
+		selection_panel->Handle_Input(target, MOUSE_IN);
+	}
+				   break;
+	case MOUSE_OUT:  if (App->gui->upper_element != selection_panel->GetViewport()->GetLayer() && selection_panel->GetInViewport() == true)
+	{
+		selection_panel->Handle_Input(selection_panel->GetViewport(), MOUSE_OUT);
+	}
 	case SUPR:
 		break;
 	case BACKSPACE:
