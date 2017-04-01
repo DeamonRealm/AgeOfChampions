@@ -15,7 +15,6 @@
 //Constructors ========================
 Entity::Entity() :name(""), action_worker(new ActionWorker())
 {
-	
 }
 
 Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), selection_rect(copy.selection_rect),
@@ -207,6 +206,12 @@ ActionWorker * Entity::GetWorker() const
 	return action_worker;
 }
 
+Entity ** Entity::GetMe()
+{
+	return &myself;
+}
+
+
 // ----------------
 ///----------------------------------------------
 
@@ -346,8 +351,8 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 						if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
 								other_unit->Repath(other_unit->GetPath());
-							//else
-							//	Repath(path);
+							else
+								Repath(path);
 
 						}
 						else
@@ -631,7 +636,6 @@ DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
 }
 bool Unit::AttackUnit()
 {
-
 	//Check if the target is in the attack area
 	if (!attack_area.Intersects(((Unit*)interaction_target)->GetAttackArea()))
 	{
@@ -930,6 +934,16 @@ const Circle& Unit::GetMark() const
 	return mark;
 }
 
+const Circle & Unit::GetSoftCollider() const
+{
+	return soft_collider;
+}
+
+const Circle & Unit::GetHardCollider() const
+{
+	return hard_collider;
+}
+
 const Entity * Unit::GetInteractionTarget()
 {
 	return interaction_target;
@@ -1146,7 +1160,6 @@ bool Resource::ExtractResources(uint* value)
 		life = 0;
 		App->entities_manager->DeleteEntity(this);
 		App->entities_manager->resources_quadtree.Exteract(&position);
-		App->action_manager->CleanRelatedActions(this);
 		return false;
 	}
 	else

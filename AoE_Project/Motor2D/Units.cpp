@@ -55,13 +55,13 @@ void Villager::SetRecollectRate(uint value)
 	recollect_rate = value;
 }
 //Actions --------------
-bool Villager::Recollect()
+bool Villager::Recollect(Resource** target)
 {
 
 	//Check if the target resource is in the "attack" (in this case used for recollect) area
-	if (!attack_area.Intersects(((Resource*)interaction_target)->GetInteractArea()))
+	if (!attack_area.Intersects((*target)->GetInteractArea()))
 	{
-		iPoint goal = attack_area.NearestPoint(((Resource*)interaction_target)->GetInteractArea());
+		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal.x, goal.y));
 		return false;
 	}
@@ -71,10 +71,11 @@ bool Villager::Recollect()
 
 	//Get resources from the target resource
 	uint recollect_value = MIN(recollect_capacity, resources_capacity - current_resources);
-	
+
 	//Extract resource material, if it fails return true to end the recollect action
-	if (!((Resource*)interaction_target)->ExtractResources(&recollect_value))
+	if (!(*target)->ExtractResources(&recollect_value))
 	{
+		*target = nullptr;
 		if (current_resources > 0)
 		{
 			//Go to the nearest download point
@@ -86,7 +87,7 @@ bool Villager::Recollect()
 		}
 		return true;
 	}
-	
+
 	//Add extracted resources at the villager
 	current_resources += recollect_value;
 
@@ -122,6 +123,7 @@ bool Villager::SaveResources()
 
 	//Reset all the resources data so the next action will not be affected for it
 	this->ResetResourcesData();
+	App->animator->UnitPlay(this);
 
 	return true;
 }
@@ -134,40 +136,56 @@ void Villager::CheckRecollectResource(RESOURCE_TYPE type)
 	case TREE:
 	case TREE_CUT:
 	case CHOP:
+		if (resource_collected_type != GP_WOOD)
+		{
+			ResetResourcesData();
+			resource_collected_type = GP_WOOD;
+		}
 		if (item_type != ITEM_TYPE::AXE)
 		{
 			item_type = AXE;
 			action_type = ATTATCK;
-			resource_collected_type = GP_WOOD;
 			changed = true;
 		}
 		break;
 	case BERRY_BUSH:
+		if (resource_collected_type != GP_MEAT)
+		{
+			ResetResourcesData();
+			resource_collected_type = GP_MEAT;
+		}
 		if (item_type != ITEM_TYPE::BASKET)
 		{
 			item_type = BASKET;
 			action_type = ATTATCK;
-			resource_collected_type = GP_MEAT;
 			changed = true;
 		}
 		break;
 	case GOLD_ORE:
 	case TINY_GOLD_ORE:
+		if (resource_collected_type != GP_GOLD)
+		{
+			ResetResourcesData();
+			resource_collected_type = GP_GOLD;
+		}
 		if (item_type != ITEM_TYPE::PICK)
 		{
 			item_type = PICK;
 			action_type = ATTATCK;
-			resource_collected_type = GP_GOLD;
 			changed = true;
 		}
 		break;
 	case STONE_ORE:
 	case TINY_STONE_ORE:
+		if (resource_collected_type != GP_STONE)
+		{
+			ResetResourcesData();
+			resource_collected_type = GP_STONE;
+		}
 		if (item_type != ITEM_TYPE::PICK)
 		{
 			item_type = PICK;
 			action_type = ATTATCK;
-			resource_collected_type = GP_STONE;
 			changed = true;
 		}
 		break;
@@ -203,6 +221,7 @@ void Villager::ResetResourcesData()
 	item_type = NO_ITEM;
 	resource_collected_type = GP_NO_RESOURCE;
 	current_resources = 0;
+	action_type = IDLE;
 }
 
 /// -----------------------------------

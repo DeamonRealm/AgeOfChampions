@@ -42,15 +42,10 @@ bool j1ActionManager::CleanUp()
 {
 
 	//Freeing space of all actions created
-	/*std::list<Action*>::iterator action_item = all_actions.begin();
-	while (action_item != all_actions.end())
-	{
-		RELEASE(action_item._Ptr->_Myval);
-		action_item++;
-	}*/
-	all_actions.clear(); /*Actions are deleted by the worker so this don't make sense*/
 
-	return false;
+	all_actions.clear();
+
+	return true;
 }
 
 //Action Calls ========================
@@ -109,7 +104,7 @@ DieUnitAction * j1ActionManager::DieAction(Unit * actor)
 	return action;
 }
 
-RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resource* target)
+RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resource** target)
 {
 	//Generate a new move action definition
 	RecollectVillagerAction* action = new RecollectVillagerAction(actor, target);
@@ -141,19 +136,6 @@ SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_T
 	return action;
 }
 
-void j1ActionManager::CleanRelatedActions(const Entity * target)
-{
-	std::list<Action*>::iterator act = all_actions.begin();
-	while (act != all_actions.end())
-	{
-		if (act._Ptr->_Myval->Related(target))
-		{
-			all_actions.remove(act._Ptr->_Myval);
-			act = all_actions.begin();
-		}
-		else act++;
-	}
-}
 /// ---------------------------------------------
 
 

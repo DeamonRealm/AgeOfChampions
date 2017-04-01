@@ -177,6 +177,9 @@ protected:
 	ActionWorker*	action_worker = nullptr;
 
 public:
+	Entity*			myself = nullptr;
+
+public:
 
 	//Functionality -------------------
 	//Select/Deselect ------
@@ -223,6 +226,7 @@ public:
 	const SDL_Rect*	GetSelectionRect()const;
 	const SDL_Rect&	GetIcon()const;
 	ActionWorker*	GetWorker()const;
+	Entity**		GetMe();
 };
 /// ---------------------------------------------
 
@@ -367,6 +371,9 @@ public:
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
 	const Circle&	GetMark()const;
+	const Circle&	GetSoftCollider()const;
+	const Circle&	GetHardCollider()const;
+
 	const Entity*	GetInteractionTarget();
 	uint			GetViewArea()const;
 	float			GetSpeed()const;

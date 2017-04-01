@@ -75,6 +75,7 @@ void j1GroupMovement::OtherUnitsPath()
 	int i = 0;
 	bool left = true;
 	int loop = 0;
+	int radius = ((Unit*)lead)->GetSoftCollider().GetRad();
 	std::vector<iPoint> locations_takens;
 	iPoint copy_destination = destination;
 	switch (lead_direcction)
@@ -92,16 +93,15 @@ void j1GroupMovement::OtherUnitsPath()
 				continue;
 			}
 			if (left == true) {
-				i *= -1;
 				i++;
 			}
 
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(copy_destination.x + 20 * i, copy_destination.y);
+			new_destination.create(copy_destination.x + radius * i, copy_destination.y);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check)&&!PlaceTaken(locations_takens, new_destination)) {
-				new_destination.create(destination.x, destination.y-20 * loop);
+				new_destination.create(destination.x, destination.y- radius * loop);
 				loop++;
 				check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			}
@@ -109,12 +109,14 @@ void j1GroupMovement::OtherUnitsPath()
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->Reset();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			left != left;
+			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
 				current_height++;
-				copy_destination.create(destination.x, destination.y - 20 * current_height);
+				copy_destination.create(destination.x, destination.y - radius * current_height);
 				i = 0;
+				current_width = 0;
+
 			}
 		}
 		break;
@@ -130,17 +132,15 @@ void j1GroupMovement::OtherUnitsPath()
 				continue;
 			}
 			if (left == true) {
-				i *= -1;
 				i++;
-				i = 0;
 			}
 
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(copy_destination.x + 20 * i, copy_destination.y + 20 * i);
+			new_destination.create(copy_destination.x + radius * i, copy_destination.y + radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
-				new_destination.create(destination.x - 20 * loop, destination.y + 20 * loop);
+				new_destination.create(destination.x - radius * loop, destination.y + radius * loop);
 				loop++;
 				check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			}
@@ -148,12 +148,13 @@ void j1GroupMovement::OtherUnitsPath()
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->Reset();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			left != left;
+			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
 				current_height++;
-				copy_destination.create(destination.x - 20 * current_height, destination.y + 20 * current_height);
+				copy_destination.create(destination.x - radius * current_height, destination.y + radius * current_height);
 				i = 0;
+				current_width = 0;
 			}
 		}
 		break;
@@ -169,17 +170,15 @@ void j1GroupMovement::OtherUnitsPath()
 				continue;
 			}
 			if (left == true) {
-				i *= -1;
 				i++;
-				i = 0;
 			}
 
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(copy_destination.x, copy_destination.y + 20 * i);
+			new_destination.create(copy_destination.x, copy_destination.y + radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
-				new_destination.create(destination.x - 20 * loop, destination.y);
+				new_destination.create(destination.x - radius * loop, destination.y);
 				loop++;
 				check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			}
@@ -187,12 +186,14 @@ void j1GroupMovement::OtherUnitsPath()
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->Reset();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			left != left;
+			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
 				current_height++;
-				copy_destination.create(destination.x - 20 * current_height, destination.y);
+				copy_destination.create(destination.x - radius * current_height, destination.y);
 				i = 0;
+				current_width = 0;
+
 			}
 		}
 		break;
@@ -208,16 +209,15 @@ void j1GroupMovement::OtherUnitsPath()
 				continue;
 			}
 			if (left == true) {
-				i *= -1;
 				i++;
 			}
 
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(copy_destination.x - 20 * i, copy_destination.y + 20 * i);
+			new_destination.create(copy_destination.x - radius * i, copy_destination.y + radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
-				new_destination.create(destination.x - 20 * loop, destination.y - 20 * loop);
+				new_destination.create(destination.x - radius * loop, destination.y - radius * loop);
 				loop++;
 				check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			}
@@ -225,12 +225,14 @@ void j1GroupMovement::OtherUnitsPath()
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->Reset();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			left != left;
+			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
 				current_height++;
-				copy_destination.create(destination.x - 20 * current_height, destination.y - 20 * current_height);
+				copy_destination.create(destination.x - radius * current_height, destination.y - radius * current_height);
 				i = 0;
+				current_width = 0;
+
 			}
 		}
 		break;
@@ -245,16 +247,15 @@ void j1GroupMovement::OtherUnitsPath()
 				continue;
 			}
 			if (left == true) {
-				i *= -1;
 				i++;
 			}
 
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(copy_destination.x + 20 * i, copy_destination.y );
+			new_destination.create(copy_destination.x + radius * i, copy_destination.y );
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
-				new_destination.create(destination.x, destination.y - 20 * loop);
+				new_destination.create(destination.x, destination.y - radius * loop);
 				loop++;
 				check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			}
@@ -262,12 +263,14 @@ void j1GroupMovement::OtherUnitsPath()
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->Reset();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			left != left;
+			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
 				current_height++;
-				copy_destination.create(destination.x, destination.y - 20 * current_height);
+				copy_destination.create(destination.x, destination.y - radius * current_height);
 				i = 0;
+				current_width = 0;
+
 			}
 		}
 		break;
@@ -283,16 +286,15 @@ void j1GroupMovement::OtherUnitsPath()
 				continue;
 			}
 			if (left == true) {
-				i *= -1;
 				i++;
 			}
 
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(copy_destination.x - 20 * i, copy_destination.y - 20 * i);
+			new_destination.create(copy_destination.x - radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
-				new_destination.create(destination.x + 20 * loop, destination.y - 20 * loop);
+				new_destination.create(destination.x + radius * loop, destination.y - radius * loop);
 				loop++;
 				check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			}
@@ -300,12 +302,14 @@ void j1GroupMovement::OtherUnitsPath()
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->Reset();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			left != left;
+			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
 				current_height++;
-				copy_destination.create(destination.x + 20 * current_height, destination.y - 20 * current_height);
+				copy_destination.create(destination.x + radius * current_height, destination.y - radius * current_height);
 				i = 0;
+				current_width = 0;
+
 			}
 		}
 		break;
@@ -320,16 +324,15 @@ void j1GroupMovement::OtherUnitsPath()
 				continue;
 			}
 			if (left == true) {
-				i *= -1;
 				i++;
 			}
 
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(copy_destination.x, copy_destination.y + 20 * i);
+			new_destination.create(copy_destination.x, copy_destination.y + radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
-				new_destination.create(destination.x + 20 * loop, destination.y);
+				new_destination.create(destination.x + radius * loop, destination.y);
 				loop++;
 				check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			}
@@ -337,12 +340,14 @@ void j1GroupMovement::OtherUnitsPath()
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->Reset();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			left != left;
+			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
 				current_height++;
-				copy_destination.create(destination.x + 20 * current_height, destination.y);
+				copy_destination.create(destination.x + radius * current_height, destination.y);
 				i = 0;
+				current_width = 0;
+
 			}
 		}
 		break;
@@ -357,16 +362,15 @@ void j1GroupMovement::OtherUnitsPath()
 				continue;
 			}
 			if (left == true) {
-				i *= -1;
 				i++;
 			}
 
 			//set path for the other units
 			std::vector<iPoint>* unit_destination = nullptr;
-			new_destination.create(copy_destination.x + 20 * i, copy_destination.y - 20 * i);
+			new_destination.create(copy_destination.x + radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
-				new_destination.create(destination.x + 20 * loop, destination.y + 20 * loop);
+				new_destination.create(destination.x + radius * loop, destination.y + radius * loop);
 				loop++;
 				check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			}
@@ -374,12 +378,14 @@ void j1GroupMovement::OtherUnitsPath()
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->Reset();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
-			left != left;
+			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
 				current_height++;
-				copy_destination.create(destination.x + 20 * current_height, destination.y + 20 * current_height);
+				copy_destination.create(destination.x + radius * current_height, destination.y + radius * current_height);
 				i = 0;
+				current_width = 0;
+
 			}
 		}
 		break;
