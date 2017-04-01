@@ -196,7 +196,7 @@ void Entity_Profile::DrawProfile() const
 
 void Entity_Profile::UpdateStats()
 {
-	if (element->GetLife() != life_update)
+	if (element->GetEntityType() != RESOURCE && element->GetLife() != life_update)
 	{
 		life_update = element->GetLife();
 		if (life_update == 0)
@@ -227,6 +227,7 @@ void Entity_Profile::UpdateStats()
 		{
 			u_resources = ((Resource*)element)->GetLife();
 			resources->SetString(App->gui->SetStringFromInt(u_resources));
+			if (u_resources == 0) element = nullptr;
 		}
 	}
 }

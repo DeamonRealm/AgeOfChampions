@@ -78,7 +78,7 @@ private:
 	UI_String*		capacity = nullptr;
 
 	//Resources
-	uint			u_resources = 0;
+	int			u_resources = 0;
 	UI_String*		resources = nullptr;
 };
 

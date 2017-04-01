@@ -220,7 +220,7 @@ public:
 	ENTITY_TYPE		GetEntityType()const;
 	DIPLOMACY		GetDiplomacy()const;
 	uint			GetMaxLife()const;
-	virtual uint	GetLife()const;
+	virtual int		GetLife()const;
 	Animation*		GetAnimation();
 	bool			GetFlipSprite()const;
 	const SDL_Rect*	GetSelectionRect()const;
@@ -496,7 +496,7 @@ public:
 	ACTION_TYPE		GetActionType()const;
 	DIRECTION_TYPE	GetDirectionType()const;
 	uint			GetMaxLife()const;
-	uint			GetLife()const;
+	int				GetLife()const;
 
 };
 /// ---------------------------------------------
