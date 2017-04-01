@@ -311,18 +311,18 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 		while (!other_units.empty()) {
 			Unit* other_unit = other_units.back();
 			if (other_unit != this) {
-				
+
 				switch (CheckColision(this, other_unit))
 				{
 				case NO_COLLISION:
 					break;
 				case COLLISION_IDLE:
 				{
-					if (GetPath()->size() <= 2) {
-						Repath(path);
-						return false;
+					if (future_position == other_unit->GetPositionRounded()) {
+
+						if (GetPath()->size() <= 2)
+							Repath(path);
 					}
-					
 				}
 					break;
 				case COLLISION_MOVE:
@@ -350,9 +350,9 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 					if (future_position == other_unit->future_position) {
 						if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-								other_unit->Repath(*(other_unit->GetPath()->begin()));
+								other_unit->Repath(other_unit->GetPath());
 							else
-								Repath(*(path->begin()));
+								Repath(path);
 
 						}
 						else
@@ -365,13 +365,11 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 									mutable_speed -= 0.2;
 							}
 						}
-
 					}
 					collisions++;
 					break;
 
 				}
-				
 			}
 			other_units.pop_back();
 		}
@@ -448,13 +446,13 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 	return false;
 }
 
-void Unit::Repath(const iPoint & destination)
+void Unit::Repath(std::vector<iPoint>* path)
 {
-	iPoint new_destination = FindWalkableCell(destination);
+	iPoint new_destination = FindWalkableCell(*(path->begin()));
 	std::vector<iPoint>* new_path;
 	new_path=App->pathfinding->SimpleAstar(GetPositionRounded(), new_destination);
-	this->GetPath()->clear();
-	this->GetPath()->insert(this->GetPath()->end(), new_path->begin(), new_path->end());
+	path->clear();
+	path->insert(path->end(), new_path->begin(), new_path->end());
 
 }
 
@@ -714,21 +712,21 @@ bool Unit::Die()
 
 COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 {
-	if(other->action_type== IDLE||other->action_type == ATTATCK)
+	if(other->action_type== IDLE)
 	{
-		if (sqrt((other->GetPosition().x - current->future_position.x) * (other->GetPosition().x - current->future_position.x) + (other->GetPosition().y - current->future_position.y) * (other->GetPosition().y - current->future_position.y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad())
-			|| sqrt((other->GetPosition().x - current->GetPosition().x) * (other->GetPosition().x - current->GetPosition().x) + (other->GetPosition().y - current->GetPosition().y) * (other->GetPosition().y - current->GetPosition().y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad()))
+		if (sqrt((other->GetPosition().x - current->future_position.x) * (other->GetPosition().x - current->future_position.x) + (other->GetPosition().y - current->future_position.y) * (other->GetPosition().y - current->future_position.y)) < (current->soft_collider.GetRad() + other->soft_collider.GetRad()))
 		{
 			return COLLISION_IDLE;
 		}
+	
 		return NO_COLLISION;
 	}
 	else if (other->action_type == WALK) {
-		if (sqrt((other->future_position.x - current->future_position.x) * (other->future_position.x - current->future_position.x) + (other->future_position.y - current->future_position.y) * (other->future_position.y - current->future_position.y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad()))
+		if (sqrt((other->future_position.x - current->future_position.x) * (other->future_position.x - current->future_position.x) + (other->future_position.y - current->future_position.y) * (other->future_position.y - current->future_position.y)) < (current->soft_collider.GetRad() + other->soft_collider.GetRad()))
 		{
 			return FUTURE_COLLISION_MOVE;
 		}
-		if (sqrt((other->GetPosition().x - current->GetPosition().x) * (other->GetPosition().x - current->GetPosition().x) + (other->GetPosition().y - current->GetPosition().y) * (other->GetPosition().y - current->GetPosition().y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad()))
+		if (sqrt((other->GetPosition().x - current->GetPosition().x) * (other->GetPosition().x - current->GetPosition().x) + (other->GetPosition().y - current->GetPosition().y) * (other->GetPosition().y - current->GetPosition().y)) < (current->soft_collider.GetRad() + other->soft_collider.GetRad()))
 		{
 			return COLLISION_MOVE;
 		}
