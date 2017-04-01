@@ -367,6 +367,9 @@ public:
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
 	const Circle&	GetMark()const;
+	const Circle&	GetSoftCollider()const;
+	const Circle&	GetHardCollider()const;
+
 	const Entity*	GetInteractionTarget();
 	uint			GetViewArea()const;
 	float			GetSpeed()const;

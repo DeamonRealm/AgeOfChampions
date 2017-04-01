@@ -346,8 +346,8 @@ bool Unit::Move(std::vector<iPoint>* path) ///Returns true when it ends
 						if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
 								other_unit->Repath(other_unit->GetPath());
-							//else
-							//	Repath(path);
+							else
+								Repath(path);
 
 						}
 						else
@@ -928,6 +928,16 @@ UNIT_TYPE Unit::GetUnitType()const
 const Circle& Unit::GetMark() const
 {
 	return mark;
+}
+
+const Circle & Unit::GetSoftCollider() const
+{
+	return soft_collider;
+}
+
+const Circle & Unit::GetHardCollider() const
+{
+	return hard_collider;
 }
 
 const Entity * Unit::GetInteractionTarget()
