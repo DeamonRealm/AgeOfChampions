@@ -63,6 +63,7 @@ bool j1Player::Start()
 	game_panel->IncressPopulation(45, true);
 
 	game_hud->AddChild(action_panel->GetHeroSkillTree());
+	game_hud->AddChild(game_panel->GetExitMenu());
 	App->gui->PushScreen(game_hud);
 	return true;
 }
@@ -87,6 +88,7 @@ bool j1Player::PreUpdate()
 		}
 		if (action_panel->GetIsIn()) action_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 	}
+	
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (selection_panel->PointisInViewport(x, y)) selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);		
@@ -219,6 +221,8 @@ bool j1Player::CleanUp()
 
 void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 {
+	game_panel->Handle_Input(target, input);
+
 	switch (input)
 	{
 	case UP_ARROW:
@@ -230,16 +234,20 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 	case RIGHT_ARROW:
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
-		{
+	{
 		if (target == action_panel->GetHeroSkillTree())
 		{
 			action_panel->Handle_Input(target, MOUSE_LEFT_BUTTON_DOWN);
 		}
-		}
+		
+		//game_panel->Handle_Input(target, MOUSE_LEFT_BUTTON_DOWN);
+
+	}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;
 	case MOUSE_LEFT_BUTTON_UP:
+
 		break;
 	case MOUSE_RIGHT_BUTTON:
 		break;

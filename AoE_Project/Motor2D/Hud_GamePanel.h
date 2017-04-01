@@ -5,8 +5,12 @@
 #include <vector>
 
 
-
 class UI_String;
+class UI_Element;
+class UI_Button;
+class UI_Image;
+
+enum GUI_INPUT;
 
 enum PLAYER_RESOURCES
 {
@@ -39,12 +43,19 @@ public:
 	// Draw Game Panel
 	bool Draw();
 
+	// Handle_input_GUI
+	void Handle_Input(UI_Element* ui_element, GUI_INPUT ui_input);
+
 	// Add Resource
 	bool AddResource(int amount, PLAYER_RESOURCES resource_type);
 
 	// Incress and Check Population
 	bool IncressPopulation(int amount, bool increase_max = false);
 	bool CheckPopulation() const;
+
+	//Get exit Menu
+	UI_Element* GetExitMenu();
+
 
 private:
 
@@ -68,7 +79,11 @@ private:
 
 	// Game Menu
 
-
+	//HUD Panels
+	UI_Element*	exit_menu_screen	= nullptr;
+	UI_Button*	exit_menu_button	= nullptr;
+	UI_Button*	exit_to_main_menu	= nullptr;
+	UI_Image*	exit_menu_image		= nullptr;
 
 };
 
