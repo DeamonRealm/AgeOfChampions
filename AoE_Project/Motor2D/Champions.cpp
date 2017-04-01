@@ -5,7 +5,6 @@
 #include "j1Render.h"
 #include "j1EntitiesManager.h"
 #include "j1Input.h"
-#include "j1BuffManager.h"
 #include "j1ActionManager.h"
 
 ///Class Champion -------------------------------
@@ -31,6 +30,18 @@ Champion::~Champion()
 
 //Functionality =======================
 //Actions -------------------
+void Champion::CleanBuffedUnits()
+{
+	std::list<Unit*>::iterator unit = buffed_units.begin();
+
+	while (unit != buffed_units.end())
+	{
+		App->buff_manager->RemoveTargetBuffs(unit._Ptr->_Myval);
+
+		unit++;
+	}
+}
+
 void Champion::Hability_A()
 {
 
@@ -180,6 +191,7 @@ Warrior::Warrior() :Champion()
 Warrior::Warrior(const Warrior & copy): Champion(copy),special_attack_area(copy.special_attack_area)
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
+	slash_particle = App->buff_manager->GetParticle(SLASH_PARTICLE);
 }
 
 //Destructors =========================
@@ -191,7 +203,7 @@ Warrior::~Warrior()
 bool Warrior::Update()
 {
 	this->action_worker->Update();
-	CheckHability_A();
+	CheckHability_B();
 	return true;
 }
 
@@ -301,9 +313,21 @@ void Warrior::CheckHability_A()
 void Warrior::Hability_B()
 {
 	//Collect all the units in the buff area
-	std::vector<Unit*> units_around;
-	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
-	uint size = units_around.size();
+	std::vector<Unit*> units_in;
+	App->entities_manager->units_quadtree.CollectCandidates(units_in, special_attack_area);
+
+	uint size = units_in.size();
+	for (uint k = 0; k < size; k++)
+	{
+		if(units_in[k]->GetPosition() != position)units_in[k]->DirectDamage(200);
+	}
+	LOG("In area %i", units_in.size());
+
+}
+
+void Warrior::CheckHability_B()
+{
+
 }
 
 void Warrior::CalculateSpecialAttackArea(const iPoint & base)

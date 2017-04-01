@@ -9,6 +9,14 @@
 
 class Unit;
 
+enum PARTICLE_TYPE
+{
+	UNKNOWN_PARTICLE,
+	BUFF_PARTICLE,
+	SLASH_PARTICLE,
+	STUN_PARTICLE
+};
+
 enum BUFF_TYPE
 {
 	NO_BUFF = 0,
@@ -23,7 +31,7 @@ enum BUFF_ATTRIBUTE_TYPE
 	DEFENSE_BUFF
 };
 
-/// Class Buff Particle ---------------
+///Class Particle ---------------------
 class Particle
 {
 public:
@@ -34,13 +42,33 @@ public:
 
 public:
 
-	iPoint				position = { 0,0 };
+	PARTICLE_TYPE	particle_type = UNKNOWN_PARTICLE;
+	iPoint			position = { 0,0 };
+	Animation		animation;
+
+public:
+
+	virtual void Draw();
+
+};
+/// -----------------------------------
+
+/// Class Buff Particle ---------------
+class BuffParticle : public Particle
+{
+public:
+
+	BuffParticle();
+	BuffParticle(const BuffParticle& copy);
+	~BuffParticle();
+
+public:
+
 	bool				actor = false;
 	BUFF_TYPE			buff_type = NO_BUFF;
 	BUFF_ATTRIBUTE_TYPE	attribute_type = NO_ATTRIBUTE;
 	j1Timer				draw_timer;
 	uint				draw_rate = 0;
-	Animation			animation;
 
 public:
 
@@ -65,7 +93,7 @@ protected:
 	float				value = 0;
 	Unit*				target = nullptr;
 	bool				actor = false;
-	Particle			particle;
+	BuffParticle		particle;
 
 public:
 
@@ -77,7 +105,7 @@ public:
 	void SetValue(float value);
 	void SetTarget(Unit* target);
 	void SetActor(bool act);
-	void SetParticle(Particle part);
+	void SetParticle(BuffParticle part);
 
 	//getters
 	BUFF_TYPE			GetBuffType()const;
@@ -150,20 +178,25 @@ private:
 	//Methods to transform loaded string to buffs enums
 	BUFF_TYPE			StrToBuffType(const char* str)const;
 	BUFF_ATTRIBUTE_TYPE StrToBuffAttributeType(const char* str)const;
+	PARTICLE_TYPE		StrToParticleType(const char* str)const;
 
 	std::vector<PassiveBuff*>	buff_definitions;
-	std::vector<Particle*>		buff_particle_definitions;
+	std::vector<BuffParticle*>	buff_particle_definitions;
+	std::vector<Particle*>		particle_definitions;
+
 	std::list<Buff*>			active_buffs;
 	std::list<PassiveBuff*>		static_buffs;
 
 	//Get a buff particle looking the types and the actor
-	Particle GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TYPE atr_type, bool act);
+	BuffParticle	GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TYPE atr_type, bool act);
 
 public:
 
 	bool			CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor = false);
 	PassiveBuff*	GetPassiveBuff(BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor);
 	void			RemoveTargetBuff(Unit* target, PassiveBuff* buff);
+	void			RemoveTargetBuffs(Unit* target);
+	Particle		GetParticle(PARTICLE_TYPE ty);
 
 };
 #endif //_J1_BUFF_MANAGER_H_

@@ -2,7 +2,7 @@
 #define _CHAMPIONS_
 
 #include "Units.h"
-class PassiveBuff;
+#include "j1BuffManager.h"
 
 ///Class Champion -------------------------------
 //Base class that define the champions bases
@@ -38,6 +38,7 @@ public:
 
 	//Functionality ---------
 	//Actions -----
+	void		 CleanBuffedUnits();
 	virtual void Hability_A();
 	virtual void CheckHability_A();
 	virtual void Hability_B();
@@ -84,7 +85,7 @@ private:
 
 	/* extra data */
 	Triangle			special_attack_area;
-	//Particle			slash_particle;
+	Particle			slash_particle;
 
 public:
 
@@ -97,6 +98,7 @@ public:
 	void	Hability_A();
 	void	CheckHability_A();
 	void	Hability_B();
+	void	CheckHability_B();
 	void	CalculateSpecialAttackArea(const iPoint& base);
 
 	//Set Methods -

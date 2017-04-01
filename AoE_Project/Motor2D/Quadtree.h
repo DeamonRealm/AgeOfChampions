@@ -448,7 +448,7 @@ public:
 		uint ret = 0;
 
 		// If range is not in the quad-tree, return
-		if (!tri.Intersects(&this->aabb))return 0;
+		//if (!tri.Intersects(&this->aabb))return 0;/*TEMP_CASE*/
 
 		// See if the points of this node are in range and pushback them to the vector
 		if (full)

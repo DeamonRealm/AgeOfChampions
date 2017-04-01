@@ -10,6 +10,7 @@
 #include "j1EntitiesManager.h"
 #include "j1ActionManager.h"
 #include "Actions_Unit.h"
+#include "j1BuffManager.h"
 
 ///Class Entity ---------------------------------
 //Constructors ========================
@@ -694,10 +695,21 @@ bool Unit::Cover()
 	return ((HabitableBuilding*)interaction_target)->CoverUnit(this);
 }
 
+void Unit::DirectDamage(uint damage)
+{
+	//Deal damage to the unit
+	life -= MIN(life, damage);
+	if (life <= 0)
+	{
+		action_worker->AddAction(App->action_manager->DieAction(this));
+	}
+}
+
 bool Unit::Die()
 {
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
+		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 		App->animator->UnitPlay(this);
 	}

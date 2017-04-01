@@ -2,6 +2,7 @@
 
 <data>
   <particle document="Area_Fire.xml"/>
+  <particle document="Slash_Effect.xml"/>
   <buff
     buff_type ="passive"
     attribute_type="attack"
