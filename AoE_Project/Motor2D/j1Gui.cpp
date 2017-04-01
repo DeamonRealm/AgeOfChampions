@@ -43,6 +43,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	standardmenu_file_name = conf.child("standard").attribute("file").as_string("");
 	icons_file_name = conf.child("icons").attribute("file").as_string("");
 	hud_file_name = conf.child("hud").attribute("file").as_string("");
+	champions_file_name = conf.child("champion").attribute("file").as_string("");
 	
 	return ret;
 }
@@ -59,6 +60,7 @@ bool j1Gui::Start()
 	standardmenu = App->tex->Load(standardmenu_file_name.c_str());
 	icons = App->tex->Load(icons_file_name.c_str());
 	hud = App->tex->Load(hud_file_name.c_str());
+	champions = App->tex->Load(champions_file_name.c_str());
 	
 	//Add textures to Ui_textures
 	ui_textures.push_back(background);
@@ -66,6 +68,7 @@ bool j1Gui::Start()
 	ui_textures.push_back(standardmenu);
 	ui_textures.push_back(icons);
 	ui_textures.push_back(hud);
+	ui_textures.push_back(champions);
 	
 	LoadCursorTypes();
 	ChangeMouseTexture(DEFAULT);
@@ -165,7 +168,7 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 SDL_Texture * j1Gui::Get_UI_Texture(uint tex_id)
 {
-	if (tex_id > ui_textures.size() - 1)return nullptr;
+	if (tex_id >= ui_textures.size())return nullptr;
 
 	std::list<SDL_Texture*>::iterator item = ui_textures.begin();
 	for (uint k = 0; k < tex_id; k++)

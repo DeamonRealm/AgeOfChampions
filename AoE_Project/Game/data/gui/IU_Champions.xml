@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:166a36e24180337169aa8c83a3bb5287:74a04d4c21a97d8082af03a183f0bf65:ea757f83f784623c2619da57817ef975$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="IU_Champions.png" width="730" height="730">
+    <sprite n="IU_Campions/IU_Dialeg.png" x="373" y="5" w="103" h="54" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_IconWarrior.png" x="479" y="5" w="36" h="36" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_ButtonUp.png" x="374" y="61" w="21" h="21" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_ButtonDown.png" x="396" y="61" w="21" h="21" pX="0.5" pY="0.5"/>
+
+ <sprite n="IU_Campions/IU_TitleWarrior.png" x="374" y="147" w="110" h="22" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_Experience0.png" x="375" y="84" w="262" h="8" pX="0.5" pY="0.5"/>
+<sprite n="IU_Campions/IU_Experience1.png" x="375" y="94" w="262" h="8" pX="0.5" pY="0.5"/>
+<sprite n="IU_Campions/IU_Experience2.png" x="375" y="104" w="262" h="8" pX="0.5" pY="0.5"/>
+<sprite n="IU_Campions/IU_Experience3.png" x="375" y="114" w="262" h="8" pX="0.5" pY="0.5"/>
+<sprite n="IU_Campions/IU_Experience4.png" x="375" y="124" w="262" h="8" pX="0.5" pY="0.5"/>
+<sprite n="IU_Campions/IU_Experience5.png" x="375" y="134" w="262" h="8" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_Ability1.png" x="376" y="174" w="67" h="61" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_Ability2.png" x="376" y="237" w="67" h="61" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_Ability3.png" x="376" y="300" w="67" h="61" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_Ability4.png" x="376" y="364" w="67" h="61" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_Ability5.png" x="376" y="428" w="67" h="61" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_Ability6.png" x="376" y="495" w="67" h="61" pX="0.5" pY="0.5"/>
+
+</TextureAtlas>

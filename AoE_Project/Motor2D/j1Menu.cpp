@@ -116,7 +116,7 @@ bool j1Menu::Start()
 	//Standard Match GUI
 //	App->gui->PushScreen(standard_match_screen);
 	App->gui->PushScreen(menu_screen);
-	App->gui->CalculateUpperElement(menu_screen);
+//	App->gui->CalculateUpperElement(menu_screen);
 	
 
 	return true;

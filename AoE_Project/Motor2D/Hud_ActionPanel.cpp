@@ -113,16 +113,39 @@ bool UnitPanel::ActivateCell(int i)
 
 HeroPanel::HeroPanel() : Action_Panel_Elements() 
 {
+	App->gui->SetDefaultInputTarget((j1Module*)App->player);
+
 	panel_icons[0] = { 504,441,36,36 };
 	panel_icons[14] = { 0,76,36,36 };
 
 	skill_tree = new UI_Image();
-	skill_tree->SetBoxPosition(10, 200);
-	skill_tree->SetBox({ 10, 200, 150, 200 });
-	skill_tree->ChangeTextureId(STANDARD);
-	skill_tree->ChangeTextureRect({ 1200, 20, 150, 200 });
+	skill_tree->SetBox({ 0, 23, 150, 200 });
+	skill_tree->ChangeTextureId(CHAMPION_SKILL);
+	skill_tree->ChangeTextureRect({ 0,0, 372, 572 });
+	skill_tree->SetLayer(15);
+	skill_tree->AdjustBox();
+	skill_tree->Activate();
+
+	mele_champion.reserve(6);
+	mele_champion.push_back({ 376,174,67,61 });
+	mele_champion.push_back({ 376,237,67,61 });
+	mele_champion.push_back({ 376,300,67,61 });
+	mele_champion.push_back({ 376,364,67,61 });
+	mele_champion.push_back({ 376,428,67,61 });
+	mele_champion.push_back({ 376,495,67,61 });
 
 	skills.reserve(6);
+	for (int i = 0; i < 6; i++)
+	{
+		skills.push_back(new UI_Button());
+		skills[i]->SetTexON(mele_champion[i], CHAMPION_SKILL);
+		skills[i]->SetTexOFF(mele_champion[i], CHAMPION_SKILL);
+		skills[i]->SetTexOVER(mele_champion[i], CHAMPION_SKILL);
+		skills[i]->AdjustBox();
+		skills[i]->SetBoxPosition(50 + 50 * i, 500);
+		skills[i]->Activate();
+		skill_tree->AddChild(skills[i]);
+	}
 
 	//champion
 	champion_skills_learned.reserve(3);
@@ -130,13 +153,8 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	champion_skills_learned.push_back(-1);
 	champion_skills_learned.push_back(-1);
 
-	mele_champion.reserve(6);
-	mele_champion.push_back({ 360,441,36,36 });
-	mele_champion.push_back({ 396,441,36,36 });
-	mele_champion.push_back({ 360,441,36,36 });
-	mele_champion.push_back({ 396,441,36,36 });
-	mele_champion.push_back({ 360,441,36,36 });
-	mele_champion.push_back({ 396,441,36,36 });
+	App->gui->PushScreen(skill_tree);
+	
 }
 
 HeroPanel::~HeroPanel()
@@ -182,6 +200,43 @@ bool HeroPanel::ActivateCell(int i)
 	return true;
 }
 
+void HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
+{
+	switch (ui_input)
+	{
+	case UP_ARROW:
+		break;
+	case DOWN_ARROW:
+		break;
+	case LEFT_ARROW:
+		break;
+	case RIGHT_ARROW:
+		break;
+	case MOUSE_LEFT_BUTTON_DOWN:
+		break;
+	case MOUSE_LEFT_BUTTON_REPEAT:
+		break;
+	case MOUSE_LEFT_BUTTON_UP:
+		break;
+	case MOUSE_RIGHT_BUTTON:
+		break;
+	case MOUSE_IN:
+		break;
+	case MOUSE_OUT:
+		break;
+	case SUPR:
+		break;
+	case BACKSPACE:
+		break;
+	case ENTER:
+		break;
+	case TAB:
+		break;
+	default:
+		break;
+	}
+}
+
 
 Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 {
@@ -192,6 +247,7 @@ Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 
 	towncenter = new TownCenterPanel();
 	unitpanel = new UnitPanel();
+	heropanel = new HeroPanel();
 
 	UI_Image* cell = nullptr;
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
@@ -266,6 +322,7 @@ int Action_Panel::GetCell() const
 {
 	SDL_Rect cell_clicked = {0,0,0,0};
 	int ret = 0;
+
 	for (int count = 0; count < MAX_PANEL_CELLS; count++)
 	{
 		cell_clicked =  { panel_pos.x + (count% PANEL_COLUMNS)*CELL_WIDTH, panel_pos.y + ((int)count / PANEL_COLUMNS)*CELL_HEIGHT,CELL_WIDTH, CELL_HEIGHT } ;
@@ -281,6 +338,11 @@ int Action_Panel::GetCell() const
 bool Action_Panel::GetIsIn() const
 {
 	return isin;
+}
+
+void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
+{
+	if (actualpanel == heropanel) heropanel->Hero_Handle_input(ui_element, ui_input);
 }
 
 void Action_Panel::SetSelectionPanelPointer(Selection_Panel * selection_panel)
@@ -369,16 +431,3 @@ void Action_Panel::CheckSelected(int selected)
 		}
 	}
 }
-/*
-void Action_Panel::HeroPanel_SkillTree(GUI_INPUT input, uint i)
-{
-	if (input == MOUSE_LEFT_BUTTON_DOWN)
-	{
-
-	}
-	if (input == MOUSE_IN)
-	{
-
-	}
-}
-*/

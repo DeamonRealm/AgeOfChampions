@@ -82,6 +82,7 @@ public:
 	~HeroPanel();
 
 	bool ActivateCell(int i);
+	void Hero_Handle_input(UI_Element* ui_element, GUI_INPUT ui_input);
 
 private:
 	UI_Image*					skill_tree = nullptr;
@@ -121,6 +122,9 @@ public:
 	// Get isin bool
 	bool GetIsIn() const;
 
+	// Handle_input_GUI
+	void Handle_Input(UI_Element* ui_element, GUI_INPUT ui_input);
+
 	// Set Pointer To Selection Panel
 	void SetSelectionPanelPointer(Selection_Panel* selection_panel);
 	void GetEntitySelected();
@@ -128,7 +132,6 @@ public:
 	// Panel Settings
 	void SetPanelType();
 	void CheckSelected(int size);
-	//void HeroPanel_SkillTree(GUI_INPUT input, uint i);
 
 private:
 	

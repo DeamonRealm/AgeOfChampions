@@ -87,6 +87,15 @@ bool j1Player::PreUpdate()
 		if (selection_panel->PointisInViewport(x, y)) selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);		
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
+		selection_panel->Handle_Input(UP_ARROW);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		selection_panel->Handle_Input(DOWN_ARROW);
+	}
+
 	// Action Panel Check Selected
 	action_panel->CheckSelected(selection_panel->GetSelectedSize());
 
@@ -201,4 +210,44 @@ bool j1Player::CleanUp()
 	delete action_panel;
 
 	return true;
+}
+
+void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
+{
+	switch (input)
+	{
+	case UP_ARROW:
+		break;
+	case DOWN_ARROW:
+		break;
+	case LEFT_ARROW:
+		break;
+	case RIGHT_ARROW:
+		break;
+	case MOUSE_LEFT_BUTTON_DOWN:
+		{
+		action_panel->Handle_Input(target, MOUSE_LEFT_BUTTON_DOWN);
+		}
+		break;
+	case MOUSE_LEFT_BUTTON_REPEAT:
+		break;
+	case MOUSE_LEFT_BUTTON_UP:
+		break;
+	case MOUSE_RIGHT_BUTTON:
+		break;
+	case MOUSE_IN:
+		break;
+	case MOUSE_OUT:
+		break;
+	case SUPR:
+		break;
+	case BACKSPACE:
+		break;
+	case ENTER:
+		break;
+	case TAB:
+		break;
+	default:
+		break;
+	}
 }

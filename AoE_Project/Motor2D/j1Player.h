@@ -55,6 +55,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// GUI_INPUT
+	void GUI_Input(UI_Element* target, GUI_INPUT input);
+
 private:
 
 	std::string				civilization;
