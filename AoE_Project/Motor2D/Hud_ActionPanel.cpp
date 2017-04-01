@@ -119,12 +119,12 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	panel_icons[14] = { 0,76,36,36 };
 
 	skill_tree = new UI_Image();
-	skill_tree->SetBox({ 0, 23, 150, 200 });
+	skill_tree->SetBox({ 0, 23, 372, 576 });
 	skill_tree->ChangeTextureId(CHAMPION_SKILL);
-	skill_tree->ChangeTextureRect({ 0,0, 372, 572 });
+	skill_tree->ChangeTextureRect({ 0,0,  372, 576  });
 	skill_tree->SetLayer(15);
 	skill_tree->AdjustBox();
-	skill_tree->Activate();
+	skill_tree->Desactivate();
 
 	mele_champion.reserve(6);
 	mele_champion.push_back({ 376,174,67,61 });
@@ -152,8 +152,6 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	champion_skills_learned.push_back(-1);
 	champion_skills_learned.push_back(-1);
 	champion_skills_learned.push_back(-1);
-
-	App->gui->PushScreen(skill_tree);
 	
 }
 
@@ -213,6 +211,9 @@ void HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 	case RIGHT_ARROW:
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
+	{
+		int x = 0;
+	}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;
@@ -291,7 +292,8 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 	switch (newevent)
 	{
 	case MOUSE_LEFT_BUTTON_DOWN:
-		{cell = GetCell();
+		{
+			cell = GetCell();
 			if (actualpanel != nullptr) actualpanel->ActivateCell(cell);
 		}
 		break;
@@ -342,7 +344,15 @@ bool Action_Panel::GetIsIn() const
 
 void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 {
-	if (actualpanel == heropanel) heropanel->Hero_Handle_input(ui_element, ui_input);
+	if (actualpanel == heropanel)
+	{
+		heropanel->Hero_Handle_input(ui_element, ui_input);
+	}
+}
+
+UI_Element * Action_Panel::GetHeroSkillTree() const
+{
+	return heropanel->skill_tree;
 }
 
 void Action_Panel::SetSelectionPanelPointer(Selection_Panel * selection_panel)
@@ -386,6 +396,12 @@ void Action_Panel::SetPanelType()
 		break;
 	case UNIT:
 		if (u_type == VILLAGER);
+		else if (u_type == WARRIOR_CHMP)
+		{
+			heropanel->skill_tree->Activate();
+			heropanel->ChangePanelIcons(panel_cells);
+			actualpanel = heropanel;
+		}
 		else 
 		{
 			for (int count = 0; count < MAX_PANEL_CELLS; count++)
@@ -421,6 +437,7 @@ void Action_Panel::CheckSelected(int selected)
 	{
 		actual_entity = nullptr;
 		actualpanel = nullptr;
+		heropanel->skill_tree->Desactivate();
 		return;
 	}
 	if (actualpanel != nullptr)

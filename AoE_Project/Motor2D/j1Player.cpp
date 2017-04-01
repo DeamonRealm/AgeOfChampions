@@ -45,8 +45,8 @@ bool j1Player::Start()
 	// Hud Background
 	game_hud = (UI_Image*) App->gui->GenerateUI_Element(IMG);
 	game_hud->ChangeTextureId(HUD);
-	game_hud->SetLayer(10);
-	App->gui->PushScreen(game_hud);
+	game_hud->SetLayer(1);
+
 
 	// HUD Panels
 	game_panel = new Game_Panel();
@@ -62,11 +62,16 @@ bool j1Player::Start()
 
 	game_panel->IncressPopulation(45, true);
 
+	game_hud->AddChild(action_panel->GetHeroSkillTree());
+	App->gui->PushScreen(game_hud);
 	return true;
 }
 
 bool j1Player::PreUpdate()
 {
+
+	App->gui->CalculateUpperElement(game_hud);
+
 	int x, y;
 	App->input->GetMousePosition(x, y);
 
@@ -226,7 +231,10 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
 		{
-		action_panel->Handle_Input(target, MOUSE_LEFT_BUTTON_DOWN);
+		if (target == action_panel->GetHeroSkillTree())
+		{
+			action_panel->Handle_Input(target, MOUSE_LEFT_BUTTON_DOWN);
+		}
 		}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:

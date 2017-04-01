@@ -84,8 +84,10 @@ public:
 	bool ActivateCell(int i);
 	void Hero_Handle_input(UI_Element* ui_element, GUI_INPUT ui_input);
 
-private:
+public:
 	UI_Image*					skill_tree = nullptr;
+private:
+	
 	std::vector<UI_Button*>		skills;
 
 	std::vector<int>			champion_skills_learned;
@@ -125,6 +127,9 @@ public:
 	// Handle_input_GUI
 	void Handle_Input(UI_Element* ui_element, GUI_INPUT ui_input);
 
+	// Return Hero Panel Skil Tree;
+	UI_Element* GetHeroSkillTree() const;
+
 	// Set Pointer To Selection Panel
 	void SetSelectionPanelPointer(Selection_Panel* selection_panel);
 	void GetEntitySelected();
@@ -156,6 +161,8 @@ private:
 
 	TownCenterPanel*			towncenter = nullptr;
 	UnitPanel*					unitpanel = nullptr;
+
+public:
 	HeroPanel*					heropanel = nullptr;
 
 
