@@ -638,7 +638,6 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 			{
 				//Build unit
 				new_building = new Building(*buildings_defs[k]);
-
 			}
 			//Set unit animation
 			App->animator->BuildingPlay(new_building);
@@ -663,6 +662,8 @@ Resource* j1EntitiesManager::GenerateResource(RESOURCE_TYPE type)
 		{
 			//Build unit
 			new_resource = new Resource(*resources_defs[k]);
+
+			new_resource->myself = new_resource;
 
 			//Set unit animation
 			App->animator->ResourcePlay(new_resource);

@@ -19,7 +19,6 @@ public:
 	//Constructor -----------
 	MoveUnitAction(Unit* actor, int x, int y) : Action(actor, TASK_U_MOVE), x_new(x), y_new(y)
 	{
-
 	}
 
 	MoveUnitAction(Unit* actor, std::vector<iPoint>* path) : Action(actor, TASK_U_MOVE), path(path)
@@ -155,40 +154,53 @@ class RecollectVillagerAction : public Action
 public:
 
 	//Constructor -----------
-	RecollectVillagerAction(Villager* actor, Resource* target) : Action(actor, TASK_U_RECOLLECT), target(target)
+	RecollectVillagerAction(Villager* actor, Resource** target) : Action(actor, TASK_U_RECOLLECT), target(target)
 	{
 	}
-
+	
 	//Functionality ---------
 	bool Activation()
 	{
-		if (target == nullptr)return false;
+		if (*target == nullptr)return false;
 
 		//Set actor interaction target
-		((Unit*)actor)->SetInteractionTarget(target);
-
+	//	((Unit*)actor)->SetInteractionTarget(target);
+		
 		//Set actor animation
 		((Villager*)actor)->ResetResourcesData();
-		((Villager*)actor)->Focus(target->GetPositionRounded(), true);
-		((Villager*)actor)->CheckRecollectResource(((Resource*)target)->GetResourceType());
+		((Villager*)actor)->Focus((*target)->GetPositionRounded(), true);
+		((Villager*)actor)->CheckRecollectResource(((Resource*)(*target))->GetResourceType());
 
 		return true;
 	}
 
 	bool Execute()
 	{
+		if (*target == nullptr)
+		{
+			//If resource is deplated execute a SaveResourceAction
+			Building* save_point = App->entities_manager->SearchNearestSavePoint(actor->GetPositionRounded());
+			if (save_point != nullptr)
+			{
+				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, save_point));
+			}
+
+			//Reset the animation
+			App->animator->UnitPlay((Villager*)actor);
+			return true;
+		}
 		//Actor recollect
-		return ((Villager*)actor)->Recollect();
+		return ((Villager*)actor)->Recollect(target);
 	}
 
-	bool Related(const Entity* tar)const
+	/*bool Related(const Entity* tar)const
 	{
 		return (actor == tar || target == tar);
-	}
+	}*/
 
 private:
 
-	Resource* target = nullptr;
+	Resource** target = nullptr;
 
 };
 /// ---------------------------------------------
@@ -208,7 +220,12 @@ public:
 	bool Activation()
 	{
 		//Set actor interaction target
-		if (target == nullptr)return false;
+		if (target == nullptr)
+		{
+			((Villager*)actor)->ResetResourcesData();
+			App->animator->UnitPlay((Villager*)actor);
+			return false;
+		}
 
 		((Unit*)actor)->SetInteractionTarget(target);
 		((Villager*)actor)->CheckCarryResource();

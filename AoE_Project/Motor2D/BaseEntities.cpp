@@ -15,7 +15,6 @@
 //Constructors ========================
 Entity::Entity() :name(""), action_worker(new ActionWorker())
 {
-	
 }
 
 Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), selection_rect(copy.selection_rect),
@@ -206,6 +205,12 @@ ActionWorker * Entity::GetWorker() const
 {
 	return action_worker;
 }
+
+Entity ** Entity::GetMe()
+{
+	return &myself;
+}
+
 
 // ----------------
 ///----------------------------------------------
@@ -1156,7 +1161,6 @@ bool Resource::ExtractResources(uint* value)
 		life = 0;
 		App->entities_manager->DeleteEntity(this);
 		App->entities_manager->resources_quadtree.Exteract(&position);
-		App->action_manager->CleanRelatedActions(this);
 		return false;
 	}
 	else

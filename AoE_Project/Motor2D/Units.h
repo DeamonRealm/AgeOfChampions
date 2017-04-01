@@ -40,7 +40,7 @@ public:
 	void SetRecollectRate(uint value);
 
 	//Actions -----
-	bool Recollect();
+	bool Recollect(Resource** target);
 	bool SaveResources();
 	void CheckRecollectResource(RESOURCE_TYPE type);
 	void CheckCarryResource();

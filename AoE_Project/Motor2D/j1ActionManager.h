@@ -133,14 +133,12 @@ public:
 	DieUnitAction*				DieAction(Unit* actor);
 	
 	//Recollect Functions
-	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource* target);
+	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource** target);
 	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building* target);
 
 	// Building Functions
 	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy);
 	
-	//Clean all actions related with the entity
-	void CleanRelatedActions(const Entity* target);
 
 private:
 
