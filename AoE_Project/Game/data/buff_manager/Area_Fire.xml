@@ -21,7 +21,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Area_Fire.png" width="1298" height="1298">
   <particle actor="1" buff_type="passive" attribute_type="attack" draw_rate="2500">
-    <anim_data speed="200" loop="0"/>
+    <anim_data speed="150" loop="0"/>
     <sprite n="FireArea/FireArea_00.png" opacity ="255" x="1" y="1" w="392" h="241" pX="0.5" pY="0.5"/>
     <sprite n="FireArea/FireArea_01.png" opacity ="255" x="395" y="1" w="402" h="246" pX="0.5" pY="0.5"/>
     <sprite n="FireArea/FireArea_02.png" opacity ="255" x="799" y="1" w="410" h="252" pX="0.5" pY="0.5"/>
@@ -36,7 +36,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="FireArea/FireArea_11.png" opacity ="255" x="817" y="842" w="395" h="281" pX="0.5" pY="0.5"/>
   </particle>
   <particle actor="0" buff_type="passive" attribute_type="attack" draw_rate ="0">
-    <anim_data speed="200" loop="1"/>
+    <anim_data speed="150" loop="1"/>
     <sprite n="FireArea/FireArea_12.png" opacity ="255" x="1214" y="842" w="75" h="54" pX="0.5" pY="0.5"/>
     <sprite n="FireArea/FireArea_13.png" opacity ="255" x="1" y="1146" w="71" h="50" pX="0.5" pY="0.5"/>
     <sprite n="FireArea/FireArea_14.png" opacity ="255" x="74" y="1146" w="77" h="55" pX="0.5" pY="0.5"/>

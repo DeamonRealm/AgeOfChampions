@@ -161,7 +161,7 @@ private:
 
 public:
 
-	bool	CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type);
+	bool	CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor = false);
 	void	RemoveTargetBuff(Unit* target, PassiveBuff* buff);
 
 };

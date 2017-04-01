@@ -217,23 +217,44 @@ void Warrior::Hability_A()
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_around;
 	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
+	uint size = units_around.size();
 
-	//Deactivate all the buffs)
+	//Deactivate all the units buffs that are not in the buff area
 	std::list<Unit*>::const_iterator unit = buffed_units.begin();
 	while (unit != buffed_units.end())
 	{
-		App->buff_manager->RemoveTargetBuff(unit._Ptr->_Myval, buff_to_apply);
+		bool found = false;
+		for (uint k = 0; k < size; k++)
+		{
+			if (unit._Ptr->_Myval == units_around[k])
+			{
+				found = true;
+				break;
+			}
+		}
+
+		if (!found)
+		{
+			App->buff_manager->RemoveTargetBuff(unit._Ptr->_Myval, buff_to_apply);
+		}
 		unit++;
 	}
 
 	//Update units buffs (check for new units and old ones)
-	uint size = units_around.size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (units_around[k]->GetPosition() != position)
+		if (units_around[k]->GetDiplomacy() == ALLY)
 		{
-			App->buff_manager->CallBuff(units_around[k], PASSIVE_BUFF, ATTACK_BUFF);
-			buffed_units.push_back(units_around[k]);
+			if (units_around[k]->GetPosition() != position)
+			{
+				App->buff_manager->CallBuff(units_around[k], PASSIVE_BUFF, ATTACK_BUFF, false);
+				buffed_units.push_back(units_around[k]);
+			}
+			else
+			{
+				App->buff_manager->CallBuff(units_around[k], PASSIVE_BUFF, ATTACK_BUFF, true);
+				buffed_units.push_back(units_around[k]);
+			}
 		}
 	}
 }

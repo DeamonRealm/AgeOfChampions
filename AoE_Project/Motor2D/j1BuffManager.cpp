@@ -29,12 +29,18 @@ BuffParticle::~BuffParticle()
 //Functionality =============
 void BuffParticle::Draw()
 {
-	if (draw_timer.Read() > draw_rate || !animation.IsEnd())
+	if (animation.IsEnd() && draw_timer.Read() < draw_rate)return;
+	else if(animation.IsEnd())
+	{
+		animation.Reset();
+	}
+	else
 	{
 		Sprite* sprite = (Sprite*)animation.GetCurrentSprite();
-		App->render->Blit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), animation.GetLoop(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+		App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), animation.GetLoop(),0, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
 		draw_timer.Start();
 	}
+
 }
 
 /// -----------------------------------
@@ -59,6 +65,7 @@ PassiveBuff::~PassiveBuff()
 
 void PassiveBuff::Draw()
 {
+	if (particle.position != target->GetPositionRounded())particle.position = target->GetPositionRounded();
 	particle.Draw();
 }
 
@@ -144,6 +151,9 @@ bool PassiveBuff::ApplyBuff()
 		target->SetDefenseBuff(buff);
 		break;
 	}
+
+	particle.draw_timer.Start();
+	particle.animation.Reset();
 
 	return true;
 }
@@ -458,7 +468,7 @@ BuffParticle j1BuffManager::GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TY
 	return BuffParticle(*buff_particle_definitions[0]);
 }
 
-bool j1BuffManager::CallBuff(Unit * target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type)
+bool j1BuffManager::CallBuff(Unit * target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor)
 {
 	if (target == nullptr)
 	{
@@ -469,7 +479,7 @@ bool j1BuffManager::CallBuff(Unit * target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_
 
 	for(uint k = 0; k < size; k++)
 	{
-		if (buff_definitions[k]->GetBuffType() == buff_type && buff_definitions[k]->GetAttributeType() == buff_atr_type)
+		if (buff_definitions[k]->GetBuffType() == buff_type && buff_definitions[k]->GetAttributeType() == buff_atr_type && buff_definitions[k]->GetActor() == actor)
 		{
 			//Build a new buff with the selected target & states
 			PassiveBuff* buff = nullptr;

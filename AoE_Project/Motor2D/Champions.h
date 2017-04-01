@@ -31,6 +31,9 @@ protected:
 	float	speed_for_level = 0;
 	uint	view_area_for_level = 0;
 
+	//List of all units buffed by the hero
+	std::list<Unit*>	buffed_units;
+
 public:
 
 	//Functionality ---------
@@ -79,7 +82,6 @@ private:
 
 	/* extra data */
 	Triangle			special_attack_area;
-	std::list<Unit*>	buffed_units;
 
 public:
 

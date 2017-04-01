@@ -133,7 +133,7 @@ uint Animation::GetId() const
 
 bool Animation::IsEnd()
 {
-	return (current_frame == -1);
+	return (current_frame == -1 && !loop);
 }
 
 void Animation::Reset()
