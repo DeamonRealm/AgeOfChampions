@@ -19,11 +19,7 @@
 
 Action_Panel_Elements::Action_Panel_Elements() 
 {
-	panel_icons.reserve(MAX_PANEL_CELLS);
-	for (int i = 0; i < MAX_PANEL_CELLS; i++)
-	{
-		panel_icons[i] = { 0,0,1,1 };
-	}
+	
 };
 
 Action_Panel_Elements::~Action_Panel_Elements()
@@ -115,8 +111,16 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 {
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
 
-	panel_icons[0] = { 504,441,36,36 };
-	panel_icons[14] = { 0,76,36,36 };
+	panel_icons.reserve(MAX_PANEL_CELLS);
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons.push_back({ 0,0,1,1 });
+	}
+	panel_icons[3] = { 504,441,36,36 };
+	panel_icons[4] = { 0,76,36,36 };
+	panel_icons[0] = { 540,441,36,36 };
+	panel_icons[1] = { 576,441, 36, 36 };
+	panel_icons[2] = { 612,441,36,36 };
 
 	skill_tree = new UI_Image();
 	skill_tree->SetBox({ 30, 100, 243, 345 });
@@ -134,7 +138,6 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	mele_champion.push_back({ 243,232,36,36 });
 	mele_champion.push_back({ 243,270,36,36 });
 
-
 	skills.reserve(6);
 	for (int i = 0; i < 6; i++)
 	{
@@ -146,6 +149,7 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills[i]->SetBoxPosition(97 + 67 * (i%2), 177 + 55*(i/2));
 		skills[i]->Activate();
 		skill_tree->AddChild(skills[i]);
+		skills[i]->SetLayer(6);
 	}
 
 	//champion
@@ -170,16 +174,28 @@ bool HeroPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		//open skill tree;
+		((Warrior*)entitis_panel)->Hability_A();
 		}
 		break;
 	case 1: 
+	{
+		((Warrior*)entitis_panel)->Hability_B();
+	}
 		break;
 	case 2:
 		break;
-	case 3:
+	case 3: {
+		if (skill_tree->GetActiveState() == true) skill_tree->Desactivate();
+		else skill_tree->Activate();
+	}
 		break;
 	case 4:
+	{
+			entitis_panel->SetLife(0);
+
+			((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
+			entitis_panel = nullptr;
+	}
 		break;
 	case 5:
 		break;
@@ -314,7 +330,7 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 bool Action_Panel::Draw()
 {
 	if (actualpanel == nullptr) return false;
-	for (int count = 0; count < 1; count++)
+	for (int count = 0; count < MAX_PANEL_CELLS; count++)
 	{
 		panel_cells[count]->Draw(false);
 	}
@@ -399,7 +415,6 @@ void Action_Panel::SetPanelType()
 		if (u_type == VILLAGER);
 		else if (u_type == WARRIOR_CHMP)
 		{
-			heropanel->skill_tree->Activate();
 			heropanel->ChangePanelIcons(panel_cells);
 			actualpanel = heropanel;
 		}

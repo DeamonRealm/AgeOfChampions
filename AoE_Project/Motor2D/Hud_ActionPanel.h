@@ -52,6 +52,11 @@ class TownCenterPanel : public Action_Panel_Elements
 public:
 	TownCenterPanel() : Action_Panel_Elements() 
 	{
+		panel_icons.reserve(MAX_PANEL_CELLS);
+		for (int i = 0; i < MAX_PANEL_CELLS; i++)
+		{
+			panel_icons[i] = { 0,0,1,1 };
+		}
 		panel_icons[0] = { 576,585,36,36 };
 
 	};
@@ -66,7 +71,13 @@ private:
 class UnitPanel : public Action_Panel_Elements
 {
 public:
-	UnitPanel() : Action_Panel_Elements() { panel_icons[0] = { 0,76,36,36 }; };
+	UnitPanel() : Action_Panel_Elements() {
+		panel_icons.reserve(MAX_PANEL_CELLS);
+		for (int i = 0; i < MAX_PANEL_CELLS; i++)
+		{
+			panel_icons[i] = { 0,0,1,1 };
+		}
+		panel_icons[0] = { 0,76,36,36 }; };
 	~UnitPanel() {};
 
 	bool ActivateCell(int i);
