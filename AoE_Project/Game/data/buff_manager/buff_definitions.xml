@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <data>
+  <particle document="Area_Fire.xml"/>
   <buff
     buff_type ="passive"
     attribute_type="attack"
+    actor="0"
     value="0.2"
+  />
+  <buff
+  buff_type ="passive"
+  attribute_type="attack"
+  actor="1"
+  value="0"
   />
   <buff
     buff_type ="passive"

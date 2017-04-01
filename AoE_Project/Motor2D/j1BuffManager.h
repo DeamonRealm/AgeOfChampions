@@ -4,6 +4,8 @@
 
 #include "j1Module.h"
 #include "j1Timer.h"
+#include "p2Point.h"
+#include "j1Animator.h"
 
 class Unit;
 
@@ -21,6 +23,32 @@ enum BUFF_ATTRIBUTE_TYPE
 	DEFENSE_BUFF
 };
 
+/// Class Buff Particle ---------------
+class BuffParticle
+{
+public:
+
+	BuffParticle();
+	BuffParticle(const BuffParticle& copy);
+	~BuffParticle();
+
+public:
+
+	iPoint				position = { 0,0 };
+	bool				actor = false;
+	BUFF_TYPE			buff_type = NO_BUFF;
+	BUFF_ATTRIBUTE_TYPE	attribute_type = NO_ATTRIBUTE;
+	j1Timer				draw_timer;
+	uint				draw_rate = 0;
+	Animation			animation;
+
+public:
+
+	void Draw();
+
+};
+/// -----------------------------------
+
 /// Class Passive Buff ----------------
 class PassiveBuff
 {
@@ -36,20 +64,27 @@ protected:
 	BUFF_ATTRIBUTE_TYPE	attribute_type = NO_ATTRIBUTE;
 	float				value = 0;
 	Unit*				target = nullptr;
+	bool				actor = false;
+	BuffParticle		particle;
 
 public:
+
+	void Draw();
 
 	//setter
 	void SetBuffType(BUFF_TYPE type);
 	void SetAttributeType(BUFF_ATTRIBUTE_TYPE type);
 	void SetValue(float value);
 	void SetTarget(Unit* target);
+	void SetActor(bool act);
+	void SetParticle(BuffParticle part);
 
 	//getters
 	BUFF_TYPE			GetBuffType()const;
 	BUFF_ATTRIBUTE_TYPE	GetAttributeType()const;
 	float				GetValue()const;
 	Unit*				GetTarget()const;
+	bool				GetActor()const;
 
 	//Utils
 	virtual bool ApplyBuff();
@@ -117,8 +152,12 @@ private:
 	BUFF_ATTRIBUTE_TYPE StrToBuffAttributeType(const char* str)const;
 
 	std::vector<PassiveBuff*>	buff_definitions;
+	std::vector<BuffParticle*>	buff_particle_definitions;
 	std::list<Buff*>			active_buffs;
 	std::list<PassiveBuff*>		static_buffs;
+
+	//Get a buff particle looking the types and the actor
+	BuffParticle GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TYPE atr_type, bool act);
 
 public:
 
