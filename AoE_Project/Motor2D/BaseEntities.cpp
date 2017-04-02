@@ -18,7 +18,7 @@ Entity::Entity() :name(""), action_worker(new ActionWorker())
 {
 }
 
-Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), selection_rect(copy.selection_rect),
+Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), vision(vision), selection_rect(copy.selection_rect),
 icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_animation(copy.current_animation), action_worker(new ActionWorker())
 {
 
@@ -83,6 +83,11 @@ void Entity::AddAction(Action * action)
 	action_worker->AddAction(action);
 }
 
+void Entity::AddPasiveAction(Action * action)
+{
+	action_worker->AddPassiveAction(action);
+}
+
 void Entity::AddPriorizedAction(Action * action)
 {
 	action_worker->AddPriorizedAction(action);
@@ -113,6 +118,11 @@ void Entity::SetEntityType(ENTITY_TYPE type)
 void Entity::SetDiplomacy(DIPLOMACY new_diplomacy)
 {
 	entity_diplomacy = new_diplomacy;
+}
+
+void Entity::SetVision(const Circle & new_vision)
+{
+	vision = new_vision;
 }
 
 void Entity::SetMaxLife(uint full_life_val)
@@ -172,6 +182,11 @@ DIPLOMACY Entity::GetDiplomacy() const
 	return entity_diplomacy;
 }
 
+Circle Entity::GetVision() const
+{
+	return vision;
+}
+
 uint Entity::GetMaxLife() const
 {
 	return max_life;
@@ -224,7 +239,7 @@ Unit::Unit() :Entity()
 
 }
 
-Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), vision(copy.vision), mark(copy.mark),soft_collider(copy.soft_collider),hard_collider(copy.hard_collider), view_area(copy.view_area),
+Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark),soft_collider(copy.soft_collider),hard_collider(copy.hard_collider), view_area(copy.view_area),
 speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
 attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time)
@@ -834,11 +849,6 @@ void Unit::SetUnitType(UNIT_TYPE type)
 void Unit::SetInteractionTarget(const Entity * target)
 {
 	interaction_target = (Entity*)target;
-}
-
-void Unit::SetVision(const Circle & new_vision)
-{
-	vision = new_vision;
 }
 
 void Unit::SetMark(const Circle & new_mark)

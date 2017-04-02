@@ -314,7 +314,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		if (Selected->GetEntity() == nullptr)break;
 
 		//Set entity target to the selected unit
-		Selected->GetEntity()->GetWorker()->Reset();
+		Selected->GetEntity()->GetWorker()->ResetActive();
 		if (Selected->GetEntity()->GetEntityType() == UNIT && ((Unit*)Selected->GetEntity())->GetUnitType() == WARRIOR_CHMP)
 		{
 			((Warrior*)Selected->GetEntity())->Hability_A();
@@ -329,7 +329,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		if (Selected->GetEntity() == nullptr)break;
 
 		//Set entity target to the selected unit
-		Selected->GetEntity()->GetWorker()->Reset();
+		Selected->GetEntity()->GetWorker()->ResetActive();
 		if (Selected->GetEntity()->GetEntityType() == UNIT && ((Unit*)Selected->GetEntity())->GetUnitType() == WARRIOR_CHMP)
 		{
 			((Warrior*)Selected->GetEntity())->Hability_B();
@@ -395,7 +395,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			if (Selected->GetEntity() == nullptr)break;
 
 			//Set entity target to the selected unit
-			Selected->GetEntity()->GetWorker()->Reset();
+			Selected->GetEntity()->GetWorker()->ResetActive();
 			if (UpperEntity != nullptr)
 			{
 				if (UpperEntity->GetDiplomacy() == ENEMY && Selected->GetEntity()->GetDiplomacy() != ENEMY)
@@ -418,7 +418,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == BUILDING)
 		{
 			//Set entity target to the selected unit
-			//Selected->GetEntity()->GetWorker()->Reset();
+			//Selected->GetEntity()->GetWorker()->ResetActive();
 			Selected->GetEntity()->AddAction(new SpawnUnitAction((ProductiveBuilding*)Selected->GetEntity(), ARBALEST, ALLY));
 		}
 

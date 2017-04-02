@@ -15,6 +15,8 @@
 #include "UI_Image.h"
 #include "UI_String.h"
 
+#include "Actions_Unit.h"
+
 //Hud Elements
 #include "Hud_SelectionPanel.h"
 #include "Hud_GamePanel.h"
@@ -157,7 +159,7 @@ bool j1Player::PreUpdate()
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST, ALLY);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-
+		new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));
 		game_panel->IncressPopulation(1, false);
 	}
 	//Generate Tree resource in mouse coordinates

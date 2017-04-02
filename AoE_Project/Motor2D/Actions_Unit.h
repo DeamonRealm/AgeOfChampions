@@ -125,6 +125,12 @@ public:
 	}
 
 	//Functionality ---------
+	bool Activation() 
+	{
+		App->sound->PlayFXAudio(DEATH_SOUND);
+		return true;
+	}
+
 	bool Execute()
 	{
 		//Actor attack the target
@@ -133,7 +139,7 @@ public:
 };
 /// ---------------------------------------------
 
-/// Die Action ----------------------------
+/// Stun Action ----------------------------
 //Stun the character
 class StunUnitAction : public Action
 {
@@ -259,5 +265,35 @@ private:
 
 };
 /// ---------------------------------------------
+
+
+///Scann for units action------------------------
+class ScannAction : public Action
+{
+public:
+	ScannAction(Unit* actor) : Action(actor, TASK_U_SCANN)
+	{
+	};
+	~ScannAction() {};
+
+public:
+
+	bool Execute()
+	{
+		App->entities_manager->units_quadtree.CollectCandidates(surrounding_units, actor->GetVision());
+		LOG("Scanning");
+		return false;
+	};
+
+
+private:
+	std::vector<Unit*> surrounding_units;
+
+};
+
+
+
+
+///----------------------------------------------
 #endif // !__ACTION_UNIT_H__
 

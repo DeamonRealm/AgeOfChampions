@@ -177,6 +177,7 @@ protected:
 	fPoint			position = { 0,0 };
 	ENTITY_TYPE		entity_type = NO_ENTITY;
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
+	Circle			vision;
 	//Life -------------
 	uint			max_life = 0;
 	float			life = 0;
@@ -210,6 +211,7 @@ public:
 
 	//Add Action ------------
 	void			AddAction(Action* action);
+	void			AddPasiveAction(Action* action);
 	void			AddPriorizedAction(Action* action);
 	void			PopAction(Action* action);
 
@@ -218,6 +220,7 @@ public:
 	virtual void	SetPosition(float x, float y, bool insert = true);
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
+	void			SetVision(const Circle& new_mark);
 	void			SetMaxLife(uint full_life_val);
 	void			SetLife(uint life_val);
 	void			SetAnimation(Animation* anim);
@@ -231,6 +234,7 @@ public:
 	iPoint			GetPositionRounded()const;
 	ENTITY_TYPE		GetEntityType()const;
 	DIPLOMACY		GetDiplomacy()const;
+	Circle			GetVision()const;
 	uint			GetMaxLife()const;
 	virtual int		GetLife()const;
 	Animation*		GetAnimation();
@@ -280,7 +284,7 @@ protected:
 
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
-	Circle			vision;
+
 	Circle			mark;
 	Circle			soft_collider;
 	Circle			hard_collider;
@@ -353,7 +357,7 @@ public:
 	void	SetFutureAction(const iPoint& future_position);
 	void	SetUnitType(UNIT_TYPE type);
 	void	SetInteractionTarget(const Entity* target);
-	void	SetVision(const Circle& new_mark);
+
 	void	SetMark(const Circle& new_mark);
 	void	SetSoftCollider(const Circle& new_soft_collider);
 	void	SetHardCollider(const Circle& new_hard_collider);

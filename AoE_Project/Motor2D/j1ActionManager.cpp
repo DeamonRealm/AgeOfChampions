@@ -2,6 +2,7 @@
 #include "Actions_Unit.h"
 #include "Actions_Building.h"
 
+
 ///Class Action ---------------------------------
 //Base class to build action definitions
 //Constructors ========================
@@ -147,13 +148,22 @@ SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_T
 	return action;
 }
 
+ScannAction * j1ActionManager::ScanAction(Entity * actor)
+{
+	ScannAction* action = new ScannAction((Unit*)actor);
+
+	all_actions.push_back(action);
+
+	return action;
+}
+
 /// ---------------------------------------------
 
 
 
 ///Action Worker---------------------------------
 //Constructor
-ActionWorker::ActionWorker()
+ActionWorker::ActionWorker() : refresh_rate(1000)
 {
 }
 
@@ -173,9 +183,10 @@ void ActionWorker::Update()
 	DoWork(&action_queue, &current_action);
 
 	//Make the passive_action logic only work when thera are no active actions (Active should take priority)
-	if (current_action == nullptr)
+	if (current_action == nullptr  &&  refresh_timer.Read() > refresh_rate)
 	{
 		DoWork(&passive_action_queue, &current_passive_action);
+		refresh_timer.Start();
 	}
 
 }
@@ -257,6 +268,11 @@ void ActionWorker::Reset()
 	ResetQueue(&passive_action_queue, &current_passive_action);
 
 	paused = false;
+}
+
+void ActionWorker::ResetActive()
+{
+	ResetQueue(&action_queue, &current_action);
 }
 
 void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)

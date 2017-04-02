@@ -58,7 +58,7 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y)
 		second_destination = LeaderPath();
 		//second_destination->insert(second_destination->end(), first_destination->begin(), first_destination->end());
 		//push action
-		lead->GetWorker()->Reset();
+		lead->GetWorker()->ResetActive();
 		lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead));
 		lead_direcction = ((Unit*)lead)->LookDirection(*(second_destination->begin()), *(second_destination->begin() + 1));
 		//do the other units path
@@ -107,7 +107,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->Reset();
+			single_unit->GetWorker()->ResetActive();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
@@ -146,7 +146,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->Reset();
+			single_unit->GetWorker()->ResetActive();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
@@ -184,7 +184,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->Reset();
+			single_unit->GetWorker()->ResetActive();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
@@ -223,7 +223,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->Reset();
+			single_unit->GetWorker()->ResetActive();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
@@ -261,7 +261,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->Reset();
+			single_unit->GetWorker()->ResetActive();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
@@ -300,7 +300,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->Reset();
+			single_unit->GetWorker()->ResetActive();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
@@ -338,7 +338,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->Reset();
+			single_unit->GetWorker()->ResetActive();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
@@ -376,7 +376,7 @@ void j1GroupMovement::OtherUnitsPath()
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->Reset();
+			single_unit->GetWorker()->ResetActive();
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;

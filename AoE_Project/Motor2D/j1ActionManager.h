@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include <queue>
 #include "p2Point.h"
+#include "j1Timer.h"
 
 class Entity;
 class Unit;
@@ -21,6 +22,7 @@ class RecollectVillagerAction;
 class SpawnUnitAction;
 class SaveResourcesVillagerAction;
 class StunUnitAction;
+class ScannAction;
 
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
@@ -38,6 +40,7 @@ enum TASK_TYPE
 	TASK_U_STUN,
 	TASK_U_RECOLLECT,
 	TASK_U_SAVE_RESOURCES,
+	TASK_U_SCANN,
 	TASK_B_SPAWN_UNITS
 };
 
@@ -90,6 +93,10 @@ private:
 	Action* current_action = nullptr;
 	bool paused = false;
 
+private:
+	j1Timer refresh_timer;
+	uint	refresh_rate = 0;
+
 public:
 	//Updates every list
 	void Update();
@@ -101,6 +108,7 @@ public:
 
 	//Clean all actionss of the worker
 	void Reset();
+	void ResetActive();
 
 	TASK_TYPE GetCurrentActionType() const;
 	Action* GetCurrentAction() const;
@@ -115,6 +123,7 @@ private:
 
 	//Resets a list and their current  action
 	void ResetQueue(std::list<Action*>* queue, Action** current);
+
 
 };
 ///----------------------------------------------
@@ -151,6 +160,9 @@ public:
 	// Building Functions
 	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy);
 	
+	//Passive actions----------------
+	//Scann for units
+	ScannAction*				ScanAction(Entity* actor);
 
 private:
 

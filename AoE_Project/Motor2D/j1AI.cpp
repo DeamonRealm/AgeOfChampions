@@ -58,7 +58,8 @@ bool j1AI::Update(float dt)
 
 bool j1AI::CleanUp()
 {
-
+	ai_worker->Reset();
+	delete ai_worker;
 
 	return true;
 }
