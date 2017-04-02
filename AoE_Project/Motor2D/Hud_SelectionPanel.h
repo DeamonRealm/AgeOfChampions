@@ -103,6 +103,10 @@ public:
 	// GUI Handle Input
 	void Handle_Input(UI_Element* target, GUI_INPUT input);
 
+	// Disable/Enable Module
+	void Enable();
+	void Disable();
+
 	// Draw Selection Panel
 	bool Draw();
 	void DrawGroup();

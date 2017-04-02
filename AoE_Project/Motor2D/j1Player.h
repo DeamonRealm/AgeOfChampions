@@ -40,6 +40,12 @@ public:
 
 	void Init() { active = false; }
 
+
+	//Enable and disable modules
+	virtual void Enable();
+
+	virtual void Disable();
+
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 

@@ -294,7 +294,6 @@ bool Selection_Panel::CleanUp()
 	selected_elements.clear();
 	group_profile.clear();
 
-	delete Selected;
 	Selected = nullptr;
 
 	return true;
@@ -446,6 +445,26 @@ void Selection_Panel::Handle_Input(UI_Element * target, GUI_INPUT input)
 {
 	if (target == viewport && input == MOUSE_IN) inviewport = true;
 	else if (target == viewport && input == MOUSE_OUT) inviewport = false;
+}
+
+void Selection_Panel::Enable()
+{
+	Selected = new Entity_Profile();
+	UpperEntity = nullptr;
+	action_command = nullptr;
+}
+
+void Selection_Panel::Disable()
+{
+	selected_elements.clear();
+	group_profile.clear();
+
+	unit_quad_selection.clear();
+	building_quad_selection.clear();
+	resource_quad_selection.clear();
+
+	delete Selected;
+
 }
 
 bool Selection_Panel::Draw()

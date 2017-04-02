@@ -7,8 +7,8 @@
 
 #include "SDL\include\SDL_rect.h"
 
-#include "Hud_SelectionPanel.h"
 
+#include "Hud_SelectionPanel.h"
 
 #define MAX_PANEL_CELLS 15
 #define PANEL_COLUMNS	5
@@ -16,9 +16,13 @@
 #define CELL_HEIGHT		41
 #define MAX_SKILLS_LEARNED 6
 
+//class Selection_Panel;
+class Game_Panel;
+
 class UI_Image;
 class UI_Button;
 class UI_Fixed_Button;
+
 class Entity;
 
 enum ENTITY_TYPE;
@@ -42,12 +46,16 @@ public:
 	virtual void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
 	Entity* GetActualEntity();
 
+	virtual void ChangePlayerGamePanel(Game_Panel* game_panel);
+
 	void LoadPanel() {};
 
 protected:
 	std::vector<SDL_Rect>		panel_icons;
 
 	Entity*						entitis_panel = nullptr;
+	
+	Game_Panel*					player_game_panel_resources = nullptr;
 };
 
 class TownCenterPanel : public Action_Panel_Elements
@@ -59,7 +67,6 @@ public:
 	bool ActivateCell(int i);
 
 private:
-
 };
 
 // General Units -------------------------------------------------------------------------------------------
@@ -146,6 +153,9 @@ public:
 	void SetSelectionPanelPointer(Selection_Panel* selection_panel);
 	void GetEntitySelected();
 
+	// Set Pointer To Game Panel
+	void SetGamePanelPointer(Game_Panel* game_panel);
+
 	// Panel Settings
 	void SetPanelType();
 	void CheckSelected(int size);
@@ -154,6 +164,7 @@ private:
 	
 	// HUD_Selection Panel Pointer
 	Selection_Panel*			player_selection_panel = nullptr;
+	Game_Panel*					player_game_panel = nullptr;
 
 	// Action Panel Detection
 	bool						isin;

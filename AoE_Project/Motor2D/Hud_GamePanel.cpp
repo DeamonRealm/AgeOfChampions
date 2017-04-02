@@ -8,6 +8,7 @@
 #include "j1Player.h"
 #include "j1Menu.h"
 #include "j1AI.h"
+#include "j1EntitiesManager.h"
 
 #include "BaseEntities.h"
 
@@ -150,6 +151,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			App->scene->Disable();
 			App->player->Disable();
 			App->AI->Disable();
+			App->entities_manager->Disable();
 			App->menu->Enable();
 		}
 	}
@@ -225,6 +227,20 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 		break;
 	}
 	return ret;
+}
+
+bool Game_Panel::UseResource(int amount_wood, int amount_food, int amount_gold, int amount_stone, int used_population)
+{
+	if(wood-amount_wood>=0 && meat-amount_food>=0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 &&  population + used_population <= max_population)
+	{
+		wood -= amount_wood;
+		meat -= amount_food;
+		gold -= amount_gold;
+		stone -= amount_stone;
+		population += used_population;
+		return true;
+	}
+	else return false;
 }
 
 bool Game_Panel::IncressPopulation(int amount, bool increase_max)

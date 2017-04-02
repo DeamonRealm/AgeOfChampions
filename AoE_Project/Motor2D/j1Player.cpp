@@ -31,6 +31,18 @@ j1Player::~j1Player()
 {
 }
 
+void j1Player::Enable()
+{
+	active = true;
+	selection_panel->Enable();
+}
+
+void j1Player::Disable()
+{
+	active = false;
+	selection_panel->Disable();
+}
+
 bool j1Player::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Player");
@@ -52,7 +64,9 @@ bool j1Player::Start()
 	game_panel = new Game_Panel();
 	selection_panel = new Selection_Panel();
 	action_panel = new Action_Panel();
+
 	action_panel->SetSelectionPanelPointer(selection_panel);
+	action_panel->SetGamePanelPointer(game_panel);
 
 	// Setting Game Panel Resources
 	game_panel->AddResource(200, GP_WOOD);

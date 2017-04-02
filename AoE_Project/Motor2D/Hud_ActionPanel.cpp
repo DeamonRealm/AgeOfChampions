@@ -11,8 +11,7 @@
 #include "Actions_Building.h"
 #include "Actions_Unit.h"
 
-
-#include "Hud_SelectionPanel.h"
+#include "Hud_GamePanel.h"
 
 #include "UI_Image.h"
 #include "UI_Button.h"
@@ -47,6 +46,11 @@ Entity * Action_Panel_Elements::GetActualEntity()
 	return entitis_panel;
 }
 
+void Action_Panel_Elements::ChangePlayerGamePanel(Game_Panel * game_panel)
+{
+	player_game_panel_resources = game_panel;
+}
+
 TownCenterPanel::TownCenterPanel() : Action_Panel_Elements()
 {
 	panel_icons.reserve(MAX_PANEL_CELLS);
@@ -55,6 +59,7 @@ TownCenterPanel::TownCenterPanel() : Action_Panel_Elements()
 		panel_icons[i] = { 0,0,1,1 };
 	}
 	panel_icons[0] = { 576,585,36,36 };
+	panel_icons[1] = { 288,585,36,36 };
 };
 
 // TOWNCENTER ------------------------------------------------------------------------------------------------------------
@@ -64,10 +69,14 @@ bool TownCenterPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
+		if(player_game_panel_resources->UseResource(0,50,0,0,1)) entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
 		}
 		break;
-	case 1: 
+	case 1: {
+		if (player_game_panel_resources->UseResource(0, 300, 300, 0, 1)) {
+			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, WARRIOR_CHMP, ALLY));
+		}
+		}
 		break;
 	case 2:
 		break;
@@ -444,6 +453,11 @@ void Action_Panel::GetEntitySelected()
 	}
 }
 
+void Action_Panel::SetGamePanelPointer(Game_Panel * game_panel)
+{
+	player_game_panel = game_panel;
+}
+
 void Action_Panel::SetPanelType()
 {
 	GetEntitySelected();
@@ -494,6 +508,7 @@ void Action_Panel::SetPanelType()
 		{
 			if (b_type == TOWN_CENTER)
 			{
+				towncenter->ChangePlayerGamePanel(player_game_panel);
 				towncenter->ChangePanelIcons(panel_cells);
 				actualpanel = towncenter;
 			}
