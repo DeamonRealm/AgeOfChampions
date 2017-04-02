@@ -37,8 +37,8 @@ enum TASK_TYPE
 	TASK_U_RECOLLECT,
 	TASK_U_SAVE_RESOURCES,
 	TASK_B_SPAWN_UNITS
-
 };
+
 
 /// Class Action --------------------------------
 //Action virtual class (are commands but not for the console)
@@ -52,8 +52,8 @@ public:
 
 protected:
 
-	Entity*		actor = nullptr;
-	TASK_TYPE	type = TASK_NONE;
+	Entity*					actor = nullptr;
+	TASK_TYPE				type = TASK_NONE;
 
 public:
 
@@ -62,16 +62,11 @@ public:
 	virtual bool Activation() { return true; }
 	//Returns TRUE when execute is finished
 	virtual bool Execute()	{ return true; }
-	//Returns true if the action is related with the target
-	virtual bool Related(const Entity* tar)const { return(actor == tar); }
 	///Each different action inheriting from this class should have custom
 	///properties to do its actions.
 
 	//Get methods -----------
 	TASK_TYPE GetType();
-
-	//Operators -------------
-	bool operator == (const Action& tar) { return (actor == tar.actor && type == tar.type); }
 
 };
 /// ---------------------------------------------
@@ -88,15 +83,21 @@ public:
 private:
 
 	std::list<Action*> action_queue;
+	std::list<Action*> passive_action_queue;
+	Action* current_passive_action = nullptr;
 	Action* current_action = nullptr;
 	bool paused = false;
 
 public:
-
+	//Updates every list
 	void Update();
+
 	void AddAction(Action* action);
+	void AddPassiveAction(Action* action);
 	void AddPriorizedAction(Action* action);
 	void PopAction(Action* action);
+
+	//Clean all actionss of the worker
 	void Reset();
 
 	TASK_TYPE GetCurrentActionType() const;
@@ -104,6 +105,14 @@ public:
 
 	void Pause();
 	void Restart();
+
+private:
+	///These are called by the public functions
+	//Makes the Actions do their Execute and Activation
+	void DoWork(std::list<Action*>* queue, Action** current);
+
+	//Resets a list and their current  action
+	void ResetQueue(std::list<Action*>* queue, Action** current);
 
 };
 ///----------------------------------------------

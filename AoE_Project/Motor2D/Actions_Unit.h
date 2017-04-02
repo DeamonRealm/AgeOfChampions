@@ -107,11 +107,6 @@ public:
 		return ((Unit*)actor)->AttackBuilding();
 	}
 
-	bool Related(const Entity* tar)const
-	{
-		return (actor == tar || target == tar);
-	}
-
 private:
 
 	Building* target = nullptr;
@@ -181,10 +176,7 @@ public:
 		return ((Villager*)actor)->Recollect(target);
 	}
 
-	/*bool Related(const Entity* tar)const
-	{
-		return (actor == tar || target == tar);
-	}*/
+
 
 private:
 
@@ -226,10 +218,7 @@ public:
 		return ((Villager*)actor)->SaveResources();
 	}
 
-	bool Related(const Entity* tar)const
-	{
-		return (actor == tar || target == tar);
-	}
+	
 
 private:
 

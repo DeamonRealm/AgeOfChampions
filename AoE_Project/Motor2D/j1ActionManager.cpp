@@ -156,32 +156,55 @@ void ActionWorker::Update()
 {
 	if (paused)
 		return;
+	
+	//If the worker has a current action execute it
 
-	if (current_action != nullptr)
+	DoWork(&action_queue, &current_action);
+
+	//Make the passive_action logic only work when thera are no active actions (Active should take priority)
+	if (current_action == nullptr)
 	{
-		if (current_action->Execute())
-		{
-			delete current_action;
-			current_action = nullptr;
-		}
-	}
-	else if (!action_queue.empty())
-	{
-		current_action = action_queue.front();
-		action_queue.pop_front();
-		//Delete action if it can't be activated
-		if (!current_action->Activation())
-		{
-			delete current_action;
-			current_action = nullptr;
-		}
+		DoWork(&passive_action_queue, &current_passive_action);
 	}
 
 }
 
+void ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
+{
+	//If the worker has a current action execute it
+	if (*current != nullptr)
+	{
+		//If the action ends (execute() == true) erase it
+		if ((*current)->Execute())
+		{
+			delete (*current);
+			(*current) = nullptr;
+		}
+	}
+	//Else, If the worker has any action waiting mark the first one as current
+	else if (!queue->empty())
+	{
+		(*current) = queue->front();
+		queue->pop_front();
+
+		//Delete action if it can't be activated
+		if (!(*current)->Activation())
+		{
+			delete (*current);
+			(*current) = nullptr;
+		}
+	}
+}
+
+
 void ActionWorker::AddAction(Action * action)
 {
 	action_queue.push_back(action);
+}
+
+void ActionWorker::AddPassiveAction(Action* action)
+{
+	passive_action_queue.push_back(action);
 }
 
 void ActionWorker::AddPriorizedAction(Action * action)
@@ -219,19 +242,25 @@ void ActionWorker::PopAction(Action * action)
 
 void ActionWorker::Reset()
 {
-	delete current_action;
-	current_action = nullptr;
+	ResetQueue(&action_queue, &current_action);
+	ResetQueue(&passive_action_queue, &current_passive_action);
+
+	paused = false;
+}
+
+void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)
+{
+	delete (*current);
+	(*current) = nullptr;
 
 	Action* to_erase;
 
-	while (!action_queue.empty())
+	while (!queue->empty())
 	{
-		to_erase = action_queue.front();
-		action_queue.pop_front();
+		to_erase = queue->front();
+		queue->pop_back();
 		RELEASE(to_erase);
 	}
-
-	paused = false;
 }
 
 TASK_TYPE ActionWorker::GetCurrentActionType() const
