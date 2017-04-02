@@ -14,13 +14,17 @@ v0.3 is quite similar to the AoE editor but with far less options, you can spawn
 * Mouse Left Click to select a unit, building or resource
 * Mouse Right Click to Make the unit do actions (Move/Attack/Recolect)
 * Mouse Double Click to select all units of the same type
-* Mouse Drag to select unit groups
-
+* Mouse Drag to select unit groups (doesn't work on enemies groups)
+* Click on the skull with the selected/s unit to kill them
+* Click on the book icon when the warrior is selected to open his skill tree
+* Click on the [+] buttons on the skill tree to gain that skills (only one per tier)
+* Click on the skill icons to activate them (only works for the first tier and it's the same an attack boost aura)
+* Click on the warrior icon in the town center panel to spawn a warrior (only one per game)
 
 #### Debug controls
 * GRAVE to activate/deactivate console (enter "help" in the console to see all the commands)
 * [F1]:Activate debug mode     
-* [F2]:Generate Building  
+* [F2]:Generate Barracks  
 * [F3]: Generate Villager
 * [N]: Generate Arbalest
 * [M]: Generate Milita
@@ -29,7 +33,6 @@ v0.3 is quite similar to the AoE editor but with far less options, you can spawn
 * [C]: Generate Stone quarry
 * [V]: Generate Gold ore
 * [W]: Generate Warrior
-* [SPACE]: Spawn Arbalest at the selected Town Center
 * Arrows to move the camera
 
 ## Media 
@@ -54,6 +57,21 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ## Changelog
+### v0.4
+* Removed: Arbalest Spawn with space
+* Added: Basic Enemy AI (Spawn 10 units at the top of the map and they move to the bottom)
+* Added: Units scann for enemies in their vision and attack them (only arbalest & enemy militia), units only scann when they are on idle
+* Added: Warrior attack buff (logic and animation)
+* Added: Warrior UI
+* Added: Load predefined scene
+* Added: Barracks building defined (lacks functionality)
+* Added: Sound (Background, Die, Attack, Select, Spawn)
+* Changed: Resource recolection logic (should avoid crashes)
+* Fixed: When a selected resource depletes game no longer crashes
+* Fixed: When a resource depletes the logic map no longer blocks the way
+
+
+
 #### v0.3
 * Removed: Movement keys
 * Removed: Animation type and direction controls
@@ -71,18 +89,18 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 Note: Animtions are not yet impleneted pls don't report them as a bug, we now that they don't work.
 
 
-#### v.0.2.1
+#### v0.2.1
 * Changed: movenet keys
 * Added: Control to change animation type
 * Better control over the direction of the animations
 
-#### v.0.2
+#### v0.2
 * Added: Buildings shadows
 * Added: Console Units Factory
 * Added: Main Menu & HUB sprite
 * Added: Map Tiles debug mode
 
-####v.0.1
+#### v0.1
 * Added: A controllable villager moving around.
 * Added: Correct render order that simulates the third dimension in builds
 * Added: Tiled map 
