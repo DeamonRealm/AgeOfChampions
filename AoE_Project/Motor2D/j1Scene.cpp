@@ -15,6 +15,7 @@
 #include "j1FileSystem.h"
 #include "j1Player.h"
 #include "Hud_GamePanel.h"
+#include "j1SoundManager.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -31,6 +32,7 @@ void j1Scene::Enable()
 {
 	active = true;
 	LoadScene();
+	App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
 }
 
 // Called before render is available

@@ -435,6 +435,8 @@ protected:
 	Circle			interact_area;
 	RESOURCE_TYPE	resource_type = NO_RESOURCE;
 
+	void CleanMapLogic();
+
 public:
 
 	//Functionality -------------------
@@ -479,6 +481,8 @@ protected:
 	DIRECTION_TYPE	direction_type = NO_DIRECTION;
 	uint			max_life = 0;
 	uint			life = 0;
+
+	void CleanMapLogic();
 
 public:
 

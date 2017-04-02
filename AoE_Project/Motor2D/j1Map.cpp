@@ -338,7 +338,7 @@ void j1Map::ChangeConstructionMap(const iPoint & position, uint element_width, u
 			{
 				construction_layer->data[i*data.width + j - 1] = 39;
 			}
-			else construction_layer->data[i*data.width + j - 1] = 37;
+			else construction_layer->data[i*data.width + j - 1] = 0;
 		}
 	}
 }

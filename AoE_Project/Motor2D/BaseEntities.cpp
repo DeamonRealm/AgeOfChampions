@@ -1152,6 +1152,16 @@ Resource::~Resource()
 }
 
 //Functionality =======================
+void Resource::CleanMapLogic()
+{
+	//Set resource position fixing it in the tiles coordinates
+	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
+
+	//Change walk & construction logic maps
+	App->map->ChangeConstructionMap(world_coords, 1, 1, 1);
+	App->map->ChangeLogicMap(world_coords, 1, 1, 1);
+}
+
 bool Resource::Draw(bool debug)
 {
 	bool ret = false;
@@ -1208,6 +1218,7 @@ bool Resource::ExtractResources(uint* value)
 		life = 0;
 		App->entities_manager->DeleteEntity(this);
 		App->entities_manager->resources_quadtree.Exteract(&position);
+		this->CleanMapLogic();
 		return false;
 	}
 	else
@@ -1303,6 +1314,15 @@ Building::~Building()
 }
 
 //Functionality =======================
+void Building::CleanMapLogic()
+{
+	//Set resource position fixing it in the tiles coordinates
+	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
+
+	//Change walk & construction logic maps
+	App->map->ChangeConstructionMap(world_coords, 1, 1, 1);
+	App->map->ChangeLogicMap(world_coords, 1, 1, 1);
+}
 
 //Draw ----------------------
 bool Building::Draw(bool debug)
@@ -1358,13 +1378,6 @@ void Building::SetPosition(float x, float y, bool insert)
 	position.x = world_coords.x;
 	position.y = world_coords.y - (App->map->data.tile_height + 1) * 0.5f;
 
-	//Set interaction area rectangle position
-	interact_area.SetPosition(iPoint(position.x,position.y));
-	
-	//Set building mark position
-	mark.SetPosition(iPoint(position.x, position.y));
-
-
 	if (!insert)return;
 
 	//Calculate the upper tile of the building zone
@@ -1387,7 +1400,15 @@ void Building::SetPosition(float x, float y, bool insert)
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 	}
 
+	//Update construction map
 	App->map->ChangeConstructionMap(upper_tile, width_in_tiles, height_in_tiles, 0);
+
+
+	//Set interaction area rectangle position
+	interact_area.SetPosition(iPoint(position.x, position.y));
+
+	//Set building mark position
+	mark.SetPosition(iPoint(position.x, position.y));
 
 	//Add building at the correct quad tree
 	App->entities_manager->buildings_quadtree.Insert(this, &position);
