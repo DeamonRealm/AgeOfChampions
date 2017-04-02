@@ -280,8 +280,22 @@ public:
 
 	bool Execute()
 	{
+		surrounding_units.clear();
+
 		App->entities_manager->units_quadtree.CollectCandidates(surrounding_units, actor->GetVision());
 		LOG("Scanning");
+
+		uint size = surrounding_units.size();
+
+		for (uint i = 0; i < size; i++)
+		{
+			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy())
+			{
+				actor->AddAction(App->action_manager->AttackToUnitAction((Unit*)actor, surrounding_units[i]));
+				return false;
+			}
+		};
+
 		return false;
 	};
 

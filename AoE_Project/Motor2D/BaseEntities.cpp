@@ -18,7 +18,7 @@ Entity::Entity() :name(""), action_worker(new ActionWorker())
 {
 }
 
-Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), vision(vision), selection_rect(copy.selection_rect),
+Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), vision(copy.vision), selection_rect(copy.selection_rect),
 icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_animation(copy.current_animation), action_worker(new ActionWorker())
 {
 
@@ -711,7 +711,7 @@ bool Unit::AttackUnit()
 			action_type = IDLE;
 			App->animator->UnitPlay(this);
 		}
-		if(act != DIE && act != DISAPPEAR)interaction_target->AddAction((Action*)App->action_manager->DieAction((Unit*)interaction_target));
+		if(act != DIE && act != DISAPPEAR)interaction_target->AddPriorizedAction((Action*)App->action_manager->DieAction((Unit*)interaction_target));
 		return true;
 	}
 	//Calculate the attack & apply the value at the target life points

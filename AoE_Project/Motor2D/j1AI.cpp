@@ -180,6 +180,7 @@ SpawnUnitsFromListCommand::~SpawnUnitsFromListCommand()
 
 bool SpawnUnitsFromListCommand::Execute()
 {
+	//Add the Loaded units to the game logic
 	while (!to_spawn->empty())
 	{
 		current_spawn = to_spawn->back();
@@ -188,6 +189,15 @@ bool SpawnUnitsFromListCommand::Execute()
 
 		App->AI->enemy_units.push_back(current_spawn);
 	}
+
+	//Add a passive scann action by default to all units
+	uint size = App->AI->enemy_units.size();
+
+	for (uint i = 0; i < size; i++)
+	{
+		App->AI->enemy_units[i]->AddPasiveAction(App->action_manager->ScanAction(App->AI->enemy_units[i]));
+	};
+
 	return true;
 }
 
