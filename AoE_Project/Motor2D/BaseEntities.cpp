@@ -319,7 +319,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 					break;
 				case COLLISION_IDLE:
 				{
-					if (GetPath()->size() <= 2) {
+					if (GetPath()->size() < 2) {
 						if(target != iPoint(-1,-1))
 							Repath(target);
 						else
@@ -468,77 +468,100 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 {
 	iPoint cell;
 	iPoint pos = App->map->WorldToMap(center.x, center.y);
+	std::vector<Unit*> other_units;
+	App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
+	int i = 1;
+	while (1) {
+		// south
+		cell.create(pos.x, pos.y + i);
+		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
 
-	// south
-	cell.create(pos.x, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
-	{
-		
-		return App->map->MapToWorld(cell.x, cell.y);;
-	}
+		// north
+		cell.create(pos.x, pos.y - i);
+		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
 
-	// north
-	cell.create(pos.x, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
-	{
+		// east
+		cell.create(pos.x + i, pos.y);
+		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
 
-		return App->map->MapToWorld(cell.x, cell.y);;
-	}
+		// west
+		cell.create(pos.x - i, pos.y);
+		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
 
-	// east
-	cell.create(pos.x + 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
-	{
-
-		return App->map->MapToWorld(cell.x, cell.y);;
-	}
-
-	// west
-	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
-	{
-
-		return App->map->MapToWorld(cell.x, cell.y);;
-	}
-
-	// south-east
-	cell.create(pos.x + 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
-	{
-
-		return App->map->MapToWorld(cell.x, cell.y);;
-	}
-	// south-west
-	cell.create(pos.x - 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
-	{
-
-		return App->map->MapToWorld(cell.x, cell.y);;
-	}
-	// north-east
-	cell.create(pos.x + 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
-	{
-
-		return App->map->MapToWorld(cell.x, cell.y);;
-	}
-	// north-west
-	cell.create(pos.x - 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
-	{
-
-		return App->map->MapToWorld(cell.x, cell.y);;
+		// south-east
+		cell.create(pos.x + i, pos.y + i);
+		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+		// south-west
+		cell.create(pos.x - i, pos.y + i);
+		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+		// north-east
+		cell.create(pos.x + i, pos.y - i);
+		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+		// north-west
+		cell.create(pos.x - i, pos.y - i);
+		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+		i++;
 	}
 }
 
-bool Unit::UnitHere()
+bool Unit::UnitHere(std::vector<Unit*> other_units, const iPoint& cell)
 {
-	std::vector<Unit*> other_units;
-
-	App->entities_manager->units_quadtree.CollectCandidates(other_units, hard_collider);
-	if (other_units.size() != 1) {
-		return false;
+	iPoint destination = App->map->MapToWorldCenter(cell.x,cell.y);
+	iPoint other_unit_cell;
+	for(int i = 0;i<other_units.size();i++)
+	{
+		
+		Unit* other = other_units[i];
+		if (this == other)
+		{
+			continue;
+		}
+		other_unit_cell = App->map->WorldToMap(other->GetPositionRounded().x, other->GetPositionRounded().y);
+		if (other_unit_cell == cell) {
+			return false;
+		}
+		/*
+		if (other->action_type == IDLE || other->action_type == ATTATCK)
+		{
+			if (sqrt((other->GetPositionRounded().x - destination.x) * (other->GetPositionRounded().x - destination.x) + (other->GetPositionRounded().y - destination.y) * (other->GetPositionRounded().y - destination.y)) < (this->hard_collider.GetRad() + other->hard_collider.GetRad()))
+			{
+				return false;
+			}
+		}
+		else if (other->action_type == WALK) {
+			if (sqrt((other->GetPositionRounded().x - destination.x) * (other->GetPositionRounded().x - destination.x) + (other->GetPositionRounded().y - destination.y) * (other->GetPositionRounded().y - destination.y)) < (this->hard_collider.GetRad() + other->hard_collider.GetRad()))
+			{
+				return false;
+			}
+		}
+		*/
 	}
+	
+	
 	return true;
 }
 

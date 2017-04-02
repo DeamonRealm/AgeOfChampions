@@ -322,7 +322,7 @@ public:
 	bool					Move(std::vector<iPoint>* path, const iPoint& target = { -1,-1 });
 	void					Repath(const iPoint & destination);
 	iPoint					FindWalkableCell(const iPoint& center);
-	bool					UnitHere();
+	bool					UnitHere(std::vector<Unit*> other_units,const iPoint& destination);
 	void					Focus(const iPoint& target, bool play = true);
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
 	bool					AttackUnit();
