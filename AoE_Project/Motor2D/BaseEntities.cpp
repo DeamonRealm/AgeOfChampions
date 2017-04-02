@@ -752,6 +752,12 @@ bool Unit::Die()
 	return false;
 }
 
+void Unit::Stun(uint time)
+{
+	this->action_type = IDLE;
+	//Add a stun buff for x time
+}
+
 COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 {
 	if(other->action_type== IDLE||other->action_type == ATTATCK)

@@ -18,7 +18,8 @@ protected:
 
 	//Hero level
 	uint	level = 1;
-	
+	bool	ability[3];
+
 	//Buff area
 	Circle			buff_area;
 	PassiveBuff*	buff_to_apply = nullptr;
@@ -39,13 +40,17 @@ public:
 	//Functionality ---------
 	//Actions -----
 	void		 CleanBuffedUnits();
+	//Ability A methods
+	virtual void SetAbility_A(bool choosed);
 	virtual void Hability_A();
 	virtual void CheckHability_A();
+	//Ability B methods
+	virtual void SetAbility_B(bool choosed);
 	virtual void Hability_B();
 	virtual void CheckHability_B();
 
 	//Set Methods -
-	void	SetPosition(float x, float y);
+	void	SetPosition(float x, float y, bool insert = true);
 	void	SetBuffArea(const Circle& area);
 	void	SetBuffToApply(const PassiveBuff* buff);
 	void	SetLevel(uint lvl);
@@ -95,6 +100,7 @@ public:
 	//Draw --------
 	bool	Draw(bool debug);
 	//Actions -----
+	void	SetAbility_A(bool choosed);
 	void	Hability_A();
 	void	CheckHability_A();
 	void	Hability_B();
@@ -102,7 +108,7 @@ public:
 	void	CalculateSpecialAttackArea(const iPoint& base);
 
 	//Set Methods -
-	void	SetPosition(float x, float y);
+	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Triangle& tri);
 
 

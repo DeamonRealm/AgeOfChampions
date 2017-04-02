@@ -335,6 +335,7 @@ public:
 	bool					Cover();
 	void					DirectDamage(uint damage);
 	bool					Die();
+	void					Stun(uint time);
 	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
 	//Bonus -----------------
 	void	AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence);

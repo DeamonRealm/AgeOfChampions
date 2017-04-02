@@ -114,7 +114,7 @@ private:
 /// ---------------------------------------------
 
 /// Die Action ----------------------------
-//Move the character
+//Kill the character
 class DieUnitAction : public Action
 {
 public:
@@ -130,6 +130,38 @@ public:
 		//Actor attack the target
 		return ((Unit*)actor)->Die();
 	}
+};
+/// ---------------------------------------------
+
+/// Die Action ----------------------------
+//Stun the character
+class StunUnitAction : public Action
+{
+public:
+
+	//Constructor -----------
+	StunUnitAction(Unit* actor, uint time) : Action(actor, TASK_U_STUN)
+	{
+	}
+
+	//Functionality ---------
+	bool Activation()
+	{
+		((Unit*)actor)->Stun(time);
+		timer.Start();
+	}
+	//Functionality ---------
+	bool Execute()
+	{
+		//Actor attack the target
+		return timer.Read() > time;
+	}
+
+private:
+
+	j1Timer timer;
+	uint time = 0;
+
 };
 /// ---------------------------------------------
 

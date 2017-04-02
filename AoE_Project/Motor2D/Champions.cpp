@@ -42,6 +42,12 @@ void Champion::CleanBuffedUnits()
 	}
 }
 
+//Ability A methods
+void Champion::SetAbility_A(bool choosed)
+{
+	ability[0] = choosed;
+}
+
 void Champion::Hability_A()
 {
 
@@ -50,6 +56,12 @@ void Champion::Hability_A()
 void Champion::CheckHability_A()
 {
 
+}
+
+//Ability B methods
+void Champion::SetAbility_B(bool choosed)
+{
+	ability[1] = choosed;
 }
 
 void Champion::Hability_B()
@@ -63,7 +75,7 @@ void Champion::CheckHability_B()
 }
 
 //Set Methods ---------------
-void Champion::SetPosition(float x, float y)
+void Champion::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
 	App->entities_manager->units_quadtree.Exteract(&position);
@@ -86,7 +98,7 @@ void Champion::SetPosition(float x, float y)
 	attack_area.SetPosition(pos);
 
 	//Add the unit with the correct position in the correct quad tree
-	App->entities_manager->units_quadtree.Insert(this, &position);
+	if(insert)App->entities_manager->units_quadtree.Insert(this, &position);
 }
 void Champion::SetBuffArea(const Circle & area)
 {
@@ -203,7 +215,7 @@ Warrior::~Warrior()
 bool Warrior::Update()
 {
 	this->action_worker->Update();
-	CheckHability_B();
+	CheckHability_A();
 	return true;
 }
 
@@ -239,8 +251,24 @@ bool Warrior::Draw(bool debug)
 	return ret;
 }
 
+
+
 //Functionality =======================
 //Actions -------------------
+//Ability A methods
+void Warrior::SetAbility_A(bool choosed)
+{
+	if (choosed)
+	{
+		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
+	}
+	else
+	{
+		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, DEFENSE_BUFF, false);
+	}
+	buff_to_apply->ApplyBuff();
+}
+
 void Warrior::Hability_A()
 {
 
@@ -346,7 +374,7 @@ void Warrior::CalculateSpecialAttackArea(const iPoint & base)
 }
 
 //Set Methods ---------------
-void Warrior::SetPosition(float x, float y)
+void Warrior::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
 	App->entities_manager->units_quadtree.Exteract(&position);
@@ -371,7 +399,7 @@ void Warrior::SetPosition(float x, float y)
 	special_attack_area.SetPosition(pos);
 
 	//Add the unit with the correct position in the correct quad tree
-	App->entities_manager->units_quadtree.Insert(this, &position);
+	if(insert)App->entities_manager->units_quadtree.Insert(this, &position);
 }
 
 void Warrior::SetSpecialAttackArea(const Triangle & tri)

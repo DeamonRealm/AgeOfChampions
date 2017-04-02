@@ -27,7 +27,8 @@ enum BUFF_ATTRIBUTE_TYPE
 {
 	NO_ATTRIBUTE = 0,
 	ATTACK_BUFF,
-	DEFENSE_BUFF
+	DEFENSE_BUFF,
+	STUN_BUFF
 };
 
 ///Class Particle ---------------------

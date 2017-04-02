@@ -16,7 +16,7 @@ Particle::Particle()
 
 }
 
-Particle::Particle(const Particle & copy) :position(copy.position), particle_type(copy.particle_type), animation(copy.animation)
+Particle::Particle(const Particle & copy) :position(copy.position), particle_type(copy.particle_type), animation(copy.animation), flip_sprite(copy.flip_sprite)
 {
 
 }
@@ -30,7 +30,7 @@ Particle::~Particle()
 void Particle::Draw()
 {
 	Sprite* sprite = (Sprite*)animation.GetCurrentSprite();
-	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), animation.GetLoop(), 0, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, 0, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
 }
 
 /// -----------------------------------
@@ -625,7 +625,7 @@ void j1BuffManager::RemoveTargetBuffs(Unit* target)
 
 Particle j1BuffManager::GetParticle(PARTICLE_TYPE ty, DIRECTION_TYPE direc)
 {
-	DIRECTION_TYPE real_dir;
+	DIRECTION_TYPE real_dir = direc;
 	bool flip = false;
 	switch (direc)
 	{
