@@ -1,0 +1,21 @@
+<data enemies="British">
+
+  <units>
+    <id type ="militia" pos_x="0" pos_y="500"/>
+    <id type ="militia" pos_x="20" pos_y="500"/>
+    <id type ="militia" pos_x="40" pos_y="500"/>
+    <id type ="militia" pos_x="-20" pos_y="500"/>
+    <id type ="militia" pos_x="-40" pos_y="500"/>
+    <id type ="militia" pos_x="0" pos_y="530"/>
+    <id type ="militia" pos_x="20" pos_y="530"/>
+    <id type ="militia" pos_x="40" pos_y="530"/>
+    <id type ="militia" pos_x="-20" pos_y="530"/>
+    <id type ="militia" pos_x="-40" pos_y="530"/>
+  </units>
+  <buildings>
+  
+
+  </buildings>
+
+
+</data>

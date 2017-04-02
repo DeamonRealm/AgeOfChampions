@@ -130,7 +130,7 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1AI.cpp">
-      <Filter>Modules</Filter>
+      <Filter>Modules\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -287,7 +287,7 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1AI.h">
-      <Filter>Modules</Filter>
+      <Filter>Modules\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +326,9 @@
     </Filter>
     <Filter Include="Modules\TasksMagament">
       <UniqueIdentifier>{0b086b82-d4b0-4f1c-871b-f1fa6dc611f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\AI">
+      <UniqueIdentifier>{753ec0cd-567d-42d6-b8fb-12dc59d9dc40}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
