@@ -14,9 +14,11 @@
 #define PANEL_COLUMNS	5
 #define CELL_WIDTH		40
 #define CELL_HEIGHT		41
+#define MAX_SKILLS_LEARNED 6
 
 class UI_Image;
 class UI_Button;
+class UI_Fixed_Button;
 class Entity;
 
 enum ENTITY_TYPE;
@@ -24,6 +26,7 @@ enum BUILDING_TYPE;
 enum UNIT_TYPE;
 enum GUI_INPUT;
 
+// Base Action Panel ------------------------------------------------------------------------------------------
 
 class Action_Panel_Elements
 {
@@ -34,9 +37,9 @@ public:
 	virtual bool ActivateCell(int i) { return false; };
 
 	void AddIcon(SDL_Rect icon_rect, uint position);
-	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const;
+	virtual void ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const;
 
-	void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
+	virtual void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
 	Entity* GetActualEntity();
 
 	void LoadPanel() {};
@@ -68,6 +71,8 @@ private:
 
 };
 
+// General Units -------------------------------------------------------------------------------------------
+
 class UnitPanel : public Action_Panel_Elements
 {
 public:
@@ -86,6 +91,8 @@ private:
 
 };
 
+
+// Hero Panel	-------------------------------------------------------------------------------------------
 class HeroPanel : public Action_Panel_Elements
 {
 public:
@@ -93,20 +100,29 @@ public:
 	~HeroPanel();
 
 	bool ActivateCell(int i);
-	void Hero_Handle_input(UI_Element* ui_element, GUI_INPUT ui_input);
+	bool Hero_Handle_input(UI_Element* ui_element, GUI_INPUT ui_input);
+
+	void LearnSkill(int i);
+	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const;
+	void ChangePanelTarget(Entity* new_target);
+	
 
 public:
-	UI_Image*					skill_tree = nullptr;
+	UI_Image*						skill_tree = nullptr;
 private:
-	
-	std::vector<UI_Button*>		skills;
 
-	std::vector<int>			champion_skills_learned;
+	UNIT_TYPE						champion_selected;
+
+	std::vector<UI_Image*>			skills;
+	std::vector<UI_Fixed_Button*>	skills_buttons;
 
 	// Champions Skills;
-	std::vector<SDL_Rect>		mele_champion;
+	std::vector<SDL_Rect>			mele_champion;
+	int								mele_learned[3];
 };
 
+
+// Action Panel --------------------------------------------------------------------------------------------
 class Action_Panel
 {
 public:

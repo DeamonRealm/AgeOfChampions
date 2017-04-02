@@ -16,6 +16,7 @@
 
 #include "UI_Image.h"
 #include "UI_Button.h"
+#include "UI_Fixed_Button.h"
 
 Action_Panel_Elements::Action_Panel_Elements() 
 {
@@ -54,7 +55,7 @@ bool TownCenterPanel::ActivateCell(int i)
 		entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
 		}
 		break;
-	case 1: //entitis_panel->AddAction(App->action_manager->)
+	case 1: 
 		break;
 	case 2:
 		break;
@@ -107,7 +108,7 @@ bool UnitPanel::ActivateCell(int i)
 	return true;
 }
 
-HeroPanel::HeroPanel() : Action_Panel_Elements() 
+HeroPanel::HeroPanel() : Action_Panel_Elements()
 {
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
 
@@ -122,7 +123,7 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	panel_icons[1] = { 576,441, 36, 36 };
 	panel_icons[2] = { 612,441,36,36 };
 
-	skill_tree = new UI_Image();
+	skill_tree = (UI_Image*)App->gui->GenerateUI_Element(IMG);
 	skill_tree->SetBox({ 30, 100, 243, 345 });
 	skill_tree->ChangeTextureId(CHAMPION_SKILL);
 	skill_tree->ChangeTextureRect({ 0,0, 243, 345 });
@@ -130,41 +131,58 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	skill_tree->AdjustBox();
 	skill_tree->Desactivate();
 
-	mele_champion.reserve(6);
-	mele_champion.push_back({ 243,80,36,36 });
+	mele_champion.reserve(MAX_SKILLS_LEARNED);
+/*	mele_champion.push_back({ 243,80,36,36 });
 	mele_champion.push_back({ 243,118,36,36 });
 	mele_champion.push_back({ 243,156,36,36 });
 	mele_champion.push_back({ 243,194,36,36 });
 	mele_champion.push_back({ 243,232,36,36 });
 	mele_champion.push_back({ 243,270,36,36 });
+	*/
+	mele_champion.push_back({ 540,441,36,36 });
+	mele_champion.push_back({ 576,441, 36, 36 });
+	mele_champion.push_back({ 612,441,36,36 });
+	mele_champion.push_back({ 540,477,36,36 });
+	mele_champion.push_back({ 576,477, 36, 36 });
+	mele_champion.push_back({ 612,477,36,36 });
 
-	skills.reserve(6);
-	for (int i = 0; i < 6; i++)
+	skills.reserve(MAX_SKILLS_LEARNED);
+	skills_buttons.reserve(MAX_SKILLS_LEARNED);
+	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
 	{
-		skills.push_back(new UI_Button());
+		skills.push_back((UI_Image*)App->gui->GenerateUI_Element(IMG));
 		skills[i]->SetBox({ 0, 0, 67, 61 });
-		skills[i]->SetTexON(mele_champion[i], CHAMPION_SKILL);
-		skills[i]->SetTexOFF(mele_champion[i], CHAMPION_SKILL);
-		skills[i]->SetTexOVER(mele_champion[i], CHAMPION_SKILL);
-		skills[i]->SetBoxPosition(97 + 67 * (i%2), 177 + 55*(i/2));
+		skills[i]->ChangeTextureId(CHAMPION_SKILL);
+		skills[i]->ChangeTextureRect(mele_champion[i]);
+		skills[i]->SetBoxPosition(97 + 67 * (i % 2), 177 + 55 * (i / 2));
 		skills[i]->Activate();
+
+		skills_buttons.push_back((UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON));
+		skills_buttons[i]->SetBox({ 77 + 67 * (i % 2), 188 + 55 * (i / 2),16,15 });
+		skills_buttons[i]->SetTexDOWN({ 265,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
+		skills_buttons[i]->SetTexUP({ 244,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
+		skills_buttons[i]->SetTexOVERUP({ 244,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
+		skills_buttons[i]->SetTexOVERDOWN({ 266,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
+		skills_buttons[i]->Activate();
+
+		skill_tree->AddChild(skills_buttons[i]);
 		skill_tree->AddChild(skills[i]);
-		skills[i]->SetLayer(6);
+		skills_buttons[i]->SetLayer(8);
+		skills[i]->SetLayer(8);
 	}
 
 	//champion
-	champion_skills_learned.reserve(3);
-	champion_skills_learned.push_back(-1);
-	champion_skills_learned.push_back(-1);
-	champion_skills_learned.push_back(-1);
+	mele_learned[0] = (-1);
+	mele_learned[1] = (-1);
+	mele_learned[2] = (-1);
 	
 }
 
 HeroPanel::~HeroPanel()
 {
 	skills.clear();
+	skills_buttons.clear();
 	
-	champion_skills_learned.clear();
 	mele_champion.clear();
 }
 
@@ -174,13 +192,15 @@ bool HeroPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		((Warrior*)entitis_panel)->Hability_A();
+		if (champion_selected == WARRIOR_CHMP && mele_learned[0] == 0)((Warrior*)entitis_panel)->Hability_A();
+		if (champion_selected == WARRIOR_CHMP && mele_learned[0] == 1)((Warrior*)entitis_panel)->Hability_A();
+			
 		}
 		break;
 	case 1: 
-	{
+		{
 		((Warrior*)entitis_panel)->Hability_B();
-	}
+		}
 		break;
 	case 2:
 		break;
@@ -192,7 +212,6 @@ bool HeroPanel::ActivateCell(int i)
 	case 4:
 	{
 			entitis_panel->SetLife(0);
-
 			((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
 			entitis_panel = nullptr;
 	}
@@ -215,7 +234,7 @@ bool HeroPanel::ActivateCell(int i)
 	return true;
 }
 
-void HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
+bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 {
 	switch (ui_input)
 	{
@@ -229,7 +248,16 @@ void HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
 	{
-		int x = 0;
+		if (ui_element->GetUItype() == FIXED_BUTTON) {
+			for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
+			{
+				if (ui_element == skills_buttons[i])
+				{
+					LearnSkill(i);
+					return true;
+				}
+			}
+		}
 	}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
@@ -253,6 +281,37 @@ void HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 	default:
 		break;
 	}
+	return false;
+}
+
+void HeroPanel::LearnSkill(int i)
+{
+	if (champion_selected == WARRIOR_CHMP && mele_learned[i / 2] == -1)
+	{
+		mele_learned[i / 2] = i; 
+	}
+}
+
+void HeroPanel::ChangePanelIcons(std::vector<UI_Image*>& actual_panel) const
+{
+	if (champion_selected == WARRIOR_CHMP) {
+		for (int i = 0; i < 3; i++)
+		{
+			if(mele_learned[i] != -1) actual_panel[i]->ChangeTextureRect(mele_champion[mele_learned[i]]);
+		}
+	}
+
+	for (uint i = 3; i < MAX_PANEL_CELLS; i++)
+	{
+		if(champion_selected == WARRIOR_CHMP)	actual_panel[i]->ChangeTextureRect(panel_icons[i]);
+	}
+}
+
+void HeroPanel::ChangePanelTarget(Entity * new_target)
+{
+	entitis_panel = new_target;
+	champion_selected = ((Unit*)entitis_panel)->GetUnitType();
+	
 }
 
 
@@ -363,7 +422,7 @@ void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 {
 	if (actualpanel == heropanel)
 	{
-		heropanel->Hero_Handle_input(ui_element, ui_input);
+		if(heropanel->Hero_Handle_input(ui_element, ui_input)) heropanel->ChangePanelIcons(panel_cells);
 	}
 }
 
@@ -415,6 +474,7 @@ void Action_Panel::SetPanelType()
 		if (u_type == VILLAGER);
 		else if (u_type == WARRIOR_CHMP)
 		{
+			heropanel->ChangePanelTarget(actual_entity);
 			heropanel->ChangePanelIcons(panel_cells);
 			actualpanel = heropanel;
 		}
