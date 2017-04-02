@@ -8,8 +8,7 @@ Tribute game to Age of Empires II developed by DemonRealm.
 
 ## How to play
 Right now there are only prototype releases to test the functionality of our game dute to this fact all debug controlls can be activated without the need of being on the debug mode (F1).  
-Controls for v.0.3 (Vertical Slice prototype)   
-v0.3 is quite similar to the AoE editor but with far less options, you can spawn difernt units, resources and bulding and test some of their functionality.   
+Controls for v.0.4 (Vertical Slice Beta)   
 
 * Mouse Left Click to select a unit, building or resource
 * Mouse Right Click to Make the unit do actions (Move/Attack/Recolect)
