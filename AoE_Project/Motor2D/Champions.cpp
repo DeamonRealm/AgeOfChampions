@@ -321,13 +321,17 @@ void Warrior::Hability_B()
 	{
 		if(units_in[k]->GetPosition() != position)units_in[k]->DirectDamage(200);
 	}
-	LOG("In area %i", units_in.size());
 
+	slash_particle.animation.Reset();
 }
 
 void Warrior::CheckHability_B()
 {
-
+	if (!slash_particle.animation.IsEnd())
+	{
+		if (slash_particle.position != GetPositionRounded())slash_particle.position = GetPositionRounded();
+		slash_particle.Draw();
+	}
 }
 
 void Warrior::CalculateSpecialAttackArea(const iPoint & base)

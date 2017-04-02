@@ -245,6 +245,7 @@ public:
 	//Functionality -------------------
 	//Methods that transform strings to enums (used when loading data from xml)
 	ENTITY_TYPE		StrToEntityEnum(const char* str)const;
+	DIPLOMACY		StrToDiplomacyEnum(const char* str)const;
 	UNIT_TYPE		StrToUnitEnum(const char* str)const;
 	ACTION_TYPE		StrToActionEnum(const char* str)const;
 	ITEM_TYPE		StrToItemEnum(const char* str)const;

@@ -30,6 +30,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Slash/Slash_Back_05.png" x="349" y="1" w="202" h="100" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_Back_06.png" x="553" y="1" w="165" h="32" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_Back_07.png" x="1" y="103" w="119" h="18" pX="0.5" pY="0.5"/>
+    
     <sprite n="Slash/Slash_DiagonalB_00.png" x="122" y="103" w="17" h="9" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_DiagonalB_01.png" x="141" y="103" w="13" h="6" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_DiagonalB_02.png" x="156" y="103" w="58" h="36" pX="0.5" pY="0.5"/>
@@ -39,6 +40,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Slash/Slash_DiagonalB_06.png" x="398" y="103" w="132" h="106" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_DiagonalB_07.png" x="532" y="103" w="132" h="106" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_DiagonalB_08.png" x="1" y="211" w="83" h="31" pX="0.5" pY="0.5"/>
+    
     <sprite n="Slash/Slash_DiagonalF_00.png" x="86" y="211" w="14" h="10" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_DiagonalF_01.png" x="102" y="211" w="12" h="6" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_DiagonalF_02.png" x="116" y="211" w="54" h="33" pX="0.5" pY="0.5"/>
@@ -47,6 +49,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Slash/Slash_DiagonalF_05.png" x="340" y="211" w="123" h="99" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_DiagonalF_06.png" x="465" y="211" w="129" h="99" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_DiagonalF_07.png" x="596" y="211" w="78" h="29" pX="0.5" pY="0.5"/>
+    
     <sprite n="Slash/Slash_Front_00.png" x="676" y="211" w="6" h="23" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_Front_01.png" x="684" y="211" w="17" h="14" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_Front_02.png" x="1" y="312" w="77" h="64" pX="0.5" pY="0.5"/>
@@ -55,6 +58,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Slash/Slash_Front_05.png" x="325" y="312" w="199" h="158" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_Front_06.png" x="526" y="312" w="164" h="155" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_Front_07.png" x="1" y="472" w="119" h="29" pX="0.5" pY="0.5"/>
+    
     <sprite n="Slash/Slash_Side_00.png" x="122" y="472" w="27" h="8" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_Side_01.png" x="151" y="472" w="16" h="15" pX="0.5" pY="0.5"/>
     <sprite n="Slash/Slash_Side_02.png" x="169" y="472" w="74" h="61" pX="0.5" pY="0.5"/>

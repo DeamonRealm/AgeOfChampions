@@ -6,8 +6,7 @@
 #include "j1Timer.h"
 #include "p2Point.h"
 #include "j1Animator.h"
-
-class Unit;
+#include "Units.h"
 
 enum PARTICLE_TYPE
 {
@@ -43,8 +42,10 @@ public:
 public:
 
 	PARTICLE_TYPE	particle_type = UNKNOWN_PARTICLE;
+	DIRECTION_TYPE	direction_type = NO_DIRECTION;
 	iPoint			position = { 0,0 };
 	Animation		animation;
+	bool			flip_sprite = false;
 
 public:
 

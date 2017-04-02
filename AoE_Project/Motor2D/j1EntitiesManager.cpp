@@ -620,7 +620,7 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 	return nullptr;
 }
 
-Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
+Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY diplomacy, bool push_in_list)
 {
 	Building* new_building = nullptr;
 
@@ -641,9 +641,16 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type)
 			}
 			//Set unit animation
 			App->animator->BuildingPlay(new_building);
+			
+			//Set unit diplomacy
+			new_building->SetDiplomacy(diplomacy);
+			
+			if (push_in_list)
+			{
+				//Add the new building at the buildings manage list
+				buildings.push_back(new_building);
 
-			//Add the new building at the buildings manage list
-			buildings.push_back(new_building);
+			}
 
 			return new_building;
 		}

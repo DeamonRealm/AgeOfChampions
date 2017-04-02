@@ -401,6 +401,13 @@ ENTITY_TYPE j1Animator::StrToEntityEnum(const char * str) const
 	return NO_ENTITY;
 }
 
+DIPLOMACY j1Animator::StrToDiplomacyEnum(const char * str) const
+{
+	if (strcmp(str, "ally") == 0)	return ALLY;
+	if (strcmp(str, "enemy") == 0)	return ENEMY;
+	return NEUTRAL;
+}
+
 UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 {
 	if (strcmp(str, "spearman") == 0)				return SPEARMAN;

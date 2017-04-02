@@ -319,7 +319,11 @@ void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint ele
 	for (int i = position.y; i < position.y + element_height; i++) {
 		for (int j = position.x; j < position.x + element_width; j++) {
 			logic_map[i*data.width + j] = value_map;
-			navigation_layer->data[i * data.width + j - 1] = 18;
+			if (value_map == 0)
+			{
+				navigation_layer->data[i * data.width + j - 1] = 18;
+			}
+			else navigation_layer->data[i * data.width + j - 1] = 17;
 		}
 	}
 	
@@ -330,7 +334,11 @@ void j1Map::ChangeConstructionMap(const iPoint & position, uint element_width, u
 	for (int i = position.y; i < position.y + element_height; i++) {
 		for (int j = position.x; j < position.x + element_width; j++) {
 			construction_map[i*data.width + j] = value_map;
-			construction_layer->data[i*data.width + j - 1] = 19;
+			if (value_map == 0)
+			{
+				construction_layer->data[i*data.width + j - 1] = 19;
+			}
+			else construction_layer->data[i*data.width + j - 1] = 18;
 		}
 	}
 }

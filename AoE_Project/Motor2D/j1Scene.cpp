@@ -12,8 +12,7 @@
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
 #include "j1Pathfinding.h"
-
-
+#include "j1FileSystem.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -59,6 +58,59 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	if (loaded)return true;
+	//Load Initial Scene ----------------------------------
+	std::string folder = name + "/" + "Scene_Data.xml";
+	pugi::xml_document scene_doc;
+	if (!App->fs->LoadXML(folder.c_str(), &scene_doc))
+	{
+		LOG("Error Loading Scene!");
+		return false;
+	}
+
+	//Load the camera position
+	pugi::xml_node camera_node = scene_doc.first_child().child("camera");
+	iPoint camera_pos = App->map->MapToWorld(camera_node.attribute("pos_x").as_uint(), camera_node.attribute("pos_y").as_uint());
+	App->render->camera.x = camera_pos.x;
+	App->render->camera.y = -camera_pos.y;
+	App->map->CalculateTilesInView();
+
+
+	pugi::xml_node entity_node = scene_doc.first_child().child("entity");
+
+	while (entity_node != NULL)
+	{
+		Entity* new_entity = nullptr;
+
+		ENTITY_TYPE type = App->animator->StrToEntityEnum(entity_node.attribute("type").as_string());
+
+		if (type == UNIT)
+		{
+			UNIT_TYPE unit_type = App->animator->StrToUnitEnum(entity_node.attribute("unit_type").as_string());
+			DIPLOMACY diplomacy = App->animator->StrToDiplomacyEnum(entity_node.attribute("diplomacy").as_string());
+			Unit* new_unit = App->entities_manager->GenerateUnit(unit_type, diplomacy, true);
+			iPoint unit_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
+			new_unit->SetPosition(unit_pos.x, unit_pos.y);
+		}
+		else if (type == RESOURCE)
+		{
+
+		}
+		else if( type ==  BUILDING)
+		{
+			BUILDING_TYPE unit_type = App->animator->StrToBuildingEnum(entity_node.attribute("building_type").as_string());
+			DIPLOMACY diplomacy = App->animator->StrToDiplomacyEnum(entity_node.attribute("diplomacy").as_string());
+			Building* new_unit = App->entities_manager->GenerateBuilding(unit_type,diplomacy);
+			iPoint unit_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
+			new_unit->SetPosition(unit_pos.x, unit_pos.y);
+		}
+
+		entity_node = entity_node.next_sibling();
+	}
+	//
+	// ----------------------------------------------------
+	loaded = true;
+
 	return true;
 }
 

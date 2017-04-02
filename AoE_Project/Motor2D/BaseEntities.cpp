@@ -1237,8 +1237,8 @@ void Resource::SetPosition(float x, float y)
 	mark.SetPosition(iPoint(position.x, position.y));
 
 	//Change walk & construction logic maps
-	App->map->ChangeConstructionMap(world_coords, 1, 1);
-	App->map->ChangeLogicMap(world_coords, 1, 1);
+	App->map->ChangeConstructionMap(world_coords, 1, 1, 0);
+	App->map->ChangeLogicMap(world_coords, 1, 1, 0);
 
 	//Add Resource at the correct quad tree
 	App->entities_manager->resources_quadtree.Insert(this, &position);
@@ -1364,14 +1364,14 @@ void Building::SetPosition(float x, float y)
 	//Check if the building is a town center to respect the build exception
 	if (building_type == TOWN_CENTER)
 	{
-		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2);
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2, 0);
 	}
 	else
 	{
-		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles);
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 	}
 
-	App->map->ChangeConstructionMap(upper_tile, width_in_tiles, height_in_tiles);
+	App->map->ChangeConstructionMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 
 	//Add building at the correct quad tree
 	App->entities_manager->buildings_quadtree.Insert(this, &position);
