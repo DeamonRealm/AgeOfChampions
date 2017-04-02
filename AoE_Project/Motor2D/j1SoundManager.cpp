@@ -196,7 +196,7 @@ bool j1SoundManager::LoadSoundBlock(const char* xml_folder)
 				sound_node = sound_node.next_sibling();
 
 			}
-			music_blocks.push_back(sound_block);
+			gui_blocks.push_back(sound_block);
 		}
 		type_node = type_node.next_sibling();
 
