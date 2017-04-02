@@ -272,7 +272,7 @@ bool j1SoundManager::PlayMusicAudio(SOUND_TYPE sound)
 		if (block->GetType() == sound)
 		{
 			uint rand_sound = rand() % block->GetSoundSize();
-			ret = App->audio->PlayMusic(block->GetAudio(rand_sound)->path.c_str());
+			ret = App->audio->PlayMusic(block->GetAudio(rand_sound)->path.c_str(),0);
 			return ret;
 		}
 	}
