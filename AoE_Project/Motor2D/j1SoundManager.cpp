@@ -100,6 +100,14 @@ bool j1SoundManager::CleanUp()
 		delete fx_blocks[k];
 	}
 	fx_blocks.clear();
+
+	uint gui_size = gui_blocks.size();
+
+	for (uint k = 0; k < fx_size; k++)
+	{
+		delete gui_blocks[k];
+	}
+	gui_blocks.clear();
 	return true;
 }
 
@@ -119,7 +127,14 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "ingame") == 0)						return INGAME_SONG;
 	else if (strcmp(str, "win") == 0)							return WIN_SONG;
 	else if (strcmp(str, "lost") == 0)							return LOST_SONG;
-	
+	else if (strcmp(str, "mainmenu_click") == 0)				return CLICK_MAIN_MENU;
+	else if (strcmp(str, "submenu_click") == 0)					return CLICK_SUBMENU;
+	else if (strcmp(str, "ingame_click") == 0)					return CLICK_INGAME;
+	else if (strcmp(str, "win_fx") == 0)						return WIN_FX;
+	else if (strcmp(str, "lost") == 0)							return LOST_FX;
+	else if (strcmp(str, "error") == 0)							return ERROR_SOUND;
+	else if (strcmp(str, "player_unit_alert") == 0)				return PLAYER_UNIT_ALERT;
+	else if (strcmp(str, "player_building_alert") == 0)			return PLAYER_BUILDING_ALERT;
 	return NO_SOUND;
 }
 
@@ -172,6 +187,17 @@ bool j1SoundManager::LoadSoundBlock(const char* xml_folder)
 			}
 			music_blocks.push_back(sound_block);
 		}
+		else if (strcmp(type_node.attribute("song_type").as_string(), "gui") == 0) {
+			sound_node = type_node.first_child();
+			while (sound_node != NULL) {
+				path = name + "/" + sound_node.attribute("soundPath").as_string();
+				load_folder = path.c_str();
+				sound_block->SetSound(App->audio->LoadFx(load_folder.c_str()) - 1, path.c_str());
+				sound_node = sound_node.next_sibling();
+
+			}
+			music_blocks.push_back(sound_block);
+		}
 		type_node = type_node.next_sibling();
 
 
@@ -199,6 +225,30 @@ bool j1SoundManager::PlayFXAudio(SOUND_TYPE sound)
 		{
 			uint rand_sound = rand() % block->GetSoundSize();
 			ret=App->audio->PlayFx(block->GetAudio(rand_sound)->id);
+			return ret;
+		}
+	}
+	return ret;
+}
+bool j1SoundManager::PlayGUIAudio(SOUND_TYPE sound)
+{
+	bool ret = false;
+	time_t t;
+	srand(time(&t));
+	Sound_Block* block = nullptr;
+
+	uint size = gui_blocks.size();
+
+	for (uint k = 0; k < size; k++)
+	{
+		//Pointer to the current block
+		block = gui_blocks[k];
+
+		//Compare block unit id
+		if (block->GetType() == sound)
+		{
+			uint rand_sound = rand() % block->GetSoundSize();
+			ret = App->audio->PlayFx(block->GetAudio(rand_sound)->id);
 			return ret;
 		}
 	}

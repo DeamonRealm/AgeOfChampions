@@ -65,6 +65,8 @@ private:
 	//Vectors that define all the entities animations
 	std::vector<Sound_Block*> fx_blocks;
 	std::vector<Sound_Block*> music_blocks;
+	std::vector<Sound_Block*> gui_blocks;
+
 
 public:
 
@@ -79,6 +81,7 @@ public:
 
 	//Animations Methods ----
 	bool			PlayFXAudio(SOUND_TYPE target);
+	bool			PlayGUIAudio(SOUND_TYPE target);
 	bool			PlayMusicAudio(SOUND_TYPE target);
 
 

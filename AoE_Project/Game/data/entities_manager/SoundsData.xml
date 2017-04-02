@@ -54,4 +54,28 @@
   <type enum="lost"  song_type ="music">
     <sound soundPath="lost.ogg" name="lost_music"/>
   </type>
+  <type enum="mainmenu_click"  song_type ="gui">
+    <sound soundPath="mainmenu_click.wav" name="mainmenu_click"/>
+  </type>
+  <type enum="submenu_click"  song_type ="gui">
+    <sound soundPath="submenu_click.wav" name="submenu_click"/>
+  </type>
+  <type enum="ingame_click"  song_type ="gui">
+    <sound soundPath="ingame_click.wav" name="ingame_click"/>
+  </type>
+  <type enum="error"  song_type ="gui">
+    <sound soundPath="error_sound.wav" name="error_sound"/>
+  </type>
+  <type enum="lost_fx"  song_type ="gui">
+    <sound soundPath="lost_fx.wav" name="lost"/>
+  </type>
+  <type enum="player_building_alert"  song_type ="gui">
+    <sound soundPath="player_building_alert.wav" name="player_building_alert"/>
+  </type>
+  <type enum="win_fx"  song_type ="gui">
+    <sound soundPath="win_fx.wav" name="win_fx"/>
+  </type>
+  <type enum="player_unit_alert"  song_type ="gui">
+    <sound soundPath="player_unit_alert.wav" name="player_unit_alert"/>
+  </type>
 </SoundAtlas>
