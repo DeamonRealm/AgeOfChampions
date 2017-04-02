@@ -40,6 +40,11 @@ void Sound_Block::SetSound(const int value)
 	sound.push_back(value);
 }
 
+void Sound_Block::SetString(const char * get)
+{
+	path = get;
+}
+
 int Sound_Block::GetAudio(int index)
 {
 	return sound[index];
@@ -55,6 +60,11 @@ int Sound_Block::GetSoundSize()
 SOUND_TYPE Sound_Block::GetType() const
 {
 	return type;
+}
+
+const char * Sound_Block::GetPath()
+{
+	return path.c_str();
 }
 
 
@@ -93,13 +103,21 @@ bool j1SoundManager::PostUpdate()
 bool j1SoundManager::CleanUp()
 {
 	//Clean the unit blocks
-	uint size = sound_blocks.size();
+	uint music_size = music_blocks.size();
 
-	for (uint k = 0; k < size; k++)
+	for (uint k = 0; k < music_size; k++)
 	{
-		sound_blocks[k]->ClearSound();
+		music_blocks[k]->ClearSound();
 	}
-	sound_blocks.clear();
+	music_blocks.clear();
+
+	uint fx_size = fx_blocks.size();
+
+	for (uint k = 0; k < fx_size; k++)
+	{
+		fx_blocks[k]->ClearSound();
+	}
+	fx_blocks.clear();
 	return true;
 }
 
@@ -142,47 +160,84 @@ bool j1SoundManager::LoadSoundBlock(const char* xml_folder)
 
 
 	type_node = all_node.first_child();
-
 	while (type_node != NULL)
 	{
 		Sound_Block* sound_block = new Sound_Block();
 
 		sound_block->SetType(StrToSoundEnum(type_node.attribute("enum").as_string()));
+		if (type_node.attribute("song_type").as_string() == "fx") {
+			sound_node = type_node.first_child();
+			while (sound_node != NULL) {
+				sound_block->path = name + "/" + sound_node.attribute("soundPath").as_string();
+				load_folder = sound_block->path.c_str();
+				sound_block->SetSound(App->audio->LoadFx(load_folder.c_str()) - 1);
+				sound_node = sound_node.next_sibling();
 
-		sound_node = type_node.first_child();
-		while (sound_node != NULL) {
-			load_folder = name + "/" + sound_node.attribute("soundPath").as_string();
-			sound_block->SetSound(App->audio->LoadFx(load_folder.c_str())-1);
-			sound_node = sound_node.next_sibling();
-
+			}
+			fx_blocks.push_back(sound_block);
 		}
-		sound_blocks.push_back(sound_block);
+		if (type_node.attribute("song_type").as_string() == "music") {
+			sound_node = type_node.first_child();
+			while (sound_node != NULL) {
+				sound_block->path = name + "/" + sound_node.attribute("soundPath").as_string();
+				load_folder = sound_block->path.c_str();
+				sound_block->SetSound(App->audio->LoadFx(load_folder.c_str()) - 1);
+				sound_node = sound_node.next_sibling();
+
+			}
+			music_blocks.push_back(sound_block);
+		}
 		type_node = type_node.next_sibling();
+
 
 	}
 	return true;
 }
 
 
-bool j1SoundManager::PlayAudio(SOUND_TYPE sound)
+bool j1SoundManager::PlayFXAudio(SOUND_TYPE sound)
 {
 	bool ret = false;
 	time_t t;
 	srand(time(&t));
 	Sound_Block* block = nullptr;
 
-	uint size = sound_blocks.size();
+	uint size = fx_blocks.size();
 
 	for (uint k = 0; k < size; k++)
 	{
 		//Pointer to the current block
-		block = sound_blocks[k];
+		block = fx_blocks[k];
 
 		//Compare block unit id
 		if (block->GetType() == sound)
 		{
 			uint rand_sound = rand() % block->GetSoundSize();
 			ret=App->audio->PlayFx(block->GetAudio(rand_sound));
+			return ret;
+		}
+	}
+	return ret;
+}
+bool j1SoundManager::PlayMusicAudio(SOUND_TYPE sound)
+{
+	bool ret = false;
+	time_t t;
+	srand(time(&t));
+	Sound_Block* block = nullptr;
+
+	uint size = music_blocks.size();
+
+	for (uint k = 0; k < size; k++)
+	{
+		//Pointer to the current block
+		block = music_blocks[k];
+
+		//Compare block unit id
+		if (block->GetType() == sound)
+		{
+			uint rand_sound = rand() % block->GetSoundSize();
+			ret = App->audio->PlayMusic(block->path.c_str());
 			return ret;
 		}
 	}

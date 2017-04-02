@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundAtlas>
 
-  <type enum="sword_solo">
+  <type enum="sword_solo" song_type ="fx">
     <sound soundPath="sword_01.wav" name="sword"/>
     <sound soundPath="sword_02.wav" name="sword"/>
     <sound soundPath="sword_03.wav" name="sword"/>
   </type>
-  <type enum="barracks_create_select">
+  <type enum="barracks_create_select" song_type ="fx">
     <sound soundPath="barracks.wav" name="barrack"/>
   </type>
-  <type enum="town_center_select">
+  <type enum="town_center_select"  song_type ="fx">
     <sound soundPath="town_center_selected.wav" name="town_center_selected"/>
   </type>
-  <type enum="villager_create">
+  <type enum="villager_create"  song_type ="fx">
     <sound soundPath="villager_created.wav" name="villager_created"/>
   </type>
-  <type enum="unit_death">
+  <type enum="unit_death"  song_type ="fx">
     <sound soundPath="unit_death_01.wav" name="death"/>
     <sound soundPath="unit_death_02.wav" name="death"/>
     <sound soundPath="unit_death_03.wav" name="death"/>
@@ -23,18 +23,18 @@
     <sound soundPath="unit_death_05.wav" name="death"/>
     <sound soundPath="unit_death_06.wav" name="death"/>
   </type>
-  <type enum="unit_attack">
+  <type enum="unit_attack"  song_type ="fx">
     <sound soundPath="male_01_attack_01.wav" name="attack"/>
     <sound soundPath="male_01_attack_02.wav" name="attack"/>
     <sound soundPath="male_01_attack_03.wav" name="attack"/>
     <sound soundPath="male_01_attack_04.wav" name="attack"/>
   </type>
-  <type enum="unit_click">
+  <type enum="unit_click"  song_type ="fx">
     <sound soundPath="male_01_click_01.wav" name="click"/>
     <sound soundPath="male_01_click_02.wav" name="click"/>
     <sound soundPath="male_01_click_03.wav" name="click"/>
   </type>
-  <type enum="unit_move">
+  <type enum="unit_move"  song_type ="fx">
     <sound soundPath="male_01_move_01.wav" name="move"/>
     <sound soundPath="male_01_move_02.wav" name="move"/>
     <sound soundPath="male_01_move_03.wav" name="move"/>

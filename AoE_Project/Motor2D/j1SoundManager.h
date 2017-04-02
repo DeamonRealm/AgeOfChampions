@@ -16,6 +16,7 @@ public:
 	Sound_Block(SOUND_TYPE type = NO_SOUND);
 
 	~Sound_Block();
+	std::string				path;
 
 private:
 
@@ -23,19 +24,21 @@ private:
 	SOUND_TYPE				type = NO_SOUND;
 	//Pointer to a vector of animations 
 	std::vector<int>		sound;
-
 public:
 
 	//Functionality -------------------
-	void	ClearSound();
+	void				ClearSound();
 	//Set Methods -----------
-	void	SetType(SOUND_TYPE type);
-	void	SetSound(const int value);
+	void				SetType(SOUND_TYPE type);
+	void				SetSound(const int value);
+	void				SetString(const char* path);
 	//Get Methods -----------
 	int					GetAudio(int index);
-
 	int					GetSoundSize();
-	SOUND_TYPE				GetType()const;
+	SOUND_TYPE			GetType()const;
+
+	const char*			GetPath();
+	
 	
 };
 /// ---------------------------------------------
@@ -66,7 +69,8 @@ public:
 private:
 
 	//Vectors that define all the entities animations
-	std::vector<Sound_Block*> sound_blocks;
+	std::vector<Sound_Block*> fx_blocks;
+	std::vector<Sound_Block*> music_blocks;
 
 public:
 
@@ -80,8 +84,9 @@ public:
 
 
 	//Animations Methods ----
-	bool PlayAudio(SOUND_TYPE target);
-	
+	bool PlayFXAudio(SOUND_TYPE target);
+	bool PlayMusicAudio(SOUND_TYPE target);
+
 
 };
 #endif // ! _J1SOUND_MANAGER_H_
