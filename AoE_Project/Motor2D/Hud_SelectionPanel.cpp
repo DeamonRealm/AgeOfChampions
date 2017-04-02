@@ -196,6 +196,11 @@ void Entity_Profile::DrawProfile() const
 
 void Entity_Profile::UpdateStats()
 {
+	if (element->myself == NULL)
+	{
+		element = nullptr; 
+		return;
+	}
 	if (element->GetEntityType() != RESOURCE && element->GetLife() != life_update)
 	{
 		life_update = element->GetLife();

@@ -175,6 +175,7 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		}
 		if (target == singleplayer)
 		{
+			option_selected->button_state = UP;
 			App->gui->ChangeMouseTexture(DEFAULT);
 			App->scene->Enable();
 			App->player->Enable();

@@ -61,11 +61,11 @@ public:
 private:
 
 	// Player Information
-	uint			wood;
-	uint			meat;
-	uint			gold;
-	uint			stone;
-	uint			population;
+	int			wood;
+	int			meat;
+	int			gold;
+	int			stone;
+	int			population;
 	uint			max_population;
 
 	int				wood_width;

@@ -231,13 +231,13 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 
 bool Game_Panel::UseResource(int amount_wood, int amount_food, int amount_gold, int amount_stone, int used_population)
 {
-	if(wood-amount_wood>=0 && meat-amount_food>=0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 &&  population + used_population <= max_population)
+	if(wood-amount_wood >= 0 && meat-amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 &&  population + used_population <= max_population)
 	{
-		wood -= amount_wood;
-		meat -= amount_food;
-		gold -= amount_gold;
-		stone -= amount_stone;
-		population += used_population;
+		if (amount_wood != 0) AddResource(-amount_wood, GP_WOOD);
+		if (amount_food != 0) AddResource(-amount_food, GP_MEAT);
+		if (amount_gold != 0) AddResource(-amount_gold, GP_GOLD);
+		if (amount_stone != 0) AddResource(-amount_stone, GP_STONE);
+		if (used_population != 0) IncressPopulation(used_population);
 		return true;
 	}
 	else return false;

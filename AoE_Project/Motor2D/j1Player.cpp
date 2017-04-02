@@ -202,10 +202,12 @@ bool j1Player::PostUpdate()
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
 		selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_REPEAT);
+		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_REPEAT);
 	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
+		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_REPEAT);
 		selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_UP);
 		action_panel->SetPanelType();
 	}

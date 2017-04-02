@@ -4,6 +4,7 @@
 #include "j1Gui.h"
 #include "j1Input.h"
 #include "j1EntitiesManager.h"
+#include "j1Render.h"
 
 #include "BaseEntities.h"
 
@@ -56,7 +57,7 @@ TownCenterPanel::TownCenterPanel() : Action_Panel_Elements()
 	panel_icons.reserve(MAX_PANEL_CELLS);
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
 	{
-		panel_icons[i] = { 0,0,1,1 };
+		panel_icons.push_back({ 0,0,1,1 });
 	}
 	panel_icons[0] = { 576,585,36,36 };
 	panel_icons[1] = { 288,585,36,36 };
@@ -69,32 +70,14 @@ bool TownCenterPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		if(player_game_panel_resources->UseResource(0,50,0,0,1)) entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
+		if(player_game_panel_resources->UseResource(0,100,0,0,1)) entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
 		}
 		break;
 	case 1: {
-		if (player_game_panel_resources->UseResource(0, 300, 300, 0, 1)) {
+		if (player_game_panel_resources->UseResource(0, 0, 100, 0, 1)) {
 			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, WARRIOR_CHMP, ALLY));
 		}
 		}
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 4: 
-		break;
-	case 5:
-		break;
-	case 6:
-		break;
-	case 7:
-		break;
-	case 8: 
-		break;
-	case 9:
-		break;
-	case 10:	
 		break;
 	default:
 		break;
@@ -109,9 +92,9 @@ UnitPanel::UnitPanel() : Action_Panel_Elements()
 	panel_icons.reserve(MAX_PANEL_CELLS);
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
 	{
-		panel_icons[i] = { 0,0,1,1 };
+		panel_icons.push_back({ 0,0,1,1 });
 	}
-	panel_icons[0] = { 0,76,36,36 };
+	panel_icons[3] = { 0,76,36,36 };
 };
 
 bool UnitPanel::ActivateCell(int i)
@@ -119,27 +102,174 @@ bool UnitPanel::ActivateCell(int i)
 	if (entitis_panel == nullptr) return false;
 	switch (i)
 	{
-	case 0: {
+	case 4: {
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
-		}
-		break;
-	case 2: 
-		break;
-	case 3:
-		break;
-	case 4:
-		break;
-	case 5:
-		break;
-	case 6:
+	}
 		break;
 	default:
 		break;
 	}
 	return true;
 }
+
+// VILLAGER PANEL ---------------------------------------------------------------------------------------------------
+
+VillagerPanel::VillagerPanel() : Action_Panel_Elements()
+{
+	panel_icons.reserve(MAX_PANEL_CELLS);
+	v_normal_panel.reserve(MAX_PANEL_CELLS);
+	v_militari_panel.reserve(MAX_PANEL_CELLS);
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons.push_back({ 0,0,1,1 });
+		v_normal_panel.push_back({ 0,0,1,1 });
+		v_militari_panel.push_back({ 0,0,1,1 });
+	}
+	panel_icons[0] = { 76,153,36,36 };
+	panel_icons[1] = { 593,36,36,36 };
+	panel_icons[2] = { 405,36,36,36 };
+	panel_icons[3] = { 0,76,36,36 };
+
+	v_normal_panel[13] = {332,36,36,36};
+	v_normal_panel[14] = { 477,36,36,36 };
+	v_militari_panel[0] = { 132,0,36,36 };
+	v_militari_panel[13] = { 332,36,36,36 };
+	v_militari_panel[14] = { 477,36,36,36 };
+}
+
+bool VillagerPanel::ActivateCell(int i)
+{
+	switch (i)
+	{
+	case 0:{
+		if (villagerisbuilding == VP_NOT_BUILDING)
+		{
+			villagerisbuilding = VP_NORMAL;
+			return false;
+		}
+		else if (villagerisbuilding == VP_NORMAL)
+		{
+
+		}
+		else if (villagerisbuilding == VP_MILITARY && player_game_panel_resources->UseResource(100,100,0,0,0))
+		{
+			//incress population left
+			buildingthis = App->entities_manager->GenerateBuilding(TOWN_CENTER,ALLY,true);	
+			int x = 0, y = 0;
+			App->input->GetMousePosition(x, y);
+			buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, false);
+
+			isbuilding = true;
+		}
+		}
+		break;
+	case 1: {
+		if (villagerisbuilding == VP_NOT_BUILDING){
+			villagerisbuilding = VP_MILITARY;
+			return false;
+		}
+		}
+		break;
+	case 2:
+		break;
+	case 3: {
+		entitis_panel->SetLife(0);
+		((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
+		entitis_panel = nullptr;
+		}
+		break;
+	case 4:
+		break;
+	case 13: {
+		if (villagerisbuilding == VP_NORMAL) {
+			villagerisbuilding = VP_MILITARY;
+			return false;
+		}
+		if (villagerisbuilding == VP_MILITARY)
+		{
+			villagerisbuilding = VP_NORMAL;
+			return false;
+		}
+		}
+		break;
+	case 14: if (villagerisbuilding != VP_NOT_BUILDING) {
+		villagerisbuilding = VP_NOT_BUILDING;
+		return false;
+		}
+		break;
+	default:
+		break;
+	}
+	return true;
+}
+
+void VillagerPanel::ChangePanelIcons(std::vector<UI_Image*>& actual_panel) const
+{
+	switch (villagerisbuilding)
+	{
+	case VP_NOT_BUILDING: 
+		for (uint i = 0; i < MAX_PANEL_CELLS; i++)
+		{
+			actual_panel[i]->ChangeTextureRect(panel_icons[i]);
+		}
+		
+		break;
+	case VP_NORMAL:
+		for (uint i = 0; i < MAX_PANEL_CELLS; i++)
+		{
+			actual_panel[i]->ChangeTextureRect(v_normal_panel[i]);
+		}
+		break;
+	case VP_MILITARY:
+		for (uint i = 0; i < MAX_PANEL_CELLS; i++)
+		{
+			actual_panel[i]->ChangeTextureRect(v_militari_panel[i]);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
+{
+	
+	switch (input)
+	{
+	case MOUSE_LEFT_BUTTON_DOWN:
+		break;
+	case MOUSE_LEFT_BUTTON_REPEAT:
+		if (isbuilding)
+		{
+			int x = 0, y = 0;
+			App->input->GetMousePosition(x, y);
+			buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, false);
+		}
+		break;
+	case MOUSE_LEFT_BUTTON_UP:
+		if (isbuilding)
+		{
+			int x = 0, y = 0;
+			App->input->GetMousePosition(x, y);
+			buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, true);
+			isbuilding = false;
+			buildingthis = nullptr;
+		}
+		break;
+
+	default:
+		break;
+	}
+	return false;
+}
+
+bool VillagerPanel::GetIsBuilding() const
+{
+	return isbuilding;
+}
+
 
 // HERO PANEL -------------------------------------------------------------------------------------------------------
 
@@ -262,18 +392,18 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 	case LEFT_ARROW:					break;
 	case RIGHT_ARROW:					break;
 	case MOUSE_LEFT_BUTTON_DOWN:
-	{
-		if (ui_element->GetUItype() == FIXED_BUTTON) {
-			for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
-			{
-				if (ui_element == skills_buttons[i])
+		{
+			if (ui_element->GetUItype() == FIXED_BUTTON) {
+				for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
 				{
-					LearnSkill(i);
-					return true;
+					if (ui_element == skills_buttons[i])
+					{
+						LearnSkill(i);
+						return true;
+					}
 				}
 			}
 		}
-	}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:		break;
 	case MOUSE_LEFT_BUTTON_UP:			break;
@@ -332,6 +462,7 @@ Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 	towncenter = new TownCenterPanel();
 	unitpanel = new UnitPanel();
 	heropanel = new HeroPanel();
+	villagerpanel = new VillagerPanel();
 
 	UI_Image* cell = nullptr;
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
@@ -370,19 +501,34 @@ bool Action_Panel::PostUpdate()
 
 void Action_Panel::Handle_Input(GUI_INPUT newevent)
 {
-	if (isin == false) return;
+	if (isin == false && villagerpanel->GetIsBuilding() == false) return;
 
 	switch (newevent)
 	{
 	case MOUSE_LEFT_BUTTON_DOWN:
 		{
+		if (actualpanel != nullptr) {
 			cell = GetCell();
-			if (actualpanel != nullptr) actualpanel->ActivateCell(cell);
+			if (actualpanel->ActivateCell(cell) == false)
+			{
+				actualpanel->ChangePanelIcons(panel_cells);
+			}
+		}
 		}
 		break;
-	case MOUSE_LEFT_BUTTON_REPEAT:
+	case MOUSE_LEFT_BUTTON_REPEAT: {
+			if (actualpanel == villagerpanel && villagerpanel->GetIsBuilding())
+			{
+				villagerpanel->Villager_Handle_input(MOUSE_LEFT_BUTTON_REPEAT);
+			}
+		}
 		break;
-	case MOUSE_LEFT_BUTTON_UP:
+	case MOUSE_LEFT_BUTTON_UP: {
+			if (actualpanel == villagerpanel && villagerpanel->GetIsBuilding())
+			{
+				villagerpanel->Villager_Handle_input(MOUSE_LEFT_BUTTON_UP);
+			}
+		}
 		break;
 	case MOUSE_IN:
 		break;
@@ -406,7 +552,7 @@ bool Action_Panel::Draw()
 int Action_Panel::GetCell() const
 {
 	SDL_Rect cell_clicked = {0,0,0,0};
-	int ret = 0;
+	int ret = -1;
 
 	for (int count = 0; count < MAX_PANEL_CELLS; count++)
 	{
@@ -484,20 +630,17 @@ void Action_Panel::SetPanelType()
 		break;
 	case UNIT:
 		{
-			if (u_type == VILLAGER);
+			if (u_type == VILLAGER) {				
+				villagerpanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = villagerpanel;
+			}
 			else if (u_type == WARRIOR_CHMP)
 			{
-				heropanel->ChangePanelTarget(actual_entity);
-				heropanel->ChangePanelIcons(panel_cells);
 				actualpanel = heropanel;
 			}
 			else
 			{
-				for (int count = 0; count < MAX_PANEL_CELLS; count++)
-				{
-					unitpanel->ChangePanelIcons(panel_cells);
-					actualpanel = unitpanel;
-				}
+				actualpanel = unitpanel;
 			}
 		}
 		break;
@@ -509,7 +652,6 @@ void Action_Panel::SetPanelType()
 			if (b_type == TOWN_CENTER)
 			{
 				towncenter->ChangePlayerGamePanel(player_game_panel);
-				towncenter->ChangePanelIcons(panel_cells);
 				actualpanel = towncenter;
 			}
 			else actualpanel = nullptr;
@@ -519,7 +661,11 @@ void Action_Panel::SetPanelType()
 		break;
 	}
 
-	if (actualpanel != nullptr) actualpanel->ChangePanelTarget(actual_entity);
+	if (actualpanel != nullptr)
+	{
+		actualpanel->ChangePanelTarget(actual_entity);
+		actualpanel->ChangePanelIcons(panel_cells);
+	}
 }
 
 void Action_Panel::CheckSelected(int selected)

@@ -83,6 +83,37 @@ private:
 
 };
 
+// Villager ----------------------------------------------------------------------------------------------
+
+enum VILLAGER_IS_BULIDING
+{
+	VP_NOT_BUILDING,
+	VP_NORMAL,
+	VP_MILITARY
+};
+
+class VillagerPanel : public Action_Panel_Elements
+{
+public:
+	VillagerPanel();
+	~VillagerPanel() {};
+
+	bool ActivateCell(int i);
+
+	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const;
+	bool Villager_Handle_input(GUI_INPUT input);
+
+	bool GetIsBuilding()const;
+
+private:
+	VILLAGER_IS_BULIDING	villagerisbuilding = VP_NOT_BUILDING;
+
+	std::vector<SDL_Rect>	v_normal_panel;
+	std::vector<SDL_Rect>	v_militari_panel;
+
+	bool					isbuilding = false;
+	Entity*					buildingthis = nullptr;
+};
 
 // Hero Panel	-------------------------------------------------------------------------------------------
 class HeroPanel : public Action_Panel_Elements
@@ -181,6 +212,8 @@ private:
 	Action_Panel_Elements*		actualpanel = nullptr;
 	TownCenterPanel*			towncenter = nullptr;
 	UnitPanel*					unitpanel = nullptr;
+	VillagerPanel*				villagerpanel = nullptr;
+
 
 public:
 	// Hero Panel
