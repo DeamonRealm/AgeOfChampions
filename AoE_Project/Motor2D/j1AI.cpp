@@ -25,9 +25,17 @@ bool j1AI::Start()
 	return true;
 }
 
-bool j1AI::Update()
+bool j1AI::PreUpdate()
 {
+
 	return false;
+}
+
+bool j1AI::Update(float dt)
+{
+	if(1)
+
+	return true;
 }
 
 bool j1AI::CleanUp()

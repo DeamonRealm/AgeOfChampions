@@ -32,6 +32,7 @@ class j1EntitiesManager;
 class j1BuffManager;
 class j1ActionManager;
 class j1Player;
+class j1AI;
 class j1Pathfinding;
 class Command;
 class Cvar;
@@ -117,6 +118,7 @@ public:
 	j1BuffManager*		buff_manager = NULL;
 	j1ActionManager*	action_manager = NULL;
 	j1Player*			player = NULL;
+	j1AI*				AI = NULL;
 	j1Pathfinding*		pathfinding = NULL;
 
 	// Add a new module to handle

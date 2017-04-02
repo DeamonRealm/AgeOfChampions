@@ -129,6 +129,9 @@
     <ClCompile Include="j1BuffManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1AI.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -281,6 +284,9 @@
       <Filter>Modules\EnititiesManager\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1BuffManager.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1AI.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>

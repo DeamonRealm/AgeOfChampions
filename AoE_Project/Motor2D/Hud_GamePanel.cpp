@@ -7,6 +7,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Menu.h"
+#include "j1AI.h"
 
 #include "BaseEntities.h"
 
@@ -40,7 +41,7 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 	exit_menu_screen->SetBox({ 0,0,App->win->screen_surface->w, 23});
 	exit_menu_screen->Activate();
 	exit_menu_screen->SetInputTarget((j1Module*)App->player);
-	exit_menu_screen->SetLayer(2);
+	exit_menu_screen->SetLayer(3);
 
 
 	exit_menu_button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
@@ -137,6 +138,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			exit_menu_image->Desactivate();
 			App->scene->Disable();
 			App->player->Disable();
+			App->AI->Disable();
 			App->menu->Enable();
 		}
 	}

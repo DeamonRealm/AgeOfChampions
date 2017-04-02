@@ -25,6 +25,7 @@
 #include "j1GroupMovement.h"
 #include "j1ActionManager.h"
 #include "j1BuffManager.h"
+#include "j1AI.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -50,6 +51,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entities_manager = new j1EntitiesManager();
 	buff_manager = new j1BuffManager();
 	player = new j1Player();
+	AI = new j1AI();
 	pathfinding = new j1Pathfinding();
 	action_manager = new j1ActionManager();
 
@@ -69,6 +71,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entities_manager);
 	AddModule(buff_manager);
 	AddModule(player);
+	AddModule(AI);
 	
 
 	// scene last

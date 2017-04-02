@@ -13,6 +13,7 @@
 #include "j1Animator.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1AI.h"
 
 //UI Elements
 #include "UI_Text_Box.h"
@@ -177,6 +178,7 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			App->gui->ChangeMouseTexture(DEFAULT);
 			App->scene->Enable();
 			App->player->Enable();
+			App->AI->Enable();
 			CleanUp();
 			Disable();
 		}

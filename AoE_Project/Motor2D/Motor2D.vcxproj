@@ -84,6 +84,7 @@
     <ClCompile Include="Hud_GamePanel.cpp" />
     <ClCompile Include="Hud_SelectionPanel.cpp" />
     <ClCompile Include="Iso_Primitives.cpp" />
+    <ClCompile Include="j1AI.cpp" />
     <ClCompile Include="j1Animator.cpp" />
     <ClCompile Include="ClusterAbstraction.cpp" />
     <ClCompile Include="j1BuffManager.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="C_var.h" />
     <ClInclude Include="BaseEntities.h" />
+    <ClInclude Include="j1AI.h" />
     <ClInclude Include="j1Animator.h" />
     <ClInclude Include="j1BuffManager.h" />
     <ClInclude Include="j1Console.h" />
