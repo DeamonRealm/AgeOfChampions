@@ -2,6 +2,7 @@
 #define _J1_AI_H_
 
 #include "j1Module.h"
+#include "p2Point.h"
 #include "p2Log.h"
 #include <vector>
 
@@ -82,14 +83,9 @@ private:
 	std::vector<Unit*> units_to_spawn;
 
 public:
-	std::list<Unit*> enemy_units;
+	std::vector<Unit*> enemy_units;
 
 };
-
-
-
-
-
 
 
 ///AI Commands-------------------------
@@ -112,6 +108,7 @@ private:
 };
 //---------------------
 
+//Spawn from list------
 class SpawnUnitsFromListCommand : public AICommand
 {
 public:
@@ -126,6 +123,25 @@ private:
 	Unit* current_spawn = nullptr;
 
 };
+//---------------------
+
+class MoveUnitsCommand : public AICommand
+{
+public:
+	MoveUnitsCommand(std::vector<Unit*>& to_move_list, iPoint new_pos);
+	~MoveUnitsCommand();
+
+
+public:
+	bool Execute();
+
+
+private:
+	std::vector<Unit*>& to_move_list;
+	iPoint new_pos;
+
+};
+
 
 #endif // !_J1_AI_H_
 

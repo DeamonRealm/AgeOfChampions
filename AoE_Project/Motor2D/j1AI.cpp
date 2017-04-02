@@ -3,7 +3,9 @@
 #include "j1AI.h"
 #include "j1EntitiesManager.h"
 #include "j1FileSystem.h"
-
+#include "j1Map.h"
+#include "j1ActionManager.h"
+#include "Actions_Unit.h"
 
 j1AI::j1AI()
 {
@@ -19,8 +21,9 @@ void j1AI::Enable()
 	active = LoadEnemies("EnemiesSpawn.xml");
 
 
-	ai_worker->AddAICommand(new WaitAICommand(60000));
+	ai_worker->AddAICommand(new WaitAICommand(5000));
 	ai_worker->AddAICommand(new SpawnUnitsFromListCommand(&units_to_spawn));
+	ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(90,90)));
 
 
 }
@@ -188,4 +191,31 @@ bool SpawnUnitsFromListCommand::Execute()
 }
 
 //---------------------------------------
+
+
+MoveUnitsCommand::MoveUnitsCommand(std::vector<Unit*>& to_move_list, iPoint new_pos) : to_move_list(to_move_list), new_pos(new_pos)
+{
+}
+
+MoveUnitsCommand::~MoveUnitsCommand()
+{
+}
+
+bool MoveUnitsCommand::Execute()
+{
+
+	uint size = to_move_list.size();
+
+	for (uint i = 0; i < size; i++)
+	{
+		to_move_list[i]->AddAction(App->action_manager->MoveAction(to_move_list[i], new_pos));
+	};
+
+	return true;
+}
+
+
+
+
+
 ///------------------------------------------------------------------------------------------------------------------
