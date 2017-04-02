@@ -74,12 +74,12 @@ public:
 
 
 	//Blocks Load Methods ---
-	bool		LoadSoundBlock(const char* xml_folder);
+	bool			LoadSoundBlock(const char* xml_folder);
 
 
 	//Animations Methods ----
-	bool PlayFXAudio(SOUND_TYPE target);
-	bool PlayMusicAudio(SOUND_TYPE target);
+	bool			PlayFXAudio(SOUND_TYPE target);
+	bool			PlayMusicAudio(SOUND_TYPE target);
 
 
 };

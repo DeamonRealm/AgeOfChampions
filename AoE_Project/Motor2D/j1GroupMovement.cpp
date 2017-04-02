@@ -294,7 +294,7 @@ void j1GroupMovement::OtherUnitsPath()
 			new_destination.create(copy_destination.x - radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
-				new_destination.create(destination.x + radius * loop, destination.y - radius * loop);
+				new_destination.create(destination.x - radius * loop, destination.y + radius * loop);
 				loop++;
 				check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			}

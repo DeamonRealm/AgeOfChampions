@@ -21,13 +21,13 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <!-- Define the building type-->
     <building id ="town_center">
       <action enum ="idle" speed="0">
-        <sprite n="000_TownCenterLeftPilonsFeudal.bmp" opacity ="255" x="1" y="1" z="70" w="112" h="52" pX="1.36607" pY="-0.46"/> 
-        <sprite n="000_TownCenterLeftPilonsFeudal2.bmp" opacity ="255" x="115" y="1" z="50" w="27" h="45" pX="6.92593" pY="-0.18"/> 
-        <sprite n="000_TownCenterRightPilonsFeudal.bmp" opacity ="255" x="423" y="1" z ="50" w="112" h="51" pX="-0.410714" pY="-0.46"/>
-        <sprite n="000_TownCenterRightPilonsFeudal2.bmp" opacity ="255" x="1" y="144" z="100" w="25" h="48" pX="-6.44" pY="-0.18"/>
-        <sprite n="000_TownCenterRightSideFeudal.bmp" opacity ="255" x="28" y="144" z="100" w="143" h="144" pX="-0.321678" pY="0.32"/>
-        <sprite n="000_TownCenterLeftSideFeudal.bmp" opacity ="255" x="144" y="1" z="100" w="145" h="141" pX="1.27586" pY="0.32"/>
-        <sprite n="000_TownCenterShadowFeudal.bmp" opacity ="100" x="173" y="144" z ="90" w="376" h="73" pX="0.526596" pY="-0.29"/>
+        <sprite n="000_TownCenterLeftPilonsFeudal.bmp" opacity ="255" x="1" y="1" z="70" w="112" h="52" pX="1.36607" pY="-0.43"/> 
+        <sprite n="000_TownCenterLeftPilonsFeudal2.bmp" opacity ="255" x="115" y="1" z="50" w="27" h="45" pX="6.92593" pY="-0.12"/> 
+        <sprite n="000_TownCenterRightPilonsFeudal.bmp" opacity ="255" x="423" y="1" z ="50" w="112" h="51" pX="-0.410714" pY="-0.43"/>
+        <sprite n="000_TownCenterRightPilonsFeudal2.bmp" opacity ="255" x="1" y="144" z="100" w="25" h="48" pX="-6.44" pY="-0.12"/>
+        <sprite n="000_TownCenterRightSideFeudal.bmp" opacity ="255" x="28" y="144" z="100" w="143" h="144" pX="-0.321678" pY="0.33"/>
+        <sprite n="000_TownCenterLeftSideFeudal.bmp" opacity ="255" x="144" y="1" z="100" w="145" h="141" pX="1.27586" pY="0.33"/>
+        <sprite n="000_TownCenterShadowFeudal.bmp" opacity ="100" x="173" y="144" z ="90" w="376" h="73" pX="0.526596" pY="-0.245"/>
         <sprite n="000_TownCenterTopPieceFeudal.bmp" opacity ="255" x="1" y="290" z ="25" w="193" h="199" pX="0.481865" pY="0.768844"/>
       </action>
     </building>

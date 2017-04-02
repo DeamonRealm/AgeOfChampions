@@ -50,7 +50,7 @@ bool j1Map::CreateWalkabilityMap(uint& width, uint & height)
 
 			if (tileset != NULL)
 			{
-				if (tile_id == 18)logic_map[i] = 0;	
+				if (tile_id == 38)logic_map[i] = 0;	
 				else logic_map[i] = 1;
 			}
 		}
@@ -321,9 +321,9 @@ void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint ele
 			logic_map[i*data.width + j] = value_map;
 			if (value_map == 0)
 			{
-				navigation_layer->data[i * data.width + j - 1] = 18;
+				navigation_layer->data[i * data.width + j - 1] = 38;
 			}
-			else navigation_layer->data[i * data.width + j - 1] = 17;
+			else navigation_layer->data[i * data.width + j - 1] = 37;
 		}
 	}
 	
@@ -336,9 +336,9 @@ void j1Map::ChangeConstructionMap(const iPoint & position, uint element_width, u
 			construction_map[i*data.width + j] = value_map;
 			if (value_map == 0)
 			{
-				construction_layer->data[i*data.width + j - 1] = 19;
+				construction_layer->data[i*data.width + j - 1] = 39;
 			}
-			else construction_layer->data[i*data.width + j - 1] = 18;
+			else construction_layer->data[i*data.width + j - 1] = 37;
 		}
 	}
 }
