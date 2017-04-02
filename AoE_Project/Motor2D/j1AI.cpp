@@ -16,14 +16,21 @@ j1AI::~j1AI()
 
 void j1AI::Enable()
 {
-
 	active = LoadEnemies("EnemiesSpawn.xml");
+
+
+	ai_worker->AddAICommand(new WaitAICommand(60000));
+	ai_worker->AddAICommand(new SpawnUnitsFromListCommand(&units_to_spawn));
+
+
 }
 
 bool j1AI::Awake(pugi::xml_node&)
 {
 	
 	bool ret = true;
+
+	ai_worker = new AIWorker;
 
 	return ret;
 }
@@ -42,7 +49,7 @@ bool j1AI::PreUpdate()
 
 bool j1AI::Update(float dt)
 {
-
+	ai_worker->Update();
 	return true;
 }
 
@@ -55,7 +62,6 @@ bool j1AI::CleanUp()
 
 bool j1AI::LoadEnemies(const char * folder)
 {
-	
 	//Load
 	LOG("--- Loading %s...", folder);
 	std::string load_folder = name + "/" + folder;
@@ -70,11 +76,11 @@ bool j1AI::LoadEnemies(const char * folder)
 	pugi::xml_node unit_node = enemy_data.child("data").child("units").first_child();
 	while (unit_node != NULL)
 	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), ENEMY);
-		new_unit->SetPosition(unit_node.attribute("pos_x").as_int(0), unit_node.attribute("pos_y").as_int(0));
+		Unit* new_unit = App->entities_manager->GenerateUnit(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), ENEMY, false);
+		new_unit->SetPosition(unit_node.attribute("pos_x").as_int(0), unit_node.attribute("pos_y").as_int(0), false);
+		units_to_spawn.push_back(new_unit);
 		unit_node = unit_node.next_sibling();
 	}
-
 	return true;
 }
 
@@ -94,7 +100,7 @@ void AIWorker::Update()
 {
 	if (current_command != nullptr)
 	{
-		if (current_command->execute())
+		if (current_command->Execute())
 		{
 			delete current_command;
 			current_command = nullptr;
@@ -152,10 +158,34 @@ bool WaitAICommand::Activation()
 
 bool WaitAICommand::Execute()
 {
-	if (timer.Read() > time) return true;
+	if (timer.Read() > time)return true;
+	
 
 	return false;
 }
 //---------------------------------------
-///------------------------------------------------------------------------------------------------------------------
 
+//Spawn all units in the waiting list----
+SpawnUnitsFromListCommand::SpawnUnitsFromListCommand(std::vector<Unit*>* to_spawn) : to_spawn(to_spawn)
+{
+}
+
+SpawnUnitsFromListCommand::~SpawnUnitsFromListCommand()
+{
+}
+
+bool SpawnUnitsFromListCommand::Execute()
+{
+	while (!to_spawn->empty())
+	{
+		current_spawn = to_spawn->back();
+		to_spawn->pop_back();
+		App->entities_manager->AddUnit(current_spawn);
+
+		App->AI->enemy_units.push_back(current_spawn);
+	}
+	return true;
+}
+
+//---------------------------------------
+///------------------------------------------------------------------------------------------------------------------

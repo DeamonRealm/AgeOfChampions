@@ -99,7 +99,7 @@ void Entity::SetName(const char * name_str)
 	name = name_str;
 }
 
-void Entity::SetPosition(float x, float y)
+void Entity::SetPosition(float x, float y, bool insert)
 {
 	position.x = x;
 	position.y = y;
@@ -786,7 +786,7 @@ void Unit::AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence)
 }
 
 //Set Methods -----
-void Unit::SetPosition(float x, float y)
+void Unit::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
 	App->entities_manager->units_quadtree.Exteract(&position);
@@ -807,7 +807,8 @@ void Unit::SetPosition(float x, float y)
 	attack_area.SetPosition(pos);
 
 	//Add the unit with the correct position in the correct quad tree
-	App->entities_manager->units_quadtree.Insert(this, &position);
+	if (insert)
+		App->entities_manager->units_quadtree.Insert(this, &position);
 }
 
 void Unit::SetFutureAction(const iPoint & position)
@@ -1222,7 +1223,7 @@ bool Resource::ExtractResources(uint* value)
 	}
 }
 
-void Resource::SetPosition(float x, float y)
+void Resource::SetPosition(float x, float y, bool insert)
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(x, y);
@@ -1241,7 +1242,8 @@ void Resource::SetPosition(float x, float y)
 	App->map->ChangeLogicMap(world_coords, 1, 1, 0);
 
 	//Add Resource at the correct quad tree
-	App->entities_manager->resources_quadtree.Insert(this, &position);
+	if (insert)
+		App->entities_manager->resources_quadtree.Insert(this, &position);
 }
 
 void Resource::SetMark(const Rectng & rectangle)
@@ -1343,7 +1345,7 @@ bool Building::Draw(bool debug)
 	return ret;
 }
 
-void Building::SetPosition(float x, float y)
+void Building::SetPosition(float x, float y, bool insert)
 {
 	//Set building position fixing it in the tiles coordinates ( center position in the selected tile)
 	iPoint map_coords = App->map->WorldToMap(x, y);
@@ -1374,7 +1376,8 @@ void Building::SetPosition(float x, float y)
 	App->map->ChangeConstructionMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 
 	//Add building at the correct quad tree
-	App->entities_manager->buildings_quadtree.Insert(this, &position);
+	if (insert)
+		App->entities_manager->buildings_quadtree.Insert(this, &position);
 }
 
 //Set Methods ---------------

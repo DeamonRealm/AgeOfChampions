@@ -207,7 +207,7 @@ public:
 
 	//Set Methods -----------
 	void			SetName(const char* name_str);
-	virtual void	SetPosition(float x, float y);
+	virtual void	SetPosition(float x, float y, bool insert = true);
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 	void			SetMaxLife(uint full_life_val);
@@ -340,7 +340,7 @@ public:
 	void	AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence);
 
 	//Set Methods -----------
-	void	SetPosition(float x, float y);
+	void	SetPosition(float x, float y, bool insert = true);
 	void	SetFutureAction(const iPoint& future_position);
 	void	SetUnitType(UNIT_TYPE type);
 	void	SetInteractionTarget(const Entity* target);
@@ -436,7 +436,7 @@ public:
 	virtual bool ExtractResources(uint* value);
 
 	//Set Methods -----------
-	void	SetPosition(float x, float y);
+	void	SetPosition(float x, float y, bool insert = true);
 	void	SetMark(const Rectng& rectangle);
 	void	SetInteractArea(const Circle& area);
 	void	SetResourceType(RESOURCE_TYPE type);
@@ -483,7 +483,7 @@ public:
 	bool	Draw(bool debug);
 
 	//Set Methods -----------
-	void	SetPosition(float x, float y);
+	void	SetPosition(float x, float y, bool insert = true);
 	void	SetMark(const Rectng& rectangle);
 	void	SetInteractArea(const Rectng& rectangle);
 	void	SetWidthInTiles(uint width);
