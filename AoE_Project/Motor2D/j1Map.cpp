@@ -314,22 +314,22 @@ void j1Map::CalculateTilesInView()
 	map_quadtree.CollectCandidates(points_in_view, viewport);
 }
 
-void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint element_height)
+void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint element_height, uint value_map)
 {
 	for (int i = position.y; i < position.y + element_height; i++) {
 		for (int j = position.x; j < position.x + element_width; j++) {
-			logic_map[i*data.width + j] = 0;
+			logic_map[i*data.width + j] = value_map;
 			navigation_layer->data[i * data.width + j - 1] = 18;
 		}
 	}
 	
 }
 
-void j1Map::ChangeConstructionMap(const iPoint & position, uint element_width, uint element_height)
+void j1Map::ChangeConstructionMap(const iPoint & position, uint element_width, uint element_height, uint value_map)
 {
 	for (int i = position.y; i < position.y + element_height; i++) {
 		for (int j = position.x; j < position.x + element_width; j++) {
-			construction_map[i*data.width + j] = 0;
+			construction_map[i*data.width + j] = value_map;
 			construction_layer->data[i*data.width + j - 1] = 19;
 		}
 	}

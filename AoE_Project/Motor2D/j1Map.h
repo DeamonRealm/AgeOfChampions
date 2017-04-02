@@ -177,9 +177,9 @@ public:
 	//Calculate the tiles that are in camera
 	void CalculateTilesInView();
 	//Change walkability in target tiles of the logic map
-	void ChangeLogicMap(const iPoint& position, uint width, uint height);
+	void ChangeLogicMap(const iPoint& position, uint width, uint height,uint value_map);
 	//Change walkability in target tiles of the construction map
-	void ChangeConstructionMap(const iPoint& position, uint width, uint height);
+	void ChangeConstructionMap(const iPoint& position, uint width, uint height, uint value_map);
 
 	//Array with all the map logic data
 	uchar*				logic_map = nullptr;
