@@ -29,7 +29,7 @@ public:
 	}
 
 	//Enable and disable modules
-	void Enable()
+	virtual void Enable()
 	{
 		active = true;
 	}

@@ -328,7 +328,4 @@
       <UniqueIdentifier>{0b086b82-d4b0-4f1c-871b-f1fa6dc611f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <Xml Include="..\Game\data\sounds\sound.xml" />
-  </ItemGroup>
 </Project>

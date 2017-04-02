@@ -538,8 +538,8 @@ bool j1Map::LoadMap()
 
 		//Define map area 
 		SDL_Rect map_area;
-		map_area.x = ((data.width) * data.tile_width) * -0.5;
-		map_area.y = 0;
+		map_area.x = ((data.width) * data.tile_width) * -0.5; -App->render->camera.x;
+		map_area.y = 0 - App->render->camera.y;
 		map_area.w = data.width * data.tile_width;
 		map_area.h = data.height * data.tile_height + (data.height);
 		

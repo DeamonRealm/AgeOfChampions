@@ -16,6 +16,8 @@ public:
 
 	void Init() { active = false; }
 
+	void Enable();
+
 	// Called before render is available
 	bool Awake(pugi::xml_node& config);
 
@@ -47,8 +49,7 @@ public:
 	//Load the selected Map
 	bool Load_Current_Map();
 
-
-	/*Just for test*/	bool loaded = false;
+	bool LoadScene();
 };
 
 #endif // __j1SCENE_H__

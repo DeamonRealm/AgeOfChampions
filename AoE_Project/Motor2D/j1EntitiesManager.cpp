@@ -605,6 +605,9 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 			//Set generated unit diplomacy
 			new_unit->SetDiplomacy(diplomacy);
 
+			//Set new unit myself pointer
+			new_unit->myself = new_unit;
+
 			//Set unit animation
 			App->animator->UnitPlay(new_unit);
 			
@@ -645,6 +648,9 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 			//Set unit diplomacy
 			new_building->SetDiplomacy(diplomacy);
 			
+			//Set building myself pointer
+			new_building->myself = new_building;
+
 			if (push_in_list)
 			{
 				//Add the new building at the buildings manage list

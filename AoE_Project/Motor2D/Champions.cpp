@@ -36,7 +36,7 @@ void Champion::CleanBuffedUnits()
 
 	while (unit != buffed_units.end())
 	{
-		App->buff_manager->RemoveTargetBuffs(unit._Ptr->_Myval);
+		if(unit._Ptr->_Myval != myself)App->buff_manager->RemoveTargetBuff(unit._Ptr->_Myval,buff_to_apply);
 
 		unit++;
 	}
@@ -203,7 +203,7 @@ Warrior::~Warrior()
 bool Warrior::Update()
 {
 	this->action_worker->Update();
-	CheckHability_B();
+	CheckHability_A();
 	return true;
 }
 
