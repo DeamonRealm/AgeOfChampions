@@ -39,4 +39,19 @@
     <sound soundPath="male_01_move_02.wav" name="move"/>
     <sound soundPath="male_01_move_03.wav" name="move"/>
   </type>
+  <type enum="main_menu"  song_type ="music">
+    <sound soundPath="main_menu.ogg" name="main_menu_music"/>
+  </type>
+  <type enum="ingame"  song_type ="music">
+    <sound soundPath="music_01.ogg" name="ingame_music"/>
+    <sound soundPath="music_02.ogg" name="ingame_music"/>
+    <sound soundPath="music_03.ogg" name="ingame_music"/>
+    <sound soundPath="music_04.ogg" name="ingame_music"/>
+  </type>
+  <type enum="win"  song_type ="music">
+    <sound soundPath="won.ogg" name="win_music"/>
+  </type>
+  <type enum="lost"  song_type ="music">
+    <sound soundPath="lost.ogg" name="lost_music"/>
+  </type>
 </SoundAtlas>

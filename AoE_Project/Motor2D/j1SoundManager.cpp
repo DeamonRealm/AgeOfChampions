@@ -35,17 +35,16 @@ void Sound_Block::SetType(SOUND_TYPE set)
 	type = set;
 }
 
-void Sound_Block::SetSound(const int value)
+void Sound_Block::SetSound(const int value, const char* string)
 {
-	sound.push_back(value);
+	Sound* new_sound = new Sound(value,string);
+	
+	sound.push_back(new_sound);
 }
 
-void Sound_Block::SetString(const char * get)
-{
-	path = get;
-}
 
-int Sound_Block::GetAudio(int index)
+
+Sound* Sound_Block::GetAudio(int index)
 {
 	return sound[index];
 }
@@ -62,10 +61,6 @@ SOUND_TYPE Sound_Block::GetType() const
 	return type;
 }
 
-const char * Sound_Block::GetPath()
-{
-	return path.c_str();
-}
 
 
 
@@ -133,8 +128,11 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "unit_attack") == 0)					return ATTACK_SOUND;
 	else if (strcmp(str, "unit_click") == 0)					return CLICK_SOUND;
 	else if (strcmp(str, "unit_move") == 0)						return MOVE_SOUND;
-
-
+	else if (strcmp(str, "main_menu") == 0)						return MAIN_MENU_SONG;
+	else if (strcmp(str, "ingame") == 0)						return INGAME_SONG;
+	else if (strcmp(str, "win") == 0)							return WIN_SONG;
+	else if (strcmp(str, "lost") == 0)							return LOST_SONG;
+	
 	return NO_SOUND;
 }
 
@@ -158,30 +156,30 @@ bool j1SoundManager::LoadSoundBlock(const char* xml_folder)
 	pugi::xml_node sound_node;
 
 
-
+	std::string path;
 	type_node = all_node.first_child();
 	while (type_node != NULL)
 	{
 		Sound_Block* sound_block = new Sound_Block();
 
 		sound_block->SetType(StrToSoundEnum(type_node.attribute("enum").as_string()));
-		if (type_node.attribute("song_type").as_string() == "fx") {
+		if (strcmp(type_node.attribute("song_type").as_string(), "fx")==0) {
 			sound_node = type_node.first_child();
 			while (sound_node != NULL) {
-				sound_block->path = name + "/" + sound_node.attribute("soundPath").as_string();
-				load_folder = sound_block->path.c_str();
-				sound_block->SetSound(App->audio->LoadFx(load_folder.c_str()) - 1);
+				path = name + "/" + sound_node.attribute("soundPath").as_string();
+				load_folder = path.c_str();
+				sound_block->SetSound(App->audio->LoadFx(load_folder.c_str()) - 1, path.c_str());
 				sound_node = sound_node.next_sibling();
 
 			}
 			fx_blocks.push_back(sound_block);
 		}
-		if (type_node.attribute("song_type").as_string() == "music") {
+		else if (strcmp(type_node.attribute("song_type").as_string(), "music") == 0) {
 			sound_node = type_node.first_child();
 			while (sound_node != NULL) {
-				sound_block->path = name + "/" + sound_node.attribute("soundPath").as_string();
-				load_folder = sound_block->path.c_str();
-				sound_block->SetSound(App->audio->LoadFx(load_folder.c_str()) - 1);
+				path = name + "/" + sound_node.attribute("soundPath").as_string();
+				load_folder = path.c_str();
+				sound_block->SetSound(-1, path.c_str());
 				sound_node = sound_node.next_sibling();
 
 			}
@@ -213,7 +211,7 @@ bool j1SoundManager::PlayFXAudio(SOUND_TYPE sound)
 		if (block->GetType() == sound)
 		{
 			uint rand_sound = rand() % block->GetSoundSize();
-			ret=App->audio->PlayFx(block->GetAudio(rand_sound));
+			ret=App->audio->PlayFx(block->GetAudio(rand_sound)->id);
 			return ret;
 		}
 	}
@@ -237,11 +235,13 @@ bool j1SoundManager::PlayMusicAudio(SOUND_TYPE sound)
 		if (block->GetType() == sound)
 		{
 			uint rand_sound = rand() % block->GetSoundSize();
-			ret = App->audio->PlayMusic(block->path.c_str());
+			ret = App->audio->PlayMusic(block->GetAudio(rand_sound)->path.c_str());
 			return ret;
 		}
 	}
 	return ret;
 }
 
-
+Sound::Sound(int id, std::string path): id(id),path(path)
+{
+}

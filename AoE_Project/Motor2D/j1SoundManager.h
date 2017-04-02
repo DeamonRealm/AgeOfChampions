@@ -6,7 +6,12 @@
 #include "BaseEntities.h"
 enum SOUND_TYPE;
 
-
+struct Sound
+{
+	Sound(int id, std::string path);
+	int id = 0;
+	std::string	path;
+};
 /// Animation Block Class -----------------------
 //Block that contains a vector of animations 
 class Sound_Block
@@ -16,28 +21,25 @@ public:
 	Sound_Block(SOUND_TYPE type = NO_SOUND);
 
 	~Sound_Block();
-	std::string				path;
 
 private:
 
 	//Enum id of this block
 	SOUND_TYPE				type = NO_SOUND;
 	//Pointer to a vector of animations 
-	std::vector<int>		sound;
+	std::vector<Sound*>		sound;
 public:
 
 	//Functionality -------------------
 	void				ClearSound();
 	//Set Methods -----------
 	void				SetType(SOUND_TYPE type);
-	void				SetSound(const int value);
-	void				SetString(const char* path);
+	void				SetSound(const int value,const char* string);
 	//Get Methods -----------
-	int					GetAudio(int index);
+	Sound*					GetAudio(int index);
 	int					GetSoundSize();
 	SOUND_TYPE			GetType()const;
 
-	const char*			GetPath();
 	
 	
 };
