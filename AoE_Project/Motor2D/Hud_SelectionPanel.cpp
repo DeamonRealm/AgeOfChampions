@@ -311,7 +311,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 	{
 	case UP_ARROW:	if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 	{
-		if (Selected->GetEntity() == nullptr)break;
+		/*if (Selected->GetEntity() == nullptr)break;
 
 		//Set entity target to the selected unit
 		Selected->GetEntity()->GetWorker()->ResetActive();
@@ -320,13 +320,13 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			((Warrior*)Selected->GetEntity())->Hability_A();
 			//App->buff_manager->CallBuff((Unit*)Selected->GetEntity(), PASSIVE_BUFF, ATTACK_BUFF);
 
-		}
+		}*/
 	}
 		break;
 	case DOWN_ARROW:if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 	{
 
-		if (Selected->GetEntity() == nullptr)break;
+		/*if (Selected->GetEntity() == nullptr)break;
 
 		//Set entity target to the selected unit
 		Selected->GetEntity()->GetWorker()->ResetActive();
@@ -335,7 +335,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			((Warrior*)Selected->GetEntity())->Hability_B();
 			//App->buff_manager->CallBuff((Unit*)Selected->GetEntity(), PASSIVE_BUFF, ATTACK_BUFF);
 
-		}
+		}*/
 	}
 		break;
 	case LEFT_ARROW:
