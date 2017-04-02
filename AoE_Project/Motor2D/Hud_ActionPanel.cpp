@@ -5,6 +5,7 @@
 #include "j1Input.h"
 #include "j1EntitiesManager.h"
 #include "j1Render.h"
+#include "j1SoundManager.h"
 
 #include "BaseEntities.h"
 
@@ -70,7 +71,7 @@ bool TownCenterPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		if(player_game_panel_resources->UseResource(0,100,0,0,1)) entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
+		if(player_game_panel_resources->UseResource(0,50,0,0,1)) entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
 		}
 		break;
 	case 1: {
@@ -84,6 +85,33 @@ bool TownCenterPanel::ActivateCell(int i)
 	}
 	return true;
 }
+
+// Barrack Panel ---------------------------------------------------------------------------------------------------------
+
+BarrackPanel::BarrackPanel() : Action_Panel_Elements()
+{
+	panel_icons.reserve(MAX_PANEL_CELLS);
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons.push_back({ 0,0,1,1 });	
+	}
+	panel_icons[0] = { 504,585,36,36 };
+}
+
+bool BarrackPanel::ActivateCell(int i)
+{
+	switch (i)
+	{
+	case 0:	{
+		if (player_game_panel_resources->UseResource(0, 25, 45, 0, 1)) entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, MILITIA, ALLY));
+		}
+		break;
+	default:
+		break;
+	}
+	return false;
+}
+
 
 // UNIT PANEL -------------------------------------------------------------------------------------------------------
 
@@ -104,7 +132,7 @@ bool UnitPanel::ActivateCell(int i)
 	{
 	case 4: {
 		entitis_panel->SetLife(0);
-		((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
+		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
 	}
 		break;
@@ -156,7 +184,7 @@ bool VillagerPanel::ActivateCell(int i)
 		else if (villagerisbuilding == VP_MILITARY && player_game_panel_resources->UseResource(100,100,0,0,0))
 		{
 			//incress population left
-			buildingthis = App->entities_manager->GenerateBuilding(TOWN_CENTER,ALLY,true);	
+			buildingthis = App->entities_manager->GenerateBuilding(BARRACK,ALLY,true);
 			int x = 0, y = 0;
 			App->input->GetMousePosition(x, y);
 			buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, false);
@@ -176,7 +204,7 @@ bool VillagerPanel::ActivateCell(int i)
 		break;
 	case 3: {
 		entitis_panel->SetLife(0);
-		((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
+		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
 		}
 		break;
@@ -284,9 +312,7 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	}
 	panel_icons[3] = { 504,441,36,36 };
 	panel_icons[4] = { 0,76,36,36 };
-	panel_icons[0] = { 540,441,36,36 };
-	panel_icons[1] = { 576,441, 36, 36 };
-	panel_icons[2] = { 612,441,36,36 };
+
 
 	skill_tree = (UI_Image*)App->gui->GenerateUI_Element(IMG);
 	skill_tree->SetBox({ 30, 100, 243, 345 });
@@ -375,7 +401,7 @@ bool HeroPanel::ActivateCell(int i)
 	case 4:
 		{
 		entitis_panel->SetLife(0);
-		((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
+		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
 		}
 	default:	break;
@@ -429,16 +455,16 @@ void HeroPanel::LearnSkill(int i)
 
 void HeroPanel::ChangePanelIcons(std::vector<UI_Image*>& actual_panel) const
 {
+	for (uint i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		if(champion_selected == WARRIOR_CHMP)	actual_panel[i]->ChangeTextureRect(panel_icons[i]);
+	}
+
 	if (champion_selected == WARRIOR_CHMP) {
 		for (int i = 0; i < 3; i++)
 		{
-			if(mele_learned[i] != -1) actual_panel[i]->ChangeTextureRect(mele_champion[mele_learned[i]]);
+			if (mele_learned[i] != -1) actual_panel[i]->ChangeTextureRect(mele_champion[mele_learned[i]]);
 		}
-	}
-
-	for (uint i = 3; i < MAX_PANEL_CELLS; i++)
-	{
-		if(champion_selected == WARRIOR_CHMP)	actual_panel[i]->ChangeTextureRect(panel_icons[i]);
 	}
 }
 
@@ -459,10 +485,11 @@ Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 
 	panel_cells.reserve(MAX_PANEL_CELLS);
 
-	towncenter = new TownCenterPanel();
+	towncenterpanel = new TownCenterPanel();
 	unitpanel = new UnitPanel();
 	heropanel = new HeroPanel();
 	villagerpanel = new VillagerPanel();
+	barrackpanel = new BarrackPanel();
 
 	UI_Image* cell = nullptr;
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
@@ -626,11 +653,13 @@ void Action_Panel::SetPanelType()
 
 	switch (e_type)
 	{
-	case NO_ENTITY: actualpanel = nullptr;
+	case NO_ENTITY: {
+		actualpanel = nullptr;
+		}
 		break;
 	case UNIT:
 		{
-			if (u_type == VILLAGER) {				
+			if (u_type == VILLAGER) {	
 				villagerpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = villagerpanel;
 			}
@@ -638,7 +667,7 @@ void Action_Panel::SetPanelType()
 			{
 				actualpanel = heropanel;
 			}
-			else
+			else if (u_type == NO_UNIT)
 			{
 				actualpanel = unitpanel;
 			}
@@ -651,10 +680,17 @@ void Action_Panel::SetPanelType()
 		{
 			if (b_type == TOWN_CENTER)
 			{
-				towncenter->ChangePlayerGamePanel(player_game_panel);
-				actualpanel = towncenter;
+				App->sound->PlayFXAudio(TOWN_CENTER_SELECTED_SOUND);
+				towncenterpanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = towncenterpanel;
 			}
-			else actualpanel = nullptr;
+			else if (b_type == BARRACK)
+			{
+				App->sound->PlayFXAudio(BARRACK_SOUND);
+				barrackpanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = barrackpanel;
+			}
+			else actualpanel = nullptr;		
 		}
 		break;
 	default:	actualpanel = nullptr;
@@ -669,7 +705,7 @@ void Action_Panel::SetPanelType()
 }
 
 void Action_Panel::CheckSelected(int selected)
-{
+{	
 	if (selected == 0)
 	{
 		actual_entity = nullptr;

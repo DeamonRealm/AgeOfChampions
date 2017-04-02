@@ -130,7 +130,9 @@ public:
 	uint	GetSelectedSize() const;
 
 	void    GetSelectedType(DIPLOMACY &d_type, ENTITY_TYPE &e_type, UNIT_TYPE &u_type, BUILDING_TYPE &b_type);
+	bool    GetSelectedIsEntity();
 	void	ResetSelectedType(SELECT_TYPE select_type);
+	void	ResetSelectedType();
 
 	UI_Element*	GetViewport();
 	bool	GetInViewport()const;

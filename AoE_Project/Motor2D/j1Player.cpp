@@ -100,7 +100,6 @@ bool j1Player::PreUpdate()
 		if (selection_panel->GetInViewport())
 		{
 			selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
-			action_panel->SetPanelType();
 		}
 		if (action_panel->GetIsIn()) action_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 	}
@@ -207,7 +206,7 @@ bool j1Player::PostUpdate()
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
-		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_REPEAT);
+		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_UP);
 		selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_UP);
 		action_panel->SetPanelType();
 	}

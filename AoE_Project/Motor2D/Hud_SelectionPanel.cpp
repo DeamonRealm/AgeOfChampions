@@ -398,10 +398,11 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			Selected->GetEntity()->GetWorker()->Reset();
 			if (UpperEntity != nullptr)
 			{
-				if (UpperEntity->GetDiplomacy() == ALLY && Selected->GetEntity()->GetDiplomacy() != ENEMY)
+				if (UpperEntity->GetDiplomacy() == ENEMY && Selected->GetEntity()->GetDiplomacy() != ENEMY)
 				{
 					if (UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
 					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
+					App->sound->PlayFXAudio(ATTACK_SOUND);
 				}
 				else if(UpperEntity->GetEntityType() == RESOURCE) Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
 			}
@@ -558,6 +559,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 				selection_rect.y += selection_rect.h;
 				selection_rect.h = -selection_rect.h;
 			}
+			if (((uint)selection_rect.w) < 30 && ((uint)selection_rect.h) < 30)	return;
 		}
 
 		selection_rect.x -= App->render->camera.x;
@@ -599,7 +601,11 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		if (type == SINGLE) UnSelect_Entity();
 
 		UpperEntity = GetUpperEntity(mouse_x,mouse_y);
-		if (UpperEntity == nullptr) return;
+		if (UpperEntity == nullptr)
+		{
+			ResetSelectedType();
+			return;
+		}
 		UpperEntity->Select();
 
 
@@ -625,9 +631,17 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		max_row_units = 16;
 		SetGroupProfile();
 		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+		App->sound->PlayFXAudio(CLICK_SOUND);
 	}
-	if(selected_elements.size() >= 1) Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
-	else Selected->SetEntity(nullptr);
+	else if (selected_elements.size() == 1)
+	{
+		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+		if(Selected->GetEntity()->GetEntityType() == UNIT) App->sound->PlayFXAudio(CLICK_SOUND);
+	}
+	else
+	{
+		ResetSelectedType();
+	}
 }
 
 void Selection_Panel::UnSelect_Entity()
@@ -781,6 +795,11 @@ void Selection_Panel::GetSelectedType(DIPLOMACY & d_type, ENTITY_TYPE & e_type, 
 	b_type = selected_building_type;
 }
 
+bool Selection_Panel::GetSelectedIsEntity()
+{
+	return (selected_entity_type==NO_ENTITY);
+}
+
 void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
 {
 	switch (select_type)
@@ -813,6 +832,16 @@ void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
 		break;
 	}
 
+}
+
+void Selection_Panel::ResetSelectedType()
+{
+	selected_elements.clear();
+	Selected->SetEntity(nullptr);
+	selected_diplomacy = NEUTRAL;
+	selected_entity_type = NO_ENTITY;
+	selected_unit_type = NO_UNIT;
+	selected_building_type = NO_BUILDING;
 }
 
 UI_Element * Selection_Panel::GetViewport()

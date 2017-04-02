@@ -14,6 +14,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1AI.h"
+#include "j1SoundManager.h"
 
 //UI Elements
 #include "UI_Text_Box.h"
@@ -161,6 +162,10 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 	case RIGHT_ARROW:
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
+		if (target->GetUItype() == FIXED_BUTTON)
+		{
+			App->sound->PlayFXAudio(CLICK_MAIN_MENU);
+		}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;

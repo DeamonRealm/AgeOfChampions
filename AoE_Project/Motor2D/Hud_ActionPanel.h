@@ -58,6 +58,10 @@ protected:
 	Game_Panel*					player_game_panel_resources = nullptr;
 };
 
+// BUILDINGS ============================================================================================
+
+// TownCenter ------------------------------------------------------------------------------------------
+
 class TownCenterPanel : public Action_Panel_Elements
 {
 public:
@@ -67,6 +71,20 @@ public:
 	bool ActivateCell(int i);
 
 private:
+};
+
+// Barrack -----------------------------------------------------------------------------------------------
+
+class BarrackPanel : public Action_Panel_Elements
+{
+public:
+	BarrackPanel();
+	~BarrackPanel() {};
+
+	bool ActivateCell(int i);
+
+private:
+
 };
 
 // General Units -------------------------------------------------------------------------------------------
@@ -116,6 +134,7 @@ private:
 };
 
 // Hero Panel	-------------------------------------------------------------------------------------------
+
 class HeroPanel : public Action_Panel_Elements
 {
 public:
@@ -210,9 +229,14 @@ private:
 
 	// Entityes Panels
 	Action_Panel_Elements*		actualpanel = nullptr;
-	TownCenterPanel*			towncenter = nullptr;
-	UnitPanel*					unitpanel = nullptr;
+	
+	// Building Panels
+	TownCenterPanel*			towncenterpanel = nullptr;
+	BarrackPanel*				barrackpanel = nullptr;
+	
+	// Units Panels
 	VillagerPanel*				villagerpanel = nullptr;
+	UnitPanel*					unitpanel = nullptr;
 
 
 public:
