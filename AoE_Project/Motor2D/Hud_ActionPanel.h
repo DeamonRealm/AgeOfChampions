@@ -53,16 +53,7 @@ protected:
 class TownCenterPanel : public Action_Panel_Elements
 {
 public:
-	TownCenterPanel() : Action_Panel_Elements() 
-	{
-		panel_icons.reserve(MAX_PANEL_CELLS);
-		for (int i = 0; i < MAX_PANEL_CELLS; i++)
-		{
-			panel_icons[i] = { 0,0,1,1 };
-		}
-		panel_icons[0] = { 576,585,36,36 };
-
-	};
+	TownCenterPanel();
 	~TownCenterPanel() {};
 
 	bool ActivateCell(int i);
@@ -76,13 +67,7 @@ private:
 class UnitPanel : public Action_Panel_Elements
 {
 public:
-	UnitPanel() : Action_Panel_Elements() {
-		panel_icons.reserve(MAX_PANEL_CELLS);
-		for (int i = 0; i < MAX_PANEL_CELLS; i++)
-		{
-			panel_icons[i] = { 0,0,1,1 };
-		}
-		panel_icons[0] = { 0,76,36,36 }; };
+	UnitPanel();
 	~UnitPanel() {};
 
 	bool ActivateCell(int i);
@@ -170,26 +155,24 @@ private:
 	// HUD_Selection Panel Pointer
 	Selection_Panel*			player_selection_panel = nullptr;
 
+	// Action Panel Detection
 	bool						isin;
-
 	SDL_Point					mouse_pos;
 	SDL_Rect					action_rect;
 
-	// Action 
+	// Panell Settings 
 	int							cell;
 	iPoint						panel_pos;
-	
 	std::vector<UI_Image*>		panel_cells;
-
 	Entity*						actual_entity = nullptr;
 
-	// Panels
+	// Entityes Panels
 	Action_Panel_Elements*		actualpanel = nullptr;
-
 	TownCenterPanel*			towncenter = nullptr;
 	UnitPanel*					unitpanel = nullptr;
 
 public:
+	// Hero Panel
 	HeroPanel*					heropanel = nullptr;
 
 

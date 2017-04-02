@@ -79,6 +79,10 @@ public:
 	void				Desactivate();
 	bool				GetActiveState()const;
 
+	//Active/Desactive childs
+	void				ActivateChilds();
+	void				DesactivateChids();
+
 	//Tree functions
 	void				AddChild(UI_Element* child, uint start_layer = 0);
 	void				Delete_Child(UI_Element* child);

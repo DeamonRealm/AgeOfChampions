@@ -18,6 +18,7 @@
 #include "UI_Button.h"
 #include "UI_Fixed_Button.h"
 
+// BASE ACTION ELEMENTS --------------------------------------------------------------------------------------
 Action_Panel_Elements::Action_Panel_Elements() 
 {
 	
@@ -46,6 +47,17 @@ Entity * Action_Panel_Elements::GetActualEntity()
 	return entitis_panel;
 }
 
+TownCenterPanel::TownCenterPanel() : Action_Panel_Elements()
+{
+	panel_icons.reserve(MAX_PANEL_CELLS);
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons[i] = { 0,0,1,1 };
+	}
+	panel_icons[0] = { 576,585,36,36 };
+};
+
+// TOWNCENTER ------------------------------------------------------------------------------------------------------------
 bool TownCenterPanel::ActivateCell(int i)
 {
 	if (entitis_panel == nullptr) return false;
@@ -81,6 +93,18 @@ bool TownCenterPanel::ActivateCell(int i)
 	return true;
 }
 
+// UNIT PANEL -------------------------------------------------------------------------------------------------------
+
+UnitPanel::UnitPanel() : Action_Panel_Elements() 
+{
+	panel_icons.reserve(MAX_PANEL_CELLS);
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons[i] = { 0,0,1,1 };
+	}
+	panel_icons[0] = { 0,76,36,36 };
+};
+
 bool UnitPanel::ActivateCell(int i)
 {
 	if (entitis_panel == nullptr) return false;
@@ -107,6 +131,8 @@ bool UnitPanel::ActivateCell(int i)
 	}
 	return true;
 }
+
+// HERO PANEL -------------------------------------------------------------------------------------------------------
 
 HeroPanel::HeroPanel() : Action_Panel_Elements()
 {
@@ -193,13 +219,11 @@ bool HeroPanel::ActivateCell(int i)
 	{
 	case 0: {
 		if (champion_selected == WARRIOR_CHMP && mele_learned[0] == 0)((Warrior*)entitis_panel)->Hability_A();
-		if (champion_selected == WARRIOR_CHMP && mele_learned[0] == 1)((Warrior*)entitis_panel)->Hability_A();
-			
+		if (champion_selected == WARRIOR_CHMP && mele_learned[0] == 1)((Warrior*)entitis_panel)->Hability_A();		
 		}
 		break;
 	case 1: 
 		{
-		((Warrior*)entitis_panel)->Hability_B();
 		}
 		break;
 	case 2:
@@ -207,29 +231,15 @@ bool HeroPanel::ActivateCell(int i)
 	case 3: {
 		if (skill_tree->GetActiveState() == true) skill_tree->Desactivate();
 		else skill_tree->Activate();
-	}
+		}
 		break;
 	case 4:
-	{
-			entitis_panel->SetLife(0);
-			((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
-			entitis_panel = nullptr;
-	}
-		break;
-	case 5:
-		break;
-	case 6:
-		break;
-	case 7:
-		break;
-	case 8:
-		break;
-	case 9:
-		break;
-	case 10:
-		break;
-	default:
-		break;
+		{
+		entitis_panel->SetLife(0);
+		((Unit*)entitis_panel)->AddAction(App->action_manager->DieAction((Unit*)entitis_panel));
+		entitis_panel = nullptr;
+		}
+	default:	break;
 	}
 	return true;
 }
@@ -238,14 +248,10 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 {
 	switch (ui_input)
 	{
-	case UP_ARROW:
-		break;
-	case DOWN_ARROW:
-		break;
-	case LEFT_ARROW:
-		break;
-	case RIGHT_ARROW:
-		break;
+	case UP_ARROW:						break;
+	case DOWN_ARROW:					break;
+	case LEFT_ARROW:					break;
+	case RIGHT_ARROW:					break;
 	case MOUSE_LEFT_BUTTON_DOWN:
 	{
 		if (ui_element->GetUItype() == FIXED_BUTTON) {
@@ -260,26 +266,16 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 		}
 	}
 		break;
-	case MOUSE_LEFT_BUTTON_REPEAT:
-		break;
-	case MOUSE_LEFT_BUTTON_UP:
-		break;
-	case MOUSE_RIGHT_BUTTON:
-		break;
-	case MOUSE_IN:
-		break;
-	case MOUSE_OUT:
-		break;
-	case SUPR:
-		break;
-	case BACKSPACE:
-		break;
-	case ENTER:
-		break;
-	case TAB:
-		break;
-	default:
-		break;
+	case MOUSE_LEFT_BUTTON_REPEAT:		break;
+	case MOUSE_LEFT_BUTTON_UP:			break;
+	case MOUSE_RIGHT_BUTTON:			break;
+	case MOUSE_IN:						break;
+	case MOUSE_OUT:						break;
+	case SUPR:							break;
+	case BACKSPACE:						break;
+	case ENTER:							break;
+	case TAB:							break;
+	default:break;
 	}
 	return false;
 }
@@ -314,6 +310,8 @@ void HeroPanel::ChangePanelTarget(Entity * new_target)
 	
 }
 
+
+// ACTION PANEL  ================================================================================================
 
 Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 {
@@ -452,10 +450,10 @@ void Action_Panel::SetPanelType()
 
 	if (actual_entity == nullptr) return;
 
-	DIPLOMACY	d_type = NEUTRAL;
-	ENTITY_TYPE e_type = NO_ENTITY; 
-	UNIT_TYPE u_type = NO_UNIT; 
-	BUILDING_TYPE b_type = NO_BUILDING;
+	DIPLOMACY			d_type = NEUTRAL;
+	ENTITY_TYPE			e_type = NO_ENTITY; 
+	UNIT_TYPE			u_type = NO_UNIT; 
+	BUILDING_TYPE		b_type = NO_BUILDING;
 
 	player_selection_panel->GetSelectedType(d_type, e_type, u_type, b_type);
 
@@ -471,19 +469,21 @@ void Action_Panel::SetPanelType()
 	case NO_ENTITY: actualpanel = nullptr;
 		break;
 	case UNIT:
-		if (u_type == VILLAGER);
-		else if (u_type == WARRIOR_CHMP)
 		{
-			heropanel->ChangePanelTarget(actual_entity);
-			heropanel->ChangePanelIcons(panel_cells);
-			actualpanel = heropanel;
-		}
-		else 
-		{
-			for (int count = 0; count < MAX_PANEL_CELLS; count++)
+			if (u_type == VILLAGER);
+			else if (u_type == WARRIOR_CHMP)
 			{
-				unitpanel->ChangePanelIcons(panel_cells);
-				actualpanel = unitpanel;
+				heropanel->ChangePanelTarget(actual_entity);
+				heropanel->ChangePanelIcons(panel_cells);
+				actualpanel = heropanel;
+			}
+			else
+			{
+				for (int count = 0; count < MAX_PANEL_CELLS; count++)
+				{
+					unitpanel->ChangePanelIcons(panel_cells);
+					actualpanel = unitpanel;
+				}
 			}
 		}
 		break;
@@ -491,15 +491,15 @@ void Action_Panel::SetPanelType()
 		actualpanel = nullptr;
 		break;
 	case BUILDING:
-	{
-		if (b_type == TOWN_CENTER)
 		{
-			towncenter->ChangePanelIcons(panel_cells);
-			actualpanel = towncenter;
+			if (b_type == TOWN_CENTER)
+			{
+				towncenter->ChangePanelIcons(panel_cells);
+				actualpanel = towncenter;
+			}
+			else actualpanel = nullptr;
 		}
-		else actualpanel = nullptr;
-	}
-	break;
+		break;
 	default:	actualpanel = nullptr;
 		break;
 	}
