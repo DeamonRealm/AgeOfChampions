@@ -140,15 +140,16 @@ class StunUnitAction : public Action
 public:
 
 	//Constructor -----------
-	StunUnitAction(Unit* actor, uint time) : Action(actor, TASK_U_STUN)
+	StunUnitAction(Unit* actor, uint time) : Action(actor, TASK_U_STUN), time(time)
 	{
 	}
 
 	//Functionality ---------
 	bool Activation()
 	{
-		((Unit*)actor)->Stun(time);
 		timer.Start();
+		((Unit*)actor)->SetAction(IDLE);
+		return true;
 	}
 	//Functionality ---------
 	bool Execute()

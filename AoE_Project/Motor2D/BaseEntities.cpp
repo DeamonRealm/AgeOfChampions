@@ -578,7 +578,7 @@ void Unit::Focus(const iPoint & target, bool play)
 			direction_type = DIRECTION_TYPE::SOUTH;
 			directed = true;
 		}
-		else if (direction_type != NORTH)
+		else if (dir_point.y <= 0 && direction_type != NORTH)
 		{
 			direction_type = DIRECTION_TYPE::NORTH;
 			directed = true;
@@ -591,7 +591,7 @@ void Unit::Focus(const iPoint & target, bool play)
 			direction_type = DIRECTION_TYPE::EAST;
 			directed = true;
 		}
-		else if (direction_type != WEST)
+		else if (dir_point.x <= 0 && direction_type != WEST)
 		{
 			direction_type = DIRECTION_TYPE::WEST;
 			directed = true;
@@ -754,8 +754,7 @@ bool Unit::Die()
 
 void Unit::Stun(uint time)
 {
-	this->action_type = IDLE;
-	//Add a stun buff for x time
+	action_worker->AddPriorizedAction(App->action_manager->StunAction(this, time));
 }
 
 COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
@@ -1365,25 +1364,33 @@ void Building::SetPosition(float x, float y, bool insert)
 	//Set building mark position
 	mark.SetPosition(iPoint(position.x, position.y));
 
+
+	if (!insert)return;
+
 	//Calculate the upper tile of the building zone
-	iPoint upper_tile(map_coords.x - 1, map_coords.y - 1);
+	iPoint upper_tile(map_coords.x, map_coords.y);
 
 	//Update the logic & construction map
 	//Check if the building is a town center to respect the build exception
 	if (building_type == TOWN_CENTER)
 	{
+		position.y = world_coords.y - (App->map->data.tile_height + 1) * 0.5f;
+		upper_tile.x -= 1;
+		upper_tile.y -= 1;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2, 0);
 	}
-	else
+	else if(building_type == BARRACK)
 	{
+		position.y = world_coords.y - (App->map->data.tile_height + 1);
+		upper_tile.x -= 2;
+		upper_tile.y -= 2;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 	}
 
 	App->map->ChangeConstructionMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 
 	//Add building at the correct quad tree
-	if (insert)
-		App->entities_manager->buildings_quadtree.Insert(this, &position);
+	App->entities_manager->buildings_quadtree.Insert(this, &position);
 }
 
 //Set Methods ---------------

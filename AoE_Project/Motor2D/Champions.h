@@ -19,6 +19,7 @@ protected:
 	//Hero level
 	uint	level = 1;
 	bool	ability[3];
+	bool	buff_actived = false;
 
 	//Buff area
 	Circle			buff_area;
@@ -90,7 +91,8 @@ private:
 
 	/* extra data */
 	Triangle			special_attack_area;
-	Particle			slash_particle;
+	Particle			ability_B_particle;
+	uint				ability_B_value = 0;
 
 public:
 
@@ -103,6 +105,7 @@ public:
 	void	SetAbility_A(bool choosed);
 	void	Hability_A();
 	void	CheckHability_A();
+	void	SetAbility_B(bool choosed);
 	void	Hability_B();
 	void	CheckHability_B();
 	void	CalculateSpecialAttackArea(const iPoint& base);

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:94935372185bc5410754f3e97638c04a:d52807a9cdc2b666368d43a73b3e1908:d59e4189731084d698a6c08c1ebbfb35$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="feudal_buildings.png" width="991" height="991">
+  <!-- Define the building type-->
+  <building id ="barrack">
+    <action enum ="idle" speed="0">
+    <sprite n="Feudal/Barracks_Feudal/000_BarracksFeudal.bmp" opacity ="255" x="310" y="1" w="316" h="256" pX="0.471519" pY="0.722656"/>
+    </action>
+  </building>
+      <!--
+    <sprite n="Feudal/Archery_Feudal/000_ArcheryFeudal.bmp" x="1" y="1" w="307" h="253" pX="0.498371" pY="0.70751"/>
+    <sprite n="Feudal/Blacksmith_Feudal/000_BlacksmithFeudal.bmp" x="628" y="1" w="282" h="168" pX="0.489362" pY="0.827381"/>
+    <sprite n="Feudal/Dock_Feudal/000_DockFeudal.bmp" x="1" y="259" w="228" h="192" pX="0.469298" pY="0.713542"/>
+    <sprite n="Feudal/House_Feudal/000_HousesFeudal.bmp" x="231" y="259" w="221" h="174" pX="0.493213" pY="0.247126"/>
+    <sprite n="Feudal/House_Feudal/001_HousesFeudal.bmp" x="454" y="259" w="176" h="156" pX="0.573864" pY="0.49359"/>
+    <sprite n="Feudal/House_Feudal/002_HousesFeudal.bmp" x="632" y="259" w="212" h="160" pX="0.551887" pY="0.75625"/>
+    <sprite n="Feudal/Market_Feudal/000_MarketFeudal.bmp" x="1" y="453" w="371" h="306" pX="0.522911" pY="0.715686"/>
+    <sprite n="Feudal/Stable_Feudal/000_StableFeudal.bmp" x="374" y="453" w="322" h="200" pX="0.5" pY="0.66"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterLeftPilonsFeudal.bmp" x="698" y="453" w="112" h="52" pX="1.36607" pY="0.961538"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterLeftPilonsFeudal2.bmp" x="812" y="453" w="27" h="45" pX="6.92593" pY="0.955556"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterLeftSideFeudal.bmp" x="841" y="453" w="145" h="141" pX="1.27586" pY="1.01418"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterRightPilonFeudal.bmp" x="1" y="761" w="118" h="43" pX="-0.305085" pY="0.976744"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterRightPilonFeudal2.bmp" x="121" y="761" w="10" h="35" pX="-17.5" pY="1"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterRightPilonsFeudal.bmp" x="133" y="761" w="112" h="51" pX="-0.410714" pY="1.01961"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterRightPilonsFeudal2.bmp" x="247" y="761" w="25" h="48" pX="-6.44" pY="0.875"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterRightSideFeudal.bmp" x="274" y="761" w="143" h="144" pX="-0.321678" pY="1"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterShadowFeudal.bmp" x="419" y="761" w="376" h="73" pX="0.5" pY="0.410959"/>
+    <sprite n="Feudal/Town_Center/000_TownCenterTopPieceFeudal.bmp" x="797" y="761" w="193" h="199" pX="0.481865" pY="0.768844"/>
+    -->
+</TextureAtlas>

@@ -104,6 +104,17 @@ DieUnitAction * j1ActionManager::DieAction(Unit * actor)
 	return action;
 }
 
+StunUnitAction * j1ActionManager::StunAction(Unit * actor, uint time)
+{
+	//Generate a new move action definition
+	StunUnitAction* action = new StunUnitAction(actor, time);
+
+	//Add the new action at the action manager
+	all_actions.push_back(action);
+
+	return action;
+}
+
 RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resource** target)
 {
 	//Generate a new move action definition

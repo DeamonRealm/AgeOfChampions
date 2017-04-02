@@ -469,6 +469,7 @@ DIRECTION_TYPE j1Animator::StrToDirectionEnum(const char* str) const
 BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 {
 	if (strcmp(str, "town_center") == 0)	return TOWN_CENTER;
+	if (strcmp(str, "barrack") == 0)		return BARRACK;
 	return NO_BUILDING;
 }
 

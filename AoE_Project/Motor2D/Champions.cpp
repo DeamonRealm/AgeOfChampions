@@ -46,6 +46,7 @@ void Champion::CleanBuffedUnits()
 void Champion::SetAbility_A(bool choosed)
 {
 	ability[0] = choosed;
+	buff_actived = true;
 }
 
 void Champion::Hability_A()
@@ -203,7 +204,7 @@ Warrior::Warrior() :Champion()
 Warrior::Warrior(const Warrior & copy): Champion(copy),special_attack_area(copy.special_attack_area)
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
-	slash_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
 }
 
 //Destructors =========================
@@ -215,7 +216,8 @@ Warrior::~Warrior()
 bool Warrior::Update()
 {
 	this->action_worker->Update();
-	CheckHability_A();
+	if (buff_actived)CheckHability_A();
+
 	return true;
 }
 
@@ -258,6 +260,8 @@ bool Warrior::Draw(bool debug)
 //Ability A methods
 void Warrior::SetAbility_A(bool choosed)
 {
+	if (buff_actived)return;
+
 	if (choosed)
 	{
 		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
@@ -267,6 +271,7 @@ void Warrior::SetAbility_A(bool choosed)
 		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, DEFENSE_BUFF, false);
 	}
 	buff_to_apply->ApplyBuff();
+	buff_actived = true;
 }
 
 void Warrior::Hability_A()
@@ -338,10 +343,28 @@ void Warrior::CheckHability_A()
 	}
 }
 
+void Warrior::SetAbility_B(bool choosed)
+{
+	if (choosed)
+	{
+		ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_B_value = 200;
+	}
+	else
+	{
+		ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+		ability_B_value = 1500;
+	}
+	ability[1] = choosed;
+}
+
 void Warrior::Hability_B()
 {
-	//Get the slash particle looking the direction
-	slash_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+	if (ability[1])
+	{
+		ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+	}
+	else ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
 
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_in;
@@ -350,22 +373,29 @@ void Warrior::Hability_B()
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
-		if(units_in[k]->GetPosition() != position)units_in[k]->DirectDamage(200);
-	}
+		if (units_in[k]->GetPosition() != position)
+		{
+			if (ability[1])
+			{
+				units_in[k]->DirectDamage(ability_B_value);
+			}
+			else units_in[k]->Stun(ability_B_value);
+		}
 
-	slash_particle.animation.Reset();
+		ability_B_particle.animation.Reset();
+	}
 }
 
 void Warrior::CheckHability_B()
 {
-	if (!slash_particle.animation.IsEnd())
+	if (!ability_B_particle.animation.IsEnd())
 	{
-		if (slash_particle.position != GetPositionRounded())slash_particle.position = GetPositionRounded();
-		slash_particle.Draw();
+		if (ability_B_particle.position != GetPositionRounded())ability_B_particle.position = GetPositionRounded();
+		ability_B_particle.Draw();
 	}
 }
 
-void Warrior::CalculateSpecialAttackArea(const iPoint & base)
+void Warrior::CalculateSpecialAttackArea(const iPoint& base)
 {
 	//Update the triangle base
 	special_attack_area.SetBase(base);
