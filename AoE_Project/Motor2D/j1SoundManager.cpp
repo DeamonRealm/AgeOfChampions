@@ -79,21 +79,8 @@ j1SoundManager::~j1SoundManager()
 {
 }
 
+
 //Game Loop ===========================
-bool j1SoundManager::Awake(pugi::xml_node& config)
-{
-	return true;
-}
-
-bool j1SoundManager::Start()
-{
-	return true;
-}
-
-bool j1SoundManager::PostUpdate()
-{
-	return true;
-}
 
 bool j1SoundManager::CleanUp()
 {
@@ -102,7 +89,7 @@ bool j1SoundManager::CleanUp()
 
 	for (uint k = 0; k < music_size; k++)
 	{
-		music_blocks[k]->ClearSound();
+		delete music_blocks[k];
 	}
 	music_blocks.clear();
 
@@ -110,7 +97,7 @@ bool j1SoundManager::CleanUp()
 
 	for (uint k = 0; k < fx_size; k++)
 	{
-		fx_blocks[k]->ClearSound();
+		delete fx_blocks[k];
 	}
 	fx_blocks.clear();
 	return true;
@@ -243,5 +230,9 @@ bool j1SoundManager::PlayMusicAudio(SOUND_TYPE sound)
 }
 
 Sound::Sound(int id, std::string path): id(id),path(path)
+{
+}
+
+Sound::~Sound()
 {
 }

@@ -67,6 +67,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(gui);
 	AddModule(animator);
+	AddModule(sound);
 	AddModule(action_manager);
 	AddModule(entities_manager);
 	AddModule(buff_manager);

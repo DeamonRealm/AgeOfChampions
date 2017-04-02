@@ -9,6 +9,8 @@ enum SOUND_TYPE;
 struct Sound
 {
 	Sound(int id, std::string path);
+	~Sound();
+
 	int id = 0;
 	std::string	path;
 };
@@ -55,16 +57,6 @@ public:
 	~j1SoundManager();
 
 public:
-
-	// Called before render is available
-	bool Awake(pugi::xml_node&);
-
-	// Called before the first frame
-	bool Start();
-
-	// Called each loop iteration
-	bool PostUpdate();
-
 	// Called before quitting
 	bool CleanUp();
 
