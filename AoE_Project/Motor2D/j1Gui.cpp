@@ -44,6 +44,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	icons_file_name = conf.child("icons").attribute("file").as_string("");
 	hud_file_name = conf.child("hud").attribute("file").as_string("");
 	champions_file_name = conf.child("champion").attribute("file").as_string("");
+	menu_pause_file_name = conf.child("menu_pause").attribute("file").as_string("");
 	
 	return ret;
 }
@@ -54,21 +55,15 @@ bool j1Gui::Start()
 	//Load Atlas
 	atlas = App->tex->Load(atlas_file_name.c_str());
 	
-	//UI_textures
-	background = App->tex->Load(background_file_name.c_str());
-	mainmenu = App->tex->Load(mainmenu_file_name.c_str());
-	standardmenu = App->tex->Load(standardmenu_file_name.c_str());
-	icons = App->tex->Load(icons_file_name.c_str());
-	hud = App->tex->Load(hud_file_name.c_str());
-	champions = App->tex->Load(champions_file_name.c_str());
-	
 	//Add textures to Ui_textures
-	ui_textures.push_back(background);
-	ui_textures.push_back(mainmenu);
-	ui_textures.push_back(standardmenu);
-	ui_textures.push_back(icons);
-	ui_textures.push_back(hud);
-	ui_textures.push_back(champions);
+	ui_textures.push_back(App->tex->Load(background_file_name.c_str()));
+	ui_textures.push_back(App->tex->Load(mainmenu_file_name.c_str()));
+	ui_textures.push_back(App->tex->Load(standardmenu_file_name.c_str()));
+	ui_textures.push_back(App->tex->Load(icons_file_name.c_str()));
+	ui_textures.push_back(App->tex->Load(hud_file_name.c_str()));
+	ui_textures.push_back(App->tex->Load(champions_file_name.c_str()));
+	ui_textures.push_back(App->tex->Load(menu_pause_file_name.c_str()));
+
 	
 	LoadCursorTypes();
 	ChangeMouseTexture(DEFAULT);
@@ -339,7 +334,7 @@ void j1Gui::DrawMouseTexture()
 {
 	int x = 0, y = 0;
 	App->input->GetMousePosition(x, y);
-	App->render->Blit(icons, x - cursor_pivot.x - App->render->camera.x, y - cursor_pivot.y - App->render->camera.y, &cursor_rect);
+	App->render->Blit(App->gui->Get_UI_Texture(ICONS), x - cursor_pivot.x - App->render->camera.x, y - cursor_pivot.y - App->render->camera.y, &cursor_rect);
 }
 
 void j1Gui::SetDefaultInputTarget(j1Module * target)

@@ -50,7 +50,8 @@ enum TEXTURE_ID
 	MAINMENU,
 	ICONS,
 	HUD,
-	CHAMPION_SKILL
+	CHAMPION_SKILL,
+	MENU_PAUSE
 };
 
 // ---------------------------------------------------
@@ -89,13 +90,6 @@ private:
 
 	//UI Textures
 	SDL_Texture*			atlas;
-	SDL_Texture*			background;
-	SDL_Texture*			mainmenu;
-	SDL_Texture*			standardmenu;
-	SDL_Texture*			icons;
-	SDL_Texture*			hud;
-	SDL_Texture*			champions;
-	
 	std::list<SDL_Texture*>	ui_textures;
 
 	std::string				atlas_file_name;
@@ -105,6 +99,7 @@ private:
 	std::string				icons_file_name;
 	std::string				hud_file_name;
 	std::string				champions_file_name;
+	std::string				menu_pause_file_name;	
 
 	//Target Module of gui input
 	j1Module*				default_input_target;

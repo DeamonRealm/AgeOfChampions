@@ -53,19 +53,27 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 	exit_menu_screen->AddChild(exit_menu_button);
 
 	exit_menu_image = (UI_Image*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
-	exit_menu_image->SetBox({450,150,243,345});
-	exit_menu_image->ChangeTextureId(TEXTURE_ID::CHAMPION_SKILL);
-	exit_menu_image->ChangeTextureRect({ 0,0,243,345 });
+	exit_menu_image->SetBox({536,150,243,345});
+	exit_menu_image->ChangeTextureId(TEXTURE_ID::MENU_PAUSE);
+	exit_menu_image->ChangeTextureRect({ 0,0,294,300 });
 	exit_menu_image->Desactivate();
 	exit_menu_screen->AddChild(exit_menu_image);
 
 	exit_to_main_menu = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	exit_to_main_menu->SetBox({0, 0, 36, 36});
-	exit_to_main_menu->SetTexOFF({396, 185,36,36}, CHAMPION_SKILL);
-	exit_to_main_menu->SetTexOVER({ 396,185,36,36 }, CHAMPION_SKILL);
-	exit_to_main_menu->SetTexON({ 391,250,36,36 }, CHAMPION_SKILL);
+	exit_to_main_menu->SetBox({38, 38, 220, 30});
+	exit_to_main_menu->SetTexOFF({295, 0,220,30}, MENU_PAUSE);
+	exit_to_main_menu->SetTexOVER({ 295, 0,220,30 }, MENU_PAUSE);
+	exit_to_main_menu->SetTexON({295, 31,220,30}, MENU_PAUSE);
 	exit_to_main_menu->Activate();
 	exit_menu_image->AddChild(exit_to_main_menu);
+
+	// Menu Text
+	resource_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	resource_text->SetColor({ 255, 255, 255, 255 });
+	resource_text->SetString("Quit Current Game");
+	resource_text->SetBox({ 58, 6,0,0 });
+	exit_to_main_menu->AddChild(resource_text);
+
 
 }
 
@@ -124,7 +132,10 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			if (exit_menu_image->GetActiveState()) exit_menu_image->Desactivate();
 			else exit_menu_image->Activate();
 		}
-		
+		if (ui_element == exit_to_main_menu)
+		{
+			((UI_String*)exit_to_main_menu->childs.begin()._Ptr->_Myval)->SetColor({150,150,0,0});
+		}
 	}
 
 	break;
@@ -132,9 +143,9 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		break;
 	case MOUSE_LEFT_BUTTON_UP:
 	{
-
 		if (ui_element == exit_to_main_menu)
 		{
+			((UI_String*)exit_to_main_menu->childs.begin()._Ptr->_Myval)->SetColor({ 255,255,255,255 });
 			exit_menu_image->Desactivate();
 			App->scene->Disable();
 			App->player->Disable();

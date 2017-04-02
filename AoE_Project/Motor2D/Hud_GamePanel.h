@@ -76,6 +76,7 @@ private:
 	std::string		hud_game_text;
 
 	std::vector<UI_String*>		player_resources;
+	std::vector<UI_String*>		menu_text;
 
 	// Game Menu
 

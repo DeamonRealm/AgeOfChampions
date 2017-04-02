@@ -31,6 +31,7 @@
     <icons file="gui/UI_Icons.png"/>
     <hud file="gui/HUD.png"/>
     <champion file="gui/IU_Champions.png"/>
+    <menu_pause file="gui/Menu_Pause.png"/>
     <c_vars>
     </c_vars>
   </gui>
