@@ -295,6 +295,7 @@ bool Selection_Panel::CleanUp()
 	group_profile.clear();
 
 	delete Selected;
+	Selected = nullptr;
 
 	return true;
 }

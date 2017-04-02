@@ -34,7 +34,7 @@ public:
 		active = true;
 	}
 
-	void Disable()
+	virtual void Disable()
 	{
 		active = false;
 	}

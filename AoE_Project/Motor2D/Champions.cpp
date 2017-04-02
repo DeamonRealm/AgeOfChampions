@@ -191,7 +191,7 @@ Warrior::Warrior() :Champion()
 Warrior::Warrior(const Warrior & copy): Champion(copy),special_attack_area(copy.special_attack_area)
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
-	slash_particle = App->buff_manager->GetParticle(SLASH_PARTICLE);
+	slash_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
 }
 
 //Destructors =========================
@@ -203,7 +203,7 @@ Warrior::~Warrior()
 bool Warrior::Update()
 {
 	this->action_worker->Update();
-	CheckHability_A();
+	CheckHability_B();
 	return true;
 }
 
@@ -226,7 +226,7 @@ bool Warrior::Draw(bool debug)
 		}
 	}
 
-	//Calculate  & draw warrior special attack area
+	//Calculate & draw warrior special attack area
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y));
@@ -312,6 +312,9 @@ void Warrior::CheckHability_A()
 
 void Warrior::Hability_B()
 {
+	//Get the slash particle looking the direction
+	slash_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_in;
 	App->entities_manager->units_quadtree.CollectCandidates(units_in, special_attack_area);

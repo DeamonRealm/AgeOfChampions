@@ -178,6 +178,7 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			App->gui->ChangeMouseTexture(DEFAULT);
 			App->scene->Enable();
 			App->player->Enable();
+			App->entities_manager->Enable();
 			App->AI->Enable();
 			CleanUp();
 			Disable();

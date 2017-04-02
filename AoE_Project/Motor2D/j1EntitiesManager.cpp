@@ -37,6 +37,42 @@ bool j1EntitiesManager::Awake(pugi::xml_node & config_node)
 	return true;
 }
 
+void j1EntitiesManager::Disable()
+{
+	active = false;
+
+	//Clean Up Units List
+	std::list<Unit*>::iterator units_item = units.begin();
+	while (units_item != units.end())
+	{
+		RELEASE(units_item._Ptr->_Myval);
+		units_item++;
+	}
+	units.clear();
+	units_quadtree.Reset();
+
+	//Clean Up resources list
+	std::list<Resource*>::iterator resources_item = resources.begin();
+	while (resources_item != resources.end())
+	{
+		RELEASE(resources_item._Ptr->_Myval);
+		resources_item++;
+	}
+	resources.clear();
+	resources_quadtree.Reset();
+
+	//Clean Up buildings list
+	std::list<Building*>::iterator buildings_item = buildings.begin();
+	while (buildings_item != buildings.end())
+	{
+		RELEASE(buildings_item._Ptr->_Myval);
+		buildings_item++;
+	}
+	buildings.clear();
+	buildings_quadtree.Reset();
+
+}
+
 bool j1EntitiesManager::Start()
 {
 	//Load Civilization Test

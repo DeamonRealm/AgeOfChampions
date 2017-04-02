@@ -20,52 +20,60 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Slash_Effect.png" width="730" height="730">
-  <simple_particle particle_type="slash_particle">
+  <simple_particle particle_type="slash_particle" direction="north">
     <anim_data speed="50" loop="0"/>
-    <sprite n="Slash/Slash_Back_00.png" x="1" y="1" w="8" h="15" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Back_01.png" x="11" y="1" w="18" h="10" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Back_02.png" x="31" y="1" w="76" h="41" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Back_03.png" x="109" y="1" w="99" h="62" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Back_04.png" x="210" y="1" w="137" h="72" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Back_05.png" x="349" y="1" w="202" h="100" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Back_06.png" x="553" y="1" w="165" h="32" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Back_07.png" x="1" y="103" w="119" h="18" pX="0.5" pY="0.5"/>
-    
-    <sprite n="Slash/Slash_DiagonalB_00.png" x="122" y="103" w="17" h="9" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalB_01.png" x="141" y="103" w="13" h="6" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalB_02.png" x="156" y="103" w="58" h="36" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalB_03.png" x="216" y="103" w="84" h="71" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalB_04.png" x="302" y="103" w="94" h="91" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalB_05.png" x="302" y="103" w="94" h="91" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalB_06.png" x="398" y="103" w="132" h="106" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalB_07.png" x="532" y="103" w="132" h="106" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalB_08.png" x="1" y="211" w="83" h="31" pX="0.5" pY="0.5"/>
-    
-    <sprite n="Slash/Slash_DiagonalF_00.png" x="86" y="211" w="14" h="10" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalF_01.png" x="102" y="211" w="12" h="6" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalF_02.png" x="116" y="211" w="54" h="33" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalF_03.png" x="172" y="211" w="78" h="67" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalF_04.png" x="252" y="211" w="86" h="84" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalF_05.png" x="340" y="211" w="123" h="99" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalF_06.png" x="465" y="211" w="129" h="99" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_DiagonalF_07.png" x="596" y="211" w="78" h="29" pX="0.5" pY="0.5"/>
-    
-    <sprite n="Slash/Slash_Front_00.png" x="676" y="211" w="6" h="23" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Front_01.png" x="684" y="211" w="17" h="14" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Front_02.png" x="1" y="312" w="77" h="64" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Front_03.png" x="80" y="312" w="102" h="98" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Front_04.png" x="184" y="312" w="139" h="111" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Front_05.png" x="325" y="312" w="199" h="158" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Front_06.png" x="526" y="312" w="164" h="155" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Front_07.png" x="1" y="472" w="119" h="29" pX="0.5" pY="0.5"/>
-    
-    <sprite n="Slash/Slash_Side_00.png" x="122" y="472" w="27" h="8" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Side_01.png" x="151" y="472" w="16" h="15" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Side_02.png" x="169" y="472" w="74" h="61" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Side_03.png" x="245" y="472" w="113" h="76" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Side_04.png" x="360" y="472" w="134" h="102" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Side_05.png" x="496" y="472" w="179" h="141" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Side_06.png" x="677" y="472" w="52" h="119" pX="0.5" pY="0.5"/>
-    <sprite n="Slash/Slash_Side_07.png" x="1" y="615" w="32" h="87" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Back_00.png" x="1" y="1" w="8" h="15" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Back_01.png" x="11" y="1" w="18" h="10" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Back_02.png" x="31" y="1" w="76" h="41" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Back_03.png" x="109" y="1" w="99" h="62" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Back_04.png" x="210" y="1" w="137" h="72" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Back_05.png" x="349" y="1" w="202" h="100" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Back_06.png" x="553" y="1" w="165" h="32" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Back_07.png" x="1" y="103" w="119" h="18" pX="0.5" pY="0.5"/>
+  </simple_particle>
+  <simple_particle particle_type="slash_particle" direction="south-west">
+    <anim_data speed="50" loop="0"/>
+      <sprite n="Slash/Slash_DiagonalB_00.png" x="122" y="103" w="17" h="9" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalB_01.png" x="141" y="103" w="13" h="6" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalB_02.png" x="156" y="103" w="58" h="36" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalB_03.png" x="216" y="103" w="84" h="71" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalB_04.png" x="302" y="103" w="94" h="91" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalB_05.png" x="302" y="103" w="94" h="91" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalB_06.png" x="398" y="103" w="132" h="106" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalB_07.png" x="532" y="103" w="132" h="106" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalB_08.png" x="1" y="211" w="83" h="31" pX="0.5" pY="0.5"/>
+  </simple_particle>
+  <simple_particle particle_type="slash_particle" direction="north-west">
+    <anim_data speed="50" loop="0"/>
+      <sprite n="Slash/Slash_DiagonalF_00.png" x="86" y="211" w="14" h="10" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalF_01.png" x="102" y="211" w="12" h="6" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalF_02.png" x="116" y="211" w="54" h="33" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalF_03.png" x="172" y="211" w="78" h="67" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalF_04.png" x="252" y="211" w="86" h="84" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalF_05.png" x="340" y="211" w="123" h="99" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalF_06.png" x="465" y="211" w="129" h="99" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_DiagonalF_07.png" x="596" y="211" w="78" h="29" pX="0.5" pY="0.5"/>
+  </simple_particle>
+  <simple_particle particle_type="slash_particle" direction="south">
+    <anim_data speed="50" loop="0"/>
+      <sprite n="Slash/Slash_Front_00.png" x="676" y="211" w="6" h="23" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Front_01.png" x="684" y="211" w="17" h="14" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Front_02.png" x="1" y="312" w="77" h="64" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Front_03.png" x="80" y="312" w="102" h="98" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Front_04.png" x="184" y="312" w="139" h="111" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Front_05.png" x="325" y="312" w="199" h="158" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Front_06.png" x="526" y="312" w="164" h="155" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Front_07.png" x="1" y="472" w="119" h="29" pX="0.5" pY="0.5"/>
+  </simple_particle>
+  <simple_particle particle_type="slash_particle" direction="west">
+    <anim_data speed="50" loop="0"/>
+      <sprite n="Slash/Slash_Side_00.png" x="122" y="472" w="27" h="8" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Side_01.png" x="151" y="472" w="16" h="15" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Side_02.png" x="169" y="472" w="74" h="61" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Side_03.png" x="245" y="472" w="113" h="76" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Side_04.png" x="360" y="472" w="134" h="102" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Side_05.png" x="496" y="472" w="179" h="141" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Side_06.png" x="677" y="472" w="52" h="119" pX="0.5" pY="0.5"/>
+      <sprite n="Slash/Slash_Side_07.png" x="1" y="615" w="32" h="87" pX="0.5" pY="0.5"/>
   </simple_particle>
 </TextureAtlas>

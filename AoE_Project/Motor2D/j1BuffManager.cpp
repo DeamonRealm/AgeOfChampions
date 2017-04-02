@@ -346,10 +346,15 @@ bool j1BuffManager::Start()
 				/*Set actor*/			((BuffParticle*)particle_def)->actor = particle_node.attribute("actor").as_bool();
 				/*Set Draw rate*/		((BuffParticle*)particle_def)->draw_rate = particle_node.attribute("draw_rate").as_uint();
 			}
-			else particle_def = new Particle();
+			else
+			{
+				particle_def = new Particle();
 
-			/*Set Particle Type*/ particle_def->particle_type = StrToParticleType(particle_node.attribute("particle_type").as_string());
-	
+			}
+
+			/*Set Particle Type*/	particle_def->particle_type = StrToParticleType(particle_node.attribute("particle_type").as_string());
+			/*Set Particle Dir*/	particle_def->direction_type = App->animator->StrToDirectionEnum(particle_node.attribute("direction").as_string());
+			
 			//Build particle animation
 			Animation animation;
 
@@ -618,14 +623,35 @@ void j1BuffManager::RemoveTargetBuffs(Unit* target)
 	}
 }
 
-Particle j1BuffManager::GetParticle(PARTICLE_TYPE ty)
+Particle j1BuffManager::GetParticle(PARTICLE_TYPE ty, DIRECTION_TYPE direc)
 {
+	DIRECTION_TYPE real_dir;
+	bool flip = false;
+	switch (direc)
+	{
+
+	case NORTH_EAST:
+		real_dir = NORTH_WEST;
+		flip = true;
+		break;
+	case EAST:
+		real_dir = WEST;
+		flip = true;
+		break;
+	case SOUTH_EAST:
+		real_dir = SOUTH_WEST;
+		flip = true;
+		break;
+	}
+
 	uint size = particle_definitions.size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (particle_definitions[k]->particle_type == ty)
+		if (particle_definitions[k]->particle_type == ty && particle_definitions[k]->direction_type == real_dir)
 		{
-			return *particle_definitions[k];
+			Particle particle(*particle_definitions[k]);
+			particle.flip_sprite = flip;
+			return particle;
 		}
 	}
 	return *particle_definitions[0];

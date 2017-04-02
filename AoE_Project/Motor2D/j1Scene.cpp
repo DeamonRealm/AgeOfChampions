@@ -13,6 +13,8 @@
 #include "j1Animator.h"
 #include "j1Pathfinding.h"
 #include "j1FileSystem.h"
+#include "j1Player.h"
+#include "Hud_GamePanel.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -179,6 +181,7 @@ bool j1Scene::LoadScene()
 			Unit* new_unit = App->entities_manager->GenerateUnit(unit_type, diplomacy, true);
 			iPoint unit_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
 			new_unit->SetPosition(unit_pos.x, unit_pos.y);
+			App->player->game_panel->IncressPopulation(1);
 		}
 		else if (type == RESOURCE)
 		{

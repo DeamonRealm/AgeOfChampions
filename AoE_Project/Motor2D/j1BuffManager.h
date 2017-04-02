@@ -197,7 +197,7 @@ public:
 	PassiveBuff*	GetPassiveBuff(BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor);
 	void			RemoveTargetBuff(Unit* target, PassiveBuff* buff);
 	void			RemoveTargetBuffs(Unit* target);
-	Particle		GetParticle(PARTICLE_TYPE ty);
+	Particle		GetParticle(PARTICLE_TYPE ty, DIRECTION_TYPE direc);
 
 };
 #endif //_J1_BUFF_MANAGER_H_

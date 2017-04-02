@@ -508,6 +508,22 @@ public:
 
 		return ret;
 	}
+
+	void Reset()
+	{
+		if (full)
+		{
+			for (uint k = 0; k < 4; k++)
+			{
+				if (children[k]->full)
+				{
+					children[k]->Reset();
+				}
+				else delete children[k];
+			}
+		}
+		this->full = false;
+	}
 };
 /// ---------------------------------------------
 
@@ -614,9 +630,9 @@ public:
 
 private:
 
-	m_AABB<DATA_TYPE>*		root = nullptr;
-	uint		max_objects = 0;
-	SDL_Color	color = { 255,255,255,255 };
+	m_AABB<DATA_TYPE>*	root = nullptr;
+	uint				max_objects = 0;
+	SDL_Color			color = { 255,255,255,255 };
 
 public:
 
@@ -701,6 +717,13 @@ public:
 		}
 	}
 
+	void Reset()
+	{
+		if (root != NULL)
+		{
+			root->Reset();
+		}
+	}
 };
 /// ---------------------------------------------
 #endif // !_QUADTREE_
