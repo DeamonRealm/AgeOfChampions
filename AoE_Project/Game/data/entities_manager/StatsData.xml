@@ -566,7 +566,7 @@
       wood_cost="5"
       gold_cost="5"
       poblation_cost="2"
-      train_time="8"
+      train_time="500"
       
       attack_for_level="1"
       range_for_level="1"
@@ -624,7 +624,7 @@
       mark_w="70"
       mark_h="70"
      interaction_rad ="50"
-      max_resources="250"
+      max_resources="500"
       />
   </unit>
   <!--Gold Ore-->
@@ -668,7 +668,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="50"
-      max_resources="400"
+      max_resources="5000"
       />
   </unit>
   

@@ -144,7 +144,6 @@ void Villager::CheckRecollectResource(RESOURCE_TYPE type)
 		if (item_type != ITEM_TYPE::AXE)
 		{
 			item_type = AXE;
-			action_type = ATTATCK;
 			changed = true;
 		}
 		break;
@@ -157,7 +156,6 @@ void Villager::CheckRecollectResource(RESOURCE_TYPE type)
 		if (item_type != ITEM_TYPE::BASKET)
 		{
 			item_type = BASKET;
-			action_type = ATTATCK;
 			changed = true;
 		}
 		break;
@@ -171,7 +169,6 @@ void Villager::CheckRecollectResource(RESOURCE_TYPE type)
 		if (item_type != ITEM_TYPE::PICK)
 		{
 			item_type = PICK;
-			action_type = ATTATCK;
 			changed = true;
 		}
 		break;
@@ -185,12 +182,12 @@ void Villager::CheckRecollectResource(RESOURCE_TYPE type)
 		if (item_type != ITEM_TYPE::PICK)
 		{
 			item_type = PICK;
-			action_type = ATTATCK;
 			changed = true;
 		}
 		break;
 	}
 
+	action_type = ATTATCK;
 	App->animator->UnitPlay(this);
 }
 

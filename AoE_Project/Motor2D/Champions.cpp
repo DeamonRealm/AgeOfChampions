@@ -216,7 +216,7 @@ Warrior::~Warrior()
 bool Warrior::Update()
 {
 	this->action_worker->Update();
-	if (buff_actived)CheckHability_A();
+	CheckHability_A();
 
 	return true;
 }
