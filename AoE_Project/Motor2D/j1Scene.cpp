@@ -123,6 +123,20 @@ bool j1Scene::PostUpdate()
 		ret = false;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		if (App->win->fullscreen)
+		{
+			SDL_SetWindowFullscreen(App->win->window, NULL);
+			App->win->fullscreen = false;
+		}
+		else
+		{
+			SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
+			App->win->fullscreen = true;
+		}
+	}
+
 	return ret;
 }
 

@@ -34,7 +34,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Nueva carpeta/Stun_EffectB09.png" opacity ="255" x="1" y="127" w="199" h="129" pX="0.5" pY="0.5"/>
     <sprite n="Nueva carpeta/Stun_EffectB10.png" opacity ="255" x="202" y="127" w="209" h="131" pX="0.5" pY="0.5"/>
   </simple_particle>
-  <simple_particle particle_type="stun_particle" direction="south-west">
+  <simple_particle particle_type="stun_particle" direction="north-west">
     <anim_data speed="50" loop="0"/>
   <sprite n="Nueva carpeta/Stun_EffectBD00.png" opacity ="255" x="413" y="127" w="87" h="45" pX="0.5" pY="0.5" oX="3" oY="0" oW="90" oH="45"/>
     <sprite n="Nueva carpeta/Stun_EffectBD01.png" opacity ="255" x="502" y="127" w="122" h="60" pX="0.5" pY="0.5"/>
@@ -48,7 +48,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Nueva carpeta/Stun_EffectBD09.png" opacity ="255" x="773" y="260" w="217" h="132" pX="0.5" pY="0.5"/>
     <sprite n="Nueva carpeta/Stun_EffectBD10.png" opacity ="255" x="992" y="260" w="226" h="140" pX="0.5" pY="0.5" oX="158" oY="85" oW="660" oH="490"/>
   </simple_particle>
-  <simple_particle particle_type="stun_particle" direction="north-west">
+  <simple_particle particle_type="stun_particle" direction="south">
     <anim_data speed="50" loop="0"/>
   <sprite n="Nueva carpeta/Stun_EffectF00.png" opacity ="255" x="1220" y="260" w="34" h="52" pX="0.5" pY="0.5"/>
     <sprite n="Nueva carpeta/Stun_EffectF01.png" opacity ="255" x="1" y="402" w="89" h="74" pX="0.5" pY="0.5"/>
@@ -62,7 +62,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Nueva carpeta/Stun_EffectF09.png" opacity ="255" x="1" y="591" w="198" h="195" pX="0.5" pY="0.5" oX="0" oY="0" oW="198" oH="197"/>
     <sprite n="Nueva carpeta/Stun_EffectF10.png" opacity ="255" x="201" y="591" w="208" h="197" pX="0.5" pY="0.5"/>
   </simple_particle>
-  <simple_particle particle_type="stun_particle" direction="south">
+  <simple_particle particle_type="stun_particle" direction="south-west">
     <anim_data speed="50" loop="0"/>
   <sprite n="Nueva carpeta/Stun_EffectFD00.png" opacity ="255" x="411" y="591" w="89" h="55" pX="0.5" pY="0.5"/>
     <sprite n="Nueva carpeta/Stun_EffectFD01.png" opacity ="255" x="502" y="591" w="128" h="76" pX="0.5" pY="0.5"/>

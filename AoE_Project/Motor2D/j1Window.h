@@ -43,6 +43,11 @@ private:
 	uint		width;
 	uint		height;
 	uint		scale;
+
+public:
+
+	bool		fullscreen = false;
+
 };
 
 #endif // __j1WINDOW_H__

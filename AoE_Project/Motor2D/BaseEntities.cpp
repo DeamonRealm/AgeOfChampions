@@ -335,8 +335,6 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 					other_path = other_unit->GetPath();
 					other_path_size = other_path->size();
 				}
-				other_path = other_unit->GetPath();
-				other_path_size = other_path->size();
 
 				switch (CheckColision(this, other_unit))
 				{
@@ -882,7 +880,7 @@ void Unit::DirectDamage(uint damage)
 	life -= MIN(life, damage);
 	if (life <= 0)
 	{
-		action_worker->AddAction(App->action_manager->DieAction(this));
+		action_worker->AddPriorizedAction(App->action_manager->DieAction(this));
 	}
 }
 

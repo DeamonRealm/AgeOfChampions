@@ -158,8 +158,18 @@ public:
 	{
 		timer.Start();
 		((Unit*)actor)->SetAction(IDLE);
+		if (((Unit*)actor)->GetUnitType() == VILLAGER)
+		{
+			if (((Villager*)actor)->GetItemType() == GOLD || ((Villager*)actor)->GetItemType() == MEAT || ((Villager*)actor)->GetItemType() == STONE || ((Villager*)actor)->GetItemType() == WOOD)
+			{
+				((Villager*)actor)->SetItemType(NO_ITEM);
+			}
+		}
+		App->animator->UnitPlay((Unit*)actor);
+
 		return true;
 	}
+
 	//Functionality ---------
 	bool Execute()
 	{

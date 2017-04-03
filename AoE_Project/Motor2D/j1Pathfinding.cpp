@@ -355,6 +355,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 			}
 		}
 	}
+
 	return nullptr;
 }
 

@@ -208,6 +208,11 @@ Warrior::Warrior(const Warrior & copy): Champion(copy),special_attack_area(copy.
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
 	ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	for (uint k = 0; k < 3; k++)
+	{
+		actived[k] = false;
+		ability[k] = false;
+	}
 }
 
 //Destructors =========================
@@ -274,7 +279,6 @@ void Warrior::SetAbility_A(bool choosed)
 	{
 		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, DEFENSE_BUFF, false);
 	}
-	buff_to_apply->ApplyBuff();
 }
 
 void Warrior::Hability_A()
@@ -359,7 +363,7 @@ void Warrior::SetAbility_B(bool choosed)
 	else
 	{
 		ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
-		ability_B_value = 1500;
+		ability_B_value = 3500;
 	}
 	ability[1] = choosed;
 }
@@ -385,7 +389,10 @@ void Warrior::Hability_B()
 			{
 				units_in[k]->DirectDamage(ability_B_value);
 			}
-			else units_in[k]->Stun(ability_B_value);
+			else
+			{
+				units_in[k]->Stun(ability_B_value);
+			}
 		}
 	}
 
