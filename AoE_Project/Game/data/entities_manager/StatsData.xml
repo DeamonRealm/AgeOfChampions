@@ -735,8 +735,8 @@
       
       max_life ="1500"
       units_capacity ="15"
-      units_spawn_x ="30"
-      units_spawn_y="47"
+      units_spawn_x ="5"
+      units_spawn_y="92"
       production_capacity ="25"
       
       />

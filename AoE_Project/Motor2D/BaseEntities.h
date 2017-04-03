@@ -346,7 +346,7 @@ public:
 	bool					AttackResource();
 	bool					Cover();
 	void					DirectDamage(uint damage);
-	bool					Die();
+	virtual bool			Die();
 	void					Stun(uint time);
 	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
 	//Bonus -----------------

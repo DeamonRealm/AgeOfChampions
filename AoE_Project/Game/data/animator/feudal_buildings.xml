@@ -23,7 +23,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <!-- Define the building type-->
   <building id ="barrack">
     <action enum ="idle" speed="0">
-    <sprite n="Feudal/Barracks_Feudal/000_BarracksFeudal.bmp" opacity ="255" x="310" y="1" w="316" h="256" pX="0.471519" pY="0.722656"/>
+    <sprite n="Feudal/Barracks_Feudal/000_BarracksFeudal.bmp" opacity ="255" x="310" y="1" z="100" w="316" h="256" pX="0.471519" pY="0.722656"/>
     </action>
   </building>
       <!--

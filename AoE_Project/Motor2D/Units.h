@@ -29,6 +29,9 @@ private:
 public:
 
 	//Functionality ----
+	//Actions -----
+	bool Die();
+
 	//Get Methods -
 	ITEM_TYPE GetItemType()const;
 

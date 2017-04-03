@@ -24,7 +24,38 @@ Villager::~Villager()
 
 }
 
+
+
 //Functionality =======================
+//Actions -----
+bool Villager::Die()
+{
+	if (action_type != DIE && action_type != DISAPPEAR)
+	{
+		App->buff_manager->RemoveTargetBuffs(this);
+		action_type = DIE;
+		if (item_type == GOLD || item_type == STONE || item_type == MEAT)
+		{
+			item_type = NO_ITEM;
+		}
+		App->animator->UnitPlay(this);
+	}
+	else if (current_animation->IsEnd())
+	{
+		if (action_type == DIE)
+		{
+			action_type = DISAPPEAR;
+			App->animator->UnitPlay(this);
+		}
+		else
+		{
+			App->entities_manager->DeleteEntity(this);
+			return true;
+		}
+	}
+	return false;
+}
+
 //Get Methods ----------
 ITEM_TYPE Villager::GetItemType() const
 {
