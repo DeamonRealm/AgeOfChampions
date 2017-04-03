@@ -130,7 +130,7 @@ bool UnitPanel::ActivateCell(int i)
 	if (entitis_panel == nullptr) return false;
 	switch (i)
 	{
-	case 4: {
+	case 3: {
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
@@ -383,12 +383,12 @@ bool HeroPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		if (champion_selected == WARRIOR_CHMP && mele_learned[0] == 0)((Warrior*)entitis_panel)->Hability_A();
-		if (champion_selected == WARRIOR_CHMP && mele_learned[0] == 1)((Warrior*)entitis_panel)->Hability_A();		
+		if (champion_selected == WARRIOR_CHMP && mele_learned[0] != -1)((Warrior*)entitis_panel)->Hability_A();
 		}
 		break;
 	case 1: 
 		{
+		if (champion_selected == WARRIOR_CHMP && mele_learned[1] != -1)((Warrior*)entitis_panel)->Hability_B();
 		}
 		break;
 	case 2:
@@ -425,6 +425,8 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 					if (ui_element == skills_buttons[i])
 					{
 						LearnSkill(i);
+						if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_A((i % 2));
+						if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_B((i % 2));
 						return true;
 					}
 				}
@@ -504,10 +506,21 @@ Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 
 Action_Panel::~Action_Panel()
 {
+	CleanUp();
 }
 
 bool Action_Panel::CleanUp()
 {
+
+
+	panel_cells.clear();
+
+	delete towncenterpanel;
+	delete barrackpanel;
+	delete villagerpanel;
+	delete unitpanel;
+	delete heropanel;
+
 	return false;
 }
 
@@ -593,6 +606,11 @@ int Action_Panel::GetCell() const
 	return ret;
 }
 
+void Action_Panel::ActivateCell(int i)
+{
+	if(actualpanel != nullptr) actualpanel->ActivateCell(i);
+}
+
 bool Action_Panel::GetIsIn() const
 {
 	return isin;
@@ -667,7 +685,7 @@ void Action_Panel::SetPanelType()
 			{
 				actualpanel = heropanel;
 			}
-			else if (u_type == NO_UNIT)
+			else
 			{
 				actualpanel = unitpanel;
 			}

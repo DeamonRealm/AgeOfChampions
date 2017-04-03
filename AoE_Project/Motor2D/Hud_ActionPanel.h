@@ -189,6 +189,7 @@ public:
 
 	// Get Cell Clicked
 	int GetCell() const;
+	void ActivateCell(int i);
 
 	// Get isin bool
 	bool GetIsIn() const;

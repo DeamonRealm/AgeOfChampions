@@ -193,6 +193,21 @@ bool j1Player::PreUpdate()
 		Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP, ALLY);
 		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 	}
+
+	// Skills
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		action_panel->ActivateCell(0);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		action_panel->ActivateCell(1);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	{
+		action_panel->ActivateCell(2);
+	}
+
 	return true;
 }
 
