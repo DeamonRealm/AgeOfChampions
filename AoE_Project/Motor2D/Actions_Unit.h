@@ -36,7 +36,8 @@ public:
 		}
 		((Unit*)actor)->SetAction(WALK);
 		((Unit*)actor)->Focus(path->back(),true);
-		((Unit*)actor)->SetFutureAction(*(path->rbegin()+1));
+		if (path->size() > 2)	((Unit*)actor)->SetFutureAction(*(path->rbegin() + 1));
+		else					((Unit*)actor)->SetFutureAction(iPoint(-1, -1));
 
 		return true;
 	}

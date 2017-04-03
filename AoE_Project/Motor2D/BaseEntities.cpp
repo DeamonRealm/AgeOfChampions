@@ -313,6 +313,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 	//Build goal path point
 	iPoint goal = path->back();
 	iPoint location = iPoint(position.x, position.y);
+	int path_size = path->size();
 	//Update goal node and animation direction
 	if (location.DistanceTo(goal) < 2)
 	{
@@ -326,19 +327,28 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 		int collisions = 0;
 		while (!other_units.empty()) {
 			Unit* other_unit = other_units.back();
-			if (other_unit != this) {
-				
+			if (other_unit != this&&other_unit->GetDiplomacy() ==ALLY) {
+				int other_path_size = 0;
+				std::vector<iPoint>* other_path = nullptr;
+				if (other_unit->GetPath() != nullptr)
+				{
+					other_path = other_unit->GetPath();
+					other_path_size = other_path->size();
+				}
+				other_path = other_unit->GetPath();
+				other_path_size = other_path->size();
+
 				switch (CheckColision(this, other_unit))
 				{
 				case NO_COLLISION:
 					break;
 				case COLLISION_IDLE:
 				{
-					if (GetPath()->size() < 2) {
+					if (path->size() < 2) {
 						if(target != iPoint(-1,-1))
 							Repath(target);
 						else
-							Repath(*(path->begin()));
+//							Repath(*(path->begin()));
 					
 
 						return false;
@@ -347,9 +357,9 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 				}
 					break;
 				case COLLISION_MOVE:
-						if (other_unit->GetPath()->size() < 2 && GetPath()->size() < 2 && future_position == other_unit->GetPositionRounded()) {
+						if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-								other_unit->Repath(*(other_unit->GetPath()->begin()));
+								other_unit->Repath(*(other_path->begin()));
 							else
 								Repath(*(path->begin()));
 
@@ -368,6 +378,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 					collisions++;
 					break;
 				case FUTURE_COLLISION_MOVE:
+					/*
 					if (future_position == other_unit->future_position) {
 						if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
@@ -389,7 +400,9 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 
 					}
 					collisions++;
+					*/
 					break;
+
 
 				}
 				
@@ -422,7 +435,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 			path->pop_back();
 
 			iPoint next_goal;
-			for (int i = path->size() - 1; i >= 0; i--) {
+			for (int i = path_size - 1; i >= 0; i--) {
 				if (App->pathfinding->IsWalkable(App->map->WorldToMap(path->at(i).x, path->at(i).y))) {
 					next_goal = path->at(i);
 					break;
@@ -441,10 +454,11 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 		}
 
 		//Set the unit next tile goal
+		if (path->size() > 2)	SetFutureAction(*(path->rbegin() + 1));
+		else					SetFutureAction(iPoint(-1,-1));
 
 		path->pop_back();
 		goal = path->back();
-		future_position = *(path->rbegin() + 1);
 
 		//Focus the unit at the next goal
 		Focus(goal);
@@ -605,9 +619,11 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 {
 	iPoint cell;
 	iPoint pos = App->map->WorldToMap(center.x, center.y);
-	
+
+
 		// south
 		cell.create(pos.x, pos.y + 1);
+
 		if (App->pathfinding->IsWalkable(cell) && !UnitHere(App->map->MapToWorldCenter(cell.x,cell.y)))
 		{
 			return App->map->MapToWorld(cell.x, cell.y);;
@@ -808,6 +824,7 @@ bool Unit::AttackUnit(Unit** target)
 		{
 			std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
 			if (path == nullptr)return true;
+			GetWorker()->ResetActive();
 			this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
 			return false;
 		}
@@ -815,12 +832,7 @@ bool Unit::AttackUnit(Unit** target)
 		{
 			return true;
 		}
-		/*
-		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
-		if (path == nullptr)return true;
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
-		return false;
-		*/
+	
 	}
 
 	//Control action rate
@@ -834,7 +846,7 @@ bool Unit::AttackUnit(Unit** target)
 		App->animator->UnitPlay(this);
 	}
 
-	if ((*target)->GetLife() == 0)
+	if ((*target)->GetLife() <= 0)
 	{
 		ACTION_TYPE act = ((Unit*)(*target))->action_type;
 		if (this->action_type == ATTATCK)
