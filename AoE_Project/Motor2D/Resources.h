@@ -20,7 +20,7 @@ public:
 
 	//Functionality ---------
 	bool	ExtractResources(uint* value);
-	int		GetLife()const;
+	uint		GetLife()const;
 
 };
 /// -------------------------

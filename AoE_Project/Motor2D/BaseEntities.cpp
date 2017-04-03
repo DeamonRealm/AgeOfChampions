@@ -192,9 +192,9 @@ uint Entity::GetMaxLife() const
 	return max_life;
 }
 
-int Entity::GetLife() const
+uint Entity::GetLife() const
 {
-	return (int)life;
+	return life;
 }
 
 Animation* Entity::GetAnimation() 
@@ -1501,7 +1501,7 @@ uint Building::GetMaxLife() const
 	return max_life;
 }
 
-int Building::GetLife() const
+uint Building::GetLife() const
 {
 	return life;
 }

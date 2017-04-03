@@ -180,7 +180,7 @@ protected:
 	Circle			vision;
 	//Life -------------
 	uint			max_life = 0;
-	float			life = 0;
+	uint			life = 0;
 	//Visual -----------
 	Animation*		current_animation = nullptr;
 	bool			flip_sprite = false;
@@ -236,7 +236,7 @@ public:
 	DIPLOMACY		GetDiplomacy()const;
 	Circle			GetVision()const;
 	uint			GetMaxLife()const;
-	virtual int		GetLife()const;
+	virtual uint	GetLife()const;
 	Animation*		GetAnimation();
 	bool			GetFlipSprite()const;
 	const SDL_Rect*	GetSelectionRect()const;
@@ -518,7 +518,7 @@ public:
 	ACTION_TYPE		GetActionType()const;
 	DIRECTION_TYPE	GetDirectionType()const;
 	uint			GetMaxLife()const;
-	int				GetLife()const;
+	uint			GetLife()const;
 
 };
 /// ---------------------------------------------
