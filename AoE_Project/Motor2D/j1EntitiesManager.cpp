@@ -844,7 +844,11 @@ Building * j1EntitiesManager::SearchNearestSavePoint(const iPoint & point)
 	while (building != buildings.end())
 	{
 		//Check building type
-		if (building._Ptr->_Myval->GetBuildingType() != TOWN_CENTER)continue;
+		if (building._Ptr->_Myval->GetBuildingType() != TOWN_CENTER)
+		{
+			building++;
+			continue;
+		}
 		//Calculate distance between building pos & point
 		uint dist = abs(building._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
 		//Check if is the nearest building from the point 

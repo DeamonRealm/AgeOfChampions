@@ -280,23 +280,25 @@ public:
 
 	bool Execute()
 	{
+		if (actor->GetWorker()->GetCurrentActionType() == TASK_U_DIE) return true;
+
 		surrounding_units.clear();
 
 		App->entities_manager->units_quadtree.CollectCandidates(surrounding_units, actor->GetVision());
 
 		uint size = surrounding_units.size();
 
-		if (actor->GetWorker()->GetCurrentActionType() == TASK_TYPE::TASK_NONE)
-		{
+	//	if (actor->GetWorker()->GetCurrentActionType() == TASK_TYPE::TASK_NONE)
+		//{
 			for (uint i = 0; i < size; i++)
 			{
 				if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy())
 				{
-					actor->AddAction(App->action_manager->AttackToUnitAction((Unit*)actor, surrounding_units[i]));
+					actor->AddPriorizedAction(App->action_manager->AttackToUnitAction((Unit*)actor, surrounding_units[i]));
 					return false;
 				}
 			};
-		}
+		//}
 
 
 		return false;

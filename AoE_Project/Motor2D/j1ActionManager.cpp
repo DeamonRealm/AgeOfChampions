@@ -175,11 +175,11 @@ ActionWorker::~ActionWorker()
 //Worker methods
 void ActionWorker::Update()
 {
+	//Don't update if the worker is paused
 	if (paused)
 		return;
-	
+		
 	//If the worker has a current action execute it
-
 	DoWork(&action_queue, &current_action);
 
 	//Make the passive_action logic only work on a refresh rate
