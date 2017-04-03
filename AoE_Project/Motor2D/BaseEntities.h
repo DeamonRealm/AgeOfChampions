@@ -339,6 +339,9 @@ public:
 	void					Repath(const iPoint & destination);
 	iPoint					FindWalkableCell(const iPoint& center);
 	bool					UnitHere(std::vector<Unit*> other_units,const iPoint& destination);
+	bool					UnitHere(const iPoint& destination);
+	iPoint					FindWalkableAdjacent(const iPoint& center);
+	iPoint					FindNewTarget();
 	void					Focus(const iPoint& target, bool play = true);
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
 	bool					AttackUnit(Unit** target);

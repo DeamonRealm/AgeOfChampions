@@ -486,7 +486,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 	std::vector<Unit*> other_units;
 	App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
 	int i = 1;
-	while (1) {
+	while (i<=5) {
 		// south
 		cell.create(pos.x, pos.y + i);
 		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
@@ -578,6 +578,113 @@ bool Unit::UnitHere(std::vector<Unit*> other_units, const iPoint& cell)
 	
 	
 	return true;
+}
+
+bool Unit::UnitHere(const iPoint & destination)
+{
+	std::vector<Unit*> other_units;
+	Circle area;
+	area.SetRad(60);
+
+	area.SetPosition(destination);
+	App->entities_manager->units_quadtree.CollectCandidates(other_units, area);
+	if (!other_units.empty()) {
+		if (other_units.size() == 1 && *(other_units.begin()) == this)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+iPoint Unit::FindWalkableAdjacent(const iPoint & center)
+{
+	iPoint cell;
+	iPoint pos = App->map->WorldToMap(center.x, center.y);
+	
+		// south
+		cell.create(pos.x, pos.y + 1);
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(App->map->MapToWorldCenter(cell.x,cell.y)))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+
+		// north
+		cell.create(pos.x, pos.y - 1);
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(App->map->MapToWorldCenter(cell.x, cell.y)))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+
+		// east
+		cell.create(pos.x + 1, pos.y);
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(App->map->MapToWorldCenter(cell.x, cell.y)))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+
+		// west
+		cell.create(pos.x - 1, pos.y);
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(App->map->MapToWorldCenter(cell.x, cell.y)))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+		
+		// south-east
+		cell.create(pos.x + 1, pos.y + 1);
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(App->map->MapToWorldCenter(cell.x, cell.y)))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+		// south-west
+		cell.create(pos.x - 1, pos.y + 1);
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(App->map->MapToWorldCenter(cell.x, cell.y)))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+		// north-east
+		cell.create(pos.x + 1, pos.y - 1);
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(App->map->MapToWorldCenter(cell.x, cell.y)))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+		// north-west
+		cell.create(pos.x - 1, pos.y - 1);
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(App->map->MapToWorldCenter(cell.x, cell.y)))
+		{
+			return App->map->MapToWorld(cell.x, cell.y);;
+		}
+	
+		return iPoint(-1, -1);
+}
+
+iPoint Unit::FindNewTarget()
+{
+std::vector<Unit*> other_units;
+App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
+Unit* unit;
+iPoint goal;
+while (!other_units.empty())
+{
+	unit = other_units.back();
+	other_units.pop_back();
+
+	if(unit->GetDiplomacy()==ALLY||unit->GetAction()==DIE ||unit->GetAction()==DISAPPEAR)
+	{
+		continue;
+	}
+	goal = FindWalkableAdjacent(unit->GetPositionRounded());
+	if (goal != iPoint(-1, -1)) 
+	{
+		SetInteractionTarget(unit);
+		return goal;
+	}
+}
+	return goal;
 }
 
 void Unit::Focus(const iPoint & target, bool play)
@@ -685,11 +792,35 @@ bool Unit::AttackUnit(Unit** target)
 	//Check if the target is in the attack area
 	if (!attack_area.Intersects(((Unit*)(*target))->GetAttackArea()))
 	{
+
 		iPoint goal = attack_area.NearestPoint(((Unit*)(*target))->GetAttackArea());
+
+		if (UnitHere(goal))
+		{
+			goal = FindWalkableAdjacent(((Unit*)(*target))->GetPositionRounded());
+			if (goal == iPoint(-1, -1))
+			{
+				goal = FindNewTarget();
+
+			}
+		}
+		if (goal != iPoint(-1, -1))
+		{
+			std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
+			if (path == nullptr)return true;
+			this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
 		if (path == nullptr)return true;
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
 		return false;
+		*/
 	}
 
 	//Control action rate
