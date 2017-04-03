@@ -16,7 +16,7 @@ Particle::Particle()
 
 }
 
-Particle::Particle(const Particle & copy) :position(copy.position), particle_type(copy.particle_type), animation(copy.animation), flip_sprite(copy.flip_sprite)
+Particle::Particle(const Particle & copy) :position(copy.position), particle_type(copy.particle_type),direction_type(copy.direction_type), animation(copy.animation), flip_sprite(copy.flip_sprite)
 {
 
 }

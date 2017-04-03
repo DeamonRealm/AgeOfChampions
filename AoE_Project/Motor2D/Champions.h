@@ -17,9 +17,9 @@ public:
 protected:
 
 	//Hero level
-	uint	level = 1;
+	uint	level = 2;
 	bool	ability[3];
-	bool	buff_actived = false;
+	bool	actived[3];
 
 	//Buff area
 	Circle			buff_area;
