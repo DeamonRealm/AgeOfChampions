@@ -46,6 +46,10 @@ public:
 	// Handle_input_GUI
 	void Handle_Input(UI_Element* ui_element, GUI_INPUT ui_input);
 
+	// Disable/Enable Module
+	void Enable();
+	void Disable();
+
 	// Add Resource
 	bool AddResource(int amount, PLAYER_RESOURCES resource_type);
 	bool UseResource(int amount_wood = 0, int amount_food = 0, int amount_gold = 0, int amount_stone = 0, int used_population = 0);

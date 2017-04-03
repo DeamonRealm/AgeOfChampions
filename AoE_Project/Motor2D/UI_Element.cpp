@@ -272,13 +272,11 @@ UI_TYPE UI_Element::GetUItype() const
 void UI_Element::Activate()
 {
 	IsActive = true;
-	ActivateChilds();
 }
 
 void UI_Element::Desactivate()
 {
 	IsActive = false;
-	DesactivateChids();
 }
 
 bool UI_Element::GetActiveState() const
@@ -291,6 +289,7 @@ void UI_Element::ActivateChilds()
 	for (std::list<UI_Element*>::iterator item = childs.begin(); item != childs.end(); item++)
 	{
 		item._Ptr->_Myval->Activate();
+		item._Ptr->_Myval->ActivateChilds();
 	}
 }
 
@@ -299,6 +298,7 @@ void UI_Element::DesactivateChids()
 	for (std::list<UI_Element*>::iterator item = childs.begin(); item != childs.end(); item++)
 	{
 		item._Ptr->_Myval->Desactivate();
+		item._Ptr->_Myval->DesactivateChids();
 	}
 }
 

@@ -309,34 +309,9 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 	if (inviewport == false)return;
 	switch (newevent)
 	{
-	case UP_ARROW:	if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
-	{
-		/*if (Selected->GetEntity() == nullptr)break;
-
-		//Set entity target to the selected unit
-		Selected->GetEntity()->GetWorker()->ResetActive();
-		if (Selected->GetEntity()->GetEntityType() == UNIT && ((Unit*)Selected->GetEntity())->GetUnitType() == WARRIOR_CHMP)
-		{
-			((Warrior*)Selected->GetEntity())->Hability_A();
-			//App->buff_manager->CallBuff((Unit*)Selected->GetEntity(), PASSIVE_BUFF, ATTACK_BUFF);
-
-		}*/
-	}
+	case UP_ARROW:
 		break;
-	case DOWN_ARROW:if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
-	{
-
-		/*if (Selected->GetEntity() == nullptr)break;
-
-		//Set entity target to the selected unit
-		Selected->GetEntity()->GetWorker()->ResetActive();
-		if (Selected->GetEntity()->GetEntityType() == UNIT && ((Unit*)Selected->GetEntity())->GetUnitType() == WARRIOR_CHMP)
-		{
-			((Warrior*)Selected->GetEntity())->Hability_B();
-			//App->buff_manager->CallBuff((Unit*)Selected->GetEntity(), PASSIVE_BUFF, ATTACK_BUFF);
-
-		}*/
-	}
+	case DOWN_ARROW:
 		break;
 	case LEFT_ARROW:
 		break;
@@ -559,7 +534,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 				selection_rect.y += selection_rect.h;
 				selection_rect.h = -selection_rect.h;
 			}
-			if (((uint)selection_rect.w) < 30 && ((uint)selection_rect.h) < 30)	return;
+			if (((uint)selection_rect.w) < 15 && ((uint)selection_rect.h) < 15)	return;
 		}
 
 		selection_rect.x -= App->render->camera.x;

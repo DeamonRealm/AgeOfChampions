@@ -40,17 +40,14 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 	
 	exit_menu_screen = App->gui->GenerateUI_Element(UI_TYPE::UNDEFINED);
 	exit_menu_screen->SetBox({ 0,0,App->win->screen_surface->w, 23});
-	exit_menu_screen->Activate();
 	exit_menu_screen->SetInputTarget((j1Module*)App->player);
 	exit_menu_screen->SetLayer(3);
-
 
 	exit_menu_button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
 	exit_menu_button->SetBox({ 1306,3,50,17 });
 	exit_menu_button->SetTexON({ 250,193, 50,17 }, ICONS);
 	exit_menu_button->SetTexOFF({ 200,193, 50, 17 }, ICONS);
 	exit_menu_button->SetTexOVER({ 200,193,50,17 }, ICONS);
-	exit_menu_button->Activate();
 	exit_menu_screen->AddChild(exit_menu_button);
 
 	exit_menu_image = (UI_Image*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
@@ -65,17 +62,18 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 	exit_to_main_menu->SetTexOFF({295, 0,220,30}, MENU_PAUSE);
 	exit_to_main_menu->SetTexOVER({ 295, 0,220,30 }, MENU_PAUSE);
 	exit_to_main_menu->SetTexON({295, 31,220,30}, MENU_PAUSE);
-	exit_to_main_menu->Activate();
+	exit_to_main_menu->Desactivate();
 	exit_menu_image->AddChild(exit_to_main_menu);
 
 	// Menu Text
 	resource_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	resource_text->SetColor({ 255, 255, 255, 255 });
 	resource_text->SetString("Quit Current Game");
+	resource_text->Desactivate();
 	resource_text->SetBox({ 58, 6,0,0 });
 	exit_to_main_menu->AddChild(resource_text);
 
-
+	exit_menu_screen->Desactivate();
 }
 
 // Destructor ==============================================
@@ -130,8 +128,15 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 	{
 		if (ui_element == exit_menu_button)
 		{
-			if (exit_menu_image->GetActiveState()) exit_menu_image->Desactivate();
-			else exit_menu_image->Activate();
+			if (exit_menu_image->GetActiveState()) {
+				exit_menu_image->Desactivate();
+				exit_menu_image->DesactivateChids();
+			}
+			else
+			{
+				exit_menu_image->Activate();
+				exit_menu_image->ActivateChilds();
+			}
 		}
 		if (ui_element == exit_to_main_menu)
 		{
@@ -147,7 +152,6 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		if (ui_element == exit_to_main_menu)
 		{
 			((UI_String*)exit_to_main_menu->childs.begin()._Ptr->_Myval)->SetColor({ 255,255,255,255 });
-			exit_menu_image->Desactivate();
 			App->scene->Disable();
 			App->player->Disable();
 			App->AI->Disable();
@@ -173,6 +177,17 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 	default:
 		break;
 	}
+}
+
+void Game_Panel::Enable()
+{
+	exit_menu_screen->Activate();
+}
+
+void Game_Panel::Disable()
+{
+	exit_menu_screen->Desactivate();
+	exit_menu_screen->DesactivateChids();
 }
 
 bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)

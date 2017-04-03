@@ -15,6 +15,7 @@
 
 #include "Hud_GamePanel.h"
 
+#include "UI_Element.h"
 #include "UI_Image.h"
 #include "UI_Button.h"
 #include "UI_Fixed_Button.h"
@@ -320,7 +321,6 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	skill_tree->ChangeTextureRect({ 0,0, 243, 345 });
 	skill_tree->SetLayer(15);
 	skill_tree->AdjustBox();
-	skill_tree->Desactivate();
 
 	mele_champion.reserve(MAX_SKILLS_LEARNED);
 /*	mele_champion.push_back({ 243,80,36,36 });
@@ -361,6 +361,8 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills_buttons[i]->SetLayer(8);
 		skills[i]->SetLayer(8);
 	}
+	
+	skill_tree->DesactivateChids();
 
 	//champion
 	mele_learned[0] = (-1);
@@ -394,8 +396,15 @@ bool HeroPanel::ActivateCell(int i)
 	case 2:
 		break;
 	case 3: {
-		if (skill_tree->GetActiveState() == true) skill_tree->Desactivate();
-		else skill_tree->Activate();
+		if (skill_tree->GetActiveState() == true)
+		{
+			skill_tree->Desactivate();
+			skill_tree->DesactivateChids();
+		}
+		else {
+			skill_tree->Activate();
+			skill_tree->ActivateChilds();
+		}
 		}
 		break;
 	case 4:
@@ -729,6 +738,7 @@ void Action_Panel::CheckSelected(int selected)
 		actual_entity = nullptr;
 		actualpanel = nullptr;
 		heropanel->skill_tree->Desactivate();
+		heropanel->skill_tree->DesactivateChids();
 		return;
 	}
 	if (actualpanel != nullptr)

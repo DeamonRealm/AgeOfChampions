@@ -37,12 +37,14 @@ void j1Player::Enable()
 {
 	active = true;
 	selection_panel->Enable();
+	game_panel->Enable();
 }
 
 void j1Player::Disable()
 {
 	active = false;
 	selection_panel->Disable();
+	game_panel->Disable();
 }
 
 bool j1Player::Awake(pugi::xml_node& config)
