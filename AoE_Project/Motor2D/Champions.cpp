@@ -6,6 +6,9 @@
 #include "j1EntitiesManager.h"
 #include "j1Input.h"
 #include "j1ActionManager.h"
+#include "j1Player.h"
+
+#include "Hud_ActionPanel.h"
 
 ///Class Champion -------------------------------
 //Base class that define the champions bases
@@ -407,6 +410,31 @@ void Warrior::CalculateSpecialAttackArea(const iPoint& base)
 	special_attack_area.SetBase(base);
 	//Recalculate the triangle vertex with the new base
 	special_attack_area.CalculateVertex();
+}
+
+bool Warrior::Die()
+{
+	if (action_type != DIE && action_type != DISAPPEAR)
+	{
+		App->buff_manager->RemoveTargetBuffs(this);
+		action_type = DIE;
+		App->animator->UnitPlay(this);
+	}
+	else if (current_animation->IsEnd())
+	{
+		if (action_type == DIE)
+		{
+			action_type = DISAPPEAR;
+			App->animator->UnitPlay(this);
+		}
+		else
+		{
+			App->player->action_panel->HeroIsDead(this->unit_type);
+			App->entities_manager->DeleteEntity(this);
+			return true;
+		}
+	}
+	return false;
 }
 
 //Set Methods ---------------
