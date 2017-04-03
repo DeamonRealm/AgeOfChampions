@@ -358,7 +358,7 @@ void Warrior::SetAbility_B(bool choosed)
 	}
 	else
 	{
-		ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
 		ability_B_value = 1500;
 	}
 	ability[1] = choosed;
@@ -370,7 +370,7 @@ void Warrior::Hability_B()
 	{
 		ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
 	}
-	else ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+	else ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
 
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_in;

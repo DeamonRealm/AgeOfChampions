@@ -4,6 +4,7 @@
   <particle document="Area_Defense.xml"/>
   <particle document="Area_Fire.xml"/>
   <particle document="Slash_Effect.xml"/>
+  <particle document="Stun_Effect.xml"/>
   <buff
     buff_type ="passive"
     attribute_type="attack"
