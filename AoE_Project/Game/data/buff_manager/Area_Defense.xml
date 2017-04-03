@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:0beb56ff4fc2a1e230b8375551b644c2:fe568d4bbf36fafd57d2f838df21f726:64184529942979f5f1f849e4b2b346cf$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Area_Defense.png" width="470" height="1393">
+  <particle particle_type="buff_particle" actor="1" buff_type="passive" attribute_type="defense" draw_rate="2500">
+    <anim_data speed="150" loop="0"/>
+    <sprite n="DeffenseArea_00.png" opacity ="255" x="1" y="1" w="30" h="21" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_01.png" opacity ="255" x="33" y="1" w="22" h="20" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_02.png" opacity ="255" x="57" y="1" w="20" h="11" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_03.png" opacity ="255" x="79" y="1" w="19" h="12" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_04.png" opacity ="255" x="100" y="1" w="29" h="19" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_05.png" opacity ="255" x="131" y="1" w="71" h="42" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_06.png" opacity ="255" x="204" y="1" w="225" h="135" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_07.png" opacity ="255" x="1" y="138" w="325" h="191" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_08.png" opacity ="255" x="1" y="331" w="418" h="245" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_09.png" opacity ="255" x="1" y="578" w="429" h="252" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_10.png" opacity ="255" x="1" y="832" w="445" h="261" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_11.png" opacity ="255" x="1" y="1095" w="468" h="274" pX="0.5" pY="0.5"/>
+  </particle>
+  <particle particle_type="buff_particle" actor="0" buff_type="passive" attribute_type="defense" draw_rate ="0">
+    <anim_data speed="150" loop="1"/>
+    <sprite n="DeffenseArea_12.png" opacity ="255" x="57" y="1" w="20" h="11" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_13.png" opacity ="255" x="1" y="1371" w="22" h="20" pX="0.5" pY="0.5"/>
+    <sprite n="DeffenseArea_14.png" opacity ="255" x="25" y="1371" w="30" h="21" pX="0.5" pY="0.5"/>
+  </particle>
+</TextureAtlas>

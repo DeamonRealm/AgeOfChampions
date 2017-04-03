@@ -289,12 +289,12 @@ void Warrior::Hability_A()
 		{
 			if (units_around[k]->GetPosition() != position)
 			{
-				App->buff_manager->CallBuff(units_around[k], PASSIVE_BUFF, ATTACK_BUFF, false);
+				App->buff_manager->CallBuff(units_around[k],buff_to_apply->GetBuffType(),buff_to_apply->GetAttributeType(), false);
 				buffed_units.push_back(units_around[k]);
 			}
 			else
 			{
-				App->buff_manager->CallBuff(units_around[k], PASSIVE_BUFF, ATTACK_BUFF, true);
+				App->buff_manager->CallBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), true);
 				buffed_units.push_back(units_around[k]);
 			}
 		}
@@ -338,7 +338,7 @@ void Warrior::CheckHability_A()
 		if (units_around[k] == nullptr)continue;
 		if (units_around[k]->GetDiplomacy() == entity_diplomacy && units_around[k]->GetPosition() != position)
 		{
-			App->buff_manager->CallBuff(units_around[k], PASSIVE_BUFF, ATTACK_BUFF, false);
+			App->buff_manager->CallBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), false);
 			buffed_units.push_back(units_around[k]);
 		}
 	}
