@@ -148,7 +148,7 @@ public:
 	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor, const iPoint& target = { -1,-1 });
 	
 	//Attack Functions
-	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit *target);
+	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit** target);
 	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target);
 	DieUnitAction*				DieAction(Unit* actor);
 	StunUnitAction*				StunAction(Unit* actor, uint time);

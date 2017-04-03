@@ -72,7 +72,7 @@ MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * ac
 	return action;
 }
 
-AttackUnitAction* j1ActionManager::AttackToUnitAction(Unit * actor, Unit * target)
+AttackUnitAction* j1ActionManager::AttackToUnitAction(Unit * actor, Unit ** target)
 {
 	//Generate a new attack action definition
 	AttackUnitAction* action = new AttackUnitAction(actor, target);
@@ -163,7 +163,7 @@ ScannAction * j1ActionManager::ScanAction(Entity * actor)
 
 ///Action Worker---------------------------------
 //Constructor
-ActionWorker::ActionWorker() : refresh_rate(1000)
+ActionWorker::ActionWorker() : refresh_rate(500)
 {
 }
 

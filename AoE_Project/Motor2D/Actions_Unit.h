@@ -68,22 +68,24 @@ class AttackUnitAction : public Action
 public:
 
 	//Constructor -----------
-	AttackUnitAction(Unit* actor,Unit* target) : Action(actor, TASK_U_ATTACK_U), target(target)
+	AttackUnitAction(Unit* actor,Unit** target) : Action(actor, TASK_U_ATTACK_U), target(target)
 	{
 		//Set actor interaction target
-		((Unit*)actor)->SetInteractionTarget(target);
+	//	((Unit*)actor)->SetInteractionTarget(target);
 	}
 
 	//Functionality ---------
 	bool Execute()
 	{
+		if ((*target) == nullptr) return true;
+
 		//Actor attack the target
-		return ((Unit*)actor)->AttackUnit();
+		return ((Unit*)actor)->AttackUnit(target);
 	}
 
 private:
 
-	Entity* target = nullptr;
+	Unit** target = nullptr;
 };
 /// ---------------------------------------------
 
@@ -215,8 +217,7 @@ public:
 		return ((Villager*)actor)->Recollect(target);
 	}
 
-
-
+	
 private:
 
 	Resource** target = nullptr;
@@ -288,18 +289,14 @@ public:
 
 		uint size = surrounding_units.size();
 
-	//	if (actor->GetWorker()->GetCurrentActionType() == TASK_TYPE::TASK_NONE)
-		//{
 			for (uint i = 0; i < size; i++)
 			{
 				if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy())
 				{
-					actor->AddPriorizedAction(App->action_manager->AttackToUnitAction((Unit*)actor, surrounding_units[i]));
+					actor->AddPriorizedAction(App->action_manager->AttackToUnitAction((Unit*)actor, (Unit**)surrounding_units[i]->GetMe()));
 					return false;
 				}
 			};
-		//}
-
 
 		return false;
 	};

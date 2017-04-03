@@ -341,7 +341,7 @@ public:
 	bool					UnitHere(std::vector<Unit*> other_units,const iPoint& destination);
 	void					Focus(const iPoint& target, bool play = true);
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
-	bool					AttackUnit();
+	bool					AttackUnit(Unit** target);
 	bool					AttackBuilding();
 	bool					AttackResource();
 	bool					Cover();

@@ -680,12 +680,12 @@ DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
 		return NO_DIRECTION;
 	}
 }
-bool Unit::AttackUnit()
+bool Unit::AttackUnit(Unit** target)
 {
 	//Check if the target is in the attack area
-	if (!attack_area.Intersects(((Unit*)interaction_target)->GetAttackArea()))
+	if (!attack_area.Intersects(((Unit*)(*target))->GetAttackArea()))
 	{
-		iPoint goal = attack_area.NearestPoint(((Unit*)interaction_target)->GetAttackArea());
+		iPoint goal = attack_area.NearestPoint(((Unit*)(*target))->GetAttackArea());
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
 		if (path == nullptr)return true;
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
@@ -699,23 +699,23 @@ bool Unit::AttackUnit()
 	if (action_type != ATTATCK)
 	{
 		action_type = ATTATCK;
-		Focus(interaction_target->GetPositionRounded());
+		Focus((*target)->GetPositionRounded());
 		App->animator->UnitPlay(this);
 	}
 
-	if (interaction_target->GetLife() == 0)
+	if ((*target)->GetLife() == 0)
 	{
-		ACTION_TYPE act = ((Unit*)interaction_target)->action_type;
+		ACTION_TYPE act = ((Unit*)(*target))->action_type;
 		if (this->action_type == ATTATCK)
 		{
 			action_type = IDLE;
 			App->animator->UnitPlay(this);
 		}
-		if(act != DIE && act != DISAPPEAR)interaction_target->AddPriorizedAction((Action*)App->action_manager->DieAction((Unit*)interaction_target));
+		if(act != DIE && act != DISAPPEAR)(*target)->AddPriorizedAction((Action*)App->action_manager->DieAction((Unit*)(*target)));
 		return true;
 	}
 	//Calculate the attack & apply the value at the target life points
-	((Unit*)interaction_target)->life -= MIN(((Unit*)interaction_target)->life, attack_hitpoints);
+	((Unit*)(*target))->life -= MIN(((Unit*)(*target))->life, attack_hitpoints);
 
 	//Reset action timer
 	action_timer.Start();
