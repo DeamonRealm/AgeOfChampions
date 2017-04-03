@@ -182,8 +182,8 @@ void ActionWorker::Update()
 
 	DoWork(&action_queue, &current_action);
 
-	//Make the passive_action logic only work when thera are no active actions (Active should take priority)
-	if (current_action == nullptr  &&  refresh_timer.Read() > refresh_rate)
+	//Make the passive_action logic only work on a refresh rate
+	if (refresh_timer.Read() > refresh_rate)
 	{
 		DoWork(&passive_action_queue, &current_passive_action);
 		refresh_timer.Start();
@@ -285,14 +285,21 @@ void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)
 	while (!queue->empty())
 	{
 		to_erase = queue->front();
-		queue->pop_back();
+		queue->pop_front();
 		RELEASE(to_erase);
 	}
+
+	queue->clear();
 }
 
 TASK_TYPE ActionWorker::GetCurrentActionType() const
 {
-	return current_action->GetType();
+	if (current_action != nullptr)
+	{
+		return current_action->GetType();
+	}
+
+	return TASK_TYPE::TASK_NONE;
 }
 
 Action * ActionWorker::GetCurrentAction() const
