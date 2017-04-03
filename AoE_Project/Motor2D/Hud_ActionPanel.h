@@ -38,6 +38,9 @@ public:
 	Action_Panel_Elements();
 	~Action_Panel_Elements();
 	
+	// Reset Panel
+	virtual void ResetPanel();
+
 	virtual bool ActivateCell(int i) { return false; };
 
 	void AddIcon(SDL_Rect icon_rect, uint position);
@@ -68,9 +71,14 @@ public:
 	TownCenterPanel();
 	~TownCenterPanel() {};
 
+	// Reset Panel
+	void ResetPanel();
+
 	bool ActivateCell(int i);
+	void ChampionIsDead(UNIT_TYPE type);
 
 private:
+	bool		got_melechmp = false;
 };
 
 // Barrack -----------------------------------------------------------------------------------------------
@@ -80,6 +88,9 @@ class BarrackPanel : public Action_Panel_Elements
 public:
 	BarrackPanel();
 	~BarrackPanel() {};
+
+	// Reset Panel
+	void ResetPanel();
 
 	bool ActivateCell(int i);
 
@@ -94,6 +105,9 @@ class UnitPanel : public Action_Panel_Elements
 public:
 	UnitPanel();
 	~UnitPanel() {};
+
+	// Reset Panel
+	void ResetPanel();
 
 	bool ActivateCell(int i);
 
@@ -115,6 +129,9 @@ class VillagerPanel : public Action_Panel_Elements
 public:
 	VillagerPanel();
 	~VillagerPanel() {};
+
+	// Reset Panel
+	void ResetPanel();
 
 	bool ActivateCell(int i);
 
@@ -140,6 +157,9 @@ class HeroPanel : public Action_Panel_Elements
 public:
 	HeroPanel();
 	~HeroPanel();
+
+	// Reset Panel
+	void ResetPanel();
 
 	bool ActivateCell(int i);
 	bool Hero_Handle_input(UI_Element* ui_element, GUI_INPUT ui_input);
@@ -175,6 +195,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Disable/Enable Panels
+	void Enable();
+	void Disable();
+
 	// Called before all Updates
 	bool PreUpdate();
 
@@ -199,6 +223,7 @@ public:
 
 	// Return Hero Panel Skil Tree;
 	UI_Element* GetHeroSkillTree() const;
+	void HeroIsDead(UNIT_TYPE type);
 
 	// Set Pointer To Selection Panel
 	void SetSelectionPanelPointer(Selection_Panel* selection_panel);

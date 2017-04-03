@@ -28,6 +28,15 @@ void j1AI::Enable()
 
 }
 
+void j1AI::Disable()
+{
+	active = false;
+	ai_worker->Reset();
+	units_to_spawn.clear();
+	enemy_units.clear();
+}
+
+
 bool j1AI::Awake(pugi::xml_node&)
 {
 	

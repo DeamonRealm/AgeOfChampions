@@ -182,10 +182,16 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 void Game_Panel::Enable()
 {
 	exit_menu_screen->Activate();
+	exit_menu_button->Activate();
 }
 
 void Game_Panel::Disable()
 {
+	population = 0;
+	wood = 0;
+	meat = 0;
+	gold = 0;
+	stone = 0;
 	exit_menu_screen->Desactivate();
 	exit_menu_screen->DesactivateChids();
 }

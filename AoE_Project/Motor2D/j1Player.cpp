@@ -36,8 +36,17 @@ j1Player::~j1Player()
 void j1Player::Enable()
 {
 	active = true;
+
+	// Setting Game Panel Resources
+	game_panel->AddResource(800, GP_WOOD);
+	game_panel->AddResource(800, GP_MEAT);
+	game_panel->AddResource(800, GP_GOLD);
+	game_panel->AddResource(800, GP_STONE);
+	game_panel->IncressPopulation(45, true);
+
 	selection_panel->Enable();
 	game_panel->Enable();
+	action_panel->Enable();
 }
 
 void j1Player::Disable()
@@ -71,14 +80,6 @@ bool j1Player::Start()
 
 	action_panel->SetSelectionPanelPointer(selection_panel);
 	action_panel->SetGamePanelPointer(game_panel);
-
-	// Setting Game Panel Resources
-	game_panel->AddResource(200, GP_WOOD);
-	game_panel->AddResource(200, GP_MEAT);
-	game_panel->AddResource(100, GP_GOLD);
-	game_panel->AddResource(200, GP_STONE);
-
-	game_panel->IncressPopulation(45, true);
 
 	game_hud->AddChild(selection_panel->GetViewport());
 	game_hud->AddChild(action_panel->GetHeroSkillTree());

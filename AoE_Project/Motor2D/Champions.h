@@ -109,7 +109,7 @@ public:
 	void	Hability_B();
 	void	CheckHability_B();
 	void	CalculateSpecialAttackArea(const iPoint& base);
-
+	bool	Die();
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Triangle& tri);

@@ -29,6 +29,15 @@ Action_Panel_Elements::Action_Panel_Elements()
 Action_Panel_Elements::~Action_Panel_Elements()
 {
 	panel_icons.clear();
+}
+void Action_Panel_Elements::ResetPanel()
+{
+	panel_icons.clear();
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons.push_back({ 0,0,1,1 });
+	}
+	entitis_panel = nullptr;
 };
 
 void Action_Panel_Elements::AddIcon(SDL_Rect icon_rect, uint position)
@@ -54,7 +63,7 @@ void Action_Panel_Elements::ChangePlayerGamePanel(Game_Panel * game_panel)
 	player_game_panel_resources = game_panel;
 }
 
-TownCenterPanel::TownCenterPanel() : Action_Panel_Elements()
+TownCenterPanel::TownCenterPanel() : Action_Panel_Elements(), got_melechmp(false)
 {
 	panel_icons.reserve(MAX_PANEL_CELLS);
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
@@ -64,6 +73,18 @@ TownCenterPanel::TownCenterPanel() : Action_Panel_Elements()
 	panel_icons[0] = { 576,585,36,36 };
 	panel_icons[1] = { 288,585,36,36 };
 };
+
+void TownCenterPanel::ResetPanel()
+{
+	panel_icons.clear();
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons.push_back({ 0,0,1,1 });
+	}
+	panel_icons[0] = { 576,585,36,36 };
+	panel_icons[1] = { 288,585,36,36 };
+	got_melechmp = false;
+}
 
 // TOWNCENTER ------------------------------------------------------------------------------------------------------------
 bool TownCenterPanel::ActivateCell(int i)
@@ -76,8 +97,12 @@ bool TownCenterPanel::ActivateCell(int i)
 		}
 		break;
 	case 1: {
-		if (player_game_panel_resources->UseResource(0, 0, 100, 0, 1)) {
-			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, WARRIOR_CHMP, ALLY));
+		if (got_melechmp == false)
+		{
+			if (player_game_panel_resources->UseResource(0, 0, 100, 0, 1)) {
+				entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, WARRIOR_CHMP, ALLY));
+				got_melechmp = true;
+			}
 		}
 		}
 		break;
@@ -85,6 +110,23 @@ bool TownCenterPanel::ActivateCell(int i)
 		break;
 	}
 	return true;
+}
+
+void TownCenterPanel::ChampionIsDead(UNIT_TYPE type)
+{
+	switch (type)
+	{
+	case WARRIOR_CHMP: {
+		got_melechmp = false;
+	}
+		break;
+	case ARCHER_CHMP:
+		break;
+	case WIZARD_CHMP:
+		break;
+	default:
+		break;
+	}
 }
 
 // Barrack Panel ---------------------------------------------------------------------------------------------------------
@@ -95,6 +137,16 @@ BarrackPanel::BarrackPanel() : Action_Panel_Elements()
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
 	{
 		panel_icons.push_back({ 0,0,1,1 });	
+	}
+	panel_icons[0] = { 504,585,36,36 };
+}
+
+void BarrackPanel::ResetPanel()
+{
+	panel_icons.clear();
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons.push_back({ 0,0,1,1 });
 	}
 	panel_icons[0] = { 504,585,36,36 };
 }
@@ -125,6 +177,10 @@ UnitPanel::UnitPanel() : Action_Panel_Elements()
 	}
 	panel_icons[3] = { 0,76,36,36 };
 };
+
+void UnitPanel::ResetPanel()
+{
+}
 
 bool UnitPanel::ActivateCell(int i)
 {
@@ -166,6 +222,14 @@ VillagerPanel::VillagerPanel() : Action_Panel_Elements()
 	v_militari_panel[0] = { 132,0,36,36 };
 	v_militari_panel[13] = { 332,36,36,36 };
 	v_militari_panel[14] = { 477,36,36,36 };
+}
+
+void VillagerPanel::ResetPanel()
+{
+	villagerisbuilding = VP_NOT_BUILDING;
+
+	isbuilding = false;
+	buildingthis = nullptr;
 }
 
 bool VillagerPanel::ActivateCell(int i)
@@ -346,7 +410,7 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills[i]->ChangeTextureId(CHAMPION_SKILL);
 		skills[i]->ChangeTextureRect(mele_champion[i]);
 		skills[i]->SetBoxPosition(97 + 67 * (i % 2), 177 + 55 * (i / 2));
-		skills[i]->Activate();
+		skills[i]->Desactivate();
 
 		skills_buttons.push_back((UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON));
 		skills_buttons[i]->SetBox({ 77 + 67 * (i % 2), 188 + 55 * (i / 2),16,15 });
@@ -354,15 +418,13 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills_buttons[i]->SetTexUP({ 244,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
 		skills_buttons[i]->SetTexOVERUP({ 244,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
 		skills_buttons[i]->SetTexOVERDOWN({ 266,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
-		skills_buttons[i]->Activate();
+		skills_buttons[i]->Desactivate();
 
 		skill_tree->AddChild(skills_buttons[i]);
 		skill_tree->AddChild(skills[i]);
 		skills_buttons[i]->SetLayer(8);
 		skills[i]->SetLayer(8);
 	}
-	
-	skill_tree->DesactivateChids();
 
 	//champion
 	mele_learned[0] = (-1);
@@ -377,6 +439,22 @@ HeroPanel::~HeroPanel()
 	skills_buttons.clear();
 	
 	mele_champion.clear();
+}
+
+void HeroPanel::ResetPanel()
+{
+	champion_selected = NO_UNIT;
+
+	skill_tree->DesactivateChids();
+
+	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
+	{
+		skills_buttons[i]->button_state = UP;
+	}
+	//champion
+	mele_learned[0] = (-1);
+	mele_learned[1] = (-1);
+	mele_learned[2] = (-1);
 }
 
 bool HeroPanel::ActivateCell(int i)
@@ -520,8 +598,6 @@ Action_Panel::~Action_Panel()
 
 bool Action_Panel::CleanUp()
 {
-
-
 	panel_cells.clear();
 
 	delete towncenterpanel;
@@ -531,6 +607,19 @@ bool Action_Panel::CleanUp()
 	delete heropanel;
 
 	return false;
+}
+
+void Action_Panel::Enable()
+{
+	towncenterpanel->ResetPanel();
+	barrackpanel->ResetPanel();
+	villagerpanel->ResetPanel();
+	unitpanel->ResetPanel();
+	heropanel->ResetPanel();
+}
+
+void Action_Panel::Disable()
+{
 }
 
 bool Action_Panel::PreUpdate()
@@ -636,6 +725,12 @@ void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 UI_Element * Action_Panel::GetHeroSkillTree() const
 {
 	return heropanel->skill_tree;
+}
+
+void Action_Panel::HeroIsDead(UNIT_TYPE type)
+{
+	towncenterpanel->ChampionIsDead(type);
+	heropanel->ResetPanel();
 }
 
 void Action_Panel::SetSelectionPanelPointer(Selection_Panel * selection_panel)
