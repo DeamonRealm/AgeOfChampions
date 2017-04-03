@@ -18,6 +18,7 @@ class AttackUnitAction;
 class AttackBuildingAction;
 class AttackResourceAction;
 class DieUnitAction;
+class DieBuildingAction;
 class RecollectVillagerAction;
 class SpawnUnitAction;
 class SaveResourcesVillagerAction;
@@ -37,6 +38,7 @@ enum TASK_TYPE
 	TASK_U_ATTACK_U,
 	TASK_U_ATTACK_B,
 	TASK_U_DIE,
+	TASK_B_DIE,
 	TASK_U_STUN,
 	TASK_U_RECOLLECT,
 	TASK_U_SAVE_RESOURCES,
@@ -149,8 +151,9 @@ public:
 	
 	//Attack Functions
 	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit** target);
-	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target);
+	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building** target);
 	DieUnitAction*				DieAction(Unit* actor);
+	DieBuildingAction*			DieBuildngAction(Building* actor);
 	StunUnitAction*				StunAction(Unit* actor, uint time);
 
 	//Recollect Functions

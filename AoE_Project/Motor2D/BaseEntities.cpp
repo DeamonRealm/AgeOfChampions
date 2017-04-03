@@ -56,6 +56,11 @@ bool Entity::Update()
 	return true;
 }
 
+bool Entity::Die()
+{
+	return true;
+}
+
 // Draw -----------
 bool Entity::Draw(bool debug)
 {
@@ -864,9 +869,49 @@ bool Unit::AttackUnit(Unit** target)
 	return false;
 }
 
-bool Unit::AttackBuilding()
+bool Unit::AttackBuilding(Building ** target)
 {
-	return true;
+	//Check if the target is in the attack area
+	if (!attack_area.Intersects((*target)->GetInteractArea()))
+	{
+
+		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
+		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
+		if (path == nullptr)return true;
+		GetWorker()->ResetActive();
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
+	}
+
+	//Control action rate
+	if (action_timer.Read() < attack_rate)return false;
+
+	//Set unit attack animation
+	if (action_type != ATTATCK)
+	{
+		action_type = ATTATCK;
+		Focus((*target)->GetPositionRounded());
+		App->animator->UnitPlay(this);
+	}
+
+	if ((*target)->GetLife() <= 0)
+	{
+		ACTION_TYPE act = (*target)->GetActionType();
+		if (this->action_type == ATTATCK)
+		{
+			action_type = IDLE;
+			App->animator->UnitPlay(this);
+		}
+		if (act != DIE && act != DISAPPEAR)(*target)->AddPriorizedAction((Action*)App->action_manager->DieBuildngAction((*target)));
+		return true;
+	}
+
+	//Calculate the attack & apply the value at the target life points
+	((Unit*)(*target))->life -= MIN(((Unit*)(*target))->life, attack_hitpoints);
+
+	//Reset action timer
+	action_timer.Start();
+
+	return false;
 }
 
 bool Unit::Cover()
@@ -1473,6 +1518,23 @@ void Building::CleanMapLogic()
 	//Change walk & construction logic maps
 	App->map->ChangeConstructionMap(world_coords, 1, 1, 1);
 	App->map->ChangeLogicMap(world_coords, 1, 1, 1);
+}
+
+bool Building::Die()
+{
+	if (building_type != RUBBLE)
+	{
+		action_type = DISAPPEAR;
+		App->animator->BuildingPlay(this);
+	}
+
+	else if (current_animation->IsEnd())
+	{
+		App->entities_manager->DeleteEntity(this);
+		return true;
+	}
+
+	return false;
 }
 
 //Draw ----------------------

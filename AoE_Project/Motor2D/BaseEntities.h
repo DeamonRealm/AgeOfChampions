@@ -74,7 +74,8 @@ enum BUILDING_TYPE
 	NO_BUILDING = 0,
 	FARM,
 	TOWN_CENTER,
-	BARRACK
+	BARRACK,
+	RUBBLE
 };
 enum ACTION_TYPE
 {
@@ -204,6 +205,7 @@ public:
 
 	//Update ----------------
 	virtual bool	Update();
+	virtual bool	Die();
 
 	//Draw ------------------
 	virtual bool	Draw(bool debug);
@@ -345,11 +347,11 @@ public:
 	void					Focus(const iPoint& target, bool play = true);
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
 	bool					AttackUnit(Unit** target);
-	bool					AttackBuilding();
+	bool					AttackBuilding(Building** target);
 	bool					AttackResource();
 	bool					Cover();
 	void					DirectDamage(uint damage);
-	virtual bool			Die();
+	bool					Die();
 	void					Stun(uint time);
 	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
 	//Bonus -----------------
@@ -498,6 +500,7 @@ public:
 	bool	CoverUnit(const Unit* target);
 	void	ReleaseUnit(const Unit* target);
 	void	ReleaseAllUnits();
+	bool	Die();
 
 	//Draw ------------------
 	bool	Draw(bool debug);

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:e4f1f6dde340ec7e2cbc06a5f21797e1:1a50ba332b6718e4dc1600889878e03c:3582dd9513d4f03de3d42b1c1047f4fc$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="rubble.png" width="387" height="387">
+  <!-- Define the building type-->
+  <building id ="town_center">
+    <action enum ="disappear" speed="0">
+      <sprite n="Rubble_00.bmp" x="1" y="1" w="91" h="51" pX="0.362637" pY="0.431373"/>
+      <sprite n="Rubble_01.bmp" x="94" y="1" w="137" h="75" pX="0.518248" pY="0.533333"/>
+      <sprite n="Rubble_02.bmp" x="233" y="1" w="153" h="79" pX="0.398693" pY="0.417722"/>
+      <sprite n="Rubble_03.bmp" x="1" y="82" w="235" h="122" pX="0.421277" pY="0.434426"/>
+      <sprite n="Rubble_04.bmp" x="1" y="206" w="310" h="156" pX="0.483871" pY="0.467949"/>
+    </action>
+  </building>
+</TextureAtlas>

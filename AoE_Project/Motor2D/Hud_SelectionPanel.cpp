@@ -376,7 +376,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				if (UpperEntity->GetDiplomacy() == ENEMY && Selected->GetEntity()->GetDiplomacy() != ENEMY)
 				{
 					if (UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit**)UpperEntity->GetMe()));
-					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
+					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building**)UpperEntity->GetMe()));
 					App->sound->PlayFXAudio(ATTACK_SOUND);
 				}
 				else if(UpperEntity->GetEntityType() == RESOURCE) Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));

@@ -97,22 +97,21 @@ class AttackBuildingAction : public Action
 public:
 
 	//Constructor -----------
-	AttackBuildingAction(Unit* actor, Building* target) : Action(actor, TASK_U_ATTACK_B), target(target)
+	AttackBuildingAction(Unit* actor, Building** target) : Action(actor, TASK_U_ATTACK_B), target(target)
 	{
-		//Set actor interaction target
-		((Unit*)actor)->SetInteractionTarget(target);
+
 	}
 
 	//Functionality ---------
 	bool Execute()
 	{
 		//Actor attack the target
-		return ((Unit*)actor)->AttackBuilding();
+		return ((Unit*)actor)->AttackBuilding(target);
 	}
 
 private:
 
-	Building* target = nullptr;
+	Building** target = nullptr;
 };
 /// ---------------------------------------------
 
@@ -138,6 +137,25 @@ public:
 	{
 		//Actor attack the target
 		return ((Unit*)actor)->Die();
+	}
+};
+/// ---------------------------------------------
+
+/// Die Building Action ----------------------------
+//Kill the character
+class DieBuildingAction : public Action
+{
+public:
+
+	//Constructor -----------
+	DieBuildingAction(Building* actor) : Action(actor, TASK_B_DIE)
+	{
+	}
+
+	bool Execute()
+	{
+		//Actor attack the target
+		return ((Building*)actor)->Die();
 	}
 };
 /// ---------------------------------------------
