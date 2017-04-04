@@ -447,6 +447,7 @@ void HeroPanel::ResetPanel()
 {
 	champion_selected = NO_UNIT;
 
+	skill_tree->Desactivate();
 	skill_tree->DesactivateChids();
 
 	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
@@ -469,8 +470,8 @@ bool HeroPanel::ActivateCell(int i)
 	case 0: {
 		if (champion_selected == WARRIOR_CHMP && mele_learned[0] != -1)
 		{
-			activate_skill = 0;
-			return true;
+			((Warrior*)entitis_panel)->Hability_A();
+			return false;
 		}
 		}
 		break;
@@ -555,8 +556,8 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 		int x = 0, y = 0;
 		App->input->GetMousePosition(x, y);
 		entitis_panel->GetWorker()->ResetActive();
-		if (activate_skill == 0)((Warrior*)entitis_panel)->Hability_B();
-		else if (activate_skill == 1)((Warrior*)entitis_panel)->Hability_B();
+		
+		if (activate_skill == 1)((Warrior*)entitis_panel)->Hability_B();
 		activate_skill = -1;
 		return false;
 	}
@@ -845,7 +846,7 @@ void Action_Panel::SetPanelType()
 			}
 			else if (u_type == WARRIOR_CHMP)
 			{
-				if (actualpanel == heropanel)return;
+				if (actualpanel == heropanel && heropanel->GetActualEntity()!= nullptr)return;
 				actualpanel = heropanel;
 			}
 			else
@@ -891,6 +892,7 @@ void Action_Panel::CheckSelected(int selected)
 	{
 		actual_entity = nullptr;
 		actualpanel = nullptr;
+		on_action = false;
 		heropanel->skill_tree->Desactivate();
 		heropanel->skill_tree->DesactivateChids();
 		return;
