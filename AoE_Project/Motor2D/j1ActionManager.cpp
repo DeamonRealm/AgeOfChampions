@@ -193,13 +193,18 @@ void ActionWorker::Update()
 	//If the worker has a current action execute it
 	DoWork(&action_queue, &current_action);
 
-	//Make the passive_action logic only work on a refresh rate
-	if (refresh_timer.Read() > refresh_rate)
+	//Secondary and passive actions take place when there is no active_action
+	if (current_action == nullptr)
 	{
-		DoWork(&passive_action_queue, &current_passive_action);
-		refresh_timer.Start();
-	}
+		DoWork(&secondary_action_queue, &current_secondary_action);
 
+		//Make the passive_action logic only work on a refresh rate
+		if (refresh_timer.Read() > refresh_rate)
+		{
+			DoWork(&passive_action_queue, &current_passive_action);
+			refresh_timer.Start();
+		}
+	}
 }
 
 void ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
@@ -238,6 +243,11 @@ void ActionWorker::AddAction(Action * action)
 void ActionWorker::AddPassiveAction(Action* action)
 {
 	passive_action_queue.push_back(action);
+}
+
+void ActionWorker::AddSecondaryAction(Action * action)
+{
+	secondary_action_queue.push_back(action);
 }
 
 void ActionWorker::AddPriorizedAction(Action * action)

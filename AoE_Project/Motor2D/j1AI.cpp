@@ -228,7 +228,7 @@ bool MoveUnitsCommand::Execute()
 
 	for (uint i = 0; i < size; i++)
 	{
-		to_move_list[i]->AddAction(App->action_manager->MoveAction(to_move_list[i], new_pos));
+		to_move_list[i]->AddSecondaryAction(App->action_manager->MoveAction(to_move_list[i], new_pos));
 	};
 
 	return true;

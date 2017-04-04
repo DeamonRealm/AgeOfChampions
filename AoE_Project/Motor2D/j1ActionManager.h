@@ -90,8 +90,10 @@ public:
 private:
 
 	std::list<Action*> action_queue;
+	std::list<Action*> secondary_action_queue;
 	std::list<Action*> passive_action_queue;
 	Action* current_passive_action = nullptr;
+	Action* current_secondary_action = nullptr;
 	Action* current_action = nullptr;
 	bool paused = false;
 
@@ -105,6 +107,7 @@ public:
 
 	void AddAction(Action* action);
 	void AddPassiveAction(Action* action);
+	void AddSecondaryAction(Action* action);
 	void AddPriorizedAction(Action* action);
 	void PopAction(Action* action);
 

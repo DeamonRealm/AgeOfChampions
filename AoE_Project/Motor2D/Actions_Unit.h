@@ -320,7 +320,7 @@ public:
 
 			for (uint i = 0; i < size; i++)
 			{
-				if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy())
+				if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 				{
 					actor->AddPriorizedAction(App->action_manager->AttackToUnitAction((Unit*)actor, (Unit**)surrounding_units[i]->GetMe()));
 					return false;

@@ -120,15 +120,28 @@ bool j1EntitiesManager::Update(float dt)
 		item_build++;
 	}
 
-	//Clean all the wasted entities
+	/*//Clean all the wasted entities
 	uint size = wasted_units.size();
 	for(uint k=0; k < size;k++)
 	{
 		RELEASE(wasted_units[k]);
 	}
-	wasted_units.clear();
+	wasted_units.clear();*/
 
 	return ret;
+}
+
+bool j1EntitiesManager::PostUpdate()
+{
+	//Clean all the wasted entities
+	uint size = wasted_units.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(wasted_units[k]);
+	}
+	wasted_units.clear();
+
+	return true;
 }
 
 bool j1EntitiesManager::Draw() const
