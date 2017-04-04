@@ -314,7 +314,13 @@ public:
 
 		surrounding_units.clear();
 
+		if (actor->GetDiplomacy() == ALLY)
+		{
+			int k = 0;
+			k++;
+		}
 		App->entities_manager->units_quadtree.CollectCandidates(surrounding_units, actor->GetVision());
+		App->entities_manager->OrganizeByNearest(surrounding_units, actor->GetVision());
 
 		uint size = surrounding_units.size();
 
@@ -332,6 +338,7 @@ public:
 
 
 private:
+
 	std::vector<Unit*> surrounding_units;
 
 };

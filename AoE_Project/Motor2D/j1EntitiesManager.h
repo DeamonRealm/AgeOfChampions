@@ -11,6 +11,13 @@
 
 class Action;
 class ActionManager;
+struct LessDistance
+{
+	bool operator()(const Unit* l, const Unit* r)
+	{
+		return l->distance_to_target >= r->distance_to_target;
+	}
+};
 
 class j1EntitiesManager : public j1Module
 {
@@ -105,6 +112,9 @@ public:
 
 	//Get the nearest resource save point from the coordinate
 	Building* SearchNearestSavePoint(const iPoint& point);
+
+	//Organize unit vector
+	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance  > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);
 
 
 

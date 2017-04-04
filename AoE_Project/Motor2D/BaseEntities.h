@@ -333,7 +333,14 @@ protected:
 
 public:
 
+	float distance_to_target = 0;
+
+public:
+
 	//Functionality -------------------
+	//Operator --------------
+	bool operator<(const Unit& target) const;
+
 	//Draw ------------------
 	bool	Draw(bool debug);
 

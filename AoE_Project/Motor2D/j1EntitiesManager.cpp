@@ -873,3 +873,34 @@ Building * j1EntitiesManager::SearchNearestSavePoint(const iPoint & point)
 
 	return nearest_building;
 }
+
+std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > j1EntitiesManager::OrganizeByNearest(std::vector<Unit*>& vec, Circle& target)
+{
+	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance  > organized;
+	uint size = vec.size();
+	iPoint pos = target.GetPosition();
+	fPoint perf_pos(pos.x, pos.y);
+
+	for (uint k = 0; k < size; k++)
+	{
+		fPoint dist = vec[k]->GetPosition();
+		dist.x -= pos.x;
+		dist.y -= pos.y;
+		float perf_dist = sqrt(dist.x*dist.x + dist.y * dist.y);
+		vec[k]->distance_to_target = perf_dist;
+		organized.push(vec[k]);
+	}
+
+	vec.clear();
+
+	while (!organized.empty())
+	{
+		Unit* unit = organized.top();
+		organized.pop();
+		vec.push_back(unit);
+	}
+
+
+
+	return organized;
+}

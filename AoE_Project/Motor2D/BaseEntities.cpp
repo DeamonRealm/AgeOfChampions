@@ -263,6 +263,11 @@ Unit::~Unit()
 
 }
 
+bool Unit::operator<(const Unit & target) const
+{
+	return distance_to_target < target.distance_to_target;
+}
+
 //Functionality =======================
 //Draw ------------
 bool Unit::Draw(bool debug)
@@ -388,6 +393,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 					collisions++;
 					break;
 				case FUTURE_COLLISION_MOVE:
+					/*
 					if (other_path_size != 0) {
 						if (future_position == other_unit->future_position && future_position != iPoint(-1, -1)) {
 							if (other_path_size <= 2 && path_size <= 2) {
@@ -411,7 +417,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 						}
 					}
 					collisions++;
-					
+					*/
 					break;
 
 
@@ -693,6 +699,8 @@ Unit** Unit::FindNewTarget()
 {
 std::vector<Unit*> other_units;
 App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
+App->entities_manager->OrganizeByNearest(other_units, this->GetVision());
+
 Unit* unit;
 iPoint goal;
 while (!other_units.empty())
