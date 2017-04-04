@@ -350,7 +350,7 @@ public:
 	void					Repath(const iPoint & destination);
 	iPoint					FindWalkableCell(const iPoint& center);
 	bool					UnitHere(std::vector<Unit*> other_units,const iPoint& destination);
-	bool					UnitHere(const iPoint& destination);
+	bool					UnitHere(const iPoint& destination, int radius);
 	iPoint					FindWalkableAdjacent(const iPoint& center);
 	Unit**					FindNewTarget();
 	void					Focus(const iPoint& target, bool play = true);
