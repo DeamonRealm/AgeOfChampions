@@ -19,7 +19,7 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="UI_Icons.png" width="660" height="660">
+<TextureAtlas imagePath="UI_Icons.png" width="687" height="660">
 	<Audio>
     <sprite n="off" x="0" y="0" w="24" h="24" pX="0" pY="0"/>
     <sprite n="off1" x="24" y="0" w="24" h="24" pX="0" pY="0"/>
@@ -338,5 +338,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Twohandedswordman" x="540" y="621" w="36" h="36" pX="0" pY="0"/>
     <sprite n="Wagon" x="576" y="621" w="36" h="36" pX="0" pY="0"/>
     <sprite n="Wolf" x="612" y="621" w="36" h="36" pX="0" pY="0"/>
+
+ <sprite n="IU_Campions/IU_IconWarrior.png" x="651" y="227" w="36" h="36" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Ability1.png" x="651" y="0" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability2.png" x="651" y="38" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability3.png"  x="651" y="76" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability4.png" x="651" y="114" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability5.png"  x="651" y="152" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability6.png"  x="651" y="190" w="36" h="36" pX="0" pY="0"/>
+
 	</Units>
 </TextureAtlas>

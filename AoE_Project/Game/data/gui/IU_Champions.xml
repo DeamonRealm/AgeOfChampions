@@ -20,24 +20,25 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="IU_Champions.png" width="410" height="345">
-    <sprite n="IU_Campions/IU_Dialeg.png" x="325" y="45" w="54" h="29" pX="0.5" pY="0.5"/>
-<sprite n="IU_Campions/IU_Window.png" x="0" y="0" w="243" h="345" pX="0.5" pY="0.5"/>
+    <sprite n="IU_Campions/IU_Dialeg.png" x="325" y="45" w="54" h="29" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Window.png" x="0" y="0" w="243" h="345" pX="0" pY="0"/>
 
- <sprite n="IU_Campions/IU_IconWarrior.png" x="243" y="308" w="36" h="36" pX="0.5" pY="0.5"/>
- <sprite n="IU_Campions/IU_ButtonUp.png" x="244" y="62" w="16" h="15" pX="0.5" pY="0.5"/>
- <sprite n="IU_Campions/IU_ButtonDown.png" x="265" y="62" w="16" h="15" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_IconWarrior.png" x="243" y="308" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_ButtonUp.png" x="244" y="62" w="16" h="15" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_ButtonDown.png" x="265" y="62" w="16" h="15" pX="0" pY="0"/>
 
- <sprite n="IU_Campions/IU_TitleWarrior.png" x="243" y="45" w="78" h="15" pX="0.5" pY="0.5"/>
- <sprite n="IU_Campions/IU_Experience0.png" x="243" y="2" w="167" h="5" pX="0.5" pY="0.5"/>
-<sprite n="IU_Campions/IU_Experience1.png" x="243" y="9" w="167" h="5" pX="0.5" pY="0.5"/>
-<sprite n="IU_Campions/IU_Experience2.png" x="243" y="16" w="167" h="5" pX="0.5" pY="0.5"/>
-<sprite n="IU_Campions/IU_Experience3.png" x="243" y="23" w="167" h="5" pX="0.5" pY="0.5"/>
-<sprite n="IU_Campions/IU_Experience4.png" x="243" y="30" w="167" h="5" pX="0.5" pY="0.5"/>
-<sprite n="IU_Campions/IU_Experience5.png" x="243" y="37" w="167" h="5" pX="0.5" pY="0.5"/> <sprite n="IU_Campions/IU_Ability1.png" x="243" y="80" w="36" h="36" pX="0.5" pY="0.5"/>
- <sprite n="IU_Campions/IU_Ability2.png" x="243" y="118" w="36" h="36" pX="0.5" pY="0.5"/>
- <sprite n="IU_Campions/IU_Ability3.png"  x="243" y="156" w="36" h="36" pX="0.5" pY="0.5"/>
- <sprite n="IU_Campions/IU_Ability4.png" x="243" y="194" w="36" h="36" pX="0.5" pY="0.5"/>
- <sprite n="IU_Campions/IU_Ability5.png"  x="243" y="232" w="36" h="36" pX="0.5" pY="0.5"/>
- <sprite n="IU_Campions/IU_Ability6.png"  x="243" y="270" w="36" h="36" pX="0.5" pY="0.5"/>
+ <sprite n="IU_Campions/IU_TitleWarrior.png" x="243" y="45" w="78" h="15" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Experience0.png" x="243" y="2" w="167" h="5" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Experience1.png" x="243" y="9" w="167" h="5" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Experience2.png" x="243" y="16" w="167" h="5" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Experience3.png" x="243" y="23" w="167" h="5" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Experience4.png" x="243" y="30" w="167" h="5" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Experience5.png" x="243" y="37" w="167" h="5" pX="0" pY="0"/> 
+<sprite n="IU_Campions/IU_Ability1.png" x="243" y="80" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability2.png" x="243" y="118" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability3.png"  x="243" y="156" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability4.png" x="243" y="194" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability5.png"  x="243" y="232" w="36" h="36" pX="0" pY="0"/>
+ <sprite n="IU_Campions/IU_Ability6.png"  x="243" y="270" w="36" h="36" pX="0" pY="0"/>
 
 </TextureAtlas>
