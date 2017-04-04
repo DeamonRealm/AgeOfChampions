@@ -191,7 +191,13 @@ void ActionWorker::Update()
 		return;
 		
 	//If the worker has a current action execute it
-	DoWork(&action_queue, &current_action);
+	if (DoWork(&action_queue, &current_action))
+	{
+
+		//Reeactive all actions form passive flows when any active action finshes
+		if(current_secondary_action != nullptr)	current_secondary_action->Activation();
+		if(current_passive_action != nullptr)	current_passive_action->Activation();
+	}
 
 	//Secondary and passive actions take place when there is no active_action
 	if (current_action == nullptr)
@@ -207,7 +213,7 @@ void ActionWorker::Update()
 	}
 }
 
-void ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
+bool ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
 {
 	//If the worker has a current action execute it
 	if (*current != nullptr)
@@ -217,10 +223,12 @@ void ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
 		{
 			delete (*current);
 			(*current) = nullptr;
+			return true;
 		}
+		return false;
 	}
-	//Else, If the worker has any action waiting mark the first one as current
-	else if (!queue->empty())
+	//If the worker has any waiting actions mark the first one as current
+	if (!queue->empty() && *current == nullptr)
 	{
 		(*current) = queue->front();
 		queue->pop_front();
@@ -232,6 +240,7 @@ void ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
 			(*current) = nullptr;
 		}
 	}
+	return false;
 }
 
 
