@@ -6,8 +6,7 @@
 #include "p2Log.h"
 #include <list>
 
-class Entity;
-class Unit;
+#include "BaseEntities.h"
 
 
 ///AI is controlled thorugh childs from this command (like ActionManager)--------
@@ -124,6 +123,24 @@ private:
 	std::list<Entity*>* to_spawn;
 	Entity* current_spawn = nullptr;
 
+};
+//---------------------
+
+
+//Spawn x unit---------
+class SpawnUnitCommand : public AICommand
+{
+public:
+	SpawnUnitCommand(UNIT_TYPE type, fPoint pos);
+	~SpawnUnitCommand();
+
+public:
+	bool Execute();
+
+
+private:
+	UNIT_TYPE type = UNIT_TYPE::NO_UNIT;
+	fPoint pos = {0,0};
 };
 //---------------------
 

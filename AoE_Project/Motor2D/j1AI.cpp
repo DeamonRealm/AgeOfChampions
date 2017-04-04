@@ -19,13 +19,25 @@ j1AI::~j1AI()
 
 void j1AI::Enable()
 {
-	active = LoadEnemies("EnemiesSpawn.xml");
+	ai_worker->AddAICommand(new WaitAICommand(10000));
+
+	//active = LoadEnemies("EnemiesSpawn.xml");
+	active = true;
+	
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(0, 500)));
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(50, 500)));
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(100, 500)));
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-50, 500)));
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-100, 500)));
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(0, 530)));
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(50, 530)));
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(100, 530)));
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-50, 530)));
+	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-100, 530)));
+	
 
 
-	ai_worker->AddAICommand(new WaitAICommand(5000));
-	ai_worker->AddAICommand(new SpawnUnitsFromListCommand(&units_to_spawn));
 	ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
-
 
 }
 
@@ -90,10 +102,16 @@ bool j1AI::LoadEnemies(const char * folder)
 	pugi::xml_node unit_node = enemy_data.child("data").child("units").first_child();
 	while (unit_node != NULL)
 	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), ENEMY, false);
+	/*	Unit* new_unit = App->entities_manager->GenerateUnit(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), ENEMY, false);
 		new_unit->SetPosition(unit_node.attribute("pos_x").as_float(), unit_node.attribute("pos_y").as_float(), false);
 		units_to_spawn.push_back(new_unit);
+		unit_node = unit_node.next_sibling();*/
+
+	
+		ai_worker->AddAICommand(new SpawnUnitCommand(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), fPoint(unit_node.attribute("pos_x").as_float(0), unit_node.attribute("pos_y").as_float(0))));
+
 		unit_node = unit_node.next_sibling();
+
 	}
 	return true;
 }
@@ -172,8 +190,12 @@ bool WaitAICommand::Activation()
 
 bool WaitAICommand::Execute()
 {
-	if (timer.Read() > time)return true;
-	
+	if (timer.Read() > time)
+	{
+
+
+		return true;
+	}
 
 	return false;
 }
@@ -196,9 +218,9 @@ bool SpawnUnitsFromListCommand::Execute()
 		current_spawn = to_spawn->back();
 		to_spawn->pop_back();
 		fPoint pos = current_spawn->GetPosition();
-		/*App->entities_manager->AddUnit((Unit*)current_spawn);
-		current_spawn->SetPosition(pos.x, pos.y);
-		*/
+	/*	App->entities_manager->AddUnit((Unit*)current_spawn);
+		current_spawn->SetPosition(pos.x, pos.y);*/
+		
 		App->AI->enemy_units.push_back(current_spawn);
 	}
 
@@ -250,6 +272,32 @@ bool MoveUnitsCommand::Execute()
 
 
 
+//Spawn X unit-----------------
+SpawnUnitCommand::SpawnUnitCommand(UNIT_TYPE type, fPoint pos) : type(type), pos(pos)
+{
 
+
+}
+
+SpawnUnitCommand::~SpawnUnitCommand()
+{
+}
+
+bool SpawnUnitCommand::Execute()
+{
+
+	Unit* new_unit = App->entities_manager->GenerateUnit(type, ENEMY);
+	new_unit->SetPosition(pos.x, pos.y);
+
+
+	App->AI->enemy_units.push_back(new_unit);
+	return true;
+}
+
+
+
+
+//-----------------------------
 
 ///------------------------------------------------------------------------------------------------------------------
+
