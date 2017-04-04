@@ -458,8 +458,9 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 				return true;
 			}
 			new_path = App->pathfinding->SimpleAstar(location, next_goal);
-
-			path->insert(path->end(), new_path->begin(), new_path->end());
+			if (new_path != nullptr) {
+				path->insert(path->end(), new_path->begin(), new_path->end());
+			}
 		}
 		if (path->size() == 1)
 		{
@@ -515,8 +516,9 @@ void Unit::Repath(const iPoint & destination)
 	std::vector<iPoint>* new_path;
 	new_path=App->pathfinding->SimpleAstar(GetPositionRounded(), new_destination);
 	this->GetPath()->clear();
-	this->GetPath()->insert(this->GetPath()->end(), new_path->begin(), new_path->end());
-
+	if (new_path != nullptr) {
+		this->GetPath()->insert(this->GetPath()->end(), new_path->begin(), new_path->end());
+	}
 }
 
 iPoint Unit::FindWalkableCell(const iPoint & center)
@@ -905,7 +907,6 @@ bool Unit::AttackUnit(Unit** target)
 	
 			std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 			if (path == nullptr)return true;
-			GetWorker()->ResetActive();
 			this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
 			return false;
 	
@@ -953,7 +954,6 @@ bool Unit::AttackBuilding(Building ** target)
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
-		GetWorker()->ResetActive();
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
 	}
 
@@ -1023,6 +1023,7 @@ bool Unit::Die()
 		}
 		else
 		{
+			GetWorker()->Reset();
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}

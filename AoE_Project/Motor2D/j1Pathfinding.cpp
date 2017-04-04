@@ -295,6 +295,10 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 		PathNode* current = nullptr;
 		while (open.queue.size() != 0)
 		{
+			if (open.queue.size() > 1000)
+			{
+				return nullptr;
+			}
 			current = open.queue.top();
 			open.queue.top()->on_close = true;
 			open.queue.pop();
