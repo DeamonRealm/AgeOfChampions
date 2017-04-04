@@ -11,7 +11,7 @@
 #include "j1Animator.h"
 #include "j1GroupMovement.h"
 #include "SDL\include\SDL_rect.h"
-
+#include "j1Map.h"
 //GUI Elements
 #include "UI_String.h"
 #include "UI_Image.h"
@@ -278,6 +278,11 @@ bool Selection_Panel::PreUpdate()
 {	
 	App->input->GetMousePosition(mouse_x, mouse_y);
 
+
+	if(WindowsMove())
+		App->map->CalculateTilesInView();
+
+		
 
 	if (selected_elements.size() == 0 || inviewport == false) return false;
 
@@ -826,4 +831,30 @@ UI_Element * Selection_Panel::GetViewport()
 bool Selection_Panel::GetInViewport() const
 {
 	return inviewport;
+}
+
+bool Selection_Panel::WindowsMove()
+{
+	bool ret = false;
+	if (mouse_x < OFFSET_Y)
+	{
+		App->render->camera.x += SDL_ceil(1000 * App->GetDT());
+		ret = true;
+	}
+	else if (mouse_x >= App->render->camera.w - OFFSET_Y)
+	{
+		App->render->camera.x -= SDL_ceil(1000 * App->GetDT());
+		ret = true;
+	}
+	if (mouse_y < viewport->GetBox()->y + OFFSET_X && mouse_y > viewport->GetBox()->y - OFFSET_X)
+	{
+		App->render->camera.y += SDL_ceil(1000 * App->GetDT());
+		ret = true;
+	}
+	else if (mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X)
+	{
+		App->render->camera.y -= SDL_ceil(1000 * App->GetDT());
+		ret = true;
+	}
+	return ret;
 }

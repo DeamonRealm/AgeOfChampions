@@ -14,6 +14,8 @@
 //Units/Bukdings Actions
 #include "j1ActionManager.h"
 
+#define OFFSET_Y 10
+#define OFFSET_X 20
 
 class UI_String;
 class UI_Image;
@@ -139,6 +141,7 @@ public:
 
 private:
 
+	bool WindowsMove();
 	// SelectionPanel Viewport
 	UI_Element*		viewport = nullptr;
 	bool			inviewport = false;
