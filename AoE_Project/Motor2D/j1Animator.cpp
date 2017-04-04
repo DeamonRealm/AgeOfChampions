@@ -114,7 +114,7 @@ const Sprite* Animation::GetCurrentSprite()
 		{
 			loops = 0;
 			current_frame = -1;
-			return &sprites[0];
+			return &sprites[sprites.size() - 1];
 		}
 	}
 

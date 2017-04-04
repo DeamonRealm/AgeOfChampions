@@ -545,7 +545,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		UnSelect_Entity();
 
 		App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, selection_rect);
-		
+		LOG("%i", unit_quad_selection.size());
 		int selected_amount = 0;
 		//Select Entity
 		int size = unit_quad_selection.size();

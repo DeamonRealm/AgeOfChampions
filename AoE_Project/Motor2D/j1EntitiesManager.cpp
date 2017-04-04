@@ -102,10 +102,18 @@ bool j1EntitiesManager::Update(float dt)
 
 	while (item != units.end())
 	{
+		//Check if a unit is null
+		if (item._Ptr->_Myval == NULL || item._Ptr->_Myval->GetUnitType() == NO_UNIT)
+		{
+			units.remove(item._Ptr->_Myval);
+			item--;
+		}
+		else
+		{
+			ret = item._Ptr->_Myval->Update();
 
-		ret = item._Ptr->_Myval->Update();
-
-		item++;
+			item++;
+		}
 	}
 
 
@@ -781,7 +789,10 @@ bool j1EntitiesManager::DeleteEntity(Entity * entity)
 	{
 		units.remove((Unit*)entity);
 	}
-
+	else
+	{
+		LOG("Fail");
+	}
 
 
 	return true;

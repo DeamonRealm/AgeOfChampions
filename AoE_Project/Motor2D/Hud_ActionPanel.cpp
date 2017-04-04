@@ -659,6 +659,10 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 			{
 				villagerpanel->Villager_Handle_input(MOUSE_LEFT_BUTTON_REPEAT);
 			}
+			else if (actualpanel == unitpanel)
+			{
+				actualpanel->ActivateCell(GetCell());
+			}
 		}
 		break;
 	case MOUSE_LEFT_BUTTON_UP: {
