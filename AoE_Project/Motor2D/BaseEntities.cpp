@@ -620,11 +620,13 @@ bool Unit::UnitHere(std::vector<Unit*> other_units, const iPoint& cell)
 	return true;
 }
 
-bool Unit::UnitHere(const iPoint & destination)
+bool Unit::UnitHere(const iPoint & destination, int radius)
 {
+
+
 	std::vector<Unit*> other_units;
 	Circle area;
-	area.SetRad(30);
+	area.SetRad(radius);
 
 	area.SetPosition(destination);
 	App->entities_manager->units_quadtree.CollectCandidates(other_units, area);
@@ -641,21 +643,24 @@ bool Unit::UnitHere(const iPoint & destination)
 	return false;
 }
 
+
 iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 {
 	iPoint cell;
 	iPoint pos = App->map->WorldToMap(center.x, center.y);
 	iPoint goal;
+
+	int radius = GetSoftCollider().GetRad();
 	Circle checker;
-	checker.SetRad(30);
+	checker.SetRad(radius);
+
+	// south
+	cell.create(pos.x, pos.y + 1);
+	checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
+	goal = attack_area.NearestPoint(&checker);
 
 
-		// south
-		cell.create(pos.x, pos.y + 1);
-		checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
-		goal = attack_area.NearestPoint(&checker);
-
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal))
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal,radius))
 		{
 			return goal;
 		}
@@ -665,7 +670,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
 		goal = attack_area.NearestPoint(&checker);
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal))
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
@@ -677,7 +682,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		goal = attack_area.NearestPoint(&checker);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal))
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
@@ -689,7 +694,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		goal = attack_area.NearestPoint(&checker);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal))
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
@@ -701,7 +706,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		goal = attack_area.NearestPoint(&checker);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal))
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
@@ -712,7 +717,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		goal = attack_area.NearestPoint(&checker);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal))
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
@@ -723,7 +728,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		goal = attack_area.NearestPoint(&checker);
 
 		
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal))
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
@@ -734,7 +739,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		goal = attack_area.NearestPoint(&checker);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal))
+		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
@@ -883,7 +888,7 @@ bool Unit::AttackUnit(Unit** target)
 
 		iPoint goal = attack_area.NearestPoint(((Unit*)(*target))->GetAttackArea());
 
-		if (UnitHere(goal))
+		if (UnitHere(goal,GetSoftCollider().GetRad()))
 		{
 			goal = FindWalkableAdjacent(((Unit*)(*target))->GetPositionRounded());
 			if (goal == iPoint(-1, -1))
