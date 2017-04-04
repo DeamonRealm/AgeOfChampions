@@ -241,7 +241,7 @@ bool MoveUnitsCommand::Execute()
 		to_move_list[i]->AddSecondaryAction(App->action_manager->MoveAction(to_move_list[i], new_pos));
 	};*/
 
-	App->group_move->GetGroupOfUnits(&to_move_list, new_pos.x, new_pos.y);
+	App->group_move->GetGroupOfUnits(&to_move_list, new_pos.x, new_pos.y, false);
 
 	return true;
 }

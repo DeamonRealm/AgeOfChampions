@@ -386,7 +386,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		}
 		else if (selected_elements.size() > 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT) {
 		
-			App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y);
+			App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y, true);
 		}
 
 

@@ -34,7 +34,7 @@ iPoint j1GroupMovement::GetMiddlePoint()
 	return ret;
 }
 
-void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y)
+void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y, bool active)
 {
 	map_destination = App->map->WorldToMap(x,y);
 	destination = { x, y };
@@ -59,14 +59,15 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y)
 		//second_destination->insert(second_destination->end(), first_destination->begin(), first_destination->end());
 		//push action
 		lead->GetWorker()->ResetActive();
-		lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead));
+		if(active)lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead));
+		else lead->AddSecondaryAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead));
 		lead_direcction = ((Unit*)lead)->LookDirection(*(second_destination->begin()), *(second_destination->begin() + 1));
 		//do the other units path
-		OtherUnitsPath();
+		OtherUnitsPath(active);
 	
 }
 
-void j1GroupMovement::OtherUnitsPath()
+void j1GroupMovement::OtherUnitsPath(bool active)
 {
 	iPoint new_middle_point;
 	iPoint new_destination;
@@ -108,7 +109,8 @@ void j1GroupMovement::OtherUnitsPath()
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->ResetActive();
-			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			if(active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -147,7 +149,8 @@ void j1GroupMovement::OtherUnitsPath()
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->ResetActive();
-			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -185,7 +188,8 @@ void j1GroupMovement::OtherUnitsPath()
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->ResetActive();
-			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -224,7 +228,8 @@ void j1GroupMovement::OtherUnitsPath()
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->ResetActive();
-			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -262,7 +267,8 @@ void j1GroupMovement::OtherUnitsPath()
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->ResetActive();
-			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -301,7 +307,8 @@ void j1GroupMovement::OtherUnitsPath()
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->ResetActive();
-			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -339,7 +346,8 @@ void j1GroupMovement::OtherUnitsPath()
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->ResetActive();
-			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -377,7 +385,8 @@ void j1GroupMovement::OtherUnitsPath()
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
 			single_unit->GetWorker()->ResetActive();
-			single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+			else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
