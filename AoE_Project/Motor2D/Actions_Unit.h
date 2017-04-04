@@ -22,18 +22,18 @@ public:
 
 	MoveUnitAction(Unit* actor, std::vector<iPoint>* path, const iPoint& target) : Action(actor, TASK_U_MOVE), path(path),target(target)
 	{
+		destination = path->front();
 	}
 
 	//Functionality ---------
 	bool Activation()
 	{
-		if (path == nullptr)
-		{
-			//Calculate the path
-			iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
-			path = App->pathfinding->SimpleAstar(origin, destination);
-			if (path == nullptr)return false;
-		}
+		
+		//Calculate the path
+		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
+		path = App->pathfinding->SimpleAstar(origin, destination);
+		if (path == nullptr)return false;
+		
 		((Unit*)actor)->SetAction(WALK);
 		((Unit*)actor)->Focus(path->back(),true);
 		if (path->size() > 2)	((Unit*)actor)->SetFutureAction(*(path->rbegin() + 1));
