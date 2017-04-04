@@ -9,6 +9,7 @@
 #include "j1Player.h"
 
 #include "Hud_ActionPanel.h"
+#include "Hud_GamePanel.h"
 
 ///Class Champion -------------------------------
 //Base class that define the champions bases
@@ -425,6 +426,8 @@ bool Warrior::Die()
 	{
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
+		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
+		App->entities_manager->units_quadtree.Exteract(&this->GetPosition());
 		App->animator->UnitPlay(this);
 	}
 	else if (current_animation->IsEnd())

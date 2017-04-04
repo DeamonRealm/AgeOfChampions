@@ -239,7 +239,7 @@ public:
 	DIPLOMACY		GetDiplomacy()const;
 	Circle			GetVision()const;
 	uint			GetMaxLife()const;
-	virtual int		GetLife()const;
+	int				GetLife()const;
 	Animation*		GetAnimation();
 	bool			GetFlipSprite()const;
 	const SDL_Rect*	GetSelectionRect()const;
@@ -520,8 +520,6 @@ public:
 	void	SetBuildingType(BUILDING_TYPE type);
 	void	SetActionType(ACTION_TYPE type);
 	void	SetDirectionType(DIRECTION_TYPE type);
-	void	SetMaxLife(uint max_life_val);
-	void	SetLife(uint life_val);
 
 	//Get Methods -----------
 	const Rectng&	GetMark()const;

@@ -777,7 +777,7 @@ bool j1EntitiesManager::DeleteEntity(Entity * entity)
 	{
 		buildings.remove((Building*)entity);
 	}
-	else
+	else if (type == UNIT)
 	{
 		units.remove((Unit*)entity);
 	}

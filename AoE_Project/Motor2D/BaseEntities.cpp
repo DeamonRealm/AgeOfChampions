@@ -9,8 +9,12 @@
 #include "p2Log.h"
 #include "j1EntitiesManager.h"
 #include "j1ActionManager.h"
-#include "Actions_Unit.h"
+#include "j1Player.h"
 #include "j1BuffManager.h"
+
+#include "Actions_Unit.h"
+
+#include "Hud_GamePanel.h"
 
 ///Class Entity ---------------------------------
 //Constructors ========================
@@ -957,6 +961,7 @@ bool Unit::Die()
 	{
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
+		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->units_quadtree.Exteract(&this->GetPosition());
 		App->animator->UnitPlay(this);
 	}
@@ -1685,16 +1690,6 @@ void Building::SetActionType(ACTION_TYPE type)
 void Building::SetDirectionType(DIRECTION_TYPE type)
 {
 	direction_type = type;
-}
-
-void Building::SetMaxLife(uint max_life_val)
-{
-	max_life = max_life_val;
-}
-
-void Building::SetLife(uint life_val)
-{
-	life = life_val;
 }
 
 const Rectng & Building::GetMark() const

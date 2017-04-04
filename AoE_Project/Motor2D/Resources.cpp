@@ -55,8 +55,3 @@ bool Tree::ExtractResources(uint * value)
 	return true;
 }
 
-int Tree::GetLife() const
-{
-	if (cortex > 0)return cortex;
-	return life;
-}
