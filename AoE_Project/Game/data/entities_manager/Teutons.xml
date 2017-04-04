@@ -18,6 +18,8 @@
   <buildings>
    <id xml = "town_center_feudal.xml"/>
    <id xml = "feudal_buildings.xml"/>
+   <id xml = "rubble_three.xml"/>
+   <id xml = "rubble_four.xml"/>
   </buildings>
   <resources>
    <id xml ="resources.xml"/>

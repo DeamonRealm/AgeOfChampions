@@ -121,14 +121,6 @@ bool j1EntitiesManager::Update(float dt)
 		item_build++;
 	}
 
-	/*//Clean all the wasted entities
-	uint size = wasted_units.size();
-	for(uint k=0; k < size;k++)
-	{
-		RELEASE(wasted_units[k]);
-	}
-	wasted_units.clear();*/
-
 	return ret;
 }
 
@@ -486,6 +478,7 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 
 	//Building Stats --------
 	/*Max Life*/		new_def->SetMaxLife(building_node->attribute("max_life").as_uint());
+						new_def->SetLife(new_def->GetMaxLife());
 
 	if (building_type == TOWN_CENTER || building_type == BARRACK)
 	{
