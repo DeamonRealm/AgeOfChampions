@@ -470,6 +470,8 @@ BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 {
 	if (strcmp(str, "town_center") == 0)	return TOWN_CENTER;
 	if (strcmp(str, "barrack") == 0)		return BARRACK;
+	if (strcmp(str, "rubble_three") == 0)	return RUBBLE_THREE;
+	if (strcmp(str, "rubble_four") == 0)	return RUBBLE_FOUR;
 	return NO_BUILDING;
 }
 
@@ -776,6 +778,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder)
 		//Build animation
 		Animation* anim = new Animation();
 		anim->SetSpeed(action_node.attribute("speed").as_uint());
+		anim->SetLoop(action_node.attribute("loop").as_bool());
 		anim->SetTexture(texture);
 
 		//Iterate all action sprites
@@ -973,7 +976,7 @@ bool j1Animator::BuildingPlay(Building* target)
 		if (block->GetId() == target->GetBuildingType())
 		{
 			//Compare block action id
-			block = block->SearchId(IDLE);
+			block = block->SearchId(target->GetActionType());
 			//If action block is found search the correct direction block or return unidirectional action
 			if (target->GetDirectionType() == NO_DIRECTION)
 			{

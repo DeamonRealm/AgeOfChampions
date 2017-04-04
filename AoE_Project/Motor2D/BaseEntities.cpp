@@ -86,6 +86,11 @@ void Entity::CleanAnimation()
 	}
 }
 
+void Entity::CleanMapLogic()
+{
+
+}
+
 //Add Action ------------
 void Entity::AddAction(Action * action)
 {
@@ -1594,25 +1599,40 @@ void Building::CleanMapLogic()
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
+	if (building_type == RUBBLE_THREE)
+	{
+		world_coords.x -= 1;
+		world_coords.y -= 1;
+	}
 
 	//Change walk & construction logic maps
-	App->map->ChangeConstructionMap(world_coords, 1, 1, 1);
-	App->map->ChangeLogicMap(world_coords, 1, 1, 1);
+	App->map->ChangeConstructionMap(world_coords, width_in_tiles, height_in_tiles, 1);
+	App->map->ChangeLogicMap(world_coords, width_in_tiles, height_in_tiles, 1);
 }
 
 bool Building::Die()
 {
-	if (building_type != RUBBLE)
+	if (action_type != DISAPPEAR)
 	{
 		action_type = DISAPPEAR;
-		App->entities_manager->units_quadtree.Exteract(&this->GetPosition());
+		if (building_type == TOWN_CENTER)building_type = RUBBLE_FOUR;
+		else if (building_type == BARRACK)building_type = RUBBLE_THREE;
+
+		App->entities_manager->buildings_quadtree.Exteract(this, &this->position);
 		App->animator->BuildingPlay(this);
+		current_animation->Reset();
 	}
 
-	else if (current_animation->IsEnd())
+
+	else
 	{
-		App->entities_manager->DeleteEntity(this);
-		return true;
+		current_animation->GetCurrentSprite();
+		if (current_animation->IsEnd())
+		{
+			this->CleanMapLogic();
+			App->entities_manager->DeleteEntity(this);
+			return true;
+		}
 	}
 
 	return false;

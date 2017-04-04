@@ -75,7 +75,8 @@ enum BUILDING_TYPE
 	FARM,
 	TOWN_CENTER,
 	BARRACK,
-	RUBBLE
+	RUBBLE_THREE,
+	RUBBLE_FOUR
 };
 enum ACTION_TYPE
 {
@@ -210,7 +211,7 @@ public:
 	//Draw ------------------
 	virtual bool	Draw(bool debug);
 	void			CleanAnimation();
-
+	virtual void	CleanMapLogic();
 	//Add Action ------------
 	void			AddAction(Action* action);
 	void			AddPasiveAction(Action* action);

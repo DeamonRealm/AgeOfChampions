@@ -775,10 +775,6 @@ bool j1EntitiesManager::DeleteEntity(Entity * entity)
 	{
 		units.remove((Unit*)entity);
 	}
-	else
-	{
-		LOG("Fail");
-	}
 
 
 	return true;

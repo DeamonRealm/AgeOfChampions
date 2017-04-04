@@ -699,7 +699,7 @@
       width_in_tiles="4"
       height_in_tiles="4"
       
-      max_life ="1500"
+      max_life ="50"
       units_capacity ="15"
       units_spawn_x ="30"
       units_spawn_y="47"
@@ -733,7 +733,7 @@
       width_in_tiles="3"
       height_in_tiles="3"
       
-      max_life ="1500"
+      max_life ="50"
       units_capacity ="15"
       units_spawn_x ="5"
       units_spawn_y="92"
