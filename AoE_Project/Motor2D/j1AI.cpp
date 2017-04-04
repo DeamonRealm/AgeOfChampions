@@ -6,6 +6,7 @@
 #include "j1Map.h"
 #include "j1ActionManager.h"
 #include "Actions_Unit.h"
+#include "j1GroupMovement.h"
 
 j1AI::j1AI()
 {
@@ -23,7 +24,7 @@ void j1AI::Enable()
 
 	ai_worker->AddAICommand(new WaitAICommand(5000));
 	ai_worker->AddAICommand(new SpawnUnitsFromListCommand(&units_to_spawn));
-	ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(90,90)));
+	ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
 
 
 }
@@ -179,7 +180,7 @@ bool WaitAICommand::Execute()
 //---------------------------------------
 
 //Spawn all units in the waiting list----
-SpawnUnitsFromListCommand::SpawnUnitsFromListCommand(std::vector<Unit*>* to_spawn) : to_spawn(to_spawn)
+SpawnUnitsFromListCommand::SpawnUnitsFromListCommand(std::list<Entity*>* to_spawn) : to_spawn(to_spawn)
 {
 }
 
@@ -194,7 +195,7 @@ bool SpawnUnitsFromListCommand::Execute()
 	{
 		current_spawn = to_spawn->back();
 		to_spawn->pop_back();
-		App->entities_manager->AddUnit(current_spawn);
+		App->entities_manager->AddUnit((Unit*)current_spawn);
 
 		App->AI->enemy_units.push_back(current_spawn);
 	}
@@ -202,10 +203,19 @@ bool SpawnUnitsFromListCommand::Execute()
 	//Add a passive scann action by default to all units
 	uint size = App->AI->enemy_units.size();
 
-	for (uint i = 0; i < size; i++)
+	/*for (uint i = 0; i < size; i++)
 	{
 		App->AI->enemy_units[i]->AddPasiveAction(App->action_manager->ScanAction(App->AI->enemy_units[i]));
 	};
+	*/
+	std::list<Entity*>::iterator it = App->AI->enemy_units.begin();
+	while (it != App->AI->enemy_units.end())
+	{
+		it._Ptr->_Myval->AddPasiveAction(App->action_manager->ScanAction(it._Ptr->_Myval));
+
+		it++;
+	}
+
 
 	return true;
 }
@@ -213,7 +223,7 @@ bool SpawnUnitsFromListCommand::Execute()
 //---------------------------------------
 
 
-MoveUnitsCommand::MoveUnitsCommand(std::vector<Unit*>& to_move_list, iPoint new_pos) : to_move_list(to_move_list), new_pos(new_pos)
+MoveUnitsCommand::MoveUnitsCommand(std::list<Entity*>& to_move_list, iPoint new_pos) : to_move_list(to_move_list), new_pos(new_pos)
 {
 }
 
@@ -226,10 +236,12 @@ bool MoveUnitsCommand::Execute()
 
 	uint size = to_move_list.size();
 
-	for (uint i = 0; i < size; i++)
+	/*for (uint i = 0; i < size; i++)
 	{
 		to_move_list[i]->AddSecondaryAction(App->action_manager->MoveAction(to_move_list[i], new_pos));
-	};
+	};*/
+
+	App->group_move->GetGroupOfUnits(&to_move_list, new_pos.x, new_pos.y);
 
 	return true;
 }

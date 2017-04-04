@@ -4,8 +4,9 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "p2Log.h"
-#include <vector>
+#include <list>
 
+class Entity;
 class Unit;
 
 
@@ -81,10 +82,10 @@ private:
 private:
 	AIWorker* ai_worker = nullptr;
 
-	std::vector<Unit*> units_to_spawn;
+	std::list<Entity*> units_to_spawn;
 
 public:
-	std::vector<Unit*> enemy_units;
+	std::list<Entity*> enemy_units;
 
 };
 
@@ -113,15 +114,15 @@ private:
 class SpawnUnitsFromListCommand : public AICommand
 {
 public:
-	SpawnUnitsFromListCommand(std::vector<Unit*>* to_spawn);
+	SpawnUnitsFromListCommand(std::list<Entity*>* to_spawn);
 	~SpawnUnitsFromListCommand();
 
 public:
 	bool Execute();
 
 private:
-	std::vector<Unit*>* to_spawn;
-	Unit* current_spawn = nullptr;
+	std::list<Entity*>* to_spawn;
+	Entity* current_spawn = nullptr;
 
 };
 //---------------------
@@ -129,7 +130,7 @@ private:
 class MoveUnitsCommand : public AICommand
 {
 public:
-	MoveUnitsCommand(std::vector<Unit*>& to_move_list, iPoint new_pos);
+	MoveUnitsCommand(std::list<Entity*>& to_move_list, iPoint new_pos);
 	~MoveUnitsCommand();
 
 
@@ -138,7 +139,7 @@ public:
 
 
 private:
-	std::vector<Unit*>& to_move_list;
+	std::list<Entity*>& to_move_list;
 	iPoint new_pos;
 
 };
