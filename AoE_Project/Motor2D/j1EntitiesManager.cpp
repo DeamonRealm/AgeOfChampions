@@ -102,13 +102,6 @@ bool j1EntitiesManager::Update(float dt)
 
 	while (item != units.end())
 	{
-		//Check if a unit is null
-		if (item._Ptr->_Myval == NULL || item._Ptr->_Myval->GetUnitType() == NO_UNIT)
-		{
-			units.remove(item._Ptr->_Myval);
-			item--;
-		}
-		else
 		{
 			ret = item._Ptr->_Myval->Update();
 
@@ -848,6 +841,7 @@ bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iP
 void j1EntitiesManager::AddUnit(const Unit * unit)
 {
 	units.push_back((Unit*)unit);
+	units_quadtree.Exteract(&unit->GetPosition());
 	units_quadtree.Insert((Unit*)unit, &unit->GetPosition());
 }
 

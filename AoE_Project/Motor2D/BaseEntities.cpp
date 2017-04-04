@@ -892,7 +892,7 @@ bool Unit::AttackUnit(Unit** target)
 			}
 		}
 	
-			std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
+			std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 			if (path == nullptr)return true;
 			GetWorker()->ResetActive();
 			this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
@@ -940,7 +940,7 @@ bool Unit::AttackBuilding(Building ** target)
 	{
 
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
-		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
+		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
 		GetWorker()->ResetActive();
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
@@ -1026,7 +1026,7 @@ void Unit::Stun(uint time)
 
 COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 {
-	if(other->action_type== IDLE||other->action_type == ATTATCK)
+	if(other->action_type == IDLE||other->action_type == ATTATCK)
 	{
 		if (sqrt((other->GetPosition().x - current->future_position.x) * (other->GetPosition().x - current->future_position.x) + (other->GetPosition().y - current->future_position.y) * (other->GetPosition().y - current->future_position.y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad())
 			|| sqrt((other->GetPosition().x - current->GetPosition().x) * (other->GetPosition().x - current->GetPosition().x) + (other->GetPosition().y - current->GetPosition().y) * (other->GetPosition().y - current->GetPosition().y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad()))
@@ -1061,7 +1061,7 @@ void Unit::AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence)
 void Unit::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
-	App->entities_manager->units_quadtree.Exteract(&position);
+	if(insert)App->entities_manager->units_quadtree.Exteract(&position);
 
 	//Set unit position
 	position.x = x;
@@ -1080,7 +1080,9 @@ void Unit::SetPosition(float x, float y, bool insert)
 
 	//Add the unit with the correct position in the correct quad tree
 	if (insert)
+	{
 		App->entities_manager->units_quadtree.Insert(this, &position);
+	}
 }
 
 void Unit::SetFutureAction(const iPoint & position)

@@ -91,7 +91,7 @@ bool j1AI::LoadEnemies(const char * folder)
 	while (unit_node != NULL)
 	{
 		Unit* new_unit = App->entities_manager->GenerateUnit(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), ENEMY, false);
-		new_unit->SetPosition(unit_node.attribute("pos_x").as_int(0), unit_node.attribute("pos_y").as_int(0), false);
+		new_unit->SetPosition(unit_node.attribute("pos_x").as_float(), unit_node.attribute("pos_y").as_float(), false);
 		units_to_spawn.push_back(new_unit);
 		unit_node = unit_node.next_sibling();
 	}
@@ -195,8 +195,10 @@ bool SpawnUnitsFromListCommand::Execute()
 	{
 		current_spawn = to_spawn->back();
 		to_spawn->pop_back();
-		App->entities_manager->AddUnit((Unit*)current_spawn);
-
+		fPoint pos = current_spawn->GetPosition();
+		/*App->entities_manager->AddUnit((Unit*)current_spawn);
+		current_spawn->SetPosition(pos.x, pos.y);
+		*/
 		App->AI->enemy_units.push_back(current_spawn);
 	}
 

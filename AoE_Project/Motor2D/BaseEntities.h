@@ -221,6 +221,7 @@ public:
 	//Set Methods -----------
 	void			SetName(const char* name_str);
 	virtual void	SetPosition(float x, float y, bool insert = true);
+	void			OnlySetPosition(float x, float y);
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 	void			SetVision(const Circle& new_mark);

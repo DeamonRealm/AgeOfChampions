@@ -63,7 +63,7 @@
       icon_w="36"
       icon_h="36"
   
-      max_life="40"
+      max_life="500"
       view_area="15"
       speed="0.40"
       attack_delay ="50"
