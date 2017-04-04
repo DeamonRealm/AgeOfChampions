@@ -214,6 +214,7 @@ public:
 	//Add Action ------------
 	void			AddAction(Action* action);
 	void			AddPasiveAction(Action* action);
+	void			AddSecondaryAction(Action * action);
 	void			AddPriorizedAction(Action* action);
 	void			PopAction(Action* action);
 

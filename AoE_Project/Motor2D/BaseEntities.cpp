@@ -93,6 +93,11 @@ void Entity::AddPasiveAction(Action * action)
 	action_worker->AddPassiveAction(action);
 }
 
+void Entity::AddSecondaryAction(Action * action)
+{
+	action_worker->AddSecondaryAction(action);
+}
+
 void Entity::AddPriorizedAction(Action * action)
 {
 	action_worker->AddPriorizedAction(action);
