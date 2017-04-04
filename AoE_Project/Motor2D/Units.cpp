@@ -34,6 +34,8 @@ bool Villager::Die()
 	{
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
+
+		App->entities_manager->units_quadtree.Exteract(&this->GetPosition());
 		if (item_type == GOLD || item_type == STONE || item_type == MEAT)
 		{
 			item_type = NO_ITEM;

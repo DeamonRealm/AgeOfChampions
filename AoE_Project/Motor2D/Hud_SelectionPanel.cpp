@@ -551,7 +551,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		int size = unit_quad_selection.size();
 		for(int count = 0; count < size; count++)
 		{
-			if (unit_quad_selection[count]->GetDiplomacy() != ALLY || unit_quad_selection[count]->GetLife() == 0) continue;
+			if (unit_quad_selection[count]->GetDiplomacy() != ALLY) continue;
 			else if (type == DOUBLECLICK && selected_unit_type != unit_quad_selection[count]->GetUnitType());
 			else
 			{
@@ -673,7 +673,6 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	size = unit_quad_selection.size();
 	for (count = 0; count < size; count++)
 	{
-		if (unit_quad_selection[count]->GetLife() == 0) continue;
 		current_sprite = (Sprite*) unit_quad_selection[count]->GetAnimation()->GetCurrentSprite();
 		rect = *current_sprite->GetFrame();
 		pos = unit_quad_selection[count]->GetPosition();

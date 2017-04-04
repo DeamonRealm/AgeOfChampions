@@ -772,17 +772,14 @@ bool j1EntitiesManager::DeleteEntity(Entity * entity)
 	if (type == RESOURCE)
 	{
 		resources.remove((Resource*)entity);
-		resources_quadtree.Exteract(&entity->GetPosition());
 	}
 	else if (type == BUILDING)
 	{
 		buildings.remove((Building*)entity);
-		buildings_quadtree.Exteract(&entity->GetPosition());
 	}
 	else
 	{
 		units.remove((Unit*)entity);
-		units_quadtree.Exteract(&entity->GetPosition());
 	}
 
 

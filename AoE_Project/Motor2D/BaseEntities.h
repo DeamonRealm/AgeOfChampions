@@ -181,7 +181,7 @@ protected:
 	Circle			vision;
 	//Life -------------
 	uint			max_life = 0;
-	uint			life = 0;
+	int				life = 0;
 	//Visual -----------
 	Animation*		current_animation = nullptr;
 	bool			flip_sprite = false;
@@ -239,7 +239,7 @@ public:
 	DIPLOMACY		GetDiplomacy()const;
 	Circle			GetVision()const;
 	uint			GetMaxLife()const;
-	virtual uint	GetLife()const;
+	virtual int		GetLife()const;
 	Animation*		GetAnimation();
 	bool			GetFlipSprite()const;
 	const SDL_Rect*	GetSelectionRect()const;
@@ -489,8 +489,6 @@ protected:
 	BUILDING_TYPE	building_type = NO_BUILDING;
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = NO_DIRECTION;
-	uint			max_life = 0;
-	uint			life = 0;
 
 	void CleanMapLogic();
 
@@ -524,8 +522,6 @@ public:
 	BUILDING_TYPE	GetBuildingType()const;
 	ACTION_TYPE		GetActionType()const;
 	DIRECTION_TYPE	GetDirectionType()const;
-	uint			GetMaxLife()const;
-	uint			GetLife()const;
 
 };
 /// ---------------------------------------------

@@ -202,7 +202,7 @@ uint Entity::GetMaxLife() const
 	return max_life;
 }
 
-uint Entity::GetLife() const
+int Entity::GetLife() const
 {
 	return life;
 }
@@ -818,6 +818,10 @@ DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
 bool Unit::AttackUnit(Unit** target)
 {
 	//Check if the target is in the attack area
+	if ((*target) == nullptr)
+	{
+		return true;
+	}
 	if (!attack_area.Intersects(((Unit*)(*target))->GetAttackArea()))
 	{
 
@@ -945,6 +949,7 @@ bool Unit::Die()
 	{
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
+		App->entities_manager->units_quadtree.Exteract(&this->GetPosition());
 		App->animator->UnitPlay(this);
 	}
 	else if (current_animation->IsEnd())
@@ -1507,8 +1512,8 @@ Building::Building() :Entity()
 
 }
 
-Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), building_type(copy.building_type), max_life(copy.max_life),
-life(copy.life), width_in_tiles(copy.width_in_tiles), height_in_tiles(copy.height_in_tiles), interact_area(copy.interact_area)
+Building::Building(const Building& copy) : Entity(copy), mark(copy.mark), building_type(copy.building_type),
+width_in_tiles(copy.width_in_tiles), height_in_tiles(copy.height_in_tiles), interact_area(copy.interact_area)
 {
 
 }
@@ -1535,6 +1540,7 @@ bool Building::Die()
 	if (building_type != RUBBLE)
 	{
 		action_type = DISAPPEAR;
+		App->entities_manager->units_quadtree.Exteract(&this->GetPosition());
 		App->animator->BuildingPlay(this);
 	}
 
@@ -1709,13 +1715,4 @@ DIRECTION_TYPE Building::GetDirectionType() const
 	return direction_type;
 }
 
-uint Building::GetMaxLife() const
-{
-	return max_life;
-}
-
-uint Building::GetLife() const
-{
-	return life;
-}
 ///----------------------------------------------
