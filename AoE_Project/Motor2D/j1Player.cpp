@@ -102,16 +102,19 @@ bool j1Player::PreUpdate()
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		if (selection_panel->GetInViewport())
+		if (selection_panel->GetInViewport() && !action_panel->GetOnAction())
 		{
-			if(!action_panel->GetOnAction()) selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
+			selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 		}
 		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 	}
 	
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
-		if (selection_panel->GetInViewport() && !action_panel->GetOnAction()) selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);
+		if (selection_panel->GetInViewport() && !action_panel->GetOnAction())
+		{
+			selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);
+		}
 		action_panel->Handle_Input(MOUSE_RIGHT_BUTTON);
 	}
 
@@ -221,14 +224,15 @@ bool j1Player::PostUpdate()
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
-		selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_REPEAT);
+		if(!action_panel->GetOnAction()) selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_REPEAT);
 		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_REPEAT);
 	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
+		
+		if(!action_panel->GetOnAction()) selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_UP);
 		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_UP);
-		selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_UP);
 		action_panel->SetPanelType();
 	}
 

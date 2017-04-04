@@ -194,7 +194,7 @@ bool UnitPanel::ActivateCell(int i)
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
-		return true;
+		return false;
 	}
 		break;
 	default:
@@ -244,6 +244,7 @@ bool VillagerPanel::ActivateCell(int i)
 		if (villagerisbuilding == VP_NOT_BUILDING)
 		{
 			villagerisbuilding = VP_NORMAL;
+			return false;
 		}
 		else if (villagerisbuilding == VP_NORMAL)
 		{
@@ -295,7 +296,7 @@ bool VillagerPanel::ActivateCell(int i)
 	default:
 		break;
 	}
-	return true;
+	return false;
 }
 
 void VillagerPanel::ChangePanelIcons(std::vector<UI_Image*>& actual_panel)
@@ -445,6 +446,7 @@ HeroPanel::~HeroPanel()
 
 void HeroPanel::ResetPanel()
 {
+	entitis_panel = nullptr;
 	champion_selected = NO_UNIT;
 
 	skill_tree->Desactivate();
@@ -502,7 +504,7 @@ bool HeroPanel::ActivateCell(int i)
 		{
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
-		entitis_panel = nullptr;
+		ResetPanel();
 		}
 	default:	break;
 	}
@@ -584,8 +586,6 @@ void HeroPanel::LearnSkill(int i)
 
 void HeroPanel::ChangePanelIcons(std::vector<UI_Image*>& actual_panel) 
 {
-	activate_skill = -1;
-
 	for (uint i = 0; i < MAX_PANEL_CELLS; i++)
 	{
 		if(champion_selected == WARRIOR_CHMP)	actual_panel[i]->ChangeTextureRect(panel_icons[i]);
@@ -601,6 +601,7 @@ void HeroPanel::ChangePanelIcons(std::vector<UI_Image*>& actual_panel)
 
 void HeroPanel::ChangePanelTarget(Entity * new_target)
 {
+	activate_skill = -1;
 	entitis_panel = new_target;
 	champion_selected = ((Unit*)entitis_panel)->GetUnitType();
 	
@@ -693,16 +694,13 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 		if (actualpanel != nullptr && isin && !on_action) {
 			cell = GetCell();
 			on_action = actualpanel->ActivateCell(cell);
-			if (on_action)
+			if (!on_action)
 			{
-				if (actualpanel != heropanel)
-				{
-					actualpanel->ChangePanelIcons(panel_cells);
-				}
+				actualpanel->ChangePanelIcons(panel_cells);
 				return;
 			}
 		}
-		if (actualpanel == heropanel && on_action)
+		else if (actualpanel == heropanel && on_action)
 		{
 			on_action = heropanel->Handle_input(newevent);
 		}
@@ -713,7 +711,7 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 			{
 				on_action = villagerpanel->Villager_Handle_input(MOUSE_LEFT_BUTTON_REPEAT);
 			}
-			else if (actualpanel == unitpanel)
+			else if (actualpanel == unitpanel && !on_action)
 			{
 				on_action = actualpanel->ActivateCell(GetCell());
 			}
@@ -841,12 +839,14 @@ void Action_Panel::SetPanelType()
 	case UNIT:
 		{
 			if (u_type == VILLAGER) {	
+				if (villagerpanel->GetActualEntity() != actual_entity) villagerpanel->ResetPanel();
 				villagerpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = villagerpanel;
 			}
 			else if (u_type == WARRIOR_CHMP)
 			{
 				if (actualpanel == heropanel && heropanel->GetActualEntity()!= nullptr)return;
+				if (heropanel->GetActualEntity() != actual_entity) heropanel->ResetPanel();
 				actualpanel = heropanel;
 			}
 			else
@@ -890,11 +890,14 @@ void Action_Panel::CheckSelected(int selected)
 {	
 	if (selected == 0)
 	{
-		actual_entity = nullptr;
-		actualpanel = nullptr;
 		on_action = false;
-		heropanel->skill_tree->Desactivate();
-		heropanel->skill_tree->DesactivateChids();
+		actual_entity = nullptr;
+		if (actualpanel == heropanel)
+		{
+			heropanel->skill_tree->Desactivate();
+			heropanel->skill_tree->DesactivateChids();
+		}
+		actualpanel = nullptr;
 		return;
 	}
 	if (actualpanel != nullptr)
