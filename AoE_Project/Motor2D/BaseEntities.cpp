@@ -332,7 +332,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 		int collisions = 0;
 		while (!other_units.empty()) {
 			Unit* other_unit = other_units.back();
-			if (other_unit != this&&other_unit->GetDiplomacy() ==ALLY) {
+			if (other_unit != this&&other_unit->GetDiplomacy() == this->GetDiplomacy()) {
 				int other_path_size = 0;
 				std::vector<iPoint>* other_path = nullptr;
 				if (other_unit->GetPath() != nullptr)
@@ -351,7 +351,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 						if(target != iPoint(-1,-1))
 							Repath(target);
 						else
-//							Repath(*(path->begin()));
+							Repath(*(path->begin()));
 					
 
 						return false;
@@ -360,6 +360,8 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 				}
 					break;
 				case COLLISION_MOVE:
+					if (other_path_size != 0) {
+
 						if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
 								other_unit->Repath(*(other_path->begin()));
@@ -377,33 +379,34 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 									mutable_speed -= 0.2;
 							}
 						}
-					
+					}
 					collisions++;
 					break;
 				case FUTURE_COLLISION_MOVE:
-					/*
-					if (future_position == other_unit->future_position) {
-						if (other_unit->GetPath()->size() <= 2 && GetPath()->size() <= 2) {
-							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-								other_unit->Repath(*(other_unit->GetPath()->begin()));
-							else
-								Repath(*(path->begin()));
-
-						}
-						else
-						{
-							if (mutable_speed == 0 && other_unit->mutable_speed == 0)
-							{
+					if (other_path_size != 0) {
+						if (future_position == other_unit->future_position && future_position != iPoint(-1, -1)) {
+							if (other_path_size <= 2 && path_size <= 2) {
 								if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-									other_unit->mutable_speed -= 0.2;
+									other_unit->Repath(*(other_path->begin()));
 								else
-									mutable_speed -= 0.2;
-							}
-						}
+									Repath(*(path->begin()));
 
+							}
+							else
+							{
+								if (mutable_speed == 0 && other_unit->mutable_speed == 0)
+								{
+									if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+										other_unit->mutable_speed -= 0.2;
+									else
+										mutable_speed -= 0.2;
+								}
+							}
+
+						}
 					}
 					collisions++;
-					*/
+					
 					break;
 
 
@@ -681,7 +684,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		return iPoint(-1, -1);
 }
 
-iPoint Unit::FindNewTarget()
+Unit** Unit::FindNewTarget()
 {
 std::vector<Unit*> other_units;
 App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
@@ -699,11 +702,12 @@ while (!other_units.empty())
 	goal = FindWalkableAdjacent(unit->GetPositionRounded());
 	if (goal != iPoint(-1, -1)) 
 	{
+
 		SetInteractionTarget(unit);
-		return goal;
+		return (Unit**)unit->GetMe();
 	}
 }
-	return goal;
+	return nullptr;
 }
 
 void Unit::Focus(const iPoint & target, bool play)
@@ -819,24 +823,25 @@ bool Unit::AttackUnit(Unit** target)
 			goal = FindWalkableAdjacent(((Unit*)(*target))->GetPositionRounded());
 			if (goal == iPoint(-1, -1))
 			{
-				goal = FindNewTarget();
-
+				Unit** new_target;
+				new_target = FindNewTarget();
+				if (new_target != nullptr) {
+					this->AddPriorizedAction((Action*)App->action_manager->AttackToUnitAction(this, new_target));
+					return true;
+				}
+				return true;
 			}
 		}
-		if (goal != iPoint(-1, -1))
-		{
+	
 			std::vector<iPoint>* path = App->pathfinding->SimpleAstar(iPoint(position.x, position.y), goal);
 			if (path == nullptr)return true;
 			GetWorker()->ResetActive();
 			this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
 			return false;
-		}
-		else
-		{
-			return true;
-		}
+	
 	
 	}
+
 
 	//Control action rate
 	if (action_timer.Read() < attack_rate)return false;

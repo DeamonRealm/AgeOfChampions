@@ -343,7 +343,7 @@ public:
 	bool					UnitHere(std::vector<Unit*> other_units,const iPoint& destination);
 	bool					UnitHere(const iPoint& destination);
 	iPoint					FindWalkableAdjacent(const iPoint& center);
-	iPoint					FindNewTarget();
+	Unit**					FindNewTarget();
 	void					Focus(const iPoint& target, bool play = true);
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
 	bool					AttackUnit(Unit** target);
