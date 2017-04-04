@@ -838,10 +838,10 @@ bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iP
 	return true;
 }
 
-void j1EntitiesManager::AddUnit(const Unit * unit)
+void j1EntitiesManager::AddUnit(Unit* unit)
 {
 	units.push_back((Unit*)unit);
-	units_quadtree.Exteract(&unit->GetPosition());
+	units_quadtree.Exteract(unit,&unit->GetPosition());
 	units_quadtree.Insert((Unit*)unit, &unit->GetPosition());
 }
 

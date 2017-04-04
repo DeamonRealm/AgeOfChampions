@@ -50,7 +50,7 @@ void Entity::Deselect()
 //Operators -------------
 bool Entity::operator == (const Entity& tar)
 {
-	return (myself == tar.myself && position == tar.position && entity_type == tar.entity_type);
+	return (myself == tar.myself && position == tar.position && entity_type == tar.entity_type && tar.life == life);
 }
 
 //Update ----------
@@ -119,6 +119,12 @@ void Entity::SetName(const char * name_str)
 }
 
 void Entity::SetPosition(float x, float y, bool insert)
+{
+	position.x = x;
+	position.y = y;
+}
+
+void Entity::OnlySetPosition(float x, float y)
 {
 	position.x = x;
 	position.y = y;
@@ -1000,7 +1006,7 @@ bool Unit::Die()
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
-		App->entities_manager->units_quadtree.Exteract(&this->GetPosition());
+		App->entities_manager->units_quadtree.Exteract(this,&this->GetPosition());
 		App->animator->UnitPlay(this);
 	}
 	else if (current_animation->IsEnd())
@@ -1061,7 +1067,7 @@ void Unit::AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence)
 void Unit::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
-	if(insert)App->entities_manager->units_quadtree.Exteract(&position);
+	if(insert)App->entities_manager->units_quadtree.Exteract(this,&position);
 
 	//Set unit position
 	position.x = x;

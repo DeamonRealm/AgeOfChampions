@@ -63,7 +63,7 @@
       icon_w="36"
       icon_h="36"
   
-      max_life="500"
+      max_life="50"
       view_area="15"
       speed="0.40"
       attack_delay ="50"
@@ -575,8 +575,8 @@
       speed_for_level="1.5"
       view_area_for_level="2"
       
-      atk_triangle_length="400"
-      atk_triangle_width_angle="100"
+      atk_triangle_length="210"
+      atk_triangle_width_angle="125"
       
     />
   </unit>

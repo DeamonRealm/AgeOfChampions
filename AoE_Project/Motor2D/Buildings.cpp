@@ -47,7 +47,7 @@ bool HabitableBuilding::CoverUnit(const Unit * target)
 void HabitableBuilding::ReleaseUnit(const Unit * target)
 {
 	units_in.remove((Unit*)target);
-	App->entities_manager->AddUnit(target);
+	App->entities_manager->AddUnit((Unit*)target);
 }
 
 void HabitableBuilding::ReleaseAllUnits()

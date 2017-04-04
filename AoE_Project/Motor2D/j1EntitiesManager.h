@@ -107,7 +107,7 @@ public:
 	bool		SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal);
 
 	//Units lists movement units used in buildings cover
-	void		AddUnit(const Unit* unit);
+	void		AddUnit(Unit* unit);
 	Unit*		PopUnit(const Unit* unit);
 
 	//Get the nearest resource save point from the coordinate

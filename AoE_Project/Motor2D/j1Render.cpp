@@ -449,7 +449,7 @@ bool j1Render::DrawTriangle(int x1, int y1, int x2, int y2, uint length, float a
 	v_B.x = position.x + B_vector.x;
 	v_B.y = position.y + B_vector.y;
 
-	DrawTriangle(&position, &v_A, &v_B, 25, 255, 255, 255);
+	DrawTriangle(&position, &v_A, &v_B, 0,0,0, 255);
 
 	return true;
 }
@@ -457,9 +457,9 @@ bool j1Render::DrawTriangle(int x1, int y1, int x2, int y2, uint length, float a
 bool j1Render::DrawTriangle(const iPoint* pick, const iPoint* v_A, const iPoint* v_B, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 	//Draw all the calculated vectors
-	App->render->DrawLine(pick->x, pick->y, v_A->x, v_A->y, 255, 0, 255, 255);
-	App->render->DrawLine(pick->x, pick->y, v_B->x, v_B->y, 255, 0, 255, 255);
-	App->render->DrawLine(v_A->x, v_A->y, v_B->x, v_B->y, 255, 0, 255, 255);
+	App->render->DrawLine(pick->x, pick->y, v_A->x, v_A->y, r, g, b, a);
+	App->render->DrawLine(pick->x, pick->y, v_B->x, v_B->y, r, g, b, a);
+	App->render->DrawLine(v_A->x, v_A->y, v_B->x, v_B->y, r, g, b, a);
 
 	return true;
 }

@@ -353,6 +353,64 @@ public:
 		return false;
 	}
 
+	bool Extract(const DATA_TYPE data, const fPoint* loc)
+	{
+		bool found = false;
+
+		if (full)
+		{
+			for (uint i = 0; i < NODE_SUBDIVISION; i++)
+			{
+				if (found)break;
+				if (children[i]->full)
+				{
+					if (children[i]->Extract(data, loc))
+					{
+						found = true;
+						break;
+					}
+				}
+				else
+				{
+					std::list<m_TreeItem<DATA_TYPE>>::iterator object = children[i]->objects.begin();
+					while (object != children[i]->objects.end())
+					{
+						if (object._Ptr->_Myval.location == *loc && object._Ptr->_Myval.data == data)
+						{
+							children[i]->objects.erase(object);
+							found = true;
+							break;
+						}
+						object++;
+					}
+				}
+			}
+			if (found)
+			{
+				if (CountChildrenObjects() < max_objects)
+				{
+					Fuse();
+				}
+				return true;
+			}
+		}
+		else
+		{
+			std::list<m_TreeItem<DATA_TYPE>>::iterator object = objects.begin();
+			while (object != objects.end())
+			{
+				if (object._Ptr->_Myval.location == *loc)
+				{
+					objects.erase(object);
+					return true;
+				}
+				object++;
+			}
+		}
+
+		return false;
+	}
+
 	void Subdivide()
 	{
 		// Get subdivision size
@@ -671,6 +729,15 @@ public:
 		if (root != NULL)
 		{
 			return root->Extract(loc);
+		}
+		return false;
+	}
+
+	bool Exteract(const DATA_TYPE data, const fPoint* loc)
+	{
+		if (root != NULL)
+		{
+			return root->Extract(data,loc);
 		}
 		return false;
 	}

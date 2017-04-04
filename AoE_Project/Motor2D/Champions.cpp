@@ -83,7 +83,7 @@ void Champion::CheckHability_B()
 void Champion::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
-	App->entities_manager->units_quadtree.Exteract(&position);
+	App->entities_manager->units_quadtree.Exteract(this,&position);
 
 	//Set unit position
 	position.x = x;
@@ -236,10 +236,15 @@ bool Warrior::Draw(bool debug)
 	bool ret = false;
 
 	//Draw Warrior Selection Mark
-	if(selected)mark.Draw();
+	if (selected)
+	{
+		special_attack_area.Draw();
+		mark.Draw();
+	}
 
 	//Draw Warrior logic areas
 	if (debug && selected) {
+	
 		if (selected)
 		{
 			attack_area.Draw();
@@ -427,7 +432,7 @@ bool Warrior::Die()
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
-		App->entities_manager->units_quadtree.Exteract(&this->GetPosition());
+		App->entities_manager->units_quadtree.Exteract(this,&this->position);
 		App->animator->UnitPlay(this);
 	}
 	else if (current_animation->IsEnd())
@@ -451,7 +456,7 @@ bool Warrior::Die()
 void Warrior::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
-	App->entities_manager->units_quadtree.Exteract(&position);
+	App->entities_manager->units_quadtree.Exteract(this,&position);
 
 	//Set unit position
 	position.x = x;
