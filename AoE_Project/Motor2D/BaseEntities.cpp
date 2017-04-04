@@ -438,24 +438,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 		if (collisions == 0 && mutable_speed!=0.0f) {
 			mutable_speed = 0.0f;
 		}
-
-		if (path->size() == 1)
-		{
-		
-			//Set unit at the goal pixel position
-			SetPosition((float)goal.x, (float)goal.y);
-			//Stop idle walk animation
-			action_type = IDLE;
-			App->animator->UnitPlay(this);
-
-			//Delete unit path
-			delete path;
-			path = nullptr;
-
-			return true;
-		}
-	
-		if (!App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
+		if (future_position!=iPoint(-1,-1)&&!App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
 		{
 			std::vector<iPoint>* new_path;
 			path->pop_back();
@@ -474,10 +457,27 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 			{
 				return true;
 			}
-			new_path=App->pathfinding->SimpleAstar(location, next_goal);
-			
+			new_path = App->pathfinding->SimpleAstar(location, next_goal);
+
 			path->insert(path->end(), new_path->begin(), new_path->end());
 		}
+		if (path->size() == 1)
+		{
+		
+			//Set unit at the goal pixel position
+			SetPosition((float)goal.x, (float)goal.y);
+			//Stop idle walk animation
+			action_type = IDLE;
+			App->animator->UnitPlay(this);
+
+			//Delete unit path
+			delete path;
+			path = nullptr;
+
+			return true;
+		}
+	
+
 
 		//Set the unit next tile goal
 		if (path->size() > 2)	SetFutureAction(*(path->rbegin() + 1));
