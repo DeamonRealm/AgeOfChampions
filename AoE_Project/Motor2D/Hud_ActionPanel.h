@@ -44,7 +44,7 @@ public:
 	virtual bool ActivateCell(int i) { return false; };
 
 	void AddIcon(SDL_Rect icon_rect, uint position);
-	virtual void ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const;
+	virtual void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 
 	virtual void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
 	Entity* GetActualEntity();
@@ -135,7 +135,7 @@ public:
 
 	bool ActivateCell(int i);
 
-	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const;
+	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 	bool Villager_Handle_input(GUI_INPUT input);
 
 	bool GetIsBuilding()const;
@@ -163,9 +163,10 @@ public:
 
 	bool ActivateCell(int i);
 	bool Hero_Handle_input(UI_Element* ui_element, GUI_INPUT ui_input);
+	bool Handle_input(GUI_INPUT input);
 
 	void LearnSkill(int i);
-	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel) const;
+	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 	void ChangePanelTarget(Entity* new_target);
 	
 
@@ -181,6 +182,7 @@ private:
 	// Champions Skills;
 	std::vector<SDL_Rect>			mele_champion;
 	int								mele_learned[3];
+	int								activate_skill = -1;
 };
 
 
@@ -235,6 +237,7 @@ public:
 	// Panel Settings
 	void SetPanelType();
 	void CheckSelected(int size);
+	bool GetOnAction();
 
 private:
 	
@@ -263,6 +266,9 @@ private:
 	// Units Panels
 	VillagerPanel*				villagerpanel = nullptr;
 	UnitPanel*					unitpanel = nullptr;
+
+	// Unit On Action   
+	bool						on_action = false;
 
 
 public:

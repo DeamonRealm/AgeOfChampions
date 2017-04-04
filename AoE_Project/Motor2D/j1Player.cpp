@@ -104,14 +104,15 @@ bool j1Player::PreUpdate()
 	{
 		if (selection_panel->GetInViewport())
 		{
-			selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
+			if(!action_panel->GetOnAction()) selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 		}
-		if (action_panel->GetIsIn()) action_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
+		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 	}
 	
 	else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
-		if (selection_panel->GetInViewport()) selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);		
+		if (selection_panel->GetInViewport() && !action_panel->GetOnAction()) selection_panel->Handle_Input(MOUSE_RIGHT_BUTTON);
+		action_panel->Handle_Input(MOUSE_RIGHT_BUTTON);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
