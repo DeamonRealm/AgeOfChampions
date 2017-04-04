@@ -21,7 +21,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 history/up oX="10" oY="8" oW="160" oH="147"
 -->
-<TextureAtlas imagePath="Main_Menu.png" width="1032
+<TextureAtlas imagePath="Main_Menu.png" width="1450
 " height="1042">
  <exit>
     <sprite n="down" x="0" y="0" w="230" h="137" pX="0" pY="0.313869"/>
@@ -64,8 +64,8 @@ history/up oX="10" oY="8" oW="160" oH="147"
     <sprite n="down" x="218" y="730" w="218" h="254" pX="0.0366973" pY="0.019685"/>
     <sprite n="hover-up" x="436" y="730" w="218" h="254" pX="0.0366973" pY="0.019685"/>
     <sprite n="up" x="654" y="730" w="218" h="254" pX="0.0366973" pY="0.019685"/>
-<sprite n="Logo_Down" x="1071" y="989" w="315" h="153" pX="0" pY="0"/>
-    <sprite n="Logo_Up" x="859" y="764" w="315" h="153" pX="0" pY="0"/>
+    <sprite n="Logo_Up" x="1067" y="47" w="441" h="148" pX="0" pY="0"/>
+<sprite n="Logo_Down" x="1067" y="288" w="441" h="148" pX="0" pY="0"/>
 
  </tutorial>
 </TextureAtlas>

@@ -21,73 +21,73 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Stun_Effect.png" width="1266" height="1266">
   <simple_particle particle_type="stun_particle" direction="north">
-    <anim_data speed="50" loop="0"/>
-    <sprite n="Nueva carpeta/Stun_EffectB00.png" opacity ="255" x="1" y="1" w="34" h="36" pX="0.5" pY="0.5" oX="0" oY="0" oW="34" oH="39"/>
-    <sprite n="Nueva carpeta/Stun_EffectB01.png" opacity ="255" x="37" y="1" w="91" h="49" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectB02.png" opacity ="255" x="130" y="1" w="109" h="57" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectB03.png" opacity ="255" x="241" y="1" w="123" h="69" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectB04.png" opacity ="255" x="366" y="1" w="157" h="74" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectB05.png" opacity ="255" x="525" y="1" w="163" h="91" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectB06.png" opacity ="255" x="690" y="1" w="185" h="97" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectB07.png" opacity ="255" x="877" y="1" w="188" h="111" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectB08.png" opacity ="255" x="1067" y="1" w="185" h="124" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectB09.png" opacity ="255" x="1" y="127" w="199" h="129" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectB10.png" opacity ="255" x="202" y="127" w="209" h="131" pX="0.5" pY="0.5"/>
+    <anim_data speed="100" loop="0"/>
+    <sprite n="Nueva carpeta/Stun_EffectB00.png" opacity ="255" x="1" y="1" w="34" h="36" pX="0.5" pY="1" oX="0" oY="0" oW="34" oH="39"/>
+    <sprite n="Nueva carpeta/Stun_EffectB01.png" opacity ="255" x="37" y="1" w="91" h="49" pX="0.5" pY="1.3"/>
+    <sprite n="Nueva carpeta/Stun_EffectB02.png" opacity ="255" x="130" y="1" w="109" h="57" pX="0.45" pY="1.4"/>
+    <sprite n="Nueva carpeta/Stun_EffectB03.png" opacity ="255" x="241" y="1" w="123" h="69" pX="0.5" pY="1.3"/>
+    <sprite n="Nueva carpeta/Stun_EffectB04.png" opacity ="255" x="366" y="1" w="157" h="74" pX="0.49" pY="1.3"/>
+    <sprite n="Nueva carpeta/Stun_EffectB05.png" opacity ="255" x="525" y="1" w="163" h="91" pX="0.47" pY="1.25"/>
+    <sprite n="Nueva carpeta/Stun_EffectB06.png" opacity ="255" x="690" y="1" w="185" h="97" pX="0.44" pY="1.25"/>
+    <sprite n="Nueva carpeta/Stun_EffectB07.png" opacity ="255" x="877" y="1" w="188" h="111" pX="0.475" pY="1.21"/>
+    <sprite n="Nueva carpeta/Stun_EffectB08.png" opacity ="255" x="1067" y="1" w="185" h="124" pX="0.53" pY="1.2"/>
+    <sprite n="Nueva carpeta/Stun_EffectB09.png" opacity ="255" x="1" y="127" w="199" h="129" pX="0.525" pY="1.2"/>
+    <sprite n="Nueva carpeta/Stun_EffectB10.png" opacity ="255" x="202" y="127" w="209" h="131" pX="0.51" pY="1.2"/>
   </simple_particle>
   <simple_particle particle_type="stun_particle" direction="north-west">
-    <anim_data speed="50" loop="0"/>
-  <sprite n="Nueva carpeta/Stun_EffectBD00.png" opacity ="255" x="413" y="127" w="87" h="45" pX="0.5" pY="0.5" oX="3" oY="0" oW="90" oH="45"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD01.png" opacity ="255" x="502" y="127" w="122" h="60" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD02.png" opacity ="255" x="626" y="127" w="148" h="69" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD03.png" opacity ="255" x="776" y="127" w="162" h="70" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD04.png" opacity ="255" x="940" y="127" w="181" h="78" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD05.png" opacity ="255" x="1" y="260" w="172" h="90" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD06.png" opacity ="255" x="175" y="260" w="195" h="98" pX="0.5" pY="0.5" oX="0" oY="0" oW="195" oH="102"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD07.png" opacity ="255" x="372" y="260" w="190" h="102" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD08.png" opacity ="255" x="564" y="260" w="207" h="119" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD09.png" opacity ="255" x="773" y="260" w="217" h="132" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectBD10.png" opacity ="255" x="992" y="260" w="226" h="140" pX="0.5" pY="0.5" oX="158" oY="85" oW="660" oH="490"/>
+    <anim_data speed="100" loop="0"/>
+  <sprite n="Nueva carpeta/Stun_EffectBD00.png" opacity ="255" x="413" y="127" w="87" h="45" pX="0.7" pY="0.7" oX="3" oY="0" oW="90" oH="45"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD01.png" opacity ="255" x="502" y="127" w="122" h="60" pX="0.85" pY="0.9"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD02.png" opacity ="255" x="626" y="127" w="148" h="69" pX="0.92" pY="1.06"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD03.png" opacity ="255" x="776" y="127" w="162" h="70" pX="0.93" pY="1.1"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD04.png" opacity ="255" x="940" y="127" w="181" h="78" pX="0.95" pY="1.1"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD05.png" opacity ="255" x="1" y="260" w="172" h="90" pX="1.12" pY="1.1"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD06.png" opacity ="255" x="175" y="260" w="195" h="98" pX="1.11" pY="1.1" oX="0" oY="0" oW="195" oH="102"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD07.png" opacity ="255" x="372" y="260" w="190" h="102" pX="1.12" pY="1.1"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD08.png" opacity ="255" x="564" y="260" w="207" h="119" pX="1.1" pY="1.06"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD09.png" opacity ="255" x="773" y="260" w="217" h="132" pX="1.1" pY="1.06"/>
+    <sprite n="Nueva carpeta/Stun_EffectBD10.png" opacity ="255" x="992" y="260" w="226" h="140" pX="1.1" pY="1.05" oX="158" oY="85" oW="660" oH="490"/>
   </simple_particle>
   <simple_particle particle_type="stun_particle" direction="south">
-    <anim_data speed="50" loop="0"/>
-  <sprite n="Nueva carpeta/Stun_EffectF00.png" opacity ="255" x="1220" y="260" w="34" h="52" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectF01.png" opacity ="255" x="1" y="402" w="89" h="74" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectF02.png" opacity ="255" x="92" y="402" w="107" h="85" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectF03.png" opacity ="255" x="201" y="402" w="122" h="104" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectF04.png" opacity ="255" x="325" y="402" w="155" h="112" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectF05.png" opacity ="255" x="482" y="402" w="161" h="137" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectF06.png" opacity ="255" x="645" y="402" w="185" h="145" pX="0.5" pY="0.5" oX="1" oY="0" oW="186" oH="145"/>
-    <sprite n="Nueva carpeta/Stun_EffectF07.png" opacity ="255" x="832" y="402" w="187" h="167" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectF08.png" opacity ="255" x="1021" y="402" w="184" h="187" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectF09.png" opacity ="255" x="1" y="591" w="198" h="195" pX="0.5" pY="0.5" oX="0" oY="0" oW="198" oH="197"/>
-    <sprite n="Nueva carpeta/Stun_EffectF10.png" opacity ="255" x="201" y="591" w="208" h="197" pX="0.5" pY="0.5"/>
+    <anim_data speed="100" loop="0"/>
+  <sprite n="Nueva carpeta/Stun_EffectF00.png" opacity ="255" x="1220" y="260" w="34" h="52" pX="0.5" pY="0.45"/>
+    <sprite n="Nueva carpeta/Stun_EffectF01.png" opacity ="255" x="1" y="402" w="89" h="74" pX="0.47" pY="0.08"/>
+    <sprite n="Nueva carpeta/Stun_EffectF02.png" opacity ="255" x="92" y="402" w="107" h="85" pX="0.44" pY="-0.07"/>
+    <sprite n="Nueva carpeta/Stun_EffectF03.png" opacity ="255" x="201" y="402" w="122" h="104" pX="0.49" pY="-0.058"/>
+    <sprite n="Nueva carpeta/Stun_EffectF04.png" opacity ="255" x="325" y="402" w="155" h="112" pX="0.48" pY="-0.05"/>
+    <sprite n="Nueva carpeta/Stun_EffectF05.png" opacity ="255" x="482" y="402" w="161" h="137" pX="0.461" pY="-0.044"/>
+    <sprite n="Nueva carpeta/Stun_EffectF06.png" opacity ="255" x="645" y="402" w="185" h="145" pX="0.43" pY="-0.044" oX="1" oY="0" oW="186" oH="145"/>
+    <sprite n="Nueva carpeta/Stun_EffectF07.png" opacity ="255" x="832" y="402" w="187" h="167" pX="0.46" pY="-0.037"/>
+    <sprite n="Nueva carpeta/Stun_EffectF08.png" opacity ="255" x="1021" y="402" w="184" h="187" pX="0.51" pY="-0.03"/>
+    <sprite n="Nueva carpeta/Stun_EffectF09.png" opacity ="255" x="1" y="591" w="198" h="195" pX="0.515" pY="-0.03" oX="0" oY="0" oW="198" oH="197"/>
+    <sprite n="Nueva carpeta/Stun_EffectF10.png" opacity ="255" x="201" y="591" w="208" h="197" pX="0.505" pY="-0.032"/>
   </simple_particle>
   <simple_particle particle_type="stun_particle" direction="south-west">
-    <anim_data speed="50" loop="0"/>
-  <sprite n="Nueva carpeta/Stun_EffectFD00.png" opacity ="255" x="411" y="591" w="89" h="55" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD01.png" opacity ="255" x="502" y="591" w="128" h="76" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD02.png" opacity ="255" x="632" y="591" w="151" h="96" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD03.png" opacity ="255" x="785" y="591" w="148" h="104" pX="0.5" pY="0.5" oX="0" oY="2" oW="148" oH="106"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD04.png" opacity ="255" x="935" y="591" w="154" h="113" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD05.png" opacity ="255" x="1091" y="591" w="174" h="133" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD06.png" opacity ="255" x="1" y="790" w="191" h="158" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD07�.png" opacity ="255" x="194" y="790" w="199" h="159" pX="0.5" pY="0.5" oX="0" oY="6" oW="199" oH="165"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD08.png" opacity ="255" x="395" y="790" w="227" h="181" pX="0.5" pY="0.5" oX="0" oY="3" oW="227" oH="184"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD09.png" opacity ="255" x="624" y="790" w="247" h="191" pX="0.5" pY="0.5" oX="0" oY="3" oW="247" oH="194"/>
-    <sprite n="Nueva carpeta/Stun_EffectFD10.png" opacity ="255" x="873" y="790" w="256" h="199" pX="0.5" pY="0.5" oX="0" oY="3" oW="256" oH="202"/>
+    <anim_data speed="100" loop="0"/>
+  <sprite n="Nueva carpeta/Stun_EffectFD00.png" opacity ="255" x="411" y="591" w="89" h="55" pX="0.7" pY="0.5"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD01.png" opacity ="255" x="502" y="591" w="128" h="76" pX="0.9" pY="0.2"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD02.png" opacity ="255" x="632" y="591" w="151" h="96" pX="0.98" pY="0.078"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD03.png" opacity ="255" x="785" y="591" w="148" h="104" pX="1.06" pY="0.01" oX="0" oY="2" oW="148" oH="106"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD04.png" opacity ="255" x="935" y="591" w="154" h="113" pX="1.11" pY="-0.02"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD05.png" opacity ="255" x="1091" y="591" w="174" h="133" pX="1.1" pY="-0.01"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD06.png" opacity ="255" x="1" y="790" w="191" h="158" pX="1.1" pY="0"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD07.png" opacity ="255" x="194" y="790" w="199" h="159" pX="1.1" pY="0" oX="0" oY="6" oW="199" oH="165"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD08.png" opacity ="255" x="395" y="790" w="227" h="181" pX="1.08" pY="0" oX="0" oY="3" oW="227" oH="184"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD09.png" opacity ="255" x="624" y="790" w="247" h="191" pX="1.07" pY="0" oX="0" oY="3" oW="247" oH="194"/>
+    <sprite n="Nueva carpeta/Stun_EffectFD10.png" opacity ="255" x="873" y="790" w="256" h="199" pX="1.07" pY="0" oX="0" oY="3" oW="256" oH="202"/>
   </simple_particle>
   <simple_particle particle_type="stun_particle" direction="west">
-    <anim_data speed="50" loop="0"/>
-  <sprite n="Nueva carpeta/Stun_EffectFR00.png" opacity ="255" x="1131" y="790" w="87" h="25" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR01.png" opacity ="255" x="1" y="991" w="122" h="59" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR02.png" opacity ="255" x="125" y="991" w="141" h="72" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR03.png" opacity ="255" x="268" y="991" w="168" h="84" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR04.png" opacity ="255" x="438" y="991" w="182" h="105" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR05.png" opacity ="255" x="622" y="991" w="221" h="106" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR06.png" opacity ="255" x="845" y="991" w="237" h="122" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR07.png" opacity ="255" x="1" y="1115" w="271" h="125" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR08.png" opacity ="255" x="274" y="1115" w="303" h="126" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR09.png" opacity ="255" x="579" y="1115" w="312" h="134" pX="0.5" pY="0.5"/>
-    <sprite n="Nueva carpeta/Stun_EffectFR10.png" opacity ="255" x="893" y="1115" w="317" h="141" pX="0.5" pY="0.5"/>
+    <anim_data speed="100" loop="0"/>
+  <sprite n="Nueva carpeta/Stun_EffectFR00.png" opacity ="255" x="1131" y="790" w="87" h="25" pX="0.7" pY="0.5"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR01.png" opacity ="255" x="1" y="991" w="122" h="59" pX="1" pY="0.43"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR02.png" opacity ="255" x="125" y="991" w="141" h="72" pX="1.14" pY="0.38"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR03.png" opacity ="255" x="268" y="991" w="168" h="84" pX="1.13" pY="0.43"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR04.png" opacity ="255" x="438" y="991" w="182" h="105" pX="1.12" pY="0.42385"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR05.png" opacity ="255" x="622" y="991" w="221" h="106" pX="1.11" pY="0.385"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR06.png" opacity ="255" x="845" y="991" w="237" h="122" pX="1.1" pY="0.362"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR07.png" opacity ="255" x="1" y="1115" w="271" h="125" pX="1.08" pY="0.394"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR08.png" opacity ="255" x="274" y="1115" w="303" h="126" pX="1.08" pY="0.42"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR09.png" opacity ="255" x="579" y="1115" w="312" h="134" pX="1.08" pY="0.44"/>
+    <sprite n="Nueva carpeta/Stun_EffectFR10.png" opacity ="255" x="893" y="1115" w="317" h="141" pX="1.08" pY="0.43"/>
   </simple_particle>
 </TextureAtlas>
