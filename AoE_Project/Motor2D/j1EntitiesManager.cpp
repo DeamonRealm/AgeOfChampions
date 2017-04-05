@@ -102,11 +102,8 @@ bool j1EntitiesManager::Update(float dt)
 
 	while (item != units.end())
 	{
-		{
-			ret = item._Ptr->_Myval->Update();
-
-			item++;
-		}
+		ret = item._Ptr->_Myval->Update();
+		item++;
 	}
 
 
@@ -130,6 +127,37 @@ bool j1EntitiesManager::PostUpdate()
 	uint size = wasted_units.size();
 	for (uint k = 0; k < size; k++)
 	{
+		//Get the entity type
+		ENTITY_TYPE type = wasted_units[k]->GetEntityType();
+
+		//Remove the entity from the correct list
+		if (type == RESOURCE)
+		{
+			resources.remove((Resource*)wasted_units[k]);
+			if (resources_quadtree.Exteract((Resource*)wasted_units[k], &wasted_units[k]->GetPosition()))
+			{
+				LOG("Resource popped from quadtree");
+			}
+		}
+		else if (type == BUILDING)
+		{
+			buildings.remove((Building*)wasted_units[k]);
+			if (buildings_quadtree.Exteract((Building*)wasted_units[k], &wasted_units[k]->GetPosition()))
+			{
+				LOG("Building popped from quadtree");
+			}
+		}
+		else if (type == UNIT)
+		{
+			units.remove((Unit*)wasted_units[k]);
+			if (units_quadtree.Exteract((Unit*)wasted_units[k], &wasted_units[k]->GetPosition()))
+			{
+				LOG("Unit popped from quadtree");
+			}
+		}
+
+		LOG("%s", wasted_units[k]->GetName());
+
 		RELEASE(wasted_units[k]);
 	}
 	wasted_units.clear();
@@ -758,24 +786,6 @@ bool j1EntitiesManager::DeleteEntity(Entity * entity)
 	
 	//Add the entity at the wasted entities list 
 	wasted_units.push_back(entity);
-
-	//Get the entity type
-	ENTITY_TYPE type = entity->GetEntityType();
-	
-	//Remove the entity from the correct list
-	if (type == RESOURCE)
-	{
-		resources.remove((Resource*)entity);
-	}
-	else if (type == BUILDING)
-	{
-		buildings.remove((Building*)entity);
-	}
-	else if (type == UNIT)
-	{
-		units.remove((Unit*)entity);
-	}
-
 
 	return true;
 }

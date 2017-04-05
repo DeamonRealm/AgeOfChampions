@@ -47,7 +47,7 @@ public:
 	virtual void CheckHability_A();
 	//Ability B methods
 	virtual void SetAbility_B(bool choosed);
-	virtual void Hability_B();
+	virtual void Hability_B(int x = 0, int y = 0);
 	virtual void CheckHability_B();
 
 	//Set Methods -
@@ -106,7 +106,7 @@ public:
 	void	Hability_A();
 	void	CheckHability_A();
 	void	SetAbility_B(bool choosed);
-	void	Hability_B();
+	void	Hability_B(int x = 0, int y = 0);
 	void	CheckHability_B();
 	void	CalculateSpecialAttackArea(const iPoint& base);
 	bool	Die();

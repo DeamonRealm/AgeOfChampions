@@ -402,7 +402,7 @@ bool j1BuffManager::Start()
 		particle_document_node = particle_document_node.next_sibling();
 		
 		//Check if the next node is a particle node or a buff node
-		if (strcmp(particle_document_node.name(), "particle") != 0 && !simple_particle)break;
+		if (strcmp(particle_document_node.name(), "particle") != 0)break;
 	}
 
 	//Point to the first buff definition

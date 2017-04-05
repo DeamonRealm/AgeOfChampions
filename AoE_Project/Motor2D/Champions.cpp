@@ -69,7 +69,7 @@ void Champion::SetAbility_B(bool choosed)
 	ability[1] = choosed;
 }
 
-void Champion::Hability_B()
+void Champion::Hability_B(int x, int y)
 {
 
 }
@@ -374,13 +374,20 @@ void Warrior::SetAbility_B(bool choosed)
 	ability[1] = choosed;
 }
 
-void Warrior::Hability_B()
+void Warrior::Hability_B(int x, int y)
 {
+
+	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
+	App->animator->UnitPlay(this);
+
+
 	if (ability[1])
 	{
 		ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
 	}
 	else ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
+
+
 
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_in;
