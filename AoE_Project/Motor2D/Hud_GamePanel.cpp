@@ -185,15 +185,17 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
 	{
-		
-
+	
 
 		if (ui_element == exit_menu_button)
 		{
+			final_menu_image->Desactivate();
+			lose = false;
+			win = false;
+
 			if (exit_menu_image->GetActiveState()) {
 				exit_menu_image->Desactivate();
 				exit_menu_image->DesactivateChids();
-				final_menu_image->Desactivate();
 			}
 			else
 			{
@@ -255,6 +257,7 @@ void Game_Panel::Enable()
 	exit_menu_button->Activate();
 	win = false;
 	lose = false;
+	game_ended = false;
 }
 
 void Game_Panel::Disable()
@@ -425,7 +428,11 @@ void Game_Panel::IncreaseAllResources()
 
 void Game_Panel::DoLose()
 {
-	lose = true;
+	if (!game_ended)
+	{
+		game_ended = true;
+		lose = true;
+	}
 	final_str->SetString("YOU LOSE!!!");
 
 	std::string str = "Enemys Killed ";
@@ -444,11 +451,14 @@ void Game_Panel::DoLose()
 
 void Game_Panel::DoWin()
 {
-	win = true;
+	if (!game_ended)
+	{
+		win = true;
+	}
 	final_str->SetString("YOU WIN!!!");
 
 	std::string str = "Enemys Killed ";
-	str = str + App->gui->SetStringFromInt(++player_death_enemies);
+	str = str + App->gui->SetStringFromInt(1+player_death_enemies);
 
 	units_dead->SetString((char*)str.c_str());
 	
