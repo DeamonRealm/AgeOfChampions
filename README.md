@@ -22,6 +22,7 @@ Tribute game to Age of Empires II developed by DemonRealm.
 * Drag and drop the barracks icon (double sword) to construct one
 * Click on the militia icon in the barracks panel to spawn one
 * Arrows or drag the mouse to the corners to move the camera 
+* [F] Toggle Fullscreen/Windowed mode
 
 Note: All spawns require the player to wait some time before the actual unit spawns, this is not shown in the UI.    
 
@@ -40,6 +41,28 @@ Note: All spawns require the player to wait some time before the actual unit spa
 * [V]: Generate Gold ore
 * [W]: Generate Warrior
 
+
+#### Units/Building Costs
+**Militia:** 
+  * Food: 60
+  * Wood: 0
+  * Gold: 20
+  * Train time: 3sec
+  
+  **Villager:**
+  * Food: 60
+  * Wood: 0
+  * Gold: 20
+  * Train time: 2.5sec
+  
+  **Warrior:**
+  * Food: 180
+  * Wood: 0
+  * Gold: 60
+  * Train time: 4sec
+  
+  **Barracks:**
+  * Stone: 175 
 
 ## Media 
 **Facebook:** https://www.facebook.com/DemonRealm.P2    
