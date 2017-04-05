@@ -70,6 +70,9 @@ private:
 	UI_Element* menu_screen;
 	UI_Element* standard_match_screen;
 
+	UI_String*			wiki;
+	UI_String*			singleplayer_text;
+
 };
 
 #endif // __j1MENU_H__

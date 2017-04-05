@@ -118,6 +118,20 @@ bool j1Menu::Start()
 	turotial->Activate();
 	menu_screen->AddChild(turotial);
 	
+	wiki = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	wiki->SetColor({ 255, 255, 255, 255 });
+	wiki->SetString("Wiki");
+	wiki->Activate();
+	wiki->SetBox({ 58, 13,0,0 });
+	history->AddChild(wiki);
+
+	singleplayer_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	singleplayer_text->SetColor({ 255, 255, 255, 255 });
+	singleplayer_text->SetString("Single Player");
+	singleplayer_text->Activate();
+	singleplayer_text->SetBox({ 60, 13,0,0 });
+	singleplayer->AddChild(singleplayer_text);
+
 	//Standard Match menu screen
 /*	standard_match_screen = App->gui->GenerateUI_Element(UNDEFINED);
 	standard_match_screen->SetBox({ 0,0,App->win->screen_surface->w, App->win->screen_surface->h });
