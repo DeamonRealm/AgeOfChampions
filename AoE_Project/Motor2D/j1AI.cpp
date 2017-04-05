@@ -19,7 +19,7 @@ j1AI::~j1AI()
 
 void j1AI::Enable()
 {
-	ai_worker->AddAICommand(new WaitAICommand(60000));
+	ai_worker->AddAICommand(new WaitAICommand(5000));
 
 	//active = LoadEnemies("EnemiesSpawn.xml");
 	active = true;
@@ -266,6 +266,13 @@ bool MoveUnitsCommand::Execute()
 	};*/
 
 	App->group_move->GetGroupOfUnits(&to_move_list, new_pos.x, new_pos.y, false);
+	
+	std::list<Entity*>::iterator it = App->AI->enemy_units.begin();
+
+	/*while (it != App->AI->enemy_units.end())
+	{
+		it._Ptr->_Myval->AddSecondaryAction(App->action_manager->AttackToBuildingAction(it._Ptr->_Myval, ));
+	}*/
 
 	return true;
 }
