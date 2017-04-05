@@ -98,6 +98,27 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 	resource_text->SetBox({ 90, 6,0,0 });
 	cancel_game_menu->AddChild(resource_text);
 
+	final_str = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	final_str->SetColor({ 0, 0, 0, 255 });
+	final_str->SetString("YOU WIN !!!");
+	final_str->Activate();
+	final_str->SetBox({ 83, 50,0,0 });
+	final_menu_image->AddChild(final_str);
+
+	units_dead = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	units_dead->SetColor({ 0, 0, 0, 255 });
+	units_dead->SetString("Enemy's Killed: ");
+	units_dead->Activate();
+	units_dead->SetBox({ 65, 70,0,0 });
+	final_menu_image->AddChild(units_dead);
+
+	your_units = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	your_units->SetColor({ 0, 0, 0, 255 });
+	your_units->SetString("Ally Units alive: ");
+	your_units->Activate();
+	your_units->SetBox({ 60, 90,0,0 });
+	final_menu_image->AddChild(your_units);
+
 	exit_menu_screen->Desactivate();
 }
 
@@ -119,11 +140,24 @@ bool Game_Panel::CleanUp()
 
 bool Game_Panel::PreUpdate()
 {
+	if (lose)
+	{
+
+		final_menu_image->Activate();
+	}
+
+
+	if (win)
+	{
+		final_menu_image->Activate();
+	}
 	return true;
 }
 
 bool Game_Panel::PostUpdate()
 {
+	
+
 	return true;
 }
 
@@ -152,13 +186,14 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 	case MOUSE_LEFT_BUTTON_DOWN:
 	{
 		
-		//final_menu_image->Activate();
+
 
 		if (ui_element == exit_menu_button)
 		{
 			if (exit_menu_image->GetActiveState()) {
 				exit_menu_image->Desactivate();
 				exit_menu_image->DesactivateChids();
+				final_menu_image->Desactivate();
 			}
 			else
 			{
@@ -218,6 +253,8 @@ void Game_Panel::Enable()
 {
 	exit_menu_screen->Activate();
 	exit_menu_button->Activate();
+	win = false;
+	lose = false;
 }
 
 void Game_Panel::Disable()
@@ -384,5 +421,41 @@ void Game_Panel::IncreaseAllUnits()
 void Game_Panel::IncreaseAllResources()
 {
 	all_resources++;
+}
+
+void Game_Panel::DoLose()
+{
+	lose = true;
+	final_str->SetString("YOU LOSE!!!");
+
+	std::string str = "Enemys Killed ";
+	str += App->gui->SetStringFromInt(player_death_enemies);
+
+
+	units_dead->SetString((char*)str.c_str());
+	
+	str.clear();
+	str = "Ally Units alive ";
+	str += App->gui->SetStringFromInt(population);
+
+	your_units->SetString((char*)str.c_str());
+	
+}
+
+void Game_Panel::DoWin()
+{
+	win = true;
+	final_str->SetString("YOU WIN!!!");
+
+	std::string str = "Enemys Killed ";
+	str = str + App->gui->SetStringFromInt(player_death_enemies);
+
+	units_dead->SetString((char*)str.c_str());
+	
+	str.clear();
+	str = "Ally Units alive ";
+	str = str + App->gui->SetStringFromInt(population);
+
+	your_units->SetString((char*)str.c_str());
 }
 

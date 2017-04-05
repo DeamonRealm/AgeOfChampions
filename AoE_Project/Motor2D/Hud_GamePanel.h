@@ -73,6 +73,9 @@ public:
 	void IncreaseAllUnits();
 	void IncreaseAllResources();
 
+	void DoLose();
+	void DoWin();
+
 
 private:
 
@@ -112,6 +115,14 @@ private:
 	//Final menu
 	UI_Element* final_menu_screen	= nullptr;
 	UI_Image*	final_menu_image	= nullptr;
+	UI_String*  final_str			= nullptr;
+	UI_String*  units_dead			= nullptr;
+	UI_String*  your_units			= nullptr;
+
+
+
+	bool win = false;
+	bool lose = false;
 	
 
 };

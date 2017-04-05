@@ -968,7 +968,7 @@ bool Unit::AttackUnit(Unit** target)
 	//Control action rate
 	if (action_timer.Read() < attack_rate)return false;
 	
-	App->sound->PlayFXAudio(SWORD_ATTACK_SOUND);
+	//App->sound->PlayFXAudio(SWORD_ATTACK_SOUND);
 
 	//Set unit attack animation
 	if (action_type != ATTATCK)
@@ -1066,6 +1066,16 @@ bool Unit::Die()
 	if (GetDiplomacy() == DIPLOMACY::ENEMY)
 	{
 		App->player->game_panel->IncreaseDeathEnemies();
+
+		std::list<Unit*>::const_iterator it = App->entities_manager->UnitsList()->begin();
+		bool lastenemy = true;
+		while (it != App->entities_manager->UnitsList()->end())
+		{
+			if (it._Ptr->_Myval->GetDiplomacy() == ENEMY && it._Ptr->_Myval->GetEntityType() == UNIT && it._Ptr->_Myval != this)
+				lastenemy = false;
+			it++;
+		}
+		if (lastenemy) App->player->game_panel->DoWin();
 	}
 
 
@@ -1697,6 +1707,12 @@ bool Building::Die()
 {
 	if (action_type != DISAPPEAR)
 	{
+		if (building_type == TOWN_CENTER)
+		{
+			//Do lose condition
+			App->player->game_panel->DoLose();
+		}
+
 		action_type = DISAPPEAR;
 		if (building_type == TOWN_CENTER)building_type = RUBBLE_FOUR;
 		else if (building_type == BARRACK)building_type = RUBBLE_THREE;
@@ -1712,6 +1728,7 @@ bool Building::Die()
 		current_animation->GetCurrentSprite();
 		if (current_animation->IsEnd())
 		{
+			
 			this->CleanMapLogic();
 			App->entities_manager->DeleteEntity(this);
 			return true;

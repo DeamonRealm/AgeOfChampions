@@ -19,7 +19,7 @@ j1AI::~j1AI()
 
 void j1AI::Enable()
 {
-	ai_worker->AddAICommand(new WaitAICommand(80000));
+	ai_worker->AddAICommand(new WaitAICommand(5000));
 
 	//active = LoadEnemies("EnemiesSpawn.xml");
 	active = true;
