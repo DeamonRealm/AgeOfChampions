@@ -19,7 +19,7 @@ j1AI::~j1AI()
 
 void j1AI::Enable()
 {
-	ai_worker->AddAICommand(new WaitAICommand(10000));
+	ai_worker->AddAICommand(new WaitAICommand(60000));
 
 	//active = LoadEnemies("EnemiesSpawn.xml");
 	active = true;
@@ -289,6 +289,7 @@ bool SpawnUnitCommand::Execute()
 	Unit* new_unit = App->entities_manager->GenerateUnit(type, ENEMY);
 	new_unit->SetPosition(pos.x, pos.y);
 
+	new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));
 
 	App->AI->enemy_units.push_back(new_unit);
 	return true;
