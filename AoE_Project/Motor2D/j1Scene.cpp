@@ -107,7 +107,7 @@ bool j1Scene::Update(float dt)
 	
 	// ------------------------------------------
 
-	App->map->Draw(App->debug_mode);
+	App->map->Draw(App->map_debug_mode);
 	App->entities_manager->Draw();
 	
 	return true;

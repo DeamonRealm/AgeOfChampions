@@ -135,70 +135,75 @@ bool j1Player::PreUpdate()
 	{
 		if (selection_panel->GetInViewport()) selection_panel->Handle_Input(ENTER);
 	}
-	//Generate a town center in the mouse coordinates
-	if(App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::BARRACK,ALLY);
-		center->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		center->SetDiplomacy(ALLY);
-		
-		game_panel->IncressPopulation(15, true);
-	}
-	//Generate Villager in the mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && game_panel->CheckPopulation())
-	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER, ALLY);
-		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		
-		game_panel->IncressPopulation(1, false);
-	}
 
-	//Generate a Militia unit in the mouse coordinates
-	if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	if (App->debug_mode)
 	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY);
-		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		//Generate a town center in the mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		{
+			Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::BARRACK, ALLY);
+			center->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+			center->SetDiplomacy(ALLY);
 
-		//game_panel->IncressPopulation(1, false);
-	}
-	//Generate a Arbalest unit in the mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
-	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST, ALLY);
-		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-		new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));
-		game_panel->IncressPopulation(1, false);
-	}
-	//Generate Tree resource in mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && game_panel->CheckPopulation())
-	{
-		Entity* new_unit = App->entities_manager->GenerateResource(TREE);
-		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-	}
-	//Generate BerryBush resource in mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && game_panel->CheckPopulation())
-	{
-		Entity* new_unit = App->entities_manager->GenerateResource(BERRY_BUSH);
-		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-	}
-	//Generate Stone Ore resource in mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && game_panel->CheckPopulation())
-	{
-		Entity* new_unit = App->entities_manager->GenerateResource(STONE_ORE);
-		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-	}
-	//Generate Gold Ore resource in mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN && game_panel->CheckPopulation())
-	{
-		Entity* new_unit = App->entities_manager->GenerateResource(GOLD_ORE);
-		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-	}
+			game_panel->IncressPopulation(15, true);
+		}
+		//Generate Villager in the mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && game_panel->CheckPopulation())
+		{
+			Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER, ALLY);
+			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 
-	//Generate Warrior unit in mouse coordinates
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && game_panel->CheckPopulation())
-	{
-		Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP, ALLY);
-		new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+			game_panel->IncressPopulation(1, false);
+		}
+
+		//Generate a Militia unit in the mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+		{
+			Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY);
+			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+
+			//game_panel->IncressPopulation(1, false);
+		}
+		//Generate a Arbalest unit in the mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
+		{
+			Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST, ALLY);
+			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+			new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));
+			game_panel->IncressPopulation(1, false);
+		}
+		//Generate Tree resource in mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && game_panel->CheckPopulation())
+		{
+			Entity* new_unit = App->entities_manager->GenerateResource(TREE);
+			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		}
+		//Generate BerryBush resource in mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && game_panel->CheckPopulation())
+		{
+			Entity* new_unit = App->entities_manager->GenerateResource(BERRY_BUSH);
+			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		}
+		//Generate Stone Ore resource in mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && game_panel->CheckPopulation())
+		{
+			Entity* new_unit = App->entities_manager->GenerateResource(STONE_ORE);
+			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		}
+		//Generate Gold Ore resource in mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN && game_panel->CheckPopulation())
+		{
+			Entity* new_unit = App->entities_manager->GenerateResource(GOLD_ORE);
+			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		}
+
+		//Generate Warrior unit in mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && game_panel->CheckPopulation())
+		{
+			Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP, ALLY);
+			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		}
+
 	}
 
 	// Skills

@@ -191,7 +191,7 @@ bool j1EntitiesManager::Draw() const
 		building_item++;
 	}
 
-	if (App->debug_mode)
+	if (App->map_debug_mode)
 	{
 		units_quadtree.Draw();
 	}

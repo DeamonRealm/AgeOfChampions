@@ -343,6 +343,18 @@ void j1Map::ChangeConstructionMap(const iPoint & position, uint element_width, u
 	}
 }
 
+bool j1Map::CheckConstructionMap(const iPoint & position, uint width, uint height) const
+{
+	for (int i = position.y; i < position.y + height; i++)
+	{
+		for (int j = position.x; j < position.x + width; j++)
+		{
+			if (construction_map[i*data.width + j] == 0)return false;
+		}
+	}
+	return true;
+}
+
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;

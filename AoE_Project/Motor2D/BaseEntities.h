@@ -504,6 +504,8 @@ protected:
 public:
 
 	//Functionality -------------------
+	//Check is can be built in the position
+	bool	CheckZone(int x, int y)const;
 	//Cover / Release units
 	bool	CoverUnit(const Unit* target);
 	void	ReleaseUnit(const Unit* target);

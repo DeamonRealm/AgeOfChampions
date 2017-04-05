@@ -180,6 +180,8 @@ public:
 	void ChangeLogicMap(const iPoint& position, uint width, uint height,uint value_map);
 	//Change walkability in target tiles of the construction map
 	void ChangeConstructionMap(const iPoint& position, uint width, uint height, uint value_map);
+	//Check the logic construction map in the tiles passed
+	bool CheckConstructionMap(const iPoint& position, uint width, uint height)const;
 
 	//Array with all the map logic data
 	uchar*				logic_map = nullptr;

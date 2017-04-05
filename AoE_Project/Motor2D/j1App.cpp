@@ -227,6 +227,12 @@ bool j1App::Update()
 		debug_mode = !debug_mode;
 	}
 
+	//Activate/Deactivate draw debug mode
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		map_debug_mode = !map_debug_mode;
+	}
+
 	bool ret = true;
 	PrepareUpdate();
 

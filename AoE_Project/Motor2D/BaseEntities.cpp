@@ -1610,6 +1610,27 @@ void Building::CleanMapLogic()
 	App->map->ChangeLogicMap(world_coords, width_in_tiles, height_in_tiles, 1);
 }
 
+bool Building::CheckZone(int x, int y) const
+{
+	//Check the construction tiles
+	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
+	if (App->map->CheckConstructionMap(world_coords, width_in_tiles, height_in_tiles))
+	{
+		//Check unit quadtree for units in build zone
+		Circle check_area;
+		check_area.SetRad(width_in_tiles * App->map->data.tile_width);
+		check_area.SetPosition(GetPositionRounded());
+		std::vector<Unit*> in_zone;
+		App->entities_manager->units_quadtree.CollectCandidates(in_zone, check_area);
+		if (in_zone.empty())
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool Building::Die()
 {
 	if (action_type != DISAPPEAR)
