@@ -95,11 +95,26 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	if (e_type == UNIT)
 	{
 		u_attack = ((Unit*)element)->GetAttackHitPoints();
-		if (u_attack > 0)attack->SetString(App->gui->SetStringFromInt(u_attack));
+		attack_up = ceil(((Unit*)element)->GetAttackBuff());
+		if (u_attack > 0 && attack_up == 0)attack->SetString(App->gui->SetStringFromInt(u_attack));
+		else if (attack_up > 0)
+		{
+			profile_text.clear();
+			profile_text = App->gui->SetStringFromInt(u_attack);
+			profile_text = profile_text + " + " + App->gui->SetStringFromInt(attack_up);
+			attack->SetString((char*)profile_text.c_str());
+		}
 
 		u_deffence = ((Unit*)element)->GetDefense();
-		if (u_deffence > 0)deffence->SetString(App->gui->SetStringFromInt(u_deffence));
-
+		deffence_up = ceil(((Unit*)element)->GetDefenseBuff());
+		if (u_deffence > 0 && deffence_up == 0)deffence->SetString(App->gui->SetStringFromInt(u_deffence));
+		else if (deffence_up > 0)
+		{
+			profile_text.clear();
+			profile_text = App->gui->SetStringFromInt(u_deffence);
+			profile_text = profile_text + " + " + App->gui->SetStringFromInt(deffence_up);
+			attack->SetString((char*)profile_text.c_str());
+		}
 		u_range = ((Unit*)element)->GetAttackRange();
 		if (u_range > 0) range->SetString(App->gui->SetStringFromInt(u_range));
 	}
@@ -216,6 +231,38 @@ void Entity_Profile::UpdateStats()
 		profile_text = App->gui->SetStringFromInt(life_update);
 		profile_text = profile_text + "/" + App->gui->SetStringFromInt(element->GetMaxLife());
 		life->SetString((char*)profile_text.c_str());
+	}
+	if(e_type == UNIT)
+	{ 
+		int tmp = ceil(((Unit*)element)->GetAttackBuff());
+		((Unit*)element)->GetAttackHitPoints();
+		if (attack_up != tmp)
+		{
+			attack_up = tmp;
+			if (attack_up == 0)attack->SetString(App->gui->SetStringFromInt(u_attack));
+			else if (attack_up > 0)
+			{
+				profile_text.clear();
+				profile_text = App->gui->SetStringFromInt(u_attack);
+				profile_text = profile_text + " + " + App->gui->SetStringFromInt(attack_up);
+				attack->SetString((char*)profile_text.c_str());
+			}
+		}
+
+		u_deffence = ((Unit*)element)->GetDefense();
+
+		if (deffence_up != ceil(((Unit*)element)->GetDefenseBuff()))
+		{
+			deffence_up = ceil(((Unit*)element)->GetDefenseBuff());
+			if (deffence_up == 0)deffence->SetString(App->gui->SetStringFromInt(u_deffence));
+			else if (deffence_up > 0)
+			{
+				profile_text.clear();
+				profile_text = App->gui->SetStringFromInt(u_deffence);
+				profile_text = profile_text + " + " + App->gui->SetStringFromInt(deffence_up);
+				attack->SetString((char*)profile_text.c_str());
+			}
+		}
 	}
 	if (e_type == BUILDING)
 	{
@@ -374,26 +421,42 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 	case MOUSE_RIGHT_BUTTON:
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 		{
-			if (Selected->GetEntity() == nullptr)break;
+			if (Selected->GetEntity() == nullptr || selected_diplomacy == ENEMY) break;
 
 			//Set entity target to the selected unit
 			Selected->GetEntity()->GetWorker()->ResetActive();
 			if (UpperEntity != nullptr)
 			{
-				if (UpperEntity->GetDiplomacy() == ENEMY && Selected->GetEntity()->GetDiplomacy() != ENEMY)
+				if (UpperEntity->GetDiplomacy() == ENEMY)
 				{
 					if (UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit**)UpperEntity->GetMe()));
 					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building**)UpperEntity->GetMe()));
 					App->sound->PlayFXAudio(ATTACK_SOUND);
 				}
-				else if(UpperEntity->GetEntityType() == RESOURCE) Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
+				else if (UpperEntity->GetEntityType() == RESOURCE)
+				{
+					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
+				}
 			}
 			else Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(),iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
 
 		}
-		else if (selected_elements.size() > 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT) {
-		
-			App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y, true);
+		else if (selected_elements.size() > 1 && selected_entity_type == UNIT) {
+			{
+				if (UpperEntity != nullptr)
+				{
+				/*	if (UpperEntity->GetEntityType() == RESOURCE && selected_unit_type == VILLAGER)
+					{
+						std::list<Entity*>::iterator villager = selected_elements.begin();
+						while (villager != selected_elements.end())
+						{
+							villager._Ptr->_Myval->AddAction(App->action_manager->RecollectAction((Villager*)villager._Ptr->_Myval, (Resource**)UpperEntity->GetMe()));
+							villager++;
+						}
+					}*/
+				}
+				else App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y, true);
+			}
 		}
 
 
@@ -848,12 +911,13 @@ bool Selection_Panel::WindowsMove()
 		App->render->camera.x -= SDL_ceil(1000 * App->GetDT());
 		ret = true;
 	}
-	if (mouse_y < viewport->GetBox()->y + OFFSET_X && mouse_y > viewport->GetBox()->y - OFFSET_X)
+	if (mouse_y < viewport->GetBox()->y + OFFSET_X && mouse_y > viewport->GetBox()->y)
 	{
 		App->render->camera.y += SDL_ceil(1000 * App->GetDT());
 		ret = true;
 	}
-	else if (mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X)
+	else if (mouse_x < OFFSET_Y && mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X
+		|| mouse_x > 300 && mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X)
 	{
 		App->render->camera.y -= SDL_ceil(1000 * App->GetDT());
 		ret = true;

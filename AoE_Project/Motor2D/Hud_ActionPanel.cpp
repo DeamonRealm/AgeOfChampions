@@ -106,7 +106,7 @@ bool TownCenterPanel::ActivateCell(int i)
 	case 1: {
 		if (got_melechmp == false)
 		{
-			if (player_game_panel_resources->UseResource(0, 0, 100, 0, 1)) {
+			if (player_game_panel_resources->UseResource(0, 180, 60, 0, 1)) {
 				App->sound->PlayGUIAudio(CLICK_INGAME);
 				entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, WARRIOR_CHMP, ALLY));
 				got_melechmp = true;
@@ -558,9 +558,10 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 				{
 					if (ui_element == skills_buttons[i])
 					{
+						if (mele_learned[i / 2] != -1)return false;
 						LearnSkill(i);
 						App->sound->PlayGUIAudio(CLICK_INGAME);
-						if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_A((i % 2));
+						if (i / 2 == 0 )((Champion*)entitis_panel)->SetAbility_A((i % 2));
 						if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_B((i % 2));
 						return true;
 					}
@@ -615,7 +616,7 @@ void HeroPanel::LearnSkill(int i)
 {
 	if (champion_selected == WARRIOR_CHMP && mele_learned[i / 2] == -1)
 	{
-		mele_learned[i / 2] = i; 
+		if(i/2 != 2)mele_learned[i / 2] = i; 
 	}
 }
 
