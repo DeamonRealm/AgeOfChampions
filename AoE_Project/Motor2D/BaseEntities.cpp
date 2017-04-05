@@ -1052,6 +1052,16 @@ void Unit::DirectDamage(uint damage)
 
 bool Unit::Die()
 {
+	if (GetDiplomacy() == DIPLOMACY::ALLY)
+	{
+		App->player->game_panel->IncreaseDeathAllies();
+	}
+	if (GetDiplomacy() == DIPLOMACY::ENEMY)
+	{
+		App->player->game_panel->IncreaseDeathEnemies();
+	}
+
+
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
 		App->buff_manager->RemoveTargetBuffs(this);

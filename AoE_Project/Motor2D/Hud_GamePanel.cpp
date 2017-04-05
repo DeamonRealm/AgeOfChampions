@@ -223,6 +223,9 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 	
 	int height = 0;
 
+	if (amount > 0)
+		all_resources += amount;
+
 	switch (resource_type)
 	{
 	case GP_WOOD:
@@ -298,6 +301,9 @@ bool Game_Panel::IncressPopulation(int amount, bool increase_max)
 	}
 	else
 	{
+		if (amount > 0)
+			IncreaseAllUnits();
+		
 		if (population + amount <= MAX_POPULATION && population + amount >= 0)
 		{
 			population += amount;
@@ -320,8 +326,43 @@ bool Game_Panel::CheckPopulation() const
 	else return true;
 }
 
+int Game_Panel::GetAllUnitScore()
+{
+	return player_all_units;
+}
+
+int Game_Panel::GetDeathUnitScore()
+{
+	return player_death_units;
+}
+
+int Game_Panel::GetResourceScore()
+{
+	return all_resources;
+}
+
 UI_Element * Game_Panel::GetExitMenu()
 {
 	return exit_menu_screen;
+}
+
+void Game_Panel::IncreaseDeathEnemies()
+{
+	player_death_enemies++;
+}
+
+void Game_Panel::IncreaseDeathAllies()
+{
+	player_death_units++;
+}
+
+void Game_Panel::IncreaseAllUnits()
+{
+	player_all_units++;
+}
+
+void Game_Panel::IncreaseAllResources()
+{
+	all_resources++;
 }
 

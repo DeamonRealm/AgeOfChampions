@@ -58,25 +58,41 @@ public:
 	bool IncressPopulation(int amount, bool increase_max = false);
 	bool CheckPopulation() const;
 
+	//Get scores
+	int GetAllUnitScore();
+	int GetDeathUnitScore();
+	int GetResourceScore();
+
 	//Get exit Menu
 	UI_Element* GetExitMenu();
+
+
+	//Scores control
+	void IncreaseDeathEnemies();
+	void IncreaseDeathAllies();
+	void IncreaseAllUnits();
+	void IncreaseAllResources();
 
 
 private:
 
 	// Player Information
-	int			wood;
-	int			meat;
-	int			gold;
-	int			stone;
-	int			population;
-	uint			max_population;
+	int			wood = 0;
+	int			meat = 0;
+	int			gold = 0;
+	int			stone = 0;
+	int			population = 0;
+	int			all_resources = 0;
+	int			player_death_units = 0;
+	int			player_death_enemies = 0;
+	int			player_all_units = 0;
+	uint		max_population = 0;
 
-	int				wood_width;
-	int				meat_width;
-	int				gold_width;
-	int				stone_width;
-	int				population_width;
+	int				wood_width = 0;
+	int				meat_width = 0;
+	int				gold_width = 0;
+	int				stone_width = 0;
+	int				population_width = 0;
 
 	std::string		hud_game_text;
 
