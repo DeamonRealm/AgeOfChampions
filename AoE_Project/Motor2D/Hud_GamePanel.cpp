@@ -264,7 +264,7 @@ void Game_Panel::Disable()
 	meat = 0;
 	gold = 0;
 	stone = 0;
-
+	max_population = 5;
 	all_resources = 0;
 	player_death_units = 0;
 	player_death_enemies = 0;
@@ -448,7 +448,7 @@ void Game_Panel::DoWin()
 	final_str->SetString("YOU WIN!!!");
 
 	std::string str = "Enemys Killed ";
-	str = str + App->gui->SetStringFromInt(player_death_enemies);
+	str = str + App->gui->SetStringFromInt(++player_death_enemies);
 
 	units_dead->SetString((char*)str.c_str());
 	

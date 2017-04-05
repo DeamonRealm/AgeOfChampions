@@ -1065,7 +1065,7 @@ bool Unit::Die()
 	}
 	if (GetDiplomacy() == DIPLOMACY::ENEMY)
 	{
-		App->player->game_panel->IncreaseDeathEnemies();
+		//App->player->game_panel->IncreaseDeathEnemies();
 
 		std::list<Unit*>::const_iterator it = App->entities_manager->UnitsList()->begin();
 		bool lastenemy = true;
@@ -1096,6 +1096,10 @@ bool Unit::Die()
 		}
 		else
 		{
+			if (GetDiplomacy() == DIPLOMACY::ENEMY)
+			{
+				App->player->game_panel->IncreaseDeathEnemies();
+			}
 			GetWorker()->Reset();
 			App->entities_manager->DeleteEntity(this);
 			return true;

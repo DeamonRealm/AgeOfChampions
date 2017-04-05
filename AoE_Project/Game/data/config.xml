@@ -11,9 +11,9 @@
   </app>
 	
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
     <c_vars>
-      <c_var name = "vsync"	description = "Active/Desactive vsync"	value = "0"	type = "boolean"	only_read="true"/>
+      <c_var name = "vsync"	description = "Active/Desactive vsync"	value = "60"	type = "boolean"	only_read="true"/>
     </c_vars>
   </renderer>
 
