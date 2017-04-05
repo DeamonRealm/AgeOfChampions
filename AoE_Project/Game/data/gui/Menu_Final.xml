@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:166a36e24180337169aa8c83a3bb5287:74a04d4c21a97d8082af03a183f0bf65:ea757f83f784623c2619da57817ef975$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Menu_Final.png" width="334" height="305">
+    <sprite n="IU_Campions/Menu_FinalWindow.png" x="0" y="0" w="227" h="305" pX="0" pY="0"/>
+<sprite n="IU_Campions/Menu_FinalButtonUp.png" x="228" y="0" w="106" h="30" pX="0" pY="0"/>
+<sprite n="IU_Campions/Menu_FinalButtonDown.png" x="228" y="32" w="106" h="30" pX="0" pY="0"/>
+
+ 
+
+</TextureAtlas>
