@@ -119,6 +119,11 @@ bool Villager::Recollect(Resource** target)
 			AddAction((Action*)App->action_manager->SaveResourcesAction(this, save_point));
 			return true;
 		}
+		else
+		{
+			this->action_type = IDLE;
+			App->animator->UnitPlay(this);
+		}
 		return true;
 	}
 

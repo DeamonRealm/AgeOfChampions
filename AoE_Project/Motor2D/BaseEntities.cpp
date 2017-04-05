@@ -961,6 +961,8 @@ bool Unit::AttackUnit(Unit** target)
 	//Control action rate
 	if (action_timer.Read() < attack_rate)return false;
 	
+	App->sound->PlayFXAudio(SWORD_ATTACK_SOUND);
+
 	//Set unit attack animation
 	if (action_type != ATTATCK)
 	{
@@ -1638,7 +1640,7 @@ void Building::CleanMapLogic()
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
-	if (building_type == RUBBLE_THREE)
+	if (building_type == RUBBLE_THREE || building_type == BARRACK)
 	{
 		world_coords.x -= 1;
 		world_coords.y -= 1;
@@ -1653,22 +1655,21 @@ bool Building::CheckZone(int x, int y)
 {
 	//Check the construction tiles
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
-	if (App->map->CheckConstructionMap(world_coords, width_in_tiles, height_in_tiles))
+	world_coords.x -= 1;
+	world_coords.y -= 1;
+	if (App->map->CheckConstructionMap(world_coords, width_in_tiles - 1, height_in_tiles))
 	{
 		//Check unit quadtree for units in build zone
 		Circle check_area;
-		check_area.SetRad(width_in_tiles * App->map->data.tile_width);
+		check_area.SetRad(width_in_tiles * App->map->data.tile_height);
 		check_area.SetPosition(GetPositionRounded());
 		std::vector<Unit*> in_zone;
 		App->entities_manager->units_quadtree.CollectCandidates(in_zone, check_area);
 		if (in_zone.empty())
 		{
-			red_locked = false;
 			return true;
 		}
 	}
-
-	red_locked = true;
 	return false;
 }
 

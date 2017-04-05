@@ -506,11 +506,9 @@ protected:
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = NO_DIRECTION;
 
-	bool			red_locked = false;
+public:
 
 	void CleanMapLogic();
-
-public:
 
 	//Functionality -------------------
 	//Check is can be built in the position

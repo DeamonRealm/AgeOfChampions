@@ -385,7 +385,7 @@ void Warrior::SetAbility_B(bool choosed)
 
 void Warrior::PrepareAbility_B()
 {
-	if (ability_B_timer.Read() < ability_B_cooldown)return;
+	if (ability_B_timer.Read() > ability_B_cooldown)return;
 
 	ability_B_prepare_mode = true;
 
@@ -395,14 +395,13 @@ void Warrior::PrepareAbility_B()
 	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
 	CalculateSpecialAttackArea(GetiPointFromDirection(direction_type));
 
-	
 }
 
 void Warrior::Hability_B(int x, int y)
 {
 	ability_B_prepare_mode = false;
 
-	if (ability_B_timer.Read() < ability_B_cooldown)return;
+	if (ability_B_timer.Read() > ability_B_cooldown)return;
 
 	//Focus the warrior in the attack direction
 	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());

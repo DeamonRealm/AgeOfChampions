@@ -65,6 +65,7 @@ void j1EntitiesManager::Disable()
 	std::list<Building*>::iterator buildings_item = buildings.begin();
 	while (buildings_item != buildings.end())
 	{
+		buildings_item._Ptr->_Myval->CleanMapLogic();
 		RELEASE(buildings_item._Ptr->_Myval);
 		buildings_item++;
 	}
