@@ -38,11 +38,11 @@ void j1Player::Enable()
 	active = true;
 
 	// Setting Game Panel Resources
-	game_panel->AddResource(800, GP_WOOD);
-	game_panel->AddResource(800, GP_MEAT);
-	game_panel->AddResource(800, GP_GOLD);
-	game_panel->AddResource(800, GP_STONE);
-	game_panel->IncressPopulation(45, true);
+	game_panel->AddResource(100, GP_WOOD);
+	game_panel->AddResource(100, GP_MEAT);
+	game_panel->AddResource(100, GP_GOLD);
+	game_panel->AddResource(100, GP_STONE);
+	game_panel->IncressPopulation(5, true);
 
 	selection_panel->Enable();
 	game_panel->Enable();

@@ -95,17 +95,25 @@ bool TownCenterPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		if(player_game_panel_resources->UseResource(0,50,0,0,1)) entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
+		if (player_game_panel_resources->UseResource(0, 60, 20, 0, 1))
+		{
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
+		}
+		else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
 		break;
 	case 1: {
 		if (got_melechmp == false)
 		{
 			if (player_game_panel_resources->UseResource(0, 0, 100, 0, 1)) {
+				App->sound->PlayGUIAudio(CLICK_INGAME);
 				entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, WARRIOR_CHMP, ALLY));
 				got_melechmp = true;
 			}
+			else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
+		else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
 		break;
 	default:
@@ -158,8 +166,13 @@ bool BarrackPanel::ActivateCell(int i)
 	if (entitis_panel == nullptr) return false;
 	switch (i)
 	{
-	case 0:	{
-		if (player_game_panel_resources->UseResource(0, 25, 45, 0, 1)) entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, MILITIA, ALLY));
+	case 0: {
+		if (player_game_panel_resources->UseResource(0, 25, 45, 0, 1))
+		{
+			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, MILITIA, ALLY));
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+		}
+		else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
 		break;
 	default:
@@ -191,6 +204,7 @@ bool UnitPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 3: {
+		App->sound->PlayGUIAudio(CLICK_INGAME);
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
@@ -243,6 +257,7 @@ bool VillagerPanel::ActivateCell(int i)
 	case 0:{
 		if (villagerisbuilding == VP_NOT_BUILDING)
 		{
+			App->sound->PlayGUIAudio(CLICK_INGAME);
 			villagerisbuilding = VP_NORMAL;
 			return false;
 		}
@@ -250,9 +265,9 @@ bool VillagerPanel::ActivateCell(int i)
 		{
 			return false;
 		}
-		else if (villagerisbuilding == VP_MILITARY && player_game_panel_resources->UseResource(100,100,0,0,0))
+		else if (villagerisbuilding == VP_MILITARY && player_game_panel_resources->UseResource(0,0,0,175,0))
 		{
-			//incress population left
+			App->sound->PlayGUIAudio(CLICK_INGAME);
 			buildingthis = App->entities_manager->GenerateBuilding(BARRACK,ALLY,true);
 			int x = 0, y = 0;
 			App->input->GetMousePosition(x, y);
@@ -265,12 +280,14 @@ bool VillagerPanel::ActivateCell(int i)
 	case 1: {
 		if (villagerisbuilding == VP_NOT_BUILDING){
 			villagerisbuilding = VP_MILITARY;
+			App->sound->PlayGUIAudio(CLICK_INGAME);
 		}
 		}
 		break;
 	case 2:
 		break;
 	case 3: {
+		App->sound->PlayGUIAudio(CLICK_INGAME);
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
@@ -281,15 +298,18 @@ bool VillagerPanel::ActivateCell(int i)
 		break;
 	case 13: {
 		if (villagerisbuilding == VP_NORMAL) {
+			App->sound->PlayGUIAudio(CLICK_INGAME);
 			villagerisbuilding = VP_MILITARY;
 		}
 		else if (villagerisbuilding == VP_MILITARY)
 		{
+			App->sound->PlayGUIAudio(CLICK_INGAME);
 			villagerisbuilding = VP_NORMAL;
 		}
 		}
 		break;
 	case 14: if (villagerisbuilding != VP_NOT_BUILDING) {
+		App->sound->PlayGUIAudio(CLICK_INGAME);
 		villagerisbuilding = VP_NOT_BUILDING;
 		}
 		break;
@@ -348,7 +368,14 @@ bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 		{
 			int x = 0, y = 0;
 			App->input->GetMousePosition(x, y);
-			buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, true);
+			if (((Building*)buildingthis)->CheckZone(x - App->render->camera.x, y - App->render->camera.y))
+			{
+				buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, true);
+			}
+			else {
+				App->entities_manager->DeleteEntity(buildingthis);
+				player_game_panel_resources->AddResource(175, GP_STONE);
+			}
 			isbuilding = false;
 			buildingthis = nullptr;
 			return false;
@@ -472,6 +499,7 @@ bool HeroPanel::ActivateCell(int i)
 	case 0: {
 		if (champion_selected == WARRIOR_CHMP && mele_learned[0] != -1)
 		{
+			App->sound->PlayGUIAudio(CLICK_INGAME);
 			((Warrior*)entitis_panel)->Hability_A();
 			return false;
 		}
@@ -482,7 +510,7 @@ bool HeroPanel::ActivateCell(int i)
 		if (champion_selected == WARRIOR_CHMP && mele_learned[1] != -1) 
 		{
 			activate_skill = 1;	
-			
+			App->sound->PlayGUIAudio(CLICK_INGAME);
 			((Warrior*)entitis_panel)->PrepareAbility_B();
 			return true;
 		}
@@ -493,10 +521,12 @@ bool HeroPanel::ActivateCell(int i)
 	case 3: {
 		if (skill_tree->GetActiveState() == true)
 		{
+			App->sound->PlayGUIAudio(CLICK_INGAME);
 			skill_tree->Desactivate();
 			skill_tree->DesactivateChids();
 		}
 		else {
+			App->sound->PlayGUIAudio(CLICK_INGAME);
 			skill_tree->Activate();
 			skill_tree->ActivateChilds();
 		}
@@ -504,6 +534,7 @@ bool HeroPanel::ActivateCell(int i)
 		break;
 	case 4:
 		{
+		App->sound->PlayGUIAudio(CLICK_INGAME);
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		}
@@ -528,6 +559,7 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 					if (ui_element == skills_buttons[i])
 					{
 						LearnSkill(i);
+						App->sound->PlayGUIAudio(CLICK_INGAME);
 						if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_A((i % 2));
 						if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_B((i % 2));
 						return true;
@@ -891,13 +923,13 @@ void Action_Panel::SetPanelType()
 		{
 			if (b_type == TOWN_CENTER)
 			{
-				App->sound->PlayFXAudio(TOWN_CENTER_SELECTED_SOUND);
+				if(towncenterpanel->GetActualEntity() != actual_entity || actualpanel != towncenterpanel) App->sound->PlayFXAudio(TOWN_CENTER_SELECTED_SOUND);
 				towncenterpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = towncenterpanel;
 			}
 			else if (b_type == BARRACK)
 			{
-				App->sound->PlayFXAudio(BARRACK_SOUND);
+				if (barrackpanel->GetActualEntity() != actual_entity || actualpanel != barrackpanel)App->sound->PlayFXAudio(BARRACK_SOUND);
 				barrackpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = barrackpanel;
 			}
