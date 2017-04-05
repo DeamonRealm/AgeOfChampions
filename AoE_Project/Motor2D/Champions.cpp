@@ -7,7 +7,7 @@
 #include "j1Input.h"
 #include "j1ActionManager.h"
 #include "j1Player.h"
-
+#include "j1SoundManager.h"
 #include "Hud_ActionPanel.h"
 #include "Hud_GamePanel.h"
 
@@ -413,8 +413,13 @@ void Warrior::Hability_B(int x, int y)
 	if (ability[1])
 	{
 		ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
 	}
-	else ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
+	else
+	{
+		ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
+	}
 
 
 
@@ -501,6 +506,7 @@ bool Warrior::Die()
 {
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
+		App->player->action_panel->HeroIsDead(this->unit_type);
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
@@ -516,7 +522,7 @@ bool Warrior::Die()
 		}
 		else
 		{
-			App->player->action_panel->HeroIsDead(this->unit_type);
+			action_worker->Reset();
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}

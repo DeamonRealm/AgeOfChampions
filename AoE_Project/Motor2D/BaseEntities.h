@@ -506,13 +506,15 @@ protected:
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = NO_DIRECTION;
 
+	bool			red_locked = false;
+
 	void CleanMapLogic();
 
 public:
 
 	//Functionality -------------------
 	//Check is can be built in the position
-	bool	CheckZone(int x, int y)const;
+	bool	CheckZone(int x, int y);
 	//Cover / Release units
 	bool	CoverUnit(const Unit* target);
 	void	ReleaseUnit(const Unit* target);

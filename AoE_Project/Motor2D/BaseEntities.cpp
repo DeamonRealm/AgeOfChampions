@@ -1649,7 +1649,7 @@ void Building::CleanMapLogic()
 	App->map->ChangeLogicMap(world_coords, width_in_tiles, height_in_tiles, 1);
 }
 
-bool Building::CheckZone(int x, int y) const
+bool Building::CheckZone(int x, int y)
 {
 	//Check the construction tiles
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
@@ -1663,10 +1663,12 @@ bool Building::CheckZone(int x, int y) const
 		App->entities_manager->units_quadtree.CollectCandidates(in_zone, check_area);
 		if (in_zone.empty())
 		{
+			red_locked = false;
 			return true;
 		}
 	}
 
+	red_locked = true;
 	return false;
 }
 

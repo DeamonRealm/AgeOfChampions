@@ -6,6 +6,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "Champions.h"
+#include "j1SoundManager.h"
 
 // Buff definitions ----------------------------------------------------------------------------
 
@@ -61,6 +62,11 @@ void BuffParticle::Draw()
 	else if(animation.IsEnd())
 	{
 		animation.Reset();
+		if (this->buff_type == BUFF_TYPE::PASSIVE_BUFF)
+		{
+			if (attribute_type == BUFF_ATTRIBUTE_TYPE::ATTACK_BUFF)App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL1_B);
+			if (attribute_type == BUFF_ATTRIBUTE_TYPE::DEFENSE_BUFF)App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL1_A);
+		}
 	}
 	else
 	{

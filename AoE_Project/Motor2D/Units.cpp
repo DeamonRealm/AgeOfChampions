@@ -51,6 +51,7 @@ bool Villager::Die()
 		}
 		else
 		{
+			action_worker->Reset();
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
