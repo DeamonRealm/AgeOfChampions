@@ -21,7 +21,7 @@ Champion::Champion() : Unit()
 }
 
 Champion::Champion(const Champion & copy) : Unit(copy), buff_area(copy.buff_area),buff_to_apply(copy.buff_to_apply), level(copy.level), attack_for_level(copy.attack_for_level), range_for_level(copy.range_for_level),
-defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level)
+defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_B_cooldown(copy.ability_B_cooldown)
 {
 
 }
@@ -385,7 +385,7 @@ void Warrior::SetAbility_B(bool choosed)
 
 void Warrior::PrepareAbility_B()
 {
-	if (ability_B_timer.Read() > ability_B_cooldown)return;
+	if (ability_B_timer.Read() < ability_B_cooldown)return;
 
 	ability_B_prepare_mode = true;
 
@@ -401,11 +401,12 @@ void Warrior::Hability_B(int x, int y)
 {
 	ability_B_prepare_mode = false;
 
-	if (ability_B_timer.Read() > ability_B_cooldown)return;
+	if (ability_B_timer.Read() < ability_B_cooldown)return;
 
 	//Focus the warrior in the attack direction
 	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
 	CalculateSpecialAttackArea(GetiPointFromDirection(direction_type));
+	action_type = ATTATCK;
 	App->animator->UnitPlay(this);
 
 
@@ -458,7 +459,12 @@ void Warrior::CheckHability_B()
 	{
 		ability_B_particle.Draw();
 	}
-	else actived[1] = false;
+	else
+	{
+		actived[1] = false;
+		action_type = IDLE;
+		App->animator->UnitPlay(this);
+	}
 }
 
 iPoint Warrior::GetiPointFromDirection(DIRECTION_TYPE direction) const
