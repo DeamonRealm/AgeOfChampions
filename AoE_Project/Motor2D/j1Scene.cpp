@@ -16,6 +16,8 @@
 #include "j1Player.h"
 #include "Hud_GamePanel.h"
 #include "j1SoundManager.h"
+#include "j1AI.h"
+#include "j1Menu.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -117,10 +119,14 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		ret = false;
+		App->scene->Disable();
+		App->player->Disable();
+		App->AI->Disable();
+		App->entities_manager->Disable();
+		App->menu->Enable();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)

@@ -136,29 +136,18 @@ bool j1EntitiesManager::PostUpdate()
 		if (type == RESOURCE)
 		{
 			resources.remove((Resource*)wasted_units[k]);
-			if (resources_quadtree.Exteract((Resource*)wasted_units[k], &wasted_units[k]->GetPosition()))
-			{
-				LOG("Resource popped from quadtree");
-			}
+			resources_quadtree.Exteract((Resource*)wasted_units[k], &wasted_units[k]->GetPosition());
 		}
 		else if (type == BUILDING)
 		{
 			buildings.remove((Building*)wasted_units[k]);
-			if (buildings_quadtree.Exteract((Building*)wasted_units[k], &wasted_units[k]->GetPosition()))
-			{
-				LOG("Building popped from quadtree");
-			}
+			buildings_quadtree.Exteract((Building*)wasted_units[k], &wasted_units[k]->GetPosition());
 		}
 		else if (type == UNIT)
 		{
 			units.remove((Unit*)wasted_units[k]);
-			if (units_quadtree.Exteract((Unit*)wasted_units[k], &wasted_units[k]->GetPosition()))
-			{
-				LOG("Unit popped from quadtree");
-			}
+			units_quadtree.Exteract((Unit*)wasted_units[k], &wasted_units[k]->GetPosition());
 		}
-
-		LOG("%s", wasted_units[k]->GetName());
 
 		RELEASE(wasted_units[k]);
 	}

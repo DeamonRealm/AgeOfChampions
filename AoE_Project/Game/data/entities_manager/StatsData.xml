@@ -536,7 +536,7 @@
       attack_type="melee"
       
       buff_area_rad ="250"
-      vision_rad ="100"
+      vision_rad ="300"
       mark_rad ="55"
       soft_rad ="30"
       hard_rad ="10"

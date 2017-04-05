@@ -1075,7 +1075,7 @@ bool Unit::Die()
 				lastenemy = false;
 			it++;
 		}
-		if (lastenemy) App->player->game_panel->DoWin();
+		if (lastenemy && !App->debug_mode) App->player->game_panel->DoWin();
 	}
 
 

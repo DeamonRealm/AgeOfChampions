@@ -117,6 +117,10 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera.y = 0;
 	}
 
+
+	SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
+	App->win->fullscreen = true;
+
 	return ret;
 }
 

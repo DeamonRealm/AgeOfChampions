@@ -201,13 +201,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			{
 				exit_menu_image->Activate();
 				exit_menu_image->ActivateChilds();
-			}
-
-			
-		}
-		if (ui_element == exit_to_main_menu)
-		{
-			((UI_String*)exit_to_main_menu->childs.begin()._Ptr->_Myval)->SetColor({150,150,0,0});
+			}			
 		}
 	}
 
@@ -218,7 +212,6 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 	{
 		if (ui_element == exit_to_main_menu)
 		{
-			((UI_String*)exit_to_main_menu->childs.begin()._Ptr->_Myval)->SetColor({ 255,255,255,255 });
 			App->scene->Disable();
 			App->player->Disable();
 			App->AI->Disable();
