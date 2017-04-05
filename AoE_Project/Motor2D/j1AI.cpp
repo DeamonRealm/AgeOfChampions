@@ -192,7 +192,7 @@ bool WaitAICommand::Execute()
 {
 	if (timer.Read() > time)
 	{
-
+		App->sound->PlayGUIAudio(PLAYER_UNIT_ALERT);
 
 		return true;
 	}
