@@ -8,6 +8,17 @@ Tribute game to Age of Empires II developed by DemonRealm.
 
 ## How to play (v0.5)
 
+In these release you are given an initial town center and a few resources, with this you should create a few more villagers to 
+recollect more resources until you are able to create your army. But care your town center can only support up to ten units being villagers, militia or the mighty warrior who can only spawn one time during the game.
+
+
+
+### Main Menu
+* Click on the single player icon to start the game
+* Click on the book to open the game wiki in your browser
+* Click on the arrow to quit the game
+
+### Game
 * Mouse Left Click to select a unit, building or resource
 * Mouse Right Click to Make the unit do actions (Move/Attack/Recolect)
 * Mouse Double Click to select all units of the same type
