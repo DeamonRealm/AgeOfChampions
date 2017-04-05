@@ -348,7 +348,10 @@ public:
 
 	//Actions ---------------
 	bool					Move(std::vector<iPoint>* path, const iPoint& target = { -1,-1 });
-	void					Repath(const iPoint & destination);
+	void					Repath(std::vector<iPoint>* path,const iPoint & destination);
+	void					CorrectPath(std::vector<iPoint>* path);
+	iPoint					NextGoal(std::vector<iPoint>* path);
+	void					NewPosition(const iPoint& goal,float& position_x, float& position_y);
 	iPoint					FindWalkableCell(const iPoint& center);
 	bool					UnitHere(std::vector<Unit*> other_units,const iPoint& destination);
 	bool					UnitHere(const iPoint& destination, int radius);

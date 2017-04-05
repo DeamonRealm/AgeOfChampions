@@ -343,6 +343,8 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 	//Build goal path point
 	iPoint goal = path->back();
 	iPoint location = iPoint(position.x, position.y);
+	float x_step = 0.0f;
+	float y_step = 0.0f;
 	int path_size = path->size();
 	//Update goal node and animation direction
 	if (location.DistanceTo(goal) < 2)
@@ -354,6 +356,21 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 		std::vector<Unit*> other_units;
 		App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
 		other_units.size();
+		if (future_position != iPoint(-1, -1) && !App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
+		{
+			CorrectPath(path);
+			if (path->empty())
+			{
+				return true;
+			}
+			goal = NextGoal(path);
+			NewPosition(goal, x_step, y_step);
+
+			//Add the calculated values at the unit & mark position
+			SetPosition(x_step, y_step);
+
+			return false;
+		}
 		int collisions = 0;
 		while (!other_units.empty()) {
 			Unit* other_unit = other_units.back();
@@ -374,11 +391,9 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 				{
 					if (path->size() < 2) {
 						if(target != iPoint(-1,-1))
-							Repath(target);
+							Repath(path, target);
 						else
-							Repath(*(path->begin()));
-					
-
+							Repath(path, *(path->begin()));
 						return false;
 					}
 					
@@ -388,9 +403,9 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 
 						if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
 							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-								other_unit->Repath(*(other_path->begin()));
+								other_unit->Repath(other_path,*(other_path->begin()));
 							else
-								Repath(*(path->begin()));
+								Repath(path, *(path->begin()));
 
 						}
 						else
@@ -443,29 +458,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 		if (collisions == 0 && mutable_speed!=0.0f) {
 			mutable_speed = 0.0f;
 		}
-		if (future_position!=iPoint(-1,-1)&&!App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
-		{
-			std::vector<iPoint>* new_path;
-			path->pop_back();
-			iPoint next_goal;
-			for (int i = path->size() - 1; i >= 0; i--) {
-				if (App->pathfinding->IsWalkable(App->map->WorldToMap(path->at(i).x, path->at(i).y))) {
-					next_goal = path->at(i);
-					break;
-				}
-				else
-					path->pop_back();
-
-			}
-			if (path->empty())
-			{
-				return true;
-			}
-			new_path = App->pathfinding->SimpleAstar(location, next_goal);
-			if (new_path != nullptr) {
-				path->insert(path->end(), new_path->begin(), new_path->end());
-			}
-		}
+	
 		if (path->size() == 1)
 		{
 		
@@ -485,16 +478,8 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 
 
 		//Set the unit next tile goal
-		
-		path->pop_back();
-
-		if (path->size() > 2)	SetFutureAction(*(path->rbegin() + 1));
-		else					SetFutureAction(iPoint(-1, -1));
-
-		goal = path->back();
-
-		//Focus the unit at the next goal
-		Focus(goal);
+		goal = NextGoal(path);
+	
 	}
 
 	//Check actor animation
@@ -506,25 +491,78 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 
 	//Calculate the X/Y values that the unit have to move 
 	//checking the goal location and the unit movement speed
+	NewPosition(goal,x_step, y_step);
+
+	//Add the calculated values at the unit & mark position
+	SetPosition(x_step, y_step);
+
+	return false;
+}
+
+void Unit::Repath(std::vector<iPoint>* path,const iPoint & destination)
+{
+	iPoint new_destination = FindWalkableCell(destination);
+	std::vector<iPoint>* new_path;
+	new_path=App->pathfinding->SimpleAstar(GetPositionRounded(), new_destination);
+	path->clear();
+	if (new_path != nullptr) {
+		path->insert(path->end(), new_path->begin(), new_path->end());
+	}
+}
+
+void Unit::CorrectPath(std::vector<iPoint>* path)
+{
+	std::vector<iPoint>* new_path;
+	path->pop_back();
+	iPoint next_goal;
+	for (int i = path->size() - 1; i >= 0; i--) {
+		if (App->pathfinding->IsWalkable(App->map->WorldToMap(path->at(i).x, path->at(i).y))) {
+			next_goal = path->at(i);
+			break;
+		}
+		else
+			path->pop_back();
+
+	}
+	if (path->empty())
+	{
+		return;
+	}
+	new_path = App->pathfinding->SimpleAstar(GetPositionRounded(), next_goal);
+	if (new_path != nullptr) {
+		LOG("PATH SIZE %i", new_path->size());
+		path->insert(path->end(), new_path->begin(), new_path->end());
+	}
+}
+
+iPoint Unit::NextGoal(std::vector<iPoint>* path)
+{
+	iPoint goal;
+	path->pop_back();
+
+	if (path->size() >= 2)	SetFutureAction(*(path->rbegin() + 1));
+
+	else					SetFutureAction(*(path->rbegin()));
+
+	goal = path->back();
+
+	//Focus the unit at the next goal
+	Focus(goal);
+	return goal;
+}
+
+void Unit::NewPosition(const iPoint& goal, float & position_x, float & position_y)
+{
+	iPoint location = iPoint(position.x, position.y);
+
 	int norm = location.DistanceTo(goal);
 	float x_step = GetSpeed() * (App->GetDT() * 100) * (goal.x - location.x) / norm;
 	float y_step = GetSpeed() * (App->GetDT() * 100) * (goal.y - location.y) / norm;
 
 	//Add the calculated values at the unit & mark position
-	SetPosition(position.x + x_step, position.y + y_step);
+	position_x = position.x + x_step;
+	position_y = position.y + y_step;
 
-	return false;
-}
-
-void Unit::Repath(const iPoint & destination)
-{
-	iPoint new_destination = FindWalkableCell(destination);
-	std::vector<iPoint>* new_path;
-	new_path=App->pathfinding->SimpleAstar(GetPositionRounded(), new_destination);
-	this->GetPath()->clear();
-	if (new_path != nullptr) {
-		this->GetPath()->insert(this->GetPath()->end(), new_path->begin(), new_path->end());
-	}
 }
 
 iPoint Unit::FindWalkableCell(const iPoint & center)
