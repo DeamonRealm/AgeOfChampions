@@ -900,26 +900,69 @@ bool Selection_Panel::GetInViewport() const
 
 bool Selection_Panel::WindowsMove()
 {
+	iPoint c_pos = { 0,0 };
+	c_pos = App->map->WorldToMap(-App->render->camera.x + App->render->camera.w / 2, -App->render->camera.y + App->render->camera.h / 2);
 	bool ret = false;
 	if (mouse_x < OFFSET_Y)
 	{
-		App->render->camera.x += SDL_ceil(1000 * App->GetDT());
+		if (c_pos.x == 1 && c_pos.y < 119)
+		{
+			App->render->camera.x += SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y -= SDL_ceil(439.71 * App->GetDT());
+		}
+		else if (c_pos.y == 119 && c_pos.x > 1)
+		{
+			App->render->camera.x += SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y += SDL_ceil(439.71 * App->GetDT());
+		}
+		else if (c_pos.y < 119 && c_pos.x >1) App->render->camera.x += SDL_ceil(1000 * App->GetDT());
 		ret = true;
+	
 	}
 	else if (mouse_x >= App->render->camera.w - OFFSET_Y)
 	{
-		App->render->camera.x -= SDL_ceil(1000 * App->GetDT());
+		if (c_pos.x == 119 && c_pos.y > 0)
+		{
+			App->render->camera.x -= SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y += SDL_ceil(439.71 * App->GetDT());
+		}
+		else if (c_pos.y == 0 && c_pos.x < 119)
+		{
+			App->render->camera.x -= SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y -= SDL_ceil(439.71 * App->GetDT());
+		}
+		else if (c_pos.y > 0 && c_pos.x < 119) App->render->camera.x -= SDL_ceil(1000 * App->GetDT());
 		ret = true;
 	}
 	if (mouse_y < viewport->GetBox()->y + OFFSET_X && mouse_y > viewport->GetBox()->y)
 	{
-		App->render->camera.y += SDL_ceil(1000 * App->GetDT());
-		ret = true;
+		if (c_pos.x == 1 && c_pos.y > 0)
+			{
+				App->render->camera.x -= SDL_ceil(898.13 * App->GetDT());
+				App->render->camera.y += SDL_ceil(439.71 * App->GetDT());
+			}
+		else if (c_pos.y == 0 && c_pos.x > 1)
+		{
+			App->render->camera.x += SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y += SDL_ceil(439.71 * App->GetDT());
+		}
+		else if(c_pos.y >0 && c_pos.x >1) App->render->camera.y += SDL_ceil(1000 * App->GetDT());
+		ret = true;	
 	}
 	else if (mouse_x < OFFSET_Y && mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X
 		|| mouse_x > 300 && mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X)
 	{
-		App->render->camera.y -= SDL_ceil(1000 * App->GetDT());
+		if (c_pos.x == 119 && c_pos.y < 119)
+		{
+			App->render->camera.x += SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y -= SDL_ceil(439.71 * App->GetDT());
+		}
+		else if (c_pos.y == 118 && c_pos.x > 1)
+		{
+			App->render->camera.x -= SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y -= SDL_ceil(439.71 * App->GetDT());
+		}
+		else if (c_pos.y <119 && c_pos.x <119) App->render->camera.y -= SDL_ceil(1000 * App->GetDT());
 		ret = true;
 	}
 	return ret;
