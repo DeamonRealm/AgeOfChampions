@@ -103,7 +103,7 @@ bool j1SoundManager::CleanUp()
 
 	uint gui_size = gui_blocks.size();
 
-	for (uint k = 0; k < fx_size; k++)
+	for (uint k = 0; k < gui_size; k++)
 	{
 		delete gui_blocks[k];
 	}
@@ -123,6 +123,10 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "unit_attack") == 0)					return ATTACK_SOUND;
 	else if (strcmp(str, "unit_click") == 0)					return CLICK_SOUND;
 	else if (strcmp(str, "unit_move") == 0)						return MOVE_SOUND;
+	else if (strcmp(str, "warrior_skill_lvl1_a") == 0)			return WARRIOR_SKILL_LVL1_A;
+	else if (strcmp(str, "warrior_skill_lvl1_b") == 0)			return WARRIOR_SKILL_LVL1_B;
+	else if (strcmp(str, "warrior_skill_lvl2_a") == 0)			return WARRIOR_SKILL_LVL2_A;
+	else if (strcmp(str, "warrior_skill_lvl2_b") == 0)			return WARRIOR_SKILL_LVL2_B;
 	else if (strcmp(str, "main_menu") == 0)						return MAIN_MENU_SONG;
 	else if (strcmp(str, "ingame") == 0)						return INGAME_SONG;
 	else if (strcmp(str, "win") == 0)							return WIN_SONG;
@@ -135,6 +139,8 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "error") == 0)							return ERROR_SOUND;
 	else if (strcmp(str, "player_unit_alert") == 0)				return PLAYER_UNIT_ALERT;
 	else if (strcmp(str, "player_building_alert") == 0)			return PLAYER_BUILDING_ALERT;
+
+
 	return NO_SOUND;
 }
 

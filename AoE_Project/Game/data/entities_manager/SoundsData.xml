@@ -39,6 +39,18 @@
     <sound soundPath="male_01_move_02.wav" name="move"/>
     <sound soundPath="male_01_move_03.wav" name="move"/>
   </type>
+  <type enum="warrior_skill_lvl1_a"  song_type ="fx">
+    <sound soundPath="warrior_skill_lvl1_a.wav" name="warrior_skill_lvl1_a"/>
+  </type>
+  <type enum="warrior_skill_lvl1_b"  song_type ="fx">
+    <sound soundPath="warrior_skill_lvl1_b.wav" name="warrior_skill_lvl1_b"/>
+  </type>
+  <type enum="warrior_skill_lvl2_a"  song_type ="fx">
+    <sound soundPath="warrior_skill_lvl2_a.wav" name="warrior_skill_lvl2_a"/>
+  </type>
+  <type enum="warrior_skill_lvl2_b"  song_type ="fx">
+    <sound soundPath="warrior_skill_lvl2_b.wav" name="warrior_skill_lvl2_b"/>
+  </type>
   <type enum="main_menu"  song_type ="music">
     <sound soundPath="main_menu.ogg" name="main_menu_music"/>
   </type>
