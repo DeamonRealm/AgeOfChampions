@@ -286,6 +286,12 @@ bool Buff::IsActive() const
 	return (timer.Read() < buff_duration);
 }
 
+void Buff::Reset()
+{
+	timer.Start();
+	particle.animation.Reset();
+}
+
 
 // j1BuffModule -------------------------------------------------------------------
 
@@ -462,7 +468,10 @@ bool j1BuffManager::Update(float dt)
 			active_buffs.remove(current_buff);
 			RELEASE(current_buff);
 		}
-		else current_buff->Draw();
+		else
+		{
+			current_buff->Draw();
+		}
 
 		item++;
 	}
@@ -496,6 +505,7 @@ BUFF_ATTRIBUTE_TYPE j1BuffManager::StrToBuffAttributeType(const char * str) cons
 {
 	if (strcmp("attack", str) == 0) 	return BUFF_ATTRIBUTE_TYPE::ATTACK_BUFF;
 	if (strcmp("defense", str) == 0)	return BUFF_ATTRIBUTE_TYPE::DEFENSE_BUFF;
+	if (strcmp("stun", str) == 0)		return BUFF_ATTRIBUTE_TYPE::STUN_BUFF;
 	return NO_ATTRIBUTE;
 }
 
@@ -549,7 +559,11 @@ bool j1BuffManager::CallBuff(Unit * target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_
 			buff->ApplyBuff();
 
 			//Add the buff at the active buffs list if is a timed buff
-			if (buff_type == TIMED_BUFF)active_buffs.push_back(((Buff*)buff));
+			if (buff_type == TIMED_BUFF)
+			{
+				((Buff*)buff)->Reset();
+				active_buffs.push_back(((Buff*)buff));
+			}
 			else static_buffs.push_back(buff);
 
 			return true;

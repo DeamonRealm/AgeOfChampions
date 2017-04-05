@@ -69,6 +69,11 @@ void Champion::SetAbility_B(bool choosed)
 	ability[1] = choosed;
 }
 
+void Champion::PrepareAbility_B()
+{
+
+}
+
 void Champion::Hability_B(int x, int y)
 {
 
@@ -113,6 +118,11 @@ void Champion::SetBuffArea(const Circle & area)
 void Champion::SetBuffToApply(const PassiveBuff * buff)
 {
 	buff_to_apply = (PassiveBuff*)buff;
+}
+
+void Champion::SetAbility_B_Cooldown(uint value)
+{
+	ability_B_cooldown = value;
 }
 
 void Champion::SetLevel(uint lvl)
@@ -225,7 +235,8 @@ Warrior::~Warrior()
 bool Warrior::Update()
 {
 	if (actived[0] && level >= 1 )CheckHability_A();
-	if (actived[1] && level >= 2 )CheckHability_B();
+	if (ability_B_prepare_mode)PrepareAbility_B();
+	else if (actived[1] && level >= 2 )CheckHability_B();
 	this->action_worker->Update();
 
 	return true;
@@ -238,7 +249,7 @@ bool Warrior::Draw(bool debug)
 	//Draw Warrior Selection Mark
 	if (selected)
 	{
-		special_attack_area.Draw();
+		if (ability_B_prepare_mode)special_attack_area.Draw();
 		mark.Draw();
 	}
 
@@ -364,20 +375,38 @@ void Warrior::SetAbility_B(bool choosed)
 	if (choosed)
 	{
 		ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
-		ability_B_value = 200;
 	}
 	else
 	{
 		ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
-		ability_B_value = 3500;
 	}
 	ability[1] = choosed;
 }
 
+void Warrior::PrepareAbility_B()
+{
+	if (ability_B_timer.Read() < ability_B_cooldown)return;
+
+	ability_B_prepare_mode = true;
+
+	//Focus the warrior in the attack direction
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
+	CalculateSpecialAttackArea(GetiPointFromDirection(direction_type));
+
+	
+}
+
 void Warrior::Hability_B(int x, int y)
 {
+	ability_B_prepare_mode = false;
 
+	if (ability_B_timer.Read() < ability_B_cooldown)return;
+
+	//Focus the warrior in the attack direction
 	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
+	CalculateSpecialAttackArea(GetiPointFromDirection(direction_type));
 	App->animator->UnitPlay(this);
 
 
@@ -400,11 +429,13 @@ void Warrior::Hability_B(int x, int y)
 		{
 			if (ability[1])
 			{
-				units_in[k]->DirectDamage(ability_B_value);
+				units_in[k]->DirectDamage(ability_B_attack_value);
 			}
 			else
 			{
-				units_in[k]->Stun(ability_B_value);
+				App->buff_manager->CallBuff(units_in[k], TIMED_BUFF, STUN_BUFF);
+				units_in[k]->Stun(ability_B_stun_value);
+
 			}
 		}
 	}
@@ -412,6 +443,7 @@ void Warrior::Hability_B(int x, int y)
 	actived[1] = true;
 	ability_B_particle.animation.Reset();
 	ability_B_particle.position = GetPositionRounded();
+	ability_B_timer.Start();
 }
 
 void Warrior::CheckHability_B()
@@ -422,6 +454,38 @@ void Warrior::CheckHability_B()
 		ability_B_particle.Draw();
 	}
 	else actived[1] = false;
+}
+
+iPoint Warrior::GetiPointFromDirection(DIRECTION_TYPE direction) const
+{
+	switch (direction)
+	{
+	case NORTH:
+		return iPoint(position.x,position.y - 1);
+		break;
+	case NORTH_EAST:
+		return iPoint(position.x + 1, position.y - 1);
+		break;
+	case EAST:
+		return iPoint(position.x + 1, position.y);
+		break;
+	case SOUTH_EAST:
+		return iPoint(position.x + 1, position.y + 1);
+		break;
+	case SOUTH:
+		return iPoint(position.x, position.y + 1);
+		break;
+	case SOUTH_WEST:
+		return iPoint(position.x - 1, position.y + 1);
+		break;
+	case WEST:
+		return iPoint(position.x - 1, position.y);
+		break;
+	case NORTH_WEST:
+		return iPoint(position.x - 1, position.y - 1);
+		break;
+	}
+	return iPoint(position.x - 1, position.y - 1);;
 }
 
 void Warrior::CalculateSpecialAttackArea(const iPoint& base)
@@ -491,6 +555,16 @@ void Warrior::SetPosition(float x, float y, bool insert)
 void Warrior::SetSpecialAttackArea(const Triangle & tri)
 {
 	special_attack_area = tri;
+}
+
+void Warrior::SetAbility_B_AttackValue(uint atk)
+{
+	ability_B_attack_value = atk;
+}
+
+void Warrior::SetAbility_B_StunValue(uint stun)
+{
+	ability_B_stun_value = stun;
 }
 
 

@@ -137,8 +137,9 @@ public:
 
 private:
 	
-	j1Timer		timer;
-	uint		buff_duration = 0;
+	j1Timer			timer;
+	uint			buff_duration = 0;
+
 
 public:
 
@@ -151,7 +152,7 @@ public:
 	//Functionality ---------
 	bool ApplyBuff();
 	bool IsActive()const;
-
+	void Reset();
 };
 /// -----------------------------------
 

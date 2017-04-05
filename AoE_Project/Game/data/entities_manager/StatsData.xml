@@ -568,6 +568,10 @@
       poblation_cost="2"
       train_time="500"
       
+      ability_B_cooldown="1500"
+      ability_B_attack_value = "200"
+      ability_B_stun_value = "1500"
+      
       attack_for_level="1"
       range_for_level="1"
       defense_for_level="1.5"

@@ -20,10 +20,15 @@ protected:
 	uint	level = 2;
 	bool	ability[3];
 	bool	actived[3];
+	bool	ability_B_prepare_mode = false;
 
 	//Buff area
 	Circle			buff_area;
 	PassiveBuff*	buff_to_apply = nullptr;
+
+	//Attack area
+	j1Timer			ability_B_timer;
+	uint			ability_B_cooldown = 0;
 
 	//Stats bonus for level
 	uint	attack_for_level = 0;
@@ -47,6 +52,7 @@ public:
 	virtual void CheckHability_A();
 	//Ability B methods
 	virtual void SetAbility_B(bool choosed);
+	virtual void PrepareAbility_B();
 	virtual void Hability_B(int x = 0, int y = 0);
 	virtual void CheckHability_B();
 
@@ -54,6 +60,7 @@ public:
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetBuffArea(const Circle& area);
 	void	SetBuffToApply(const PassiveBuff* buff);
+	void	SetAbility_B_Cooldown(uint value);
 	void	SetLevel(uint lvl);
 	void	SetAttackForLevel(uint atk_for_lvl);
 	void	SetRangeForLevel(uint rng_for_lvl);
@@ -92,7 +99,8 @@ private:
 	/* extra data */
 	Triangle			special_attack_area;
 	Particle			ability_B_particle;
-	uint				ability_B_value = 0;
+	uint				ability_B_attack_value = 0;
+	uint				ability_B_stun_value = 0;
 
 public:
 
@@ -106,13 +114,17 @@ public:
 	void	Hability_A();
 	void	CheckHability_A();
 	void	SetAbility_B(bool choosed);
+	void	PrepareAbility_B();
 	void	Hability_B(int x = 0, int y = 0);
 	void	CheckHability_B();
+	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
 	void	CalculateSpecialAttackArea(const iPoint& base);
 	bool	Die();
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Triangle& tri);
+	void	SetAbility_B_AttackValue(uint atk);
+	void	SetAbility_B_StunValue(uint stun);
 
 
 };
