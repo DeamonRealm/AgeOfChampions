@@ -190,6 +190,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		if (ui_element == exit_menu_button)
 		{
 			final_menu_image->Desactivate();
+			final_menu_image->DesactivateChids();
 			lose = false;
 			win = false;
 
@@ -248,6 +249,7 @@ void Game_Panel::Enable()
 {
 	exit_menu_screen->Activate();
 	exit_menu_button->Activate();
+	final_menu_image->ActivateChilds();
 	win = false;
 	lose = false;
 	game_ended = false;
