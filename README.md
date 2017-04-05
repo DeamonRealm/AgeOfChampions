@@ -2,13 +2,11 @@
 
 
 
-# Age of Champions
+# Age of Champions (Vertical Slice)
 Tribute game to Age of Empires II developed by DemonRealm.
 
 
-## How to play
-Right now there are only prototype releases to test the functionality of our game dute to this fact all debug controlls can be activated without the need of being on the debug mode (F1).  
-Controls for v.0.4 (Vertical Slice Beta)   
+## How to play (v0.5)
 
 * Mouse Left Click to select a unit, building or resource
 * Mouse Right Click to Make the unit do actions (Move/Attack/Recolect)
@@ -17,26 +15,35 @@ Controls for v.0.4 (Vertical Slice Beta)
 * Click on the skull with the selected/s unit to kill them
 * Click on the book icon when the warrior is selected to open his skill tree
 * Click on the [+] buttons on the skill tree to gain that skills (only one per tier)
-* Click on the skill icons to activate them (only works for the first tier and it's the same an attack boost aura)
+* Click on the skill icons to activate them (only works for the first and second tier)
 * Click on the warrior icon in the town center panel to spawn a warrior (only one per game)
+* Click on the villager icon in the town center panel to spawn a villager
+* Click on the second building icon in the villager panel open the barracks construction panel
+* Drag and drop the barracks icon (double sword) to construct one
+* Click on the militia icon in the barracks panel to spawn one
+* Arrows or drag the mouse to the corners to move the camera 
+
+Note: All spawns require the player to wait some time before the actual unit spawns, this is not shown in the UI.    
 
 #### Debug controls
+(only available after activating debug mode (F1))
 * GRAVE to activate/deactivate console (enter "help" in the console to see all the commands)
-* [F1]:Activate debug mode     
-* [F2]:Generate Barracks  
-* [F3]: Generate Villager
+* [F1]:Activate/Deactivate debug mode     
+* [F2]: Activate map logic Debug
+* [F3]: Generate Villager 
+* [F4]: Spawn Barracks
 * [N]: Generate Arbalest
-* [M]: Generate Milita
+* [M]: Generate Enemy Static Milita
 * [Z]: Generete Tree
 * [X]: Generete Berry Bush
 * [C]: Generate Stone quarry
 * [V]: Generate Gold ore
 * [W]: Generate Warrior
-* Arrows to move the camera
+
 
 ## Media 
-**Facebook:**https://www.facebook.com/DemonRealm.P2    
-**Twitter:**https://twitter.com/Demon_Realm    
+**Facebook:** https://www.facebook.com/DemonRealm.P2    
+**Twitter:** https://twitter.com/Demon_Realm    
 **Github page:** https://github.com/DeamonRealm/Age_of_Empires_II
 
 
@@ -54,6 +61,27 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Dr.Memory](http://www.drmemory.org/) is used to control all memory leaks.
 
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
+
+## Changelog
+### v0.5
+
+* Added: Warrior skills (defense/attack buff + stun + slash)
+* Added: Win/lose condition
+* Added: End of game panel
+* Added: AI attacks buildings
+* Added: Buildings death (destruction)
+* Added: In game pause menu
+* Improved: Autoattack scann
+* Changed: Spawn properties (both enemies & player)
+* Changed: Debug controls can only be accesed when in debug mode
+* Fixed issue #21 
+* Fixed issue #22 
+* Fixed issue #24 
+* Fixed issue #25 
+* Fixed issue #26 
+* Fixed issue #27 
+* Fixed issue #28 
+* Fixed issue #29 
 
 ## Changelog
 ### v0.4
