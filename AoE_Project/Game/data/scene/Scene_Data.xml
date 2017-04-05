@@ -12,7 +12,7 @@
     x_pos="100"
     y_pos="100"
   />
-  <entity
+<!-- <entity
     type ="unit"
     unit_type="villager"
     diplomacy="ally"
@@ -33,6 +33,7 @@
     x_pos="102"
     y_pos="103"
   />
+  -->
   <entity
     type ="resource"
     resource_type="berry_bush"
@@ -41,8 +42,44 @@
   />
   <entity
   type ="resource"
+  resource_type="berry_bush"
+  x_pos="100"
+  y_pos="109"
+  />
+  <entity
+  type ="resource"
+  resource_type="berry_bush"
+  x_pos="104"
+  y_pos="109"
+  />
+  <entity
+  type ="resource"
+  resource_type="berry_bush"
+  x_pos="101"
+  y_pos="109"
+  />
+  <entity
+type ="resource"
+resource_type="berry_bush"
+x_pos="102"
+y_pos="109"
+  />
+  <entity
+  type ="resource"
   resource_type="gold_ore"
   x_pos="109"
+  y_pos="105"
+  />
+    <entity
+  type ="resource"
+  resource_type="gold_ore"
+  x_pos="110"
+  y_pos="105"
+  />
+  <entity
+  type ="resource"
+  resource_type="gold_ore"
+  x_pos="111"
   y_pos="105"
   />
   <entity
@@ -50,5 +87,17 @@
     resource_type="stone_ore"
     x_pos="108"
     y_pos="108"
+  />
+  <entity
+  type ="resource"
+  resource_type="stone_ore"
+  x_pos="108"
+  y_pos="109"
+  />
+  <entity
+  type ="resource"
+  resource_type="stone_ore"
+  x_pos="109"
+  y_pos="109"
   />
 </data>
