@@ -482,6 +482,8 @@ bool HeroPanel::ActivateCell(int i)
 		if (champion_selected == WARRIOR_CHMP && mele_learned[1] != -1) 
 		{
 			activate_skill = 1;	
+			
+			((Warrior*)entitis_panel)->PrepareAbility_B();
 			return true;
 		}
 		}
@@ -504,7 +506,6 @@ bool HeroPanel::ActivateCell(int i)
 		{
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
-		ResetPanel();
 		}
 	default:	break;
 	}
@@ -614,26 +615,38 @@ void HeroPanel::ChangePanelTarget(Entity * new_target)
 
 Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 {
+	App->gui->SetDefaultInputTarget((j1Module*)App->player);
 	panel_pos.x = 37;
 	panel_pos.y = 624;
 
 	panel_cells.reserve(MAX_PANEL_CELLS);
+	panel_buttons.reserve(MAX_PANEL_CELLS);
 
 	towncenterpanel = new TownCenterPanel();
 	unitpanel = new UnitPanel();
 	heropanel = new HeroPanel();
 	villagerpanel = new VillagerPanel();
 	barrackpanel = new BarrackPanel();
-
+	
 	UI_Image* cell = nullptr;
+	UI_Button* button = nullptr;
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
 	{
 		cell = (UI_Image*)App->gui->GenerateUI_Element(IMG);
 		cell->ChangeTextureRect({ 0, 0, 1, 1 });
-		cell->SetBoxPosition( panel_pos.x + (i% PANEL_COLUMNS)*CELL_WIDTH, panel_pos.y + ((int)i / PANEL_COLUMNS)*CELL_HEIGHT);
+		cell->SetBoxPosition(panel_pos.x +2 + (i% PANEL_COLUMNS)*CELL_WIDTH, panel_pos.y +2 + ((int)i / PANEL_COLUMNS)*CELL_HEIGHT);
 		cell->ChangeTextureId(ICONS);
 		panel_cells.push_back(cell);
+
+		button = (UI_Button*)App->gui->GenerateUI_Element(BUTTON);
+		button->SetBox({ panel_pos.x + (i% PANEL_COLUMNS)*CELL_WIDTH, panel_pos.y + ((int)i / PANEL_COLUMNS)*CELL_HEIGHT, 40, 40 });
+		button->SetTexON({ 650,330,40,40 },ICONS);
+		button->SetTexOVER({ 650,412,40,40 },ICONS);
+		button->SetTexOFF({ 650,412,40,40 },ICONS);
+		button->Activate();
+		panel_buttons.push_back(button);
 	}
+	
 }
 
 Action_Panel::~Action_Panel()
@@ -657,7 +670,7 @@ bool Action_Panel::CleanUp()
 void Action_Panel::Enable()
 {
 	on_action = false;
-
+	
 	towncenterpanel->ResetPanel();
 	barrackpanel->ResetPanel();
 	villagerpanel->ResetPanel();
@@ -667,6 +680,8 @@ void Action_Panel::Enable()
 
 void Action_Panel::Disable()
 {
+	action_screen->Desactivate();
+	action_screen->DesactivateChids();
 }
 
 bool Action_Panel::PreUpdate()
@@ -717,6 +732,7 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 			{
 				on_action = actualpanel->ActivateCell(GetCell());
 			}
+			
 		}
 		break;
 	case MOUSE_LEFT_BUTTON_UP: {
@@ -724,6 +740,11 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 			{
 				on_action = villagerpanel->Villager_Handle_input(MOUSE_LEFT_BUTTON_UP);
 			}
+			for (int i = 0; i < MAX_PANEL_CELLS; i++)
+			{
+				panel_buttons[i]->button_state = OFF;
+			}
+			
 		}
 		break;
 	case MOUSE_IN:
@@ -738,10 +759,15 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 
 bool Action_Panel::Draw()
 {
+	SDL_Rect text_rect = { 0,0,1,1 };
 	if (actualpanel == nullptr) return false;
 	for (int count = 0; count < MAX_PANEL_CELLS; count++)
 	{
 		panel_cells[count]->Draw(false);
+		if (panel_cells[count]->GetTextureBox().w != text_rect.w && panel_cells[count]->GetTextureBox().h != text_rect.h)
+		{
+			panel_buttons[count]->Draw(false);
+		}	
 	}
 	return true;
 }
@@ -756,6 +782,7 @@ int Action_Panel::GetCell() const
 		cell_clicked =  { panel_pos.x + (count% PANEL_COLUMNS)*CELL_WIDTH, panel_pos.y + ((int)count / PANEL_COLUMNS)*CELL_HEIGHT,CELL_WIDTH, CELL_HEIGHT } ;
 		if (SDL_PointInRect(&mouse_pos, &cell_clicked))
 		{
+			panel_buttons[count]->button_state = ON;
 			return count;
 		}
 	}

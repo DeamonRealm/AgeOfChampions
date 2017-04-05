@@ -72,7 +72,7 @@ void UI_Fixed_Button::HandleInput()
 	}
 
 	//Mouse Left Button -------------------------
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		if (this->MouseIsIn() && App->gui->upper_element == this->layer)
 		{

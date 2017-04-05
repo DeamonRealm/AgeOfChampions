@@ -34,6 +34,12 @@ j1Menu::~j1Menu()
 {
 }
 
+void j1Menu::Enable()
+{
+	active = true;
+	App->sound->PlayMusicAudio(MAIN_MENU_SONG);
+}
+
 bool j1Menu::Awake(pugi::xml_node & config)
 {
 	LOG("Loading Scene");
@@ -46,6 +52,8 @@ bool j1Menu::Awake(pugi::xml_node & config)
 bool j1Menu::Start()
 {
 	App->gui->SetDefaultInputTarget(this);
+
+	App->sound->PlayMusicAudio(MAIN_MENU_SONG);
 
 	//Main menu screen
 	menu_screen = App->gui->GenerateUI_Element(UNDEFINED);
@@ -162,10 +170,12 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 	case RIGHT_ARROW:
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
+	{
 		if (target->GetUItype() == FIXED_BUTTON)
 		{
-			App->sound->PlayFXAudio(CLICK_MAIN_MENU);
+			App->sound->PlayGUIAudio(CLICK_MAIN_MENU);
 		}
+	}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;

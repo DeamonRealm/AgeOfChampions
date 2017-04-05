@@ -71,6 +71,7 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 {
 	if (entity_selected == nullptr) return;
 	element = entity_selected;
+	background = { 650,371,40,40 };
 
 	name->SetString((char*)element->GetName());
 
@@ -127,10 +128,11 @@ void Entity_Profile::DrawProfile() const
 {
 	if (element == nullptr) return;
 	//Draw profile background
-	App->render->DrawQuad({ 338 - App->render->camera.x, 632 - App->render->camera.y, 39, 38 }, 148, 148, 148);
+	//App->render->DrawQuad({ 338 - App->render->camera.x, 632 - App->render->camera.y, 39, 38 }, 148, 148, 148);
+	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 342 - App->render->camera.x, 634 - App->render->camera.y, &element->GetIcon());
 
 	//Draw profile icon
-	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 634 - App->render->camera.y, &element->GetIcon());
+	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 634 - App->render->camera.y, &background);
 
 	name->DrawAt(337, 610);
 	//civilization->DrawAt(472, 640)
@@ -139,8 +141,8 @@ void Entity_Profile::DrawProfile() const
 	//Draw life
 	if (life_update >= 0 && e_type == UNIT)
 	{
-		App->render->DrawQuad({ 340 - App->render->camera.x, 670 - App->render->camera.y, 36, 3 }, 255, 0, 0);
-		App->render->DrawQuad({ 340 - App->render->camera.x, 670 - App->render->camera.y, 36 * life_update / m_life, 3 }, 0, 255, 0);
+		App->render->DrawQuad({ 342 - App->render->camera.x, 670 - App->render->camera.y, 36, 2 }, 255, 0, 0);
+		App->render->DrawQuad({ 342 - App->render->camera.x, 670 - App->render->camera.y, 36 * life_update / m_life, 2 }, 0, 255, 0);
 
 		life->DrawAt(380, 660);
 	}

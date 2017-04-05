@@ -90,3 +90,8 @@ iPoint UI_Image::GetPivot() const
 {
 	return pivot;
 }
+
+SDL_Rect UI_Image::GetTextureBox() const
+{
+	return texture_rect;
+}

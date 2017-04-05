@@ -54,6 +54,7 @@ private:
 
 	Entity*			element = nullptr;
 	ENTITY_TYPE		e_type;
+	SDL_Rect		background = {0,0,0,0};
 
 	//General
 	UI_String*		name = nullptr;

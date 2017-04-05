@@ -30,6 +30,7 @@ public:
 	void				ChangeTextureRect(SDL_Rect new_rect);
 	void				ChangeTextureId(int id);
 	iPoint				GetPivot()const;
+	SDL_Rect			GetTextureBox()const;
 };
 
 #endif // __UI_IMG__

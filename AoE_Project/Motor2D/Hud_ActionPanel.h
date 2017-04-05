@@ -249,11 +249,13 @@ private:
 	bool						isin;
 	SDL_Point					mouse_pos;
 	SDL_Rect					action_rect;
+	UI_Image*					action_screen = nullptr;
 
 	// Panell Settings 
 	int							cell;
 	iPoint						panel_pos;
 	std::vector<UI_Image*>		panel_cells;
+	std::vector<UI_Button*>		panel_buttons;
 	Entity*						actual_entity = nullptr;
 
 	// Entityes Panels

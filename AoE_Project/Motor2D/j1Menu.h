@@ -26,6 +26,7 @@ public:
 	virtual ~j1Menu();
 
 	void Init() { active = true; }
+	void Enable();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& config);
