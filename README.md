@@ -23,6 +23,7 @@ Tribute game to Age of Empires II developed by DemonRealm.
 * Click on the militia icon in the barracks panel to spawn one
 * Arrows or drag the mouse to the corners to move the camera 
 * [F] Toggle Fullscreen/Windowed mode
+* Click on the scroll at the upper-right part of the screen to open the in-game menu
 
 Note: All spawns require the player to wait some time before the actual unit spawns, this is not shown in the UI.    
 
