@@ -447,9 +447,8 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 		{
 			std::vector<iPoint>* new_path;
 			path->pop_back();
-
 			iPoint next_goal;
-			for (int i = path_size - 1; i >= 0; i--) {
+			for (int i = path->size() - 1; i >= 0; i--) {
 				if (App->pathfinding->IsWalkable(App->map->WorldToMap(path->at(i).x, path->at(i).y))) {
 					next_goal = path->at(i);
 					break;
@@ -486,10 +485,12 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 
 
 		//Set the unit next tile goal
-		if (path->size() > 2)	SetFutureAction(*(path->rbegin() + 1));
-		else					SetFutureAction(iPoint(-1,-1));
-
+		
 		path->pop_back();
+
+		if (path->size() > 2)	SetFutureAction(*(path->rbegin() + 1));
+		else					SetFutureAction(iPoint(-1, -1));
+
 		goal = path->back();
 
 		//Focus the unit at the next goal
