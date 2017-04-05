@@ -124,6 +124,7 @@ private:
 	bool win = false;
 	bool lose = false;
 	
+	bool game_ended = false;
 
 };
 
