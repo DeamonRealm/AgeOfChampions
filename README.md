@@ -9,8 +9,9 @@ Tribute game to Age of Empires II developed by DemonRealm.
 ## How to play (v0.5)
 
 In these release you are given an initial town center and a few resources, with this you should create a few more villagers to 
-recollect more resources until you are able to create your army. But care your town center can only support up to ten units being villagers, militia or the mighty warrior who can only spawn one time during the game.
+recollect more resources until you are able to create your army. But care your town center can only support up to ten units being villagers, militia or the mighty warrior who can only spawn one time during the game.   
 
+After 80 seconds a group of enemies will spawn at the top of the map and will aim to destroy your town center, be fast at creating your army and defeat them to prevent the perish of your small town.
 
 
 ### Main Menu
