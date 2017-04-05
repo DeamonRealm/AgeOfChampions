@@ -70,7 +70,7 @@
       attack_hitpoints="4"
       attack_bonus="2"
       siege_hitpoints="10"
-      attack_rate="2030"
+      attack_rate="3000"
       attack_range="50"
       defense="0"
       defense_bonus="5"
@@ -80,7 +80,7 @@
       wood_cost="0"
       gold_cost="20"
       poblation_cost="2"
-      train_time="3500"
+      train_time="3000"
     />
   </unit>
   <!--Archer-->
@@ -520,7 +520,7 @@
       wood_cost="0"
       gold_cost="20"
       poblation_cost="2"
-      train_time="3000"
+      train_time="2500"
       
       resources_capacity ="90"
       recollect_capacity ="10"
@@ -549,28 +549,28 @@
       icon_w="36"
       icon_h="36"
       
-      max_life="210"
+      max_life="120"
       view_area="15"
       speed="0.8"
       attack_delay ="50"
-      attack_hitpoints="13"
+      attack_hitpoints="9"
       attack_bonus="2"
       siege_hitpoints="10"
-      attack_rate="200"
+      attack_rate="2000"
       attack_range="25"
       defense="1"
-      defense_bonus="5"
+      defense_bonus="2"
       armor="12"
       armor_bonus="5"
       food_cost="180"
       wood_cost="0"
       gold_cost="60"
       poblation_cost="2"
-      train_time="5000"
+      train_time="4000"
       
-      ability_B_cooldown="1500"
-      ability_B_attack_value = "200"
-      ability_B_stun_value = "1500"
+      ability_B_cooldown="5000"
+      ability_B_attack_value = "10"
+      ability_B_stun_value = "2000"
       
       attack_for_level="1"
       range_for_level="1"
@@ -628,7 +628,7 @@
       mark_w="70"
       mark_h="70"
      interaction_rad ="50"
-      max_resources="175"
+      max_resources="200"
       />
   </unit>
   <!--Gold Ore-->
@@ -650,7 +650,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="50"
-      max_resources="200"
+      max_resources="400"
       />
   </unit>
   <!--Stone Ore-->
@@ -672,7 +672,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="50"
-      max_resources="200"
+      max_resources="400"
       />
   </unit>
   

@@ -35,12 +35,6 @@
   />
   -->
   <entity
-    type ="resource"
-    resource_type="berry_bush"
-    x_pos="105"
-    y_pos="109"
-  />
-  <entity
   type ="resource"
   resource_type="berry_bush"
   x_pos="100"
@@ -70,23 +64,11 @@
   x_pos="109"
   y_pos="105"
   />
-    <entity
-  type ="resource"
-  resource_type="gold_ore"
-  x_pos="110"
-  y_pos="105"
-  />
   <entity
     type ="resource"
     resource_type="stone_ore"
     x_pos="108"
     y_pos="108"
-  />
-  <entity
-  type ="resource"
-  resource_type="stone_ore"
-  x_pos="108"
-  y_pos="109"
   />
 
 </data>
