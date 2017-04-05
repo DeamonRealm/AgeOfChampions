@@ -520,9 +520,9 @@
       wood_cost="0"
       gold_cost="20"
       poblation_cost="2"
-      train_time="4000"
+      train_time="3000"
       
-      resources_capacity ="200"
+      resources_capacity ="90"
       recollect_capacity ="10"
       recollect_rate ="450"
       
@@ -563,7 +563,7 @@
       armor="12"
       armor_bonus="5"
       food_cost="180"
-      wood_cost="5"
+      wood_cost="0"
       gold_cost="60"
       poblation_cost="2"
       train_time="5000"
@@ -650,7 +650,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="50"
-      max_resources="100"
+      max_resources="200"
       />
   </unit>
   <!--Stone Ore-->
@@ -672,7 +672,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="50"
-      max_resources="100"
+      max_resources="200"
       />
   </unit>
   
