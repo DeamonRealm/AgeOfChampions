@@ -24,16 +24,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <anim_data speed="150" loop="0"/>
     <sprite n="FireArea/FireArea_00.png" opacity ="255" x="1" y="1" w="392" h="241" pX="0.5" pY="0.5"/>
     <sprite n="FireArea/FireArea_01.png" opacity ="255" x="395" y="1" w="402" h="246" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_02.png" opacity ="255" x="799" y="1" w="410" h="252" pX="0.5" pY="0.5"/>
+    <sprite n="FireArea/FireArea_02.png" opacity ="255" x="799" y="1" w="410" h="252" pX="0.525" pY="0.5"/>
     <sprite n="FireArea/FireArea_03.png" opacity ="255" x="1" y="255" w="406" h="267" pX="0.5" pY="0.5"/>
     <sprite n="FireArea/FireArea_04.png" opacity ="255" x="409" y="255" w="417" h="270" pX="0.5" pY="0.5"/>
     <sprite n="FireArea/FireArea_05.png" opacity ="255" x="828" y="255" w="433" h="283" pX="0.5" pY="0.5"/>
     <sprite n="FireArea/FireArea_06.png" opacity ="255" x="1" y="540" w="425" h="283" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_07.png" opacity ="255" x="428" y="540" w="425" h="290" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_08.png" opacity ="255" x="855" y="540" w="442" h="300" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_09.png" opacity ="255" x="1" y="842" w="417" h="302" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_10.png" opacity ="255" x="420" y="842" w="395" h="281" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_11.png" opacity ="255" x="817" y="842" w="395" h="281" pX="0.5" pY="0.5"/>
+    <sprite n="FireArea/FireArea_07.png" opacity ="255" x="428" y="540" w="425" h="290" pX="0.51" pY="0.53"/>
+    <sprite n="FireArea/FireArea_08.png" opacity ="255" x="855" y="540" w="442" h="300" pX="0.51" pY="0.53"/>
+    <sprite n="FireArea/FireArea_09.png" opacity ="255" x="1" y="842" w="417" h="302" pX="0.53" pY="0.51"/>
+    <sprite n="FireArea/FireArea_10.png" opacity ="255" x="420" y="842" w="395" h="281" pX="0.54" pY="0.5"/>
+    <sprite n="FireArea/FireArea_11.png" opacity ="255" x="817" y="842" w="395" h="281" pX="0.54" pY="0.5"/>
   </particle>
   <particle particle_type="buff_particle" actor="0" buff_type="passive" attribute_type="attack" draw_rate ="0">
     <anim_data speed="150" loop="1"/>
