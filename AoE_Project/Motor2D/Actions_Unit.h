@@ -312,14 +312,13 @@ public:
 		if (actor->GetWorker()->GetCurrentActionType() == TASK_U_DIE) return true;
 
 		surrounding_units.clear();
+		surrounding_buildings.clear();
 
-		if (actor->GetDiplomacy() == ALLY)
-		{
-			int k = 0;
-			k++;
-		}
 		App->entities_manager->units_quadtree.CollectCandidates(surrounding_units, actor->GetVision());
 		App->entities_manager->OrganizeByNearest(surrounding_units, actor->GetVision());
+
+		App->entities_manager->buildings_quadtree.CollectCandidates(surrounding_buildings, actor->GetVision());
+
 
 		uint size = surrounding_units.size();
 
@@ -332,6 +331,17 @@ public:
 				}
 			};
 
+			uint sizeb = surrounding_buildings.size();
+
+			for (uint k = 0; k < sizeb; k++)
+			{
+				if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy())
+				{
+					actor->AddPriorizedAction(App->action_manager->AttackToBuildingAction((Unit*)actor, (Building**)surrounding_buildings[k]->GetMe()));
+					return false;
+				}
+			};
+
 		return false;
 	};
 
@@ -339,7 +349,7 @@ public:
 private:
 
 	std::vector<Unit*> surrounding_units;
-
+	std::vector<Building*> surrounding_buildings;
 };
 
 

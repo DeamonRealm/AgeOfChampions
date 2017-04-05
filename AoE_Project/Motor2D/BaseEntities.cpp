@@ -998,7 +998,7 @@ bool Unit::AttackBuilding(Building ** target)
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
+		this->AddSecondaryAction((Action*)App->action_manager->MoveAction(path, this));
 	}
 
 	//Control action rate
