@@ -89,6 +89,7 @@ private:
 	UI_Element*	exit_menu_screen	= nullptr;
 	UI_Button*	exit_menu_button	= nullptr;
 	UI_Button*	exit_to_main_menu	= nullptr;
+	UI_Button*	cancel_game_menu	= nullptr;
 	UI_Image*	exit_menu_image		= nullptr;
 
 };

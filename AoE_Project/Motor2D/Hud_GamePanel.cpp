@@ -65,6 +65,15 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 	exit_to_main_menu->Desactivate();
 	exit_menu_image->AddChild(exit_to_main_menu);
 
+	cancel_game_menu = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	cancel_game_menu->SetBox({ 38, 230, 220, 30 });
+	cancel_game_menu->SetTexOFF({ 295, 0,220,30 }, MENU_PAUSE);
+	cancel_game_menu->SetTexOVER({ 295, 0,220,30 }, MENU_PAUSE);
+	cancel_game_menu->SetTexON({ 295, 31,220,30 }, MENU_PAUSE);
+	cancel_game_menu->Desactivate();
+	exit_menu_image->AddChild(cancel_game_menu);
+
+
 	// Menu Text
 	resource_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	resource_text->SetColor({ 255, 255, 255, 255 });
@@ -72,6 +81,13 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 	resource_text->Desactivate();
 	resource_text->SetBox({ 58, 6,0,0 });
 	exit_to_main_menu->AddChild(resource_text);
+
+	resource_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	resource_text->SetColor({ 255, 255, 255, 255 });
+	resource_text->SetString("Cancel");
+	resource_text->Desactivate();
+	resource_text->SetBox({ 90, 6,0,0 });
+	cancel_game_menu->AddChild(resource_text);
 
 	exit_menu_screen->Desactivate();
 }
@@ -157,6 +173,11 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			App->AI->Disable();
 			App->entities_manager->Disable();
 			App->menu->Enable();
+		}
+		if (ui_element == cancel_game_menu)
+		{
+			exit_menu_image->Desactivate();
+			exit_menu_image->DesactivateChids();
 		}
 	}
 		break;
