@@ -338,7 +338,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 		LOG("Error path not found!");
 		return true;
 	}
-	
+
 
 	//Build goal path point
 	iPoint goal = path->back();
@@ -349,7 +349,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 	//Update goal node and animation direction
 	if (location.DistanceTo(goal) < 2)
 	{
-	
+
 		//if we have a collision with other unit and we have lower priority reduction of speed
 
 		//Look in the next update if there is an error
@@ -374,94 +374,101 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 		int collisions = 0;
 		while (!other_units.empty()) {
 			Unit* other_unit = other_units.back();
-			if (other_unit != this) {
-				int other_path_size = 0;
-				std::vector<iPoint>* other_path = nullptr;
-				if (other_unit->GetPath() != nullptr)
-				{
-					other_path = other_unit->GetPath();
-					other_path_size = other_path->size();
-				}
-
-				switch (CheckColision(this, other_unit))
-				{
-				case NO_COLLISION:
-					break;
-				case COLLISION_IDLE:
-				{
-					if (path->size() < 2) {
-						if(target != iPoint(-1,-1))
-							Repath(path, target);
-						else
-							Repath(path, *(path->begin()));
-						return false;
-					}
-					
-				}
-					break;
-				case COLLISION_MOVE:
-
-						if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
-							if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-								other_unit->Repath(other_path,*(other_path->begin()));
-							else
-								Repath(path, *(path->begin()));
-
-						}
-						else
-						{
-							if (mutable_speed == 0 && other_unit->mutable_speed == 0)
-							{
-								if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-									other_unit->mutable_speed -= 0.2;
-								else
-									mutable_speed -= 0.2;
-							}
-						}
-					
-					collisions++;
-					break;
-				case FUTURE_COLLISION_MOVE:
-					/*
-					if (other_path_size != 0) {
-						if (future_position == other_unit->future_position && future_position != iPoint(-1, -1)) {
-							if (other_path_size <= 2 && path_size <= 2) {
-								if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-									other_unit->Repath(*(other_path->begin()));
-								else
-									Repath(*(path->begin()));
-
-							}
-							else
-							{
-								if (mutable_speed == 0 && other_unit->mutable_speed == 0)
-								{
-									if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-										other_unit->mutable_speed -= 0.2;
-									else
-										mutable_speed -= 0.2;
-								}
-							}
-
-						}
-					}
-					collisions++;
-					*/
-					break;
-
-
-				}
-				
-			}
 			other_units.pop_back();
+
+			if (other_unit == this)
+			{
+				continue;
+			}
+			int other_path_size = 0;
+			std::vector<iPoint>* other_path = nullptr;
+			if (this != other_unit) {
+
+			}
+			if (other_unit->GetPath() != nullptr)
+			{
+				other_path = other_unit->GetPath();
+				other_path_size = other_path->size();
+			}
+
+			switch (CheckColision(this, other_unit))
+			{
+			case NO_COLLISION:
+				break;
+			case COLLISION_IDLE:
+			{
+				if (path->size() < 2) {
+					if (target != iPoint(-1, -1))
+						Repath(path, target);
+					else
+						Repath(path, *(path->begin()));
+					return false;
+				}
+
+			}
+			break;
+			case COLLISION_MOVE:
+
+				if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
+					if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+						other_unit->Repath(other_path, *(other_path->begin()));
+					else
+						Repath(path, *(path->begin()));
+
+				}
+				else
+				{
+					if (mutable_speed == 0 && other_unit->mutable_speed == 0)
+					{
+						if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+							other_unit->mutable_speed -= 0.2;
+						else
+							mutable_speed -= 0.2;
+					}
+				}
+
+				collisions++;
+				break;
+			case FUTURE_COLLISION_MOVE:
+				/*
+				if (other_path_size != 0) {
+				if (future_position == other_unit->future_position && future_position != iPoint(-1, -1)) {
+				if (other_path_size <= 2 && path_size <= 2) {
+				if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+				other_unit->Repath(*(other_path->begin()));
+				else
+				Repath(*(path->begin()));
+
+				}
+				else
+				{
+				if (mutable_speed == 0 && other_unit->mutable_speed == 0)
+				{
+				if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
+				other_unit->mutable_speed -= 0.2;
+				else
+				mutable_speed -= 0.2;
+				}
+				}
+
+				}
+				}
+				collisions++;
+				*/
+				break;
+
+
+
+
+			}
 		}
-		if (collisions == 0 && mutable_speed!=0.0f) {
+		if (collisions == 0 && mutable_speed != 0.0f) {
 			mutable_speed = 0.0f;
 		}
-	
+
 		if (path->size() == 1)
 		{
-		
+
 			//Set unit at the goal pixel position
 			SetPosition((float)goal.x, (float)goal.y);
 			//Stop idle walk animation
@@ -474,12 +481,12 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 
 			return true;
 		}
-	
+
 
 
 		//Set the unit next tile goal
 		goal = NextGoal(path);
-	
+
 	}
 
 	//Check actor animation
@@ -491,7 +498,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 
 	//Calculate the X/Y values that the unit have to move 
 	//checking the goal location and the unit movement speed
-	NewPosition(goal,x_step, y_step);
+	NewPosition(goal, x_step, y_step);
 
 	//Add the calculated values at the unit & mark position
 	SetPosition(x_step, y_step);
@@ -1094,10 +1101,13 @@ void Unit::Stun(uint time)
 
 COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 {
+	if (current == other)
+	{
+		return NO_COLLISION;
+	}
 	if(other->action_type == IDLE||other->action_type == ATTATCK)
 	{
-		if (sqrt((other->GetPosition().x - current->future_position.x) * (other->GetPosition().x - current->future_position.x) + (other->GetPosition().y - current->future_position.y) * (other->GetPosition().y - current->future_position.y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad())
-			|| sqrt((other->GetPosition().x - current->GetPosition().x) * (other->GetPosition().x - current->GetPosition().x) + (other->GetPosition().y - current->GetPosition().y) * (other->GetPosition().y - current->GetPosition().y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad()))
+		if (sqrt((other->GetPosition().x - current->GetPosition().x) * (other->GetPosition().x - current->GetPosition().x) + (other->GetPosition().y - current->GetPosition().y) * (other->GetPosition().y - current->GetPosition().y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad()))
 		{
 			return COLLISION_IDLE;
 		}
