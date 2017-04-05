@@ -215,7 +215,7 @@ Warrior::Warrior() :Champion()
 
 }
 
-Warrior::Warrior(const Warrior & copy): Champion(copy),special_attack_area(copy.special_attack_area)
+Warrior::Warrior(const Warrior & copy) : Champion(copy), special_attack_area(copy.special_attack_area), ability_B_attack_value(copy.ability_B_attack_value), ability_B_stun_value(copy.ability_B_stun_value)
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
 	ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
@@ -425,6 +425,8 @@ void Warrior::Hability_B(int x, int y)
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
+		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+
 		if (units_in[k]->GetPosition() != position)
 		{
 			if (ability[1])
@@ -450,7 +452,6 @@ void Warrior::CheckHability_B()
 {
 	if (!ability_B_particle.animation.IsEnd())
 	{
-		if (ability_B_particle.position != GetPositionRounded())ability_B_particle.position = GetPositionRounded();
 		ability_B_particle.Draw();
 	}
 	else actived[1] = false;

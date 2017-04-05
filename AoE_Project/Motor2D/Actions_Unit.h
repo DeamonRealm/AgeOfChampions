@@ -174,7 +174,6 @@ public:
 	//Functionality ---------
 	bool Activation()
 	{
-		timer.Start();
 		((Unit*)actor)->SetAction(IDLE);
 		if (((Unit*)actor)->GetUnitType() == VILLAGER)
 		{
@@ -184,7 +183,7 @@ public:
 			}
 		}
 		App->animator->UnitPlay((Unit*)actor);
-
+		timer.Start();
 		return true;
 	}
 
