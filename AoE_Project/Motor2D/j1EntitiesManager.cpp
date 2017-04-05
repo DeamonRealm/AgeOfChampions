@@ -45,6 +45,7 @@ void j1EntitiesManager::Disable()
 	std::list<Unit*>::iterator units_item = units.begin();
 	while (units_item != units.end())
 	{
+		App->buff_manager->RemoveTargetBuffs(units_item._Ptr->_Myval);
 		RELEASE(units_item._Ptr->_Myval);
 		units_item++;
 	}

@@ -148,7 +148,7 @@ public:
 
 	//Get String from format
 	char*				SetStringFromInt(int number);
-
+	char*				SetStringFromFloat(float number);
 };
 
 #endif // __GUI_H__

@@ -69,6 +69,8 @@ private:
 	std::string				civilization;
 
 	UI_Image*				game_hud = nullptr;
+	UI_String*				frames = nullptr;
+	UI_String*				dt = nullptr;
 
 public: /*This is temporal*/
 

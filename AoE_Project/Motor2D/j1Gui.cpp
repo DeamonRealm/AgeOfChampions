@@ -357,3 +357,9 @@ char * j1Gui::SetStringFromInt(int number)
 	return buffer;
 }
 
+char * j1Gui::SetStringFromFloat(float number)
+{
+	static char buffer[128];
+	int ret = snprintf(buffer, sizeof(buffer), "%.3f", number);
+	return buffer;
+}

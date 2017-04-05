@@ -199,6 +199,11 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			CleanUp();
 			Disable();
 		}
+		if (target == history)
+		{
+			ShellExecute(NULL, "open", "https://github.com/DeamonRealm/Age_of_Empires_II/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
+			history->button_state = UP;
+		}
 		if (target == exit)
 		{
 			App->SetQuit();
