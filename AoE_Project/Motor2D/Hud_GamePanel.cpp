@@ -37,7 +37,7 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
 
 	//Exit Menu 
-	
+
 	exit_menu_screen = App->gui->GenerateUI_Element(UI_TYPE::UNDEFINED);
 	exit_menu_screen->SetBox({ 0,0,App->win->screen_surface->w, 23});
 	exit_menu_screen->SetInputTarget((j1Module*)App->player);
@@ -73,6 +73,15 @@ wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
 	cancel_game_menu->Desactivate();
 	exit_menu_image->AddChild(cancel_game_menu);
 
+
+	//Final Menu
+
+	final_menu_image = (UI_Image*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
+	final_menu_image->SetBox({ 536,150,227 ,305 });
+	final_menu_image->ChangeTextureId(TEXTURE_ID::FINAL_MENU);
+	final_menu_image->ChangeTextureRect({ 0,0,227,305 });
+	final_menu_image->Desactivate();
+	exit_menu_screen->AddChild(final_menu_image);
 
 	// Menu Text
 	resource_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
@@ -142,6 +151,9 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
 	{
+		
+		//final_menu_image->Activate();
+
 		if (ui_element == exit_menu_button)
 		{
 			if (exit_menu_image->GetActiveState()) {
@@ -153,6 +165,8 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 				exit_menu_image->Activate();
 				exit_menu_image->ActivateChilds();
 			}
+
+			
 		}
 		if (ui_element == exit_to_main_menu)
 		{
@@ -213,6 +227,12 @@ void Game_Panel::Disable()
 	meat = 0;
 	gold = 0;
 	stone = 0;
+
+	all_resources = 0;
+	player_death_units = 0;
+	player_death_enemies = 0;
+	player_all_units = 0;
+
 	exit_menu_screen->Desactivate();
 	exit_menu_screen->DesactivateChids();
 }

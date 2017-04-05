@@ -108,6 +108,12 @@ private:
 	UI_Button*	cancel_game_menu	= nullptr;
 	UI_Image*	exit_menu_image		= nullptr;
 
+
+	//Final menu
+	UI_Element* final_menu_screen	= nullptr;
+	UI_Image*	final_menu_image	= nullptr;
+	
+
 };
 
 

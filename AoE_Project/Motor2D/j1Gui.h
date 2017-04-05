@@ -51,7 +51,8 @@ enum TEXTURE_ID
 	ICONS,
 	HUD,
 	CHAMPION_SKILL,
-	MENU_PAUSE
+	MENU_PAUSE,
+	FINAL_MENU
 };
 
 // ---------------------------------------------------
@@ -100,6 +101,7 @@ private:
 	std::string				hud_file_name;
 	std::string				champions_file_name;
 	std::string				menu_pause_file_name;	
+	std::string				final_menu_file_name;
 
 	//Target Module of gui input
 	j1Module*				default_input_target;
