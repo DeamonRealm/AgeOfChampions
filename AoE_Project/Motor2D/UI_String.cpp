@@ -9,7 +9,7 @@ UI_String::UI_String(const SDL_Rect& box, char * text, const SDL_Color& text_col
 
 UI_String::UI_String(const UI_String* copy) : UI_Element(copy->box, STRING), text(copy->text), text_font(copy->text_font), text_texture(copy->text_texture), text_color(copy->text_color) {}
 
-UI_String::UI_String() : UI_Element({0,0}, STRING), text(""), text_font(nullptr) {}
+UI_String::UI_String() : UI_Element({0,0,0,0}, STRING), text(""), text_font(nullptr) {}
 
 //Destructor ==============================================
 UI_String::~UI_String()
@@ -48,11 +48,11 @@ uint UI_String::GetLenght()const
 	return uint(text.length());
 }
 
-void UI_String::SetString(char * new_text)
+void UI_String::SetString(char * new_text, bool generate)
 {
 	if(text_texture != nullptr) App->font->DeleteTexture(text_texture);
 	text = new_text;
-	if(strlen(new_text) > 0)text_texture = App->font->Print(text.c_str(), text_color, text_font);
+	if(generate && strlen(new_text) > 0)text_texture = App->font->Print(text.c_str(), text_color, text_font);
 }
 
 void UI_String::PushString(const char * new_text, uint position)

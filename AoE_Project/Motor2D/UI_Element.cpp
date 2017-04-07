@@ -14,7 +14,7 @@ UI_Element::UI_Element() : box({0,0,0,0}), ui_type(UNDEFINED), IsActive(false), 
 //Destructor
 UI_Element::~UI_Element()
 {
-	CleanUpChilds();
+	childs.clear();
 }
 
 
@@ -51,25 +51,9 @@ bool UI_Element::CleanUp()
 	/*
 			This CleanUp
 	*/
-	input_target = nullptr;
-	//Childs CleanUp
-	CleanUpChilds();
+
+
 	return true;
-
-}
-
-bool UI_Element::CleanUpChilds()
-{
-	bool ret = true;
-
-	while (childs.size() > 0) {
-
-		ret = childs.front()->CleanUp();
-		childs.pop_front();
-
-	}
-
-	return ret;
 }
 
 void UI_Element::Draw(bool debug) const

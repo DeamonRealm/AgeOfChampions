@@ -141,15 +141,16 @@ bool j1Gui::CleanUp()
 	LOG("Freeing GUI");
 	bool ret = true;
 
-	while (screens.size() > 0)
+//	screens.clear();
+
+
+	std::list<UI_Element*>::iterator item = gui_elements.end();
+	while (item != gui_elements.begin())
 	{
-
-		//CleanUp the item childs
-		ret = screens.back()->CleanUp();
-		//Delete all item data
-		screens.pop_back();
-
+		item--;
+		delete item._Ptr->_Myval;
 	}
+	gui_elements.clear();
 
 	return true;
 }
@@ -248,7 +249,12 @@ UI_Element* j1Gui::GenerateUI_Element(UI_TYPE element_type)
 		new_element = new UI_Fixed_Button();
 		break;
 	}
-	
+
+	if (new_element != nullptr)
+	{
+  		gui_elements.push_back(new_element);
+	}
+
 	return new_element;
 }
 

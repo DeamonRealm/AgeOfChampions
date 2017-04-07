@@ -139,6 +139,21 @@ Entity * Entity_Profile::GetEntity()
 	return element;
 }
 
+void Entity_Profile::Reset()
+{
+	profile_text.clear();
+	element = nullptr;
+	life_update = 0;
+	m_life = 0;
+	u_attack = 0;
+	u_deffence = 0;
+	attack_up = 0;
+	deffence_up = 0;
+	u_range = 0;
+	u_capacity = 0;
+	m_capacity = 0;
+}
+
 void Entity_Profile::DrawProfile() const
 {
 	if (element == nullptr) return;
@@ -353,8 +368,11 @@ bool Selection_Panel::CleanUp()
 	selected_elements.clear();
 	group_profile.clear();
 
-	Selected = nullptr;
-
+	if (Selected != nullptr)
+	{
+		delete Selected;
+		Selected = nullptr;
+	}
 	return true;
 }
 
@@ -500,7 +518,7 @@ void Selection_Panel::Handle_Input(UI_Element * target, GUI_INPUT input)
 
 void Selection_Panel::Enable()
 {
-	Selected = new Entity_Profile();
+	//Selected = new Entity_Profile();
 	UpperEntity = nullptr;
 	action_command = nullptr;
 }
@@ -513,8 +531,7 @@ void Selection_Panel::Disable()
 	unit_quad_selection.clear();
 	building_quad_selection.clear();
 	resource_quad_selection.clear();
-
-	delete Selected;
+	Selected->Reset();
 
 }
 

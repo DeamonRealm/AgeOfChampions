@@ -16,7 +16,8 @@ UI_Scroll::UI_Scroll() : UI_Element({ 0,0,0,0 }, SCROLL), ContentWindow({0,0,0,0
 //Destructors =============================================
 UI_Scroll::~UI_Scroll()
 {
-
+	Items.clear();
+	Items_location.clear();
 }
 
 //Game Loop ===============================================

@@ -45,6 +45,9 @@ public:
 
 	void SetEntity(Entity* entity_selected);
 	Entity* GetEntity();
+
+	void Reset();
+
 	void DrawProfile() const;
 	void UpdateStats();
 

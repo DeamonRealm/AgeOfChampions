@@ -133,15 +133,8 @@ bool j1Console::CleanUp()
 		delete console_variables[k];
 	}
 
-	std::list<UI_String*>::const_iterator label = console_labels.begin();
-	while (label != console_labels.end())
-	{
-		delete label._Ptr->_Myval;
-		label++;
-	}
-
-	delete console_input_box;
-	delete console_labels_scroll;
+	console_labels.clear();
+	commands.clear();
 
 	return true;
 }
@@ -418,7 +411,11 @@ void j1Console::AddConsoleText(char* new_text)
 			console_labels_scroll->PopFrontItem();
 		}
 	}*/
-	UI_String* label = new UI_String({ 0,0,0,0 }, new_text, font_color, font);
+	UI_String* label = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	label->SetBox({ 0,0,0,0 });
+	label->SetString(new_text,false);
+	label->SetColor(font_color);
+	label->SetFont(font);
 	console_labels.push_back(label);
 	if (can_texturize_strings)
 	{
@@ -445,7 +442,11 @@ char * j1Console::GenerateConsoleLabel(char * new_text,...)
 		}
 	}*/
 
-	UI_String* label = new UI_String({ 0,0,0,0 }, tmp_string, font_color, font);
+	UI_String* label = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	label->SetBox({ 0,0,0,0 });
+	label->SetString(tmp_string,false);
+	label->SetColor(font_color);
+	label->SetFont(font); 
 	console_labels.push_back(label);
 	UpdateConsoleLabels();
 

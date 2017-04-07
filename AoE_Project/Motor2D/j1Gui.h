@@ -86,6 +86,8 @@ private:
 	mutable bool			debug = false;
 
 	//UI elements
+	std::list<UI_Element*>  gui_elements;
+
 	std::list<UI_Element*>	screens;
 	uint					tabable_elements = 0;
 
