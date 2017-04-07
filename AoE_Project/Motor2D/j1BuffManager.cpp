@@ -495,29 +495,45 @@ bool j1BuffManager::Update(float dt)
 }
 
 bool j1BuffManager::CleanUp()
-{	//RELEASE buff_definitions
-	int buff_definition_size = buff_definitions.size();
-	for (int i = 0; i < buff_definition_size; i++)	
+{	
+	//RELEASE buff_definitions
+	uint size = buff_definitions.size();
+	for (int i = 0; i < size; i++)
+	{
 		RELEASE(buff_definitions[i]);
+	}
 	buff_definitions.clear();
+	
 	//RELEASE particle_definitions
-	int particle_definitions_size = particle_definitions.size();
-	for (int i = 0; i < particle_definitions_size; i++)	
-		RELEASE(particle_definitions[i]);	
+	size = particle_definitions.size();
+	for (int i = 0; i < size; i++)
+	{
+		RELEASE(particle_definitions[i]);
+	}
 	particle_definitions.clear();
+	
 	//RELEASE buff_particle_definitions
-	int buff_particle_definitions_size = buff_particle_definitions.size();
-	for (int i = 0; i < buff_particle_definitions_size; i++)
-			RELEASE(buff_particle_definitions[i]);
+	size = buff_particle_definitions.size();
+	for (int i = 0; i < size; i++)
+	{
+		RELEASE(buff_particle_definitions[i]);
+	}
 	buff_particle_definitions.clear();
+	
 	//RELEASE active_buffs
 	for (std::list<Buff*>::iterator item = active_buffs.begin(); item != active_buffs.end(); item++)
+	{
 		RELEASE(item._Ptr->_Myval);
+	}
 	active_buffs.clear();
+	
 	//RELEASE static_buffs
 	for (std::list<PassiveBuff*>::iterator item = static_buffs.begin(); item != static_buffs.end(); item++)
+	{
 		RELEASE(item._Ptr->_Myval);
+	}
 	static_buffs.clear();
+
 	return true;
 }
 

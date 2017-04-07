@@ -125,6 +125,9 @@ bool j1EntitiesManager::Update(float dt)
 
 bool j1EntitiesManager::PostUpdate()
 {
+	//If there's no entities to delete returns
+	if (wasted_units.empty())return true;
+
 	//Clean all the wasted entities
 	uint size = wasted_units.size();
 	for (uint k = 0; k < size; k++)
@@ -160,28 +163,37 @@ bool j1EntitiesManager::Draw() const
 {
 	bool ret = true;
 
+	//Calculate the current camera viewport to collect all the entities inside
+	SDL_Rect viewport = { - (App->render->camera.x + 50) - App->map->data.tile_width, -App->render->camera.y, App->render->camera.w + 100 + App->map->data.tile_width * 2, App->render->camera.h - App->map->data.tile_height * 1 };
+
 	//Draw all units
-	std::list<Unit*>::const_iterator unit_item = units.begin();
-	while (unit_item != units.end() && ret)
+	std::vector<Unit*> units_vec;
+	units_quadtree.CollectCandidates(units_vec, viewport);
+	uint size = units_vec.size();
+	for (uint k = 0; k < size; k++)
 	{
-		ret = unit_item._Ptr->_Myval->Draw(App->debug_mode);
-		unit_item++;
-	}
-	//Draw all Resources
-	std::list<Resource*>::const_iterator resource_item = resources.begin();
-	while (resource_item != resources.end() && ret)
-	{
-		ret = resource_item._Ptr->_Myval->Draw(App->debug_mode);
-		resource_item++;
-	}
-	//Draw all buildings
-	std::list<Building*>::const_iterator building_item = buildings.begin();
-	while (building_item != buildings.end() && ret)
-	{
-		ret = building_item._Ptr->_Myval->Draw(App->debug_mode);
-		building_item++;
+		units_vec[k]->Draw(App->debug_mode);
 	}
 
+	//Draw all Resources
+	std::vector<Resource*> resources_vec;
+	resources_quadtree.CollectCandidates(resources_vec, viewport);
+	size = resources_vec.size();
+	for (uint k = 0; k < size; k++)
+	{
+		resources_vec[k]->Draw(App->debug_mode);
+	}
+
+	//Draw all buildings
+	std::vector<Building*> buildings_vec;
+	buildings_quadtree.CollectCandidates(buildings_vec, viewport);
+	size = buildings_vec.size();
+	for (uint k = 0; k < size; k++)
+	{
+		buildings_vec[k]->Draw(App->debug_mode);
+	}
+
+	//Draw Units quadtree in debug mode
 	if (App->map_debug_mode)
 	{
 		units_quadtree.Draw();

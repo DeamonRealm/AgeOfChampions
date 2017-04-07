@@ -317,7 +317,16 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[50];
-	sprintf_s(title, 50, "Age Of Champions || DT: %u || FPS: %u", last_frame_ms, frames_on_last_update);
+
+	if (debug_mode || map_debug_mode)
+	{
+		sprintf_s(title, 50, "Age Of Champions || DT: %u || FPS: %u", last_frame_ms, frames_on_last_update);
+	}
+	else
+	{
+		sprintf_s(title, 50, "Age Of Champions");
+	}
+
 	App->win->SetTitle(title);
 
 	if(capped_ms > 0 && last_frame_ms < capped_ms)

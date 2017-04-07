@@ -66,9 +66,18 @@ public:
 	//Destructors =========================
 	~AABB()
 	{
-		for (int i = 0; i < 4; ++i)
-			if (children[i] != nullptr)
-				delete children[i];
+		if (full)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				if (children[i] != nullptr)
+				{
+					delete children[i];
+				}
+			}
+		}
+
+		this->objects.clear();
 	}
 
 public:
@@ -216,9 +225,18 @@ public:
 	//Destructors =========================
 	~m_AABB()
 	{
-		for (int i = 0; i < 4; ++i)
-			if (children[i] != nullptr)
-				delete children[i];
+		if (full)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				if (children[i] != nullptr)
+				{
+					delete children[i];
+				}
+			}
+		}
+
+		this->objects.clear();
 	}
 
 public:

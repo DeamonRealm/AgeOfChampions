@@ -87,15 +87,6 @@ bool j1Player::Start()
 	game_hud->AddChild(game_panel->GetExitMenu());
 	App->gui->PushScreen(game_hud);
 
-	//Debug Strings
-	frames = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	frames->SetColor({ 0,255,255,255 });
-	frames->SetBox({ 20,50,200,50 });
-	
-	dt = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	dt->SetColor({ 0,255,255,255 });
-	dt->SetBox({ 20,50,200,50 });
-
 	return true;
 }
 
@@ -260,23 +251,6 @@ bool j1Player::PostUpdate()
 
 	// Draw Action Panel
 	action_panel->Draw();
-
-
-	//Draw debug mode
-	if (App->debug_mode)
-	{
-		std::string str = "FPS: ";
-		str += App->gui->SetStringFromInt(ceil(1 / App->GetDT()));
-		frames->SetString((char*)str.c_str());
-		frames->DrawAt(5, 5);
-
-		str.clear();
-		str = "DT: ";
-		str += App->gui->SetStringFromFloat(App->GetDT());
-		dt->SetString((char*)str.c_str());
-		dt->DrawAt(5, 20);
-
-	}
 
 	//Draw Mouse Last one
 	if (SDL_ShowCursor(-1) == 0) App->gui->DrawMouseTexture();

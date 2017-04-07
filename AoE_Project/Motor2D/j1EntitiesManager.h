@@ -115,7 +115,7 @@ public:
 	Building* SearchNearestSavePoint(const iPoint& point);
 
 	//Organize unit vector
-	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance  > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);
+	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);
 
 
 
