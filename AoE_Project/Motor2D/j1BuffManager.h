@@ -166,13 +166,13 @@ public:
 	~j1BuffManager();
 
 	// Called before the first frame
-	virtual bool Start();
+	bool Start();
 
 	// Called each loop iteration
-	virtual bool Update(float dt);
+	bool Update(float dt);
 
 	// Called before quitting
-	virtual bool CleanUp();
+	bool CleanUp();
 
 
 
