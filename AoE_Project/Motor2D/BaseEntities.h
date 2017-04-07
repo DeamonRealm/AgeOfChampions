@@ -14,9 +14,9 @@
 #include "j1Animator.h"
 #include "j1ActionManager.h"
 
-struct SDL_Texture;
-struct PathNode;
-enum CURSOR_TARGET;
+struct	SDL_Texture;
+struct	PathNode;
+enum	CURSOR_TARGET;
 
 #define FOCUS_MARGIN 12
 
@@ -325,7 +325,7 @@ public:
 
 	//Actions ---------------
 	bool					Move(std::vector<iPoint>* path, const iPoint& target = { -1,-1 });
-	void					Repath(std::vector<iPoint>* path,const iPoint & destination);
+	void					Repath(std::vector<iPoint>*& path,const iPoint & destination);
 	void					CorrectPath(std::vector<iPoint>* path);
 	iPoint					NextGoal(std::vector<iPoint>* path);
 	void					NewPosition(const iPoint& goal,float& position_x, float& position_y);
@@ -338,7 +338,6 @@ public:
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
 	bool					AttackUnit(Unit** target);
 	bool					AttackBuilding(Building** target);
-	bool					AttackResource();
 	bool					Cover();
 	void					DirectDamage(uint damage);
 	bool					Die();

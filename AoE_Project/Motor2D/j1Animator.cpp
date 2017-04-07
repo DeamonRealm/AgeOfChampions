@@ -165,7 +165,7 @@ Animation_Block::~Animation_Block()
 //Functionality =======================
 void Animation_Block::ClearAnimationBlocks()
 {
-	while (childs.size() > 0)
+	while (!childs.empty())
 	{
 		childs.back()->ClearAnimationBlocks();
 		childs.pop_back();
@@ -175,6 +175,7 @@ void Animation_Block::ClearAnimationBlocks()
 	if (animation != nullptr)
 	{
 		delete animation;
+		animation = nullptr;
 	}
 }
 

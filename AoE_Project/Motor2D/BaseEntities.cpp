@@ -507,14 +507,18 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 	return false;
 }
 
-void Unit::Repath(std::vector<iPoint>* path,const iPoint & destination)
+void Unit::Repath(std::vector<iPoint>*& path,const iPoint & destination)
 {
 	iPoint new_destination = FindWalkableCell(destination);
 	std::vector<iPoint>* new_path;
-	new_path=App->pathfinding->SimpleAstar(GetPositionRounded(), new_destination);
-	path->clear();
+	new_path = App->pathfinding->SimpleAstar(GetPositionRounded(), new_destination);
+
 	if (new_path != nullptr) {
-		path->insert(path->end(), new_path->begin(), new_path->end());
+
+		path->clear();
+		delete path;
+
+		path = new_path;
 	}
 }
 
