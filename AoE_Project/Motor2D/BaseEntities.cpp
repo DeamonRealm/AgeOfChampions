@@ -31,8 +31,11 @@ icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_ani
 //Destructors =========================
 Entity::~Entity()
 {
-	/*delete current_animation;
-	current_animation = nullptr;*/
+	if (current_animation != nullptr)
+	{
+		delete current_animation;
+	}
+	current_animation = nullptr;
 	myself = nullptr;
 }
 

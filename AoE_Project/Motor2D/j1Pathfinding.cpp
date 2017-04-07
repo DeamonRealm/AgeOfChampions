@@ -8,6 +8,7 @@
 // Constructors =======================
 j1Pathfinding::j1Pathfinding()
 {
+	name = "pathfinding";
 }
 
 // Destructors ========================

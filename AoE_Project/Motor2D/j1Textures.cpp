@@ -96,6 +96,8 @@ bool j1Textures::UnLoad(SDL_Texture* texture)
 			textures.remove(texture);
 			return true;
 		}
+
+		item++;
 	}
 
 	return false;

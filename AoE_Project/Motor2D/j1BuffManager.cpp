@@ -405,7 +405,7 @@ bool j1BuffManager::Start()
 			//Add the definition in the buff manager
 			if (!simple_particle)buff_particle_definitions.push_back((BuffParticle*)particle_def);
 			else particle_definitions.push_back(particle_def);
-
+			
 			//Focus the next particle node
 			particle_node = particle_node.next_sibling();
 		}

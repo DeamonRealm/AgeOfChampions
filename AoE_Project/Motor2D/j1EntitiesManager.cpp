@@ -200,6 +200,8 @@ bool j1EntitiesManager::CleanUp()
 		units_item++;
 	}
 	units.clear();
+	units_quadtree.Reset();
+	units_quadtree.Clear();
 
 	//Clean Up resources list
 	std::list<Resource*>::iterator resources_item = resources.begin();
@@ -209,6 +211,8 @@ bool j1EntitiesManager::CleanUp()
 		resources_item++;
 	}
 	resources.clear();
+	resources_quadtree.Reset();
+	resources_quadtree.Clear();
 
 	//Clean Up buildings list
 	std::list<Building*>::iterator buildings_item = buildings.begin();
@@ -218,14 +222,31 @@ bool j1EntitiesManager::CleanUp()
 		buildings_item++;
 	}
 	buildings.clear();
+	buildings_quadtree.Reset();
+	buildings_quadtree.Clear();
 
 	//Clean Up units_defs vector
+	uint size = units_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(units_defs[k]);
+	}
 	units_defs.clear();
 
 	//Clean Up resoureces_defs vector
+	size = resources_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(resources_defs[k]);
+	}
 	resources_defs.clear();
 
 	//Clean Up buildings_defs vector
+	size = buildings_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(buildings_defs[k]);
+	}
 	buildings_defs.clear();
 
 

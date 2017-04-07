@@ -11,6 +11,7 @@
 
 class Action;
 class ActionManager;
+
 struct LessDistance
 {
 	bool operator()(const Unit* l, const Unit* r)

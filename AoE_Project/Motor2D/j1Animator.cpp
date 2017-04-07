@@ -59,6 +59,7 @@ Animation::Animation()
 Animation::~Animation()
 {
 	sprites.clear();
+	texture = nullptr; /*This texture can't be unloaded*/
 }
 
 void Animation::SetTexture(const SDL_Texture * tex)
@@ -347,6 +348,7 @@ j1Animator::j1Animator()
 //Destructor ==========================
 j1Animator::~j1Animator()
 {
+	
 }
 
 //Game Loop ===========================
@@ -375,6 +377,7 @@ bool j1Animator::CleanUp()
 		unit_blocks[k]->ClearAnimationBlocks();
 	}
 	unit_blocks.clear();
+
 	//Clean the building blocks
 	size = building_blocks.size();
 
@@ -383,6 +386,7 @@ bool j1Animator::CleanUp()
 		building_blocks[k]->ClearAnimationBlocks();
 	}
 	building_blocks.clear();
+
 	//Clean the building blocks
 	size = resource_blocks.size();
 
@@ -954,8 +958,12 @@ bool j1Animator::UnitPlay(Unit* target)
 			{
 				target->CleanAnimation();
 				DiplomaticAnimation* anim = new DiplomaticAnimation(*block->GetAnimation());
-				target->SetAnimation((Animation*)anim);
-				target->GetAnimation()->Reset();
+				if (anim != nullptr)
+				{
+					target->SetAnimation((Animation*)anim);
+					target->GetAnimation()->Reset();
+				}
+				else LOG("Error in unit animation Play");
 
 				return true;
 			}
@@ -984,14 +992,18 @@ bool j1Animator::BuildingPlay(Building* target)
 			//If action block is found search the correct direction block or return unidirectional action
 			if (target->GetDirectionType() == NO_DIRECTION)
 			{
-				target->SetAnimation(block->GetAnimation());
+				Animation* anim = new Animation(*block->GetAnimation());
+				if (anim == nullptr)LOG("Error in building Play");
+				target->SetAnimation(anim);
 				return true;
 			}
 			if (block != nullptr)block = block->SearchId(target->GetDirectionType());
 			//If direction block is found returns the block animation
 			if (block != nullptr)
 			{
-				target->SetAnimation(new Animation(*block->GetAnimation()));
+				Animation* anim = new Animation(*block->GetAnimation());
+				if (anim == nullptr)LOG("Error in building Play");
+				target->SetAnimation(anim);
 				return true;
 			}
 		}

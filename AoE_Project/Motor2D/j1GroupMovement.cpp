@@ -5,6 +5,7 @@
 #include "j1ActionManager.h"
 j1GroupMovement::j1GroupMovement()
 {
+	name = "group_movement";
 }
 
 j1GroupMovement::~j1GroupMovement()

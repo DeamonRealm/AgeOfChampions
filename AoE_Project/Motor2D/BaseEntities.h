@@ -1,8 +1,6 @@
 #ifndef _BASE_ENTITIES_
 #define _BASE_ENTITIES_
 
-#define FOCUS_MARGIN 10
-
 #include <list>
 #include <vector>
 #include <queue>
