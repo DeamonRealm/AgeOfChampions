@@ -68,6 +68,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 	AddModule(animator);
 	AddModule(sound);
+	AddModule(group_move);
 	AddModule(action_manager);
 	AddModule(entities_manager);
 	AddModule(buff_manager);
@@ -95,7 +96,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	for(std::list<j1Module*>::iterator item = modules.end(); item != modules.end(); item--)
+	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end(); item++)
 	{
 		RELEASE(item._Ptr->_Myval);
 	}

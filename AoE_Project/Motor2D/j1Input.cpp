@@ -23,7 +23,7 @@ j1Input::j1Input() : j1Module()
 // Destructor
 j1Input::~j1Input()
 {
-	delete[] keyboard;
+	RELEASE_ARRAY(keyboard);
 }
 
 // Called before render is available

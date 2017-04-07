@@ -22,7 +22,7 @@ struct Formation
 	FormationType formation_type = NO_FORMATION;
 
 };
-class j1GroupMovement
+class j1GroupMovement:public j1Module
 {
 public:
 	j1GroupMovement();
