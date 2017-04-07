@@ -424,10 +424,13 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	mele_champion.push_back({ 243,232,36,36 });
 	mele_champion.push_back({ 243,270,36,36 });
 	*/
-	mele_champion.push_back({ 540,441,36,36 });
-	mele_champion.push_back({ 576,441, 36, 36 });
-	mele_champion.push_back({ 612,441,36,36 });
-	mele_champion.push_back({ 540,477,36,36 });
+
+	mele_champion.push_back({ 651,38, 36, 36 });
+	mele_champion.push_back({ 651,0,36,36 });
+	mele_champion.push_back({ 651,114,36,36 });
+	mele_champion.push_back({ 651,76,36,36 });
+
+
 	mele_champion.push_back({ 576,477, 36, 36 });
 	mele_champion.push_back({ 612,477,36,36 });
 
@@ -437,7 +440,7 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	{
 		skills.push_back((UI_Image*)App->gui->GenerateUI_Element(IMG));
 		skills[i]->SetBox({ 0, 0, 67, 61 });
-		skills[i]->ChangeTextureId(CHAMPION_SKILL);
+		skills[i]->ChangeTextureId(ICONS);
 		skills[i]->ChangeTextureRect(mele_champion[i]);
 		skills[i]->SetBoxPosition(97 + 67 * (i % 2), 177 + 55 * (i / 2));
 		skills[i]->Desactivate();
@@ -890,6 +893,12 @@ void Action_Panel::SetPanelType()
 		actualpanel = nullptr;
 		actual_entity = nullptr;
 		return;
+	}
+
+	if (actualpanel == heropanel && u_type != WARRIOR_CHMP)
+	{
+		heropanel->skill_tree->Desactivate();
+		heropanel->skill_tree->DesactivateChids();
 	}
 
 	switch (e_type)

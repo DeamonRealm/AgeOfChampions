@@ -32,6 +32,7 @@ bool Villager::Die()
 {
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
+		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 

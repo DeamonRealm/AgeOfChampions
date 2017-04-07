@@ -430,7 +430,7 @@ void Game_Panel::DoLose()
 	}
 	final_str->SetString("YOU LOSE!!!");
 
-	std::string str = "Enemys Killed ";
+	std::string str = "Enemies Killed ";
 	str += App->gui->SetStringFromInt(player_death_enemies);
 
 
@@ -452,7 +452,7 @@ void Game_Panel::DoWin()
 	}
 	final_str->SetString("YOU WIN!!!");
 
-	std::string str = "Enemys Killed ";
+	std::string str = "Enemies Killed ";
 	str = str + App->gui->SetStringFromInt(1+player_death_enemies);
 
 	units_dead->SetString((char*)str.c_str());
