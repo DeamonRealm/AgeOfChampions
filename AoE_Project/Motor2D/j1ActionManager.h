@@ -122,6 +122,7 @@ public:
 	void Restart();
 
 private:
+
 	///These are called by the public functions
 	//Makes the Actions do their Execute and Activation
 	//Returns true if the current action has been executed correctly

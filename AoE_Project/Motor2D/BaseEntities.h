@@ -12,9 +12,8 @@
 #include "SDL/include/SDL_rect.h"
 #include "j1Timer.h"
 #include "j1Animator.h"
+#include "j1ActionManager.h"
 
-class Action;
-class ActionWorker;
 struct SDL_Texture;
 struct PathNode;
 enum CURSOR_TARGET;
@@ -193,9 +192,10 @@ protected:
 	SDL_Rect		selection_rect = { 0,0,0,0 };
 	SDL_Rect		icon_rect = { 0,0,0,0 };
 	//Worker -----------
-	ActionWorker*	action_worker = nullptr;
+	ActionWorker	action_worker;
 
 public:
+
 	Entity*			myself = nullptr;
 
 public:
@@ -250,34 +250,11 @@ public:
 	bool			GetFlipSprite()const;
 	const SDL_Rect*	GetSelectionRect()const;
 	const SDL_Rect&	GetIcon()const;
-	ActionWorker*	GetWorker()const;
+	ActionWorker*	GetWorker();
 	Entity**		GetMe();
 };
 /// ---------------------------------------------
 
-//Class Bonus ---------------
-enum BONUS_TYPE
-{
-	NO_BONUS = 0,
-	CLASS_BONUS,
-	UNIT_BONUS
-};
-
-class Bonus
-{
-public:
-
-	Bonus(BONUS_TYPE type, uint type_id, uint bonus) :type(type), type_id(type_id), bonus(bonus) {}
-	~Bonus() {}
-
-public:
-
-	uint bonus = 0;
-	BONUS_TYPE type = NO_BONUS;
-	uint type_id = 0;
-
-};
-// --------------------------
 ///Class Unit -----------------------------------
 //Base class that define the general attributes for all units
 class Unit : public Entity
@@ -297,8 +274,8 @@ protected:
 	Circle			mark;
 	Circle			soft_collider;
 	Circle			hard_collider;
-	SDL_Texture*	pos_texture = nullptr;
 	Entity*			interaction_target = nullptr;
+
 	//Movement ---------
 	uint			view_area = 0;
 	float			speed = 0.0f;
@@ -329,10 +306,6 @@ protected:
 	uint			population_cost = 0;
 	uint			train_time = 0;
 	uint			exp = 0;
-
-	//Bonuses data
-	std::vector<Bonus*> attack_bonuses;
-	std::vector<Bonus*> defence_bonuses;
 	
 	// Attack area
 	Circle	attack_area;
@@ -371,8 +344,6 @@ public:
 	bool					Die();
 	void					Stun(uint time);
 	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
-	//Bonus -----------------
-	void	AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence);
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y, bool insert = true);

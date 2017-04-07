@@ -25,6 +25,13 @@ public:
 		destination = path->front();
 	}
 
+	//Destructor ------------
+	~MoveUnitAction()
+	{
+		this->actor = nullptr;
+		delete [] path;
+	}
+
 	//Functionality ---------
 	bool Activation()
 	{
@@ -75,6 +82,13 @@ public:
 	//	((Unit*)actor)->SetInteractionTarget(target);
 	}
 
+	//Destructor ------------
+	~AttackUnitAction()
+	{
+		this->actor = nullptr;
+		this->target = nullptr;
+	}
+
 	//Functionality ---------
 	bool Execute()
 	{
@@ -100,6 +114,13 @@ public:
 	AttackBuildingAction(Unit* actor, Building** target) : Action(actor, TASK_U_ATTACK_B), target(target)
 	{
 
+	}
+
+	//Destructor ------------
+	~AttackBuildingAction()
+	{
+		this->actor = nullptr;
+		this->target = nullptr;
 	}
 
 	//Functionality ---------
@@ -213,6 +234,13 @@ public:
 	{
 	}
 	
+	//Destructor ------------
+	~RecollectVillagerAction()
+	{
+		this->actor = nullptr;
+		this->target = nullptr;
+	}
+
 	//Functionality ---------
 	bool Activation()
 	{
@@ -262,6 +290,14 @@ public:
 	//Constructor -----------
 	SaveResourcesVillagerAction(Villager* actor, Building* target) : Action(actor,TASK_U_SAVE_RESOURCES), target(target)
 	{
+
+	}
+
+	//Destructor ------------
+	~SaveResourcesVillagerAction()
+	{
+		this->actor = nullptr;
+		this->target = nullptr;
 	}
 
 	//Functionality ---------
@@ -300,10 +336,20 @@ private:
 class ScannAction : public Action
 {
 public:
+
+	//Constructor -------------
 	ScannAction(Unit* actor) : Action(actor, TASK_U_SCANN)
 	{
-	};
-	~ScannAction() {};
+
+	}
+
+	//Destructor ------------
+	~ScannAction()
+	{
+		this->actor = nullptr;
+		surrounding_units.clear();
+		surrounding_buildings.clear();
+	}
 
 public:
 

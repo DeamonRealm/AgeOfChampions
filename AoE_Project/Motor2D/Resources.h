@@ -24,4 +24,4 @@ public:
 };
 /// -------------------------
 
-#endif // !_RESOURCES_H_
+#endif // _RESOURCES_H_

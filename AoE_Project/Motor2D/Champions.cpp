@@ -237,7 +237,7 @@ bool Warrior::Update()
 	if (actived[0] && level >= 1 )CheckHability_A();
 	if (ability_B_prepare_mode)PrepareAbility_B();
 	else if (actived[1] && level >= 2 )CheckHability_B();
-	this->action_worker->Update();
+	action_worker.Update();
 
 	return true;
 }
@@ -527,7 +527,7 @@ bool Warrior::Die()
 		}
 		else
 		{
-			action_worker->Reset();
+			action_worker.Reset();
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}

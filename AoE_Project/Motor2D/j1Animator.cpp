@@ -172,7 +172,10 @@ void Animation_Block::ClearAnimationBlocks()
 
 	}
 
-	if(animation != nullptr)delete animation;
+	if (animation != nullptr)
+	{
+		delete animation;
+	}
 }
 
 void Animation_Block::SetId(uint id)
@@ -987,7 +990,7 @@ bool j1Animator::BuildingPlay(Building* target)
 			//If direction block is found returns the block animation
 			if (block != nullptr)
 			{
-				target->SetAnimation(block->GetAnimation());
+				target->SetAnimation(new Animation(*block->GetAnimation()));
 				return true;
 			}
 		}
@@ -1012,7 +1015,8 @@ bool j1Animator::ResourcePlay(Resource * target)
 			//Generate a random number to select one of the possible animations
 			uint rand_index = rand() % resource_blocks[k]->GetChildsNum();
 			//Choose the child with the random index and get its animation
-			Animation* anim = resource_blocks[k]->GetBlock(rand_index)->GetAnimation();
+			Animation* anim = new Animation(*resource_blocks[k]->GetBlock(rand_index)->GetAnimation());
+
 			if (anim != nullptr)
 			{
 				target->SetAnimation(anim);

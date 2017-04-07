@@ -18,12 +18,12 @@
 
 ///Class Entity ---------------------------------
 //Constructors ========================
-Entity::Entity() :name(""), action_worker(new ActionWorker())
+Entity::Entity() :name(""), action_worker()
 {
 }
 
 Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), vision(copy.vision), selection_rect(copy.selection_rect),
-icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_animation(copy.current_animation), action_worker(new ActionWorker())
+icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_animation(copy.current_animation), action_worker()
 {
 
 }
@@ -31,7 +31,8 @@ icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_ani
 //Destructors =========================
 Entity::~Entity()
 {
-
+	//delete current_animation;
+	myself = nullptr;
 }
 
 
@@ -56,7 +57,7 @@ bool Entity::operator == (const Entity& tar)
 //Update ----------
 bool Entity::Update()
 {
-	action_worker->Update();
+	action_worker.Update();
 	return true;
 }
 
@@ -94,27 +95,27 @@ void Entity::CleanMapLogic()
 //Add Action ------------
 void Entity::AddAction(Action * action)
 {
-	action_worker->AddAction(action);
+	action_worker.AddAction(action);
 }
 
 void Entity::AddPasiveAction(Action * action)
 {
-	action_worker->AddPassiveAction(action);
+	action_worker.AddPassiveAction(action);
 }
 
 void Entity::AddSecondaryAction(Action * action)
 {
-	action_worker->AddSecondaryAction(action);
+	action_worker.AddSecondaryAction(action);
 }
 
 void Entity::AddPriorizedAction(Action * action)
 {
-	action_worker->AddPriorizedAction(action);
+	action_worker.AddPriorizedAction(action);
 }
 
 void Entity::PopAction(Action * action)
 {
-	action_worker->PopAction(action);
+	action_worker.PopAction(action);
 }
 
 //Set Methods -----
@@ -242,9 +243,9 @@ const SDL_Rect& Entity::GetIcon()const
 	return icon_rect;
 }
 
-ActionWorker * Entity::GetWorker() const
+ActionWorker * Entity::GetWorker()
 {
-	return action_worker;
+	return &action_worker;
 }
 
 Entity ** Entity::GetMe()
@@ -1053,7 +1054,7 @@ void Unit::DirectDamage(uint damage)
 	life -= MIN(life, damage);
 	if (life <= 0)
 	{
-		action_worker->AddPriorizedAction(App->action_manager->DieAction(this));
+		action_worker.AddPriorizedAction(App->action_manager->DieAction(this));
 	}
 }
 
@@ -1110,7 +1111,7 @@ bool Unit::Die()
 
 void Unit::Stun(uint time)
 {
-	action_worker->AddPriorizedAction(App->action_manager->StunAction(this, time));
+	action_worker.AddPriorizedAction(App->action_manager->StunAction(this, time));
 }
 
 COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
@@ -1139,14 +1140,6 @@ COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 		return NO_COLLISION;
 	}
 	return NO_COLLISION;
-}
-
-//Bonus -----------
-void Unit::AddBonus(BONUS_TYPE type, uint type_id, uint bonus, bool defence)
-{
-	Bonus* new_bonus = new Bonus(type, type_id, bonus);
-	if (defence) defence_bonuses.push_back(new_bonus);
-	else defence_bonuses.push_back(new_bonus);
 }
 
 //Set Methods -----
@@ -1480,10 +1473,10 @@ uint Unit::GetExp() const
 
 std::vector<iPoint>* Unit::GetPath() const
 {
-	if (action_worker->GetCurrentActionType() != TASK_U_MOVE)
+	if (action_worker.GetCurrentActionType() != TASK_U_MOVE)
 		return nullptr;
 
-	return ((MoveUnitAction*)action_worker->GetCurrentAction())->GetPath();
+	return ((MoveUnitAction*)action_worker.GetCurrentAction())->GetPath();
 }
 // ----------------
 ///----------------------------------------------
@@ -1756,6 +1749,7 @@ bool Building::Draw(bool debug)
 	{
 		interact_area.Draw();
 	}
+
 	/*if (debug) {
 	//Draw Entity Selection Rect
 	App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);

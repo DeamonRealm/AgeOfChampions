@@ -14,8 +14,9 @@ Action::Action(Entity* actor, TASK_TYPE type) : actor(actor), type (type)
 //Destructors =========================
 Action::~Action()
 {
-
+	actor = nullptr;
 }
+
 TASK_TYPE Action::GetType()
 {
 	return type;
@@ -181,6 +182,9 @@ ActionWorker::ActionWorker() : refresh_rate(500)
 //Destructor
 ActionWorker::~ActionWorker()
 {
+	ResetQueue(&action_queue, &current_action);
+	ResetQueue(&passive_action_queue, &current_passive_action);
+	ResetQueue(&secondary_action_queue, &current_secondary_action);
 }
 
 //Worker methods
