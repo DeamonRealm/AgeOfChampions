@@ -31,7 +31,8 @@ icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_ani
 //Destructors =========================
 Entity::~Entity()
 {
-	//delete current_animation;
+	/*delete current_animation;
+	current_animation = nullptr;*/
 	myself = nullptr;
 }
 
@@ -331,7 +332,7 @@ bool Unit::Draw(bool debug)
 
 
 //Actions ---------
-bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true when it ends
+bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns true when it ends
 {
 	//Check if the unit have an assigned path
 	if (path == nullptr)
@@ -403,6 +404,7 @@ bool Unit::Move(std::vector<iPoint>* path, const iPoint& target) ///Returns true
 						Repath(path, target);
 					else
 						Repath(path, *(path->begin()));
+
 					return false;
 				}
 
@@ -522,7 +524,7 @@ void Unit::Repath(std::vector<iPoint>*& path,const iPoint & destination)
 	}
 }
 
-void Unit::CorrectPath(std::vector<iPoint>* path)
+void Unit::CorrectPath(std::vector<iPoint>*& path)
 {
 	std::vector<iPoint>* new_path;
 	path->pop_back();
