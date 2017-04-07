@@ -511,7 +511,7 @@ Cvar * j1Console::GetCvarfromInput(char * input) const
 	cvar_name[j] = '\0';
 	std::string name_str = cvar_name;
 	delete cvar_name;
-
+	delete module_name;
 	//Search the Cvar with the name build
 	uint cvar_num = console_variables.size();
 	for (uint k = 0; k < cvar_num; k++)

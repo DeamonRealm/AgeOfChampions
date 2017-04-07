@@ -141,8 +141,11 @@ bool j1Gui::CleanUp()
 	LOG("Freeing GUI");
 	bool ret = true;
 
-//	screens.clear();
-
+	// CleanUp (Clear Lists)
+	screens.clear();
+	ui_textures.clear();
+	cursors_rects.clear();
+	cursors_pivots.clear();
 
 	std::list<UI_Element*>::iterator item = gui_elements.end();
 	while (item != gui_elements.begin())
