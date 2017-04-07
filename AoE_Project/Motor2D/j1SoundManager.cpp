@@ -20,7 +20,10 @@ Sound_Block::Sound_Block(SOUND_TYPE type) :type(type)
 //Destructor ==========================
 Sound_Block::~Sound_Block()
 {
-	
+	for (int i=0; i < sound.size(); i++)
+	{
+		delete sound[i];
+	}
 }
 
 //Functionality =======================

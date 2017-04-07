@@ -93,9 +93,6 @@
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Pathfinding</Filter>
     </ClCompile>
-    <ClCompile Include="ClusterAbstraction.cpp">
-      <Filter>Pathfinding</Filter>
-    </ClCompile>
     <ClCompile Include="Hud_ActionPanel.cpp">
       <Filter>UserInteraface\Hud</Filter>
     </ClCompile>
@@ -239,9 +236,6 @@
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClInclude>
     <ClInclude Include="j1Pathfinding.h">
-      <Filter>Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="ClusterAbstraction.h">
       <Filter>Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="Resources.h">

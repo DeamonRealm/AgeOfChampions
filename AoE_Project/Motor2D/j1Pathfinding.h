@@ -4,9 +4,10 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include <queue>
+#define INVALID_WALK_CODE 255
+
 struct PathList;
 struct Node;
-struct ClusterAbstraction;
 struct SDL_Texture;
 struct PathNode;
 ///class Pathfinding ------------------
@@ -34,10 +35,8 @@ private:
 	int map_min_y = 0;
 	int map_max_x = 0;
 	int map_max_y = 0;
-	//A pointer to the last path generated
-	std::vector<iPoint> last_path;
+
 	//Map cluster abstraction
-	ClusterAbstraction* cluster_abstraction = nullptr;
 
 public:
 
@@ -57,8 +56,7 @@ public:
 	uchar	GetTileAt(const iPoint& pos) const;
 
 	// Create a path with two nodes
-	int	CreatePath(Node* start, Node*goal);
-	std::vector<iPoint>* CreatePath(const iPoint& origin, const iPoint& goal);
+
 	std::vector<iPoint>* SimpleAstar(const iPoint& origin, const iPoint& goal);
 
 	// Create a path with two coordinates
