@@ -347,17 +347,20 @@ void ActionWorker::ResetActive()
 
 void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)
 {
-	(*current)->CleanUp();
-	delete (*current);
-	(*current) = nullptr;
+	if ((*current) != nullptr)
+	{
+		(*current)->CleanUp();
+		delete (*current);
+		(*current) = nullptr;
+	}
 
 	Action* to_erase;
 
 	while (!queue->empty())
 	{
 		to_erase = queue->front();
-		queue->pop_front();
 		to_erase->CleanUp();
+		queue->pop_front();
 		RELEASE(to_erase);
 	}
 

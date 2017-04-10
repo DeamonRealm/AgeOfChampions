@@ -57,7 +57,7 @@ public:
 	void CleanUp()
 	{
 		this->actor = nullptr;
-		delete[] path;
+		if(path != nullptr)	path->clear();
 	}
 
 	//Returns the path 
