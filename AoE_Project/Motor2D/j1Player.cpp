@@ -131,9 +131,6 @@ bool j1Player::PreUpdate()
 		selection_panel->Handle_Input(DOWN_ARROW);
 	}
 
-	// Action Panel Check Selected
-	action_panel->CheckSelected(selection_panel->GetSelectedSize());
-
 	if (App->debug_mode)
 	{
 		//Generate a town center in the mouse coordinates

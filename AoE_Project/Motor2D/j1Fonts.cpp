@@ -39,17 +39,20 @@ bool j1Fonts::Awake(pugi::xml_node& conf)
 	return ret;
 }
 
-bool j1Fonts::PostUpdate()
+bool j1Fonts::PreUpdate()
 {
-	
-/*	uint size = ready_to_texture.size();
-
+	int size = ready_to_unload.size();
 	for (int i = 0; i < size; i++)
 	{
-		SDL_DestroyTexture(ready_to_texture[i]);
+		App->tex->UnLoad(ready_to_unload[i]);
 	}
-	ready_to_texture.clear();
-	*/
+	ready_to_unload.clear();
+	
+	return true;
+}
+
+bool j1Fonts::PostUpdate()
+{
 	return true;
 }
 
@@ -100,7 +103,6 @@ SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 	{
 		ret = App->tex->LoadSurface(surface);
 		SDL_FreeSurface(surface);
-		texture_list.push_back(ret);
 	}
 
 	return ret;
@@ -121,6 +123,5 @@ bool j1Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* fon
 
 void j1Fonts::DeleteTexture(SDL_Texture * texture_to_delete)
 {
-	texture_list.remove(texture_to_delete);
-	App->tex->UnLoad(texture_to_delete);	
+	ready_to_unload.push_back(texture_to_delete);
 }

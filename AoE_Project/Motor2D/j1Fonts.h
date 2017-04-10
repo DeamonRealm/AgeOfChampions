@@ -23,6 +23,9 @@ public:
 	bool Awake(pugi::xml_node&);
 
 	// Called each loop iteration
+	bool PreUpdate();
+
+	// Called each loop iteration
 	bool PostUpdate();
 
 	// Called before quitting
@@ -42,8 +45,7 @@ public:
 public:
 
 	std::list<_TTF_Font*>			fonts;
-	std::list<SDL_Texture*>			texture_list;
-	std::vector<SDL_Texture*>		ready_to_texture;
+	std::vector<SDL_Texture*>		ready_to_unload;
 	_TTF_Font*						default = nullptr;
 };
 

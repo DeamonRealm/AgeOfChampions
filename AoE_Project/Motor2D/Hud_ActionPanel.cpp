@@ -726,6 +726,9 @@ void Action_Panel::Disable()
 
 bool Action_Panel::PreUpdate()
 {
+	// Action Panel Check Selected
+	CheckSelected(player_selection_panel->GetSelectedSize());
+
 	if (on_action)
 	{
 		if (actualpanel == villagerpanel)
@@ -997,7 +1000,7 @@ void Action_Panel::CheckSelected(int selected)
 	}
 	if (actualpanel != nullptr)
 	{
-		if (actualpanel->GetActualEntity() == nullptr)
+		if (actualpanel->GetActualEntity() == nullptr || actualpanel->GetActualEntity()->GetLife() == 0)
 		{
 			actualpanel->ChangePanelTarget(player_selection_panel->GetSelected());
 		}

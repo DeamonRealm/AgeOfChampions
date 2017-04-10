@@ -344,10 +344,8 @@ bool Selection_Panel::PreUpdate()
 	App->input->GetMousePosition(mouse_x, mouse_y);
 
 
-	if(WindowsMove())
-		App->map->CalculateTilesInView();
+	if(WindowsMove()) App->map->CalculateTilesInView();
 
-		
 
 	if (selected_elements.size() == 0 || inviewport == false) return false;
 
