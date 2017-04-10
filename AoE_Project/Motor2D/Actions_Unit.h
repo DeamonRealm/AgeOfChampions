@@ -37,6 +37,12 @@ public:
 		
 		//Calculate the path
 		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
+		if (path != nullptr)
+		{
+			path->clear();
+			delete path;
+			path = nullptr;
+		}
 		path = App->pathfinding->SimpleAstar(origin, destination);
 		if (path == nullptr)return false;
 		
@@ -57,7 +63,12 @@ public:
 	void CleanUp()
 	{
 		this->actor = nullptr;
-		if(path != nullptr)	path->clear();
+		if (path != nullptr)
+		{
+			path->clear();
+			delete path;
+			path = nullptr;
+		}
 	}
 
 	//Returns the path 

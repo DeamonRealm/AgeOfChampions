@@ -105,9 +105,13 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 	std::fill(path_nodes, path_nodes + size, PathNode(-1, -1, iPoint(-1, -1), nullptr));
 
 	int ret = -1;
+
 	iPoint mouse_position = App->map->FixPointMap(destination.x, destination.y);
 	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
 	iPoint map_goal = App->map->WorldToMap(mouse_position.x, mouse_position.y);
+
+	iPoint diference = origin - App->map->MapToWorld(map_origin.x, map_origin.y);
+
 	if (map_origin == map_goal)
 	{
 		std::vector<iPoint>* path = new std::vector<iPoint>;
@@ -147,10 +151,14 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 				iPoint mouse_cell = App->map->WorldToMap(mouse_position.x, mouse_position.y);
 				if (mouse_cell == current->pos)
 					current = GetPathNode(current->parent->pos.x, current->parent->pos.y);
-				
+				iPoint current_world;
 				for (; current->parent != nullptr; current = GetPathNode(current->parent->pos.x, current->parent->pos.y))
 				{
-					path->push_back(App->map->MapToWorld(current->pos.x, current->pos.y));
+				
+					current_world = App->map->MapToWorld(current->pos.x, current->pos.y);
+					current_world.x += diference.x;
+					current_world.y += diference.y;
+					path->push_back(current_world);
 					
 				}
 				
