@@ -242,6 +242,16 @@ VillagerPanel::VillagerPanel() : Action_Panel_Elements()
 	v_militari_panel[14] = { 477,36,36,36 };
 }
 
+void VillagerPanel::PreUpdate()
+{
+	if (isbuilding)
+	{
+		int x = 0, y = 0;
+		App->input->GetMousePosition(x, y);
+		buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, false);
+	}
+}
+
 void VillagerPanel::ResetPanel()
 {
 	villagerisbuilding = VP_NOT_BUILDING;
@@ -349,21 +359,9 @@ void VillagerPanel::ChangePanelIcons(std::vector<UI_Image*>& actual_panel)
 
 bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 {
-	
 	switch (input)
 	{
 	case MOUSE_LEFT_BUTTON_DOWN:
-		break;
-	case MOUSE_LEFT_BUTTON_REPEAT:
-		if (isbuilding)
-		{
-			int x = 0, y = 0;
-			App->input->GetMousePosition(x, y);
-			buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, false);
-			return true;
-		}
-		break;
-	case MOUSE_LEFT_BUTTON_UP:
 		if (isbuilding)
 		{
 			int x = 0, y = 0;
@@ -381,7 +379,14 @@ bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 			return false;
 		}
 		break;
-
+	case MOUSE_LEFT_BUTTON_REPEAT:
+		break;
+	case MOUSE_LEFT_BUTTON_UP:
+		if (isbuilding)
+		{
+		return true;
+		}
+		break;
 	default:
 		break;
 	}
@@ -417,20 +422,11 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	skill_tree->AdjustBox();
 
 	mele_champion.reserve(MAX_SKILLS_LEARNED);
-/*	mele_champion.push_back({ 243,80,36,36 });
-	mele_champion.push_back({ 243,118,36,36 });
-	mele_champion.push_back({ 243,156,36,36 });
-	mele_champion.push_back({ 243,194,36,36 });
-	mele_champion.push_back({ 243,232,36,36 });
-	mele_champion.push_back({ 243,270,36,36 });
-	*/
-
 	mele_champion.push_back({ 651,38, 36, 36 });
 	mele_champion.push_back({ 651,0,36,36 });
 	mele_champion.push_back({ 651,114,36,36 });
 	mele_champion.push_back({ 651,76,36,36 });
-
-
+	// must Change
 	mele_champion.push_back({ 576,477, 36, 36 });
 	mele_champion.push_back({ 612,477,36,36 });
 
@@ -554,26 +550,24 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 	case DOWN_ARROW:					break;
 	case LEFT_ARROW:					break;
 	case RIGHT_ARROW:					break;
-	case MOUSE_LEFT_BUTTON_DOWN:
+	case MOUSE_LEFT_BUTTON_DOWN:		break;
+	case MOUSE_LEFT_BUTTON_REPEAT:		break;
+	case MOUSE_LEFT_BUTTON_UP:			
 		{
-			if (ui_element->GetUItype() == FIXED_BUTTON) {
-				for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
+			for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
+			{
+				if (ui_element == skills_buttons[i])
 				{
-					if (ui_element == skills_buttons[i])
-					{
-						if (mele_learned[i / 2] != -1)return false;
-						LearnSkill(i);
-						App->sound->PlayGUIAudio(CLICK_INGAME);
-						if (i / 2 == 0 )((Champion*)entitis_panel)->SetAbility_A((i % 2));
-						if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_B((i % 2));
-						return true;
-					}
+					if (mele_learned[i / 2] != -1)return false;
+					LearnSkill(i);
+					App->sound->PlayGUIAudio(CLICK_INGAME);
+					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_A((i % 2));
+					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_B((i % 2));
+					return true;
 				}
 			}
 		}
 		break;
-	case MOUSE_LEFT_BUTTON_REPEAT:		break;
-	case MOUSE_LEFT_BUTTON_UP:			break;
 	case MOUSE_RIGHT_BUTTON:			break;
 	case MOUSE_IN:						break;
 	case MOUSE_OUT:						break;
@@ -655,6 +649,12 @@ Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 	panel_pos.x = 37;
 	panel_pos.y = 624;
 
+	action_screen = App->gui->GenerateUI_Element(UNDEFINED);
+	action_screen->SetBox(action_rect);
+	action_screen->SetLayer(20);
+	action_screen->Activate();
+	action_screen->SetInputTarget((j1Module*)App->player);
+
 	panel_cells.reserve(MAX_PANEL_CELLS);
 	panel_buttons.reserve(MAX_PANEL_CELLS);
 
@@ -670,19 +670,19 @@ Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 	{
 		cell = (UI_Image*)App->gui->GenerateUI_Element(IMG);
 		cell->ChangeTextureRect({ 0, 0, 1, 1 });
-		cell->SetBoxPosition(panel_pos.x +2 + (i% PANEL_COLUMNS)*CELL_WIDTH, panel_pos.y +2 + ((int)i / PANEL_COLUMNS)*CELL_HEIGHT);
+		cell->SetBoxPosition(panel_pos.x +2 + (i% PANEL_COLUMNS)*(CELL_WIDTH+1), panel_pos.y +2 + ((int)i / PANEL_COLUMNS)*CELL_HEIGHT);
 		cell->ChangeTextureId(ICONS);
 		panel_cells.push_back(cell);
 
 		button = (UI_Button*)App->gui->GenerateUI_Element(BUTTON);
-		button->SetBox({ panel_pos.x + (i% PANEL_COLUMNS)*CELL_WIDTH, panel_pos.y + ((int)i / PANEL_COLUMNS)*CELL_HEIGHT, 40, 40 });
+		button->SetBox({(i% PANEL_COLUMNS)*(CELL_WIDTH+1), ((int)i / PANEL_COLUMNS)*CELL_HEIGHT, 40, 40 });
 		button->SetTexON({ 650,330,40,40 },ICONS);
 		button->SetTexOVER({ 650,412,40,40 },ICONS);
 		button->SetTexOFF({ 650,412,40,40 },ICONS);
-		button->Activate();
 		panel_buttons.push_back(button);
+		action_screen->AddChild(button);
 	}
-	
+	action_screen->DesactivateChids();
 }
 
 Action_Panel::~Action_Panel()
@@ -693,6 +693,7 @@ Action_Panel::~Action_Panel()
 bool Action_Panel::CleanUp()
 {
 	panel_cells.clear();
+	panel_buttons.clear();
 
 	delete towncenterpanel;
 	delete barrackpanel;
@@ -707,6 +708,9 @@ void Action_Panel::Enable()
 {
 	on_action = false;
 	
+	action_screen->Activate();
+	action_screen->DesactivateChids();
+
 	towncenterpanel->ResetPanel();
 	barrackpanel->ResetPanel();
 	villagerpanel->ResetPanel();
@@ -722,11 +726,13 @@ void Action_Panel::Disable()
 
 bool Action_Panel::PreUpdate()
 {
-	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
-	SDL_Point p = { mouse_pos.x,mouse_pos.y };
-	if(SDL_PointInRect(&p, &action_rect)) isin = true;
-	else isin = false;
-
+	if (on_action)
+	{
+		if (actualpanel == villagerpanel)
+		{
+			villagerpanel->PreUpdate();
+		}
+	}
 	return true;
 }
 
@@ -737,55 +743,30 @@ bool Action_Panel::PostUpdate()
 
 void Action_Panel::Handle_Input(GUI_INPUT newevent)
 {
-	if (isin == false && !on_action) return;
+	if (!on_action) return;
 
-	if (actualpanel == nullptr) return;
 	switch (newevent)
 	{
 	case MOUSE_LEFT_BUTTON_DOWN:
 		{
-		if (actualpanel != nullptr && isin && !on_action) {
-			cell = GetCell();
-			on_action = actualpanel->ActivateCell(cell);
-			if (!on_action)
+			if (actualpanel == heropanel)
 			{
-				actualpanel->ChangePanelIcons(panel_cells);
-				return;
+				on_action = heropanel->Handle_input(newevent);
 			}
-		}
-		else if (actualpanel == heropanel && on_action)
-		{
-			on_action = heropanel->Handle_input(newevent);
-		}
+			else if (actualpanel == villagerpanel)
+			{
+				on_action = villagerpanel->Villager_Handle_input(newevent);
+			}
 		}
 		break;
-	case MOUSE_LEFT_BUTTON_REPEAT: {
-			if (actualpanel == villagerpanel && on_action)
-			{
-				on_action = villagerpanel->Villager_Handle_input(MOUSE_LEFT_BUTTON_REPEAT);
-			}
-			else if (actualpanel == unitpanel && !on_action)
-			{
-				on_action = actualpanel->ActivateCell(GetCell());
-			}
-			
-		}
+	case MOUSE_LEFT_BUTTON_REPEAT: 
 		break;
 	case MOUSE_LEFT_BUTTON_UP: {
-			if (actualpanel == villagerpanel && on_action)
-			{
-				on_action = villagerpanel->Villager_Handle_input(MOUSE_LEFT_BUTTON_UP);
-			}
-			for (int i = 0; i < MAX_PANEL_CELLS; i++)
-			{
-				panel_buttons[i]->button_state = OFF;
-			}
-			
+		if (actualpanel == villagerpanel)
+		{
+			on_action = villagerpanel->Villager_Handle_input(newevent);
 		}
-		break;
-	case MOUSE_IN:
-		break;
-	case MOUSE_OUT:
+		}
 		break;
 	default:
 		break;
@@ -795,35 +776,12 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 
 bool Action_Panel::Draw()
 {
-	SDL_Rect text_rect = { 0,0,1,1 };
 	if (actualpanel == nullptr) return false;
 	for (int count = 0; count < MAX_PANEL_CELLS; count++)
 	{
-		panel_cells[count]->Draw(false);
-		if (panel_cells[count]->GetTextureBox().w != text_rect.w && panel_cells[count]->GetTextureBox().h != text_rect.h)
-		{
-			panel_buttons[count]->Draw(false);
-		}	
+		if(panel_cells[count]->GetTextureBox().w > 1) panel_cells[count]->Draw(false);
 	}
 	return true;
-}
-
-int Action_Panel::GetCell() const
-{
-	SDL_Rect cell_clicked = {0,0,0,0};
-	int ret = -1;
-
-	for (int count = 0; count < MAX_PANEL_CELLS; count++)
-	{
-		cell_clicked =  { panel_pos.x + (count% PANEL_COLUMNS)*CELL_WIDTH, panel_pos.y + ((int)count / PANEL_COLUMNS)*CELL_HEIGHT,CELL_WIDTH, CELL_HEIGHT } ;
-		if (SDL_PointInRect(&mouse_pos, &cell_clicked))
-		{
-			panel_buttons[count]->button_state = ON;
-			return count;
-		}
-	}
-
-	return ret;
 }
 
 void Action_Panel::ActivateCell(int i)
@@ -838,9 +796,61 @@ bool Action_Panel::GetIsIn() const
 
 void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 {
-	if (actualpanel == heropanel)
+	switch (ui_input)
 	{
-		if(heropanel->Hero_Handle_input(ui_element, ui_input)) heropanel->ChangePanelIcons(panel_cells);
+	case MOUSE_LEFT_BUTTON_DOWN:
+		break;
+	case MOUSE_LEFT_BUTTON_REPEAT:
+		if (isin && ui_element->GetUItype() == BUTTON)
+		{
+			if (actualpanel == unitpanel && !on_action)
+			{
+				for (int count = 0; count < MAX_PANEL_CELLS; count++)
+				{
+					if (ui_element == panel_buttons[count])
+					{
+						on_action = actualpanel->ActivateCell(count);
+					}
+				}
+			}
+		}
+		break;
+	case MOUSE_LEFT_BUTTON_UP:
+		if (isin && ui_element->GetUItype() == BUTTON)
+		{
+			for (int count = 0; count < MAX_PANEL_CELLS; count++)
+			{
+				if (ui_element == panel_buttons[count]) {
+					on_action = actualpanel->ActivateCell(count);
+					if (!on_action)
+					{
+						actualpanel->ChangePanelIcons(panel_cells);
+						SetButtons();
+						return;
+					}
+				}
+			}
+		}
+		else if (actualpanel == heropanel && ui_element->GetUItype() == FIXED_BUTTON)
+		{
+			if (heropanel->Hero_Handle_input(ui_element, ui_input))
+			{
+				action_screen->DesactivateChids();
+				heropanel->ChangePanelIcons(panel_cells);
+				SetButtons();
+			}
+		}
+		break;
+	case MOUSE_RIGHT_BUTTON:
+		break;
+	case MOUSE_IN:
+		if (ui_element == action_screen)	isin = true;
+		break;
+	case MOUSE_OUT:
+		if (ui_element == action_screen)	isin = false;
+		break;
+	default:
+		break;
 	}
 }
 
@@ -952,8 +962,21 @@ void Action_Panel::SetPanelType()
 
 	if (actualpanel != nullptr)
 	{
+		action_screen->DesactivateChids();
 		actualpanel->ChangePanelTarget(actual_entity);
 		actualpanel->ChangePanelIcons(panel_cells);
+		SetButtons();
+	}
+}
+
+void Action_Panel::SetButtons()
+{
+	for (int count = 0; count < MAX_PANEL_CELLS; count++)
+	{
+		if (panel_cells[count]->GetTextureBox().w > 1 && panel_cells[count]->GetTextureBox().h > 1)
+		{
+			panel_buttons[count]->Activate();
+		}
 	}
 }
 
@@ -963,6 +986,7 @@ void Action_Panel::CheckSelected(int selected)
 	{
 		on_action = false;
 		actual_entity = nullptr;
+		action_screen->DesactivateChids();
 		if (actualpanel == heropanel)
 		{
 			heropanel->skill_tree->Desactivate();
@@ -983,4 +1007,9 @@ void Action_Panel::CheckSelected(int selected)
 bool Action_Panel::GetOnAction()
 {
 	return on_action;
+}
+
+UI_Element * Action_Panel::GetActionScreen() const
+{
+	return action_screen;
 }

@@ -38,10 +38,10 @@ void j1Player::Enable()
 	active = true;
 
 	// Setting Game Panel Resources
-	game_panel->AddResource(100, GP_WOOD);
-	game_panel->AddResource(100, GP_MEAT);
-	game_panel->AddResource(100, GP_GOLD);
-	game_panel->AddResource(100, GP_STONE);
+	game_panel->AddResource(500, GP_WOOD);
+	game_panel->AddResource(500, GP_MEAT);
+	game_panel->AddResource(500, GP_GOLD);
+	game_panel->AddResource(500, GP_STONE);
 	game_panel->IncressPopulation(5, true);
 
 	selection_panel->Enable();
@@ -67,6 +67,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 bool j1Player::Start()
 {
+	App->gui->SetDefaultInputTarget(this);
 	// Hud Background
 	game_hud = (UI_Image*) App->gui->GenerateUI_Element(IMG);
 	game_hud->ChangeTextureId(HUD);
@@ -84,6 +85,7 @@ bool j1Player::Start()
 	game_hud->AddChild(selection_panel->GetViewport());
 	game_hud->AddChild(action_panel->GetHeroSkillTree());
 	action_panel->GetHeroSkillTree()->SetLayer(5);
+	game_hud->AddChild(action_panel->GetActionScreen());
 	game_hud->AddChild(game_panel->GetExitMenu());
 	App->gui->PushScreen(game_hud);
 
@@ -131,12 +133,6 @@ bool j1Player::PreUpdate()
 
 	// Action Panel Check Selected
 	action_panel->CheckSelected(selection_panel->GetSelectedSize());
-
-	//Building spawn unit
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		if (selection_panel->GetInViewport()) selection_panel->Handle_Input(ENTER);
-	}
 
 	if (App->debug_mode)
 	{
@@ -283,26 +279,36 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 	case RIGHT_ARROW:
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
-	{
-			action_panel->Handle_Input(target, MOUSE_LEFT_BUTTON_DOWN);
-	}
+		{
+			action_panel->Handle_Input(target, input);
+		}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;
 	case MOUSE_LEFT_BUTTON_UP:
-
+		{
+			action_panel->Handle_Input(target, input);
+		}
 		break;
 	case MOUSE_RIGHT_BUTTON:
 		break;
-	case MOUSE_IN: if (App->gui->upper_element == selection_panel->GetViewport()->GetLayer() && selection_panel->GetInViewport() != true)
-	{
-		selection_panel->Handle_Input(target, MOUSE_IN);
-	}
-				   break;
-	case MOUSE_OUT:  if (App->gui->upper_element != selection_panel->GetViewport()->GetLayer() && selection_panel->GetInViewport() == true)
-	{
-		selection_panel->Handle_Input(selection_panel->GetViewport(), MOUSE_OUT);
-	}
+	case MOUSE_IN:
+		{
+			if (App->gui->upper_element == selection_panel->GetViewport()->GetLayer() && selection_panel->GetInViewport() != true)
+			{
+				selection_panel->Handle_Input(target, input);
+			}
+			action_panel->Handle_Input(target, input);
+		}
+		break;
+	case MOUSE_OUT: 
+		{
+			if (App->gui->upper_element != selection_panel->GetViewport()->GetLayer() && selection_panel->GetInViewport() == true)
+			{
+				selection_panel->Handle_Input(selection_panel->GetViewport(), input);
+			}
+			action_panel->Handle_Input(target, input);
+		}
 	case SUPR:
 		break;
 	case BACKSPACE:

@@ -64,6 +64,7 @@ u_capacity(0), u_resources(0), m_capacity(0), m_life(0)
 //Entity Profile Destructor ======================================================
 Entity_Profile::~Entity_Profile()
 {
+	element = nullptr;
 }
 
 //Functionality ==================================================================
@@ -371,7 +372,6 @@ bool Selection_Panel::CleanUp()
 	if (Selected != nullptr)
 	{
 		delete Selected;
-		Selected = nullptr;
 	}
 	return true;
 }
@@ -451,7 +451,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building**)UpperEntity->GetMe()));
 					App->sound->PlayFXAudio(ATTACK_SOUND);
 				}
-				else if (UpperEntity->GetEntityType() == RESOURCE)
+				else if (UpperEntity->GetEntityType() == RESOURCE && selected_unit_type == VILLAGER)
 				{
 					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
 				}
@@ -495,13 +495,6 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 	case BACKSPACE:
 		break;
 	case ENTER:
-		if (Selected->GetEntity() == nullptr)break;
-
-		if (Selected->GetEntity()->GetEntityType() == BUILDING)
-		{
-			Selected->GetEntity()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)Selected->GetEntity(), ARBALEST, ALLY));
-		}
-
 		break;
 	case TAB:
 		break;

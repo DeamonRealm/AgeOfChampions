@@ -130,6 +130,9 @@ public:
 	VillagerPanel();
 	~VillagerPanel() {};
 
+	// Pre Update
+	void PreUpdate();
+
 	// Reset Panel
 	void ResetPanel();
 
@@ -214,7 +217,6 @@ public:
 	bool Draw();
 
 	// Get Cell Clicked
-	int GetCell() const;
 	void ActivateCell(int i);
 
 	// Get isin bool
@@ -236,12 +238,16 @@ public:
 
 	// Panel Settings
 	void SetPanelType();
+	void SetButtons();
 	void CheckSelected(int size);
 	bool GetOnAction();
 
+	// Return ActionPanel Screens
+	UI_Element* GetActionScreen()const;
+
 private:
 	
-	// HUD_Selection Panel Pointer
+	// HUD Panels Pointer
 	Selection_Panel*			player_selection_panel = nullptr;
 	Game_Panel*					player_game_panel = nullptr;
 
@@ -249,7 +255,7 @@ private:
 	bool						isin;
 	SDL_Point					mouse_pos;
 	SDL_Rect					action_rect;
-	UI_Image*					action_screen = nullptr;
+	UI_Element*					action_screen = nullptr;
 
 	// Panell Settings 
 	int							cell;
