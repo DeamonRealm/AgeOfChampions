@@ -77,6 +77,8 @@ public:
 	virtual bool Activation() { return true; }
 	//Returns TRUE when execute is finished
 	virtual bool Execute()	{ return true; }
+
+	virtual void CleanUp() {}
 	///Each different action inheriting from this class should have custom
 	///properties to do its actions.
 
@@ -125,6 +127,7 @@ public:
 
 	//Clean all actionss of the worker
 	void HardReset();
+	void ResetChannel(TASK_CHANNELS channel);
 	void ResetActive();
 
 	TASK_TYPE GetCurrentActionType() const;

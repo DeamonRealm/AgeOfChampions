@@ -28,8 +28,7 @@ public:
 	//Destructor ------------
 	~MoveUnitAction()
 	{
-		this->actor = nullptr;
-		delete [] path;
+
 	}
 
 	//Functionality ---------
@@ -54,6 +53,12 @@ public:
 		return ((Unit*)actor)->Move(path,target);
 	}
 
+
+	void CleanUp()
+	{
+		this->actor = nullptr;
+		delete[] path;
+	}
 
 	//Returns the path 
 	std::vector<iPoint>* GetPath() const

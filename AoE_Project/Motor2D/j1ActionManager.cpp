@@ -225,6 +225,7 @@ bool ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
 		//If the action ends (execute() == true) erase it
 		if ((*current)->Execute())
 		{
+			(*current)->CleanUp();
 			delete (*current);
 			(*current) = nullptr;
 			return true;
@@ -240,6 +241,7 @@ bool ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
 		//Delete action if it can't be activated
 		if (!(*current)->Activation())
 		{
+			(*current)->CleanUp();
 			delete (*current);
 			(*current) = nullptr;
 		}
@@ -256,8 +258,10 @@ void ActionWorker::AddAction(Action * action, TASK_CHANNELS channel)
 		primary_action_queue.push_back(action);
 		break;
 	case SECONDARY:
+		secondary_action_queue.push_back(action);
 		break;
 	case PASSIVE:
+		passive_action_queue.push_back(action);
 		break;
 	default:
 		break;
@@ -310,10 +314,30 @@ void ActionWorker::PopAction(Action * action)
 
 void ActionWorker::HardReset()
 {
-	ResetQueue(&primary_action_queue, &current_primary_action);
-	ResetQueue(&passive_action_queue, &current_passive_action);
+	ResetQueue(&primary_action_queue,	&current_primary_action);
+	ResetQueue(&secondary_action_queue, &current_secondary_action);
+	ResetQueue(&passive_action_queue,	&current_passive_action);
 
 	paused = false;
+}
+
+void ActionWorker::ResetChannel(TASK_CHANNELS channel)
+{
+	switch (channel)
+	{
+	case PRIMARY:
+		ResetQueue(&primary_action_queue, &current_primary_action);
+		break;
+	case SECONDARY:
+		ResetQueue(&secondary_action_queue, &current_secondary_action);
+		break;
+	case PASSIVE:
+		ResetQueue(&passive_action_queue, &current_passive_action);
+		break;
+	default:
+		break;
+	}
+
 }
 
 void ActionWorker::ResetActive()
