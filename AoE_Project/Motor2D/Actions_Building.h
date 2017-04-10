@@ -43,7 +43,7 @@ public:
 			App->animator->UnitPlay(new_unit);
 			App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
 
-			new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)));
+			new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)), TASK_CHANNELS::PRIMARY);
 
 			//Add an autoatack passive action
 			new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));

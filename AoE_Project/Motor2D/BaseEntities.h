@@ -215,7 +215,7 @@ public:
 	void			CleanAnimation();
 	virtual void	CleanMapLogic();
 	//Add Action ------------
-	void			AddAction(Action* action);
+	void			AddAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
 	void			AddPasiveAction(Action* action);
 	void			AddSecondaryAction(Action * action);
 	void			AddPriorizedAction(Action* action);

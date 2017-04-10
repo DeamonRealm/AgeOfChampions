@@ -182,7 +182,7 @@ ActionWorker::ActionWorker() : refresh_rate(500)
 //Destructor
 ActionWorker::~ActionWorker()
 {
-	ResetQueue(&action_queue, &current_action);
+	ResetQueue(&primary_action_queue, &current_primary_action);
 	ResetQueue(&passive_action_queue, &current_passive_action);
 	ResetQueue(&secondary_action_queue, &current_secondary_action);
 }
@@ -195,7 +195,7 @@ void ActionWorker::Update()
 		return;
 		
 	//If the worker has a current action execute it
-	if (DoWork(&action_queue, &current_action))
+	if (DoWork(&primary_action_queue, &current_primary_action))
 	{
 
 		//Reeactive all actions form passive flows when any active action finshes
@@ -204,7 +204,7 @@ void ActionWorker::Update()
 	}
 
 	//Secondary and passive actions take place when there is no active_action
-	if (current_action == nullptr)
+	if (current_primary_action == nullptr)
 	{
 		DoWork(&secondary_action_queue, &current_secondary_action);
 
@@ -248,9 +248,21 @@ bool ActionWorker::DoWork(std::list<Action*>* queue, Action ** current)
 }
 
 
-void ActionWorker::AddAction(Action * action)
+void ActionWorker::AddAction(Action * action, TASK_CHANNELS channel)
 {
-	action_queue.push_back(action);
+	switch (channel)
+	{
+	case PRIMARY:
+		primary_action_queue.push_back(action);
+		break;
+	case SECONDARY:
+		break;
+	case PASSIVE:
+		break;
+	default:
+		break;
+	}
+
 }
 
 void ActionWorker::AddPassiveAction(Action* action)
@@ -265,30 +277,30 @@ void ActionWorker::AddSecondaryAction(Action * action)
 
 void ActionWorker::AddPriorizedAction(Action * action)
 {
-	if (current_action != nullptr)
+	if (current_primary_action != nullptr)
 	{
-		action_queue.push_front(current_action);
-		current_action = action;
-		current_action->Activation();
+		primary_action_queue.push_front(current_primary_action);
+		current_primary_action = action;
+		current_primary_action->Activation();
 	}
 	else
 	{
-		current_action = action;
-		current_action->Activation();
+		current_primary_action = action;
+		current_primary_action->Activation();
 	}
 }
 
 void ActionWorker::PopAction(Action * action)
 {
-	if (current_action == action)current_action = nullptr;
+	if (current_primary_action == action)current_primary_action = nullptr;
 	else
 	{
-		std::list<Action*>::iterator act = action_queue.begin();
-		while (act != action_queue.end())
+		std::list<Action*>::iterator act = primary_action_queue.begin();
+		while (act != primary_action_queue.end())
 		{
 			if (act._Ptr->_Myval == action)
 			{
-				action_queue.remove(action);
+				primary_action_queue.remove(action);
 				return;
 			}
 			act++;
@@ -296,9 +308,9 @@ void ActionWorker::PopAction(Action * action)
 	}
 }
 
-void ActionWorker::Reset()
+void ActionWorker::HardReset()
 {
-	ResetQueue(&action_queue, &current_action);
+	ResetQueue(&primary_action_queue, &current_primary_action);
 	ResetQueue(&passive_action_queue, &current_passive_action);
 
 	paused = false;
@@ -306,7 +318,7 @@ void ActionWorker::Reset()
 
 void ActionWorker::ResetActive()
 {
-	ResetQueue(&action_queue, &current_action);
+	ResetQueue(&primary_action_queue, &current_primary_action);
 }
 
 void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)
@@ -328,9 +340,9 @@ void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)
 
 TASK_TYPE ActionWorker::GetCurrentActionType() const
 {
-	if (current_action != nullptr)
+	if (current_primary_action != nullptr)
 	{
-		return current_action->GetType();
+		return current_primary_action->GetType();
 	}
 
 	return TASK_TYPE::TASK_NONE;
@@ -338,7 +350,7 @@ TASK_TYPE ActionWorker::GetCurrentActionType() const
 
 Action * ActionWorker::GetCurrentAction() const
 {
-	return current_action;
+	return current_primary_action;
 }
 
 void ActionWorker::Pause()

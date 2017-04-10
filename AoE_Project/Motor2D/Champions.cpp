@@ -527,7 +527,7 @@ bool Warrior::Die()
 		}
 		else
 		{
-			action_worker.Reset();
+			action_worker.HardReset();
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}

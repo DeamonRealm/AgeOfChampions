@@ -60,7 +60,7 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y, boo
 		//second_destination->insert(second_destination->end(), first_destination->begin(), first_destination->end());
 		//push action
 		lead->GetWorker()->ResetActive();
-		if(active)lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead));
+		if(active)lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead), TASK_CHANNELS::PRIMARY);
 		else lead->AddSecondaryAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead));
 		lead_direcction = ((Unit*)lead)->LookDirection(*(second_destination->begin()), *(second_destination->begin() + 1));
 		//do the other units path
@@ -112,7 +112,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			single_unit->GetWorker()->ResetActive();
 			if (unit_destination != nullptr) 
 			{
-				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
 				else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			}
 			left = !left;
@@ -155,7 +155,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			single_unit->GetWorker()->ResetActive();
 			if (unit_destination != nullptr)
 			{
-				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
 				else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			}
 			left = !left;
@@ -197,7 +197,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			single_unit->GetWorker()->ResetActive();
 			if (unit_destination != nullptr)
 			{
-				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
 				else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			}			left = !left;
 			i *= -1;
@@ -239,7 +239,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			single_unit->GetWorker()->ResetActive();
 			if (unit_destination != nullptr)
 			{
-				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
 				else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			}			left = !left;
 			i *= -1;
@@ -280,7 +280,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			single_unit->GetWorker()->ResetActive();
 			if (unit_destination != nullptr)
 			{
-				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
 				else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			}			left = !left;
 			i *= -1;
@@ -322,7 +322,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			single_unit->GetWorker()->ResetActive();
 			if (unit_destination != nullptr)
 			{
-				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
 				else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			}			left = !left;
 			i *= -1;
@@ -363,7 +363,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			single_unit->GetWorker()->ResetActive();
 			if (unit_destination != nullptr)
 			{
-				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
 				else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			}		left = !left;
 			i *= -1;
@@ -404,7 +404,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			single_unit->GetWorker()->ResetActive();
 			if (unit_destination != nullptr)
 			{
-				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
+				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
 				else single_unit->AddSecondaryAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit));
 			}			left = !left;
 			i *= -1;

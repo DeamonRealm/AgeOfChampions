@@ -54,6 +54,7 @@ public:
 		return ((Unit*)actor)->Move(path,target);
 	}
 
+
 	//Returns the path 
 	std::vector<iPoint>* GetPath() const
 	{
@@ -262,7 +263,7 @@ public:
 			Building* save_point = App->entities_manager->SearchNearestSavePoint(actor->GetPositionRounded());
 			if (save_point != nullptr)
 			{
-				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, save_point));
+				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, save_point), TASK_CHANNELS::PRIMARY);
 			}
 
 			//Reset the animation

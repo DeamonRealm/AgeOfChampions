@@ -97,9 +97,9 @@ void Entity::CleanMapLogic()
 }
 
 //Add Action ------------
-void Entity::AddAction(Action * action)
+void Entity::AddAction(Action * action, TASK_CHANNELS channel)
 {
-	action_worker.AddAction(action);
+	action_worker.AddAction(action, channel);
 }
 
 void Entity::AddPasiveAction(Action * action)
@@ -1110,7 +1110,7 @@ bool Unit::Die()
 			{
 				App->player->game_panel->IncreaseDeathEnemies();
 			}
-			GetWorker()->Reset();
+			GetWorker()->HardReset();
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}

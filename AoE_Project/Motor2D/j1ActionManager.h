@@ -47,6 +47,14 @@ enum TASK_TYPE
 };
 
 
+enum TASK_CHANNELS
+{
+	PRIMARY,
+	SECONDARY,
+	PASSIVE
+};
+
+
 /// Class Action --------------------------------
 //Action virtual class (are commands but not for the console)
 class Action
@@ -88,14 +96,18 @@ public:
 	~ActionWorker();
 
 private:
+	bool paused = false;
 
-	std::list<Action*> action_queue;
+	//Diferent action list
+	std::list<Action*> primary_action_queue;
 	std::list<Action*> secondary_action_queue;
 	std::list<Action*> passive_action_queue;
-	Action* current_passive_action = nullptr;
+
+	//Each current action
+	Action* current_primary_action = nullptr;
 	Action* current_secondary_action = nullptr;
-	Action* current_action = nullptr;
-	bool paused = false;
+	Action* current_passive_action = nullptr;
+	
 
 private:
 	j1Timer refresh_timer;
@@ -105,14 +117,14 @@ public:
 	//Updates every list
 	void Update();
 
-	void AddAction(Action* action);
+	void AddAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
 	void AddPassiveAction(Action* action);
 	void AddSecondaryAction(Action* action);
 	void AddPriorizedAction(Action* action);
 	void PopAction(Action* action);
 
 	//Clean all actionss of the worker
-	void Reset();
+	void HardReset();
 	void ResetActive();
 
 	TASK_TYPE GetCurrentActionType() const;
