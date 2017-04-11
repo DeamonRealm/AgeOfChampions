@@ -63,6 +63,10 @@ void Action_Panel_Elements::ChangePlayerGamePanel(Game_Panel * game_panel)
 	player_game_panel_resources = game_panel;
 }
 
+void Action_Panel_Elements::LoadPanelFromXML(const pugi::xml_node & conf)
+{
+}
+
 
 // TOWNCENTER ------------------------------------------------------------------------------------------------------------
 
@@ -777,26 +781,6 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 	return;
 }
 
-bool Action_Panel::Draw()
-{
-	if (actualpanel == nullptr) return false;
-	for (int count = 0; count < MAX_PANEL_CELLS; count++)
-	{
-		if(panel_cells[count]->GetTextureBox().w > 1) panel_cells[count]->Draw(false);
-	}
-	return true;
-}
-
-void Action_Panel::ActivateCell(int i)
-{
-	if(actualpanel != nullptr) actualpanel->ActivateCell(i);
-}
-
-bool Action_Panel::GetIsIn() const
-{
-	return isin;
-}
-
 void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 {
 	switch (ui_input)
@@ -857,30 +841,24 @@ void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 	}
 }
 
-UI_Element * Action_Panel::GetHeroSkillTree() const
+void Action_Panel::ActivateCell(int i)
 {
-	return heropanel->skill_tree;
+	if (actualpanel != nullptr) actualpanel->ActivateCell(i);
 }
 
-void Action_Panel::HeroIsDead(UNIT_TYPE type)
+bool Action_Panel::Draw()
 {
-	towncenterpanel->ChampionIsDead(type);
-	heropanel->ResetPanel();
+	if (actualpanel == nullptr) return false;
+	for (int count = 0; count < MAX_PANEL_CELLS; count++)
+	{
+		if(panel_cells[count]->GetTextureBox().w > 1) panel_cells[count]->Draw(false);
+	}
+	return true;
 }
 
 void Action_Panel::SetSelectionPanelPointer(Selection_Panel * selection_panel)
 {
 	player_selection_panel = selection_panel;
-}
-
-void Action_Panel::GetEntitySelected()
-{
-	actual_entity = player_selection_panel->GetSelected();
-	if (actual_entity == nullptr)
-	{
-		actualpanel = nullptr;
-		return;
-	}
 }
 
 void Action_Panel::SetGamePanelPointer(Game_Panel * game_panel)
@@ -890,7 +868,7 @@ void Action_Panel::SetGamePanelPointer(Game_Panel * game_panel)
 
 void Action_Panel::SetPanelType()
 {
-	GetEntitySelected();
+	SetEntitySelected();
 
 	if (actual_entity == nullptr) return;
 
@@ -972,6 +950,16 @@ void Action_Panel::SetPanelType()
 	}
 }
 
+void Action_Panel::SetEntitySelected()
+{
+	actual_entity = player_selection_panel->GetSelected();
+	if (actual_entity == nullptr)
+	{
+		actualpanel = nullptr;
+		return;
+	}
+}
+
 void Action_Panel::SetButtons()
 {
 	for (int count = 0; count < MAX_PANEL_CELLS; count++)
@@ -981,6 +969,16 @@ void Action_Panel::SetButtons()
 			panel_buttons[count]->Activate();
 		}
 	}
+}
+
+bool Action_Panel::GetOnAction() const
+{
+	return on_action;
+}
+
+bool Action_Panel::GetIsIn() const
+{
+	return isin;
 }
 
 void Action_Panel::CheckSelected(int selected)
@@ -1007,12 +1005,42 @@ void Action_Panel::CheckSelected(int selected)
 	}
 }
 
-bool Action_Panel::GetOnAction()
+void Action_Panel::HeroIsDead(UNIT_TYPE type)
 {
-	return on_action;
+	towncenterpanel->ChampionIsDead(type);
+	heropanel->ResetPanel();
 }
 
 UI_Element * Action_Panel::GetActionScreen() const
 {
 	return action_screen;
+}
+
+UI_Element * Action_Panel::GetHeroSkillTree() const
+{
+	return heropanel->skill_tree;
+}
+
+void Building_Panel_Data::SetInfo()
+{
+	if (wood_cost > 0 || meat_cost > 0 || gold_cost > 0 || stone_cost > 0)
+	{
+		cell_info += ": Cost ( ";
+		if (wood_cost > 0) cell_info = cell_info + App->gui->SetStringFromInt(wood_cost) + " wood ";
+		if (meat_cost > 0) cell_info = cell_info + App->gui->SetStringFromInt(meat_cost) + " food ";
+		if (gold_cost > 0) cell_info = cell_info + App->gui->SetStringFromInt(gold_cost) + " gold ";
+		if (stone_cost > 0) cell_info = cell_info + App->gui->SetStringFromInt(stone_cost) + " stone ";
+		cell_info += ")";
+
+	}
+}
+
+const char * Building_Panel_Data::GetInfo() const
+{
+	return cell_info.c_str();
+}
+
+const char * Unit_Panel_Data::GetInfo() const
+{
+	return cell_info.c_str();
 }

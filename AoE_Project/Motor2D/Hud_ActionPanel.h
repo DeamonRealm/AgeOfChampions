@@ -30,6 +30,52 @@ enum BUILDING_TYPE;
 enum UNIT_TYPE;
 enum GUI_INPUT;
 
+// Basic Action Panel Data -------------------------------------------------------------------------------------
+
+// Buildings Data
+
+struct Building_Panel_Data
+{
+	// Data
+	uint		cell_position = 0;
+	uint		cell_at_level = 0;
+
+	// Data
+	SDL_Rect	cell_icon = { 0,0,1,1 };
+	int			wood_cost = 0;
+	int			meat_cost = 0;
+	int			gold_cost = 0;
+	int			stone_cost = 0;
+	int			population_cost = 0;
+
+	// Information
+	std::string	cell_info;
+
+public:
+	// Functionality
+	void		SetInfo();
+	const char*	GetInfo() const;
+};
+
+// Units Data
+
+struct Unit_Panel_Data
+{
+	// Data
+	uint		cell_position = 0;
+	uint		cell_at_level = 0;
+
+	// Data
+	SDL_Rect	cell_icon = { 0,0,1,1 };
+
+	// Information
+	std::string	cell_info;
+
+public:
+	// Functionality
+	const char*	GetInfo() const;
+};
+
 // Base Action Panel ------------------------------------------------------------------------------------------
 
 class Action_Panel_Elements
@@ -43,15 +89,15 @@ public:
 
 	virtual bool ActivateCell(int i) { return false; };
 
-	void AddIcon(SDL_Rect icon_rect, uint position);
+	void		 AddIcon(SDL_Rect icon_rect, uint position);
 	virtual void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 
 	virtual void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
-	Entity* GetActualEntity();
+	Entity*		 GetActualEntity();
 
 	virtual void ChangePlayerGamePanel(Game_Panel* game_panel);
 
-	void LoadPanel() {};
+	virtual void LoadPanelFromXML(const pugi::xml_node&	conf);
 
 protected:
 	std::vector<SDL_Rect>		panel_icons;
@@ -212,38 +258,38 @@ public:
 
 	// Handle Input
 	void Handle_Input(GUI_INPUT newevent);
+	// Handle input GUI
+	void Handle_Input(UI_Element* ui_element, GUI_INPUT ui_input);
+	// Activate with Input
+	void ActivateCell(int i);
 
 	// Draw Game Panel
 	bool Draw();
 
-	// Get Cell Clicked
-	void ActivateCell(int i);
-
-	// Get isin bool
-	bool GetIsIn() const;
-
-	// Handle_input_GUI
-	void Handle_Input(UI_Element* ui_element, GUI_INPUT ui_input);
-
-	// Return Hero Panel Skil Tree;
-	UI_Element* GetHeroSkillTree() const;
-	void HeroIsDead(UNIT_TYPE type);
-
 	// Set Pointer To Selection Panel
 	void SetSelectionPanelPointer(Selection_Panel* selection_panel);
-	void GetEntitySelected();
 
 	// Set Pointer To Game Panel
 	void SetGamePanelPointer(Game_Panel* game_panel);
 
 	// Panel Settings
 	void SetPanelType();
+	void SetEntitySelected();
 	void SetButtons();
+
+	bool GetOnAction()const;
+	bool GetIsIn() const;
+
+	// Check Panel Selected Settings
 	void CheckSelected(int size);
-	bool GetOnAction();
+
+	// Return Hero Panel Skil Tree;
+	void HeroIsDead(UNIT_TYPE type);
 
 	// Return ActionPanel Screens
 	UI_Element* GetActionScreen()const;
+	UI_Element* GetHeroSkillTree() const;
+
 
 private:
 	
