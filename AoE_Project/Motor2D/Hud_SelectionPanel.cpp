@@ -440,7 +440,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			if (Selected->GetEntity() == nullptr || selected_diplomacy == ENEMY) break;
 
 			//Set entity target to the selected unit
-			Selected->GetEntity()->GetWorker()->ResetActive();
+			Selected->GetEntity()->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (UpperEntity != nullptr)
 			{
 				if (UpperEntity->GetDiplomacy() == ENEMY)
@@ -479,7 +479,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == BUILDING)
 		{
 			//Set entity target to the selected unit
-			//Selected->GetEntity()->GetWorker()->ResetActive();
+			//Selected->GetEntity()->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			Selected->GetEntity()->AddAction(new SpawnUnitAction((ProductiveBuilding*)Selected->GetEntity(), ARBALEST, ALLY));
 		}
 

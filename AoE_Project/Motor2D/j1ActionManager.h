@@ -125,7 +125,6 @@ public:
 	//Clean all actionss of the worker
 	void HardReset();
 	void ResetChannel(TASK_CHANNELS channel);
-	void ResetActive();
 
 	TASK_TYPE GetCurrentActionType() const;
 	Action* GetCurrentAction() const;

@@ -330,10 +330,6 @@ void ActionWorker::ResetChannel(TASK_CHANNELS channel)
 
 }
 
-void ActionWorker::ResetActive()
-{
-	ResetQueue(&primary_action_queue, &current_primary_action);
-}
 
 void ActionWorker::ResetQueue(std::list<Action*>* queue, Action ** current)
 {

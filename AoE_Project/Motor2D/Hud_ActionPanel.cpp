@@ -594,7 +594,7 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 		App->input->GetMousePosition(x, y);
 		x -= App->render->camera.x;
 		y -= App->render->camera.y;
-		entitis_panel->GetWorker()->ResetActive();
+		entitis_panel->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 		
 		if (activate_skill == 1)((Warrior*)entitis_panel)->Hability_B(x, y);
 		activate_skill = -1;

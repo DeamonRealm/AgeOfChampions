@@ -59,7 +59,7 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y, boo
 		second_destination = LeaderPath();
 		//second_destination->insert(second_destination->end(), first_destination->begin(), first_destination->end());
 		//push action
-		lead->GetWorker()->ResetActive();
+		lead->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 		if(active)lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead), TASK_CHANNELS::PRIMARY);
 		else lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead), TASK_CHANNELS::SECONDARY);
 		lead_direcction = ((Unit*)lead)->LookDirection(*(second_destination->begin()), *(second_destination->begin() + 1));
@@ -109,7 +109,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->ResetActive();
+			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (unit_destination != nullptr) 
 			{
 				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
@@ -152,7 +152,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->ResetActive();
+			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (unit_destination != nullptr)
 			{
 				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
@@ -194,7 +194,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->ResetActive();
+			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (unit_destination != nullptr)
 			{
 				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
@@ -236,7 +236,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->ResetActive();
+			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (unit_destination != nullptr)
 			{
 				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
@@ -277,7 +277,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->ResetActive();
+			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (unit_destination != nullptr)
 			{
 				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
@@ -319,7 +319,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->ResetActive();
+			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (unit_destination != nullptr)
 			{
 				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
@@ -360,7 +360,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->ResetActive();
+			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (unit_destination != nullptr)
 			{
 				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
@@ -401,7 +401,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
-			single_unit->GetWorker()->ResetActive();
+			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (unit_destination != nullptr)
 			{
 				if (active)	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
