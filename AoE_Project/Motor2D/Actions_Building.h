@@ -46,7 +46,7 @@ public:
 			new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)), TASK_CHANNELS::PRIMARY);
 
 			//Add an autoatack passive action
-			new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));
+			new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
 
 			return true;
 		}

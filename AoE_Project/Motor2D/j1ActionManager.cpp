@@ -182,9 +182,7 @@ ActionWorker::ActionWorker() : refresh_rate(500)
 //Destructor
 ActionWorker::~ActionWorker()
 {
-	ResetQueue(&primary_action_queue, &current_primary_action);
-	ResetQueue(&passive_action_queue, &current_passive_action);
-	ResetQueue(&secondary_action_queue, &current_secondary_action);
+	HardReset();
 }
 
 //Worker methods
@@ -269,15 +267,7 @@ void ActionWorker::AddAction(Action * action, TASK_CHANNELS channel)
 
 }
 
-void ActionWorker::AddPassiveAction(Action* action)
-{
-	passive_action_queue.push_back(action);
-}
 
-void ActionWorker::AddSecondaryAction(Action * action)
-{
-	secondary_action_queue.push_back(action);
-}
 
 void ActionWorker::AddPriorizedAction(Action * action)
 {

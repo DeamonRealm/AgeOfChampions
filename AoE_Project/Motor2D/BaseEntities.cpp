@@ -102,16 +102,6 @@ void Entity::AddAction(Action * action, TASK_CHANNELS channel)
 	action_worker.AddAction(action, channel);
 }
 
-void Entity::AddPasiveAction(Action * action)
-{
-	action_worker.AddPassiveAction(action);
-}
-
-void Entity::AddSecondaryAction(Action * action)
-{
-	action_worker.AddSecondaryAction(action);
-}
-
 void Entity::AddPriorizedAction(Action * action)
 {
 	action_worker.AddPriorizedAction(action);
@@ -1017,7 +1007,7 @@ bool Unit::AttackBuilding(Building ** target)
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
-		this->AddSecondaryAction((Action*)App->action_manager->MoveAction(path, this));
+		this->AddAction((Action*)App->action_manager->MoveAction(path, this), TASK_CHANNELS::SECONDARY);
 	}
 
 	//Control action rate

@@ -227,15 +227,11 @@ bool SpawnUnitsFromListCommand::Execute()
 	//Add a passive scann action by default to all units
 	uint size = App->AI->enemy_units.size();
 
-	/*for (uint i = 0; i < size; i++)
-	{
-		App->AI->enemy_units[i]->AddPasiveAction(App->action_manager->ScanAction(App->AI->enemy_units[i]));
-	};
-	*/
+
 	std::list<Entity*>::iterator it = App->AI->enemy_units.begin();
 	while (it != App->AI->enemy_units.end())
 	{
-		it._Ptr->_Myval->AddPasiveAction(App->action_manager->ScanAction(it._Ptr->_Myval));
+		it._Ptr->_Myval->AddAction(App->action_manager->ScanAction(it._Ptr->_Myval), TASK_CHANNELS::PASSIVE);
 
 		it++;
 	}
@@ -260,19 +256,10 @@ bool MoveUnitsCommand::Execute()
 
 	uint size = to_move_list.size();
 
-	/*for (uint i = 0; i < size; i++)
-	{
-		to_move_list[i]->AddSecondaryAction(App->action_manager->MoveAction(to_move_list[i], new_pos));
-	};*/
-
 	App->group_move->GetGroupOfUnits(&to_move_list, new_pos.x, new_pos.y, false);
 	
 	std::list<Entity*>::iterator it = App->AI->enemy_units.begin();
 
-	/*while (it != App->AI->enemy_units.end())
-	{
-		it._Ptr->_Myval->AddSecondaryAction(App->action_manager->AttackToBuildingAction(it._Ptr->_Myval, ));
-	}*/
 
 	return true;
 }
@@ -296,7 +283,7 @@ bool SpawnUnitCommand::Execute()
 	Unit* new_unit = App->entities_manager->GenerateUnit(type, ENEMY);
 	new_unit->SetPosition(pos.x, pos.y);
 
-	new_unit->AddPasiveAction(App->action_manager->ScanAction(new_unit));
+	new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
 
 	App->AI->enemy_units.push_back(new_unit);
 	return true;

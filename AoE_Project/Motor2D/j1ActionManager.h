@@ -109,9 +109,8 @@ private:
 	Action* current_primary_action = nullptr;
 	Action* current_secondary_action = nullptr;
 	Action* current_passive_action = nullptr;
-	
 
-private:
+	//Refresh rate in ms		Default = 0
 	j1Timer refresh_timer;
 	uint	refresh_rate = 0;
 
@@ -120,8 +119,6 @@ public:
 	void Update();
 
 	void AddAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
-	void AddPassiveAction(Action* action);
-	void AddSecondaryAction(Action* action);
 	void AddPriorizedAction(Action* action);
 	void PopAction(Action* action);
 
