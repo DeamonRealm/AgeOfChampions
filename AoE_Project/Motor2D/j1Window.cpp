@@ -85,7 +85,7 @@ bool j1Window::Awake(pugi::xml_node& config)
 // Called before quitting
 bool j1Window::CleanUp()
 {
-	LOG("Destroying SDL window and quitting all SDL systems");
+	//LOG("Destroying SDL window and quitting all SDL systems");
 
 	//Destroy window
 	if(window != NULL)

@@ -132,9 +132,16 @@ bool j1Console::CleanUp()
 	{
 		delete console_variables[k];
 	}
+	console_variables.clear();
+
+	uint size = commands.size();
+	for (uint i = 0; i < size; i++)
+	{
+		delete commands[i];
+	}
+	commands.clear();
 
 	console_labels.clear();
-	commands.clear();
 
 	return true;
 }

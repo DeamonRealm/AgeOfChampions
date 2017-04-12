@@ -395,7 +395,7 @@ bool j1App::PostUpdate()
 // Called before quitting
 bool j1App::CleanUp()
 {
-	PERF_START(ptimer);
+//	PERF_START(ptimer);
 	bool ret = true;
 	std::list<j1Module*>::const_iterator item = modules.end();
 	item--;
@@ -410,7 +410,7 @@ bool j1App::CleanUp()
 	saved_games.clear();
 	
 
-	PERF_PEEK(ptimer);
+//	PERF_PEEK(ptimer);
 	return ret;
 }
 

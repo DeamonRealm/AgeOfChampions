@@ -138,7 +138,7 @@ bool j1Gui::PostUpdate()
 // Called before quitting
 bool j1Gui::CleanUp()
 {
-	LOG("Freeing GUI");
+	//LOG("Freeing GUI");
 	bool ret = true;
 
 	// CleanUp (Clear Lists)

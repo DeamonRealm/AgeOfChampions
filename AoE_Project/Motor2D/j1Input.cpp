@@ -181,7 +181,7 @@ bool j1Input::PreUpdate()
 // Called before quitting
 bool j1Input::CleanUp()
 {
-	LOG("Quitting SDL event subsystem");
+	//LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }

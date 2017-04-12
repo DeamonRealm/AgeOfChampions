@@ -59,7 +59,7 @@ bool j1Fonts::PostUpdate()
 // Called before quitting
 bool j1Fonts::CleanUp()
 {
-	LOG("Freeing True Type fonts and library");
+	//LOG("Freeing True Type fonts and library");
 	while(fonts.size() > 0)
 	{
 		TTF_CloseFont(fonts.back());
