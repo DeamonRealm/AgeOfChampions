@@ -216,7 +216,7 @@ public:
 	virtual void	CleanMapLogic();
 	//Add Action ------------
 	void			AddAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
-	void			AddPriorizedAction(Action* action);
+	void			AddPriorizedAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
 	void			PopAction(Action* action);
 
 	//Set Methods -----------

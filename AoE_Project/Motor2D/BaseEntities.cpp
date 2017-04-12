@@ -102,9 +102,9 @@ void Entity::AddAction(Action * action, TASK_CHANNELS channel)
 	action_worker.AddAction(action, channel);
 }
 
-void Entity::AddPriorizedAction(Action * action)
+void Entity::AddPriorizedAction(Action * action, TASK_CHANNELS channel)
 {
-	action_worker.AddPriorizedAction(action);
+	action_worker.AddPriorizedAction(action, channel);
 }
 
 void Entity::PopAction(Action * action)

@@ -269,19 +269,32 @@ void ActionWorker::AddAction(Action * action, TASK_CHANNELS channel)
 
 
 
-void ActionWorker::AddPriorizedAction(Action * action)
+void ActionWorker::AddPriorizedAction(Action * action, TASK_CHANNELS channel)
 {
-	if (current_primary_action != nullptr)
+	switch (channel)
 	{
-		primary_action_queue.push_front(current_primary_action);
-		current_primary_action = action;
-		current_primary_action->Activation();
+	case PRIMARY:
+		AddPriorized(action, &primary_action_queue, &current_primary_action);
+		break;
+	case SECONDARY:
+		AddPriorized(action, &secondary_action_queue, &current_secondary_action);
+		break;
+	case PASSIVE:
+		AddPriorized(action, &passive_action_queue, &current_passive_action);
+		break;
+	default:
+		break;
 	}
-	else
-	{
-		current_primary_action = action;
-		current_primary_action->Activation();
-	}
+}
+
+void ActionWorker::AddPriorized(Action* action, std::list<Action*>* queue, Action** current)
+{
+	//Check if there is a current action if it is push it to the front of the queue
+	if ((*current) != nullptr)	queue->push_front(*current);
+
+	//Make the new action the current action and activate it
+	(*current) = action;
+	(*current)->Activation();
 }
 
 void ActionWorker::PopAction(Action * action)
