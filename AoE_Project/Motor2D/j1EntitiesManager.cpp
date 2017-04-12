@@ -332,9 +332,9 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Unit Type*/		new_def->SetUnitType(unit_type);
 	/*Attack Type*/		new_def->SetAttackType(App->animator->StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
 	//Unit Primitives -------
-	/*Mark*/			Circle vision;
-	/*Mark Radius*/		vision.SetRad(unit_node->attribute("vision_rad").as_uint());
-	/*Mark Color*/		vision.SetColor({ 0,255,255,255 });
+	/*Vision*/			Circle vision;
+	/*Vision Radius*/	vision.SetRad(unit_node->attribute("vision_rad").as_uint());
+	/*Vision Color*/	vision.SetColor({ 0,255,255,255 });
 						new_def->SetVision(vision);
 	/*Mark*/			Circle mark;
 	/*Mark Radius*/		mark.SetRad(unit_node->attribute("mark_rad").as_uint());
@@ -502,6 +502,10 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	/*Building Type*/	new_def->SetBuildingType(building_type);
 
 	//Building Primitives ---
+	/*Vision*/			Circle vision;
+	/*Vision Radius*/	vision.SetRad(building_node->attribute("vision_rad").as_uint());
+	/*Vision Color*/	vision.SetColor({ 0,255,255,255 });
+						new_def->SetVision(vision);
 	/*Mark*/			Rectng mark;
 	/*Mark Width*/		mark.SetWidth(building_node->attribute("mark_w").as_uint());
 	/*Mark Height*/		mark.SetHeight(building_node->attribute("mark_h").as_uint());

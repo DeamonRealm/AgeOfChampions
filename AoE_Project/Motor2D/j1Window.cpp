@@ -72,12 +72,15 @@ bool j1Window::Awake(pugi::xml_node& config)
 		else
 		{
 			//Get window surface
-			screen_surface = SDL_GetWindowSurface(window);
+			
+			screen_surface = SDL_CreateRGBSurface(0, this->width, this->height, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
+			SDL_SetSurfaceBlendMode(screen_surface, SDL_BlendMode::SDL_BLENDMODE_BLEND);
+
 		}
 	}
 
 	//Lock cursor on screen
-	SDL_SetWindowGrab(window, SDL_TRUE);
+	//SDL_SetWindowGrab(window, SDL_TRUE);
 
 	return ret;
 }

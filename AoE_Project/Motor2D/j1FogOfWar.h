@@ -20,15 +20,14 @@ public:
 
 private:
 
-	// /*Fog Layer*/					std::vector<bool> fog_layer;
+	/*Fog Layer*/					std::vector<bool> fog_layer;
 	/*Fog Surface*/					SDL_Surface* fog_surface = nullptr;
 	/*Stamp to erase fog surface*/	SDL_Surface* fog_eraser = nullptr;
-	/*Screen Surface*/				SDL_Surface* screen_surface = nullptr;
 
 public:
 
 	uint	GetFogID(int x, int y)const;
-	void	ClearFogZone(const Circle zone);
+	void	ClearFogZone(Circle zone);
 	void	ClearFogTile(int x, int y);
 
 };

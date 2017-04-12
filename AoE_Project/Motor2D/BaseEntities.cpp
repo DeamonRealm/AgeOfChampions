@@ -11,6 +11,7 @@
 #include "j1ActionManager.h"
 #include "j1Player.h"
 #include "j1BuffManager.h"
+#include "j1FogOfWar.h"
 
 #include "Actions_Unit.h"
 
@@ -122,6 +123,8 @@ void Entity::SetPosition(float x, float y, bool insert)
 {
 	position.x = x;
 	position.y = y;
+
+	App->fog_of_war->ClearFogZone(vision);
 }
 
 void Entity::OnlySetPosition(float x, float y)
@@ -1153,6 +1156,8 @@ void Unit::SetPosition(float x, float y, bool insert)
 	iPoint pos(position.x, position.y);
 	//Set unit vision position
 	vision.SetPosition(pos);
+	App->fog_of_war->ClearFogZone(vision);
+
 	//Set unit mark position
 	mark.SetPosition(pos);
 	//Set soft_collider mark position
@@ -1814,6 +1819,9 @@ void Building::SetPosition(float x, float y, bool insert)
 	//Update construction map
 	App->map->ChangeConstructionMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 
+	//Clear fog around building vision zone
+	vision.SetPosition(iPoint(position.x, position.y));
+	App->fog_of_war->ClearFogZone(vision);
 
 	//Set interaction area rectangle position
 	interact_area.SetPosition(iPoint(position.x, position.y));

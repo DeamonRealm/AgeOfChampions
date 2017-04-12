@@ -146,6 +146,17 @@ bool j1Render::Update(float dt)
 		blit_queue.pop();
 	}
 
+	SDL_Texture* fog_texture = SDL_CreateTextureFromSurface(App->render->renderer, App->win->screen_surface);
+
+	if (SDL_RenderCopy(App->render->renderer, fog_texture, NULL, NULL))
+	{
+		LOG("Blit error: %s", SDL_GetError());
+	}
+
+
+	SDL_DestroyTexture(fog_texture);
+	fog_texture = nullptr;
+
 	return true;
 }
 

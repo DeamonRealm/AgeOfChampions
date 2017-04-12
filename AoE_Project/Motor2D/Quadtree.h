@@ -720,7 +720,7 @@ public:
 
 	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const Circle& circle) const
 	{
-		int tests = 1;
+		int tests = 0;
 
 		if (root != NULL && circle.Intersects(&root->aabb))
 			tests = root->CollectCandidates(nodes, circle);
