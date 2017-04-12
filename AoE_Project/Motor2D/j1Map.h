@@ -176,6 +176,8 @@ public:
 	iPoint FixPointMap(int x, int y);
 	//Calculate the tiles that are in camera
 	void CalculateTilesInView();
+	//Get tiles in view
+	const std::vector<iPoint> GetTilesInView()const;
 	//Change walkability in target tiles of the logic map
 	void ChangeLogicMap(const iPoint& position, uint width, uint height,uint value_map);
 	//Change walkability in target tiles of the construction map
@@ -189,7 +191,7 @@ public:
 	uchar*				construction_map = nullptr;
 
 private:
-	QuadTree<iPoint>	map_quadtree;
+
 	std::vector<iPoint> points_in_view;
 	MapLayer*			draw_layer = nullptr;
 	MapLayer*			navigation_layer = nullptr;
@@ -197,6 +199,11 @@ private:
 	pugi::xml_document	map_file;
 	std::string			folder;
 	bool				map_loaded = false;
+
+public:
+
+	QuadTree<iPoint>	map_quadtree;
+
 };
 
 #endif // __j1MAP_H__

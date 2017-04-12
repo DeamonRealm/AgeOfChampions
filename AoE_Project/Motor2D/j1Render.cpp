@@ -117,8 +117,6 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera.y = 0;
 	}
 
-
-
 	return ret;
 }
 
@@ -147,6 +145,7 @@ bool j1Render::Update(float dt)
 		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect(), blit->GetFlip(),blit->GetOpacity(), blit->GetXPivot(), blit->GetYPivot());
 		blit_queue.pop();
 	}
+
 	return true;
 }
 

@@ -2,8 +2,8 @@
 
 <data>
   <camera
-    pos_x="104"
-    pos_y="90"
+    pos_x="0"
+    pos_y="0"
   />
   <entity
     type ="building"

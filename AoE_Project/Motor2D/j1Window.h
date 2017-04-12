@@ -31,6 +31,7 @@ public:
 	uint GetScale() const;
 
 public:
+
 	//The window we'll be rendering to
 	SDL_Window* window;
 

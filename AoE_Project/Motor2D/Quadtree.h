@@ -205,6 +205,41 @@ public:
 
 		return ret;
 	}
+
+	int CollectCandidates(std::vector<DATA_TYPE>& nodes, const Circle& circle)
+	{
+		uint ret = 0;
+
+		// If range is not in the quad-tree, return
+		if (!circle.Intersects(&aabb))return 0;
+
+		// See if the points of this node are in range and pushback them to the vector
+		if (full)
+		{
+			// Otherwise, add the points from the children
+			ret += children[0]->CollectCandidates(nodes, circle);
+			ret += children[1]->CollectCandidates(nodes, circle);
+			ret += children[2]->CollectCandidates(nodes, circle);
+			ret += children[3]->CollectCandidates(nodes, circle);
+		}
+		else
+		{
+			uint size = objects.size();
+			for (uint k = 0; k < size; k++)
+			{
+				fPoint loc(objects[k].location.x, objects[k].location.y);
+
+				if (circle.IsIn(&loc))
+				{
+					nodes.push_back(objects[k].location);
+					ret++;
+				}
+
+			}
+		}
+
+		return ret;
+	}
 };
 /// ---------------------------------------------
 
@@ -681,6 +716,16 @@ public:
 			delete root;
 			root = NULL;
 		}
+	}
+
+	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const Circle& circle) const
+	{
+		int tests = 1;
+
+		if (root != NULL && circle.Intersects(&root->aabb))
+			tests = root->CollectCandidates(nodes, circle);
+
+		return tests;
 	}
 
 };

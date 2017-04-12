@@ -10,7 +10,7 @@
       unit_type ="arbalest"
       attack_type="melee"
       
-      vision_rad ="500"
+      vision_rad ="245"
       mark_rad ="55"
       soft_rad ="30"
       hard_rad ="10"

@@ -37,6 +37,8 @@ class j1Pathfinding;
 class Command;
 class Cvar;
 
+class j1FogOfWar;
+
 class j1App
 {
 public:
@@ -120,6 +122,7 @@ public:
 	j1Player*			player = NULL;
 	j1AI*				AI = NULL;
 	j1Pathfinding*		pathfinding = NULL;
+	j1FogOfWar*			fog_of_war = NULL;
 
 	// Add a new module to handle
 	void		AddModule(j1Module* module);

@@ -9,6 +9,7 @@
 #include "j1Window.h"
 #include "j1Timer.h"
 #include "j1EntitiesManager.h"
+#include "j1FogOfWar.h"
 
 #include <math.h>
 
@@ -114,6 +115,7 @@ void j1Map::Draw(bool debug)
 		{
 			//Get tile id
 			int tile_id = layer->Get(points_in_view[k].x, points_in_view[k].y);
+			int fog_id = App->fog_of_war->GetFogID(points_in_view[k].x, points_in_view[k].y);
 			if (tile_id == 0)continue;
 
 			//Get tileset from tile id
@@ -312,6 +314,11 @@ void j1Map::CalculateTilesInView()
 	points_in_view.clear();
 	SDL_Rect viewport = { -App->render->camera.x - data.tile_width, -App->render->camera.y, App->render->camera.w + data.tile_width * 2, App->render->camera.h - data.tile_height * 1 };
 	map_quadtree.CollectCandidates(points_in_view, viewport);
+}
+
+const std::vector<iPoint> j1Map::GetTilesInView() const
+{
+	return points_in_view;
 }
 
 void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint element_height, uint value_map)
