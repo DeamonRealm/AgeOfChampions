@@ -66,7 +66,7 @@ bool j1Menu::Start()
 	int size = App->fs->Load("gui/mainmenu.xml", &buffer);
 	pugi::xml_document menu_data;
 	pugi::xml_parse_result result = menu_data.load_buffer(buffer, size);
-	RELEASE(buffer);
+	RELEASE_ARRAY(buffer);
 	
 	pugi::xml_node unit_node = menu_data.first_child();
 

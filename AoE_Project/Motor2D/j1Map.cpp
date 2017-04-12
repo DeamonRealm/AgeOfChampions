@@ -412,7 +412,7 @@ bool j1Map::Load(const char* file_name)
 	int size = App->fs->Load(tmp.c_str(), &buf);
 	pugi::xml_parse_result result = map_file.load_buffer(buf, size);
 
-	RELEASE(buf);
+	RELEASE_ARRAY(buf);
 
 	if (result == NULL)
 	{

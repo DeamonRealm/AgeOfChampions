@@ -313,7 +313,7 @@ void j1Gui::LoadCursorTypes()
 	int size = App->fs->Load("gui/ui_icons.xml", &buffer);
 	pugi::xml_document icons_data;
 	pugi::xml_parse_result result = icons_data.load_buffer(buffer, size);
-	RELEASE(buffer);
+	RELEASE_ARRAY(buffer);
 
 	pugi::xml_node unit_node = icons_data.first_child().child("Mouse").first_child();
 	
