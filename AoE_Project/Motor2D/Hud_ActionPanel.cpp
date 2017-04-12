@@ -6,6 +6,7 @@
 #include "j1EntitiesManager.h"
 #include "j1Render.h"
 #include "j1SoundManager.h"
+#include "j1FileSystem.h"
 
 #include "BaseEntities.h"
 
@@ -20,36 +21,86 @@
 #include "UI_Button.h"
 #include "UI_Fixed_Button.h"
 
+// Cells Data Methods ------------------------------------------------------------------------------
+void Cells_Data::SetInfo()
+{
+	if (wood_cost > 0 || food_cost > 0 || gold_cost > 0 || stone_cost > 0)
+	{
+		cell_info += " (";
+		if (wood_cost > 0) cell_info = cell_info + " Wood: " + App->gui->SetStringFromInt(wood_cost);
+		if (food_cost > 0) cell_info = cell_info + " Food: " + App->gui->SetStringFromInt(food_cost);
+		if (gold_cost > 0) cell_info = cell_info + " Gold: " + App->gui->SetStringFromInt(gold_cost);
+		if (stone_cost > 0) cell_info = cell_info + " Stone: " + App->gui->SetStringFromInt(stone_cost);
+		cell_info += ")";
+	}
+}
+
+const char * Cells_Data::GetInfo() const
+{
+	return cell_info.c_str();
+}
+
 // BASE ACTION ELEMENTS --------------------------------------------------------------------------------------
 Action_Panel_Elements::Action_Panel_Elements() 
 {
-	
+	Cells_Data celldata;
+	panel_icons.reserve(MAX_PANEL_CELLS);
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		panel_icons.push_back(celldata);
+	}
+	entitis_panel = nullptr;
 };
 
 Action_Panel_Elements::~Action_Panel_Elements()
 {
 	panel_icons.clear();
+	cell_data.clear();
 }
-void Action_Panel_Elements::ResetPanel()
+
+void Action_Panel_Elements::SetDataFromXML()
 {
+	current_age = 1;
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		cell_lvl[i] = 0;
+	}
+	UpdateCells();
+
+	entitis_panel = nullptr;
+}
+
+void Action_Panel_Elements::UpdateCells()
+{
+	// Reset Cells
+	Cells_Data celldata;
 	panel_icons.clear();
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
 	{
-		panel_icons.push_back({ 0,0,1,1 });
+		panel_icons.push_back(celldata);
 	}
-	entitis_panel = nullptr;
-};
 
-void Action_Panel_Elements::AddIcon(SDL_Rect icon_rect, uint position)
-{
-	if (position < MAX_PANEL_CELLS)	panel_icons[position] = icon_rect;
+	// Set Current Cells
+	int size = cell_data.size();
+	for (int i = 0; i < size; i++)
+	{
+		if (cell_data[i].cell_at_level == cell_lvl[cell_data[i].cell_position] && cell_data[i].cell_at_age <= current_age)
+		{
+			panel_icons[cell_data[i].cell_position] = cell_data[i];
+		}
+	}
 }
+
+void Action_Panel_Elements::ResetPanel()
+{
+	SetDataFromXML();
+};
 
 void Action_Panel_Elements::ChangePanelIcons(std::vector<UI_Image*> & actual_panel) 
 {
 	for (uint i = 0; i < MAX_PANEL_CELLS; i++)
 	{
-		actual_panel[i]->ChangeTextureRect(panel_icons[i]);
+		actual_panel[i]->ChangeTextureRect(panel_icons[i].cell_icon);
 	}
 }
 
@@ -65,31 +116,46 @@ void Action_Panel_Elements::ChangePlayerGamePanel(Game_Panel * game_panel)
 
 void Action_Panel_Elements::LoadPanelFromXML(const pugi::xml_node & conf)
 {
+	Cells_Data data;
+	pugi::xml_node item = conf.first_child();
+	while (item != NULL)
+	{
+		data.cell_position = item.attribute("cp").as_int(0);
+		data.cell_at_level = item.attribute("cl").as_int(0);
+		data.cell_at_age = item.attribute("al").as_int(0);
+		data.cell_icon.x = item.attribute("x").as_int(0);
+		data.cell_icon.y = item.attribute("y").as_int(0);
+		data.cell_icon.w = item.attribute("w").as_int(0);
+		data.cell_icon.h = item.attribute("h").as_int(0);
+		data.cell_info	 = item.attribute("ci").as_string("");
+		data.wood_cost = item.attribute("wc").as_int(0);
+		data.food_cost = item.attribute("fc").as_int(0);
+		data.gold_cost = item.attribute("gc").as_int(0);
+		data.stone_cost = item.attribute("sc").as_int(0);
+
+		data.SetInfo();
+
+		cell_data.push_back(data);
+		
+		item = item.next_sibling();
+	}
+
+	UpdateCells();
 }
 
+void Action_Panel_Elements::UpgradeCurrentAge(uint curr_age)
+{
+	current_age = current_age;
+	UpdateCells();
+}
 
 // TOWNCENTER ------------------------------------------------------------------------------------------------------------
 
-TownCenterPanel::TownCenterPanel() : Action_Panel_Elements(), got_melechmp(false)
-{
-	panel_icons.reserve(MAX_PANEL_CELLS);
-	for (int i = 0; i < MAX_PANEL_CELLS; i++)
-	{
-		panel_icons.push_back({ 0,0,1,1 });
-	}
-	panel_icons[0] = { 576,585,36,36 };
-	panel_icons[1] = { 288,585,36,36 };
-};
+TownCenterPanel::TownCenterPanel() : Action_Panel_Elements(), got_melechmp(false){};
 
 void TownCenterPanel::ResetPanel()
 {
-	panel_icons.clear();
-	for (int i = 0; i < MAX_PANEL_CELLS; i++)
-	{
-		panel_icons.push_back({ 0,0,1,1 });
-	}
-	panel_icons[0] = { 576,585,36,36 };
-	panel_icons[1] = { 288,585,36,36 };
+	SetDataFromXML();
 	got_melechmp = false;
 }
 
@@ -145,25 +211,7 @@ void TownCenterPanel::ChampionIsDead(UNIT_TYPE type)
 
 // Barrack Panel ---------------------------------------------------------------------------------------------------------
 
-BarrackPanel::BarrackPanel() : Action_Panel_Elements()
-{
-	panel_icons.reserve(MAX_PANEL_CELLS);
-	for (int i = 0; i < MAX_PANEL_CELLS; i++)
-	{
-		panel_icons.push_back({ 0,0,1,1 });	
-	}
-	panel_icons[0] = { 504,585,36,36 };
-}
-
-void BarrackPanel::ResetPanel()
-{
-	panel_icons.clear();
-	for (int i = 0; i < MAX_PANEL_CELLS; i++)
-	{
-		panel_icons.push_back({ 0,0,1,1 });
-	}
-	panel_icons[0] = { 504,585,36,36 };
-}
+BarrackPanel::BarrackPanel() : Action_Panel_Elements(){}
 
 bool BarrackPanel::ActivateCell(int i)
 {
@@ -185,22 +233,11 @@ bool BarrackPanel::ActivateCell(int i)
 	return false;
 }
 
-
 // UNIT PANEL -------------------------------------------------------------------------------------------------------
 
-UnitPanel::UnitPanel() : Action_Panel_Elements() 
-{
-	panel_icons.reserve(MAX_PANEL_CELLS);
-	for (int i = 0; i < MAX_PANEL_CELLS; i++)
-	{
-		panel_icons.push_back({ 0,0,1,1 });
-	}
-	panel_icons[3] = { 0,76,36,36 };
-};
+UnitPanel::UnitPanel() : Action_Panel_Elements() {};
 
-void UnitPanel::ResetPanel()
-{
-}
+void UnitPanel::ResetPanel(){}
 
 bool UnitPanel::ActivateCell(int i)
 {
@@ -223,28 +260,7 @@ bool UnitPanel::ActivateCell(int i)
 
 // VILLAGER PANEL ---------------------------------------------------------------------------------------------------
 
-VillagerPanel::VillagerPanel() : Action_Panel_Elements()
-{
-	panel_icons.reserve(MAX_PANEL_CELLS);
-	v_normal_panel.reserve(MAX_PANEL_CELLS);
-	v_militari_panel.reserve(MAX_PANEL_CELLS);
-	for (int i = 0; i < MAX_PANEL_CELLS; i++)
-	{
-		panel_icons.push_back({ 0,0,1,1 });
-		v_normal_panel.push_back({ 0,0,1,1 });
-		v_militari_panel.push_back({ 0,0,1,1 });
-	}
-	panel_icons[0] = { 76,153,36,36 };
-	panel_icons[1] = { 593,36,36,36 };
-	panel_icons[2] = { 405,36,36,36 };
-	panel_icons[3] = { 0,76,36,36 };
-
-	v_normal_panel[13] = {332,36,36,36};
-	v_normal_panel[14] = { 477,36,36,36 };
-	v_militari_panel[0] = { 132,0,36,36 };
-	v_militari_panel[13] = { 332,36,36,36 };
-	v_militari_panel[14] = { 477,36,36,36 };
-}
+VillagerPanel::VillagerPanel() : Action_Panel_Elements(){}
 
 void VillagerPanel::PreUpdate()
 {
@@ -259,7 +275,7 @@ void VillagerPanel::PreUpdate()
 void VillagerPanel::ResetPanel()
 {
 	villagerisbuilding = VP_NOT_BUILDING;
-
+	SetDataFromXML();
 	isbuilding = false;
 	buildingthis = nullptr;
 }
@@ -271,8 +287,9 @@ bool VillagerPanel::ActivateCell(int i)
 	case 0:{
 		if (villagerisbuilding == VP_NOT_BUILDING)
 		{
-			App->sound->PlayGUIAudio(CLICK_INGAME);
 			villagerisbuilding = VP_NORMAL;
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			ChangePanelLvl(villagerisbuilding);
 			return false;
 		}
 		else if (villagerisbuilding == VP_NORMAL)
@@ -294,6 +311,7 @@ bool VillagerPanel::ActivateCell(int i)
 	case 1: {
 		if (villagerisbuilding == VP_NOT_BUILDING){
 			villagerisbuilding = VP_MILITARY;
+			ChangePanelLvl(villagerisbuilding);
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 		}
 		}
@@ -312,53 +330,28 @@ bool VillagerPanel::ActivateCell(int i)
 		break;
 	case 13: {
 		if (villagerisbuilding == VP_NORMAL) {
-			App->sound->PlayGUIAudio(CLICK_INGAME);
 			villagerisbuilding = VP_MILITARY;
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			ChangePanelLvl(villagerisbuilding);
 		}
 		else if (villagerisbuilding == VP_MILITARY)
 		{
-			App->sound->PlayGUIAudio(CLICK_INGAME);
 			villagerisbuilding = VP_NORMAL;
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			ChangePanelLvl(villagerisbuilding);
 		}
 		}
 		break;
 	case 14: if (villagerisbuilding != VP_NOT_BUILDING) {
-		App->sound->PlayGUIAudio(CLICK_INGAME);
 		villagerisbuilding = VP_NOT_BUILDING;
+		App->sound->PlayGUIAudio(CLICK_INGAME);
+		ChangePanelLvl(villagerisbuilding);
 		}
 		break;
 	default:
 		break;
 	}
 	return false;
-}
-
-void VillagerPanel::ChangePanelIcons(std::vector<UI_Image*>& actual_panel)
-{
-	switch (villagerisbuilding)
-	{
-	case VP_NOT_BUILDING: 
-		for (uint i = 0; i < MAX_PANEL_CELLS; i++)
-		{
-			actual_panel[i]->ChangeTextureRect(panel_icons[i]);
-		}
-		
-		break;
-	case VP_NORMAL:
-		for (uint i = 0; i < MAX_PANEL_CELLS; i++)
-		{
-			actual_panel[i]->ChangeTextureRect(v_normal_panel[i]);
-		}
-		break;
-	case VP_MILITARY:
-		for (uint i = 0; i < MAX_PANEL_CELLS; i++)
-		{
-			actual_panel[i]->ChangeTextureRect(v_militari_panel[i]);
-		}
-		break;
-	default:
-		break;
-	}
 }
 
 bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
@@ -397,6 +390,15 @@ bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 	return false;
 }
 
+void VillagerPanel::ChangePanelLvl(int lvl)
+{
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		cell_lvl[i] = lvl;
+	}
+	UpdateCells();
+}
+
 bool VillagerPanel::GetIsBuilding() const
 {
 	return isbuilding;
@@ -408,15 +410,6 @@ bool VillagerPanel::GetIsBuilding() const
 HeroPanel::HeroPanel() : Action_Panel_Elements()
 {
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
-
-	panel_icons.reserve(MAX_PANEL_CELLS);
-	for (int i = 0; i < MAX_PANEL_CELLS; i++)
-	{
-		panel_icons.push_back({ 0,0,1,1 });
-	}
-	panel_icons[3] = { 504,441,36,36 };
-	panel_icons[4] = { 0,76,36,36 };
-
 
 	skill_tree = (UI_Image*)App->gui->GenerateUI_Element(IMG);
 	skill_tree->SetBox({ 30, 100, 243, 345 });
@@ -470,18 +463,16 @@ HeroPanel::~HeroPanel()
 {
 	skills.clear();
 	skills_buttons.clear();
-	
-	mele_champion.clear();
 }
 
 void HeroPanel::ResetPanel()
 {
 	entitis_panel = nullptr;
 	champion_selected = NO_UNIT;
-
+	
 	skill_tree->Desactivate();
 	skill_tree->DesactivateChids();
-
+	
 	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
 	{
 		skills_buttons[i]->button_state = UP;
@@ -490,6 +481,8 @@ void HeroPanel::ResetPanel()
 	mele_learned[0] = (-1);
 	mele_learned[1] = (-1);
 	mele_learned[2] = (-1);
+
+	SetDataFromXML();
 
 	activate_skill = -1;
 }
@@ -617,21 +610,11 @@ void HeroPanel::LearnSkill(int i)
 {
 	if (champion_selected == WARRIOR_CHMP && mele_learned[i / 2] == -1)
 	{
-		if(i/2 != 2)mele_learned[i / 2] = i; 
-	}
-}
-
-void HeroPanel::ChangePanelIcons(std::vector<UI_Image*>& actual_panel) 
-{
-	for (uint i = 0; i < MAX_PANEL_CELLS; i++)
-	{
-		if(champion_selected == WARRIOR_CHMP)	actual_panel[i]->ChangeTextureRect(panel_icons[i]);
-	}
-
-	if (champion_selected == WARRIOR_CHMP) {
-		for (int i = 0; i < 3; i++)
+		if (i / 2 != 2)
 		{
-			if (mele_learned[i] != -1) actual_panel[i]->ChangeTextureRect(mele_champion[mele_learned[i]]);
+			mele_learned[i / 2] = i;
+			cell_lvl[i / 2] = (i % 2)+1;
+			UpdateCells();
 		}
 	}
 }
@@ -644,14 +627,34 @@ void HeroPanel::ChangePanelTarget(Entity * new_target)
 	
 }
 
-
 // ACTION PANEL  ================================================================================================
 
-Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
+Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({37,624}), isin(false)
 {
+	// Create Panels
+	towncenterpanel = new TownCenterPanel();
+	barrackpanel = new BarrackPanel();
+	unitpanel = new UnitPanel();
+	heropanel = new HeroPanel();
+	villagerpanel = new VillagerPanel();
+
+	
+	//Load Panels Data from loaded folder
+	char* buffer = nullptr;
+	int size = App->fs->Load("gui/Hud_Action_Panel_Data.xml", &buffer);
+	pugi::xml_document panel_data;
+	pugi::xml_parse_result result = panel_data.load_buffer(buffer, size);
+	RELEASE_ARRAY(buffer);
+
+	pugi::xml_node unit_node = panel_data.first_child();
+	towncenterpanel->LoadPanelFromXML(unit_node.child("Buildings").child("TownCenter"));
+	barrackpanel->LoadPanelFromXML(unit_node.child("Buildings").child("Barrack"));
+	villagerpanel->LoadPanelFromXML(unit_node.child("Units").child("Villager"));
+	unitpanel->LoadPanelFromXML(unit_node.child("Units").child("Unit"));
+	heropanel->LoadPanelFromXML(unit_node.child("Units").child("Champion"));
+
+	// Set GUI Elements
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
-	panel_pos.x = 37;
-	panel_pos.y = 624;
 
 	action_screen = App->gui->GenerateUI_Element(UNDEFINED);
 	action_screen->SetBox(action_rect);
@@ -662,12 +665,6 @@ Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 	panel_cells.reserve(MAX_PANEL_CELLS);
 	panel_buttons.reserve(MAX_PANEL_CELLS);
 
-	towncenterpanel = new TownCenterPanel();
-	unitpanel = new UnitPanel();
-	heropanel = new HeroPanel();
-	villagerpanel = new VillagerPanel();
-	barrackpanel = new BarrackPanel();
-	
 	UI_Image* cell = nullptr;
 	UI_Button* button = nullptr;
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
@@ -687,6 +684,7 @@ Action_Panel::Action_Panel() : action_rect({37, 624, 200, 123}), isin(false)
 		action_screen->AddChild(button);
 	}
 	action_screen->DesactivateChids();
+
 }
 
 Action_Panel::~Action_Panel()
@@ -1021,26 +1019,15 @@ UI_Element * Action_Panel::GetHeroSkillTree() const
 	return heropanel->skill_tree;
 }
 
-void Building_Panel_Data::SetInfo()
+void Action_Panel::UpgradeCivilizationAge(uint curr_age)
 {
-	if (wood_cost > 0 || meat_cost > 0 || gold_cost > 0 || stone_cost > 0)
+	towncenterpanel->UpgradeCurrentAge(curr_age);
+	barrackpanel->UpgradeCurrentAge(curr_age);
+	
+	villagerpanel->UpgradeCurrentAge(curr_age);
+	if (actualpanel != nullptr)
 	{
-		cell_info += ": Cost ( ";
-		if (wood_cost > 0) cell_info = cell_info + App->gui->SetStringFromInt(wood_cost) + " wood ";
-		if (meat_cost > 0) cell_info = cell_info + App->gui->SetStringFromInt(meat_cost) + " food ";
-		if (gold_cost > 0) cell_info = cell_info + App->gui->SetStringFromInt(gold_cost) + " gold ";
-		if (stone_cost > 0) cell_info = cell_info + App->gui->SetStringFromInt(stone_cost) + " stone ";
-		cell_info += ")";
-
+		actualpanel->ChangePanelIcons(panel_cells);
+		SetButtons();
 	}
-}
-
-const char * Building_Panel_Data::GetInfo() const
-{
-	return cell_info.c_str();
-}
-
-const char * Unit_Panel_Data::GetInfo() const
-{
-	return cell_info.c_str();
 }

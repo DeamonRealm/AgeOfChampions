@@ -151,6 +151,7 @@ bool j1Gui::CleanUp()
 	while (item != gui_elements.begin())
 	{
 		item--;
+		item._Ptr->_Myval->CleanUp();
 		delete item._Ptr->_Myval;
 	}
 	gui_elements.clear();

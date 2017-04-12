@@ -7,7 +7,6 @@
 
 #include "SDL\include\SDL_rect.h"
 
-
 #include "Hud_SelectionPanel.h"
 
 #define MAX_PANEL_CELLS 15
@@ -32,47 +31,29 @@ enum GUI_INPUT;
 
 // Basic Action Panel Data -------------------------------------------------------------------------------------
 
-// Buildings Data
+// Cells Data
 
-struct Building_Panel_Data
+struct Cells_Data
 {
 	// Data
 	uint		cell_position = 0;
 	uint		cell_at_level = 0;
+	uint		cell_at_age	  = 0;
 
 	// Data
 	SDL_Rect	cell_icon = { 0,0,1,1 };
 	int			wood_cost = 0;
-	int			meat_cost = 0;
+	int			food_cost = 0;
 	int			gold_cost = 0;
 	int			stone_cost = 0;
 	int			population_cost = 0;
 
 	// Information
-	std::string	cell_info;
+	std::string	cell_info = "";
 
 public:
 	// Functionality
 	void		SetInfo();
-	const char*	GetInfo() const;
-};
-
-// Units Data
-
-struct Unit_Panel_Data
-{
-	// Data
-	uint		cell_position = 0;
-	uint		cell_at_level = 0;
-
-	// Data
-	SDL_Rect	cell_icon = { 0,0,1,1 };
-
-	// Information
-	std::string	cell_info;
-
-public:
-	// Functionality
 	const char*	GetInfo() const;
 };
 
@@ -85,11 +66,12 @@ public:
 	~Action_Panel_Elements();
 	
 	// Reset Panel
+	void		 SetDataFromXML();
+	void		 UpdateCells();
 	virtual void ResetPanel();
 
 	virtual bool ActivateCell(int i) { return false; };
 
-	void		 AddIcon(SDL_Rect icon_rect, uint position);
 	virtual void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 
 	virtual void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
@@ -98,12 +80,15 @@ public:
 	virtual void ChangePlayerGamePanel(Game_Panel* game_panel);
 
 	virtual void LoadPanelFromXML(const pugi::xml_node&	conf);
-
+	virtual void UpgradeCurrentAge(uint curr_age = 1);
+	virtual void UpgradeResearch() {};
 protected:
-	std::vector<SDL_Rect>		panel_icons;
+	uint						current_age = 1;
+	int							cell_lvl[MAX_PANEL_CELLS];
 
+	std::vector<Cells_Data>		panel_icons;
+	std::vector<Cells_Data>     cell_data;
 	Entity*						entitis_panel = nullptr;
-	
 	Game_Panel*					player_game_panel_resources = nullptr;
 };
 
@@ -134,9 +119,6 @@ class BarrackPanel : public Action_Panel_Elements
 public:
 	BarrackPanel();
 	~BarrackPanel() {};
-
-	// Reset Panel
-	void ResetPanel();
 
 	bool ActivateCell(int i);
 
@@ -184,16 +166,13 @@ public:
 
 	bool ActivateCell(int i);
 
-	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 	bool Villager_Handle_input(GUI_INPUT input);
 
+	void ChangePanelLvl(int lvl);
 	bool GetIsBuilding()const;
 
 private:
 	VILLAGER_IS_BULIDING	villagerisbuilding = VP_NOT_BUILDING;
-
-	std::vector<SDL_Rect>	v_normal_panel;
-	std::vector<SDL_Rect>	v_militari_panel;
 
 	bool					isbuilding = false;
 	Entity*					buildingthis = nullptr;
@@ -215,7 +194,6 @@ public:
 	bool Handle_input(GUI_INPUT input);
 
 	void LearnSkill(int i);
-	void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 	void ChangePanelTarget(Entity* new_target);
 	
 
@@ -290,9 +268,12 @@ public:
 	UI_Element* GetActionScreen()const;
 	UI_Element* GetHeroSkillTree() const;
 
+	// Upgrade Age
+	void UpgradeCivilizationAge(uint curr_age = 1);
+
 
 private:
-	
+
 	// HUD Panels Pointer
 	Selection_Panel*			player_selection_panel = nullptr;
 	Game_Panel*					player_game_panel = nullptr;

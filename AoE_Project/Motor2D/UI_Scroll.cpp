@@ -16,8 +16,7 @@ UI_Scroll::UI_Scroll() : UI_Element({ 0,0,0,0 }, SCROLL), ContentWindow({0,0,0,0
 //Destructors =============================================
 UI_Scroll::~UI_Scroll()
 {
-	Items.clear();
-	Items_location.clear();
+	CleanUp();
 }
 
 //Game Loop ===============================================
@@ -52,6 +51,8 @@ void UI_Scroll::Draw(bool debug) const
 bool UI_Scroll::CleanUp()
 {
 	bool ret = true;
+
+	Items_location.clear();
 
 	while (Items.size() > 0) {
 

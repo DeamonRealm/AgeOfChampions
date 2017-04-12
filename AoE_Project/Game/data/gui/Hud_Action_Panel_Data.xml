@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Recipe that Stores Data for HUD Action Panels-->
+<!--Format:
+cp => cell position
+cl => cell available at level cl
+al => cell available at age "al"
+x  => cell icon x pos in texture
+y  => cell icon y pos in texture
+w  => cell icon width
+h  => cell icon height
+ci => cell information (string shown as help in game)
+// Buildings Only .....................
+wc => wood cost to activate cell
+fc => food cost to activate cell
+gc => gold cost to activate cell
+sc => stone cost to activate cell
+pc => population cost to activate cell
+// ....................................
+
+-->
+<HudActionPanelData>
+  <Buildings>
+    <TownCenter>
+      <cell cp ="0" cl ="0" al ="1" x="576" y="585" w="36" h="36" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ci ="Create Villager"/>
+      <cell cp ="1" cl ="0" al ="1" x="288" y="585" w="36" h="36" wc ="0" fc ="180" gc ="60" sc ="0" pc ="1" ci ="Create Warrior Champion"/>
+      <cell cp ="5" cl ="0" al ="1" x="540" y="477" w="36" h="36" wc ="0" fc ="0" gc ="50" sc ="0" pc ="0" ci ="Research Loom (+15 villager hitpoints, +1/+2P armor)"/>
+      <cell cp ="6" cl ="0" al ="2" x="0" y="513" w="36" h="36" wc ="50" fc ="175" gc ="0" sc ="0" pc ="0" ci ="Research Wheelbarrow (+10% villager speed; +25% capacity)"/>
+      <cell cp ="6" cl ="1" al ="3" x="468" y="477" w="36" h="36" wc ="0" fc ="0" gc ="50" sc ="0" pc ="0" ci ="Research Hand Cart (+10% villager speed; +50% capacity)"/>
+      <cell cp ="7" cl ="0" al ="2" x="612" y="477" w="36" h="36" wc ="0" fc ="75" gc ="0" sc ="0" pc ="0" ci ="Research Town Watch (+4 Building LOS)"/>
+      <cell cp ="7" cl ="1" al ="3" x="576" y="477" w="36" h="36" wc ="0" fc ="300" gc ="100" sc ="0" pc ="0" ci ="Research Town Patrol (+4 Building LOS)"/>
+      <cell cp ="10" cl ="0" al ="1" x="432" y="477" w="36" h="36" wc ="0" fc ="500" gc ="0" sc ="0" pc ="0" ci ="Advance to Feudal Age"/>
+      <cell cp ="10" cl ="1" al ="2" x="396" y="477" w="36" h="36" wc ="0" fc ="800" gc ="200" sc ="0" pc ="0" ci ="Advance to Castle Age"/>
+      <cell cp ="10" cl ="2" al ="3" x="504" y="477" w="36" h="36" wc ="0" fc ="1000" gc ="800" sc ="0" pc ="0" ci ="Advance to Imperial Age"/>
+    </TownCenter>
+    <Barrack>
+      <cell cp ="0" cl ="0" al ="1" x="504" y="585" w="36" h="36" wc ="0" mc ="60" gc ="20" sc ="0" pc ="1" ci ="Create Militia"/>
+      <cell cp ="0" cl ="1" al ="2" x="180" y="585" w="36" h="36" wc ="0" mc ="60" gc ="20" sc ="0" pc ="1" ci ="Create Man-at-Arms"/>
+      <cell cp ="0" cl ="2" al ="3" x="144" y="585" w="36" h="36" wc ="0" mc ="60" gc ="20" sc ="0" pc ="1" ci ="Create Long Swordsman"/>
+      <cell cp ="0" cl ="3" al ="4" x="540" y="621" w="36" h="36" wc ="0" mc ="60" gc ="20" sc ="0" pc ="1" ci ="Create Two-Handed Swordsman"/>
+      <cell cp ="0" cl ="4" al ="4" x="252" y="549" w="36" h="36" wc ="0" mc ="60" gc ="20" sc ="0" pc ="1" ci ="Create Champion"/>
+      <cell cp ="1" cl ="0" al ="2" x="396" y="621" w="36" h="36" wc ="25" mc ="35" gc ="0" sc ="0" pc ="1" ci ="Create Spearman"/>
+      <cell cp ="1" cl ="1" al ="3" x="72" y="621" w="36" h="36" wc ="25" mc ="35" gc ="0" sc ="0" pc ="1" ci ="Create Pikeman"/>
+      <cell cp ="6" cl ="0" al ="3" x="36" y="369" w="36" h="36" wc ="0" mc ="215" gc ="90" sc ="0" pc ="0" ci ="Upgrade To Pikeman"/>
+      <cell cp ="5" cl ="0" al ="2" x="604" y="333" w="36" h="36" wc ="0" mc ="100" gc ="0" sc ="0" pc ="0" ci ="Upgrade To Man-at-Arms"/>
+      <cell cp ="5" cl ="1" al ="3" x="568" y="333" w="36" h="36" wc ="0" mc ="200" gc ="65" sc ="0" pc ="0" ci ="Upgrade To Long Swordsman"/>
+      <cell cp ="5" cl ="2" al ="4" x="144" y="369" w="36" h="36" wc ="0" mc ="300" gc ="100" sc ="0" pc ="0" ci ="Upgrade To Two-Handed Swordsman"/>
+      <cell cp ="5" cl ="3" al ="4" x="144" y="369" w="36" h="36" wc ="0" mc ="750" gc ="350" sc ="0" pc ="0" ci ="Upgrade To Champion"/>
+    </Barrack>
+  </Buildings>
+  <Units>
+    <Villager>
+      <cell cp ="0" cl ="0" al ="1" x="76" y="153" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
+      <cell cp ="1" cl ="0" al ="1" x="593" y="36" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Militari Building"/>
+      <cell cp ="2" cl ="0" al ="1" x="405" y="36" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Repair Building"/>
+      <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Kill Unit"/>
+      <cell cp ="13" cl ="1" al ="1" x="332" y="36" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
+      <cell cp ="14" cl ="1" al ="1" x="477" y="36" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
+      <cell cp ="0" cl ="2" al ="1" x="132" y="0" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="175" pc ="0" ci ="Bulid Barrack"/>
+      <cell cp ="13" cl ="2" al ="1" x="332" y="36" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
+      <cell cp ="14" cl ="2" al ="1" x="477" y="36" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
+    </Villager>
+    <Unit>
+      <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Kill Warrior"/>
+    </Unit>
+    <Champion>
+      <cell cp ="0" cl ="1" al ="1" x="651" y="38" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Passive Hability: Heavy Deffence"/>
+      <cell cp ="0" cl ="2" al ="1" x="651" y="0" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Passive Hability: Berserk"/>
+      <cell cp ="1" cl ="1" al ="1" x="651" y="114" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Stun"/>
+      <cell cp ="1" cl ="2" al ="1" x="651" y="76" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Slash"/>
+      <cell cp ="2" cl ="1" al ="1" x="576" y="477" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci =""/>
+      <cell cp ="2" cl ="2" al ="1" x="612" y="477" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci =""/>
+      <cell cp ="3" cl ="0" al ="1" x="504" y="441" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Open Warrior Skill Tree"/>
+      <cell cp ="4" cl ="0" al ="1" x="0" y="76" w="36" h="36" wc ="0" mc ="0" gc ="0" sc ="0" pc ="0" ci ="Kill Warrior"/>
+    </Champion>
+  </Units>
+</HudActionPanelData>
