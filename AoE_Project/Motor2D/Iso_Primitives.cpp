@@ -137,7 +137,13 @@ bool Circle::Intersects(const Circle * target) const
 	float vec_len = sqrt(vec.x * vec.x + vec.y * vec.y);
 	return (rad >= vec_len);
 }
-
+bool Circle::Overlap(const Circle* target) const
+{
+	int radius = GetRad() + target->GetRad()+2;
+	int deltaX = GetPosition().x - target->GetPosition().x;
+	int deltaY = GetPosition().y - target->GetPosition().y;
+	return deltaX*deltaX + deltaY*deltaY <= radius*radius;
+}
 bool Circle::Intersects(const Rectng * target) const
 {
 	iPoint vec = (target->GetPosition() + target->GetDisplacement()) - position;

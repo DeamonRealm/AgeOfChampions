@@ -348,7 +348,6 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	if (location.DistanceTo(goal) < 2)
 	{
 
-		//if we have a collision with other unit and we have lower priority reduction of speed
 
 		//Look in the next update if there is an error
 		std::vector<Unit*> other_units;
@@ -407,6 +406,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 			}
 			break;
 			case COLLISION_MOVE:
+				//if we have a collision with other unit and we have lower priority reduction of speed
 
 				if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
 					if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
@@ -575,73 +575,12 @@ void Unit::NewPosition(const iPoint& goal, float & position_x, float & position_
 
 }
 
-iPoint Unit::FindWalkableCell(const iPoint & center)
-{
-	iPoint cell;
-	iPoint pos = App->map->WorldToMap(center.x, center.y);
-	std::vector<Unit*> other_units;
-	App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
-	int i = 1;
-	while (i<=5) {
-		// south
-		cell.create(pos.x, pos.y + i);
-		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
-		{
-			return App->map->MapToWorld(cell.x, cell.y);;
-		}
 
-		// north
-		cell.create(pos.x, pos.y - i);
-		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
-		{
-			return App->map->MapToWorld(cell.x, cell.y);;
-		}
-
-		// east
-		cell.create(pos.x + i, pos.y);
-		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
-		{
-			return App->map->MapToWorld(cell.x, cell.y);;
-		}
-
-		// west
-		cell.create(pos.x - i, pos.y);
-		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
-		{
-			return App->map->MapToWorld(cell.x, cell.y);;
-		}
-
-		// south-east
-		cell.create(pos.x + i, pos.y + i);
-		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
-		{
-			return App->map->MapToWorld(cell.x, cell.y);;
-		}
-		// south-west
-		cell.create(pos.x - i, pos.y + i);
-		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
-		{
-			return App->map->MapToWorld(cell.x, cell.y);;
-		}
-		// north-east
-		cell.create(pos.x + i, pos.y - i);
-		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
-		{
-			return App->map->MapToWorld(cell.x, cell.y);;
-		}
-		// north-west
-		cell.create(pos.x - i, pos.y - i);
-		if (App->pathfinding->IsWalkable(cell) && UnitHere(other_units, cell))
-		{
-			return App->map->MapToWorld(cell.x, cell.y);;
-		}
-		i++;
-	}
-}
 
 bool Unit::UnitHere(std::vector<Unit*> other_units, const iPoint& cell)
 {
-	iPoint destination = App->map->MapToWorldCenter(cell.x,cell.y);
+	
+	iPoint destination = cell;
 	iPoint other_unit_cell;
 	for(int i = 0;i<other_units.size();i++)
 	{
@@ -678,124 +617,214 @@ bool Unit::UnitHere(std::vector<Unit*> other_units, const iPoint& cell)
 
 bool Unit::UnitHere(const iPoint & destination, int radius)
 {
-
-
 	std::vector<Unit*> other_units;
 	Circle area;
-	area.SetRad(radius);
-
 	area.SetPosition(destination);
+
+	area.SetRad(radius * 2);
 	App->entities_manager->units_quadtree.CollectCandidates(other_units, area);
+	area.SetRad(this->GetHardCollider().GetRad());
 	if (!other_units.empty()) {
-		if (other_units.size() == 1 && *(other_units.begin()) == this)
+		for (int i = 0; i < other_units.size(); i++)
 		{
-			return false;
+			if (other_units[i] == this) {
+				continue;
+			}
+			if (other_units[i]->GetHardCollider().Overlap(&area))
+			{
+				return true;
+			}
 		}
-		else
-		{
-			return true;
-		}
+		
 	}
+
 	return false;
 }
+iPoint Unit::FindWalkableCell(const iPoint & center)
+{
+	iPoint cell;
+	iPoint pos = center;
+	iPoint goal;
+	iPoint cell_map;
+	int radius = GetSoftCollider().GetRad();
+	int doble_radius = radius*2;
 
+	std::vector<Unit*> other_units;
+	App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
+	int i = 1;
+	while (i <= 5) {
+		// south
+		cell.create(pos.x, pos.y + doble_radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
+
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+
+		// north
+		cell.create(pos.x, pos.y - doble_radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
+
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+
+		// east
+		cell.create(pos.x + doble_radius*i, pos.y);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
+
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+
+		// west
+		cell.create(pos.x - doble_radius*i, pos.y);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
+
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+
+		// south-east
+		cell.create(pos.x + doble_radius*i, pos.y + doble_radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
+
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+		// south-west
+		cell.create(pos.x - doble_radius*i, pos.y + doble_radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
+
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+		// north-east
+		cell.create(pos.x + doble_radius*i, pos.y - doble_radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
+
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+		// north-west
+		cell.create(pos.x - doble_radius*i, pos.y - doble_radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
+
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+		i++;
+	}
+	return iPoint(-1, -1);
+}
 
 iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 {
 	iPoint cell;
-	iPoint pos = App->map->WorldToMap(center.x, center.y);
+	iPoint pos = center;
 	iPoint goal;
-
+	iPoint cell_map;
 	int radius = GetSoftCollider().GetRad();
+	Circle target;
+	target.SetRad(radius);
+	target.SetPosition(center);
+
 	Circle checker;
 	checker.SetRad(radius);
 
 	// south
-	cell.create(pos.x, pos.y + 1);
-	checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
-	goal = attack_area.NearestPoint(&checker);
-
-
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal,radius))
+	cell.create(pos.x, pos.y + radius*2);
+	checker.SetPosition(cell);
+	goal = checker.NearestPoint(&target);
+	cell_map = App->map->WorldToMap(cell.x, cell.y);
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal,radius))
 		{
 			return goal;
 		}
 
 		// north
-		cell.create(pos.x, pos.y - 1);
-		checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
-		goal = attack_area.NearestPoint(&checker);
+		cell.create(pos.x, pos.y - radius * 2);
+		checker.SetPosition(cell);
+		goal = checker.NearestPoint(&target);
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
 
 
 		// east
-		cell.create(pos.x + 1, pos.y);
-		checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
-		goal = attack_area.NearestPoint(&checker);
+		cell.create(pos.x + radius * 2, pos.y);
+		checker.SetPosition(cell);
+		goal = checker.NearestPoint(&target);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
 
 
 		// west
-		cell.create(pos.x - 1, pos.y);
-		checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
-		goal = attack_area.NearestPoint(&checker);
+		cell.create(pos.x - radius * 2, pos.y);
+		checker.SetPosition(cell);
+		goal = checker.NearestPoint(&target);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
 
 		
 		// south-east
-		cell.create(pos.x + 1, pos.y + 1);
-		checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
-		goal = attack_area.NearestPoint(&checker);
+		cell.create(pos.x + radius * 2, pos.y + radius * 2);
+		checker.SetPosition(cell);
+		goal = checker.NearestPoint(&target);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
 
 		// south-west
-		cell.create(pos.x - 1, pos.y + 1);
-		checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
-		goal = attack_area.NearestPoint(&checker);
+		cell.create(pos.x - radius * 2, pos.y + radius * 2);
+		checker.SetPosition(cell);
+		goal = checker.NearestPoint(&target);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
 
 		// north-east
-		cell.create(pos.x + 1, pos.y - 1);
-		checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
-		goal = attack_area.NearestPoint(&checker);
+		cell.create(pos.x + radius * 2, pos.y - radius * 2);
+		checker.SetPosition(cell);
+		goal = checker.NearestPoint(&target);
 
 		
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
 
 		// north-west
-		cell.create(pos.x - 1, pos.y - 1);
-		checker.SetPosition(App->map->MapToWorldCenter(cell.x, cell.y));
-		goal = attack_area.NearestPoint(&checker);
+		cell.create(pos.x - radius * 2, pos.y - radius * 2);
+		checker.SetPosition(cell);
+		goal = checker.NearestPoint(&target);
 
 
-		if (App->pathfinding->IsWalkable(cell) && !UnitHere(goal, radius))
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
 		{
 			return goal;
 		}
@@ -939,10 +968,10 @@ bool Unit::AttackUnit(Unit** target)
 	{
 		return true;
 	}
-	if (!attack_area.Intersects(((Unit*)(*target))->GetAttackArea()))
+	if (!attack_area.Overlap(&((Unit*)(*target))->GetSoftCollider()))
 	{
 
-		iPoint goal = attack_area.NearestPoint(((Unit*)(*target))->GetAttackArea());
+		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider());
 
 		if (UnitHere(goal,GetSoftCollider().GetRad()))
 		{

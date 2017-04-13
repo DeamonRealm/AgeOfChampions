@@ -81,6 +81,7 @@ public:
 	bool	Intersects(const Circle* target)const;
 	bool	Intersects(const Rectng* target)const;
 	bool	Intersects(const iPoint* point)const;
+	bool	Overlap(const Circle* target)const;
 	iPoint  NearestPoint(const Circle* target)const;
 	iPoint	NearestPoint(const Rectng* target)const;
 
