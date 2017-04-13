@@ -82,6 +82,8 @@ public:
 	virtual void LoadPanelFromXML(const pugi::xml_node&	conf);
 	virtual void UpgradeCurrentAge(uint curr_age = 1);
 	virtual void UpgradeResearch() {};
+
+	const char*	 GetCellInfo(int i)const;
 protected:
 	uint						current_age = 1;
 	int							cell_lvl[MAX_PANEL_CELLS];
@@ -208,7 +210,6 @@ private:
 
 	// Champions Skills;
 	std::vector<SDL_Rect>			mele_champion;
-	int								mele_learned[3];
 	int								activate_skill = -1;
 };
 
@@ -284,6 +285,10 @@ private:
 	SDL_Rect					action_rect;
 	UI_Element*					action_screen = nullptr;
 
+	uint						cell_shown = 0;
+	UI_String*					cell_information = nullptr;
+
+
 	// Panell Settings 
 	int							cell;
 	iPoint						panel_pos;
@@ -304,6 +309,7 @@ private:
 
 	// Unit On Action   
 	bool						on_action = false;
+	bool						show_cell_info = false;
 
 
 public:

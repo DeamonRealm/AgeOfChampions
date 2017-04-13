@@ -18,6 +18,7 @@
 
 #include "UI_Element.h"
 #include "UI_Image.h"
+#include "UI_String.h"
 #include "UI_Button.h"
 #include "UI_Fixed_Button.h"
 
@@ -149,6 +150,11 @@ void Action_Panel_Elements::UpgradeCurrentAge(uint curr_age)
 	UpdateCells();
 }
 
+const char* Action_Panel_Elements::GetCellInfo(int i) const
+{
+	return panel_icons[i].GetInfo();
+}
+
 // TOWNCENTER ------------------------------------------------------------------------------------------------------------
 
 TownCenterPanel::TownCenterPanel() : Action_Panel_Elements(), got_melechmp(false){};
@@ -165,7 +171,8 @@ bool TownCenterPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		if (player_game_panel_resources->UseResource(0, 60, 20, 0, 1))
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+			panel_icons[i].stone_cost, panel_icons[i].population_cost))
 		{
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
@@ -176,7 +183,9 @@ bool TownCenterPanel::ActivateCell(int i)
 	case 1: {
 		if (got_melechmp == false)
 		{
-			if (player_game_panel_resources->UseResource(0, 180, 60, 0, 1)) {
+			if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+				panel_icons[i].stone_cost, panel_icons[i].population_cost))
+			{
 				App->sound->PlayGUIAudio(CLICK_INGAME);
 				entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, WARRIOR_CHMP, ALLY));
 				got_melechmp = true;
@@ -219,7 +228,8 @@ bool BarrackPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		if (player_game_panel_resources->UseResource(0, 25, 45, 0, 1))
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost,panel_icons[i].food_cost, panel_icons[i].gold_cost,
+			panel_icons[i].stone_cost, panel_icons[i].population_cost))
 		{
 			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, MILITIA, ALLY));
 			App->sound->PlayGUIAudio(CLICK_INGAME);
@@ -296,7 +306,8 @@ bool VillagerPanel::ActivateCell(int i)
 		{
 			return false;
 		}
-		else if (villagerisbuilding == VP_MILITARY && player_game_panel_resources->UseResource(0,0,0,175,0))
+		else if (villagerisbuilding == VP_MILITARY && player_game_panel_resources->UseResource(panel_icons[i].wood_cost,
+			panel_icons[i].food_cost,panel_icons[i].gold_cost,panel_icons[i].stone_cost,panel_icons[i].population_cost))
 		{
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 			buildingthis = App->entities_manager->GenerateBuilding(BARRACK,ALLY,true);
@@ -451,12 +462,6 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills_buttons[i]->SetLayer(8);
 		skills[i]->SetLayer(8);
 	}
-
-	//champion
-	mele_learned[0] = (-1);
-	mele_learned[1] = (-1);
-	mele_learned[2] = (-1);
-	
 }
 
 HeroPanel::~HeroPanel()
@@ -477,11 +482,6 @@ void HeroPanel::ResetPanel()
 	{
 		skills_buttons[i]->button_state = UP;
 	}
-	//champion
-	mele_learned[0] = (-1);
-	mele_learned[1] = (-1);
-	mele_learned[2] = (-1);
-
 	SetDataFromXML();
 
 	activate_skill = -1;
@@ -493,7 +493,7 @@ bool HeroPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		if (champion_selected == WARRIOR_CHMP && mele_learned[0] != -1)
+		if (champion_selected == WARRIOR_CHMP && cell_lvl[i] != 0)
 		{
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 			((Warrior*)entitis_panel)->Hability_A();
@@ -503,7 +503,7 @@ bool HeroPanel::ActivateCell(int i)
 		break;
 	case 1: 
 		{
-		if (champion_selected == WARRIOR_CHMP && mele_learned[1] != -1) 
+		if (champion_selected == WARRIOR_CHMP && cell_lvl[i] != 0)
 		{
 			activate_skill = 1;	
 			App->sound->PlayGUIAudio(CLICK_INGAME);
@@ -555,7 +555,7 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 			{
 				if (ui_element == skills_buttons[i])
 				{
-					if (mele_learned[i / 2] != -1)return false;
+					if (cell_lvl[i / 2] != 0)return false;
 					LearnSkill(i);
 					App->sound->PlayGUIAudio(CLICK_INGAME);
 					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_A((i % 2));
@@ -608,11 +608,10 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 
 void HeroPanel::LearnSkill(int i)
 {
-	if (champion_selected == WARRIOR_CHMP && mele_learned[i / 2] == -1)
+	if (champion_selected == WARRIOR_CHMP)
 	{
-		if (i / 2 != 2)
+		if (i / 2 != 2) // can't learn skill 3 yet
 		{
-			mele_learned[i / 2] = i;
 			cell_lvl[i / 2] = (i % 2)+1;
 			UpdateCells();
 		}
@@ -629,7 +628,7 @@ void HeroPanel::ChangePanelTarget(Entity * new_target)
 
 // ACTION PANEL  ================================================================================================
 
-Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({37,624}), isin(false)
+Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({ 37,624 }), isin(false)
 {
 	// Create Panels
 	towncenterpanel = new TownCenterPanel();
@@ -638,7 +637,7 @@ Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({37
 	heropanel = new HeroPanel();
 	villagerpanel = new VillagerPanel();
 
-	
+
 	//Load Panels Data from loaded folder
 	char* buffer = nullptr;
 	int size = App->fs->Load("gui/Hud_Action_Panel_Data.xml", &buffer);
@@ -661,6 +660,12 @@ Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({37
 	action_screen->SetLayer(20);
 	action_screen->Activate();
 	action_screen->SetInputTarget((j1Module*)App->player);
+
+	cell_information = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	cell_information->SetBoxPosition(10, 570);
+	cell_information->SetString("Potato Information");
+	cell_information->Activate();
+	cell_information->SetColor({255, 255, 255, 255});
 
 	panel_cells.reserve(MAX_PANEL_CELLS);
 	panel_buttons.reserve(MAX_PANEL_CELLS);
@@ -829,10 +834,35 @@ void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 	case MOUSE_RIGHT_BUTTON:
 		break;
 	case MOUSE_IN:
-		if (ui_element == action_screen)	isin = true;
+	{
+		if (ui_element == action_screen) {
+			isin = true;
+		}
+		if (ui_element == panel_buttons[cell_shown] && show_cell_info == true) break;
+		if (ui_element->GetUItype() == BUTTON && show_cell_info == false)
+		{
+			for (int count = 0; count < MAX_PANEL_CELLS; count++)
+			{
+				if (ui_element == panel_buttons[count])
+				{
+					cell_information->SetString((char*)actualpanel->GetCellInfo(count));
+					cell_shown = count;
+					show_cell_info = true;
+				}
+			}
+		}
+	}
 		break;
 	case MOUSE_OUT:
-		if (ui_element == action_screen)	isin = false;
+		if (ui_element == action_screen)
+		{
+			isin = false;
+			show_cell_info = false;
+		}
+		else if (ui_element == panel_buttons[cell_shown] && isin)
+		{
+			show_cell_info = false;
+		}
 		break;
 	default:
 		break;
@@ -850,6 +880,10 @@ bool Action_Panel::Draw()
 	for (int count = 0; count < MAX_PANEL_CELLS; count++)
 	{
 		if(panel_cells[count]->GetTextureBox().w > 1) panel_cells[count]->Draw(false);
+	}
+	if (show_cell_info)
+	{
+		cell_information->Draw(false);
 	}
 	return true;
 }
@@ -960,11 +994,16 @@ void Action_Panel::SetEntitySelected()
 
 void Action_Panel::SetButtons()
 {
+	show_cell_info = false;
 	for (int count = 0; count < MAX_PANEL_CELLS; count++)
 	{
 		if (panel_cells[count]->GetTextureBox().w > 1 && panel_cells[count]->GetTextureBox().h > 1)
 		{
 			panel_buttons[count]->Activate();
+		}
+		else
+		{
+			panel_buttons[count]->Desactivate();
 		}
 	}
 }
