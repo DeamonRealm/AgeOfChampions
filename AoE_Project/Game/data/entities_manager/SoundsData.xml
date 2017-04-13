@@ -1,19 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundAtlas>
-
   <type enum="sword_solo" song_type ="fx">
     <sound soundPath="sword_01.wav" name="sword"/>
     <sound soundPath="sword_02.wav" name="sword"/>
     <sound soundPath="sword_03.wav" name="sword"/>
   </type>
+  <type enum="arrow_attack" song_type ="fx">
+    <sound soundPath="arrow_attack_01.wav" name="arrow"/>
+    <sound soundPath="arrow_attack_02.wav" name="arrow"/>
+    <sound soundPath="arrow_attack_03.wav" name="arrow"/>
+    <sound soundPath="arrow_attack_04.wav" name="arrow"/>
+  </type>
+  <type enum="monk_converting" song_type ="fx">
+    <sound soundPath="monk_converting.wav" name="monk_converting"/>
+  </type>
+  <type enum="monk_healing" song_type ="fx">
+    <sound soundPath="monk_healing.wav" name="monk_healing"/>
+  </type>
+  <type enum="building_on_fire" song_type ="fx">
+    <sound soundPath="building_on_fire.wav" name="onfire"/>
+  </type>  
   <type enum="barracks_create_select" song_type ="fx">
     <sound soundPath="barracks.wav" name="barrack"/>
+  </type>
+  <type enum="archery_create_selected" song_type ="fx">
+    <sound soundPath="archery_create_selected.wav" name="archery"/>
+  </type>
+  <type enum="blacksmith_created_selected" song_type ="fx">
+    <sound soundPath="blacksmith_created_selected.wav" name="blacksmith"/>
+  </type>
+  <type enum="monastery_create_selected" song_type ="fx">
+    <sound soundPath="monastery_create_selected.wav" name="monastery"/>
+  </type>
+  <type enum="farm_create_selected" song_type ="fx">
+    <sound soundPath="farm_create_selected.wav" name="farm"/>
+  </type>
+  <type enum="tower_create_selected" song_type ="fx">
+    <sound soundPath="tower_create_selected.wav" name="tower"/>
+  </type>
+  <type enum="mill_create_selected" song_type ="fx">
+    <sound soundPath="mill_create_selected.wav" name="mill"/>
+  </type>
+  <type enum="stable_create_selected" song_type ="fx">
+    <sound soundPath="stable_create_selected.wav" name="stable"/>
+  </type>
+  <type enum="university_create_selected" song_type ="fx">
+    <sound soundPath="university_create_selected.wav" name="university"/>
+  </type>
+  <type enum="miningcamp_create_selected" song_type ="fx">
+    <sound soundPath="miningcamp_create_selected.wav" name="miningcamp"/>
+  </type>
+  <type enum="lumbercamp_created_selected" song_type ="fx">
+    <sound soundPath="lumbercamp_created_selected.wav" name="lumbercamp"/>
   </type>
   <type enum="town_center_select"  song_type ="fx">
     <sound soundPath="town_center_selected.wav" name="town_center_selected"/>
   </type>
   <type enum="villager_create"  song_type ="fx">
     <sound soundPath="villager_created.wav" name="villager_created"/>
+  </type>
+  <type enum="villager_finish_building"  song_type ="fx">
+    <sound soundPath="villager_finish_building.wav" name="villager_finish"/>
+  </type>
+  <type enum="infantry_archer_horseman_created"  song_type ="fx">
+    <sound soundPath="infantry_archer_horseman_created.wav" name="infantry_archer_horseman_created"/>
+  </type>
+  <type enum="monk_created"  song_type ="fx">
+    <sound soundPath="monk_created.wav" name="monk_created"/>
+  </type>  
+  <type enum="horse_death"  song_type ="fx">
+    <sound soundPath="horse_death_01.wav" name="death"/>
+    <sound soundPath="horse_death02.wav" name="death"/>
+    <sound soundPath="horse_death_03.wav" name="death"/>
+  </type>
+  <type enum="horse_selected"  song_type ="fx">
+    <sound soundPath="horse_selected_01.wav" name="selected"/>
+    <sound soundPath="horse_selected_02.wav" name="selected"/>
+  </type>
+  <type enum="horse_tasked"  song_type ="fx">
+    <sound soundPath="horse_tasked.wav" name="tasked"/>
   </type>
   <type enum="unit_death"  song_type ="fx">
     <sound soundPath="unit_death_01.wav" name="death"/>
