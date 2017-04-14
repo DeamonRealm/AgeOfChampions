@@ -831,7 +831,11 @@ void Selection_Panel::SetGroupProfile()
 
 Entity * Selection_Panel::GetSelected() const
 {
-	return Selected->GetEntity();
+	if (selected_diplomacy == ALLY)
+	{
+		return Selected->GetEntity();
+	}
+	else return nullptr;
 }
 
 uint Selection_Panel::GetSelectedSize() const

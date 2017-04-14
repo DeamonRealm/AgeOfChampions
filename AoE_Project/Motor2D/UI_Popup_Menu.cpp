@@ -15,7 +15,8 @@ UI_Popup_menu::UI_Popup_menu() : UI_Element({ 0,0,0,0 }, POPUP_MENU), tex_select
 //Destructor =================================================
 UI_Popup_menu::~UI_Popup_menu()
 {
-
+	Items.clear();
+	Items_location.clear();
 }
 
 //Game Loop ==================================================

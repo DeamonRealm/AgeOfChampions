@@ -13,9 +13,7 @@ UI_String::UI_String() : UI_Element({0,0,0,0}, STRING), text(""), text_font(null
 
 //Destructor ==============================================
 UI_String::~UI_String()
-{
-
-}
+{}
 
 
 //Game Loop ===============================================

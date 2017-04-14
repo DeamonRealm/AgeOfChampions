@@ -52,16 +52,9 @@ bool UI_Scroll::CleanUp()
 {
 	bool ret = true;
 
+	Items.clear();
 	Items_location.clear();
 
-	while (Items.size() > 0) {
-
-		//CleanUp the item childs
-		ret = Items.back()->CleanUp();
-		//Delete all item data
-		Items.pop_back();
-
-	}
 	return ret;
 }
 

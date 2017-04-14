@@ -256,6 +256,8 @@ public:
 	void SetEntitySelected();
 	void SetButtons();
 
+	void DesactivateButtons();
+
 	bool GetOnAction()const;
 	bool GetIsIn() const;
 

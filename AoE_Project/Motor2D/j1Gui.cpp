@@ -147,12 +147,34 @@ bool j1Gui::CleanUp()
 	cursors_rects.clear();
 	cursors_pivots.clear();
 
+	UI_TYPE gui_type = UNDEFINED;
 	std::list<UI_Element*>::iterator item = gui_elements.end();
 	while (item != gui_elements.begin())
 	{
 		item--;
-		item._Ptr->_Myval->CleanUp();
-		delete item._Ptr->_Myval;
+		//._Ptr->_Myval->CleanUp();
+		gui_type = item._Ptr->_Myval->GetUItype();
+		switch (gui_type)
+		{
+		case UNDEFINED: delete item._Ptr->_Myval;
+			break;
+		case BUTTON:	delete ((UI_Button*)item._Ptr->_Myval);
+			break;
+		case TEXT_BOX:	delete ((UI_Text_Box*)item._Ptr->_Myval);
+			break;
+		case STRING:	delete ((UI_String*)item._Ptr->_Myval);
+			break;
+		case IMG:		delete ((UI_Image*)item._Ptr->_Myval);
+			break;
+		case SCROLL:	delete ((UI_Scroll*)item._Ptr->_Myval);
+			break;
+		case POPUP_MENU:delete ((UI_Popup_menu*)item._Ptr->_Myval);
+			break;
+		case FIXED_BUTTON:delete ((UI_Fixed_Button*)item._Ptr->_Myval);
+			break;
+		default:	delete item._Ptr->_Myval;
+			break;
+		}
 	}
 	gui_elements.clear();
 

@@ -987,6 +987,7 @@ void Action_Panel::SetEntitySelected()
 	actual_entity = player_selection_panel->GetSelected();
 	if (actual_entity == nullptr)
 	{
+		DesactivateButtons();
 		actualpanel = nullptr;
 		return;
 	}
@@ -1005,6 +1006,14 @@ void Action_Panel::SetButtons()
 		{
 			panel_buttons[count]->Desactivate();
 		}
+	}
+}
+
+void Action_Panel::DesactivateButtons()
+{
+	for (int count = 0; count < MAX_PANEL_CELLS; count++)
+	{
+		panel_buttons[count]->Desactivate();
 	}
 }
 

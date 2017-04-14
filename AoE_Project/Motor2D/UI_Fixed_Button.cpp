@@ -14,7 +14,8 @@ UI_Fixed_Button::UI_Fixed_Button() : UI_Element({ 0,0,0,0 }, FIXED_BUTTON), butt
 
 
 //Destructor ==============================================
-UI_Fixed_Button::~UI_Fixed_Button(){}
+UI_Fixed_Button::~UI_Fixed_Button()
+{}
 
 
 //Game Loop ===============================================

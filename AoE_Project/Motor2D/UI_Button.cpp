@@ -14,9 +14,7 @@ UI_Button::UI_Button() : UI_Element({ 0,0,0,0 }, BUTTON), button_state(OFF) {}
 
 //Destructor ==============================================
 UI_Button::~UI_Button()
-{
-
-}
+{}
 
 
 //Game Loop ===============================================
