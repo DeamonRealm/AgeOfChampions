@@ -230,6 +230,11 @@ bool Entity::GetFlipSprite() const
 	return flip_sprite;
 }
 
+bool Entity::GetIfSelected() const
+{
+	return selected;
+}
+
 const SDL_Rect * Entity::GetSelectionRect() const
 {
 	return &selection_rect;
@@ -1352,6 +1357,45 @@ void Unit::SetExp(uint experience)
 	exp = experience;
 }
 
+void Unit::SetUpgrade(Unit * upgraded)
+{
+	// From Base Entity
+	name.clear();
+	name = upgraded->GetName();
+	vision = upgraded->GetVision();
+	selection_rect = *upgraded->GetSelectionRect();
+	icon_rect = upgraded->GetIcon();
+	if (life == max_life)
+	{
+		life = upgraded->GetLife();
+	}
+	max_life = upgraded->GetMaxLife();
+
+	// Unit
+	unit_type = upgraded->GetUnitType();
+	mark = upgraded->GetMark();
+	soft_collider = upgraded->GetSoftCollider();
+	hard_collider = upgraded->GetHardCollider();
+	view_area = upgraded->GetViewArea();
+	speed = upgraded->GetSpeed();
+
+	int curr_frame = current_animation->GetCurrentFrame();
+	CleanAnimation();
+	App->animator->UnitPlay(this);
+	current_animation->SetCurrentFrame(curr_frame);
+
+	attack_delay = upgraded->attack_delay;
+	attack_hitpoints = upgraded->attack_hitpoints;
+	siege_hitpoints = upgraded->siege_hitpoints;
+	attack_rate = upgraded->attack_rate;
+	attack_type = upgraded->attack_type;
+
+	defense = upgraded->defense;
+	armor = upgraded->armor;
+
+	attack_area = upgraded->attack_area;
+}
+
 // ----------------
 //Get Methods -----
 UNIT_TYPE Unit::GetUnitType()const
@@ -1510,6 +1554,10 @@ std::vector<iPoint>* Unit::GetPath() const
 		return nullptr;
 
 	return ((MoveUnitAction*)action_worker.GetCurrentAction())->GetPath();
+}
+iPoint Unit::GetFuturePosition() const
+{
+	return future_position;
 }
 // ----------------
 ///----------------------------------------------

@@ -73,6 +73,12 @@ void Animation::SetLoop(bool loop_state)
 	loop = loop_state;
 }
 
+void Animation::SetCurrentFrame(uint curr)
+{
+	if (curr < sprites.size())	current_frame = curr;
+	else current_frame = sprites.size() - 1;
+}
+
 void Animation::SetSpeed(uint new_speed)
 {
 	speed = new_speed;
@@ -91,6 +97,11 @@ SDL_Texture * Animation::GetTexture() const
 bool Animation::GetLoop() const
 {
 	return loop;
+}
+
+uint Animation::GetCurrentFrame() const
+{
+	return current_frame;
 }
 
 uint Animation::GetSpeed() const

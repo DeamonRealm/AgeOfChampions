@@ -78,12 +78,14 @@ public:
 	//Set Methods -----------
 	void	SetTexture(const SDL_Texture* tex);
 	void	SetLoop(bool loop_state);
+	void	SetCurrentFrame(uint curr);
 	void	SetSpeed(uint new_speed);
 	void	SetId(uint id);
 
 	//Get Methods -----------
 	SDL_Texture*					GetTexture()const;
 	bool							GetLoop()const;
+	uint							GetCurrentFrame()const;
 	uint							GetSpeed()const;
 	const Sprite*					GetCurrentSprite();
 	const std::vector<Sprite>*		GetAllSprites()const;

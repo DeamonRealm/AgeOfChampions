@@ -117,8 +117,8 @@ public:
 	//Organize unit vector
 	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);
 
-
-
+	//Upgrade Entity
+	bool UpgradeUnit(std::vector<Unit*> &upgraded, ENTITY_TYPE e_type = NO_ENTITY, UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
 	
 	
 

@@ -264,6 +264,7 @@ public:
 	int				GetLife()const;
 	Animation*		GetAnimation();
 	bool			GetFlipSprite()const;
+	bool			GetIfSelected()const;
 	const SDL_Rect*	GetSelectionRect()const;
 	const SDL_Rect&	GetIcon()const;
 	ActionWorker*	GetWorker();
@@ -394,6 +395,7 @@ public:
 	void	SetPopulationCost(uint poblation_cst);
 	void	SetTrainTime(uint train_time_val);
 	void	SetExp(uint experience);
+	void	SetUpgrade(Unit* previous_unit);
 
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
@@ -428,6 +430,7 @@ public:
 	uint			GetTrainTime()const;
 	uint			GetExp()const;
 	std::vector<iPoint>* GetPath() const;
+	iPoint			GetFuturePosition() const;
 
 };
 /// ---------------------------------------------

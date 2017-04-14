@@ -939,3 +939,33 @@ std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > j1EntitiesManager:
 
 	return organized;
 }
+
+bool j1EntitiesManager::UpgradeUnit(std::vector<Unit*> &upgraded, ENTITY_TYPE e_type, UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOMACY e_diplomacy)
+{
+	bool ret = false;
+
+	if (e_type == UNIT && e_type != NO_UNIT && new_type != NO_UNIT)
+	{
+		Unit* new_unit = nullptr;
+		int size = units_defs.size();
+		for (int count = 0; count < size; count++)
+		{
+			if (units_defs[count]->GetUnitType() == new_type) 
+			{
+				new_unit = units_defs[count];
+				break;
+			}
+		}
+		std::list<Unit*>::iterator unit = units.begin();
+		while (unit != units.end())
+		{
+			if (unit._Ptr->_Myval->GetDiplomacy() == e_diplomacy && unit._Ptr->_Myval->GetUnitType() == u_type)
+			{
+				unit._Ptr->_Myval->SetUpgrade(new_unit);
+			}
+			unit++;
+		}
+	}
+
+	return ret;
+}

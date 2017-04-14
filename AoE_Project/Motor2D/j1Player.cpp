@@ -31,6 +31,7 @@ j1Player::j1Player()
 //j1Player Destructor ============================================================
 j1Player::~j1Player()
 {
+	upgraded_units.clear();
 }
 
 void j1Player::Enable()
@@ -51,6 +52,7 @@ void j1Player::Enable()
 
 void j1Player::Disable()
 {
+	upgraded_units.clear();
 	active = false;
 	selection_panel->Disable();
 	game_panel->Disable();
@@ -154,10 +156,8 @@ bool j1Player::PreUpdate()
 		//Generate a Militia unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		{
-			Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY);
+			Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ALLY);
 			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
-
-			//game_panel->IncressPopulation(1, false);
 		}
 		//Generate a Arbalest unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
@@ -200,6 +200,10 @@ bool j1Player::PreUpdate()
 		}
 
 	}
+	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+	{
+		App->entities_manager->UpgradeUnit(upgraded_units, UNIT, MILITIA, ARBALEST, ALLY);
+	}
 
 	// Skills
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
@@ -220,6 +224,8 @@ bool j1Player::PreUpdate()
 
 bool j1Player::PostUpdate()
 {
+	upgraded_units.clear();
+
 	game_hud->Draw(false);
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
