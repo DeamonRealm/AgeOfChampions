@@ -515,7 +515,7 @@ bool Warrior::Die()
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
-		App->entities_manager->units_quadtree.Exteract(this,&this->position);
+		App->entities_manager->AddDeathUnit(this);
 		App->animator->UnitPlay(this);
 	}
 	else if (current_animation->IsEnd())
@@ -527,7 +527,7 @@ bool Warrior::Die()
 		}
 		else
 		{
-			action_worker.HardReset();
+			App->entities_manager->RemoveDeathUnit(this);
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}

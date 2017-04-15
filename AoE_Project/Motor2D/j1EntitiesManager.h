@@ -57,6 +57,7 @@ private:
 
 	//Lists of current game entities
 	std::list<Unit*>		units;
+	std::list<Unit*>		death_units;
 	std::list<Resource*>	resources;
 	std::list<Building*>	buildings;
 
@@ -109,6 +110,9 @@ public:
 
 	//Units lists movement units used in buildings cover
 	void		AddUnit(Unit* unit);
+	void		AddDeathUnit(Unit* unit);
+	void		RemoveDeathUnit(Unit* unit);
+
 	Unit*		PopUnit(const Unit* unit);
 
 	//Get the nearest resource save point from the coordinate

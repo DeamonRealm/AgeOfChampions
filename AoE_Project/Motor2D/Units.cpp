@@ -36,7 +36,7 @@ bool Villager::Die()
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 
-		App->entities_manager->units_quadtree.Exteract(&this->GetPosition());
+		App->entities_manager->AddDeathUnit(this);
 		if (item_type == GOLD || item_type == STONE || item_type == MEAT)
 		{
 			item_type = NO_ITEM;
@@ -52,7 +52,8 @@ bool Villager::Die()
 		}
 		else
 		{
-			action_worker.HardReset();
+			//action_worker.HardReset();
+			App->entities_manager->RemoveDeathUnit(this);
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}

@@ -46,12 +46,24 @@ void j1EntitiesManager::Disable()
 	while (units_item != units.end())
 	{
 		App->buff_manager->RemoveTargetBuffs(units_item._Ptr->_Myval);
-		RELEASE(units_item._Ptr->_Myval);
+		switch (units_item._Ptr->_Myval->GetUnitType())
+		{
+		case VILLAGER:
+			delete ((Villager*)units_item._Ptr->_Myval);
+			break;
+		case WARRIOR_CHMP:
+			delete ((Warrior*)units_item._Ptr->_Myval);
+			break;
+		default:
+			RELEASE(units_item._Ptr->_Myval);
+			break;
+		}
+	
 		units_item++;
 	}
 	units.clear();
 	units_quadtree.Reset();
-
+	
 	//Clean Up resources list
 	std::list<Resource*>::iterator resources_item = resources.begin();
 	while (resources_item != resources.end())
@@ -108,9 +120,7 @@ bool j1EntitiesManager::Update(float dt)
 		item++;
 	}
 
-
 	std::list<Building*>::const_iterator item_build = buildings.begin();
-	ret = true;
 
 	while (item_build != buildings.end())
 	{
@@ -148,8 +158,11 @@ bool j1EntitiesManager::PostUpdate()
 		}
 		else if (type == UNIT)
 		{
+			wasted_units[k]->GetWorker()->HardReset();
 			units.remove((Unit*)wasted_units[k]);
+			death_units.remove((Unit*)wasted_units[k]);
 			units_quadtree.Exteract((Unit*)wasted_units[k], &wasted_units[k]->GetPosition());
+
 		}
 
 		RELEASE(wasted_units[k]);
@@ -174,7 +187,19 @@ bool j1EntitiesManager::Draw() const
 	{
 		units_vec[k]->Draw(App->debug_mode);
 	}
-
+	/*
+	std::list<Unit*> death_units_vec;
+	uint size = units_vec.size();
+	for (uint k = 0; k < size; k++)
+	{
+		units_vec[k]->Draw(App->debug_mode);
+	}
+	*/
+	std::list<Unit*>::const_iterator death_unit = death_units.begin();
+	for (; death_unit != death_units.end(); death_unit++)
+	{
+		death_unit._Ptr->_Myval->Draw(App->debug_mode);
+	}
 	//Draw all Resources
 	std::vector<Resource*> resources_vec;
 	resources_quadtree.CollectCandidates(resources_vec, viewport);
@@ -208,7 +233,18 @@ bool j1EntitiesManager::CleanUp()
 	std::list<Unit*>::iterator units_item = units.begin();
 	while (units_item != units.end())
 	{
-		RELEASE(units_item._Ptr->_Myval);
+		switch (units_item._Ptr->_Myval->GetUnitType())
+		{
+		case VILLAGER:
+			delete ((Villager*)units_item._Ptr->_Myval);
+			break;
+		case WARRIOR_CHMP:
+			delete ((Warrior*)units_item._Ptr->_Myval);
+			break;
+		default:
+			RELEASE(units_item._Ptr->_Myval);
+			break;
+		}
 		units_item++;
 	}
 	units.clear();
@@ -241,7 +277,18 @@ bool j1EntitiesManager::CleanUp()
 	uint size = units_defs.size();
 	for (uint k = 0; k < size; k++)
 	{
-		RELEASE(units_defs[k]);
+		switch (units_defs[k]->GetUnitType())
+		{
+		case VILLAGER:
+			delete ((Villager*)units_defs[k]);
+			break;
+		case WARRIOR_CHMP:
+			delete ((Warrior*)units_defs[k]);
+			break;
+		default:
+			RELEASE(units_defs[k]);
+			break;
+		}
 	}
 	units_defs.clear();
 
@@ -873,6 +920,19 @@ void j1EntitiesManager::AddUnit(Unit* unit)
 	units.push_back((Unit*)unit);
 	units_quadtree.Exteract(unit,&unit->GetPosition());
 	units_quadtree.Insert((Unit*)unit, &unit->GetPosition());
+}
+
+void j1EntitiesManager::AddDeathUnit(Unit * unit)
+{
+
+	death_units.push_back((Unit*)unit);
+	units_quadtree.Exteract(unit, &unit->GetPosition());
+
+}
+
+void j1EntitiesManager::RemoveDeathUnit(Unit * unit)
+{
+	death_units.remove(unit);
 }
 
 Unit * j1EntitiesManager::PopUnit(const Unit * unit)
