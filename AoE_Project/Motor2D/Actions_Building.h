@@ -7,6 +7,70 @@
 #include "j1App.h"
 #include "j1SoundManager.h"
 #include "Actions_Unit.h"
+#include "j1Player.h"
+
+enum RESEARCH_TECH
+{
+	NO_TECH,
+
+	//Archery Tech
+	A_ARCHER_UP,
+	A_C_ARCHER_UP,
+	A_CROSSBOW_UP,
+	A_PARTHIAN_T_UP,
+	A_THUMBRING_UP,
+
+	//Barrak Tech
+	B_MILITIA_UP,
+	B_MAN_AT_ARMS_UP,
+	B_LONGSWORDSMAN_UP,
+	B_TWO_HANDED_UP,
+
+	//Blacksmith Tech
+	BS_BLASTFURNACE,
+	BS_BODKINARROW,
+	BS_BRACER,
+	BS_FLETCHING,
+	BS_FORGING,
+	BS_IRONCASTING,
+	BS_LEATHER_AA,
+	BS_PADDED_AA,
+	BS_RING_AA,
+	BS_CHAIN_BA,
+	BS_PLATE_BA,
+	BS_SCALE_BA,
+	BS_CHAIN_MAIL_ARMOR,
+	BS_PLATE_MAIL_ARMOR,
+	BS_SCALE_MAIL_ARMOR,
+
+	// Castle Tech
+	// LC wood
+	// M mill
+	// MC stone/gold
+	// Mk Market
+
+	// Monk
+
+	// Stable
+	S_BLOODLINES,
+	S_KNIGHT_UP,
+	S_CAVALLIER_UP,
+	S_HUSBANDRY,
+	S_SCOUTC_UP,
+
+	// Seige Workshop
+
+	// TownCenter Tech
+	TC_FEUDAL,
+	TC_CASTLE,
+	TC_IMPERIAL,
+	TC_LOOM,
+	TC_PATROL,
+	TC_TOWNWATCH,
+	TC_WHEELBARROW,
+
+	// University
+};
 
 class SpawnUnitAction : public Action
 {
@@ -63,4 +127,43 @@ private:
 	DIPLOMACY	diplomacy = DIPLOMACY::NEUTRAL;
 
 };
+
+class ResearchTecAction : public Action
+{
+public:
+	ResearchTecAction(RESEARCH_TECH type, uint r_time, j1Module* callback, DIPLOMACY diplomacy = ALLY) : Action(nullptr, TASK_B_SPAWN_UNITS), type(type), civilization(callback),diplomacy(diplomacy), research_time(r_time) {};
+	~ResearchTecAction() {};
+
+	bool Activation()
+	{
+		timer.Start();
+		return true;
+	}
+
+	bool Execute()
+	{
+		time = timer.Read();
+		if (research_time <= time)
+		{
+			if (civilization == App->player)
+			{
+				App->entities_manager->UpgradeEntity(type, diplomacy);
+				App->player->UpgradeCivilization(type);
+			}
+			App->sound->PlayFXAudio(BLACKSMITH_SOUND);
+			return true;
+		}
+
+		return false;
+	}
+private:
+	j1Module*		civilization = nullptr;
+	uint			time = 0;
+	uint			research_time = 0;
+	j1Timer			timer;
+	RESEARCH_TECH	type = RESEARCH_TECH::NO_TECH;
+	DIPLOMACY		diplomacy = DIPLOMACY::NEUTRAL;
+};
+
+
 #endif // __ACTION_BUILDING_H__

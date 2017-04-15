@@ -22,6 +22,7 @@ class Selection_Panel;
 class Game_Panel;
 class Action_Panel;
 
+enum RESEARCH_TECH;
 
 enum ACTION
 {
@@ -63,6 +64,9 @@ public:
 
 	// GUI_INPUT
 	void GUI_Input(UI_Element* target, GUI_INPUT input);
+
+	// Upgrade Civilization
+	void UpgradeCivilization(RESEARCH_TECH type);
 
 private:
 

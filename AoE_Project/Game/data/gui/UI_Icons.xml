@@ -197,6 +197,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="B_Squires" x="72" y="369" w="36" h="36" pX="0" pY="0"/>
     <sprite n="B_Tracking" x="108" y="369" w="36" h="36" pX="0" pY="0"/>
     <sprite n="B_TwoHandedUp" x="144" y="369" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="B_LongSwordsmanUp" x="468" y="405" w="36" h="36" pX="0" pY="0"/>
     <sprite n="BS_BlastFurnace" x="180" y="369" w="36" h="36" pX="0" pY="0"/>
     <sprite n="BS_BodkinArrow" x="216" y="369" w="36" h="36" pX="0" pY="0"/>
     <sprite n="BS_Bracer" x="252" y="369" w="36" h="36" pX="0" pY="0"/>
@@ -223,7 +224,6 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="LC_BowSaw" x="360" y="405" w="36" h="36" pX="0" pY="0"/>
     <sprite n="LC_DoublebitAxe" x="396" y="405" w="36" h="36" pX="0" pY="0"/>
     <sprite n="LC_TwomSaw" x="432" y="405" w="36" h="36" pX="0" pY="0"/>
-    <sprite n="LongSwordsmanUp" x="468" y="405" w="36" h="36" pX="0" pY="0"/>
     <sprite n="M_CropRotation" x="504" y="405" w="36" h="36" pX="0" pY="0"/>
     <sprite n="M_HeavyPlow" x="540" y="405" w="36" h="36" pX="0" pY="0"/>
     <sprite n="M_HorseCollar" x="576" y="405" w="36" h="36" pX="0" pY="0"/>

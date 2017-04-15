@@ -18,6 +18,7 @@
 
 //Test Action Manager
 #include "j1ActionManager.h"
+#include "Actions_Building.h";
 
 //Constructors ========================
 j1EntitiesManager::j1EntitiesManager()
@@ -998,6 +999,11 @@ std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > j1EntitiesManager:
 
 
 	return organized;
+}
+
+void j1EntitiesManager::UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy)
+{
+	// Upgrade Entity acording to research tecnology type
 }
 
 bool j1EntitiesManager::UpgradeUnit(std::vector<Unit*> &upgraded, ENTITY_TYPE e_type, UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOMACY e_diplomacy)

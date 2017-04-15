@@ -28,6 +28,7 @@ enum ENTITY_TYPE;
 enum BUILDING_TYPE;
 enum UNIT_TYPE;
 enum GUI_INPUT;
+enum RESEARCH_TECH;
 
 // Basic Action Panel Data -------------------------------------------------------------------------------------
 
@@ -273,6 +274,7 @@ public:
 
 	// Upgrade Age
 	void UpgradeCivilizationAge(uint curr_age = 1);
+	void UpgradeTecnology(RESEARCH_TECH type);
 
 
 private:

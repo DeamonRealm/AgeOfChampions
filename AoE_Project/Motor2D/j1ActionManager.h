@@ -21,6 +21,7 @@ class DieUnitAction;
 class DieBuildingAction;
 class RecollectVillagerAction;
 class SpawnUnitAction;
+class ResearchTecAction;
 class SaveResourcesVillagerAction;
 class StunUnitAction;
 class ScannAction;
@@ -29,6 +30,7 @@ enum UNIT_TYPE;
 enum BUILDING_TYPE;
 enum RESOURCE_TYPE;
 enum DIPLOMACY;
+enum RESEARCH_TECH;
 
 
 enum TASK_TYPE
@@ -43,7 +45,8 @@ enum TASK_TYPE
 	TASK_U_RECOLLECT,
 	TASK_U_SAVE_RESOURCES,
 	TASK_U_SCANN,
-	TASK_B_SPAWN_UNITS
+	TASK_B_SPAWN_UNITS,
+	TASK_B_RESEARCH
 };
 
 
@@ -177,6 +180,7 @@ public:
 
 	// Building Functions
 	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy);
+	ResearchTecAction*			ResearchAction(RESEARCH_TECH type, uint r_time, j1Module* callback, DIPLOMACY diplomacy);
 	
 	//Passive actions----------------
 	//Scann for units

@@ -12,6 +12,8 @@
 class Action;
 class ActionManager;
 
+enum RESEARCH_TECH;
+
 struct LessDistance
 {
 	bool operator()(const Unit* l, const Unit* r)
@@ -122,6 +124,7 @@ public:
 	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);
 
 	//Upgrade Entity
+	void UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy);
 	bool UpgradeUnit(std::vector<Unit*> &upgraded, ENTITY_TYPE e_type = NO_ENTITY, UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
 	
 	

@@ -133,6 +133,7 @@ void Action_Panel_Elements::LoadPanelFromXML(const pugi::xml_node & conf)
 		data.food_cost = item.attribute("fc").as_int(0);
 		data.gold_cost = item.attribute("gc").as_int(0);
 		data.stone_cost = item.attribute("sc").as_int(0);
+		data.population_cost = item.attribute("pc").as_int(0);
 
 		data.SetInfo();
 
@@ -193,6 +194,14 @@ bool TownCenterPanel::ActivateCell(int i)
 			else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
 		else App->sound->PlayGUIAudio(ERROR_SOUND);
+		}
+		break;
+	case 5: {
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+			panel_icons[i].stone_cost, panel_icons[i].population_cost))
+		{
+			entitis_panel->AddAction(App->action_manager->ResearchAction(TC_LOOM, 3000, App->player, ALLY));
+		}
 		}
 		break;
 	default:
@@ -278,7 +287,8 @@ void VillagerPanel::PreUpdate()
 	{
 		int x = 0, y = 0;
 		App->input->GetMousePosition(x, y);
-		buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, false);
+		buildingthis->OnlySetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		buildingthis->Draw(false);
 	}
 }
 
@@ -1078,4 +1088,10 @@ void Action_Panel::UpgradeCivilizationAge(uint curr_age)
 		actualpanel->ChangePanelIcons(panel_cells);
 		SetButtons();
 	}
+}
+
+void Action_Panel::UpgradeTecnology(RESEARCH_TECH type)
+{
+	// update panels acording to type
+	//int x = 0;
 }

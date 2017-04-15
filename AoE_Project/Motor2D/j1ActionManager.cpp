@@ -160,6 +160,14 @@ SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_T
 	return action;
 }
 
+ResearchTecAction * j1ActionManager::ResearchAction(RESEARCH_TECH type, uint r_time, j1Module * callback, DIPLOMACY diplomacy)
+{
+	ResearchTecAction* action = new ResearchTecAction(type, r_time, callback, diplomacy);
+
+	all_actions.push_back(action);
+	return action;
+}
+
 ScannAction * j1ActionManager::ScanAction(Entity * actor)
 {
 	ScannAction* action = new ScannAction((Unit*)actor);

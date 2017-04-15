@@ -16,6 +16,7 @@
 #include "UI_String.h"
 
 #include "Actions_Unit.h"
+#include "Actions_Building.h"
 
 //Hud Elements
 #include "Hud_SelectionPanel.h"
@@ -321,6 +322,33 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 	case TAB:
 		break;
 	default:
+		break;
+	}
+}
+
+void j1Player::UpgradeCivilization(RESEARCH_TECH type) 
+{
+	upgraded_units.clear();
+	switch (type)
+	{
+	case NO_TECH:
+		break;
+	case TC_FEUDAL: {
+		action_panel->UpgradeCivilizationAge(2);
+		return;
+		}
+		break;
+	case TC_CASTLE:	{
+		action_panel->UpgradeCivilizationAge(3);
+		return;
+		}
+		break;
+	case TC_IMPERIAL: {
+		action_panel->UpgradeCivilizationAge(4);
+		return;
+		}
+		break;
+	default: action_panel->UpgradeTecnology(type);
 		break;
 	}
 }
