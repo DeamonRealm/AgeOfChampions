@@ -347,7 +347,6 @@ public:
 	iPoint					NextGoal(std::vector<iPoint>* path);
 	void					NewPosition(const iPoint& goal,float& position_x, float& position_y);
 	iPoint					FindWalkableCell(const iPoint& center);
-	bool					UnitHere(std::vector<Unit*> other_units,const iPoint& destination);
 	bool					UnitHere(const iPoint& destination, int radius);
 	iPoint					FindWalkableAdjacent(const iPoint& center);
 

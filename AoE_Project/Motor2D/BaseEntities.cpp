@@ -582,43 +582,7 @@ void Unit::NewPosition(const iPoint& goal, float & position_x, float & position_
 
 
 
-bool Unit::UnitHere(std::vector<Unit*> other_units, const iPoint& cell)
-{
-	
-	iPoint destination = cell;
-	iPoint other_unit_cell;
-	for(int i = 0;i<other_units.size();i++)
-	{
-		
-		Unit* other = other_units[i];
-		if (this == other)
-		{
-			continue;
-		}
-		other_unit_cell = App->map->WorldToMap(other->GetPositionRounded().x, other->GetPositionRounded().y);
-		if (other_unit_cell == cell) {
-			return false;
-		}
-		/*
-		if (other->action_type == IDLE || other->action_type == ATTATCK)
-		{
-			if (sqrt((other->GetPositionRounded().x - destination.x) * (other->GetPositionRounded().x - destination.x) + (other->GetPositionRounded().y - destination.y) * (other->GetPositionRounded().y - destination.y)) < (this->hard_collider.GetRad() + other->hard_collider.GetRad()))
-			{
-				return false;
-			}
-		}
-		else if (other->action_type == WALK) {
-			if (sqrt((other->GetPositionRounded().x - destination.x) * (other->GetPositionRounded().x - destination.x) + (other->GetPositionRounded().y - destination.y) * (other->GetPositionRounded().y - destination.y)) < (this->hard_collider.GetRad() + other->hard_collider.GetRad()))
-			{
-				return false;
-			}
-		}
-		*/
-	}
-	
-	
-	return true;
-}
+
 
 bool Unit::UnitHere(const iPoint & destination, int radius)
 {
@@ -626,7 +590,7 @@ bool Unit::UnitHere(const iPoint & destination, int radius)
 	Circle area;
 	area.SetPosition(destination);
 
-	area.SetRad(radius * 2);
+	area.SetRad(radius);
 	App->entities_manager->units_quadtree.CollectCandidates(other_units, area);
 	area.SetRad(this->GetHardCollider().GetRad());
 	if (!other_units.empty()) {
@@ -738,6 +702,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	iPoint goal;
 	iPoint cell_map;
 	int radius = GetSoftCollider().GetRad();
+	int doble_radius = radius * 2;
 	Circle target;
 	target.SetRad(radius);
 	target.SetPosition(center);
@@ -746,7 +711,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	checker.SetRad(radius);
 
 	// south
-	cell.create(pos.x, pos.y + radius*2);
+	cell.create(pos.x, pos.y + doble_radius);
 	checker.SetPosition(cell);
 	goal = checker.NearestPoint(&target);
 	cell_map = App->map->WorldToMap(cell.x, cell.y);
@@ -756,7 +721,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		}
 
 		// north
-		cell.create(pos.x, pos.y - radius * 2);
+		cell.create(pos.x, pos.y - doble_radius);
 		checker.SetPosition(cell);
 		goal = checker.NearestPoint(&target);
 
@@ -767,7 +732,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 
 
 		// east
-		cell.create(pos.x + radius * 2, pos.y);
+		cell.create(pos.x + doble_radius, pos.y);
 		checker.SetPosition(cell);
 		goal = checker.NearestPoint(&target);
 
@@ -779,7 +744,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 
 
 		// west
-		cell.create(pos.x - radius * 2, pos.y);
+		cell.create(pos.x - doble_radius, pos.y);
 		checker.SetPosition(cell);
 		goal = checker.NearestPoint(&target);
 
@@ -791,7 +756,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 
 		
 		// south-east
-		cell.create(pos.x + radius * 2, pos.y + radius * 2);
+		cell.create(pos.x + doble_radius, pos.y + doble_radius);
 		checker.SetPosition(cell);
 		goal = checker.NearestPoint(&target);
 
@@ -802,7 +767,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		}
 
 		// south-west
-		cell.create(pos.x - radius * 2, pos.y + radius * 2);
+		cell.create(pos.x - doble_radius, pos.y + doble_radius);
 		checker.SetPosition(cell);
 		goal = checker.NearestPoint(&target);
 
@@ -813,7 +778,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		}
 
 		// north-east
-		cell.create(pos.x + radius * 2, pos.y - radius * 2);
+		cell.create(pos.x + doble_radius, pos.y - doble_radius);
 		checker.SetPosition(cell);
 		goal = checker.NearestPoint(&target);
 
@@ -824,7 +789,7 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 		}
 
 		// north-west
-		cell.create(pos.x - radius * 2, pos.y - radius * 2);
+		cell.create(pos.x - doble_radius, pos.y - doble_radius);
 		checker.SetPosition(cell);
 		goal = checker.NearestPoint(&target);
 
@@ -986,7 +951,7 @@ bool Unit::AttackUnit(Unit** target)
 				Unit** new_target;
 				new_target = FindNewTarget();
 				if (new_target != nullptr) {
-					this->AddPriorizedAction((Action*)App->action_manager->AttackToUnitAction(this, new_target));
+					this->AddAction((Action*)App->action_manager->AttackToUnitAction(this, new_target));
 					return true;
 				}
 				return true;
