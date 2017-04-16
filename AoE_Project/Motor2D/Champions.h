@@ -20,15 +20,15 @@ protected:
 	uint	level = 2;
 	bool	ability[3];
 	bool	actived[3];
-	bool	ability_B_prepare_mode = false;
+	bool	ability_lvl_2_prepare_mode = false;
 
 	//Buff area
 	Circle			buff_area;
 	PassiveBuff*	buff_to_apply = nullptr;
 
 	//Attack area
-	j1Timer			ability_B_timer;
-	uint			ability_B_cooldown = 0;
+	j1Timer			ability_lvl_2_timer;
+	uint			ability_lvl_2_cooldown = 0;
 
 	//Stats bonus for level
 	uint	attack_for_level = 0;
@@ -47,20 +47,20 @@ public:
 	//Actions -----
 	void		 CleanBuffedUnits();
 	//Ability A methods
-	virtual void SetAbility_A(bool choosed);
-	virtual void Hability_A();
-	virtual void CheckHability_A();
+	virtual void SetAbility_lvl_1(bool choosed);
+	virtual void Hability_lvl_1();
+	virtual void CheckHability_lvl_1();
 	//Ability B methods
-	virtual void SetAbility_B(bool choosed);
-	virtual void PrepareAbility_B();
-	virtual void Hability_B(int x = 0, int y = 0);
+	virtual void SetAbility_lvl_2(bool choosed);
+	virtual void PrepareAbility_lvl_2();
+	virtual void Hability_lvl_2(int x = 0, int y = 0);
 	virtual void CheckHability_B();
 
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetBuffArea(const Circle& area);
 	void	SetBuffToApply(const PassiveBuff* buff);
-	void	SetAbility_B_Cooldown(uint value);
+	void	SetAbility_lvl_2_Cooldown(uint value);
 	void	SetLevel(uint lvl);
 	void	SetAttackForLevel(uint atk_for_lvl);
 	void	SetRangeForLevel(uint rng_for_lvl);
@@ -98,9 +98,9 @@ private:
 
 	/* extra data */
 	Triangle			special_attack_area;
-	Particle			ability_B_particle;
-	uint				ability_B_attack_value = 0;
-	uint				ability_B_stun_value = 0;
+	Particle			ability_lvl_2_particle;
+	uint				ability_lvl_2_attack_value = 0;
+	uint				ability_lvl_2_stun_value = 0;
 
 public:
 
@@ -110,21 +110,78 @@ public:
 	//Draw --------
 	bool	Draw(bool debug);
 	//Actions -----
-	void	SetAbility_A(bool choosed);
-	void	Hability_A();
-	void	CheckHability_A();
-	void	SetAbility_B(bool choosed);
-	void	PrepareAbility_B();
-	void	Hability_B(int x = 0, int y = 0);
-	void	CheckHability_B();
+	void	SetAbility_lvl_1(bool choosed);
+	void	Hability_lvl_1();
+	void	CheckHability_lvl_1();
+	void	SetAbility_lvl_2(bool choosed);
+	void	PrepareAbility_lvl_2();
+	void	Hability_lvl_2(int x = 0, int y = 0);
+	void	CheckHability_lvl_2();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
 	void	CalculateSpecialAttackArea(const iPoint& base);
 	bool	Die();
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Triangle& tri);
-	void	SetAbility_B_AttackValue(uint atk);
-	void	SetAbility_B_StunValue(uint stun);
+	void	SetAbility_lvl_2_AttackValue(uint atk);
+	void	SetAbility_lvl_2_StunValue(uint stun);
+
+
+};
+/// ---------------------------------------------
+
+/// Class Warrior -------------------------------
+// Class that defines the warrior champion states
+class Wizard : public Champion
+{
+public:
+
+	Wizard();
+	Wizard(const Wizard& copy);
+	~Wizard();
+
+private:
+
+	/* extra data */
+	Circle				area_attack_spell_2;
+	Circle				area_attack_spell_3;
+
+	Circle				area_limit_spell_2;
+	Circle				area_limit_spell_3;
+
+	Particle			ability_lvl_2_particle;
+	Particle			ability_lvl_3_particle;
+
+	uint				ability_lvl_2_heal_value = 0;
+	uint				ability_lvl_2_cooldown = 0;
+
+	uint				ability_lvl_3_attack_value = 0;
+	uint				ability_lvl_3_cooldown = 0;
+
+
+public:
+
+	//Functionality ---------
+	//Game Loop ---
+	bool Update();
+	//Draw --------
+	bool	Draw(bool debug);
+	//Actions -----
+	void	SetAbility_lvl_1(bool choosed);
+	void	Hability_lvl_1();
+	void	CheckHability_lvl_1();
+	void	SetAbility_lvl_2(bool choosed);
+	void	PrepareAbility_lvl_2();
+	void	Hability_lvl_2(int x = 0, int y = 0);
+	void	CheckHability_lvl_2();
+	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
+	void	CalculateSpecialAttackArea(const iPoint& base,bool attack_lvl_2);
+	bool	Die();
+	//Set Methods -
+	void	SetPosition(float x, float y, bool insert = true);
+	void	SetSpecialAttackArea(const Circle& circle,const char* name);
+	void	SetAbility_lvl_2_HealValue(uint heal);
+	void	SetAbility_lvl_3_AttackValue(uint attack);
 
 
 };

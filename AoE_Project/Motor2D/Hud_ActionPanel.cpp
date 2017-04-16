@@ -506,7 +506,7 @@ bool HeroPanel::ActivateCell(int i)
 		if (champion_selected == WARRIOR_CHMP && cell_lvl[i] != 0)
 		{
 			App->sound->PlayGUIAudio(CLICK_INGAME);
-			((Warrior*)entitis_panel)->Hability_A();
+			((Warrior*)entitis_panel)->Hability_lvl_1();
 			return false;
 		}
 		}
@@ -517,7 +517,7 @@ bool HeroPanel::ActivateCell(int i)
 		{
 			activate_skill = 1;	
 			App->sound->PlayGUIAudio(CLICK_INGAME);
-			((Warrior*)entitis_panel)->PrepareAbility_B();
+			((Warrior*)entitis_panel)->PrepareAbility_lvl_2();
 			return true;
 		}
 		}
@@ -568,8 +568,8 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 					if (cell_lvl[i / 2] != 0)return false;
 					LearnSkill(i);
 					App->sound->PlayGUIAudio(CLICK_INGAME);
-					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_A((i % 2));
-					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_B((i % 2));
+					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1((i % 2));
+					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2((i % 2));
 					return true;
 				}
 			}
@@ -599,7 +599,7 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 		y -= App->render->camera.y;
 		entitis_panel->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 		
-		if (activate_skill == 1)((Warrior*)entitis_panel)->Hability_B(x, y);
+		if (activate_skill == 1)((Warrior*)entitis_panel)->Hability_lvl_2(x, y);
 		activate_skill = -1;
 		return false;
 	}

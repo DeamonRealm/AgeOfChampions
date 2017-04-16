@@ -448,8 +448,8 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Atk Triangle Width*/	atk_triangle.SetWidthAngle(unit_node->attribute("atk_triangle_width_angle").as_float());
 								atk_triangle.SetXAngle(12.0);
 								((Warrior*)new_def)->SetSpecialAttackArea(atk_triangle);
-		/*Ability B Atk Val*/	((Warrior*)new_def)->SetAbility_B_AttackValue(unit_node->attribute("ability_B_attack_value").as_uint());
-		/*Ability B Stun Val*/	((Warrior*)new_def)->SetAbility_B_StunValue(unit_node->attribute("ability_B_stun_value").as_uint());
+		/*Ability B Atk Val*/	((Warrior*)new_def)->SetAbility_lvl_2_AttackValue(unit_node->attribute("ability_B_attack_value").as_uint());
+		/*Ability B Stun Val*/	((Warrior*)new_def)->SetAbility_lvl_2_StunValue(unit_node->attribute("ability_B_stun_value").as_uint());
 								chmp = true;
 	}
 	else if (unit_type == ARCHER_CHMP)
@@ -458,7 +458,15 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	}
 	else if (unit_type == WIZARD_CHMP)
 	{
-
+		/*Circle Spell*/		Circle temp_circle;
+		/*limit Spell_2*/		temp_circle.SetRad(unit_node->attribute("radius_spell_limit_2").as_uint());
+								((Wizard*)new_def)->SetSpecialAttackArea(temp_circle,"limit_lvl_2");
+		/*area Spell_2*/		temp_circle.SetRad(unit_node->attribute("radius_area_spell_2").as_uint());
+								((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_2");
+		/*limit Spell_3*/		temp_circle.SetRad(unit_node->attribute("radius_spell_limit_3").as_uint());
+								((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "limit_lvl_3");
+		/*area Spell_3*/		temp_circle.SetRad(unit_node->attribute("radius_area_spell_3").as_uint());
+								((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
 	}
 
 	if (chmp)
@@ -466,7 +474,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Buff Area*/			Circle buff_area({ 0,0 }, unit_node->attribute("buff_area_rad").as_uint());
 								buff_area.SetColor({ 255,50,50,255 });
 								((Champion*)new_def)->SetBuffArea(buff_area);
-		/*Ability B Cooldown*/	((Champion*)new_def)->SetAbility_B_Cooldown(unit_node->attribute("ability_B_cooldown").as_uint());
+		/*Ability B Cooldown*/	((Champion*)new_def)->SetAbility_lvl_2_Cooldown(unit_node->attribute("ability_B_cooldown").as_uint());
 		/*Attack for level*/	((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("attack_for_level").as_uint());
 		/*Range for level*/		((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("range_for_level").as_uint());
 		/*Defense for level*/	((Champion*)new_def)->SetDefenseForLevel(unit_node->attribute("defense_for_level").as_float());

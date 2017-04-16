@@ -584,7 +584,64 @@
       
     />
   </unit>
-  
+  <!--Wizard-->
+  <unit civ="Teutons" id="unit">
+    <stats
+      name="Wizard"
+      unit_type ="wizard_chmp"
+      attack_type="melee"
+      
+      buff_area_rad ="250"
+      vision_rad ="300"
+      mark_rad ="55"
+      soft_rad ="30"
+      hard_rad ="10"
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="50"
+      selection_h="50"
+      icon_x="288"
+      icon_y="585"
+      icon_w="36"
+      icon_h="36"
+      
+      max_life="120"
+      view_area="15"
+      speed="0.8"
+      attack_delay ="50"
+      attack_hitpoints="9"
+      attack_bonus="2"
+      siege_hitpoints="10"
+      attack_rate="2000"
+      attack_range="25"
+      defense="1"
+      defense_bonus="2"
+      armor="12"
+      armor_bonus="5"
+      food_cost="180"
+      wood_cost="0"
+      gold_cost="60"
+      poblation_cost="2"
+      train_time="4000"
+      
+      ability_lvl_2_cooldown = "5000"
+      ability_lvl_2_heal_value = "10"
+      
+      ability_lvl_3_attack_value = "2000"
+      ability_lvl_3_cooldown = "5000"
+
+      attack_for_level="1"
+      range_for_level="1"
+      defense_for_level="1.5"
+      armor_for_level="1.5"
+      speed_for_level="1.5"
+      view_area_for_level="2"
+      
+      atk_triangle_length="210"
+      atk_triangle_width_angle="125"
+      
+    />
+  </unit>
   <!--Resources-->
   
   <!--Tree-->

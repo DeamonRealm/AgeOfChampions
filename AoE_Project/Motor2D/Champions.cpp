@@ -21,7 +21,7 @@ Champion::Champion() : Unit()
 }
 
 Champion::Champion(const Champion & copy) : Unit(copy), buff_area(copy.buff_area),buff_to_apply(copy.buff_to_apply), level(copy.level), attack_for_level(copy.attack_for_level), range_for_level(copy.range_for_level),
-defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_B_cooldown(copy.ability_B_cooldown)
+defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_lvl_2_timer(copy.ability_lvl_2_timer)
 {
 
 }
@@ -47,34 +47,34 @@ void Champion::CleanBuffedUnits()
 }
 
 //Ability A methods
-void Champion::SetAbility_A(bool choosed)
+void Champion::SetAbility_lvl_1(bool choosed)
 {
 	ability[0] = choosed;
 	actived[0] = true;
 }
 
-void Champion::Hability_A()
+void Champion::Hability_lvl_1()
 {
 
 }
 
-void Champion::CheckHability_A()
+void Champion::CheckHability_lvl_1()
 {
 
 }
 
 //Ability B methods
-void Champion::SetAbility_B(bool choosed)
+void Champion::SetAbility_lvl_2(bool choosed)
 {
 	ability[1] = choosed;
 }
 
-void Champion::PrepareAbility_B()
+void Champion::PrepareAbility_lvl_2()
 {
 
 }
 
-void Champion::Hability_B(int x, int y)
+void Champion::Hability_lvl_2(int x, int y)
 {
 
 }
@@ -120,9 +120,9 @@ void Champion::SetBuffToApply(const PassiveBuff * buff)
 	buff_to_apply = (PassiveBuff*)buff;
 }
 
-void Champion::SetAbility_B_Cooldown(uint value)
+void Champion::SetAbility_lvl_2_Cooldown(uint value)
 {
-	ability_B_cooldown = value;
+	ability_lvl_2_cooldown = value;
 }
 
 void Champion::SetLevel(uint lvl)
@@ -215,10 +215,10 @@ Warrior::Warrior() :Champion()
 
 }
 
-Warrior::Warrior(const Warrior & copy) : Champion(copy), special_attack_area(copy.special_attack_area), ability_B_attack_value(copy.ability_B_attack_value), ability_B_stun_value(copy.ability_B_stun_value)
+Warrior::Warrior(const Warrior & copy) : Champion(copy), special_attack_area(copy.special_attack_area), ability_lvl_2_attack_value(copy.ability_lvl_2_attack_value), ability_lvl_2_stun_value(copy.ability_lvl_2_stun_value)
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
-	ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
 	for (uint k = 0; k < 3; k++)
 	{
 		actived[k] = false;
@@ -234,8 +234,8 @@ Warrior::~Warrior()
 
 bool Warrior::Update()
 {
-	if (actived[0] && level >= 1 )CheckHability_A();
-	if (ability_B_prepare_mode)PrepareAbility_B();
+	if (actived[0] && level >= 1 )CheckHability_lvl_1();
+	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
 	else if (actived[1] && level >= 2 )CheckHability_B();
 	action_worker.Update();
 
@@ -249,7 +249,7 @@ bool Warrior::Draw(bool debug)
 	//Draw Warrior Selection Mark
 	if (selected)
 	{
-		if (ability_B_prepare_mode)special_attack_area.Draw();
+		if (ability_lvl_2_prepare_mode)special_attack_area.Draw();
 		mark.Draw();
 	}
 
@@ -284,7 +284,7 @@ bool Warrior::Draw(bool debug)
 //Functionality =======================
 //Actions -------------------
 //Ability A methods
-void Warrior::SetAbility_A(bool choosed)
+void Warrior::SetAbility_lvl_1(bool choosed)
 {
 	if (actived[0])return;
 
@@ -298,7 +298,7 @@ void Warrior::SetAbility_A(bool choosed)
 	}
 }
 
-void Warrior::Hability_A()
+void Warrior::Hability_lvl_1()
 {
 	if (actived[0])return;
 	//Collect all the units in the buff area
@@ -309,7 +309,7 @@ void Warrior::Hability_A()
 	//Update units buffs (check for new units and old ones)
 	for (uint k = 0; k < size; k++)
 	{
-		if (units_around[k]->GetDiplomacy() == ALLY)
+		if (units_around[k]->GetDiplomacy() == entity_diplomacy)
 		{
 			if (units_around[k]->GetPosition() != position)
 			{
@@ -326,7 +326,7 @@ void Warrior::Hability_A()
 	actived[0] = true;
 }
 
-void Warrior::CheckHability_A()
+void Warrior::CheckHability_lvl_1()
 {
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_around;
@@ -368,26 +368,26 @@ void Warrior::CheckHability_A()
 	}
 }
 
-void Warrior::SetAbility_B(bool choosed)
+void Warrior::SetAbility_lvl_2(bool choosed)
 {
 	if (level < 2) return;
 
 	if (choosed)
 	{
-		ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
 	}
 	else
 	{
-		ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
 	}
 	ability[1] = choosed;
 }
 
-void Warrior::PrepareAbility_B()
+void Warrior::PrepareAbility_lvl_2()
 {
-	if (ability_B_timer.Read() < ability_B_cooldown)return;
+	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
 
-	ability_B_prepare_mode = true;
+	ability_lvl_2_prepare_mode = true;
 
 	//Focus the warrior in the attack direction
 	int x, y;
@@ -397,11 +397,11 @@ void Warrior::PrepareAbility_B()
 
 }
 
-void Warrior::Hability_B(int x, int y)
+void Warrior::Hability_lvl_2(int x, int y)
 {
-	ability_B_prepare_mode = false;
+	ability_lvl_2_prepare_mode = false;
 
-	if (ability_B_timer.Read() < ability_B_cooldown)return;
+	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
 
 	//Focus the warrior in the attack direction
 	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
@@ -412,12 +412,12 @@ void Warrior::Hability_B(int x, int y)
 
 	if (ability[1])
 	{
-		ability_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
 	}
 	else
 	{
-		ability_B_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
+		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
 	}
 
@@ -436,28 +436,28 @@ void Warrior::Hability_B(int x, int y)
 		{
 			if (ability[1])
 			{
-				units_in[k]->DirectDamage(ability_B_attack_value);
+				units_in[k]->DirectDamage(ability_lvl_2_attack_value);
 			}
 			else
 			{
 				App->buff_manager->CallBuff(units_in[k], TIMED_BUFF, STUN_BUFF);
-				units_in[k]->Stun(ability_B_stun_value);
+				units_in[k]->Stun(ability_lvl_2_stun_value);
 
 			}
 		}
 	}
 
 	actived[1] = true;
-	ability_B_particle.animation.Reset();
-	ability_B_particle.position = GetPositionRounded();
-	ability_B_timer.Start();
+	ability_lvl_2_particle.animation.Reset();
+	ability_lvl_2_particle.position = GetPositionRounded();
+	ability_lvl_2_timer.Start();
 }
 
-void Warrior::CheckHability_B()
+void Warrior::CheckHability_lvl_2()
 {
-	if (!ability_B_particle.animation.IsEnd())
+	if (!ability_lvl_2_particle.animation.IsEnd())
 	{
-		ability_B_particle.Draw();
+		ability_lvl_2_particle.Draw();
 	}
 	else
 	{
@@ -569,17 +569,408 @@ void Warrior::SetSpecialAttackArea(const Triangle & tri)
 	special_attack_area = tri;
 }
 
-void Warrior::SetAbility_B_AttackValue(uint atk)
+void Warrior::SetAbility_lvl_2_AttackValue(uint atk)
 {
-	ability_B_attack_value = atk;
+	ability_lvl_2_attack_value = atk;
 }
 
-void Warrior::SetAbility_B_StunValue(uint stun)
+void Warrior::SetAbility_lvl_2_StunValue(uint stun)
 {
-	ability_B_stun_value = stun;
+	ability_lvl_2_stun_value = stun;
 }
 
 
 /// ---------------------------------------------
+Wizard::Wizard() :Champion()
+{
+
+}
+
+Wizard::Wizard(const Wizard & copy) : Champion(copy), area_attack_spell_2(copy.area_attack_spell_2), area_limit_spell_2(copy.area_limit_spell_2), area_attack_spell_3(copy.area_attack_spell_3), area_limit_spell_3(copy.area_limit_spell_3), ability_lvl_2_heal_value(copy.ability_lvl_2_heal_value), ability_lvl_3_attack_value(copy.ability_lvl_3_attack_value)
+{
+	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
+	ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	for (uint k = 0; k < 3; k++)
+	{
+		actived[k] = false;
+		ability[k] = false;
+	}
+}
+
+//Destructors =========================
+Wizard::~Wizard()
+{
+
+}
+bool Wizard::Update()
+{
+	if (actived[0] && level >= 1)CheckHability_lvl_1();
+	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
+	else if (actived[1] && level >= 2)CheckHability_lvl_2();
+	action_worker.Update();
+
+	return true;
+}
+
+bool Wizard::Draw(bool debug)
+{
+	bool ret = false;
+
+	//Draw wizard Selection Mark
+	if (selected)
+	{
+	//	if (ability_lvl_2_prepare_mode)special_attack_area.Draw();
+		mark.Draw();
+	}
+
+	//Draw wizard logic areas
+	if (debug && selected) {
+
+		if (selected)
+		{
+			attack_area.Draw();
+			soft_collider.Draw();
+			hard_collider.Draw();
+			vision.Draw();
+			buff_area.Draw();
+		}
+	}
+
+	//Calculate & draw wizard special attack area
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y),true);
+	//if (debug && selected) special_attack_area.Draw();
+
+	//Draw Entity Current animation frame
+	const Sprite* sprite = current_animation->GetCurrentSprite();
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+
+	return ret;
+}
+
+void Wizard::SetAbility_lvl_1(bool choosed)
+{
+	if (actived[0])return;
+
+	if (choosed)
+	{
+		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, LIFE_BUFF, false);
+	}
+	else
+	{
+		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, VISION_BUFF, false);
+	}
+
+}
+
+void Wizard::Hability_lvl_1()
+{
+
+	if (actived[0])return;
+	//Collect all the units in the buff area
+	std::vector<Unit*> units_around;
+	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
+	uint size = units_around.size();
+
+	//Update units buffs (check for new units and old ones)
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_around[k]->GetDiplomacy() == entity_diplomacy)
+		{
+			if (units_around[k]->GetPosition() != position)
+			{
+				App->buff_manager->CallBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), false);
+				buffed_units.push_back(units_around[k]);
+			}
+			else
+			{
+				App->buff_manager->CallBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), true);
+				buffed_units.push_back(units_around[k]);
+			}
+		}
+	}
+	actived[0] = true;
+}
+
+void Wizard::CheckHability_lvl_1()
+{
+	//Collect all the units in the buff area
+	std::vector<Unit*> units_around;
+	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
+	uint size = units_around.size();
+
+	//Deactivate all the units buffs that are not in the buff area
+	std::list<Unit*>::iterator unit = buffed_units.begin();
+	while (unit != buffed_units.end())
+	{
+		bool found = false;
+		for (uint k = 0; k < size; k++)
+		{
+			if (unit._Ptr->_Myval == units_around[k])
+			{
+				units_around[k] = nullptr;
+				found = true;
+				break;
+			}
+		}
+
+		if (!found)
+		{
+			App->buff_manager->RemoveTargetBuff(unit._Ptr->_Myval, buff_to_apply);
+			buffed_units.remove(unit._Ptr->_Myval);
+		}
+		unit++;
+	}
+
+	//Update units buffs (check for new units and old ones)
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_around[k] == nullptr)continue;
+		if (units_around[k]->GetDiplomacy() == entity_diplomacy && units_around[k]->GetPosition() != position)
+		{
+			App->buff_manager->CallBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), false);
+			buffed_units.push_back(units_around[k]);
+		}
+	}
+}
+
+void Wizard::SetAbility_lvl_2(bool choosed)
+{
+	if (level < 2) return;
+
+	if (choosed)
+	{
+		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	}
+	else
+	{
+		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+	}
+	ability[1] = choosed;
+}
+
+void Wizard::PrepareAbility_lvl_2()
+{
+	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
+
+	ability_lvl_2_prepare_mode = true;
+
+	//Focus the wizard in the attack direction
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
+	CalculateSpecialAttackArea(iPoint(x, y), true);
+
+}
+
+void Wizard::Hability_lvl_2(int x, int y)
+{
+	ability_lvl_2_prepare_mode = false;
+
+	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
+
+	//Focus the wizard in the spell direction
+	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
+	CalculateSpecialAttackArea(iPoint(x, y),true);
+	action_type = ATTATCK;
+	App->animator->UnitPlay(this);
+
+	if (ability[1])
+	{
+		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+	}
+	else
+	{
+		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
+
+	}
 
 
+
+	//Collect all the units in the buff area
+	std::vector<Unit*> units_in;
+	App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_2);
+
+	uint size = units_in.size();
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
+			if (ability[1])
+			{
+
+			//	units_in[k]->DirectDamage(ability_B_attack_value);
+			}
+			else
+			{
+				units_in[k]->HealUnit(ability_lvl_2_heal_value);
+			}
+	}
+
+	actived[1] = true;
+	ability_lvl_2_particle.animation.Reset();
+	ability_lvl_2_particle.position = GetPositionRounded();
+	ability_lvl_2_timer.Start();
+}
+
+void Wizard::CheckHability_lvl_2()
+{
+	if (!ability_lvl_2_particle.animation.IsEnd())
+	{
+		ability_lvl_2_particle.Draw();
+	}
+	else
+	{
+		actived[1] = false;
+		action_type = IDLE;
+		App->animator->UnitPlay(this);
+	}
+}
+
+iPoint Wizard::GetiPointFromDirection(DIRECTION_TYPE direction) const
+{
+	switch (direction)
+	{
+	case NORTH:
+		return iPoint(position.x, position.y - 1);
+		break;
+	case NORTH_EAST:
+		return iPoint(position.x + 1, position.y - 1);
+		break;
+	case EAST:
+		return iPoint(position.x + 1, position.y);
+		break;
+	case SOUTH_EAST:
+		return iPoint(position.x + 1, position.y + 1);
+		break;
+	case SOUTH:
+		return iPoint(position.x, position.y + 1);
+		break;
+	case SOUTH_WEST:
+		return iPoint(position.x - 1, position.y + 1);
+		break;
+	case WEST:
+		return iPoint(position.x - 1, position.y);
+		break;
+	case NORTH_WEST:
+		return iPoint(position.x - 1, position.y - 1);
+		break;
+	}
+	return iPoint(position.x - 1, position.y - 1);;
+}
+
+void Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
+{
+	if (attack_lvl_2)
+	{	
+		iPoint position = area_attack_spell_2.GetPosition();
+		if (!area_limit_spell_2.IsIn(&fPoint(position.x, position.y)))
+		{
+			int temporal_radius = area_attack_spell_2.GetRad();
+			area_attack_spell_2.SetRad(0);
+			iPoint new_position = area_attack_spell_2.NearestPoint(&area_limit_spell_2);
+			area_attack_spell_2.SetPosition(new_position);
+			area_attack_spell_2.SetRad(temporal_radius);
+		}
+		else
+		{
+			area_attack_spell_2.SetPosition(base);
+		}
+	}
+	else	
+	{
+
+		iPoint position = area_attack_spell_3.GetPosition();
+		if (!area_limit_spell_3.IsIn(&fPoint(position.x, position.y)))
+		{
+			int temporal_radius = area_attack_spell_3.GetRad();
+			area_attack_spell_3.SetRad(0);
+			iPoint new_position = area_attack_spell_3.NearestPoint(&area_limit_spell_3);
+			area_attack_spell_3.SetPosition(new_position);
+			area_attack_spell_3.SetRad(temporal_radius);
+		}
+		else
+		{
+			area_attack_spell_3.SetPosition(base);
+		}
+	}
+}
+
+bool Wizard::Die()
+{
+	if (action_type != DIE && action_type != DISAPPEAR)
+	{
+		App->player->action_panel->HeroIsDead(this->unit_type);
+		App->buff_manager->RemoveTargetBuffs(this);
+		action_type = DIE;
+		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
+		App->entities_manager->AddDeathUnit(this);
+		App->animator->UnitPlay(this);
+	}
+	else if (current_animation->IsEnd())
+	{
+		if (action_type == DIE)
+		{
+			action_type = DISAPPEAR;
+			App->animator->UnitPlay(this);
+		}
+		else
+		{
+			App->entities_manager->RemoveDeathUnit(this);
+			App->entities_manager->DeleteEntity(this);
+			return true;
+		}
+	}
+	return false;
+}
+
+void Wizard::SetPosition(float x, float y, bool insert)
+{
+	//Extract the units to push it with the new position later
+	App->entities_manager->units_quadtree.Exteract(this, &position);
+
+	//Set unit position
+	position.x = x;
+	position.y = y;
+	iPoint pos(position.x, position.y);
+	//Set unit vision position
+	vision.SetPosition(pos);
+	//Set unit mark position
+	mark.SetPosition(pos);
+	//Set soft_collider mark position
+	soft_collider.SetPosition(pos);
+	//Set hard_collider mark position
+	hard_collider.SetPosition(pos);
+	//Set buff_area position
+	buff_area.SetPosition(pos);
+	//Set unit attack area position
+	attack_area.SetPosition(pos);
+
+	//Set area limit position
+	area_limit_spell_2.SetPosition(pos);
+	area_limit_spell_3.SetPosition(pos);
+
+	//Add the unit with the correct position in the correct quad tree
+	if (insert)App->entities_manager->units_quadtree.Insert(this, &position);
+}
+
+void Wizard::SetSpecialAttackArea(const Circle & circle, const char * name)
+{
+	if (strcmp("limit_lvl_2", name) == 0) area_limit_spell_2 = circle;
+	else if (strcmp("area_lvl_2", name) == 0)area_attack_spell_2 = circle;
+	else if (strcmp("limit_lvl_3", name) == 0)area_limit_spell_3 = circle;
+	else if (strcmp("area_lvl_3", name) == 0)area_attack_spell_3 = circle;
+
+}
+
+void Wizard::SetAbility_lvl_2_HealValue(uint heal)
+{
+	ability_lvl_2_heal_value = heal;
+}
+
+void Wizard::SetAbility_lvl_3_AttackValue(uint attack)
+{
+	ability_lvl_3_attack_value = attack;
+}

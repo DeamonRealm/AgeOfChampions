@@ -1059,6 +1059,17 @@ void Unit::DirectDamage(uint damage)
 	}
 }
 
+void Unit::HealUnit(uint heal)
+{
+	//Deal damage to the unit
+	if (life + heal > max_life) {
+		life = max_life;
+		return;
+	}
+	life += heal;
+
+}
+
 bool Unit::Die()
 {
 	if (GetDiplomacy() == DIPLOMACY::ALLY)

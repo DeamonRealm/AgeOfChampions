@@ -31,6 +31,30 @@
     value="0"
   />
   <buff
+    buff_type ="passive"
+    attribute_type="vision"
+    actor="1"
+    value="0"
+  />
+  <buff
+  buff_type ="passive"
+  attribute_type="vision"
+  actor="0"
+  value="0.2"
+  />
+  <buff
+    buff_type ="passive"
+    attribute_type="life"
+    actor="1"
+    value="0"
+  />
+  <buff
+  buff_type ="passive"
+  attribute_type="life"
+  actor="0"
+  value="0.2"
+  />
+  <buff
     buff_type ="timed"
     attribute_type="stun"
     buff_duration ="5000"

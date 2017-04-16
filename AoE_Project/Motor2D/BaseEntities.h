@@ -357,6 +357,8 @@ public:
 	bool					AttackBuilding(Building** target);
 	bool					Cover();
 	void					DirectDamage(uint damage);
+	void					HealUnit(uint heal);
+
 	bool					Die();
 	void					Stun(uint time);
 	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
