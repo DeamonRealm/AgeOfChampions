@@ -310,6 +310,7 @@ bool BarrackPanel::ActivateCell(int i)
 		{
 			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
 			App->sound->PlayGUIAudio(CLICK_INGAME);
+			cell_lvl[i]++;
 		}
 		else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}

@@ -697,6 +697,15 @@ void Selection_Panel::Select(SELECT_TYPE type)
 	}
 }
 
+void Selection_Panel::UpdateSelected()
+{
+	if (Selected->GetEntity() != nullptr)
+	{
+		Selected->SetEntity(Selected->GetEntity());
+	}
+	if (selected_elements.size() > 1) SetGroupProfile();
+}
+
 void Selection_Panel::UnSelect_Entity()
 {
 	std::list<Entity*>::const_iterator item = selected_elements.begin();

@@ -1345,7 +1345,6 @@ void Unit::SetUpgrade(Unit * upgraded)
 
 	// Unit
 	unit_type = upgraded->GetUnitType();
-	mark = upgraded->GetMark();
 	soft_collider = upgraded->GetSoftCollider();
 	hard_collider = upgraded->GetHardCollider();
 	view_area = upgraded->GetViewArea();

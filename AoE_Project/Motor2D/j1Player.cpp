@@ -346,4 +346,5 @@ void j1Player::UpgradeCivilization(RESEARCH_TECH type)
 	default: action_panel->UpgradeTecnology(type);
 		break;
 	}
+	selection_panel->UpdateSelected();
 }
