@@ -43,6 +43,167 @@
       train_time="8000"
     />
   </unit>
+  <!--Two Handed Swordman-->
+  <unit civ="Teutons" id="unit">
+    <stats
+        name="Two Handed Swordman"
+        unit_type ="two_handed_swordman"
+        attack_type="melee"
+      
+        vision_rad ="225"
+        mark_rad ="55"
+        soft_rad ="30"
+        hard_rad ="10"
+        selection_x ="0"
+        selection_y ="0"
+        selection_w="50"
+        selection_h="50"
+        icon_x="609"
+        icon_y="513"
+        icon_w="36"
+        icon_h="36"
+      
+        max_life="150"
+        view_area="15"
+        speed="2.5"
+        attack_delay ="50"
+        attack_hitpoints="5"
+        attack_bonus="2"
+        siege_hitpoints="10"
+        attack_rate="200"
+        attack_range="25"
+        defense="10"
+        defense_bonus="5"
+        armor="12"
+        armor_bonus="5"
+        food_cost="5"
+        wood_cost="5"
+        gold_cost="5"
+        population_cost="2"
+        train_time="8000"
+    />
+  </unit>
+
+  <!--Long Swordman-->
+  <unit civ="Teutons" id="unit">
+    <stats
+        name="Long Swordman"
+        unit_type ="long_swordman"
+        attack_type="melee"
+      
+        vision_rad ="225"
+        mark_rad ="55"
+        soft_rad ="30"
+        hard_rad ="10"
+        selection_x ="0"
+        selection_y ="0"
+        selection_w="50"
+        selection_h="50"
+        icon_x="609"
+        icon_y="513"
+        icon_w="36"
+        icon_h="36"
+      
+        max_life="150"
+        view_area="15"
+        speed="2.5"
+        attack_delay ="50"
+        attack_hitpoints="5"
+        attack_bonus="2"
+        siege_hitpoints="10"
+        attack_rate="200"
+        attack_range="25"
+        defense="10"
+        defense_bonus="5"
+        armor="12"
+        armor_bonus="5"
+        food_cost="5"
+        wood_cost="5"
+        gold_cost="5"
+        population_cost="2"
+        train_time="8000"
+    />
+  </unit>
+  <!--Champion-->
+  <unit civ="Teutons" id="unit">
+    <stats
+        name="Champion"
+        unit_type ="champion"
+        attack_type="melee"
+      
+        vision_rad ="225"
+        mark_rad ="55"
+        soft_rad ="30"
+        hard_rad ="10"
+        selection_x ="0"
+        selection_y ="0"
+        selection_w="50"
+        selection_h="50"
+        icon_x="609"
+        icon_y="513"
+        icon_w="36"
+        icon_h="36"
+      
+        max_life="150"
+        view_area="15"
+        speed="2.5"
+        attack_delay ="50"
+        attack_hitpoints="5"
+        attack_bonus="2"
+        siege_hitpoints="10"
+        attack_rate="200"
+        attack_range="25"
+        defense="10"
+        defense_bonus="5"
+        armor="12"
+        armor_bonus="5"
+        food_cost="5"
+        wood_cost="5"
+        gold_cost="5"
+        population_cost="2"
+        train_time="8000"
+    />
+  </unit>
+  <!--Man At Arms-->
+  <unit civ="Teutons" id="unit">
+    <stats
+        name="Man At Arms"
+        unit_type ="man_at_arms"
+        attack_type="melee"
+      
+        vision_rad ="225"
+        mark_rad ="55"
+        soft_rad ="30"
+        hard_rad ="10"
+        selection_x ="0"
+        selection_y ="0"
+        selection_w="50"
+        selection_h="50"
+        icon_x="609"
+        icon_y="513"
+        icon_w="36"
+        icon_h="36"
+      
+        max_life="150"
+        view_area="15"
+        speed="2.5"
+        attack_delay ="50"
+        attack_hitpoints="5"
+        attack_bonus="2"
+        siege_hitpoints="10"
+        attack_rate="200"
+        attack_range="25"
+        defense="10"
+        defense_bonus="5"
+        armor="12"
+        armor_bonus="5"
+        food_cost="5"
+        wood_cost="5"
+        gold_cost="5"
+        population_cost="2"
+        train_time="8000"
+    />
+  </unit>
   <!--Militia-->
   <unit civ="Teutons" id="unit">
     <stats

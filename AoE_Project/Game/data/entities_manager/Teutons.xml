@@ -2,7 +2,11 @@
   <units>
    <id xml = "militia.xml"/>
    <id xml = "archer.xml"/>
+   <id xml = "two_handed_swordman.xml"/>
+   <id xml = "man_at_arms.xml"/>
    <id xml = "arbalest.xml"/>
+   <id xml = "long_swordman.xml"/>
+   <id xml= "champion.xml"/>
    <id xml = "cavalier.xml"/>
    <id xml = "cavalry_archer.xml"/>
    <id xml = "elite_skirmisher.xml"/>

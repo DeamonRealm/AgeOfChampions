@@ -163,7 +163,7 @@ bool j1Player::PreUpdate()
 		//Generate a Arbalest unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
 		{
-			Unit* new_unit = App->entities_manager->GenerateUnit(ARBALEST, ALLY);
+			Unit* new_unit = App->entities_manager->GenerateUnit(CHAMPION, ALLY);
 			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 			new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
 			game_panel->IncressPopulation(1, false);
