@@ -9,7 +9,6 @@
 #include "j1Window.h"
 #include "j1Timer.h"
 #include "j1EntitiesManager.h"
-#include "j1FogOfWar.h"
 
 #include <math.h>
 
@@ -115,7 +114,7 @@ void j1Map::Draw(bool debug)
 		{
 			//Get tile id
 			int tile_id = layer->Get(points_in_view[k].x, points_in_view[k].y);
-			int fog_id = App->fog_of_war->GetFogID(points_in_view[k].x, points_in_view[k].y);
+			
 			if (tile_id == 0)continue;
 
 			//Get tileset from tile id

@@ -26,7 +26,6 @@
 #include "j1ActionManager.h"
 #include "j1BuffManager.h"
 #include "j1AI.h"
-#include "j1FogOfWar.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -56,8 +55,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new j1Pathfinding();
 	action_manager = new j1ActionManager();
 
-	fog_of_war = new j1FogOfWar();
-
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(fs);
@@ -81,8 +78,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// scene last
 	AddModule(scene);
-
-	AddModule(fog_of_war);
 
 	AddModule(menu);
 
