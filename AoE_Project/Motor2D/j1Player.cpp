@@ -32,7 +32,6 @@ j1Player::j1Player()
 //j1Player Destructor ============================================================
 j1Player::~j1Player()
 {
-	upgraded_units.clear();
 }
 
 void j1Player::Enable()
@@ -53,7 +52,6 @@ void j1Player::Enable()
 
 void j1Player::Disable()
 {
-	upgraded_units.clear();
 	active = false;
 	selection_panel->Disable();
 	game_panel->Disable();
@@ -203,7 +201,7 @@ bool j1Player::PreUpdate()
 	}
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
-		App->entities_manager->UpgradeUnit(upgraded_units, UNIT, MILITIA, ARBALEST, ALLY);
+		App->entities_manager->UpgradeUnit(MILITIA, ARBALEST, ALLY);
 	}
 
 	// Skills
@@ -225,8 +223,6 @@ bool j1Player::PreUpdate()
 
 bool j1Player::PostUpdate()
 {
-	upgraded_units.clear();
-
 	game_hud->Draw(false);
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
@@ -328,7 +324,6 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 
 void j1Player::UpgradeCivilization(RESEARCH_TECH type) 
 {
-	upgraded_units.clear();
 	switch (type)
 	{
 	case NO_TECH:

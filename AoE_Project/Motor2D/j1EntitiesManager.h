@@ -125,7 +125,7 @@ public:
 
 	//Upgrade Entity
 	void UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy);
-	bool UpgradeUnit(std::vector<Unit*> &upgraded, ENTITY_TYPE e_type = NO_ENTITY, UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
+	bool UpgradeUnit(UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
 	
 	
 

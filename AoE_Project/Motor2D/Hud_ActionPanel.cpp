@@ -61,7 +61,7 @@ Action_Panel_Elements::~Action_Panel_Elements()
 
 void Action_Panel_Elements::SetDataFromXML()
 {
-	current_age = 1;
+	current_age = 2;
 	for (int i = 0; i < MAX_PANEL_CELLS; i++)
 	{
 		cell_lvl[i] = 0;
@@ -137,6 +137,10 @@ void Action_Panel_Elements::LoadPanelFromXML(const pugi::xml_node & conf)
 
 		data.SetInfo();
 
+		data.u_type = (UNIT_TYPE)item.attribute("ut").as_int(0);
+		data.b_type = (BUILDING_TYPE)item.attribute("bt").as_int(0);
+		data.r_type = (RESEARCH_TECH)item.attribute("rt").as_int(0);
+
 		cell_data.push_back(data);
 		
 		item = item.next_sibling();
@@ -147,7 +151,7 @@ void Action_Panel_Elements::LoadPanelFromXML(const pugi::xml_node & conf)
 
 void Action_Panel_Elements::UpgradeCurrentAge(uint curr_age)
 {
-	current_age = current_age;
+	current_age = curr_age;
 	UpdateCells();
 }
 
@@ -176,7 +180,7 @@ bool TownCenterPanel::ActivateCell(int i)
 			panel_icons[i].stone_cost, panel_icons[i].population_cost))
 		{
 			App->sound->PlayGUIAudio(CLICK_INGAME);
-			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, VILLAGER, ALLY));
+			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
 		}
 		else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
@@ -188,7 +192,7 @@ bool TownCenterPanel::ActivateCell(int i)
 				panel_icons[i].stone_cost, panel_icons[i].population_cost))
 			{
 				App->sound->PlayGUIAudio(CLICK_INGAME);
-				entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, WARRIOR_CHMP, ALLY));
+				entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
 				got_melechmp = true;
 			}
 			else App->sound->PlayGUIAudio(ERROR_SOUND);
@@ -200,7 +204,17 @@ bool TownCenterPanel::ActivateCell(int i)
 		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
 			panel_icons[i].stone_cost, panel_icons[i].population_cost))
 		{
-			entitis_panel->AddAction(App->action_manager->ResearchAction(TC_LOOM, 3000, App->player, ALLY));
+			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
+			cell_lvl[i]++;
+		}
+		}
+		break;
+	case 10: {
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+			panel_icons[i].stone_cost, panel_icons[i].population_cost))
+		{
+			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
+			cell_lvl[i]++;
 		}
 		}
 		break;
@@ -227,6 +241,27 @@ void TownCenterPanel::ChampionIsDead(UNIT_TYPE type)
 	}
 }
 
+bool TownCenterPanel::UpgradeResearch(RESEARCH_TECH type)
+{
+	bool ret = false;
+	switch (type)
+	{
+	case NO_TECH:
+		break;
+	case TC_LOOM:
+		break;
+	case TC_PATROL:
+		break;
+	case TC_TOWNWATCH:
+		break;
+	case TC_WHEELBARROW:
+		break;
+	default:
+		break;
+	}
+	return ret;
+}
+
 // Barrack Panel ---------------------------------------------------------------------------------------------------------
 
 BarrackPanel::BarrackPanel() : Action_Panel_Elements(){}
@@ -237,10 +272,43 @@ bool BarrackPanel::ActivateCell(int i)
 	switch (i)
 	{
 	case 0: {
-		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost,panel_icons[i].food_cost, panel_icons[i].gold_cost,
+			if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+				panel_icons[i].stone_cost, panel_icons[i].population_cost))
+			{
+				entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
+				App->sound->PlayGUIAudio(CLICK_INGAME);
+			}
+			else App->sound->PlayGUIAudio(ERROR_SOUND);
+		}
+		break;
+	case 1: {
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
 			panel_icons[i].stone_cost, panel_icons[i].population_cost))
 		{
-			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, MILITIA, ALLY));
+			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			cell_lvl[i]++;
+		}
+		else App->sound->PlayGUIAudio(ERROR_SOUND);
+		}
+		break;
+	case 5: {
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+			panel_icons[i].stone_cost, panel_icons[i].population_cost))
+		{
+			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			cell_lvl[i]++;
+		}
+		else App->sound->PlayGUIAudio(ERROR_SOUND);
+		}
+			break;
+		break;
+	case 6: {
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+			panel_icons[i].stone_cost, panel_icons[i].population_cost))
+		{
+			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 		}
 		else App->sound->PlayGUIAudio(ERROR_SOUND);
@@ -250,6 +318,53 @@ bool BarrackPanel::ActivateCell(int i)
 		break;
 	}
 	return false;
+}
+
+bool BarrackPanel::UpgradeResearch(RESEARCH_TECH type)
+{
+	bool ret = false;
+	switch (type)
+	{
+	case NO_TECH:
+		break;
+	case B_MILITIA_UP: 
+	{
+		cell_lvl[0]++;
+		ret = true;
+	}
+		break;
+	case B_MAN_AT_ARMS_UP:
+	{
+		cell_lvl[0]++;
+		ret = true;
+	}
+		break;
+	case B_LONGSWORDSMAN_UP:
+	{
+		cell_lvl[0]++;
+		ret = true;
+	}
+		break;
+	case B_TWO_HANDED_UP:
+	{
+		cell_lvl[0]++;
+		ret = true;
+	}
+		break;
+	case B_SPEARMAN_UP:		
+	{
+		cell_lvl[1]++;
+		ret = true;
+	}
+		break;
+	default:
+		break;
+	}
+	if (ret)
+	{
+		UpdateCells();
+	}
+	return ret;
 }
 
 // UNIT PANEL -------------------------------------------------------------------------------------------------------
@@ -1093,5 +1208,14 @@ void Action_Panel::UpgradeCivilizationAge(uint curr_age)
 void Action_Panel::UpgradeTecnology(RESEARCH_TECH type)
 {
 	// update panels acording to type
-	//int x = 0;
+	towncenterpanel->UpgradeResearch(type);
+	barrackpanel->UpgradeResearch(type);
+
+	// updata actual panel;
+	if (actualpanel != nullptr)
+	{
+		action_screen->DesactivateChids();
+		actualpanel->ChangePanelIcons(panel_cells);
+		SetButtons();
+	}
 }

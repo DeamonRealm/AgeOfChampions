@@ -1012,13 +1012,46 @@ std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > j1EntitiesManager:
 void j1EntitiesManager::UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy)
 {
 	// Upgrade Entity acording to research tecnology type
+	switch (type)
+	{
+	case NO_TECH:
+		break;
+	case A_ARCHER_UP: //UpgradeUnit(ARCHER, CROSSBOWMAN, diplomacy);
+		break;
+	case A_C_ARCHER_UP: UpgradeUnit(CAVALRY_ARCHER, HEAVY_CAVALRY_ARCHER, diplomacy);
+		break;
+	case A_CROSSBOW_UP://UpgradeUnit(CROSSBOWMAN, ARBALEST, diplomacy);
+		break;
+	case A_PARTHIAN_T_UP:
+		break;
+	case A_THUMBRING_UP:
+		break;
+	case B_MILITIA_UP:		UpgradeUnit(MILITIA, MAN_AT_ARMS, diplomacy);
+		break;
+	case B_MAN_AT_ARMS_UP:	UpgradeUnit(MAN_AT_ARMS, LONG_SWORDMAN, diplomacy);
+		break;
+	case B_LONGSWORDSMAN_UP:UpgradeUnit(LONG_SWORDMAN, TWO_HANDED_SWORDMAN, diplomacy);
+		break;
+	case B_TWO_HANDED_UP:	UpgradeUnit(TWO_HANDED_SWORDMAN, CHAMPION, diplomacy);
+		break;
+	case B_SPEARMAN_UP:		UpgradeUnit(SPEARMAN, PIKEMAN, diplomacy);
+		break;
+	case S_KNIGHT_UP:		UpgradeUnit(KNIGHT, CAVALIER, diplomacy);
+		break;
+	case S_CAVALLIER_UP:	UpgradeUnit(CAVALIER, PALADIN, diplomacy);
+		break;
+	case S_SCOUTC_UP:		
+		break;
+	default:
+		break;
+	}
 }
 
-bool j1EntitiesManager::UpgradeUnit(std::vector<Unit*> &upgraded, ENTITY_TYPE e_type, UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOMACY e_diplomacy)
+bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOMACY e_diplomacy)
 {
 	bool ret = false;
 
-	if (e_type == UNIT && e_type != NO_UNIT && new_type != NO_UNIT)
+	if (u_type != NO_UNIT && new_type != NO_UNIT)
 	{
 		Unit* new_unit = nullptr;
 		int size = units_defs.size();

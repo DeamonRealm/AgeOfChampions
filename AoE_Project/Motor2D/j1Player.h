@@ -74,8 +74,6 @@ private:
 
 	UI_Image*				game_hud = nullptr;
 
-	std::vector<Unit*>		upgraded_units;
-
 public: /*This is temporal*/
 
 	//HUD Panels

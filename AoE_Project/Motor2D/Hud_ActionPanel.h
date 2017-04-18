@@ -52,6 +52,10 @@ struct Cells_Data
 	// Information
 	std::string	cell_info = "";
 
+	UNIT_TYPE	u_type = ((UNIT_TYPE)0);
+	BUILDING_TYPE b_type = ((BUILDING_TYPE)0);
+	RESEARCH_TECH r_type = ((RESEARCH_TECH)0);
+
 public:
 	// Functionality
 	void		SetInfo();
@@ -82,11 +86,11 @@ public:
 
 	virtual void LoadPanelFromXML(const pugi::xml_node&	conf);
 	virtual void UpgradeCurrentAge(uint curr_age = 1);
-	virtual void UpgradeResearch() {};
+	virtual bool UpgradeResearch(RESEARCH_TECH type) { return false; };
 
 	const char*	 GetCellInfo(int i)const;
 protected:
-	uint						current_age = 1;
+	uint						current_age = 2;
 	int							cell_lvl[MAX_PANEL_CELLS];
 
 	std::vector<Cells_Data>		panel_icons;
@@ -111,6 +115,8 @@ public:
 	bool ActivateCell(int i);
 	void ChampionIsDead(UNIT_TYPE type);
 
+	bool UpgradeResearch(RESEARCH_TECH type);
+
 private:
 	bool		got_melechmp = false;
 };
@@ -124,6 +130,8 @@ public:
 	~BarrackPanel() {};
 
 	bool ActivateCell(int i);
+
+	bool UpgradeResearch(RESEARCH_TECH type);
 
 private:
 
@@ -273,7 +281,7 @@ public:
 	UI_Element* GetHeroSkillTree() const;
 
 	// Upgrade Age
-	void UpgradeCivilizationAge(uint curr_age = 1);
+	void UpgradeCivilizationAge(uint curr_age = 2);
 	void UpgradeTecnology(RESEARCH_TECH type);
 
 
