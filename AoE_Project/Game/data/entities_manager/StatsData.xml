@@ -766,6 +766,7 @@
       icon_w="36"
       icon_h="36"
       
+  
       max_life="120"
       view_area="15"
       speed="0.8"
@@ -785,6 +786,7 @@
       poblation_cost="2"
       train_time="4000"
       
+      
       ability_lvl_2_cooldown = "5000"
       ability_lvl_2_heal_value = "10"
       
@@ -798,8 +800,11 @@
       speed_for_level="1.5"
       view_area_for_level="2"
       
-      atk_triangle_length="210"
-      atk_triangle_width_angle="125"
+      area_attack_spell_2="300"
+      area_limit_spell_2="500"
+      
+      area_attack_spell_3="150"
+      area_limit_spell_3="350"
       
     />
   </unit>

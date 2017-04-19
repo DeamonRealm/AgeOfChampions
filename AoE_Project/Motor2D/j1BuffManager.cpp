@@ -184,6 +184,16 @@ bool PassiveBuff::ApplyBuff()
 		buff = base * value;
 		target->SetDefenseBuff(buff);
 		break;
+	case VISION_BUFF:
+		base = target->GetVision().GetRad();
+		buff = base * value;
+		target->SetVisionBuff(buff);
+		break;
+	case LIFE_BUFF:
+		base = target->GetMaxLife();
+		buff = base * value;
+		target->SetLifeBuff(buff);
+		break;
 	}
 
 	particle.draw_timer.Start();
@@ -215,6 +225,16 @@ bool PassiveBuff::RemoveBuff()
 		base = target->GetDefense();
 		current_buff = base * value;
 		target->SetDefenseBuff(MAX(target->GetDefenseBuff() - current_buff, 0));
+		break;
+	case VISION_BUFF:
+		base = target->GetVision().GetRad();
+		current_buff = base * value;
+		target->SetDefenseBuff(MAX(target->GetVisionBuff() - current_buff, 0));
+		break;
+	case LIFE_BUFF:
+		base = target->GetMaxLife();
+		current_buff = base * value;
+		target->SetDefenseBuff(MAX(target->GetLifeBuff() - current_buff, 0));
 		break;
 	}
 
@@ -280,6 +300,16 @@ bool Buff::ApplyBuff()
 		base = target->GetDefense();
 		buff = base * value;
 		target->SetDefenseBuff(buff);
+		break;
+	case VISION_BUFF:
+		base = target->GetVision().GetRad();
+		buff = base * value;
+		target->SetVisionBuff(buff);
+		break;
+	case LIFE_BUFF:
+		base = target->GetDefense();
+		buff = base * value;
+		target->SetLifeBuff(buff);
 		break;
 	}
 
@@ -549,6 +579,8 @@ BUFF_ATTRIBUTE_TYPE j1BuffManager::StrToBuffAttributeType(const char * str) cons
 {
 	if (strcmp("attack", str) == 0) 	return BUFF_ATTRIBUTE_TYPE::ATTACK_BUFF;
 	if (strcmp("defense", str) == 0)	return BUFF_ATTRIBUTE_TYPE::DEFENSE_BUFF;
+	if (strcmp("defense", str) == 0)	return BUFF_ATTRIBUTE_TYPE::VISION_BUFF;
+	if (strcmp("defense", str) == 0)	return BUFF_ATTRIBUTE_TYPE::LIFE_BUFF;
 	if (strcmp("stun", str) == 0)		return BUFF_ATTRIBUTE_TYPE::STUN_BUFF;
 	return NO_ATTRIBUTE;
 }

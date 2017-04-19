@@ -197,6 +197,12 @@ bool j1Player::PreUpdate()
 			Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP, ALLY);
 			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
 		}
+		//Generate Wizard unit in mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && game_panel->CheckPopulation())
+		{
+			Unit* new_unit = App->entities_manager->GenerateUnit(WIZARD_CHMP, ALLY);
+			new_unit->SetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		}
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)

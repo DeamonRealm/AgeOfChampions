@@ -327,7 +327,10 @@ protected:
 	uint			population_cost = 0;
 	uint			train_time = 0;
 	uint			exp = 0;
-	
+	//Vision
+	float			vision_buff = 0;
+	//Life
+	float			life_buff = 0;
 	// Attack area
 	Circle	attack_area;
 
@@ -391,6 +394,8 @@ public:
 	void	SetDefense(uint def);
 	void	SetDefenseBonus(uint def_bonus);
 	void	SetDefenseBuff(float def_buff);
+	void	SetVisionBuff(float vis_buff);
+	void	SetLifeBuff(float hp_buff);
 	void	SetArmor(uint arm);
 	void	SetArmorBonus(uint arm_bonus);
 	void	SetArmorBuff(float arm_buff);
@@ -436,6 +441,9 @@ public:
 	uint			GetExp()const;
 	std::vector<iPoint>* GetPath() const;
 	iPoint			GetFuturePosition() const;
+
+	float			GetVisionBuff()const;
+	float			GetLifeBuff()const;
 
 };
 /// ---------------------------------------------

@@ -18,6 +18,8 @@
    <id xml = "spearman.xml"/>
    <id xml = "villager.xml"/>
    <id xml = "warrior_chmp.xml"/>
+   <id xml = "wizard_chmp.xml"/>
+
   </units>
   <buildings>
    <id xml = "town_center_feudal.xml"/>

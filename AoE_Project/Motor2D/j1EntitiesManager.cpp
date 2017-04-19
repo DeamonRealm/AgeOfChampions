@@ -55,6 +55,9 @@ void j1EntitiesManager::Disable()
 		case WARRIOR_CHMP:
 			delete ((Warrior*)units_item._Ptr->_Myval);
 			break;
+		case WIZARD_CHMP:
+			delete ((Wizard*)units_item._Ptr->_Myval);
+			break;
 		default:
 			RELEASE(units_item._Ptr->_Myval);
 			break;
@@ -242,6 +245,9 @@ bool j1EntitiesManager::CleanUp()
 		case WARRIOR_CHMP:
 			delete ((Warrior*)units_item._Ptr->_Myval);
 			break;
+		case WIZARD_CHMP:
+			delete ((Wizard*)units_item._Ptr->_Myval);
+			break;
 		default:
 			RELEASE(units_item._Ptr->_Myval);
 			break;
@@ -368,6 +374,8 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	else if (unit_type == WIZARD_CHMP)
 	{
 
+		Wizard* new_wizard = new Wizard();
+		new_def = new_wizard;
 	}
 	else
 	{
@@ -459,13 +467,13 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	else if (unit_type == WIZARD_CHMP)
 	{
 		/*Circle Spell*/		Circle temp_circle;
-		/*limit Spell_2*/		temp_circle.SetRad(unit_node->attribute("radius_spell_limit_2").as_uint());
+		/*limit Spell_2*/		temp_circle.SetRad(unit_node->attribute("area_limit_spell_2").as_uint());
 								((Wizard*)new_def)->SetSpecialAttackArea(temp_circle,"limit_lvl_2");
-		/*area Spell_2*/		temp_circle.SetRad(unit_node->attribute("radius_area_spell_2").as_uint());
+		/*area Spell_2*/		temp_circle.SetRad(unit_node->attribute("area_attack_spell_2").as_uint());
 								((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_2");
-		/*limit Spell_3*/		temp_circle.SetRad(unit_node->attribute("radius_spell_limit_3").as_uint());
+		/*limit Spell_3*/		temp_circle.SetRad(unit_node->attribute("area_limit_spell_3").as_uint());
 								((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "limit_lvl_3");
-		/*area Spell_3*/		temp_circle.SetRad(unit_node->attribute("radius_area_spell_3").as_uint());
+		/*area Spell_3*/		temp_circle.SetRad(unit_node->attribute("area_attack_spell_3").as_uint());
 								((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
 	}
 
@@ -752,7 +760,8 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 			}
 			else if (type == WIZARD_CHMP)
 			{
-
+				Wizard* new_wizard = new Wizard(*(Wizard*)units_defs[k]);
+				new_unit = new_wizard;
 			}
 			else
 			{

@@ -1285,6 +1285,16 @@ void Unit::SetDefenseBuff(float def_buff)
 	defense_buff = def_buff;
 }
 
+void Unit::SetVisionBuff(float vis_buff)
+{
+	vision_buff = vis_buff;
+}
+
+void Unit::SetLifeBuff(float hp_buff)
+{
+	life_buff = hp_buff;
+}
+
 void Unit::SetArmor(uint arm)
 {
 	armor = arm;
@@ -1529,6 +1539,14 @@ std::vector<iPoint>* Unit::GetPath() const
 iPoint Unit::GetFuturePosition() const
 {
 	return future_position;
+}
+float Unit::GetVisionBuff() const
+{
+	return vision_buff;
+}
+float Unit::GetLifeBuff() const
+{
+	return life_buff;
 }
 // ----------------
 ///----------------------------------------------

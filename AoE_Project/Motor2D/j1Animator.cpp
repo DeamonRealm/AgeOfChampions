@@ -447,6 +447,8 @@ UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 	if (strcmp(str, "long_swordman") == 0)			return LONG_SWORDMAN;
 	if (strcmp(str, "champion") == 0)				return CHAMPION;
 	if (strcmp(str, "warrior_chmp") == 0)			return WARRIOR_CHMP;
+	if (strcmp(str, "wizard_chmp") == 0)			return WIZARD_CHMP;
+
 	return NO_UNIT;
 }
 
