@@ -142,8 +142,7 @@ bool j1Gui::CleanUp()
 	bool ret = true;
 
 	// CleanUp (Clear Lists)
-	screens.clear();
-	ui_textures.clear();
+	screens.clear();	
 	cursors_rects.clear();
 	cursors_pivots.clear();
 
@@ -177,6 +176,14 @@ bool j1Gui::CleanUp()
 		}
 	}
 	gui_elements.clear();
+
+	std::list<SDL_Texture*>::iterator text_ui = ui_textures.end();
+	while (text_ui != ui_textures.begin())
+	{
+		text_ui--;
+		App->tex->UnLoad(text_ui._Ptr->_Myval);
+	}
+	ui_textures.clear();
 
 	return true;
 }

@@ -15,6 +15,7 @@ UI_Popup_menu::UI_Popup_menu() : UI_Element({ 0,0,0,0 }, POPUP_MENU), tex_select
 //Destructor =================================================
 UI_Popup_menu::~UI_Popup_menu()
 {
+	option_selected = nullptr;
 	Items.clear();
 	Items_location.clear();
 }
@@ -148,7 +149,7 @@ void UI_Popup_menu::SetOptionSelection()
 	std::list<iPoint>::const_iterator position = Items_location.begin();
 	for (std::list<UI_String*>::const_iterator item = Items.begin(); item != Items.end(); item++)
 	{
-		if (ypos >= position._Ptr->_Myval.y && ypos < position._Ptr->_Myval.y + cell_height)
+		if (ypos >= position._Ptr->_Myval.y && ypos < position._Ptr->_Myval.y + (int)cell_height)
 		{
 			tex_selection.SetBoxPosition(box.x, item._Ptr->_Myval->GetBox()->y + text_size / 2 - cell_height/ 2);
 			option_selected = item._Ptr->_Myval;

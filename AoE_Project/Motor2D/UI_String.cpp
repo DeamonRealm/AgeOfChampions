@@ -13,7 +13,12 @@ UI_String::UI_String() : UI_Element({0,0,0,0}, STRING), text(""), text_font(null
 
 //Destructor ==============================================
 UI_String::~UI_String()
-{}
+{
+	if (text_texture != nullptr)
+		App->tex->UnLoad(text_texture);
+	text_texture = nullptr;
+	text_font = nullptr;
+}
 
 
 //Game Loop ===============================================
@@ -48,14 +53,23 @@ uint UI_String::GetLenght()const
 
 void UI_String::SetString(char * new_text, bool generate)
 {
-	if(text_texture != nullptr) App->font->DeleteTexture(text_texture);
+	if (text_texture != nullptr)
+	{
+		App->font->DeleteTexture(text_texture);
+		text_texture = nullptr;
+	}
 	text = new_text;
-	if(generate && strlen(new_text) > 0)text_texture = App->font->Print(text.c_str(), text_color, text_font);
+	if(generate && strlen(new_text) > 0) 
+		text_texture = App->font->Print(text.c_str(), text_color, text_font);
 }
 
 void UI_String::PushString(const char * new_text, uint position)
 {
-	if (text_texture != nullptr) App->font->DeleteTexture(text_texture);
+	if (text_texture != nullptr)
+	{
+		App->font->DeleteTexture(text_texture);
+		text_texture = nullptr;
+	}
 	text.insert(position, new_text);
 	text_texture = App->font->Print(text.c_str(), text_color, text_font);
 }
@@ -65,6 +79,11 @@ bool UI_String::DeleteChar(uint position)
 	if (text.length() == 0) return false;
 
 	text.erase(position,1);
+	
+	if (text_texture != nullptr) {
+		App->font->DeleteTexture(text_texture);
+		text_texture = nullptr;
+	}
 
 	if(text.length() > 0)text_texture = App->font->Print(text.c_str(), text_color, text_font);
 	return true;
@@ -83,9 +102,12 @@ bool UI_String::DeleteSegment(uint start, uint end)
 		if (!ret)break;
 	}
 
+	if (text_texture != nullptr) {
+		App->font->DeleteTexture(text_texture);
+		text_texture = nullptr;
+	}
 	//Generate str texture if it contain alive chars
-	if (text.length() == 0)text_texture = nullptr;
-	else if (ret)text_texture = App->font->Print(text.c_str(), text_color, text_font);
+	if (ret && text.length() > 0)text_texture = App->font->Print(text.c_str(), text_color, text_font);
 
 	return ret;
 }
@@ -155,7 +177,7 @@ bool UI_String::TokenizeString(uint margin)
 
 bool UI_String::GenerateTexture()
 {
-	if (text.length() == NULL)return false;
+	if (text.length() == 0)return false;
 	if(strlen(text.c_str()) > 0)text_texture = App->font->Print(this->text.c_str(), text_color, text_font);
 	if(text_texture != nullptr)return true;
 	return false;

@@ -38,7 +38,7 @@ protected:
 
 	UI_Element*				parent = nullptr;
 
-	j1Module*				input_target;
+	j1Module*				input_target = nullptr;
 
 public:
 

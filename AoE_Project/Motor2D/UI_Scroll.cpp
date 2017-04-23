@@ -92,28 +92,28 @@ iPoint UI_Scroll::CalculateScrollDesp()
 	{
 	case VERTICAL:
 
-		loc = -(ScrollItem.GetBox()->y - ScrollBack.GetBox()->y);
+		loc = -((float)(ScrollItem.GetBox()->y - ScrollBack.GetBox()->y));
 		if (loc == 0) break;
 		desp_y = (loc * ContentLenght) / (ScrollBack.GetBox()->h - ScrollItem.GetBox()->h);
 		break;
 
 	case VERTICAL_INV:
 
-		loc = (ScrollItem.GetBox()->y - ScrollBack.GetBox()->y);
+		loc = ((float)(ScrollItem.GetBox()->y - ScrollBack.GetBox()->y));
 		if (loc == 0) break;
 		desp_y = (loc * ContentLenght) / (ScrollBack.GetBox()->h - ScrollItem.GetBox()->h);
 		break;
 
 	case LATERAL:
 
-		loc = (ScrollItem.GetBox()->x - ScrollBack.GetBox()->x);
+		loc = ((float)(ScrollItem.GetBox()->x - ScrollBack.GetBox()->x));
 		if (loc == 0) break;
 		desp_x = -(loc * ContentLenght) / (ScrollBack.GetBox()->w - ScrollItem.GetBox()->w);
 		break;
 
 	case LATERAL_INV:
 
-		loc = (ScrollItem.GetBox()->x - ScrollBack.GetBox()->x);
+		loc = ((float)ScrollItem.GetBox()->x - ScrollBack.GetBox()->x);
 		if (loc == 0) break;
 		desp_x = (loc * ContentLenght) / (ScrollBack.GetBox()->w - ScrollItem.GetBox()->w);
 		break;
@@ -170,7 +170,7 @@ uint UI_Scroll::UpdateContentLenght(UI_Element * new_item)
 		break;
 	}
 
-	if (length > 0 && length > ContentLenght)ContentLenght = length;
+	if (length > 0 && length > ContentLenght)ContentLenght = (uint)length;
 	return uint(length);
 }
 

@@ -95,7 +95,35 @@ void Action_Panel_Elements::UpdateCells()
 void Action_Panel_Elements::ResetPanel()
 {
 	SetDataFromXML();
-};
+}
+
+bool Action_Panel_Elements::ActivateCell(int i)
+{
+	if (entitis_panel == nullptr) return false;
+	
+	if (panel_icons[i].u_type != NO_UNIT)
+	{
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+			panel_icons[i].stone_cost, panel_icons[i].population_cost))
+		{
+			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+		}
+		else App->sound->PlayGUIAudio(ERROR_SOUND);
+	}
+	else if (panel_icons[i].r_type != NO_TECH)
+	{
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+			panel_icons[i].stone_cost, panel_icons[i].population_cost))
+		{
+			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			cell_lvl[i]++;
+		}
+		else App->sound->PlayGUIAudio(ERROR_SOUND);
+	}
+	return false;
+}
 
 void Action_Panel_Elements::ChangePanelIcons(std::vector<UI_Image*> & actual_panel) 
 {
@@ -175,16 +203,6 @@ bool TownCenterPanel::ActivateCell(int i)
 	if (entitis_panel == nullptr) return false;
 	switch (i)
 	{
-	case 0: {
-		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
-			panel_icons[i].stone_cost, panel_icons[i].population_cost))
-		{
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
-		}
-		else App->sound->PlayGUIAudio(ERROR_SOUND);
-		}
-		break;
 	case 1: {
 		if (got_melechmp == false)
 		{
@@ -200,25 +218,30 @@ bool TownCenterPanel::ActivateCell(int i)
 		else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
 		break;
-	case 5: {
-		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
-			panel_icons[i].stone_cost, panel_icons[i].population_cost))
-		{
-			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
-			cell_lvl[i]++;
-		}
-		}
-		break;
-	case 10: {
-		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
-			panel_icons[i].stone_cost, panel_icons[i].population_cost))
-		{
-			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
-			cell_lvl[i]++;
-		}
-		}
-		break;
 	default:
+	{
+		if (panel_icons[i].u_type != NO_UNIT)
+		{
+			if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+				panel_icons[i].stone_cost, panel_icons[i].population_cost))
+			{
+				entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
+				App->sound->PlayGUIAudio(CLICK_INGAME);
+			}
+			else App->sound->PlayGUIAudio(ERROR_SOUND);
+		}
+		else if (panel_icons[i].r_type != NO_TECH)
+		{
+			if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+				panel_icons[i].stone_cost, panel_icons[i].population_cost))
+			{
+				entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
+				App->sound->PlayGUIAudio(CLICK_INGAME);
+				cell_lvl[i]++;
+			}
+			else App->sound->PlayGUIAudio(ERROR_SOUND);
+		}
+	}
 		break;
 	}
 	return false;
@@ -265,61 +288,6 @@ bool TownCenterPanel::UpgradeResearch(RESEARCH_TECH type)
 // Barrack Panel ---------------------------------------------------------------------------------------------------------
 
 BarrackPanel::BarrackPanel() : Action_Panel_Elements(){}
-
-bool BarrackPanel::ActivateCell(int i)
-{
-	if (entitis_panel == nullptr) return false;
-	switch (i)
-	{
-	case 0: {
-			if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
-				panel_icons[i].stone_cost, panel_icons[i].population_cost))
-			{
-				entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
-				App->sound->PlayGUIAudio(CLICK_INGAME);
-			}
-			else App->sound->PlayGUIAudio(ERROR_SOUND);
-		}
-		break;
-	case 1: {
-		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
-			panel_icons[i].stone_cost, panel_icons[i].population_cost))
-		{
-			entitis_panel->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			cell_lvl[i]++;
-		}
-		else App->sound->PlayGUIAudio(ERROR_SOUND);
-		}
-		break;
-	case 5: {
-		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
-			panel_icons[i].stone_cost, panel_icons[i].population_cost))
-		{
-			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			cell_lvl[i]++;
-		}
-		else App->sound->PlayGUIAudio(ERROR_SOUND);
-		}
-			break;
-		break;
-	case 6: {
-		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
-			panel_icons[i].stone_cost, panel_icons[i].population_cost))
-		{
-			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			cell_lvl[i]++;
-		}
-		else App->sound->PlayGUIAudio(ERROR_SOUND);
-		}
-		break;
-	default:
-		break;
-	}
-	return false;
-}
 
 bool BarrackPanel::UpgradeResearch(RESEARCH_TECH type)
 {
@@ -403,7 +371,7 @@ void VillagerPanel::PreUpdate()
 	{
 		int x = 0, y = 0;
 		App->input->GetMousePosition(x, y);
-		buildingthis->OnlySetPosition(x - App->render->camera.x, y - App->render->camera.y);
+		buildingthis->OnlySetPosition((float)x - App->render->camera.x,(float) y - App->render->camera.y);
 		buildingthis->Draw(false);
 	}
 }
@@ -418,9 +386,23 @@ void VillagerPanel::ResetPanel()
 
 bool VillagerPanel::ActivateCell(int i)
 {
-	switch (i)
+	if (entitis_panel == nullptr) return false;
+
+	if (panel_icons[i].b_type != NO_BUILDING)
 	{
-	case 0:{
+		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost, 
+			panel_icons[i].stone_cost, panel_icons[i].population_cost))
+		{
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			buildingthis = App->entities_manager->GenerateBuilding(panel_icons[i].b_type, ALLY, true);
+			isbuilding = true;
+			return true;
+		}
+		else App->sound->PlayGUIAudio(ERROR_SOUND);
+	}
+	else switch (i)
+	{
+	case 0: {
 		if (villagerisbuilding == VP_NOT_BUILDING)
 		{
 			villagerisbuilding = VP_NORMAL;
@@ -432,27 +414,16 @@ bool VillagerPanel::ActivateCell(int i)
 		{
 			return false;
 		}
-		else if (villagerisbuilding == VP_MILITARY && player_game_panel_resources->UseResource(panel_icons[i].wood_cost,
-			panel_icons[i].food_cost,panel_icons[i].gold_cost,panel_icons[i].stone_cost,panel_icons[i].population_cost))
-		{
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			buildingthis = App->entities_manager->GenerateBuilding(BARRACK,ALLY,true);
-			int x = 0, y = 0;
-			App->input->GetMousePosition(x, y);
-			buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, false);
-			isbuilding = true;
-			return true;
-		}
-		}
-		break;
+	}
+			break;
 	case 1: {
-		if (villagerisbuilding == VP_NOT_BUILDING){
+		if (villagerisbuilding == VP_NOT_BUILDING) {
 			villagerisbuilding = VP_MILITARY;
 			ChangePanelLvl(villagerisbuilding);
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 		}
-		}
-		break;
+	}
+			break;
 	case 2:
 		break;
 	case 3: {
@@ -461,8 +432,8 @@ bool VillagerPanel::ActivateCell(int i)
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
 		return false;
-		}
-		break;
+	}
+			break;
 	case 4:
 		break;
 	case 13: {
@@ -477,14 +448,14 @@ bool VillagerPanel::ActivateCell(int i)
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 			ChangePanelLvl(villagerisbuilding);
 		}
-		}
-		break;
+	}
+			 break;
 	case 14: if (villagerisbuilding != VP_NOT_BUILDING) {
 		villagerisbuilding = VP_NOT_BUILDING;
 		App->sound->PlayGUIAudio(CLICK_INGAME);
 		ChangePanelLvl(villagerisbuilding);
-		}
-		break;
+	}
+			 break;
 	default:
 		break;
 	}
@@ -502,7 +473,7 @@ bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 			App->input->GetMousePosition(x, y);
 			if (((Building*)buildingthis)->CheckZone(x - App->render->camera.x, y - App->render->camera.y))
 			{
-				buildingthis->SetPosition(x - App->render->camera.x, y - App->render->camera.y, true);
+				buildingthis->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y, true);
 			}
 			else {
 				App->entities_manager->DeleteEntity(buildingthis);
@@ -540,7 +511,6 @@ bool VillagerPanel::GetIsBuilding() const
 {
 	return isbuilding;
 }
-
 
 // HERO PANEL -------------------------------------------------------------------------------------------------------
 
@@ -684,8 +654,10 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 					if (cell_lvl[i / 2] != 0)return false;
 					LearnSkill(i);
 					App->sound->PlayGUIAudio(CLICK_INGAME);
-					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1((i % 2));
-					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2((i % 2));
+					bool skill = false;
+					if (i % 2 == 1) skill = true;
+					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1(skill);
+					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
 					return true;
 				}
 			}

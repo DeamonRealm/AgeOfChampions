@@ -96,7 +96,7 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	if (e_type == UNIT)
 	{
 		u_attack = ((Unit*)element)->GetAttackHitPoints();
-		attack_up = ceil(((Unit*)element)->GetAttackBuff());
+		attack_up = (int)ceil(((Unit*)element)->GetAttackBuff());
 		if (u_attack > 0 && attack_up == 0)attack->SetString(App->gui->SetStringFromInt(u_attack));
 		else if (attack_up > 0)
 		{
@@ -107,7 +107,7 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 		}
 
 		u_deffence = ((Unit*)element)->GetDefense();
-		deffence_up = ceil(((Unit*)element)->GetDefenseBuff());
+		deffence_up = (int)ceil(((Unit*)element)->GetDefenseBuff());
 		if (u_deffence > 0 && deffence_up == 0)deffence->SetString(App->gui->SetStringFromInt(u_deffence));
 		else if (deffence_up > 0)
 		{
@@ -250,7 +250,7 @@ void Entity_Profile::UpdateStats()
 	}
 	if(e_type == UNIT)
 	{ 
-		int tmp = ceil(((Unit*)element)->GetAttackBuff());
+		int tmp = (int)ceil(((Unit*)element)->GetAttackBuff());
 		((Unit*)element)->GetAttackHitPoints();
 		if (attack_up != tmp)
 		{
@@ -269,7 +269,7 @@ void Entity_Profile::UpdateStats()
 
 		if (deffence_up != ceil(((Unit*)element)->GetDefenseBuff()))
 		{
-			deffence_up = ceil(((Unit*)element)->GetDefenseBuff());
+			deffence_up = (int)ceil(((Unit*)element)->GetDefenseBuff());
 			if (deffence_up == 0)deffence->SetString(App->gui->SetStringFromInt(u_deffence));
 			else if (deffence_up > 0)
 			{
@@ -322,7 +322,7 @@ Selection_Panel::Selection_Panel() : selection_rect({ 0,0,0,0 }), map_viewport({
 
 	int i = 0;
 
-	while (i < max_selected_units)
+	while (i < (int)max_selected_units)
 	{
 		profile = (UI_Image*)App->gui->GenerateUI_Element(IMG);
 		profile->Desactivate();
@@ -580,7 +580,8 @@ void Selection_Panel::DrawGroup()
 bool Selection_Panel::PointisInViewport(int x, int y) 
 {
 	SDL_Point p = { x,y };
-	return SDL_PointInRect(&p, &map_viewport);
+	if (SDL_PointInRect(&p, &map_viewport) == SDL_TRUE) return true;
+	else return false;
 }
 
 // Change to quads
@@ -928,15 +929,15 @@ bool Selection_Panel::WindowsMove()
 	{
 		if (c_pos.x == 1 && c_pos.y < 119)
 		{
-			App->render->camera.x += SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y -= SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x += (int)SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y -= (int)SDL_ceil(439.71 * App->GetDT());
 		}
 		else if (c_pos.y == 119 && c_pos.x > 1)
 		{
-			App->render->camera.x += SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y += SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x += (int)SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
 		}
-		else if (c_pos.y < 119 && c_pos.x >1) App->render->camera.x += SDL_ceil(1000 * App->GetDT());
+		else if (c_pos.y < 119 && c_pos.x >1) App->render->camera.x += (int)SDL_ceil(1000 * App->GetDT());
 		ret = true;
 	
 	}
@@ -944,30 +945,30 @@ bool Selection_Panel::WindowsMove()
 	{
 		if (c_pos.x == 119 && c_pos.y > 0)
 		{
-			App->render->camera.x -= SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y += SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
 		}
 		else if (c_pos.y == 0 && c_pos.x < 119)
 		{
-			App->render->camera.x -= SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y -= SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y -= (int)SDL_ceil(439.71 * App->GetDT());
 		}
-		else if (c_pos.y > 0 && c_pos.x < 119) App->render->camera.x -= SDL_ceil(1000 * App->GetDT());
+		else if (c_pos.y > 0 && c_pos.x < 119) App->render->camera.x -= (int)SDL_ceil(1000 * App->GetDT());
 		ret = true;
 	}
 	if (mouse_y < viewport->GetBox()->y + OFFSET_X && mouse_y > viewport->GetBox()->y)
 	{
 		if (c_pos.x == 1 && c_pos.y > 0)
 			{
-				App->render->camera.x -= SDL_ceil(898.13 * App->GetDT());
-				App->render->camera.y += SDL_ceil(439.71 * App->GetDT());
+				App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
+				App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
 			}
 		else if (c_pos.y == 0 && c_pos.x > 1)
 		{
-			App->render->camera.x += SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y += SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x += (int)SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
 		}
-		else if(c_pos.y >0 && c_pos.x >1) App->render->camera.y += SDL_ceil(1000 * App->GetDT());
+		else if(c_pos.y >0 && c_pos.x >1) App->render->camera.y += (int)SDL_ceil(1000 * App->GetDT());
 		ret = true;	
 	}
 	else if (mouse_x < OFFSET_Y && mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X
@@ -975,15 +976,15 @@ bool Selection_Panel::WindowsMove()
 	{
 		if (c_pos.x == 119 && c_pos.y < 119)
 		{
-			App->render->camera.x += SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y -= SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x += (int)SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y -= (int)SDL_ceil(439.71 * App->GetDT());
 		}
 		else if (c_pos.y == 118 && c_pos.x > 1)
 		{
-			App->render->camera.x -= SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y -= SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y -= (int)SDL_ceil(439.71 * App->GetDT());
 		}
-		else if (c_pos.y <119 && c_pos.x <119) App->render->camera.y -= SDL_ceil(1000 * App->GetDT());
+		else if (c_pos.y <119 && c_pos.x <119) App->render->camera.y -= (int)SDL_ceil(1000 * App->GetDT());
 		ret = true;
 	}
 	return ret;

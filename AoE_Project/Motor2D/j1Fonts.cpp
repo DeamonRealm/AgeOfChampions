@@ -65,8 +65,15 @@ bool j1Fonts::CleanUp()
 		TTF_CloseFont(fonts.back());
 		fonts.pop_back();
 	}
-
 	fonts.clear();
+
+	int size = ready_to_unload.size();
+	for (int i = 0; i < size; i++)
+	{
+		App->tex->UnLoad(ready_to_unload[i]);
+	}
+	ready_to_unload.clear();
+
 	TTF_Quit();
 	return true;
 }

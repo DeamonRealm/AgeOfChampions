@@ -17,11 +17,9 @@
 #include "j1SoundManager.h"
 
 //UI Elements
-#include "UI_Text_Box.h"
 #include "UI_Button.h"
 #include "UI_String.h"
 #include "UI_Scroll.h"
-#include "UI_Popup_Menu.h"
 #include "UI_Fixed_Button.h"
 
 

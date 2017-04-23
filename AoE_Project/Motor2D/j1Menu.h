@@ -3,15 +3,9 @@
 
 #include "j1Module.h"
 
-struct SDL_Texture;
-class UI_Button;
 class UI_String;
-class UI_Interactive_String;
 class UI_Image;
 class UI_Element;
-class UI_Text_Box;
-class UI_Scroll;
-class UI_Popup_menu;
 class UI_Fixed_Button;
 class  Unit;
 class  Building;

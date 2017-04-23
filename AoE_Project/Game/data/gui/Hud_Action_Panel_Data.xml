@@ -26,6 +26,7 @@ pc => population cost to activate cell
     <TownCenter>
       <cell cp ="0" cl ="0" al ="1" x="576" y="585" w="36" h="36" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="13" ci ="Create Villager"/>
       <cell cp ="1" cl ="0" al ="1" x="288" y="585" w="36" h="36" wc ="0" fc ="180" gc ="60" sc ="0" pc ="1" ut ="18" ci ="Create Warrior Champion"/>
+      <cell cp ="2" cl ="0" al ="1" x="540" y="585" w="36" h="36" wc ="0" fc ="180" gc ="60" sc ="0" pc ="1" ut ="20" ci ="Create Wizard Champion"/>
       <cell cp ="5" cl ="0" al ="1" x="540" y="477" w="36" h="36" wc ="0" fc ="0" gc ="50" sc ="0" pc ="0" rt ="34" ci ="Research Loom (+15 villager hitpoints, +1/+2P armor)"/>
       <cell cp ="6" cl ="0" al ="2" x="0" y="513" w="36" h="36" wc ="50" fc ="175" gc ="0" sc ="0" pc ="0" rt ="37" ci ="Research Wheelbarrow (+10% villager speed; +25% capacity)"/>
       <cell cp ="6" cl ="1" al ="3" x="468" y="477" w="36" h="36" wc ="0" fc ="0" gc ="50" sc ="0" pc ="0" rt ="38" ci ="Research Hand Cart (+10% villager speed; +50% capacity)"/>
@@ -35,6 +36,22 @@ pc => population cost to activate cell
       <cell cp ="10" cl ="0" al ="2" x="396" y="477" w="36" h="36" wc ="0" fc ="8" gc ="2" sc ="0" pc ="0" rt ="32" ci ="Advance to Castle Age"/>
       <cell cp ="10" cl ="1" al ="3" x="504" y="477" w="36" h="36" wc ="0" fc ="10" gc ="8" sc ="0" pc ="0" rt="33" ci ="Advance to Imperial Age"/>
     </TownCenter>
+    <Mill>
+      <cell cp ="4" cl ="0" al ="2" x="576" y="405" w="36" h="36" wc ="75" fc ="75" gc ="0" sc ="0" pc ="0" rt ="39" ci ="Research Horse Collar (Farm +75 food)"/>
+      <cell cp ="4" cl ="1" al ="3" x="540" y="405" w="36" h="36" wc ="125" fc ="125" gc ="0" sc ="0" pc ="0" rt ="40" ci ="Research Heavy Plow (Farm +125 food)"/>
+      <cell cp ="4" cl ="2" al ="4" x="504" y="405" w="36" h="36" wc ="250" fc ="250" gc ="0" sc ="0" pc ="0" rt ="41" ci ="Research Crop Rotation (Farm +175 food)"/>
+    </Mill>
+    <Lumber_Camp>
+      <cell cp ="0" cl ="0" al ="2" x="396" y="405" w="36" h="36" wc ="50" fc ="100" gc ="0" sc ="0" pc ="0" rt ="42" ci ="Research Double-Bit Axe (Choop Speed +20%)"/>
+      <cell cp ="0" cl ="1" al ="3" x="360" y="405" w="36" h="36" wc ="100" fc ="150" gc ="0" sc ="0" pc ="0" rt ="43" ci ="Research Bow Saw (Choop Speed +20%)"/>
+      <cell cp ="0" cl ="2" al ="4" x="432" y="405" w="36" h="36" wc ="200" fc ="300" gc ="0" sc ="0" pc ="0" rt ="44" ci ="Research Two-Man Saw (Choop Speed +10%)"/>
+    </Lumber_Camp>
+    <Mining_Camp>
+      <cell cp ="3" cl ="0" al ="2" x="612" y="405" w="36" h="36" wc ="50" fc ="100" gc ="0" sc ="0" pc ="0" rt ="45" ci ="Research Gold Mining (Gather Gold +15% Faster)"/>
+      <cell cp ="3" cl ="1" al ="3" x="0"   y="441" w="36" h="36" wc ="100" fc ="150" gc ="0" sc ="0" pc ="0" rt ="46" ci ="Research Gold Shaft Mining (Gather Gold +15% Faster)"/>
+      <cell cp ="4" cl ="0" al ="2" x="36"  y="441" w="36" h="36" wc ="200" fc ="300" gc ="0" sc ="0" pc ="0" rt ="47" ci ="Research Stone Mining (Gather Stone +15% Faster)"/>
+      <cell cp ="4" cl ="1" al ="3" x="72"  y="441" w="36" h="36" wc ="50" fc ="100" gc ="0" sc ="0" pc ="0" rt ="48" ci ="Research Stone Shaft Mining (Gather Stone +15% Faster)"/>
+    </Mining_Camp>
     <Barrack>
       <cell cp ="0" cl ="0" al ="1" x="504" y="585" w="36" h="36" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="1" ci ="Create Militia"/>
       <cell cp ="0" cl ="1" al ="2" x="180" y="585" w="36" h="36" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="15" ci ="Create Man-at-Arms"/>
@@ -49,31 +66,99 @@ pc => population cost to activate cell
       <cell cp ="5" cl ="2" al ="4" x="468" y="405" w="36" h="36" wc ="0" fc ="30" gc ="10" sc ="0" pc ="0" rt="8" ci ="Upgrade To Two-Handed Swordsman"/>
       <cell cp ="5" cl ="3" al ="4" x="144" y="369" w="36" h="36" wc ="0" fc ="75" gc ="35" sc ="0" pc ="0" rt="9" ci ="Upgrade To Champion"/>
     </Barrack>
+    <BlackSmith>
+      <cell cp ="0" cl ="0" al ="2" x="504" y="369" w="36" h="36" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="17" ci ="Research Padded Archer Armor (Archers +1/+1P armor)"/>
+      <cell cp ="0" cl ="1" al ="3" x="468" y="369" w="36" h="36" wc ="0" fc ="150" gc ="150" sc ="0" pc ="0" rt ="18" ci ="Research Leather Archer Armor (Archers +1/+1P armor)"/>
+      <cell cp ="0" cl ="2" al ="4" x="612" y="369" w="36" h="36" wc ="0" fc ="250" gc ="250" sc ="0" pc ="0" rt ="19" ci ="Research Ring Archer Armor (Archers +1/+2P armor)"/>
+      <cell cp ="1" cl ="0" al ="2" x="360" y="369" w="36" h="36" wc ="0" fc ="100" gc ="50"  sc ="0" pc ="0" rt ="20" ci ="Research Fletching (Archers, Tower and Castle +1 Attack, +1 Range, Town Center +1 Attack)"/>
+      <cell cp ="1" cl ="1" al ="3" x="216" y="369" w="36" h="36" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="21" ci ="Research Bodkin Arrow (Archers, Tower and Castle +1 Attack, +1 Range, Town Center +1 Attack)"/>
+      <cell cp ="1" cl ="2" al ="4" x="252" y="369" w="36" h="36" wc ="0" fc ="300" gc ="200" sc ="0" pc ="0" rt ="22" ci ="Research Bracer (Archers, Tower and Castle +1 Attack, +1 Range, Town Center +1 Attack)"/>
+      <cell cp ="2" cl ="0" al ="2" x="396" y="369" w="36" h="36" wc ="0" fc ="150" gc ="0"   sc ="0" pc ="0" rt ="23" ci ="Research Forging (Infantry, Cavalry +1 Attack)"/>
+      <cell cp ="2" cl ="1" al ="3" x="432" y="369" w="36" h="36" wc ="0" fc ="220" gc ="120" sc ="0" pc ="0" rt ="24" ci ="Research Iron Casting (Infantry, Cavalry +1 Attack)"/>
+      <cell cp ="2" cl ="2" al ="4" x="180" y="369" w="36" h="36" wc ="0" fc ="275" gc ="225" sc ="0" pc ="0" rt ="25" ci ="Research Blast Furnace (Infantry, Cavalry +2 Attack)"/>
+      <cell cp ="5" cl ="0" al ="2" x="0"   y="405" w="36" h="36" wc ="0" fc ="150" gc ="0"   sc ="0" pc ="0" rt ="26" ci ="Research Scale Barding Armor (Cavalry +1/+1P Armor)"/>
+      <cell cp ="5" cl ="1" al ="3" x="288" y="369" w="36" h="36" wc ="0" fc ="250" gc ="150" sc ="0" pc ="0" rt ="27" ci ="Research Chain Barding Armor (Cavalry +1/+1P Armor)"/>
+      <cell cp ="5" cl ="2" al ="4" x="540" y="369" w="36" h="36" wc ="0" fc ="350" gc ="200" sc ="0" pc ="0" rt ="28" ci ="Research Plate Barding Armor (Cavalry +1/+2P Armor)"/>
+      <cell cp ="6" cl ="0" al ="2" x="36"  y="405" w="36" h="36" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="29" ci ="Research Scale Mail Armor (Infantry +1/+1P Armor)"/>
+      <cell cp ="6" cl ="1" al ="3" x="324" y="369" w="36" h="36" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="30" ci ="Research Chain Mail Armor (Infantry +1/+1P Armor)"/>
+      <cell cp ="6" cl ="2" al ="4" x="576" y="369" w="36" h="36" wc ="0" fc ="300" gc ="150" sc ="0" pc ="0" rt ="31" ci ="Research Plate Mail Armor (Infantry +1/+2P Armor)"/>
+    </BlackSmith>
+    <Archery_Range>
+      <cell cp ="0" cl ="0" al ="2" x="0"   y="549" w="36" h="36" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="3"  ci ="Create Archer"/>
+      <cell cp ="0" cl ="1" al ="3" x="324" y="549" w="36" h="36" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="3" ci ="Create Crossbowman"/>
+      <cell cp ="0" cl ="2" al ="4" x="609" y="513" w="36" h="36" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="2" ci ="Create Arbalest"/>
+      <cell cp ="1" cl ="0" al ="2" x="360" y="621" w="36" h="36" wc ="35" fc ="25" gc ="0"  sc ="0" pc ="1" ut ="6"  ci ="Create Skirmisher"/>
+      <cell cp ="1" cl ="1" al ="3" x="432" y="549" w="36" h="36" wc ="35" fc ="25" gc ="0"  sc ="0" pc ="1" ut ="6" ci ="Create Elite Skirmisher"/>
+      <cell cp ="2" cl ="0" al ="3" x="216" y="549" w="36" h="36" wc ="40" fc ="0"  gc ="60" sc ="0" pc ="1" ut ="5"  ci ="Create Cavalry Archer"/>
+      <cell cp ="2" cl ="1" al ="4" x="540" y="549" w="36" h="36" wc ="40" fc ="0"  gc ="60" sc ="0" pc ="1" ut ="5" ci ="Create Elite Cavalry Archer"/>
+      <cell cp ="5" cl ="0" al ="3" x="352" y="333" w="36" h="36" wc ="0" fc ="125"  gc ="75" sc ="0" pc ="0" rt ="1" ci ="Upgrade To Crossbowman"/>
+      <cell cp ="5" cl ="1" al ="4" x="424" y="333" w="36" h="36" wc ="0" fc ="350"  gc ="300" sc ="0" pc ="0" rt ="2" ci ="Upgrade To Arbalest"/>
+      <cell cp ="6" cl ="0" al ="3" x="496" y="333" w="36" h="36" wc ="200" fc ="0"  gc ="100" sc ="0" pc ="0" rt ="3" ci ="Upgrade To Elite Skirmisher"/>
+      <cell cp ="7" cl ="0" al ="4" x="388" y="333" w="36" h="36" wc ="0" fc ="900"  gc ="500" sc ="0" pc ="0" rt ="4" ci ="Upgrade To Elite Cavalry Archer"/>
+      <cell cp ="10" cl ="0" al ="3" x="532" y="333" w="36" h="36" wc ="250" fc ="300" gc ="0" sc ="0" pc ="0" rt ="5" ci ="Research Thumb Ring (Incress Attack Rate, Accuracy 100% inmovile targets)"/>
+    </Archery_Range>
+    <Stable>
+      <cell cp ="0" cl ="0" al ="2" x="216" y="621" w="36" h="36" wc ="0" fc ="80"  gc ="0" sc ="0" pc ="1" ut ="8"  ci ="Create Scout Cavalry"/>
+      <cell cp ="0" cl ="1" al ="3" x="72"  y="585" w="36" h="36" wc ="0" fc ="80"  gc ="0" sc ="0" pc ="1" ut ="8" ci ="Create Light Cavalry"/>
+      <cell cp ="1" cl ="0" al ="3" x="36"  y="585" w="36" h="36" wc ="0" fc ="60"  gc ="75" sc ="0" pc ="1" ut ="8" ci ="Create Knight"/>
+      <cell cp ="1" cl ="1" al ="4" x="180" y="549" w="36" h="36" wc ="0" fc ="60"  gc ="75"  sc ="0" pc ="1" ut ="4"  ci ="Create Cavalier"/>
+      <cell cp ="1" cl ="2" al ="4" x="0"   y="621" w="36" h="36" wc ="0" fc ="60"  gc ="75"  sc ="0" pc ="1" ut ="10" ci ="Create Paladin"/>
+      <cell cp ="5" cl ="0" al ="4" x="144" y="477" w="36" h="36" wc ="0" fc ="125"  gc ="75" sc ="0" pc ="0" rt ="30" ci ="Upgrade To Light Cavalry"/>
+      <cell cp ="6" cl ="0" al ="4" x="108" y="477" w="36" h="36" wc ="0" fc ="350"  gc ="300" sc ="0" pc ="0" rt ="27" ci ="Upgrade To Cavalier"/>
+      <cell cp ="6" cl ="1" al ="4" x="36"  y="477" w="36" h="36" wc ="200" fc ="0"  gc ="100" sc ="0" pc ="0" rt ="28" ci ="Upgrade To Paladin"/>
+      <cell cp ="6" cl ="2" al ="3" x="0"   y="477" w="36" h="36" wc ="250" fc ="300" gc ="0" sc ="0" pc ="0" rt ="26" ci ="Research Bloodlines (Cavalry +20 Healthpoints)"/>
+      <cell cp ="10" cl ="0" al ="3" x="72" y="477" w="36" h="36" wc ="0" fc ="150" gc ="0" sc ="0" pc ="0" rt ="29" ci ="Research Husbandry (Cavalry +10% Speed)"/>
+    </Stable>
+    <!-- <Monastery>
+    
+    </Monastery>
+    <University>
+      
+    </University>
+    <Castle>
+      
+    </Castle>-->
   </Buildings>
   <Units>
     <Villager>
-      <cell cp ="0" cl ="0" al ="1" x="76" y="153" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
-      <cell cp ="1" cl ="0" al ="1" x="593" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Militari Building"/>
-      <cell cp ="2" cl ="0" al ="1" x="405" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Repair Building"/>
-      <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Kill Unit"/>
-      <cell cp ="13" cl ="1" al ="1" x="332" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
-      <cell cp ="14" cl ="1" al ="1" x="477" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
+      <cell cp ="0" cl ="0" al ="1" x="76" y="153" w="36" h="36"   ci ="Buildings"/>
+      <cell cp ="1" cl ="0" al ="1" x="593" y="36" w="36" h="36"   ci ="Militari Building"/>
+      <cell cp ="2" cl ="0" al ="1" x="405" y="36" w="36" h="36"   ci ="Repair Building"/>
+      <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Unit"/>
+      <cell cp ="13" cl ="1" al ="1" x="332" y="36" w="36" h="36"  ci ="Buildings"/>
+      <cell cp ="14" cl ="1" al ="1" x="477" y="36" w="36" h="36"  ci ="Buildings"/>
       <cell cp ="0" cl ="2" al ="1" x="132" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="175" pc ="0" bt="3" ci ="Bulid Barrack"/>
-      <cell cp ="13" cl ="2" al ="1" x="332" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
-      <cell cp ="14" cl ="2" al ="1" x="477" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Buildings"/>
+      <cell cp ="13" cl ="2" al ="1" x="332" y="36" w="36" h="36"  ci ="Buildings"/>
+      <cell cp ="14" cl ="2" al ="1" x="477" y="36" w="36" h="36"  ci ="Buildings"/>
     </Villager>
     <Unit>
-      <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Kill Warrior"/>
+      <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36" ci ="Kill Unit"/>
     </Unit>
     <Champion>
-      <cell cp ="0" cl ="1" al ="1" x="651" y="38" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Passive Hability: Heavy Deffence"/>
-      <cell cp ="0" cl ="2" al ="1" x="651" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Passive Hability: Berserk"/>
-      <cell cp ="1" cl ="1" al ="1" x="651" y="114" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Stun"/>
-      <cell cp ="1" cl ="2" al ="1" x="651" y="76" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Slash"/>
-      <cell cp ="2" cl ="1" al ="1" x="576" y="477" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci =""/>
-      <cell cp ="2" cl ="2" al ="1" x="612" y="477" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci =""/>
-      <cell cp ="3" cl ="0" al ="1" x="504" y="441" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Open Warrior Skill Tree"/>
-      <cell cp ="4" cl ="0" al ="1" x="0" y="76" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="0" pc ="0" ci ="Kill Warrior"/>
+      <cell cp ="0" cl ="1" al ="1" x="651" y="38" w="36" h="36"   ci ="Passive Hability: Heavy Deffence"/>
+      <cell cp ="0" cl ="2" al ="1" x="651" y="0" w="36" h="36"    ci ="Passive Hability: Berserk"/>
+      <cell cp ="1" cl ="1" al ="1" x="651" y="114" w="36" h="36"  ci ="Stun"/>
+      <cell cp ="1" cl ="2" al ="1" x="651" y="76" w="36" h="36"   ci ="Slash"/>
+      <cell cp ="2" cl ="1" al ="1" x="576" y="477" w="36" h="36"  ci ="n"/>
+      <cell cp ="2" cl ="2" al ="1" x="612" y="477" w="36" h="36"  ci ="n"/>
+      <cell cp ="3" cl ="0" al ="1" x="504" y="441" w="36" h="36"  ci ="Open Warrior Skill Tree"/>
+      <cell cp ="4" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Warrior"/>
+      <cell cp ="5" cl ="1" al ="1" x="651" y="38" w="36" h="36"   ci ="Passive Hability: Heal All"/>
+      <cell cp ="5" cl ="2" al ="1" x="651" y="0" w="36" h="36"    ci ="Passive Hability: Vitaliti Up"/>
+      <cell cp ="6" cl ="1" al ="1" x="651" y="114" w="36" h="36"  ci ="tp"/>
+      <cell cp ="6" cl ="2" al ="1" x="651" y="76" w="36" h="36"   ci ="Kaboom"/>
+      <cell cp ="7" cl ="1" al ="1" x="576" y="477" w="36" h="36"  ci ="n"/>
+      <cell cp ="7" cl ="2" al ="1" x="612" y="477" w="36" h="36"  ci ="n"/>
+      <cell cp ="8" cl ="0" al ="1" x="504" y="441" w="36" h="36"  ci ="Open Mage Skill Tree"/>
+      <cell cp ="8" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Mage"/>
+      <cell cp ="10" cl ="1" al ="1" x="651" y="38" w="36" h="36"  ci ="Passive Hability: Archer acc++"/>
+      <cell cp ="10" cl ="2" al ="1" x="651" y="0" w="36" h="36"   ci ="Passive Hability: Archer los++"/>
+      <cell cp ="11" cl ="1" al ="1" x="651" y="114" w="36" h="36" ci ="shot"/>
+      <cell cp ="11" cl ="2" al ="1" x="651" y="76" w="36" h="36"  ci ="shot shot shot"/>
+      <cell cp ="12" cl ="1" al ="1" x="576" y="477" w="36" h="36" ci ="n"/>
+      <cell cp ="12" cl ="2" al ="1" x="612" y="477" w="36" h="36" ci ="n"/>
+      <cell cp ="13" cl ="0" al ="1" x="504" y="441" w="36" h="36" ci ="Open Archer Skill Tree"/>
+      <cell cp ="14" cl ="0" al ="1" x="0" y="76" w="36" h="36"    ci ="Kill Archer"/>
     </Champion>
   </Units>
 </HudActionPanelData>

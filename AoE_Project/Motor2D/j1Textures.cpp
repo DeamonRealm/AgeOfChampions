@@ -53,7 +53,6 @@ bool j1Textures::CleanUp()
 	while (texture != textures.end())
 	{
 		SDL_DestroyTexture(texture._Ptr->_Myval);
-
 		texture++;
 	}
 
@@ -108,7 +107,7 @@ SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
 {
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
 
-	if(texture == NULL)
+	if(texture == nullptr)
 	{
 		LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
 	}

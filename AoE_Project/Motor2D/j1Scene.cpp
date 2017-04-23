@@ -60,7 +60,6 @@ bool j1Scene::Start()
 	//Load Logic Map --------------------------------------
 	uint width = 0;
 	uint height = 0;
-	uchar* logic_map = nullptr;
 	j1Timer ptimer;
 	App->map->CreateWalkabilityMap(width, height);
 	App->pathfinding->SetMap(width, height);
@@ -202,7 +201,7 @@ bool j1Scene::LoadScene()
 			DIPLOMACY diplomacy = App->animator->StrToDiplomacyEnum(entity_node.attribute("diplomacy").as_string());
 			Unit* new_unit = App->entities_manager->GenerateUnit(unit_type, diplomacy, true);
 			iPoint unit_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
-			new_unit->SetPosition(unit_pos.x, unit_pos.y);
+			new_unit->SetPosition((float)unit_pos.x, (float)unit_pos.y);
 			App->player->game_panel->IncressPopulation(1);
 		}
 		else if (type == RESOURCE)
@@ -210,7 +209,7 @@ bool j1Scene::LoadScene()
 			RESOURCE_TYPE resource_type = App->animator->StrToResourceEnum(entity_node.attribute("resource_type").as_string());
 			Resource* new_resource = App->entities_manager->GenerateResource(resource_type);
 			iPoint resource_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
-			new_resource->SetPosition(resource_pos.x, resource_pos.y);
+			new_resource->SetPosition((float)resource_pos.x, (float)resource_pos.y);
 		}
 		else if (type == BUILDING)
 		{
@@ -218,7 +217,7 @@ bool j1Scene::LoadScene()
 			DIPLOMACY diplomacy = App->animator->StrToDiplomacyEnum(entity_node.attribute("diplomacy").as_string());
 			Building* new_building = App->entities_manager->GenerateBuilding(building_type, diplomacy);
 			iPoint building_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
-			new_building->SetPosition(building_pos.x, building_pos.y);
+			new_building->SetPosition((float)building_pos.x, (float)building_pos.y);
 		}
 
 		entity_node = entity_node.next_sibling();

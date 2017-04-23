@@ -7,7 +7,7 @@
 #include "SDL\include\SDL_rect.h"
 
 
-struct UI_Element;
+class UI_Element;
 struct SDL_Texture;
 enum UI_TYPE;
 

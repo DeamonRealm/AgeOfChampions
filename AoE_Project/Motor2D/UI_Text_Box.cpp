@@ -189,7 +189,7 @@ void UI_Text_Box::SetCursorScreenPos(uint position)
 void UI_Text_Box::AdjustCursorSize()
 {
 	Cursor_h = this->Text_entered.GetPixelHeightLenght();
-	Cursor_w = ceil(Cursor_h / 4);
+	Cursor_w = (uint)ceil(Cursor_h / 4);
 }
 
 void UI_Text_Box::SetCursorSize(uint w, uint h)

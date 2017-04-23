@@ -1031,7 +1031,7 @@ void j1EntitiesManager::UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy)
 		break;
 	case A_CROSSBOW_UP://UpgradeUnit(CROSSBOWMAN, ARBALEST, diplomacy);
 		break;
-	case A_PARTHIAN_T_UP:
+	case A_SKIMISHER_UP:
 		break;
 	case A_THUMBRING_UP:
 		break;

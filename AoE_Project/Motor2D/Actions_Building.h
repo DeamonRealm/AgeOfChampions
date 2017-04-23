@@ -15,9 +15,9 @@ enum RESEARCH_TECH
 
 	//Archery Tech
 	A_ARCHER_UP,
-	A_C_ARCHER_UP,
 	A_CROSSBOW_UP,
-	A_PARTHIAN_T_UP,
+	A_SKIMISHER_UP,
+	A_C_ARCHER_UP,
 	A_THUMBRING_UP,
 
 	//Barrak Tech
@@ -28,29 +28,21 @@ enum RESEARCH_TECH
 	B_SPEARMAN_UP,
 
 	//Blacksmith Tech
-	BS_BLASTFURNACE,
+	BS_PADDED_AA,
+	BS_LEATHER_AA,
+	BS_RING_AA,
+	BS_FLETCHING,
 	BS_BODKINARROW,
 	BS_BRACER,
-	BS_FLETCHING,
 	BS_FORGING,
 	BS_IRONCASTING,
-	BS_LEATHER_AA,
-	BS_PADDED_AA,
-	BS_RING_AA,
+	BS_BLASTFURNACE,
+	BS_SCALE_BA,
 	BS_CHAIN_BA,
 	BS_PLATE_BA,
-	BS_SCALE_BA,
+	BS_SCALE_MAIL_ARMOR,
 	BS_CHAIN_MAIL_ARMOR,
 	BS_PLATE_MAIL_ARMOR,
-	BS_SCALE_MAIL_ARMOR,
-
-	// Castle Tech
-	// LC wood
-	// M mill
-	// MC stone/gold
-	// Mk Market
-
-	// Monk
 
 	// Stable
 	S_BLOODLINES,
@@ -69,8 +61,28 @@ enum RESEARCH_TECH
 	TC_PATROL,
 	TC_TOWNWATCH,
 	TC_WHEELBARROW,
-	TC_HANDCART
+	TC_HANDCART,
 
+	// Castle Tech
+	// Mill Tecnology
+	M_HORSECOLLAR,
+	M_HEAVYPLOW,
+	M_CROPROTATION,
+
+	// Lumber Camp Tecnology
+	LC_DOUBLEBIT_AXE,
+	LC_BOW_SAW,
+	LC_TWOMAN_SAW,
+
+	// Mining Camp Tecnology
+	MC_GOLD_MINING,
+	MC_GOLD_SHAFT,
+	MC_STONE_MINING,
+	MC_STONE_SHAFT
+
+	// Mk Market
+
+	// Monk
 	// University
 };
 
@@ -105,7 +117,7 @@ public:
 			int x = ((ProductiveBuilding*)actor)->GetSpawnPoint().x + actor->GetPosition().x;
 			int y = ((ProductiveBuilding*)actor)->GetSpawnPoint().y + actor->GetPosition().y;
 			App->entities_manager->AddUnit(new_unit);
-			new_unit->SetPosition(x, y);
+			new_unit->SetPosition((float)x, (float)y);
 			App->animator->UnitPlay(new_unit);
 			App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
 

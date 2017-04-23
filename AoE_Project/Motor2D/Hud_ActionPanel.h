@@ -75,7 +75,7 @@ public:
 	void		 UpdateCells();
 	virtual void ResetPanel();
 
-	virtual bool ActivateCell(int i) { return false; };
+	virtual bool ActivateCell(int i);
 
 	virtual void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 
@@ -128,8 +128,6 @@ class BarrackPanel : public Action_Panel_Elements
 public:
 	BarrackPanel();
 	~BarrackPanel() {};
-
-	bool ActivateCell(int i);
 
 	bool UpgradeResearch(RESEARCH_TECH type);
 
