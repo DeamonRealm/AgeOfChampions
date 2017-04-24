@@ -281,23 +281,27 @@ bool j1EntitiesManager::CleanUp()
 	buildings_quadtree.Clear();
 
 	//Clean Up units_defs vector
-	uint size = units_defs.size();
+	uint size = ally_units_defs.size();
 	for (uint k = 0; k < size; k++)
 	{
-		switch (units_defs[k]->GetUnitType())
+		switch (ally_units_defs[k]->GetUnitType())
 		{
 		case VILLAGER:
-			delete ((Villager*)units_defs[k]);
+			delete ((Villager*)ally_units_defs[k]);
+			delete ((Villager*)enemy_units_defs[k]);
 			break;
 		case WARRIOR_CHMP:
-			delete ((Warrior*)units_defs[k]);
+			delete ((Warrior*)ally_units_defs[k]);
+			delete ((Warrior*)enemy_units_defs[k]);
 			break;
 		default:
-			RELEASE(units_defs[k]);
+			RELEASE(ally_units_defs[k]);
+			RELEASE(enemy_units_defs[k]);
 			break;
 		}
 	}
-	units_defs.clear();
+	ally_units_defs.clear();
+	enemy_units_defs.clear();
 
 	//Clean Up resoureces_defs vector
 	size = resources_defs.size();
@@ -496,7 +500,8 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	}
 
 	//Add the generated unit in the units definitions entities manager array
-	units_defs.push_back(new_def);
+	ally_units_defs.push_back(new_def);
+	enemy_units_defs.push_back(new_def);
 
 	LOG("%s definition built!", new_def->GetName());
 	
@@ -741,20 +746,26 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 {
 	Unit* new_unit = nullptr;
 
-	uint def_num = units_defs.size();
+	uint def_num = ally_units_defs.size();
 	for (uint k = 0; k < def_num; k++)
 	{
-		if (units_defs[k]->GetUnitType() == type)
+		if (ally_units_defs[k]->GetUnitType() == type)
 		{
 			//If the unit to generate is a special unit we need to allocate extra stats
 			if (type == VILLAGER)
 			{
-				Villager* new_villager = new Villager(*(Villager*)units_defs[k]);
+				Villager* new_villager;
+				if(diplomacy == ALLY)new_villager = new Villager(*(Villager*)ally_units_defs[k]);
+				else new_villager = new Villager(*(Villager*)enemy_units_defs[k]);
+
 				new_unit = new_villager;
 			}
 			else if (type == WARRIOR_CHMP)
 			{
-				Warrior* new_warrior = new Warrior(*(Warrior*)units_defs[k]);
+				Warrior* new_warrior;
+				if (diplomacy == ALLY)new_warrior = new Warrior(*(Warrior*)ally_units_defs[k]);
+				else new_warrior = new Warrior(*(Warrior*)enemy_units_defs[k]);
+
 				new_unit = new_warrior;
 			}
 			else if (type == ARCHER_CHMP)
@@ -763,13 +774,17 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 			}
 			else if (type == WIZARD_CHMP)
 			{
-				Wizard* new_wizard = new Wizard(*(Wizard*)units_defs[k]);
+				Wizard* new_wizard;
+				if (diplomacy == ALLY)new_wizard = new Wizard(*(Wizard*)ally_units_defs[k]);
+				else new_wizard = new Wizard(*(Wizard*)enemy_units_defs[k]);
+
 				new_unit = new_wizard;
 			}
 			else
 			{
 				//Build unit
-				new_unit = new Unit(*units_defs[k]);
+				if (diplomacy == ALLY)new_unit = new Unit(*ally_units_defs[k]);
+				else new_unit = new Unit(*enemy_units_defs[k]);
 			}
 
 			//Set generated unit diplomacy
@@ -1066,12 +1081,12 @@ bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 	if (u_type != NO_UNIT && new_type != NO_UNIT)
 	{
 		Unit* new_unit = nullptr;
-		int size = units_defs.size();
+		int size = ally_units_defs.size();
 		for (int count = 0; count < size; count++)
 		{
-			if (units_defs[count]->GetUnitType() == new_type) 
+			if (ally_units_defs[count]->GetUnitType() == new_type)
 			{
-				new_unit = units_defs[count];
+				new_unit = ally_units_defs[count];
 				break;
 			}
 		}

@@ -68,9 +68,10 @@ private:
 	std::vector<Entity*>	wasted_units;
 
 	//Vector of predefined units
-	std::vector<Unit*>		units_defs;
-	std::vector<Resource*>	resources_defs;
+	std::vector<Unit*>		ally_units_defs;
+	std::vector<Unit*>		enemy_units_defs;
 	std::vector<Building*>	buildings_defs;
+	std::vector<Resource*>	resources_defs;
 
 	// Cvar that defines the console unit generator unit type
 	Cvar* unit_cvar;
@@ -85,7 +86,7 @@ private:
 
 public:
 
-	//Entities Quad Trees to help other modules work with enetities
+	//Entities Quad Trees to help other modules work with entities
 	m_QuadTree<Unit*>			units_quadtree;
 	m_QuadTree<Resource*>		resources_quadtree;
 	m_QuadTree<Building*>		buildings_quadtree;
