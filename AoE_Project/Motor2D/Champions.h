@@ -102,8 +102,6 @@ private:
 	/* extra data */
 	std::vector<Unit*>	protected_units;
 
-	j1Timer				taunt_timer;
-	uint				taunt_max_time = 0;
 
 	Triangle			special_attack_area;
 	Circle				area_ability_lvl_3;
@@ -142,6 +140,7 @@ public:
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Triangle& tri);
+	void	SetAreaAbilityLvl3(const Circle& circle);
 	void	SetAbility_lvl_2_AttackValue(uint atk);
 	void	SetAbility_lvl_2_StunValue(uint stun);
 

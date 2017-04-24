@@ -456,8 +456,12 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Atk Triangle Width*/	atk_triangle.SetWidthAngle(unit_node->attribute("atk_triangle_width_angle").as_float());
 								atk_triangle.SetXAngle(12.0);
 								((Warrior*)new_def)->SetSpecialAttackArea(atk_triangle);
-		/*Ability B Atk Val*/	((Warrior*)new_def)->SetAbility_lvl_2_AttackValue(unit_node->attribute("ability_B_attack_value").as_uint());
-		/*Ability B Stun Val*/	((Warrior*)new_def)->SetAbility_lvl_2_StunValue(unit_node->attribute("ability_B_stun_value").as_uint());
+								Circle circle;
+								circle.SetColor({ 100, 100, 100, 255 });
+								circle.SetRad(unit_node->attribute("area_ability_lvl_3").as_uint());
+								((Warrior*)new_def)->SetAreaAbilityLvl3(circle);
+		/*Ability B Atk Val*/	((Warrior*)new_def)->SetAbility_lvl_2_AttackValue(unit_node->attribute("ability_lvl_2_attack_value").as_uint());
+		/*Ability B Stun Val*/	((Warrior*)new_def)->SetAbility_lvl_2_StunValue(unit_node->attribute("ability_lvl_2_stun_value").as_uint());
 								chmp = true;
 	}
 	else if (unit_type == ARCHER_CHMP)

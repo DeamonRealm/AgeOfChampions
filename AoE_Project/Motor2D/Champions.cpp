@@ -529,7 +529,6 @@ void Warrior::Hability_lvl_3(int x, int y)
 
 			}
 		}
-		taunt_timer.Start();
 	}
 	else
 	{
@@ -665,6 +664,12 @@ void Warrior::SetSpecialAttackArea(const Triangle & tri)
 	special_attack_area = tri;
 }
 
+void Warrior::SetAreaAbilityLvl3(const Circle & circle)
+{
+	area_ability_lvl_3 = circle;
+
+}
+
 void Warrior::SetAbility_lvl_2_AttackValue(uint atk)
 {
 	ability_lvl_2_attack_value = atk;
@@ -674,6 +679,8 @@ void Warrior::SetAbility_lvl_2_StunValue(uint stun)
 {
 	ability_lvl_2_stun_value = stun;
 }
+
+
 
 
 /// ---------------------------------------------

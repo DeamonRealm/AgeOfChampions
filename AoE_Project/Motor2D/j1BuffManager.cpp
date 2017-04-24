@@ -711,6 +711,14 @@ void j1BuffManager::RemoveTargetBuffs(Unit* target)
 		((Champion*)target)->CleanBuffedUnits();
 		((Warrior*)target)->ClearProtectedUnits();
 	}
+	else if (target->GetUnitType() == WIZARD_CHMP)
+	{
+		((Champion*)target)->CleanBuffedUnits();
+	}
+	else if (target->GetUnitType() == ARCHER_CHMP)
+	{
+		((Champion*)target)->CleanBuffedUnits();
+	}
 	std::list<PassiveBuff*>::iterator item = static_buffs.begin();
 	while (item != static_buffs.end())
 	{
