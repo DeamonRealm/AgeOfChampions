@@ -255,7 +255,7 @@ public:
 	//Set Methods -----------
 	void			SetName(const char* name_str);
 	virtual void	SetPosition(float x, float y, bool insert = true);
-	void			OnlySetPosition(float x, float y);
+	virtual void	OnlySetPosition(float x, float y);
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 	void			SetVision(const Circle& new_mark);
@@ -545,6 +545,7 @@ public:
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y, bool insert = true);
+	void	OnlySetPosition(float x, float y);
 	void	SetMark(const Rectng& rectangle);
 	void	SetInteractArea(const Rectng& rectangle);
 	void	SetWidthInTiles(uint width);

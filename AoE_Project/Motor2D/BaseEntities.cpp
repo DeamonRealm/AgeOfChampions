@@ -126,12 +126,8 @@ void Entity::SetPosition(float x, float y, bool insert)
 
 void Entity::OnlySetPosition(float x, float y)
 {
-	iPoint pos = App->map->WorldToMap(x, y);
-	pos.x += 1;
-	pos.y += 1;
-	pos = App->map->MapToWorld(pos.x, pos.y);
-	position.x = pos.x;
-	position.y = pos.y;
+	position.x = x;
+	position.y = y;
 }
 
 void Entity::SetEntityType(ENTITY_TYPE type)
@@ -1884,60 +1880,51 @@ bool Building::Draw(bool debug)
 	return ret;
 }
 
+//Set Methods ---------------
 void Building::SetPosition(float x, float y, bool insert)
 {
 	//Set building position fixing it in the tiles coordinates ( center position in the selected tile)
 	iPoint map_coords = App->map->WorldToMap(x, y);
 	iPoint world_coords = App->map->MapToWorld(map_coords.x, map_coords.y);
 	position.x = world_coords.x;
-	position.y = world_coords.y - (App->map->data.tile_height + 1) * 0.5f;
+	position.y = world_coords.y;
 
 	if (!insert)return;
 
 	//Calculate the upper tile of the building zone
-	iPoint upper_tile(map_coords.x, map_coords.y);
+	iPoint upper_tile(map_coords.x - 1, map_coords.y - 1);
 
 	//Update the logic & construction map
 	//Check if the building is a town center to respect the build exception
-	if (building_type == TOWN_CENTER)
+	switch (building_type)
 	{
-		position.y = world_coords.y - (App->map->data.tile_height + 1) * 0.5f;
-		upper_tile.x -= 1;
-		upper_tile.y -= 1;
+	case FARM:
+		break;
+	case TOWN_CENTER:
+		position.y -= App->map->data.tile_height * 0.5f;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2, 0);
-	}
-	else if (building_type == BARRACK)
-	{
-		position.y = world_coords.y + (App->map->data.tile_height + 1);
+		break;
+	case BARRACK:
+	case ARCHERY_RANGE:
+	case BLACKSMITH:
+	case STABLE:
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
-	}
-	else if (building_type == BLACKSMITH)
-	{
-		position.y = world_coords.y + (App->map->data.tile_height + 1);
+		break;
+	case MARKET:
+		position.y += (App->map->data.tile_height + 1) * 0.5f;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
-	}
-	else if (building_type == STABLE)
-	{
-		position.y = world_coords.y + (App->map->data.tile_height + 1);
-
+		break;
+		break;
+	case HOUSE_A:
+	case HOUSE_B:
+	case HOUSE_C:
+		position.y -= (App->map->data.tile_height + 1) * 0.5f;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
-	}
-	else if (building_type == HOUSE_A || building_type == HOUSE_B || building_type == HOUSE_C)
-	{
-		position.y = world_coords.y - (App->map->data.tile_height + 1) * 0.5f;
-		upper_tile.x -= 1;
-		upper_tile.y -= 1;
-		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
-	}
-	else if (building_type == ARCHERY_RANGE)
-	{
-		position.y = world_coords.y + (App->map->data.tile_height + 1) ;
-		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
-	}
-	else if (building_type == MARKET)
-	{
-		position.y = world_coords.y + (App->map->data.tile_height + 1) * 1.5f;
-		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
+		break;
+	case RUBBLE_THREE:
+		break;
+	case RUBBLE_FOUR:
+		break;
 	}
 
 	//Update construction map
@@ -1956,8 +1943,35 @@ void Building::SetPosition(float x, float y, bool insert)
 	App->entities_manager->buildings_quadtree.Insert(this, &position);
 }
 
+void Building::OnlySetPosition(float x, float y)
+{
+	//Set building position fixing it in the tiles coordinates ( center position in the selected tile)
+	iPoint pos = App->map->WorldToMap(x, y);
+	pos = App->map->MapToWorld(pos.x, pos.y);
+	switch (building_type)
+	{
+	case FARM:
+		break;
+	case TOWN_CENTER:
+		pos.y -= App->map->data.tile_height * 0.5f;
+	case MARKET:
+		pos.y += App->map->data.tile_height * 0.5f;
+		break;
+	case HOUSE_A:
+	case HOUSE_B:
+	case HOUSE_C:
+		pos.y -= (App->map->data.tile_height + 1) * 0.5f;
+		break;
+	case RUBBLE_THREE:
+		break;
+	case RUBBLE_FOUR:
+		break;
+	}
 
-//Set Methods ---------------
+	position.x = pos.x;
+	position.y = pos.y;
+}
+
 void Building::SetMark(const Rectng& rectangle)
 {
 	mark = rectangle;

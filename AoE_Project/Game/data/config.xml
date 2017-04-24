@@ -49,8 +49,6 @@
 
   <file_system>
     <path>data</path>
-    <c_vars>
-    </c_vars>
   </file_system>
 
   <map>
