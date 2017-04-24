@@ -126,8 +126,12 @@ void Entity::SetPosition(float x, float y, bool insert)
 
 void Entity::OnlySetPosition(float x, float y)
 {
-	position.x = x;
-	position.y = y;
+	iPoint pos = App->map->WorldToMap(x, y);
+	pos.x += 1;
+	pos.y += 1;
+	pos = App->map->MapToWorld(pos.x, pos.y);
+	position.x = pos.x;
+	position.y = pos.y;
 }
 
 void Entity::SetEntityType(ENTITY_TYPE type)
@@ -1930,11 +1934,14 @@ void Building::SetPosition(float x, float y, bool insert)
 		position.y = world_coords.y + (App->map->data.tile_height + 1) ;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 	}
+	else if (building_type == MARKET)
+	{
+		position.y = world_coords.y + (App->map->data.tile_height + 1) * 1.5f;
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
+	}
 
 	//Update construction map
-	upper_tile.x -= 1;
-	upper_tile.y -= 1;
-	App->map->ChangeConstructionMap(upper_tile, width_in_tiles + 2, height_in_tiles + 2, 0);
+	App->map->ChangeConstructionMap(upper_tile, width_in_tiles + 1, height_in_tiles + 1, 0);
 
 	//Clear fog around building vision zone
 	vision.SetPosition(iPoint(position.x, position.y));

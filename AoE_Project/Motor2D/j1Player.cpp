@@ -137,7 +137,7 @@ bool j1Player::PreUpdate()
 		//Generate a town center in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		{
-			Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::STABLE, ALLY);
+			Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::MARKET, ALLY);
 			center->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 			center->SetDiplomacy(ALLY);
 
