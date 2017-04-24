@@ -239,7 +239,7 @@ private:
 
 	//Vectors that define all the entities animations
 	std::vector<DiplomaticAnimation_Block*> unit_blocks;
-	std::vector<Animation_Block*>			building_blocks;
+	std::vector<DiplomaticAnimation_Block*>	building_blocks;
 	std::vector<Animation_Block*>			resource_blocks;
 
 public:

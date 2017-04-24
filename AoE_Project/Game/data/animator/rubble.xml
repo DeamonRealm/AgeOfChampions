@@ -19,7 +19,7 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="rubble.png" width="387" height="387">
+<TextureAtlas blue_texture="rubble.png" red_texture="rubble.png" width="387" height="387">
   <!-- Define the building type-->
   <building id ="rubble_four">
     <action enum ="disappear" speed="4500" loop="0">

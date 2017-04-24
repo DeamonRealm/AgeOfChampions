@@ -20,7 +20,7 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 
-<TextureAtlas blue_texture="spearman.png" red_texture="spearman.png" width="862" height="862">
+<TextureAtlas blue_texture="spearman.png" red_texture="spearman_red.png" width="862" height="862">
   <!-- Define the unit type-->
   <unit id ="spearman">
 

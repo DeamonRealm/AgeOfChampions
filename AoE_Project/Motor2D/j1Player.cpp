@@ -161,7 +161,7 @@ bool j1Player::PreUpdate()
 		//Generate a Arbalest unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
 		{
-			Unit* new_unit = App->entities_manager->GenerateUnit(CROSSBOWMAN, ALLY);
+			Unit* new_unit = App->entities_manager->GenerateUnit(HEAVY_CAVALRY_ARCHER, ENEMY);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 			new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
 			game_panel->IncressPopulation(1, false);

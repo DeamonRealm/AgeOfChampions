@@ -19,7 +19,7 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="feudal_buildings.png" width="991" height="991">
+<TextureAtlas blue_texture="feudal_buildings.png" red_texture="feudal_buildings_red.png" width="991" height="991">
   <!-- Define the building type-->
   <building id ="barrack">
     <action enum ="idle" speed="0">

@@ -790,9 +790,12 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder)
 	std::string load_folder = name + "/" + xml_folder;
 	pugi::xml_document build_anim_data;
 	if (!App->fs->LoadXML(load_folder.c_str(), &build_anim_data))return false;
-	//Texture load
-	load_folder = name + "/" + build_anim_data.child("TextureAtlas").attribute("imagePath").as_string();
-	SDL_Texture* texture = App->tex->Load(load_folder.c_str());
+	
+	//Load the item animations textures
+	std::string folder = load_folder = name + "/" + build_anim_data.child("TextureAtlas").attribute("blue_texture").as_string();
+	SDL_Texture* blue_texture = App->tex->Load(folder.c_str());
+	folder = name + "/" + build_anim_data.child("TextureAtlas").attribute("red_texture").as_string();
+	SDL_Texture* red_texture = App->tex->Load(folder.c_str());
 
 	//Focus building id
 	pugi::xml_node build_node = build_anim_data.child("TextureAtlas").child("building");
@@ -803,7 +806,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder)
 	while (build_node != NULL)
 	{
 		//Allocate building animation block data
-		Animation_Block* building_block = new Animation_Block();
+		DiplomaticAnimation_Block* building_block = new DiplomaticAnimation_Block();
 		building_block->SetId((uint)StrToBuildingEnum(build_node.attribute("id").as_string()));
 
 		//Iterate all building actions
@@ -811,14 +814,15 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder)
 		while (action_node != NULL)
 		{
 			//Allocate action animation block data
-			Animation_Block* action_block = new Animation_Block();
+			DiplomaticAnimation_Block* action_block = new DiplomaticAnimation_Block();
 			action_block->SetId((uint)StrToActionEnum(action_node.attribute("enum").as_string()));
 
 			//Build animation
-			Animation* anim = new Animation();
+			DiplomaticAnimation* anim = new DiplomaticAnimation();
 			anim->SetSpeed(action_node.attribute("speed").as_uint());
 			anim->SetLoop(action_node.attribute("loop").as_bool());
-			anim->SetTexture(texture);
+			anim->SetTexture(blue_texture);
+			anim->SetRedTexture(red_texture);
 
 			//Iterate all action sprites
 			pugi::xml_node sprite = action_node.first_child();
@@ -1009,7 +1013,7 @@ bool j1Animator::UnitPlay(Unit* target)
 
 bool j1Animator::BuildingPlay(Building* target)
 {
-	Animation_Block* block = nullptr;
+	DiplomaticAnimation_Block* block = nullptr;
 
 	//Iterate all blocks of childs vector
 	uint size = building_blocks.size();
@@ -1026,18 +1030,18 @@ bool j1Animator::BuildingPlay(Building* target)
 			//If action block is found search the correct direction block or return unidirectional action
 			if (target->GetDirectionType() == NO_DIRECTION)
 			{
-				Animation* anim = new Animation(*block->GetAnimation());
+				DiplomaticAnimation* anim = new DiplomaticAnimation(*block->GetAnimation());
 				if (anim == nullptr)LOG("Error in building Play");
-				target->SetAnimation(anim);
+				target->SetAnimation((Animation*)anim);
 				return true;
 			}
 			if (block != nullptr)block = block->SearchId(target->GetDirectionType());
 			//If direction block is found returns the block animation
 			if (block != nullptr)
 			{
-				Animation* anim = new Animation(*block->GetAnimation());
+				DiplomaticAnimation* anim = new DiplomaticAnimation(*block->GetAnimation());
 				if (anim == nullptr)LOG("Error in building Play");
-				target->SetAnimation(anim);
+				target->SetAnimation((Animation*)anim);
 				return true;
 			}
 		}

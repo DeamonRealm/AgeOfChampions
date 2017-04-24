@@ -12,6 +12,13 @@
     x_pos="100"
     y_pos="100"
   />
+  <entity
+  type ="building"
+  building_type="town_center"
+  diplomacy="enemy"
+  x_pos="90"
+  y_pos="100"
+  />
 <!-- <entity
     type ="unit"
     unit_type="villager"
