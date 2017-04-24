@@ -19,6 +19,18 @@
     value="0"
   />
   <buff
+  buff_type ="passive"
+  attribute_type="super_attack"
+  actor="0"
+  value="7"
+  />
+  <buff
+    buff_type ="passive"
+    attribute_type="super_attack"
+    actor="1"
+    value="0"
+  />
+  <buff
     buff_type ="passive"
     attribute_type="defense"
     actor="0"

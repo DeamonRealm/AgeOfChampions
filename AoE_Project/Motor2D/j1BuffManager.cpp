@@ -178,7 +178,11 @@ bool PassiveBuff::ApplyBuff()
 		buff = base * value;
 		target->SetAttackBuff(buff);
 		break;
-
+	case SUPER_ATTACK_BUFF:
+		base = target->GetAttackHitPoints();
+		buff = base * value;
+		target->SetSuperAttackBuff(buff);
+		break;
 	case DEFENSE_BUFF:
 		base = target->GetDefense();
 		buff = base * value;
@@ -220,7 +224,11 @@ bool PassiveBuff::RemoveBuff()
 		current_buff = base * value;
 		target->SetAttackBuff(MAX(target->GetAttackBuff() - current_buff, 0));
 		break;
-
+	case SUPER_ATTACK_BUFF:
+		base = target->GetAttackHitPoints();
+		current_buff = base * value;
+		target->SetSuperAttackBuff(MAX(target->GetAttackBuff() - current_buff, 0));
+		break;
 	case DEFENSE_BUFF:
 		base = target->GetDefense();
 		current_buff = base * value;
@@ -235,6 +243,9 @@ bool PassiveBuff::RemoveBuff()
 		base = target->GetMaxLife();
 		current_buff = base * value;
 		target->SetDefenseBuff(MAX(target->GetLifeBuff() - current_buff, 0));
+		break;
+	case TAUNT_BUFF:
+		target->QuitProtection();
 		break;
 	}
 
@@ -295,7 +306,11 @@ bool Buff::ApplyBuff()
 		buff = base * value;
 		target->SetAttackBuff(buff);
 		break;
-
+	case SUPER_ATTACK_BUFF:
+		base = target->GetAttackHitPoints();
+		buff = base * value;
+		target->SetSuperAttackBuff(buff);
+		break;
 	case DEFENSE_BUFF:
 		base = target->GetDefense();
 		buff = base * value;
@@ -577,11 +592,14 @@ BUFF_TYPE j1BuffManager::StrToBuffType(const char * str) const
 
 BUFF_ATTRIBUTE_TYPE j1BuffManager::StrToBuffAttributeType(const char * str) const
 {
-	if (strcmp("attack", str) == 0) 	return BUFF_ATTRIBUTE_TYPE::ATTACK_BUFF;
-	if (strcmp("defense", str) == 0)	return BUFF_ATTRIBUTE_TYPE::DEFENSE_BUFF;
-	if (strcmp("defense", str) == 0)	return BUFF_ATTRIBUTE_TYPE::VISION_BUFF;
-	if (strcmp("defense", str) == 0)	return BUFF_ATTRIBUTE_TYPE::LIFE_BUFF;
-	if (strcmp("stun", str) == 0)		return BUFF_ATTRIBUTE_TYPE::STUN_BUFF;
+	if (strcmp("attack", str) == 0) 		return BUFF_ATTRIBUTE_TYPE::ATTACK_BUFF;
+	if (strcmp("super_attack", str) == 0) 	return BUFF_ATTRIBUTE_TYPE::SUPER_ATTACK_BUFF;
+	if (strcmp("defense", str) == 0)		return BUFF_ATTRIBUTE_TYPE::DEFENSE_BUFF;
+	if (strcmp("vision", str) == 0)			return BUFF_ATTRIBUTE_TYPE::VISION_BUFF;
+	if (strcmp("life", str) == 0)			return BUFF_ATTRIBUTE_TYPE::LIFE_BUFF;
+	if (strcmp("stun", str) == 0)			return BUFF_ATTRIBUTE_TYPE::STUN_BUFF;
+	if (strcmp("taunt", str) == 0)			return BUFF_ATTRIBUTE_TYPE::TAUNT_BUFF;
+
 	return NO_ATTRIBUTE;
 }
 
@@ -691,6 +709,7 @@ void j1BuffManager::RemoveTargetBuffs(Unit* target)
 	if (target->GetUnitType() == WARRIOR_CHMP)
 	{
 		((Champion*)target)->CleanBuffedUnits();
+		((Warrior*)target)->ClearProtectedUnits();
 	}
 	std::list<PassiveBuff*>::iterator item = static_buffs.begin();
 	while (item != static_buffs.end())

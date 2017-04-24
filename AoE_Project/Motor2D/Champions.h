@@ -21,15 +21,18 @@ protected:
 	bool	ability[3];
 	bool	actived[3];
 	bool	ability_lvl_2_prepare_mode = false;
+	bool	ability_lvl_3_prepare_mode = false;
 
 	//Buff area
 	Circle			buff_area;
 	PassiveBuff*	buff_to_apply = nullptr;
 
-	//Attack area
+	//Attack area lvl 2
 	j1Timer			ability_lvl_2_timer;
 	uint			ability_lvl_2_cooldown = 0;
-
+	//Attack area lvl 3
+	j1Timer			ability_lvl_3_timer;
+	uint			ability_lvl_3_cooldown = 0;
 	//Stats bonus for level
 	uint	attack_for_level = 0;
 	uint	range_for_level = 0;
@@ -54,7 +57,7 @@ public:
 	virtual void SetAbility_lvl_2(bool choosed);
 	virtual void PrepareAbility_lvl_2();
 	virtual void Hability_lvl_2(int x = 0, int y = 0);
-	virtual void CheckHability_B();
+	virtual void CheckHability_lvl_2();
 
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
@@ -97,14 +100,25 @@ public:
 private:
 
 	/* extra data */
+	std::vector<Unit*>	protected_units;
+
+	j1Timer				taunt_timer;
+	uint				taunt_max_time = 0;
+
 	Triangle			special_attack_area;
+	Circle				area_ability_lvl_3;
+
 	Particle			ability_lvl_2_particle;
+	Particle			ability_lvl_3_particle;
+
 	uint				ability_lvl_2_attack_value = 0;
 	uint				ability_lvl_2_stun_value = 0;
+	uint				ability_lvl_3_attack_value = 0;
 
 public:
 
 	//Functionality ---------
+	void ClearProtectedUnits();
 	//Game Loop ---
 	bool Update();
 	//Draw --------
@@ -117,6 +131,11 @@ public:
 	void	PrepareAbility_lvl_2();
 	void	Hability_lvl_2(int x = 0, int y = 0);
 	void	CheckHability_lvl_2();
+
+	void	SetAbility_lvl_3(bool choosed);
+	void	PrepareAbility_lvl_3();
+	void	Hability_lvl_3(int x = 0, int y = 0);
+	void	CheckHability_lvl_3();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
 	void	CalculateSpecialAttackArea(const iPoint& base);
 	bool	Die();

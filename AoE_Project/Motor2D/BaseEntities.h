@@ -14,6 +14,7 @@
 
 struct	SDL_Texture;
 struct	PathNode;
+class	Warrior;
 enum	CURSOR_TARGET;
 
 #define FOCUS_MARGIN 12
@@ -310,6 +311,7 @@ protected:
 	uint			attack_hitpoints = 0;
 	uint			attack_bonus = 0;
 	float			attack_buff = 0;
+	float			super_attack_buff = 0;
 	uint			siege_hitpoints = 0;
 	uint			attack_rate = 0;
 	ATTACK_TYPE		attack_type = NO_ATTACK;
@@ -331,6 +333,9 @@ protected:
 	float			vision_buff = 0;
 	//Life
 	float			life_buff = 0;
+	//Others
+	bool			unit_protected = false;
+	Warrior*		tank = nullptr;
 	// Attack area
 	Circle	attack_area;
 
@@ -363,12 +368,15 @@ public:
 	bool					AttackUnit(Unit** target);
 	bool					AttackBuilding(Building** target);
 	bool					Cover();
-	void					DirectDamage(uint damage);
+	bool					DirectDamage(uint damage);
 	void					HealUnit(uint heal);
 
 	bool					Die();
 	void					Stun(uint time);
 	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
+	//Set Quit Protection
+	void	SetProtection(Warrior* warrior);
+	void	QuitProtection();
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y, bool insert = true);
@@ -387,6 +395,7 @@ public:
 	void	SetAttackHitPoints(uint atk_val);
 	void	SetAttackBonus(uint atk_bonus);
 	void	SetAttackBuff(float atk_buff);
+	void	SetSuperAttackBuff(float atk_buff);
 	void	SetSiegeHitPoints(uint siege_val);
 	void	SetAttackRate(uint atk_rate);
 	void	SetAttackType(ATTACK_TYPE atk_type);
@@ -420,6 +429,7 @@ public:
 	DIRECTION_TYPE	GetDirection()const;
 	uint			GetAttackDelay()const;
 	uint			GetAttackHitPoints()const;
+
 	uint			GetAttackBonus()const;
 	float			GetAttackBuff()const;
 	uint			GetSiegeHitPoints()const;

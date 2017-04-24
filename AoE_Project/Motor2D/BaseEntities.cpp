@@ -930,6 +930,7 @@ DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
 }
 bool Unit::AttackUnit(Unit** target)
 {
+	bool ret = false;
 	//Check if the target is in the attack area
 	if ((*target) == nullptr)
 	{
@@ -976,25 +977,23 @@ bool Unit::AttackUnit(Unit** target)
 		Focus((*target)->GetPositionRounded());
 		App->animator->UnitPlay(this);
 	}
-
-	if ((*target)->GetLife() <= 0)
+		
+	//Calculate the attack & apply the value at the target life points
+	//((Unit*)(*target))->life -= MIN(((Unit*)(*target))->life, attack_hitpoints);
+	ret=((Unit*)(*target))->DirectDamage(attack_hitpoints);
+	if (ret|| (*target)->GetLife() <= 0)
 	{
-		ACTION_TYPE act = ((Unit*)(*target))->action_type;
+		ret = true;
 		if (this->action_type == ATTATCK)
 		{
 			action_type = IDLE;
 			App->animator->UnitPlay(this);
 		}
-		if(act != DIE && act != DISAPPEAR)(*target)->AddPriorizedAction((Action*)App->action_manager->DieAction((Unit*)(*target)));
-		return true;
 	}
-	//Calculate the attack & apply the value at the target life points
-	((Unit*)(*target))->life -= MIN(((Unit*)(*target))->life, attack_hitpoints);
-
 	//Reset action timer
 	action_timer.Start();
 
-	return false;
+	return ret;
 }
 
 bool Unit::AttackBuilding(Building ** target)
@@ -1046,14 +1045,26 @@ bool Unit::Cover()
 	return ((HabitableBuilding*)interaction_target)->CoverUnit(this);
 }
 
-void Unit::DirectDamage(uint damage)
+bool Unit::DirectDamage(uint damage)
 {
+	bool ret = false;
+	if (unit_protected == true && tank!=nullptr)
+	{
+		tank->DirectDamage(1);
+		return false;
+	}
 	//Deal damage to the unit
 	life -= MIN(life, damage);
 	if (life <= 0)
 	{
-		action_worker.AddPriorizedAction(App->action_manager->DieAction(this));
+		ACTION_TYPE act = action_type;
+		if (act != DIE && act != DISAPPEAR) {
+			
+			action_worker.AddPriorizedAction(App->action_manager->DieAction(this));
+			ret = true;
+		}
 	}
+	return ret;
 }
 
 void Unit::HealUnit(uint heal)
@@ -1151,6 +1162,19 @@ COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 	return NO_COLLISION;
 }
 
+void Unit::SetProtection(Warrior * warrior)
+{
+	unit_protected = true;
+	tank = warrior;
+}
+
+void Unit::QuitProtection()
+{
+	unit_protected = false;
+	tank = nullptr;
+
+}
+
 //Set Methods -----
 void Unit::SetPosition(float x, float y, bool insert)
 {
@@ -1189,7 +1213,10 @@ void Unit::SetAttackBuff(float atk_buff)
 {
 	attack_buff = atk_buff;
 }
-
+void Unit::SetSuperAttackBuff(float atk_buff)
+{
+	super_attack_buff = atk_buff;
+}
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
@@ -1433,6 +1460,7 @@ uint Unit::GetAttackHitPoints()const
 {
 	return attack_hitpoints;
 }
+
 
 uint Unit::GetAttackBonus()const
 {

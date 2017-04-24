@@ -79,7 +79,7 @@ void Champion::Hability_lvl_2(int x, int y)
 
 }
 
-void Champion::CheckHability_B()
+void Champion::CheckHability_lvl_2()
 {
 
 }
@@ -232,11 +232,20 @@ Warrior::~Warrior()
 
 }
 
+void Warrior::ClearProtectedUnits()
+{
+	int size = protected_units.size();
+	for (int i = 0; i < size; i++)
+	{
+		protected_units[i]->QuitProtection();
+	}
+}
+
 bool Warrior::Update()
 {
 	if (actived[0] && level >= 1 )CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level >= 2 )CheckHability_B();
+	else if (actived[1] && level >= 2 )CheckHability_lvl_2();
 	action_worker.Update();
 
 	return true;
@@ -467,6 +476,93 @@ void Warrior::CheckHability_lvl_2()
 	}
 }
 
+void Warrior::SetAbility_lvl_3(bool choosed)
+{
+	if (level < 3) return;
+
+	if (choosed)
+	{
+		ability_lvl_3_particle = App->buff_manager->GetParticle(ONE_HIT_PARTICLE, NO_DIRECTION);
+
+	}
+	else
+	{
+		ability_lvl_3_particle = App->buff_manager->GetParticle(TAUNT_PARTICLE, NO_DIRECTION);
+	}
+	ability[2] = choosed;
+}
+
+void Warrior::PrepareAbility_lvl_3()
+{
+	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
+
+	ability_lvl_3_prepare_mode = true;
+}
+
+void Warrior::Hability_lvl_3(int x, int y)
+{
+
+	ability_lvl_3_prepare_mode = false;
+
+	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
+
+
+	if (ability[2])
+	{
+		ability_lvl_2_particle = App->buff_manager->GetParticle(TAUNT_PARTICLE, NO_DIRECTION);
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);//lvl_3_attack
+
+		//Collect all the units in the buff area
+		std::vector<Unit*> units_in;
+		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_ability_lvl_3);
+
+		uint size = units_in.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
+
+			if (units_in[k]->GetPosition() != position)
+			{
+				App->buff_manager->CallBuff(units_in[k], TIMED_BUFF, TAUNT_BUFF);
+				units_in[k]->SetProtection(this);
+				protected_units.push_back(units_in[k]);
+
+			}
+		}
+		taunt_timer.Start();
+	}
+	else
+	{
+		ability_lvl_2_particle = App->buff_manager->GetParticle(ONE_HIT_PARTICLE, NO_DIRECTION);
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);//lvl_3_defense
+
+		App->buff_manager->CallBuff(this, TIMED_BUFF, SUPER_ATTACK_BUFF, false);
+	}
+
+
+
+
+
+	actived[2] = true;
+	ability_lvl_3_particle.animation.Reset();
+	ability_lvl_3_particle.position = GetPositionRounded();
+	ability_lvl_3_timer.Start();
+}
+
+void Warrior::CheckHability_lvl_3()
+{
+	if (!ability_lvl_3_particle.animation.IsEnd())
+	{
+		ability_lvl_3_particle.Draw();
+	}
+	else
+	{
+		actived[2] = false;
+		action_type = IDLE;
+		App->animator->UnitPlay(this);
+	}
+}
+
 iPoint Warrior::GetiPointFromDirection(DIRECTION_TYPE direction) const
 {
 	switch (direction)
@@ -559,7 +655,7 @@ void Warrior::SetPosition(float x, float y, bool insert)
 	attack_area.SetPosition(pos);
 	//Set attack area position
 	special_attack_area.SetPosition(pos);
-
+	area_ability_lvl_3.SetPosition(pos);
 	//Add the unit with the correct position in the correct quad tree
 	if(insert)App->entities_manager->units_quadtree.Insert(this, &position);
 }
