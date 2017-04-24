@@ -97,6 +97,11 @@ void Action_Panel_Elements::ResetPanel()
 	SetDataFromXML();
 }
 
+void Action_Panel_Elements::SetDefault()
+{
+	UpdateCells();
+}
+
 bool Action_Panel_Elements::ActivateCell(int i)
 {
 	if (entitis_panel == nullptr) return false;
@@ -384,6 +389,12 @@ void VillagerPanel::ResetPanel()
 	buildingthis = nullptr;
 }
 
+void VillagerPanel::SetDefault()
+{
+	villagerisbuilding = VP_NOT_BUILDING;
+	ChangePanelLvl(villagerisbuilding);
+}
+
 bool VillagerPanel::ActivateCell(int i)
 {
 	if (entitis_panel == nullptr) return false;
@@ -583,6 +594,15 @@ void HeroPanel::ResetPanel()
 	activate_skill = -1;
 }
 
+void HeroPanel::SetDefault()
+{
+	entitis_panel = nullptr;
+	champion_selected = NO_UNIT;
+	skill_tree->Desactivate();
+	skill_tree->DesactivateChids();
+	activate_skill = -1;
+}
+
 bool HeroPanel::ActivateCell(int i)
 {
 	if (entitis_panel == nullptr) return false;
@@ -592,7 +612,7 @@ bool HeroPanel::ActivateCell(int i)
 		if (champion_selected == WARRIOR_CHMP && cell_lvl[i] != 0)
 		{
 			App->sound->PlayGUIAudio(CLICK_INGAME);
-			((Warrior*)entitis_panel)->Hability_lvl_1();
+			((Champion*)entitis_panel)->Hability_lvl_1();
 			return false;
 		}
 		}
@@ -603,7 +623,7 @@ bool HeroPanel::ActivateCell(int i)
 		{
 			activate_skill = 1;	
 			App->sound->PlayGUIAudio(CLICK_INGAME);
-			((Warrior*)entitis_panel)->PrepareAbility_lvl_2();
+			((Champion*)entitis_panel)->PrepareAbility_lvl_2();
 			return true;
 		}
 		}
@@ -630,6 +650,21 @@ bool HeroPanel::ActivateCell(int i)
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		}
+	case 8:
+	{
+		if (skill_tree->GetActiveState() == true)
+		{
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			skill_tree->Desactivate();
+			skill_tree->DesactivateChids();
+		}
+		else {
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			skill_tree->Activate();
+			skill_tree->ActivateChilds();
+		}
+	}
+		break;
 	default:	break;
 	}
 	return false;
@@ -658,6 +693,7 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 					if (i % 2 == 1) skill = true;
 					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1(skill);
 					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
+					//if (i / 2 == 2)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
 					return true;
 				}
 			}
@@ -687,7 +723,7 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 		y -= App->render->camera.y;
 		entitis_panel->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 		
-		if (activate_skill == 1)((Warrior*)entitis_panel)->Hability_lvl_2(x, y);
+		if (activate_skill == 1)((Champion*)entitis_panel)->Hability_lvl_2(x, y);
 		activate_skill = -1;
 		return false;
 	}
@@ -1035,7 +1071,7 @@ void Action_Panel::SetPanelType()
 				villagerpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = villagerpanel;
 			}
-			else if (u_type == WARRIOR_CHMP)
+			else if (u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP)
 			{
 				if (actualpanel == heropanel && heropanel->GetActualEntity()!= nullptr)return;
 				if (heropanel->GetActualEntity() != actual_entity) heropanel->ResetPanel();
@@ -1127,19 +1163,16 @@ bool Action_Panel::GetIsIn() const
 
 void Action_Panel::CheckSelected(int selected)
 {	
-	if (selected == 0)
+	if (selected == 0 && actualpanel != nullptr)
 	{
 		on_action = false;
 		actual_entity = nullptr;
 		action_screen->DesactivateChids();
-		if (actualpanel == heropanel)
-		{
-			heropanel->skill_tree->Desactivate();
-			heropanel->skill_tree->DesactivateChids();
-		}
+		actualpanel->SetDefault();
 		actualpanel = nullptr;
 		return;
 	}
+	
 	if (actualpanel != nullptr)
 	{
 		if (actualpanel->GetActualEntity() == nullptr || actualpanel->GetActualEntity()->GetLife() == 0)
@@ -1167,6 +1200,8 @@ UI_Element * Action_Panel::GetHeroSkillTree() const
 
 void Action_Panel::UpgradeCivilizationAge(uint curr_age)
 {
+	current_age = curr_age;
+
 	towncenterpanel->UpgradeCurrentAge(curr_age);
 	barrackpanel->UpgradeCurrentAge(curr_age);
 	

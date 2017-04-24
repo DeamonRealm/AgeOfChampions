@@ -73,7 +73,9 @@ public:
 	// Reset Panel
 	void		 SetDataFromXML();
 	void		 UpdateCells();
+
 	virtual void ResetPanel();
+	virtual void SetDefault();
 
 	virtual bool ActivateCell(int i);
 
@@ -172,6 +174,7 @@ public:
 
 	// Reset Panel
 	void ResetPanel();
+	void SetDefault();
 
 	bool ActivateCell(int i);
 
@@ -197,6 +200,7 @@ public:
 
 	// Reset Panel
 	void ResetPanel();
+	void SetDefault();
 
 	bool ActivateCell(int i);
 	bool Hero_Handle_input(UI_Element* ui_element, GUI_INPUT ui_input);
@@ -325,6 +329,8 @@ private:
 public:
 	// Hero Panel
 	HeroPanel*					heropanel = nullptr;
+	
+	uint						current_age = 2;
 
 
 };
