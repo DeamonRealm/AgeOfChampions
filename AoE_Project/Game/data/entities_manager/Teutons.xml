@@ -19,13 +19,12 @@
    <id xml = "villager.xml"/>
    <id xml = "warrior_chmp.xml"/>
    <id xml = "wizard_chmp.xml"/>
+   <id xml = "crossbowman.xml"/>
 
   </units>
   <buildings>
-   <id xml = "town_center_feudal.xml"/>
    <id xml = "feudal_buildings.xml"/>
-   <id xml = "rubble_three.xml"/>
-   <id xml = "rubble_four.xml"/>
+   <id xml = "rubble.xml"/>
   </buildings>
   <resources>
    <id xml ="resources.xml"/>

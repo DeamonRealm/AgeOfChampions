@@ -555,10 +555,9 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	Building* new_def = nullptr;
 
 	//Allocate the correct class
-	if(building_type == TOWN_CENTER || building_type == BARRACK)
-	{
-		new_def = new ProductiveBuilding();
-	}
+
+	new_def = new ProductiveBuilding();
+	
 
 	//Building ID -----------
 	/*Name*/			new_def->SetName(building_node->attribute("name").as_string());

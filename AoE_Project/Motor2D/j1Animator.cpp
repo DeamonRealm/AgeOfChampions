@@ -445,6 +445,7 @@ UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 	if (strcmp(str, "two_handed_swordman") == 0)	return TWO_HANDED_SWORDMAN;
 	if (strcmp(str, "man_at_arms") == 0)			return MAN_AT_ARMS;
 	if (strcmp(str, "long_swordman") == 0)			return LONG_SWORDMAN;
+	if (strcmp(str, "crossbowman") == 0)			return CROSSBOWMAN;
 	if (strcmp(str, "champion") == 0)				return CHAMPION;
 	if (strcmp(str, "warrior_chmp") == 0)			return WARRIOR_CHMP;
 	if (strcmp(str, "wizard_chmp") == 0)			return WIZARD_CHMP;
@@ -495,6 +496,14 @@ BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 {
 	if (strcmp(str, "town_center") == 0)	return TOWN_CENTER;
 	if (strcmp(str, "barrack") == 0)		return BARRACK;
+	if (strcmp(str, "farm") == 0)			return FARM;
+	if (strcmp(str, "archery_range") == 0)	return ARCHERY_RANGE;
+	if (strcmp(str, "blacksmith") == 0)		return BLACKSMITH;
+	if (strcmp(str, "market") == 0)			return MARKET;
+	if (strcmp(str, "stable") == 0)			return STABLE;
+	if (strcmp(str, "houseA") == 0)			return HOUSE_A;
+	if (strcmp(str, "houseB") == 0)			return HOUSE_B;
+	if (strcmp(str, "houseC") == 0)			return HOUSE_C;
 	if (strcmp(str, "rubble_three") == 0)	return RUBBLE_THREE;
 	if (strcmp(str, "rubble_four") == 0)	return RUBBLE_FOUR;
 	return NO_BUILDING;
@@ -788,58 +797,66 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder)
 	//Focus building id
 	pugi::xml_node build_node = build_anim_data.child("TextureAtlas").child("building");
 	
-	//Allocate building animation block data
-	Animation_Block* building_block = new Animation_Block();
-	building_block->SetId((uint)StrToBuildingEnum(build_node.attribute("id").as_string()));
 
-	//Iterate all building actions
-	pugi::xml_node action_node = build_node.first_child();
-	while (action_node != NULL)
+
+	//Iterate all buildings
+	while (build_node != NULL)
 	{
-		//Allocate action animation block data
-		Animation_Block* action_block = new Animation_Block();
-		action_block->SetId((uint)StrToActionEnum(action_node.attribute("enum").as_string()));
+		//Allocate building animation block data
+		Animation_Block* building_block = new Animation_Block();
+		building_block->SetId((uint)StrToBuildingEnum(build_node.attribute("id").as_string()));
 
-		//Build animation
-		Animation* anim = new Animation();
-		anim->SetSpeed(action_node.attribute("speed").as_uint());
-		anim->SetLoop(action_node.attribute("loop").as_bool());
-		anim->SetTexture(texture);
-
-		//Iterate all action sprites
-		pugi::xml_node sprite = action_node.first_child();
-		while (sprite != NULL)
+		//Iterate all building actions
+		pugi::xml_node action_node = build_node.first_child();
+		while (action_node != NULL)
 		{
-			//Load sprite rect
-			SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
-			//Load sprite pivot
-			float pX = sprite.attribute("pX").as_float() * rect.w;
-			pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
-			float pY = sprite.attribute("pY").as_float() * rect.h;
-			pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
-			//Load sprite opacity
-			uint opacity = sprite.attribute("opacity").as_uint();
+			//Allocate action animation block data
+			Animation_Block* action_block = new Animation_Block();
+			action_block->SetId((uint)StrToActionEnum(action_node.attribute("enum").as_string()));
 
-			//Add sprite at animation
-			anim->AddSprite(rect, iPoint(pX, pY), sprite.attribute("z").as_int(),opacity);
+			//Build animation
+			Animation* anim = new Animation();
+			anim->SetSpeed(action_node.attribute("speed").as_uint());
+			anim->SetLoop(action_node.attribute("loop").as_bool());
+			anim->SetTexture(texture);
 
-			//Focus next animation sprite
-			sprite = sprite.next_sibling();
+			//Iterate all action sprites
+			pugi::xml_node sprite = action_node.first_child();
+			while (sprite != NULL)
+			{
+				//Load sprite rect
+				SDL_Rect rect = { sprite.attribute("x").as_int(),sprite.attribute("y").as_int(),sprite.attribute("w").as_int(),sprite.attribute("h").as_int() };
+				//Load sprite pivot
+				float pX = sprite.attribute("pX").as_float() * rect.w;
+				pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+				float pY = sprite.attribute("pY").as_float() * rect.h;
+				pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+				//Load sprite opacity
+				uint opacity = sprite.attribute("opacity").as_uint();
+
+				//Add sprite at animation
+				anim->AddSprite(rect, iPoint(pX, pY), sprite.attribute("z").as_int(), opacity);
+
+				//Focus next animation sprite
+				sprite = sprite.next_sibling();
+			}
+
+			//Set animation of action block
+			action_block->SetAnimation(anim);
+
+			//Add build action to building animation block
+			building_block->AddAnimationBlock(action_block);
+
+			//Focus next action node
+			action_node = action_node.next_sibling();
 		}
 
-		//Set animation of action block
-		action_block->SetAnimation(anim);
+		//Add loaded building animation to buildings vector
+		building_blocks.push_back(building_block);
 
-		//Add build action to building animation block
-		building_block->AddAnimationBlock(action_block);
-		
-		//Focus next action node
-		action_node = action_node.next_sibling();
+		//Focus next building node 
+		build_node = build_node.next_sibling();
 	}
-
-	//Add loaded building animation to buildings vector
-	building_blocks.push_back(building_block);
-
 	//Release loaded document data
 	build_anim_data.reset();
 

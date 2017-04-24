@@ -1902,16 +1902,39 @@ void Building::SetPosition(float x, float y, bool insert)
 		upper_tile.y -= 1;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2, 0);
 	}
-	else if(building_type == BARRACK)
+	else if (building_type == BARRACK)
 	{
-		position.y = world_coords.y - (App->map->data.tile_height + 1);
-		upper_tile.x -= 2;
-		upper_tile.y -= 2;
+		position.y = world_coords.y + (App->map->data.tile_height + 1);
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
+	}
+	else if (building_type == BLACKSMITH)
+	{
+		position.y = world_coords.y + (App->map->data.tile_height + 1);
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
+	}
+	else if (building_type == STABLE)
+	{
+		position.y = world_coords.y + (App->map->data.tile_height + 1);
+
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
+	}
+	else if (building_type == HOUSE_A || building_type == HOUSE_B || building_type == HOUSE_C)
+	{
+		position.y = world_coords.y - (App->map->data.tile_height + 1) * 0.5f;
+		upper_tile.x -= 1;
+		upper_tile.y -= 1;
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
+	}
+	else if (building_type == ARCHERY_RANGE)
+	{
+		position.y = world_coords.y + (App->map->data.tile_height + 1) ;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 	}
 
 	//Update construction map
-	App->map->ChangeConstructionMap(upper_tile, width_in_tiles, height_in_tiles, 0);
+	upper_tile.x -= 1;
+	upper_tile.y -= 1;
+	App->map->ChangeConstructionMap(upper_tile, width_in_tiles + 2, height_in_tiles + 2, 0);
 
 	//Clear fog around building vision zone
 	vision.SetPosition(iPoint(position.x, position.y));
@@ -1925,6 +1948,7 @@ void Building::SetPosition(float x, float y, bool insert)
 	//Add building at the correct quad tree
 	App->entities_manager->buildings_quadtree.Insert(this, &position);
 }
+
 
 //Set Methods ---------------
 void Building::SetMark(const Rectng& rectangle)

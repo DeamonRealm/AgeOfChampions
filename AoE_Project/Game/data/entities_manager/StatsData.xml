@@ -43,6 +43,46 @@
       train_time="8000"
     />
   </unit>
+  <!--Crossbowman-->
+  <unit civ="Teutons" id="unit">
+    <stats
+        name="Crossbowman"
+        unit_type ="crossbowman"
+        attack_type="melee"
+      
+        vision_rad ="225"
+        mark_rad ="55"
+        soft_rad ="30"
+        hard_rad ="10"
+        selection_x ="0"
+        selection_y ="0"
+        selection_w="50"
+        selection_h="50"
+        icon_x="609"
+        icon_y="513"
+        icon_w="36"
+        icon_h="36"
+      
+        max_life="150"
+        view_area="15"
+        speed="2.5"
+        attack_delay ="50"
+        attack_hitpoints="5"
+        attack_bonus="2"
+        siege_hitpoints="10"
+        attack_rate="200"
+        attack_range="25"
+        defense="10"
+        defense_bonus="5"
+        armor="12"
+        armor_bonus="5"
+        food_cost="5"
+        wood_cost="5"
+        gold_cost="5"
+        population_cost="2"
+        train_time="8000"
+    />
+  </unit>
   <!--Two Handed Swordman-->
   <unit civ="Teutons" id="unit">
     <stats
@@ -960,6 +1000,251 @@
       intaraction_area_h="215"
       width_in_tiles="3"
       height_in_tiles="3"
+      vision_rad ="300"
+      
+      max_life ="50"
+      units_capacity ="15"
+      units_spawn_x ="5"
+      units_spawn_y="92"
+      production_capacity ="25"
+      
+      />
+  </unit>
+
+  <!--Archery Range Feudal -->
+  <unit civ="Teutons/English" id="building">
+    <stats
+      name="Archery Range"
+      building_type="archery_range"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="200"
+      selection_h="150"
+      icon_x="108"
+      icon_y="36"
+      icon_w="36"
+      icon_h="36"
+      mark_x="0"
+      mark_y="0"
+      mark_w="215"
+      mark_h="215"
+      interaction_area_x="0"
+      intaraction_area_y="0"
+      interaction_area_w="215"
+      intaraction_area_h="215"
+      width_in_tiles="3"
+      height_in_tiles="3"
+      vision_rad ="300"
+      
+      max_life ="50"
+      units_capacity ="15"
+      units_spawn_x ="5"
+      units_spawn_y="92"
+      production_capacity ="25"
+      
+      />
+  </unit>
+
+  <!--Blacksmith Feudal -->
+  <unit civ="Teutons/English" id="building">
+    <stats
+      name="Blacksmith"
+      building_type="blacksmith"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="200"
+      selection_h="150"
+      icon_x="108"
+      icon_y="36"
+      icon_w="36"
+      icon_h="36"
+      mark_x="0"
+      mark_y="0"
+      mark_w="215"
+      mark_h="215"
+      interaction_area_x="0"
+      intaraction_area_y="0"
+      interaction_area_w="215"
+      intaraction_area_h="215"
+      width_in_tiles="3"
+      height_in_tiles="3"
+      vision_rad ="300"
+      
+      max_life ="50"
+      units_capacity ="15"
+      units_spawn_x ="5"
+      units_spawn_y="92"
+      production_capacity ="25"
+      
+      />
+  </unit>
+
+  <!--Market Feudal -->
+  <unit civ="Teutons/English" id="building">
+    <stats
+      name="Market"
+      building_type="market"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="200"
+      selection_h="150"
+      icon_x="108"
+      icon_y="36"
+      icon_w="36"
+      icon_h="36"
+      mark_x="0"
+      mark_y="0"
+      mark_w="215"
+      mark_h="215"
+      interaction_area_x="0"
+      intaraction_area_y="0"
+      interaction_area_w="215"
+      intaraction_area_h="215"
+      width_in_tiles="3"
+      height_in_tiles="3"
+      vision_rad ="300"
+      
+      max_life ="50"
+      units_capacity ="15"
+      units_spawn_x ="5"
+      units_spawn_y="92"
+      production_capacity ="25"
+      
+      />
+  </unit>
+
+  <!--Stable Feudal -->
+  <unit civ="Teutons/English" id="building">
+    <stats
+      name="Stable"
+      building_type="stable"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="200"
+      selection_h="150"
+      icon_x="108"
+      icon_y="36"
+      icon_w="36"
+      icon_h="36"
+      mark_x="0"
+      mark_y="0"
+      mark_w="220"
+      mark_h="220"
+      interaction_area_x="0"
+      intaraction_area_y="0"
+      interaction_area_w="215"
+      intaraction_area_h="215"
+      width_in_tiles="3"
+      height_in_tiles="3"
+      vision_rad ="300"
+      
+      max_life ="50"
+      units_capacity ="15"
+      units_spawn_x ="5"
+      units_spawn_y="92"
+      production_capacity ="25"
+      
+      />
+  </unit>
+
+  <!--House Feudal -->
+  <unit civ="Teutons/English" id="building">
+    <stats
+      name="House"
+      building_type="houseA"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="200"
+      selection_h="150"
+      icon_x="108"
+      icon_y="36"
+      icon_w="36"
+      icon_h="36"
+      mark_x="0"
+      mark_y="0"
+      mark_w="160"
+      mark_h="160"
+      interaction_area_x="0"
+      intaraction_area_y="0"
+      interaction_area_w="150"
+      intaraction_area_h="150"
+      width_in_tiles="2"
+      height_in_tiles="2"
+      vision_rad ="300"
+      
+      max_life ="50"
+      units_capacity ="15"
+      units_spawn_x ="5"
+      units_spawn_y="92"
+      production_capacity ="25"
+      
+      />
+  </unit>
+
+  <!--House Feudal -->
+  <unit civ="Teutons/English" id="building">
+    <stats
+      name="House"
+      building_type="houseB"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="200"
+      selection_h="150"
+      icon_x="108"
+      icon_y="36"
+      icon_w="36"
+      icon_h="36"
+      mark_x="0"
+      mark_y="0"
+      mark_w="160"
+      mark_h="160"
+      interaction_area_x="0"
+      intaraction_area_y="0"
+      interaction_area_w="150"
+      intaraction_area_h="150"
+      width_in_tiles="2"
+      height_in_tiles="2"
+      vision_rad ="300"
+      
+      max_life ="50"
+      units_capacity ="15"
+      units_spawn_x ="5"
+      units_spawn_y="92"
+      production_capacity ="25"
+      
+      />
+  </unit>
+
+  <!--House Feudal -->
+  <unit civ="Teutons/English" id="building">
+    <stats
+      name="House"
+      building_type="houseC"
+      
+      selection_x ="0"
+      selection_y ="0"
+      selection_w="200"
+      selection_h="150"
+      icon_x="108"
+      icon_y="36"
+      icon_w="36"
+      icon_h="36"
+      mark_x="0"
+      mark_y="0"
+      mark_w="160"
+      mark_h="160"
+      interaction_area_x="0"
+      intaraction_area_y="0"
+      interaction_area_w="150"
+      intaraction_area_h="150"
+      width_in_tiles="2"
+      height_in_tiles="2"
       vision_rad ="300"
       
       max_life ="50"
