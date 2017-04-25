@@ -72,7 +72,7 @@ public:
 	
 	// Reset Panel
 	void		 SetDataFromXML();
-	void		 UpdateCells();
+	virtual void UpdateCells();
 
 	virtual void ResetPanel();
 	virtual void SetDefault();
@@ -201,6 +201,7 @@ public:
 
 	// Reset Panel
 	void ResetPanel();
+	void UpdateCells();
 	void SetDefault();
 
 	bool ActivateCell(int i);
@@ -216,6 +217,7 @@ public:
 
 public:
 	UI_Image*						skill_tree = nullptr;
+	bool							inskilltree = false;
 private:
 
 	UNIT_TYPE						champion_selected;

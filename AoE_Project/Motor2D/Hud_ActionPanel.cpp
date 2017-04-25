@@ -586,6 +586,8 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills_buttons[i]->SetLayer(8);
 		skills[i]->SetLayer(8);
 	}
+
+	champion_row.reserve(3);
 }
 
 HeroPanel::~HeroPanel()
@@ -620,6 +622,11 @@ void HeroPanel::ResetPanel()
 	activate_skill = -1;
 }
 
+void HeroPanel::UpdateCells()
+{
+	SetNewOrder();
+}
+
 void HeroPanel::SetDefault()
 {
 	entitis_panel = nullptr;
@@ -627,8 +634,11 @@ void HeroPanel::SetDefault()
 	champion_wizard = nullptr;
 	champion_archer = nullptr;
 	champion_selected = NO_UNIT;
-	skill_tree->Desactivate();
-	skill_tree->DesactivateChids();
+	if (inskilltree == false)
+	{
+		skill_tree->Desactivate();
+		skill_tree->DesactivateChids();
+	}
 	activate_skill = -1;
 }
 
@@ -749,6 +759,7 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 					LearnSkill(i);
 					App->sound->PlayGUIAudio(CLICK_INGAME);
 					bool skill = false;
+					inskilltree = true;
 					if (i % 2 == 1) skill = true;
 					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1(skill);
 					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
@@ -760,7 +771,7 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 		break;
 	case MOUSE_RIGHT_BUTTON:			break;
 	case MOUSE_IN:						break;
-	case MOUSE_OUT:						break;
+	case MOUSE_OUT:						if (ui_element == skill_tree) inskilltree = false; break;
 	case SUPR:							break;
 	case BACKSPACE:						break;
 	case ENTER:							break;
@@ -810,6 +821,10 @@ void HeroPanel::LearnSkill(int i)
 
 void HeroPanel::SetSkillTree()
 {
+	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
+	{
+		skills_buttons[i]->button_state = UP;
+	}
 }
 
 void HeroPanel::SetNewOrder()
@@ -828,18 +843,51 @@ void HeroPanel::SetNewOrder()
 		else if (champion_row[count] == champion_archer) cell_lvl[i] = archer_learned[i - (count * 10)];
 		panel_icons.push_back(celldata);
 	}
-
-	// Set Current Cells
-	/*int size = cell_data.size();
-
-	for (int i = 0; i < size; i++)
-	{
-		if (cell_data[i].cell_at_level == cell_lvl[cell_data[i].cell_position] && cell_data[i].cell_at_age <= current_age)
-		{
-			panel_icons[cell_data[i].cell_position] = cell_data[i];
-		}
-	}*/
 	
+	// Set Current Cells
+	int pos = 0;
+	int size = cell_data.size();
+	if (champion_mele != nullptr)
+	{		
+		for (int i = 0; i < size; i++)
+		{
+			pos = cell_data[i].cell_position;
+			if (pos == 5)break;
+			else if (cell_data[i].cell_at_level == cell_lvl[pos] && cell_data[i].cell_at_age <= current_age)
+			{
+				panel_icons[pos] = cell_data[i];
+			}
+		}
+	}	
+	if (champion_wizard != nullptr)
+	{
+		int place = 0;
+		if (champion_mele == nullptr) place = -5;
+		for (int i = 0; i < size; i++)
+		{
+			pos = cell_data[i].cell_position;
+			if (pos < 5 || pos >= 10) continue;
+			else if (cell_data[i].cell_at_level == cell_lvl[pos + place] && cell_data[i].cell_at_age <= current_age)
+			{
+				panel_icons[pos + place] = cell_data[i];
+			}
+		}
+	}
+	if (champion_archer != nullptr)
+	{
+		int place = 0;
+		if (champion_row[0] == champion_archer) place = -10;
+		else if (champion_row[1] == champion_archer) place = -5;
+		for (int i = 0; i < size; i++)
+		{
+			pos = cell_data[i].cell_position;
+			if (pos == 10)break;
+			else if (cell_data[i].cell_at_level == cell_lvl[pos + place] && cell_data[i].cell_at_age <= current_age)
+			{
+				panel_icons[pos + place] = cell_data[i];
+			}
+		}
+	}
 }
 
 void HeroPanel::ChangePanelTarget(Entity * new_target)
@@ -856,6 +904,7 @@ void HeroPanel::ChangePanelTarget(Entity * new_target)
 	}
 	entitis_panel = champion_row[0];
 	champion_selected = ((Unit*)entitis_panel)->GetUnitType();
+	SetNewOrder();
 }
 
 // ACTION PANEL  ================================================================================================
@@ -1132,6 +1181,7 @@ void Action_Panel::SetGamePanelPointer(Game_Panel * game_panel)
 
 void Action_Panel::SetPanelType()
 {
+	if (isin) return;
 	SetEntitySelected();
 
 	if (actual_entity == nullptr) return;
@@ -1171,8 +1221,7 @@ void Action_Panel::SetPanelType()
 			}
 			else if (u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP)
 			{
-				if (actualpanel == heropanel && heropanel->GetActualEntity()!= nullptr)return;
-				if (heropanel->GetActualEntity() != actual_entity) heropanel->SetDefault();
+				heropanel->SetDefault();
 				actualpanel = heropanel;
 			}
 			else
