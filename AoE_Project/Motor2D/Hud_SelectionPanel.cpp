@@ -512,6 +512,7 @@ void Selection_Panel::Enable()
 	//Selected = new Entity_Profile();
 	UpperEntity = nullptr;
 	action_command = nullptr;
+	champions_selected = false;
 }
 
 void Selection_Panel::Disable()
@@ -523,7 +524,6 @@ void Selection_Panel::Disable()
 	building_quad_selection.clear();
 	resource_quad_selection.clear();
 	Selected->Reset();
-
 }
 
 bool Selection_Panel::Draw()
@@ -626,6 +626,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, selection_rect);
 
 		int selected_amount = 0;
+		UNIT_TYPE u_type = NO_UNIT;
 		//Select Entity
 		int size = unit_quad_selection.size();
 		for(int count = 0; count < size; count++)
@@ -637,12 +638,14 @@ void Selection_Panel::Select(SELECT_TYPE type)
 				selected_amount++;
 				UpperEntity = unit_quad_selection[count];
 				UpperEntity->Select();
+				u_type = ((Unit*)UpperEntity)->GetUnitType();
 				selected_elements.push_back(UpperEntity);
 				if (selected_elements.size() == 1)
 				{
 					ResetSelectedType(SINGLE);
 				}
-				else if (type != DOUBLECLICK && selected_unit_type != NO_UNIT)
+				else if ((type != DOUBLECLICK && selected_unit_type != NO_UNIT && champions_selected == false)
+					|| (u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP))
 				{
 					ResetSelectedType(GROUP);
 				}
@@ -843,7 +846,19 @@ Entity * Selection_Panel::GetSelected() const
 {
 	if (selected_diplomacy == ALLY)
 	{
-		return Selected->GetEntity();
+		if (selected_unit_type == WARRIOR_CHMP || selected_unit_type == WIZARD_CHMP || selected_unit_type == ARCHER_CHMP)
+		{
+			std::list<Entity*>::const_iterator item = selected_elements.end();
+			while (item != selected_elements.begin())
+			{
+				item--;
+				if (selected_unit_type == ((Unit*)item._Ptr->_Myval)->GetUnitType())
+				{
+					return item._Ptr->_Myval;
+				}
+			}
+		}
+		else return Selected->GetEntity();
 	}
 	else return nullptr;
 }
@@ -859,6 +874,23 @@ void Selection_Panel::GetSelectedType(DIPLOMACY & d_type, ENTITY_TYPE & e_type, 
 	e_type = selected_entity_type;
 	u_type = selected_unit_type;
 	b_type = selected_building_type;
+}
+
+void Selection_Panel::GetChampionsSelected(Unit *& warrior, Unit *& wizard, Unit *& archer)
+{
+	std::list<Entity*>::const_iterator item = selected_elements.end();
+	UNIT_TYPE u_type = NO_UNIT;
+	while (item != selected_elements.begin())
+	{
+		item--;
+		if (item._Ptr->_Myval->GetEntityType() == UNIT)
+		{
+			u_type = ((Unit*)item._Ptr->_Myval)->GetUnitType();
+			if		(u_type == WARRIOR_CHMP) warrior = (Unit*)item._Ptr->_Myval;
+			else if (u_type == WIZARD_CHMP) wizard = (Unit*)item._Ptr->_Myval;
+			else if (u_type == ARCHER_CHMP) archer = (Unit*)item._Ptr->_Myval;
+		}
+	}
 }
 
 bool Selection_Panel::GetSelectedIsEntity()
@@ -886,7 +918,14 @@ void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
 	}
 		break;
 	case GROUP: {
-		if (selected_unit_type != ((Unit*)UpperEntity)->GetUnitType()) selected_unit_type = NO_UNIT;
+		UNIT_TYPE u_type = ((Unit*)UpperEntity)->GetUnitType();
+		if (u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP)
+		{
+			selected_unit_type = u_type;
+			champions_selected = true;
+		}
+		else if (selected_unit_type != u_type)
+			selected_unit_type = NO_UNIT;
 		}
 		break;
 	case DOUBLECLICK: break;
@@ -908,6 +947,7 @@ void Selection_Panel::ResetSelectedType()
 	selected_entity_type = NO_ENTITY;
 	selected_unit_type = NO_UNIT;
 	selected_building_type = NO_BUILDING;
+	champions_selected = false;
 }
 
 UI_Element * Selection_Panel::GetViewport()

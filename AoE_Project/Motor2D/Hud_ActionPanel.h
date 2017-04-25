@@ -121,6 +121,7 @@ public:
 
 private:
 	bool		got_melechmp = false;
+	bool		got_wizchmp = false;
 };
 
 // Barrack -----------------------------------------------------------------------------------------------
@@ -207,6 +208,7 @@ public:
 	bool Handle_input(GUI_INPUT input);
 
 	void LearnSkill(int i);
+	void SetSkillTree();
 	void ChangePanelTarget(Entity* new_target);
 	
 
@@ -215,6 +217,12 @@ public:
 private:
 
 	UNIT_TYPE						champion_selected;
+
+	Unit*							champion_mele = nullptr;
+	Unit*							champion_wizard = nullptr;
+	Unit*							champion_archer = nullptr;
+
+	std::vector<Unit*>				champion_row;
 
 	std::vector<UI_Image*>			skills;
 	std::vector<UI_Fixed_Button*>	skills_buttons;

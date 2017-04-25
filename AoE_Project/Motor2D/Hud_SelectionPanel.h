@@ -141,6 +141,7 @@ public:
 	uint	GetSelectedSize() const;
 
 	void    GetSelectedType(DIPLOMACY &d_type, ENTITY_TYPE &e_type, UNIT_TYPE &u_type, BUILDING_TYPE &b_type);
+	void	GetChampionsSelected(Unit* &warrior, Unit* &wizard, Unit* &archer);
 	bool    GetSelectedIsEntity();
 	void	ResetSelectedType(SELECT_TYPE select_type);
 	void	ResetSelectedType();
@@ -189,6 +190,7 @@ private:
 	ENTITY_TYPE		selected_entity_type;
 	UNIT_TYPE		selected_unit_type;
 	BUILDING_TYPE   selected_building_type;
+	bool			champions_selected = false;
 
 	//Action inputs
 	Action* action_command = nullptr;
