@@ -394,6 +394,10 @@ void VillagerPanel::PreUpdate()
 		int x = 0, y = 0;
 		App->input->GetMousePosition(x, y);
 		buildingthis->OnlySetPosition((float)x - App->render->camera.x,(float) y - App->render->camera.y);
+		if (!((Building*)buildingthis)->CheckZone(x - App->render->camera.x, y - App->render->camera.y))
+		{
+			buildingthis->SetBlitColor({ 255,100,100,255 });
+		}
 		buildingthis->Draw(false);
 	}
 }

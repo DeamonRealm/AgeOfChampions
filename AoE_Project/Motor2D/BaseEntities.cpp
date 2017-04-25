@@ -1986,9 +1986,11 @@ bool Building::CheckZone(int x, int y)
 {
 	//Check the construction tiles
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
+	if (App->fog_of_war->GetFogID(world_coords.x, world_coords.y) == DARK_FOG)return false;
+
 	world_coords.x -= 1;
 	world_coords.y -= 1;
-	if (App->map->CheckConstructionMap(world_coords, width_in_tiles - 1, height_in_tiles))
+	if (App->map->CheckConstructionMap(world_coords, width_in_tiles, height_in_tiles))
 	{
 		//Check unit quadtree for units in build zone
 		Circle check_area;
