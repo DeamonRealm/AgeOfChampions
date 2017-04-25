@@ -634,11 +634,8 @@ void HeroPanel::SetDefault()
 	champion_wizard = nullptr;
 	champion_archer = nullptr;
 	champion_selected = NO_UNIT;
-	if (inskilltree == false)
-	{
-		skill_tree->Desactivate();
-		skill_tree->DesactivateChids();
-	}
+	skill_tree->Desactivate();
+	skill_tree->DesactivateChids();
 	activate_skill = -1;
 }
 
@@ -655,11 +652,38 @@ bool HeroPanel::ActivateCell(int i)
 			skill_tree->DesactivateChids();
 		}
 		entitis_panel = champion_row[i / 5];
-		if(entitis_panel != nullptr)champion_selected = ((Unit*)entitis_panel)->GetUnitType();
+		activate_skill = -1;
+		champion_selected = ((Unit*)entitis_panel)->GetUnitType();
 	}
-	// Open/Close Skilltree
-	if (i % 5 == 3)
+
+	int cellpos = i % 5;
+	switch (cellpos)
 	{
+	case 0: {
+		App->sound->PlayGUIAudio(CLICK_INGAME);
+		((Champion*)entitis_panel)->Hability_lvl_1();
+		return false;
+		}
+		break;
+	case 1: {
+		if (champion_selected == WARRIOR_CHMP)
+		{
+			activate_skill = 1;
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			((Champion*)entitis_panel)->PrepareAbility_lvl_2();
+			return true;
+		}
+		}
+		break;
+	case 2:
+		if (champion_selected == WARRIOR_CHMP)
+		{
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			((Champion*)entitis_panel)->Hability_lvl_3();
+			return false;
+		}
+		break;
+	case 3:
 		if (skill_tree->GetActiveState() == true)
 		{
 			App->sound->PlayGUIAudio(CLICK_INGAME);
@@ -672,70 +696,44 @@ bool HeroPanel::ActivateCell(int i)
 			skill_tree->Activate();
 			skill_tree->ActivateChilds();
 		}
-	}
-	/*switch (i)
-	{
-	case 0: {
-		if (champion_selected == WARRIOR_CHMP && cell_lvl[i] != 0)
-		{
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			((Champion*)first_row)->Hability_lvl_1();
-			return false;
-		}
-		}
 		break;
-	case 1: 
-		{
-		if (champion_selected == WARRIOR_CHMP && cell_lvl[i] != 0)
-		{
-			activate_skill = 1;	
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			((Champion*)first_row)->PrepareAbility_lvl_2();
-			return true;
-		}
-		}
-		break;
-	case 2:
-		break;
-	case 3: {
-		if (skill_tree->GetActiveState() == true)
-		{
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			skill_tree->Desactivate();
-			skill_tree->DesactivateChids();
-		}
-		else {
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			SetSkillTree(WARRIOR_CHMP);
-			skill_tree->Activate();
-			skill_tree->ActivateChilds();
-		}
-		}
-		break;
-	case 4:
-		{
+	case 4: {
 		App->sound->PlayGUIAudio(CLICK_INGAME);
+		UNIT_TYPE u_type = ((Unit*)entitis_panel)->GetUnitType();
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
-		}
-	case 8:
-	{
-		if (skill_tree->GetActiveState() == true)
+		
+		if (u_type == WARRIOR_CHMP) champion_mele = nullptr;
+		else if (u_type == WIZARD_CHMP) champion_wizard = nullptr;
+		else champion_archer = nullptr;
+		
+		champion_row.clear();
+		if (champion_mele != nullptr) champion_row.push_back(champion_mele);
+		if (champion_wizard != nullptr) champion_row.push_back(champion_wizard);
+		if (champion_archer != nullptr) champion_row.push_back(champion_archer);
+
+		while (champion_row.size() < 3)
 		{
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			skill_tree->Desactivate();
-			skill_tree->DesactivateChids();
+			champion_row.push_back(nullptr);
 		}
-		else {
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			SetSkillTree(WIZARD_CHMP);
-			skill_tree->Activate();
-			skill_tree->ActivateChilds();
+		if (champion_row[0] != nullptr)
+		{
+			entitis_panel = champion_row[0];
+			champion_selected = ((Unit*)entitis_panel)->GetUnitType();
+			activate_skill = -1;
+			if (skill_tree->GetActiveState() == true)
+			{
+				skill_tree->Desactivate();
+				skill_tree->DesactivateChids();
+			}
+			SetNewOrder();
 		}
-	}
+		else SetDefault();
+		}
 		break;
-	default:	break;
-	}*/
+	default:
+		break;
+	}
 	return false;
 }
 
@@ -759,7 +757,6 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 					LearnSkill(i);
 					App->sound->PlayGUIAudio(CLICK_INGAME);
 					bool skill = false;
-					inskilltree = true;
 					if (i % 2 == 1) skill = true;
 					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1(skill);
 					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
@@ -771,7 +768,7 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 		break;
 	case MOUSE_RIGHT_BUTTON:			break;
 	case MOUSE_IN:						break;
-	case MOUSE_OUT:						if (ui_element == skill_tree) inskilltree = false; break;
+	case MOUSE_OUT:						break;
 	case SUPR:							break;
 	case BACKSPACE:						break;
 	case ENTER:							break;
@@ -785,7 +782,7 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 {
 	switch (input)
 	{
-/*	case MOUSE_LEFT_BUTTON_DOWN: if (activate_skill != -1)
+	case MOUSE_LEFT_BUTTON_DOWN: if (activate_skill != -1)
 	{
 		int x = 0, y = 0;
 		App->input->GetMousePosition(x, y);
@@ -796,7 +793,7 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 		if (activate_skill == 1)((Champion*)entitis_panel)->Hability_lvl_2(x, y);
 		activate_skill = -1;
 		return false;
-	}*/
+	}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		break;

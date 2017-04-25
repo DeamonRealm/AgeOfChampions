@@ -217,7 +217,6 @@ public:
 
 public:
 	UI_Image*						skill_tree = nullptr;
-	bool							inskilltree = false;
 private:
 
 	UNIT_TYPE						champion_selected;
