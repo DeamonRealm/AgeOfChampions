@@ -209,7 +209,9 @@ public:
 
 	void LearnSkill(int i);
 	void SetSkillTree();
+	void SetNewOrder();
 	void ChangePanelTarget(Entity* new_target);
+
 	
 
 public:
@@ -217,12 +219,16 @@ public:
 private:
 
 	UNIT_TYPE						champion_selected;
+	int								mele_learned[5];
+	int								wizard_learned[5];
+	int								archer_learned[5];
 
 	Unit*							champion_mele = nullptr;
 	Unit*							champion_wizard = nullptr;
 	Unit*							champion_archer = nullptr;
 
 	std::vector<Unit*>				champion_row;
+
 
 	std::vector<UI_Image*>			skills;
 	std::vector<UI_Fixed_Button*>	skills_buttons;

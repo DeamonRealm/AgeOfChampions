@@ -741,7 +741,7 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 	case MOUSE_LEFT_BUTTON_REPEAT:		break;
 	case MOUSE_LEFT_BUTTON_UP:			
 		{
-			/*for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
+			for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
 			{
 				if (ui_element == skills_buttons[i])
 				{
@@ -752,10 +752,10 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 					if (i % 2 == 1) skill = true;
 					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1(skill);
 					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
-					if (i / 2 == 2)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
+					if (i / 2 == 2)((Champion*)entitis_panel)->SetAbility_lvl_3(skill);
 					return true;
 				}
-			}*/
+			}
 		}
 		break;
 	case MOUSE_RIGHT_BUTTON:			break;
@@ -801,18 +801,45 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 
 void HeroPanel::LearnSkill(int i)
 {
-	/*if (champion_selected == WARRIOR_CHMP)
-	{
-		if (i / 2 != 2) // can't learn skill 3 yet
-		{
-			cell_lvl[i / 2] = (i % 2)+1;
-			UpdateCells();
-		}
-	}*/
+	int skill_cell = i / 2;
+	if (champion_selected == WIZARD_CHMP) wizard_learned[skill_cell] = (i % 2) + 1;
+	else if (champion_selected == ARCHER_CHMP) archer_learned[skill_cell] = (i % 2) + 1;
+	else mele_learned[skill_cell] = (i % 2) + 1; 
+	SetNewOrder();
 }
 
 void HeroPanel::SetSkillTree()
 {
+}
+
+void HeroPanel::SetNewOrder()
+{
+	// Reset Cells
+	Cells_Data celldata;
+	panel_icons.clear();
+	int count = -1;
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		if (i % 5 == 0) count++;
+		if (champion_row[count] == nullptr);
+		else if (champion_row[count] == champion_mele) cell_lvl[i] = mele_learned[i];
+		else if (champion_row[count] == champion_wizard)
+			cell_lvl[i] = wizard_learned[i - (count * 5)];
+		else if (champion_row[count] == champion_archer) cell_lvl[i] = archer_learned[i - (count * 10)];
+		panel_icons.push_back(celldata);
+	}
+
+	// Set Current Cells
+	/*int size = cell_data.size();
+
+	for (int i = 0; i < size; i++)
+	{
+		if (cell_data[i].cell_at_level == cell_lvl[cell_data[i].cell_position] && cell_data[i].cell_at_age <= current_age)
+		{
+			panel_icons[cell_data[i].cell_position] = cell_data[i];
+		}
+	}*/
+	
 }
 
 void HeroPanel::ChangePanelTarget(Entity * new_target)
@@ -1123,7 +1150,7 @@ void Action_Panel::SetPanelType()
 		return;
 	}
 
-	if (actualpanel == heropanel && u_type != WARRIOR_CHMP)
+	if (actualpanel == heropanel && u_type != WARRIOR_CHMP && u_type != WIZARD_CHMP && u_type != ARCHER_CHMP)
 	{
 		heropanel->skill_tree->Desactivate();
 		heropanel->skill_tree->DesactivateChids();
