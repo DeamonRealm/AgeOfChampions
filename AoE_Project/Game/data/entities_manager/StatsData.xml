@@ -1001,7 +1001,7 @@
       intaraction_area_h="215"
       width_in_tiles="3"
       height_in_tiles="3"
-      vision_rad ="300"
+      vision_rad ="600"
       
       max_life ="50"
       units_capacity ="15"
@@ -1036,7 +1036,7 @@
       intaraction_area_h="215"
       width_in_tiles="3"
       height_in_tiles="3"
-      vision_rad ="300"
+      vision_rad ="600"
       
       max_life ="50"
       units_capacity ="15"
@@ -1071,7 +1071,7 @@
       intaraction_area_h="215"
       width_in_tiles="3"
       height_in_tiles="3"
-      vision_rad ="300"
+      vision_rad ="500"
       
       max_life ="50"
       units_capacity ="15"
@@ -1106,7 +1106,7 @@
       intaraction_area_h="215"
       width_in_tiles="3"
       height_in_tiles="3"
-      vision_rad ="300"
+      vision_rad ="500"
       
       max_life ="50"
       units_capacity ="15"
@@ -1141,7 +1141,7 @@
       intaraction_area_h="215"
       width_in_tiles="3"
       height_in_tiles="3"
-      vision_rad ="300"
+      vision_rad ="500"
       
       max_life ="50"
       units_capacity ="15"
@@ -1176,7 +1176,7 @@
       intaraction_area_h="150"
       width_in_tiles="2"
       height_in_tiles="2"
-      vision_rad ="300"
+      vision_rad ="500"
       
       max_life ="50"
       units_capacity ="15"
@@ -1211,7 +1211,7 @@
       intaraction_area_h="150"
       width_in_tiles="2"
       height_in_tiles="2"
-      vision_rad ="300"
+      vision_rad ="500"
       
       max_life ="50"
       units_capacity ="15"
@@ -1246,7 +1246,7 @@
       intaraction_area_h="150"
       width_in_tiles="2"
       height_in_tiles="2"
-      vision_rad ="300"
+      vision_rad ="500"
       
       max_life ="50"
       units_capacity ="15"

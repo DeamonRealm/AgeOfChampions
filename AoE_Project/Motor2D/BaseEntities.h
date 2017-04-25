@@ -214,6 +214,7 @@ protected:
 	ENTITY_TYPE		entity_type = NO_ENTITY;
 	DIPLOMACY		entity_diplomacy = NEUTRAL;
 	Circle			vision;
+	Circle			render_area;
 	//Life -------------
 	uint			max_life = 0;
 	int				life = 0;
@@ -262,6 +263,7 @@ public:
 	void			SetEntityType(ENTITY_TYPE type);
 	void			SetDiplomacy(DIPLOMACY new_diplomacy);
 	void			SetVision(const Circle& new_mark);
+	void			SetRenderArea(const Circle& new_render_area);
 	void			SetMaxLife(uint full_life_val);
 	void			SetLife(uint life_val);
 	void			SetAnimation(Animation* anim);
@@ -276,6 +278,7 @@ public:
 	ENTITY_TYPE		GetEntityType()const;
 	DIPLOMACY		GetDiplomacy()const;
 	Circle			GetVision()const;
+	Circle			GetRenderArea()const;
 	uint			GetMaxLife()const;
 	int				GetLife()const;
 	Animation*		GetAnimation();

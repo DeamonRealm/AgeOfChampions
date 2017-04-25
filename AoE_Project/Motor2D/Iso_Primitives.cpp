@@ -100,7 +100,8 @@ bool Circle::Draw()
 
 bool Circle::IsIn(const fPoint* loc) const
 {
-	return ((((loc->x - position.x) * (loc->x - position.x)) / (rad  *rad) + ((loc->y - position.y) * (loc->y - position.y)) / ((rad * sin(x_angle)) * (rad * sin(x_angle)))) <= 1);
+	float sin_rad = rad * sin(x_angle);
+	return ((((loc->x - position.x) * (loc->x - position.x)) / (rad  *rad) + ((loc->y - position.y) * (loc->y - position.y)) / (sin_rad * sin_rad)) <= 1);
 }
 
 bool Circle::Intersects(const SDL_Rect * rect) const

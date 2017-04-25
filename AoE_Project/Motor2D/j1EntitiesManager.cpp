@@ -185,13 +185,22 @@ bool j1EntitiesManager::Draw() const
 	std::vector<Unit*> units_vec;
 	units_quadtree.CollectCandidates(units_vec, App->render->camera_viewport);
 	uint size = units_vec.size();
+	iPoint pos;
+	FOG_TYPE fog_type;
 	for (uint k = 0; k < size; k++)
 	{
-		iPoint pos = units_vec[k]->GetPositionRounded();
+		pos = units_vec[k]->GetPositionRounded();
 		pos = App->map->WorldToMap(pos.x, pos.y);
-		FOG_TYPE fog_type = App->fog_of_war->GetFogID(pos.x, pos.y);
+		fog_type = App->fog_of_war->GetFogID(pos.x, pos.y);
 		if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
 		if (units_vec[k]->GetDiplomacy() == NEUTRAL && fog_type == DARK_FOG)continue;
+		if (units_vec[k]->GetDiplomacy() == ALLY && App->fog_of_war->fog_update)
+		{
+			App->fog_of_war->ClearAlphaLayer(units_vec[k]->GetVision(), 0);
+			App->fog_of_war->ClearFogLayer(units_vec[k]->GetRenderArea(), GRAY_FOG);
+			App->fog_of_war->ClearFogLayer(units_vec[k]->GetVision(), NO_FOG);
+
+		}
 		units_vec[k]->Draw(App->debug_mode);
 	}
 
@@ -206,7 +215,7 @@ bool j1EntitiesManager::Draw() const
 	size = resources_vec.size();
 	for (uint k = 0; k < size; k++)
 	{
-		iPoint pos = resources_vec[k]->GetPositionRounded();
+		pos = resources_vec[k]->GetPositionRounded();
 		pos = App->map->WorldToMap(pos.x, pos.y);
 		if (App->fog_of_war->GetFogID(pos.x, pos.y) != DARK_FOG)resources_vec[k]->Draw(App->debug_mode);
 	}
@@ -217,8 +226,14 @@ bool j1EntitiesManager::Draw() const
 	size = buildings_vec.size();
 	for (uint k = 0; k < size; k++)
 	{
-		iPoint pos = buildings_vec[k]->GetPositionRounded();
+		pos = buildings_vec[k]->GetPositionRounded();
 		pos = App->map->WorldToMap(pos.x, pos.y);
+		if (buildings_vec[k]->GetDiplomacy() == ALLY && App->fog_of_war->fog_update)
+		{
+			App->fog_of_war->ClearAlphaLayer(buildings_vec[k]->GetVision(), 0);
+			App->fog_of_war->ClearFogLayer(buildings_vec[k]->GetRenderArea(), NO_FOG);
+
+		}
 		if (App->fog_of_war->GetFogID(pos.x, pos.y) != DARK_FOG)buildings_vec[k]->Draw(App->debug_mode);
 	}
 
@@ -810,6 +825,11 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 			//Set generated unit diplomacy
 			new_unit->SetDiplomacy(diplomacy);
 
+			//Set generated unit render area with the vision area specified
+			Circle rend = new_unit->GetVision();
+			rend.SetRad(rend.GetRad() + RENDER_MARGIN);
+			new_unit->SetRenderArea(rend);
+
 			//Set new unit myself pointer
 			new_unit->myself = new_unit;
 
@@ -853,6 +873,11 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 			//Set unit diplomacy
 			new_building->SetDiplomacy(diplomacy);
 			
+			//Set generated building render area with the vision area specified
+			Circle rend = new_building->GetVision();
+			rend.SetRad(rend.GetRad() + RENDER_MARGIN);
+			new_building->SetRenderArea(rend);
+
 			//Set building myself pointer
 			new_building->myself = new_building;
 

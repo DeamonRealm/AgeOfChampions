@@ -4,11 +4,13 @@
 #include "j1Module.h"
 #include "Iso_Primitives.h"
 #include "Quadtree.h"
+#include "j1Timer.h"
 
 #define ALPHA_LIMIT 255			/* Values between 0 & 255 */
 #define MID_ALPHA 150			/* Values between 0 & 255 */
-#define	DIVISIONS_PER_PIXELS 40	/* Values between 20 & 60 in debug for >60 fps */ /* Values between 20 & 130 in release for >60 fps */
+#define	DIVISIONS_PER_PIXELS 60	/* Values between 20 & 60 in debug for >60 fps */ /* Values between 20 & 130 in release for >60 fps */
 #define RENDER_MARGIN 80		/* Values between 0 & INF */
+#define	UPDATE_RATE	100			/* DT between fog updates for optimize the process */
 
 enum FOG_TYPE
 {
@@ -26,6 +28,8 @@ public:
 
 public:
 
+	void Init();
+
 	// Called each loop iteration
 	bool PostUpdate();
 
@@ -40,14 +44,20 @@ private:
 
 	uint alpha_cell_size = 0;
 
+	//Timer that count last update time
+	j1Timer		update_timer;
+
 public:
 
-	void		GenerateFogOfWar();
+	//Boolean true when fog is ready to be updated
+	bool				fog_update = true;
 
-	FOG_TYPE	GetFogID(int x, int y)const;
+	void				GenerateFogOfWar();
 
-	void		ClearAlphaLayer(const Circle zone, unsigned short alpha = 0);
-	void		ClearFogLayer(const Circle zone, FOG_TYPE type);
+	FOG_TYPE			GetFogID(int x, int y)const;
+
+	void				ClearAlphaLayer(const Circle zone, unsigned short alpha = 0);
+	void				ClearFogLayer(const Circle zone, FOG_TYPE type);
 };
 
 #endif

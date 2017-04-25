@@ -310,15 +310,16 @@ iPoint j1Map::FixPointMap(int x, int y)
 	return ret;
 }
 
+bool j1Map::IsInMapMark(int x, int y) const
+{
+
+	return false;
+}
+
 void j1Map::CalculateTilesInView()
 {
 	points_in_view.clear();
 	map_quadtree.CollectCandidates(points_in_view, App->render->camera_viewport);
-}
-
-const std::vector<iPoint> j1Map::GetTilesInView() const
-{
-	return points_in_view;
 }
 
 void j1Map::ChangeLogicMap(const iPoint & position, uint element_width, uint element_height, uint value_map)

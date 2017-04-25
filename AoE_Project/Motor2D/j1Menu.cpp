@@ -15,6 +15,7 @@
 #include "j1Player.h"
 #include "j1AI.h"
 #include "j1SoundManager.h"
+#include "j1FogOfWar.h"
 
 //UI Elements
 #include "UI_Button.h"
@@ -223,8 +224,9 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			App->player->Enable();
 			App->entities_manager->Enable();
 			App->AI->Enable();
-			CleanUp();
-			Disable();
+			App->fog_of_war->Enable();
+			this->CleanUp();
+			this->Disable();
 		}
 		if (target == history)
 		{

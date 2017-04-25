@@ -129,7 +129,9 @@
     <ClCompile Include="j1AI.cpp">
       <Filter>Modules\AI</Filter>
     </ClCompile>
-    <ClCompile Include="j1FogOfWar.cpp" />
+    <ClCompile Include="j1FogOfWar.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">

@@ -333,6 +333,20 @@ bool j1Render::TileBlit(SDL_Texture * texture, int x, int y, const SDL_Rect* sec
 	return true;
 }
 
+bool j1Render::FogBlit(const iPoint & position, uint cell_size, Uint8 alpha)
+{
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, alpha);
+
+	SDL_Rect alpha_rect;
+	alpha_rect.x = position.x + camera.x;
+	alpha_rect.y = position.y + camera.y;
+	alpha_rect.w = alpha_rect.h = cell_size;
+
+	SDL_RenderFillRect(renderer, &alpha_rect);
+
+	return false;
+}
+
 bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;

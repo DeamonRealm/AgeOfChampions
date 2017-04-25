@@ -20,6 +20,7 @@
 //Constructors ========================
 Entity::Entity() :name(""), action_worker()
 {
+
 }
 
 Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), vision(copy.vision), selection_rect(copy.selection_rect),
@@ -150,6 +151,11 @@ void Entity::SetVision(const Circle & new_vision)
 	vision = new_vision;
 }
 
+void Entity::SetRenderArea(const Circle & new_render_area)
+{
+	render_area = new_render_area;
+}
+
 void Entity::SetMaxLife(uint full_life_val)
 {
 	max_life = full_life_val;
@@ -210,6 +216,11 @@ DIPLOMACY Entity::GetDiplomacy() const
 Circle Entity::GetVision() const
 {
 	return vision;
+}
+
+Circle Entity::GetRenderArea() const
+{
+	return render_area;
 }
 
 uint Entity::GetMaxLife() const
@@ -303,6 +314,7 @@ bool Unit::Draw(bool debug)
 			soft_collider.Draw();
 			hard_collider.Draw();
 			vision.Draw();
+			render_area.Draw();
 	}
 	
 	/*if (debug) {
@@ -1366,8 +1378,14 @@ void Unit::SetPosition(float x, float y, bool insert)
 	iPoint pos(position.x, position.y);
 	//Set unit vision position
 	vision.SetPosition(pos);
+	//Set unit render area position
+	render_area.SetPosition(pos);
 
-	if (entity_diplomacy == ALLY)App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+	if (entity_diplomacy == ALLY)
+	{
+		App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
+		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+	}
 
 	//Set unit mark position
 	mark.SetPosition(pos);
@@ -1874,12 +1892,19 @@ void Resource::SetPosition(float x, float y, bool insert)
 	iPoint coords = App->map->MapToWorld(world_coords.x, world_coords.y);
 	position.x = coords.x;
 	position.y = coords.y;
+	iPoint pos(position.x, position.y);
 
 	//Set resource interaction area position
-	interact_area.SetPosition(iPoint(position.x, position.y));
+	interact_area.SetPosition(pos);
 
 	//Set resource mark position
-	mark.SetPosition(iPoint(position.x, position.y));
+	mark.SetPosition(pos);
+
+	//Set resource vision position
+	vision.SetPosition(pos);
+
+	//Set resource render area position
+	render_area.SetPosition(pos);
 
 	//Change walk & construction logic maps
 	App->map->ChangeConstructionMap(world_coords, 1, 1, 0);
@@ -2110,12 +2135,17 @@ void Building::SetPosition(float x, float y, bool insert)
 
 	//Update construction map
 	App->map->ChangeConstructionMap(upper_tile, width_in_tiles + 1, height_in_tiles + 1, 0);
+	
+	iPoint pos(position.x, position.y);
 
 	//Clear fog around building vision zone
-	vision.SetPosition(iPoint(position.x, position.y));
+	vision.SetPosition(pos);
+
+	//Set building render area position
+	render_area.SetPosition(pos);
 
 	//Set interaction area rectangle position
-	interact_area.SetPosition(iPoint(position.x, position.y));
+	interact_area.SetPosition(pos);
 
 	//Set building mark position
 	mark.SetPosition(iPoint(position.x, position.y));

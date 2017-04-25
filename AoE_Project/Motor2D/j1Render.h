@@ -108,6 +108,8 @@ public:
 	// Draw & Blit ----------
 	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, bool horizontal_flip = false, uint opacity = 255, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0) const;
 	bool TileBlit(SDL_Texture* texture, int x, int y, const SDL_Rect* section);
+	bool FogBlit(const iPoint & position, uint cell_size, Uint8 alpha);
+
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, float x_angle = 0, bool use_camera = true) const;

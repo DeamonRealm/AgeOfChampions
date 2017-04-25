@@ -174,10 +174,10 @@ public:
 	iPoint WorldCenterToMap(int x, int y)const;
 	//Fix an external map point inside the map limits
 	iPoint FixPointMap(int x, int y);
+	//Check if a point is inside the map area + mark
+	bool IsInMapMark(int x, int y)const;
 	//Calculate the tiles that are in camera
 	void CalculateTilesInView();
-	//Get tiles in view
-	const std::vector<iPoint> GetTilesInView()const;
 	//Change walkability in target tiles of the logic map
 	void ChangeLogicMap(const iPoint& position, uint width, uint height,uint value_map);
 	//Change walkability in target tiles of the construction map

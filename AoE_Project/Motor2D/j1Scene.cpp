@@ -133,6 +133,7 @@ bool j1Scene::PostUpdate()
 		App->player->Disable();
 		App->AI->Disable();
 		App->entities_manager->Disable();
+		App->fog_of_war->Disable();
 		App->menu->Enable();
 	}
 

@@ -19,20 +19,39 @@ j1FogOfWar::~j1FogOfWar()
 }
 
 //Game Loop ===========================
+void j1FogOfWar::Init()
+{
+	active = false;
+}
+
 bool j1FogOfWar::PostUpdate()
 {
-	if (App->debug_mode)return true;
+	if (App->map_debug_mode)return true;
 
-	// TODO 4:	Draw alpha layer!
-	//			Collect the candidates of the fog_quadtree to get the alpha cells in camera.
-	//			Iterate the filled vector and call FogBlit method from render module.
-	//			The cell size is the size of the cell walls in pixels.
+	std::vector<AlphaCell*> in_view_cells;
+
+	uint size = fog_quadtree.CollectCandidates(in_view_cells, App->render->camera_viewport);
+	for (uint k = 0; k < size; k++)
+	{
+		App->render->FogBlit(in_view_cells[k]->position, alpha_cell_size, in_view_cells[k]->alpha);
+	}
 
 
-	// TODO 8:	Update alpha layer! 
-	//			Check if there's any alpha cell in camera with a higher value than MID_ALPHA 
-	// 			If theres one equal its alpha value to MID_ALPHA
-	// 			More Info: https://github.com/ferranmartinvila/Fog_of_war-Research
+	if (update_timer.Read() > UPDATE_RATE)
+	{
+		fog_update = true;
+		update_timer.Start();
+	}
+	else fog_update = false;
+
+
+	if (fog_update)
+	{
+		for (uint k = 0; k < size; k++)
+		{
+			if (in_view_cells[k]->alpha < MID_ALPHA)in_view_cells[k]->alpha = MID_ALPHA;
+		}
+	}
 
 	return true;
 }
@@ -55,7 +74,7 @@ void j1FogOfWar::GenerateFogOfWar()
 
 	//Build fog quadtree boundaries & limit
 	fog_quadtree.SetBoundaries({ (int)mid_map_lenght, 0, (int)alpha_cell_size * (int)alpha_layer_width, (int)alpha_cell_size * (int)alpha_layer_height });
-	fog_quadtree.SetMaxObjects(100);
+	fog_quadtree.SetMaxObjects(120);
 	fog_quadtree.SetDebugColor({ 255,255,0,255 });
 
 	j1Timer time;
@@ -63,7 +82,7 @@ void j1FogOfWar::GenerateFogOfWar()
 	//Build fog alpha layer
 	//Allocate alpha layer cells
 	alpha_layer = new AlphaCell[alpha_layer_width * alpha_layer_height];
-
+	float mid_alpha_cell_size = alpha_cell_size * 0.5f;
 	for (uint y = 0; y < alpha_layer_height; y++)
 	{
 		for (uint x = 0; x < alpha_layer_width; x++)
@@ -71,17 +90,10 @@ void j1FogOfWar::GenerateFogOfWar()
 			AlphaCell* current_cell = &alpha_layer[y * alpha_layer_width + x];
 
 			current_cell->position = { (int)mid_map_lenght + (int)alpha_cell_size * (int)x, (int)(int)alpha_cell_size * (int)y };
-			current_cell->alpha = ALPHA_LIMIT;
-			fog_quadtree.Insert(current_cell, &iPoint(current_cell->position.x + alpha_cell_size * 0.5, current_cell->position.y + alpha_cell_size * 0.5));
+			fog_quadtree.Insert(current_cell, &iPoint(current_cell->position.x + mid_alpha_cell_size, current_cell->position.y + mid_alpha_cell_size));
 		}
 	}
 
-
-
-	// TODO 1:	Create fog layer!
-	//			Allocate an array of FOG_TYPE for the fog layer.
-	//			Array size is the same as a map layer so get map width and map height from App->map.data
-	//			Iterate the allocated array and fill it with DARK_FOG type.
 	fog_layer = new FOG_TYPE[App->map->data.width * App->map->data.height];
 
 	for (uint y = 0; y < App->map->data.height; y++)
@@ -97,8 +109,6 @@ void j1FogOfWar::GenerateFogOfWar()
 
 FOG_TYPE j1FogOfWar::GetFogID(int x, int y) const
 {
-	// TODO 2:	Map optimization
-	//			Improve this function to get the FOG_TYPE of the correct map tile
 	return fog_layer[y * App->map->data.width + x];
 }
 
@@ -121,7 +131,6 @@ void j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type)
 
 	for (uint k = 0; k < size; k++)
 	{
-		// TODO 1:	Uncomment this when TODO 1 is done!
 		fog_layer[tiles_in[k].y * App->map->data.width + tiles_in[k].x] = type;
 	}
 

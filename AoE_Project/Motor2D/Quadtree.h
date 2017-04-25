@@ -199,7 +199,10 @@ public:
 			{
 				SDL_Point pos = { objects[k].location.x,objects[k].location.y };
 				if (SDL_PointInRect(&pos, &rect))
+				{
 					nodes.push_back(objects[k].data);
+					ret++;
+				}
 			}
 		}
 
@@ -705,7 +708,7 @@ public:
 
 	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const SDL_Rect& r) const
 	{
-		int tests = 1;
+		int tests = 0;
 
 		if (root != NULL && SDL_HasIntersection(&r, &root->aabb))
 			tests = root->CollectCandidates(nodes, r);
