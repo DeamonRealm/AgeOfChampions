@@ -344,7 +344,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 		return true;
 	}
 
-
+	last_position = GetPositionRounded();
 	//Build goal path point
 	iPoint goal = path->back();
 	iPoint location = iPoint(position.x, position.y);
@@ -354,12 +354,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	//Update goal node and animation direction
 	if (location.DistanceTo(goal) < 2)
 	{
-
-
-		//Look in the next update if there is an error
-		std::vector<Unit*> other_units;
-		App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
-		other_units.size();
+		
 		if (future_position != iPoint(-1, -1) && !App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
 		{
 			CorrectPath(path);
@@ -375,6 +370,10 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 
 			return false;
 		}
+		//Look in the next update if there is an error
+		std::vector<Unit*> other_units;
+		App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
+		other_units.size();
 		int collisions = 0;
 		while (!other_units.empty()) {
 			Unit* other_unit = other_units.back();
@@ -614,15 +613,191 @@ bool Unit::UnitHere(const iPoint & destination, int radius)
 iPoint Unit::FindWalkableCell(const iPoint & center)
 {
 	iPoint cell;
+	iPoint cell_1;
+	iPoint cell_2;
 	iPoint pos = center;
 	iPoint goal;
 	iPoint cell_map;
 	int radius = GetSoftCollider().GetRad();
 	int doble_radius = radius*2;
-
-	std::vector<Unit*> other_units;
-	App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
+	iPoint unit_location = this->GetPositionRounded();
 	int i = 1;
+	switch (this->LookDirection(last_position, pos))
+	{
+	case NORTH:
+		LOG("NORTH");
+		while (i <= 5) {
+
+			cell_1.create(pos.x + doble_radius*i, pos.y);
+			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_1, doble_radius))
+			{
+				return cell_1;
+			}
+
+			cell_2.create(pos.x - doble_radius*i, pos.y);
+			cell_map = App->map->WorldToMap(cell_2.x, cell_2.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
+			{
+				return cell_2;
+			}
+			i++;
+		}
+		break;
+	case NORTH_EAST:
+		LOG("NORTH_EAST");
+		while (i <= 5) {
+			cell_1.create(pos.x + doble_radius*i, pos.y + doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_1, doble_radius))
+			{
+				return cell_1;
+			}
+
+			cell_2.create(pos.x - doble_radius*i, pos.y - doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_2.x, cell_2.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
+			{
+				return cell_2;
+			}
+			i++;
+
+		}
+		break;
+	case EAST:
+		LOG("EAST");
+		while (i <= 5) {
+
+			cell_1.create(pos.x, pos.y + doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_1, doble_radius))
+			{
+				return cell_1;
+			}
+
+			cell_2.create(pos.x, pos.y - doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_2.x, cell_2.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
+			{
+				return cell_2;
+			}	
+			i++;
+
+		}
+		break;
+	case SOUTH_EAST:
+		LOG("SOUTH_EAST");
+		while (i <= 5) {
+
+			cell_1.create(pos.x + doble_radius*i, pos.y - doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_1, doble_radius))
+			{
+				return cell_1;
+			}
+
+			cell_2.create(pos.x - doble_radius*i, pos.y + doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_2.x, cell_2.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
+			{
+				return cell_2;
+			}
+			i++;
+
+		}
+		break;
+	case SOUTH:
+		LOG("SOUTH");
+		while (i <= 5) {
+
+			cell_1.create(pos.x + doble_radius*i, pos.y);
+			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_1, doble_radius))
+			{
+				return cell_1;
+			}
+
+			cell_2.create(pos.x - doble_radius*i, pos.y);
+			cell_map = App->map->WorldToMap(cell_2.x, cell_2.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
+			{
+				return cell_2;
+			}
+			i++;
+
+		}
+		break;
+	case SOUTH_WEST:	
+		LOG("SOUTH_WEST");
+		while (i <= 5) {
+
+			cell_1.create(pos.x + doble_radius*i, pos.y + doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_1, doble_radius))
+			{
+				return cell_1;
+			}
+
+			cell_2.create(pos.x - doble_radius*i, pos.y - doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_2.x, cell_2.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
+			{
+				return cell_2;
+			}
+			i++;
+
+		}
+		break;
+	case WEST:
+		LOG("WEST");
+		while (i <= 5) {
+
+			cell_1.create(pos.x, pos.y + doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_1, doble_radius))
+			{
+				return cell_1;
+			}
+
+			cell_2.create(pos.x, pos.y - doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_2.x, cell_2.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
+			{
+				return cell_2;
+			}
+			i++;
+
+		}
+		break;
+	case NORTH_WEST:
+		LOG("NORTH_WEST");
+		while (i <= 5) {
+
+			cell_1.create(pos.x + doble_radius*i, pos.y + doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_1, doble_radius))
+			{
+				return cell_1;
+			}
+
+			cell_2.create(pos.x - doble_radius*i, pos.y - doble_radius*i);
+			cell_map = App->map->WorldToMap(cell_2.x, cell_2.y);
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
+			{
+				return cell_2;
+			}
+			i++;
+
+		}
+		break;
+	default:
+		break;
+	}
+
+	if (unit_location.DistanceTo(cell_1) < unit_location.DistanceTo(cell_2)) return cell_1;
+	else return cell_2;
+
+	/*
 	while (i <= 5) {
 		// south
 		cell.create(pos.x, pos.y + doble_radius*i);
@@ -695,6 +870,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 		i++;
 	}
 	return iPoint(-1, -1);
+	*/
 }
 
 iPoint Unit::FindWalkableAdjacent(const iPoint & center)
@@ -708,10 +884,8 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	Circle target;
 	target.SetRad(radius);
 	target.SetPosition(center);
-
 	Circle checker;
 	checker.SetRad(radius);
-
 	// south
 	cell.create(pos.x, pos.y + doble_radius);
 	checker.SetPosition(cell);
@@ -945,7 +1119,7 @@ bool Unit::AttackUnit(Unit** target)
 	{
 
 		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider());
-
+		/*
 		if (UnitHere(goal,GetSoftCollider().GetRad()))
 		{
 			goal = FindWalkableAdjacent(((Unit*)(*target))->GetPositionRounded());
@@ -960,7 +1134,7 @@ bool Unit::AttackUnit(Unit** target)
 				return true;
 			}
 		}
-	
+	*/
 			std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 			if (path == nullptr)return true;
 			this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));

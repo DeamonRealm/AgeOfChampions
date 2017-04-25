@@ -316,6 +316,7 @@ protected:
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = SOUTH;
 	iPoint			future_position = { 0,0 };
+	iPoint			last_position = { 0,0 };
 	//Attack -----------
 	j1Timer			action_timer;
 	uint			attack_delay = 0;

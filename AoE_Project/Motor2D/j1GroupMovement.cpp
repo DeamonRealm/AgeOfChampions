@@ -119,7 +119,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			i *= -1;
 			if (current_width == formation.width) {
 				current_height++;
-				copy_destination.create(destination.x, destination.y - radius * current_height);
+				copy_destination.create(destination.x, destination.y + radius * current_height);
 				i = 0;
 				current_width = 0;
 
