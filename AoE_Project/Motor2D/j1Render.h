@@ -89,6 +89,7 @@ public:
 	SDL_Renderer*	renderer;
 	SDL_Rect		camera;
 	SDL_Rect		viewport;
+	SDL_Rect		camera_viewport;
 	SDL_Color		background;
 
 public:
@@ -99,6 +100,7 @@ public:
 	//View port Methods ------
 	void	SetViewPort(const SDL_Rect& rect);
 	void	ResetViewPort();
+	void	CalculateCameraViewport();
 
 	//View frame change -----
 	iPoint	ScreenToWorld(int x, int y) const;

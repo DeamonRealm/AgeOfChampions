@@ -108,7 +108,11 @@ bool j1Scene::Update(float dt)
 		moved = true;
 	}
 
-	if(moved)App->map->CalculateTilesInView();
+	if (moved)
+	{
+		App->render->CalculateCameraViewport();
+		App->map->CalculateTilesInView();
+	}
 	
 	// ------------------------------------------
 
@@ -188,6 +192,7 @@ bool j1Scene::LoadScene()
 	iPoint camera_pos = App->map->MapToWorld(camera_node.attribute("pos_x").as_uint(), camera_node.attribute("pos_y").as_uint());
 	App->render->camera.x = camera_pos.x;
 	App->render->camera.y = -camera_pos.y;
+	App->render->CalculateCameraViewport();
 	App->map->CalculateTilesInView();
 
 

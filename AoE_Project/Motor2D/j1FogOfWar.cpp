@@ -122,7 +122,7 @@ void j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type)
 	for (uint k = 0; k < size; k++)
 	{
 		// TODO 1:	Uncomment this when TODO 1 is done!
-		// fog_layer[tiles_in[k].y * App->map->data.width + tiles_in[k].x] = type;
+		fog_layer[tiles_in[k].y * App->map->data.width + tiles_in[k].x] = type;
 	}
 
 }

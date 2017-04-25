@@ -313,8 +313,7 @@ iPoint j1Map::FixPointMap(int x, int y)
 void j1Map::CalculateTilesInView()
 {
 	points_in_view.clear();
-	SDL_Rect viewport = { -App->render->camera.x - data.tile_width, -App->render->camera.y, App->render->camera.w + data.tile_width * 2, App->render->camera.h - data.tile_height * 1 };
-	map_quadtree.CollectCandidates(points_in_view, viewport);
+	map_quadtree.CollectCandidates(points_in_view, App->render->camera_viewport);
 }
 
 const std::vector<iPoint> j1Map::GetTilesInView() const

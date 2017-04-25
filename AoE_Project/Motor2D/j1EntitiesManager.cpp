@@ -12,6 +12,7 @@
 #include "j1Map.h"
 #include "p2Log.h"
 #include "j1SoundManager.h"
+#include "j1FogOfWar.h"
 
 //Testing purposes only should be erased
 #include "j1Scene.h"
@@ -180,25 +181,20 @@ bool j1EntitiesManager::Draw() const
 {
 	bool ret = true;
 
-	//Calculate the current camera viewport to collect all the entities inside
-	SDL_Rect viewport = { - (App->render->camera.x + 50) - App->map->data.tile_width, -App->render->camera.y, App->render->camera.w + 100 + App->map->data.tile_width * 2, App->render->camera.h - App->map->data.tile_height * 1 };
-
 	//Draw all units
 	std::vector<Unit*> units_vec;
-	units_quadtree.CollectCandidates(units_vec, viewport);
+	units_quadtree.CollectCandidates(units_vec, App->render->camera_viewport);
 	uint size = units_vec.size();
 	for (uint k = 0; k < size; k++)
 	{
+		iPoint pos = units_vec[k]->GetPositionRounded();
+		pos = App->map->WorldToMap(pos.x, pos.y);
+		FOG_TYPE fog_type = App->fog_of_war->GetFogID(pos.x, pos.y);
+		if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
+		if (units_vec[k]->GetDiplomacy() == NEUTRAL && fog_type == DARK_FOG)continue;
 		units_vec[k]->Draw(App->debug_mode);
 	}
-	/*
-	std::list<Unit*> death_units_vec;
-	uint size = units_vec.size();
-	for (uint k = 0; k < size; k++)
-	{
-		units_vec[k]->Draw(App->debug_mode);
-	}
-	*/
+
 	std::list<Unit*>::const_iterator death_unit = death_units.begin();
 	for (; death_unit != death_units.end(); death_unit++)
 	{
@@ -206,20 +202,24 @@ bool j1EntitiesManager::Draw() const
 	}
 	//Draw all Resources
 	std::vector<Resource*> resources_vec;
-	resources_quadtree.CollectCandidates(resources_vec, viewport);
+	resources_quadtree.CollectCandidates(resources_vec, App->render->camera_viewport);
 	size = resources_vec.size();
 	for (uint k = 0; k < size; k++)
 	{
-		resources_vec[k]->Draw(App->debug_mode);
+		iPoint pos = resources_vec[k]->GetPositionRounded();
+		pos = App->map->WorldToMap(pos.x, pos.y);
+		if (App->fog_of_war->GetFogID(pos.x, pos.y) != DARK_FOG)resources_vec[k]->Draw(App->debug_mode);
 	}
 
 	//Draw all buildings
 	std::vector<Building*> buildings_vec;
-	buildings_quadtree.CollectCandidates(buildings_vec, viewport);
+	buildings_quadtree.CollectCandidates(buildings_vec, App->render->camera_viewport);
 	size = buildings_vec.size();
 	for (uint k = 0; k < size; k++)
 	{
-		buildings_vec[k]->Draw(App->debug_mode);
+		iPoint pos = buildings_vec[k]->GetPositionRounded();
+		pos = App->map->WorldToMap(pos.x, pos.y);
+		if (App->fog_of_war->GetFogID(pos.x, pos.y) != DARK_FOG)buildings_vec[k]->Draw(App->debug_mode);
 	}
 
 	//Draw Units quadtree in debug mode

@@ -4,6 +4,8 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Console.h"
+#include "j1Map.h"
+
 #include <math.h>
 
 ///Class Blit_Call ------------------------------
@@ -131,6 +133,7 @@ bool j1Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+
 	return true;
 }
 
@@ -233,6 +236,11 @@ void j1Render::SetViewPort(const SDL_Rect& rect)
 void j1Render::ResetViewPort()
 {
 	SDL_RenderSetViewport(renderer, &viewport);
+}
+
+void j1Render::CalculateCameraViewport()
+{
+	camera_viewport = { -(App->render->camera.x + 50) - (int)App->map->data.tile_width, -App->render->camera.y, App->render->camera.w + 100 + (int)App->map->data.tile_width * 2, App->render->camera.h - (int)App->map->data.tile_height * 1 };
 }
 
 iPoint j1Render::ScreenToWorld(int x, int y) const

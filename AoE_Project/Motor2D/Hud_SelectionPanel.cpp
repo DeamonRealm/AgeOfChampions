@@ -1027,5 +1027,8 @@ bool Selection_Panel::WindowsMove()
 		else if (c_pos.y <119 && c_pos.x <119) App->render->camera.y -= (int)SDL_ceil(1000 * App->GetDT());
 		ret = true;
 	}
+
+	App->render->CalculateCameraViewport();
+
 	return ret;
 }

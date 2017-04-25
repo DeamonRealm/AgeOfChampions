@@ -11,7 +11,7 @@
 #include "j1ActionManager.h"
 #include "j1Player.h"
 #include "j1BuffManager.h"
-
+#include "j1FogOfWar.h"
 #include "Actions_Unit.h"
 
 #include "Hud_GamePanel.h"
@@ -1192,6 +1192,8 @@ void Unit::SetPosition(float x, float y, bool insert)
 	iPoint pos(position.x, position.y);
 	//Set unit vision position
 	vision.SetPosition(pos);
+
+	if (entity_diplomacy == ALLY)App->fog_of_war->ClearFogLayer(vision, NO_FOG);
 
 	//Set unit mark position
 	mark.SetPosition(pos);
