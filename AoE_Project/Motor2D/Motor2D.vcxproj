@@ -90,6 +90,7 @@
     <ClCompile Include="j1Console.cpp" />
     <ClCompile Include="j1EntitiesManager.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
+    <ClCompile Include="j1FogOfWar.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1GroupMovement.cpp" />
     <ClCompile Include="j1Gui.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="j1BuffManager.h" />
     <ClInclude Include="j1Console.h" />
     <ClInclude Include="j1FileSystem.h" />
+    <ClInclude Include="j1FogOfWar.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1GroupMovement.h" />
     <ClInclude Include="j1Gui.h" />

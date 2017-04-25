@@ -411,3 +411,17 @@ float Triangle::GetWidthAngle() const
 }
 
 /// ---------------------------------------------
+
+/// Class Alpha Cell ----------------------------
+//Constructors ==============
+AlphaCell::AlphaCell(const iPoint& position, unsigned short alpha) :position(position), alpha(alpha)
+{
+
+}
+
+//Destructors ===============
+AlphaCell::~AlphaCell()
+{
+
+}
+/// ---------------------------------------------

@@ -231,7 +231,7 @@ public:
 
 				if (circle.IsIn(&loc))
 				{
-					nodes.push_back(objects[k].location);
+					nodes.push_back(objects[k].data);
 					ret++;
 				}
 

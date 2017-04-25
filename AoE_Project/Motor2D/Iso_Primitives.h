@@ -189,4 +189,20 @@ public:
 
 };
 /// ---------------------------------------------
+
+/// Class Alpha Cell ----------------------------
+class AlphaCell
+{
+public:
+
+	AlphaCell(const iPoint& position = { 0,0 }, unsigned short alpha = 255);
+	~AlphaCell();
+
+public:
+
+	iPoint position = { 0,0 };
+	unsigned short alpha = 255;
+
+};
+/// ---------------------------------------------
 #endif // _ISO_PRIMITVES_

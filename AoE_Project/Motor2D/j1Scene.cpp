@@ -18,6 +18,7 @@
 #include "j1SoundManager.h"
 #include "j1AI.h"
 #include "j1Menu.h"
+#include "j1FogOfWar.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -65,6 +66,9 @@ bool j1Scene::Start()
 	App->pathfinding->SetMap(width, height);
 	// ----------------------------------------------------
 
+	//Generate Fog of War ---------------------------------
+	App->fog_of_war->GenerateFogOfWar();
+	// ----------------------------------------------------
 	return true;
 }
 

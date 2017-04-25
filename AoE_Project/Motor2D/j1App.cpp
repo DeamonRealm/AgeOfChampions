@@ -26,6 +26,7 @@
 #include "j1ActionManager.h"
 #include "j1BuffManager.h"
 #include "j1AI.h"
+#include "j1FogOfWar.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -54,6 +55,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AI = new j1AI();
 	pathfinding = new j1Pathfinding();
 	action_manager = new j1ActionManager();
+	fog_of_war = new j1FogOfWar();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -72,9 +74,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(action_manager);
 	AddModule(entities_manager);
 	AddModule(buff_manager);
+	AddModule(fog_of_war);
 	AddModule(player);
 	AddModule(AI);
-	
 
 	// scene last
 	AddModule(scene);
@@ -390,7 +392,6 @@ bool j1App::PostUpdate()
 // Called before quitting
 bool j1App::CleanUp()
 {
-//	PERF_START(ptimer);
 	bool ret = true;
 	std::list<j1Module*>::const_iterator item = modules.end();
 	item--;
@@ -403,7 +404,6 @@ bool j1App::CleanUp()
 
 	saved_games.clear();
 	
-//	PERF_PEEK(ptimer);
 	return ret;
 }
 
