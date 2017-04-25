@@ -181,7 +181,7 @@ bool PassiveBuff::ApplyBuff()
 	case SUPER_ATTACK_BUFF:
 		base = target->GetAttackHitPoints();
 		buff = base * value;
-		target->SetSuperAttackBuff(buff);
+		target->SetAttackBuff(buff);
 		break;
 	case DEFENSE_BUFF:
 		base = target->GetDefense();
@@ -222,27 +222,27 @@ bool PassiveBuff::RemoveBuff()
 	case ATTACK_BUFF:
 		base = target->GetAttackHitPoints();
 		current_buff = base * value;
-		target->SetAttackBuff(MAX(target->GetAttackBuff() - current_buff, 0));
+		target->SetAttackBuff(-current_buff);
 		break;
 	case SUPER_ATTACK_BUFF:
 		base = target->GetAttackHitPoints();
 		current_buff = base * value;
-		target->SetSuperAttackBuff(MAX(target->GetAttackBuff() - current_buff, 0));
+		target->SetAttackBuff(-current_buff);
 		break;
 	case DEFENSE_BUFF:
 		base = target->GetDefense();
 		current_buff = base * value;
-		target->SetDefenseBuff(MAX(target->GetDefenseBuff() - current_buff, 0));
+		target->SetDefenseBuff(-current_buff);
 		break;
 	case VISION_BUFF:
 		base = target->GetVision().GetRad();
 		current_buff = base * value;
-		target->SetDefenseBuff(MAX(target->GetVisionBuff() - current_buff, 0));
+		target->SetDefenseBuff(-current_buff);
 		break;
 	case LIFE_BUFF:
 		base = target->GetMaxLife();
 		current_buff = base * value;
-		target->SetDefenseBuff(MAX(target->GetLifeBuff() - current_buff, 0));
+		target->SetDefenseBuff(-current_buff);
 		break;
 	case TAUNT_BUFF:
 		target->QuitProtection();
@@ -309,7 +309,7 @@ bool Buff::ApplyBuff()
 	case SUPER_ATTACK_BUFF:
 		base = target->GetAttackHitPoints();
 		buff = base * value;
-		target->SetSuperAttackBuff(buff);
+		target->SetAttackBuff(buff);
 		break;
 	case DEFENSE_BUFF:
 		base = target->GetDefense();

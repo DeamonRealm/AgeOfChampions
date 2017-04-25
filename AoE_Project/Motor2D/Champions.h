@@ -49,15 +49,21 @@ public:
 	//Functionality ---------
 	//Actions -----
 	void		 CleanBuffedUnits();
-	//Ability A methods
+	//Ability lvl1 methods
 	virtual void SetAbility_lvl_1(bool choosed);
 	virtual void Hability_lvl_1();
 	virtual void CheckHability_lvl_1();
-	//Ability B methods
+	//Ability lvl2 methods
 	virtual void SetAbility_lvl_2(bool choosed);
 	virtual void PrepareAbility_lvl_2();
 	virtual void Hability_lvl_2(int x = 0, int y = 0);
 	virtual void CheckHability_lvl_2();
+	//Ability lvl3 methods
+
+	virtual void SetAbility_lvl_3(bool choosed);
+	virtual void PrepareAbility_lvl_3();
+	virtual void Hability_lvl_3(int x = 0, int y = 0);
+	virtual void CheckHability_lvl_3();
 
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
