@@ -578,7 +578,10 @@ public:
 				fPoint loc = object._Ptr->_Myval.location;
 
 				if (tri.IsIn(&loc))
+				{
 					nodes.push_back(object._Ptr->_Myval.data);
+					ret++;
+				}
 
 				object++;
 			}
@@ -821,7 +824,7 @@ public:
 
 	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const Triangle& tri) const
 	{
-		int tests = 1;
+		int tests = 0;
 
 		if (root != NULL && tri.Intersects(&root->aabb))
 			tests = root->CollectCandidates(nodes, tri);

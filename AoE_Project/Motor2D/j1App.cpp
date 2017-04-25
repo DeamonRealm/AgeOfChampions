@@ -401,10 +401,8 @@ bool j1App::CleanUp()
 		item--;
 	}
 
-
 	saved_games.clear();
 	
-
 //	PERF_PEEK(ptimer);
 	return ret;
 }

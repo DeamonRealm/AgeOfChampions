@@ -360,6 +360,8 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 
 	//Generate a new unit definition from the node & check if is a special unit to allocate extra stats
 	Unit* new_def = nullptr;
+	Unit* new_def_enemy = nullptr;
+
 	UNIT_TYPE unit_type = App->animator->StrToUnitEnum(unit_node->attribute("unit_type").as_string());
 	if (unit_type == VILLAGER)
 	{
@@ -501,7 +503,25 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 
 	//Add the generated unit in the units definitions entities manager array
 	ally_units_defs.push_back(new_def);
-	enemy_units_defs.push_back(new_def);
+	switch (new_def->GetUnitType())
+	{
+	case WARRIOR_CHMP:
+		new_def_enemy = new Warrior(*(Warrior*)new_def);
+		break;
+	case ARCHER_CHMP:
+
+		break;
+	case WIZARD_CHMP:
+		new_def_enemy = new Wizard(*(Wizard*)new_def);
+		break;
+	case VILLAGER:
+		new_def_enemy = new Villager(*(Villager*)new_def);
+		break;
+	default:
+		new_def_enemy = new Unit(*(Unit*)new_def);
+		break;
+	}
+	enemy_units_defs.push_back(new_def_enemy);
 
 	LOG("%s definition built!", new_def->GetName());
 	

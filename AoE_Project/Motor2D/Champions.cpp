@@ -303,7 +303,7 @@ bool Warrior::Draw(bool debug)
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), &blit_color);
 
 	return ret;
 }
@@ -423,6 +423,15 @@ void Warrior::PrepareAbility_lvl_2()
 	App->input->GetMousePosition(x, y);
 	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
 	CalculateSpecialAttackArea(GetiPointFromDirection(direction_type));
+
+	//Collect all the units in the buff area
+	std::vector<Unit*> units_in;
+	uint size = App->entities_manager->units_quadtree.CollectCandidates(units_in, special_attack_area);
+
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_in[k]->GetPosition() != position)units_in[k]->SetBlitColor({ 255,120,120,255 });
+	}
 
 }
 
@@ -761,7 +770,7 @@ bool Wizard::Draw(bool debug)
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), &blit_color);
 
 	return ret;
 }

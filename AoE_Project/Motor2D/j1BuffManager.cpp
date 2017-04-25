@@ -771,5 +771,5 @@ Particle j1BuffManager::GetParticle(PARTICLE_TYPE ty, DIRECTION_TYPE direc)
 			return particle;
 		}
 	}
-	return *particle_definitions[0];
+	return Particle();
 }

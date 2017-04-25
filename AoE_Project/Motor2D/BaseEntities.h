@@ -219,6 +219,7 @@ protected:
 	int				life = 0;
 	//Visual -----------
 	Animation*		current_animation = nullptr;
+	SDL_Color		blit_color = { 255,255,255,255 };
 	bool			flip_sprite = false;
 	SDL_Rect		selection_rect = { 0,0,0,0 };
 	SDL_Rect		icon_rect = { 0,0,0,0 };
@@ -247,6 +248,8 @@ public:
 	virtual bool	Draw(bool debug);
 	void			CleanAnimation();
 	virtual void	CleanMapLogic();
+	void			SetBlitColor(const SDL_Color new_color);
+
 	//Add Action ------------
 	void			AddAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
 	void			AddPriorizedAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
