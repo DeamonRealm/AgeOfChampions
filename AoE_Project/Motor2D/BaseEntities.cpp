@@ -1418,6 +1418,13 @@ void Unit::SetPosition(float x, float y, bool insert)
 	//Extract the units to push it with the new position later
 	if(insert)App->entities_manager->units_quadtree.Exteract(this,&position);
 
+
+	uint size = in_vision_cells.size();
+	for (uint k = 0; k < size; k++)
+	{
+		in_vision_cells[k]->alpha = MID_ALPHA;
+	}
+
 	//Set unit position
 	position.x = x;
 	position.y = y;
@@ -1441,6 +1448,8 @@ void Unit::SetPosition(float x, float y, bool insert)
 	hard_collider.SetPosition(pos);
 	//Set unit attack area position
 	attack_area.SetPosition(pos);
+
+
 
 	//Add the unit with the correct position in the correct quad tree
 	if (insert)
@@ -1768,7 +1777,8 @@ uint Unit::GetArmorBonus() const
 {
 	return armor_bonus;
 }
-
+
+
 uint Unit::GetMaxLife() const
 {
 	return max_life+ life_buff;
@@ -2210,6 +2220,13 @@ void Building::SetPosition(float x, float y, bool insert)
 
 	//Add building at the correct quad tree
 	App->entities_manager->buildings_quadtree.Insert(this, &position);
+
+	if (entity_diplomacy == ALLY)
+	{
+		in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision);
+		App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
+		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+	}
 }
 
 void Building::OnlySetPosition(float x, float y)

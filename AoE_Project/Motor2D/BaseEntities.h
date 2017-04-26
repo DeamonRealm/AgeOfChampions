@@ -16,6 +16,7 @@ struct	SDL_Texture;
 struct	PathNode;
 class	Warrior;
 enum	CURSOR_TARGET;
+class AlphaCell;
 
 #define FOCUS_MARGIN 12
 
@@ -226,6 +227,9 @@ protected:
 	SDL_Rect		icon_rect = { 0,0,0,0 };
 	//Worker -----------
 	ActionWorker	action_worker;
+
+	//Fog Tiles --------
+	std::vector<AlphaCell*> in_vision_cells;
 
 public:
 
