@@ -201,6 +201,9 @@ void TownCenterPanel::ResetPanel()
 {
 	SetDataFromXML();
 	got_melechmp = false;
+	got_wizchmp = false;
+	got_archchmp = false;
+	
 }
 
 bool TownCenterPanel::ActivateCell(int i)
@@ -591,7 +594,15 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills[i]->SetLayer(8);
 	}
 
-	champion_row.reserve(3);
+	champion_mele = nullptr;
+	champion_wizard = nullptr;
+	champion_archer = nullptr;
+
+	champion_row.push_back(champion_mele);
+	champion_row.push_back(champion_wizard);
+	champion_row.push_back(champion_archer);
+
+
 }
 
 HeroPanel::~HeroPanel()
@@ -604,11 +615,11 @@ void HeroPanel::ResetPanel()
 {
 	entitis_panel = nullptr;
 	champion_selected = NO_UNIT;
-	
+
 	champion_mele = nullptr;
 	champion_wizard = nullptr;
 	champion_archer = nullptr;
-	
+
 	champion_row.clear();
 	champion_row.push_back(champion_mele);
 	champion_row.push_back(champion_wizard);
@@ -616,6 +627,13 @@ void HeroPanel::ResetPanel()
 
 	skill_tree->Desactivate();
 	skill_tree->DesactivateChids();
+
+	for (int i = 0; i < 5; i++)
+	{
+		mele_learned[i] = 0;
+		archer_learned[i] = 0;
+		wizard_learned[i] = 0;
+	}
 	
 	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
 	{
@@ -625,6 +643,46 @@ void HeroPanel::ResetPanel()
 
 	activate_skill = -1;
 }
+
+void HeroPanel::HeroisDead(UNIT_TYPE u_type)
+{
+
+	if (u_type == WARRIOR_CHMP) {
+		champion_mele = nullptr;
+		memset(mele_learned, 0, 5);
+	}
+	else if (u_type == WIZARD_CHMP) {
+		champion_wizard = nullptr;
+		memset(wizard_learned, 0, 5);
+	}
+	else {
+		champion_archer = nullptr;
+		memset(archer_learned, 0, 5);
+	}
+	champion_row.clear();
+	if (champion_mele != nullptr) champion_row.push_back(champion_mele);
+	if (champion_wizard != nullptr) champion_row.push_back(champion_wizard);
+	if (champion_archer != nullptr) champion_row.push_back(champion_archer);
+
+	while (champion_row.size() < 3)
+	{
+		champion_row.push_back(nullptr);
+	}
+	if (champion_row[0] != nullptr)
+	{
+		entitis_panel = champion_row[0];
+		champion_selected = ((Unit*)entitis_panel)->GetUnitType();
+		activate_skill = -1;
+		if (skill_tree->GetActiveState() == true)
+		{
+			skill_tree->Desactivate();
+			skill_tree->DesactivateChids();
+		}
+		UpdateCells();
+	}
+	else SetDefault();
+}
+
 
 void HeroPanel::UpdateCells()
 {
@@ -683,6 +741,13 @@ bool HeroPanel::ActivateCell(int i)
 			((Champion*)entitis_panel)->Hability_lvl_3();
 			return false;
 		}
+		else
+		{
+			activate_skill = 2;
+			App->sound->PlayGUIAudio(CLICK_INGAME);
+			((Champion*)entitis_panel)->PrepareAbility_lvl_3();
+			return true;
+		}
 		break;
 	case 3:
 		if (skill_tree->GetActiveState() == true)
@@ -703,33 +768,7 @@ bool HeroPanel::ActivateCell(int i)
 		UNIT_TYPE u_type = ((Unit*)entitis_panel)->GetUnitType();
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
-		
-		if (u_type == WARRIOR_CHMP) champion_mele = nullptr;
-		else if (u_type == WIZARD_CHMP) champion_wizard = nullptr;
-		else champion_archer = nullptr;
-		
-		champion_row.clear();
-		if (champion_mele != nullptr) champion_row.push_back(champion_mele);
-		if (champion_wizard != nullptr) champion_row.push_back(champion_wizard);
-		if (champion_archer != nullptr) champion_row.push_back(champion_archer);
-
-		while (champion_row.size() < 3)
-		{
-			champion_row.push_back(nullptr);
-		}
-		if (champion_row[0] != nullptr)
-		{
-			entitis_panel = champion_row[0];
-			champion_selected = ((Unit*)entitis_panel)->GetUnitType();
-			activate_skill = -1;
-			if (skill_tree->GetActiveState() == true)
-			{
-				skill_tree->Desactivate();
-				skill_tree->DesactivateChids();
-			}
-			SetNewOrder();
-		}
-		else SetDefault();
+		HeroisDead(u_type);
 		}
 		break;
 	default:
@@ -760,8 +799,8 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 					bool skill = false;
 					if (i % 2 == 1) skill = true;
 					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1(skill);
-					if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
-					if (i / 2 == 2)((Champion*)entitis_panel)->SetAbility_lvl_3(skill);
+					else if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
+					else if (i / 2 == 2)((Champion*)entitis_panel)->SetAbility_lvl_3(skill);
 					return true;
 				}
 			}
@@ -791,7 +830,10 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 		y -= App->render->camera.y;
 		entitis_panel->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 		
-		if (activate_skill == 1)((Champion*)entitis_panel)->Hability_lvl_2(x, y);
+		if (activate_skill == 1)
+			((Champion*)entitis_panel)->Hability_lvl_2(x, y);
+		else if(activate_skill == 2)
+			((Champion*)entitis_panel)->Hability_lvl_3(x, y);
 		activate_skill = -1;
 		return false;
 	}
@@ -811,9 +853,9 @@ bool HeroPanel::Handle_input(GUI_INPUT input)
 void HeroPanel::LearnSkill(int i)
 {
 	int skill_cell = i / 2;
-	if (champion_selected == WIZARD_CHMP) wizard_learned[skill_cell] = (i % 2) + 1;
-	else if (champion_selected == ARCHER_CHMP) archer_learned[skill_cell] = (i % 2) + 1;
-	else mele_learned[skill_cell] = (i % 2) + 1; 
+	if (champion_selected == WIZARD_CHMP && wizard_learned[skill_cell] == 0) wizard_learned[skill_cell] = (i % 2) + 1;
+	else if (champion_selected == ARCHER_CHMP && archer_learned[skill_cell] == 0) archer_learned[skill_cell] = (i % 2) + 1;
+	else if(champion_selected == WARRIOR_CHMP && mele_learned[skill_cell] == 0) mele_learned[skill_cell] = (i % 2) + 1;
 	SetNewOrder();
 }
 
@@ -890,6 +932,7 @@ void HeroPanel::SetNewOrder()
 
 void HeroPanel::ChangePanelTarget(Entity * new_target)
 {
+
 	activate_skill = -1;
 	App->player->selection_panel->GetChampionsSelected(champion_mele, champion_wizard, champion_archer);
 	champion_row.clear();
@@ -1330,7 +1373,7 @@ void Action_Panel::CheckSelected(int selected)
 void Action_Panel::HeroIsDead(UNIT_TYPE type)
 {
 	towncenterpanel->ChampionIsDead(type);
-	heropanel->ResetPanel();
+	heropanel->HeroisDead(type);
 }
 
 UI_Element * Action_Panel::GetActionScreen() const

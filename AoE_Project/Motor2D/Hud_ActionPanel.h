@@ -122,6 +122,7 @@ public:
 private:
 	bool		got_melechmp = false;
 	bool		got_wizchmp = false;
+	bool		got_archchmp = false;
 };
 
 // Barrack -----------------------------------------------------------------------------------------------
@@ -201,6 +202,7 @@ public:
 
 	// Reset Panel
 	void ResetPanel();
+	void HeroisDead(UNIT_TYPE type);
 	void UpdateCells();
 	void SetDefault();
 
@@ -220,9 +222,9 @@ public:
 private:
 
 	UNIT_TYPE						champion_selected;
-	int								mele_learned[5];
-	int								wizard_learned[5];
-	int								archer_learned[5];
+	int								mele_learned[5] = {0,0,0,0,0};
+	int								wizard_learned[5] = { 0,0,0,0,0 };
+	int								archer_learned[5] = { 0,0,0,0,0 };
 
 	Unit*							champion_mele = nullptr;
 	Unit*							champion_wizard = nullptr;
