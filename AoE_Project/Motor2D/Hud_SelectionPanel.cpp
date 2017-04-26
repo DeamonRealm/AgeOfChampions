@@ -308,7 +308,7 @@ Selection_Panel::Selection_Panel() : selection_rect({ 0,0,0,0 }), map_viewport({
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
 
 	viewport = App->gui->GenerateUI_Element(UNDEFINED);
-	viewport->SetBox({ 0, 23,1366,560 });
+	viewport->SetBox({ 0, 23,1366,574 });
 	viewport->Activate();
 	viewport->SetInputTarget((j1Module*)App->player);
 
@@ -478,8 +478,6 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == BUILDING)
 		{
-			//Set entity target to the selected unit
-			//Selected->GetEntity()->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			Selected->GetEntity()->AddAction(new SpawnUnitAction((ProductiveBuilding*)Selected->GetEntity(), ARBALEST, ALLY));
 		}
 
@@ -621,11 +619,16 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		
 
 		unit_quad_selection.clear();
-		UnSelect_Entity();
-
 		App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, selection_rect);
-
+		
+		
 		int selected_amount = 0;
+		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT
+			&& selected_entity_type == UNIT && selected_diplomacy == ALLY)
+		{
+			selected_amount = selected_elements.size();
+		}
+		else UnSelect_Entity();
 		UNIT_TYPE u_type = NO_UNIT;
 		//Select Entity
 		int size = unit_quad_selection.size();
@@ -633,7 +636,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		{
 			if (unit_quad_selection[count]->GetDiplomacy() != ALLY) continue;
 			else if (type == DOUBLECLICK && selected_unit_type != unit_quad_selection[count]->GetUnitType());
-			else
+			else if (!unit_quad_selection[count]->GetIfSelected())
 			{
 				selected_amount++;
 				UpperEntity = unit_quad_selection[count];
@@ -660,7 +663,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		UpperEntity = GetUpperEntity(mouse_x,mouse_y);
 		if (UpperEntity == nullptr)
 		{
-			ResetSelectedType();
+			if(type != ADD) ResetSelectedType();
 			return;
 		}
 		UpperEntity->Select();
@@ -962,6 +965,7 @@ bool Selection_Panel::GetInViewport() const
 
 bool Selection_Panel::WindowsMove()
 {
+	if (expand) return false;
 	iPoint c_pos = { 0,0 };
 	c_pos = App->map->WorldToMap(-App->render->camera.x + App->render->camera.w / 2, -App->render->camera.y + App->render->camera.h / 2);
 	bool ret = false;
