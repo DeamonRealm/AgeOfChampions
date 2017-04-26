@@ -123,7 +123,8 @@ bool Action_Panel_Elements::ActivateCell(int i)
 		{
 			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
 			App->sound->PlayGUIAudio(CLICK_INGAME);
-			cell_lvl[i]++;
+			cell_lvl[i] -= RESEARCH_MARGIN;
+			UpdateCells();
 		}
 		else App->sound->PlayGUIAudio(ERROR_SOUND);
 	}
@@ -188,6 +189,33 @@ void Action_Panel_Elements::UpgradeCurrentAge(uint curr_age)
 	UpdateCells();
 }
 
+bool Action_Panel_Elements::UpgradeResearch(RESEARCH_TECH type)
+{
+	bool ret = false;
+	int size = cell_data.size();
+	for (int i = 0; i < size; i++)
+	{
+		if (cell_data[i].r_type == type)
+		{ 
+			if (cell_data[i].u_type != NO_UNIT)
+			{
+				cell_lvl[cell_data[i].cell_position]++;
+				ret = true;
+			}
+			else 
+			{
+				cell_lvl[cell_data[i].cell_position] = cell_data[i].cell_at_level + 1;
+				ret = true;
+			}
+		}
+	}
+	if (ret)
+	{
+		UpdateCells();
+	}
+	return ret;
+}
+
 const char* Action_Panel_Elements::GetCellInfo(int i) const
 {
 	return panel_icons[i].GetInfo();
@@ -203,7 +231,6 @@ void TownCenterPanel::ResetPanel()
 	got_melechmp = false;
 	got_wizchmp = false;
 	got_archchmp = false;
-	
 }
 
 bool TownCenterPanel::ActivateCell(int i)
@@ -260,7 +287,8 @@ bool TownCenterPanel::ActivateCell(int i)
 			{
 				entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
 				App->sound->PlayGUIAudio(CLICK_INGAME);
-				cell_lvl[i]++;
+				cell_lvl[i] -= RESEARCH_MARGIN;
+				UpdateCells();
 			}
 			else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
@@ -278,87 +306,17 @@ void TownCenterPanel::ChampionIsDead(UNIT_TYPE type)
 		got_melechmp = false;
 	}
 		break;
-	case ARCHER_CHMP: {
+	case WIZARD_CHMP: {
 		got_wizchmp = false;
 	}
 		break;
-	case WIZARD_CHMP:
-		break;
-	default:
-		break;
-	}
-}
-
-bool TownCenterPanel::UpgradeResearch(RESEARCH_TECH type)
-{
-	bool ret = false;
-	switch (type)
-	{
-	case NO_TECH:
-		break;
-	case TC_LOOM:
-		break;
-	case TC_PATROL:
-		break;
-	case TC_TOWNWATCH:
-		break;
-	case TC_WHEELBARROW:
-		break;
-	default:
-		break;
-	}
-	return ret;
-}
-
-// Barrack Panel ---------------------------------------------------------------------------------------------------------
-
-BarrackPanel::BarrackPanel() : Action_Panel_Elements(){}
-
-bool BarrackPanel::UpgradeResearch(RESEARCH_TECH type)
-{
-	bool ret = false;
-	switch (type)
-	{
-	case NO_TECH:
-		break;
-	case B_MILITIA_UP: 
-	{
-		cell_lvl[0]++;
-		ret = true;
-	}
-		break;
-	case B_MAN_AT_ARMS_UP:
-	{
-		cell_lvl[0]++;
-		ret = true;
-	}
-		break;
-	case B_LONGSWORDSMAN_UP:
-	{
-		cell_lvl[0]++;
-		ret = true;
-	}
-		break;
-	case B_TWO_HANDED_UP:
-	{
-		cell_lvl[0]++;
-		ret = true;
-	}
-		break;
-	case B_SPEARMAN_UP:		
-	{
-		cell_lvl[1]++;
-		ret = true;
+	case ARCHER_CHMP: {
+		got_archchmp = false;
 	}
 		break;
 	default:
 		break;
 	}
-	if (ret)
-	{
-		UpdateCells();
-	}
-	return ret;
 }
 
 // UNIT PANEL -------------------------------------------------------------------------------------------------------
@@ -954,7 +912,10 @@ Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({ 3
 {
 	// Create Panels
 	towncenterpanel = new TownCenterPanel();
-	barrackpanel = new BarrackPanel();
+	barrackpanel = new Action_Panel_Elements();
+	archerypanel = new Action_Panel_Elements();
+	stablepanel = new Action_Panel_Elements();
+	blacksmithpanel = new Action_Panel_Elements();
 	unitpanel = new UnitPanel();
 	heropanel = new HeroPanel();
 	villagerpanel = new VillagerPanel();
@@ -967,12 +928,15 @@ Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({ 3
 	pugi::xml_parse_result result = panel_data.load_buffer(buffer, size);
 	RELEASE_ARRAY(buffer);
 
-	pugi::xml_node unit_node = panel_data.first_child();
-	towncenterpanel->LoadPanelFromXML(unit_node.child("Buildings").child("TownCenter"));
-	barrackpanel->LoadPanelFromXML(unit_node.child("Buildings").child("Barrack"));
-	villagerpanel->LoadPanelFromXML(unit_node.child("Units").child("Villager"));
-	unitpanel->LoadPanelFromXML(unit_node.child("Units").child("Unit"));
-	heropanel->LoadPanelFromXML(unit_node.child("Units").child("Champion"));
+	pugi::xml_node panel_node = panel_data.first_child();
+	towncenterpanel->LoadPanelFromXML(panel_node.child("Buildings").child("TownCenter"));
+	barrackpanel->LoadPanelFromXML(panel_node.child("Buildings").child("Barrack"));
+	archerypanel->LoadPanelFromXML(panel_node.child("Buildings").child("Archery_Range"));
+	stablepanel->LoadPanelFromXML(panel_node.child("Buildings").child("Stable"));
+	blacksmithpanel->LoadPanelFromXML(panel_node.child("Buildings").child("BlackSmith"));
+	villagerpanel->LoadPanelFromXML(panel_node.child("Units").child("Villager"));
+	unitpanel->LoadPanelFromXML(panel_node.child("Units").child("Unit"));
+	heropanel->LoadPanelFromXML(panel_node.child("Units").child("Champion"));
 
 	// Set GUI Elements
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
@@ -985,7 +949,6 @@ Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({ 3
 
 	cell_information = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	cell_information->SetBoxPosition(10, 570);
-	cell_information->SetString("Potato Information");
 	cell_information->Activate();
 	cell_information->SetColor({255, 255, 255, 255});
 
@@ -1026,6 +989,9 @@ bool Action_Panel::CleanUp()
 
 	delete towncenterpanel;
 	delete barrackpanel;
+	delete archerypanel;
+	delete stablepanel;
+	delete blacksmithpanel;
 	delete villagerpanel;
 	delete unitpanel;
 	delete heropanel;
@@ -1042,6 +1008,9 @@ void Action_Panel::Enable()
 
 	towncenterpanel->ResetPanel();
 	barrackpanel->ResetPanel();
+	archerypanel->ResetPanel();
+	stablepanel->ResetPanel();
+	blacksmithpanel->ResetPanel();
 	villagerpanel->ResetPanel();
 	unitpanel->ResetPanel();
 	heropanel->ResetPanel();
@@ -1250,6 +1219,7 @@ void Action_Panel::SetPanelType()
 	switch (e_type)
 	{
 	case NO_ENTITY: {
+		actual_entity = nullptr;
 		actualpanel = nullptr;
 		}
 		break;
@@ -1271,8 +1241,10 @@ void Action_Panel::SetPanelType()
 			}
 		}
 		break;
-	case RESOURCE:
+	case RESOURCE: {
+		actual_entity = nullptr;
 		actualpanel = nullptr;
+		}
 		break;
 	case BUILDING:
 		{
@@ -1288,10 +1260,31 @@ void Action_Panel::SetPanelType()
 				barrackpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = barrackpanel;
 			}
+			else if (b_type == ARCHERY_RANGE)
+			{
+				if (archerypanel->GetActualEntity() != actual_entity || actualpanel != archerypanel)App->sound->PlayFXAudio(ARCHERY_SOUND);
+				archerypanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = archerypanel;
+			}
+			else if (b_type == STABLE)
+			{
+				if (stablepanel->GetActualEntity() != actual_entity || actualpanel != stablepanel)App->sound->PlayFXAudio(STABLE_SOUND);
+				stablepanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = stablepanel;
+			}
+			else if (b_type == BLACKSMITH)
+			{
+				if (blacksmithpanel->GetActualEntity() != actual_entity || actualpanel != blacksmithpanel)App->sound->PlayFXAudio(STABLE_SOUND);
+				blacksmithpanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = blacksmithpanel;
+			}
 			else actualpanel = nullptr;		
 		}
 		break;
-	default:	actualpanel = nullptr;
+	default: {
+		actual_entity = nullptr;
+		actualpanel = nullptr;
+		}
 		break;
 	}
 
@@ -1302,6 +1295,7 @@ void Action_Panel::SetPanelType()
 		actualpanel->ChangePanelIcons(panel_cells);
 		SetButtons();
 	}
+	else DesactivateButtons();
 }
 
 void Action_Panel::SetEntitySelected()
@@ -1392,13 +1386,10 @@ void Action_Panel::UpgradeCivilizationAge(uint curr_age)
 
 	towncenterpanel->UpgradeCurrentAge(curr_age);
 	barrackpanel->UpgradeCurrentAge(curr_age);
-	
+	archerypanel->UpgradeCurrentAge(curr_age);
+	stablepanel->UpgradeCurrentAge(curr_age);
+	blacksmithpanel->UpgradeCurrentAge(curr_age);
 	villagerpanel->UpgradeCurrentAge(curr_age);
-	if (actualpanel != nullptr)
-	{
-		actualpanel->ChangePanelIcons(panel_cells);
-		SetButtons();
-	}
 }
 
 void Action_Panel::UpgradeTecnology(RESEARCH_TECH type)
@@ -1406,6 +1397,9 @@ void Action_Panel::UpgradeTecnology(RESEARCH_TECH type)
 	// update panels acording to type
 	towncenterpanel->UpgradeResearch(type);
 	barrackpanel->UpgradeResearch(type);
+	archerypanel->UpgradeResearch(type);
+	stablepanel->UpgradeResearch(type);
+	blacksmithpanel->UpgradeResearch(type);
 
 	// updata actual panel;
 	if (actualpanel != nullptr)

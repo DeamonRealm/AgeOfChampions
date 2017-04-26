@@ -137,7 +137,7 @@ bool j1Player::PreUpdate()
 		//Generate a town center in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		{
-			Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::MARKET, ALLY);
+			Building* center = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER, ALLY);
 			center->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 			center->SetDiplomacy(ALLY);
 
@@ -336,16 +336,19 @@ void j1Player::UpgradeCivilization(RESEARCH_TECH type)
 		break;
 	case TC_FEUDAL: {
 		action_panel->UpgradeCivilizationAge(2);
+		action_panel->UpgradeTecnology(type);
 		return;
 		}
 		break;
 	case TC_CASTLE:	{
 		action_panel->UpgradeCivilizationAge(3);
+		action_panel->UpgradeTecnology(type);
 		return;
 		}
 		break;
 	case TC_IMPERIAL: {
 		action_panel->UpgradeCivilizationAge(4);
+		action_panel->UpgradeTecnology(type);
 		return;
 		}
 		break;

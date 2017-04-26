@@ -1075,11 +1075,11 @@ void j1EntitiesManager::UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy)
 	{
 	case NO_TECH:
 		break;
-	case A_ARCHER_UP: //UpgradeUnit(ARCHER, CROSSBOWMAN, diplomacy);
+	case A_ARCHER_UP: UpgradeUnit(ARCHER, CROSSBOWMAN, diplomacy);
 		break;
 	case A_C_ARCHER_UP: UpgradeUnit(CAVALRY_ARCHER, HEAVY_CAVALRY_ARCHER, diplomacy);
 		break;
-	case A_CROSSBOW_UP://UpgradeUnit(CROSSBOWMAN, ARBALEST, diplomacy);
+	case A_CROSSBOW_UP: UpgradeUnit(CROSSBOWMAN, ARBALEST, diplomacy);
 		break;
 	case A_SKIMISHER_UP:
 		break;

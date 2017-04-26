@@ -14,6 +14,7 @@
 #define CELL_WIDTH		40
 #define CELL_HEIGHT		41
 #define MAX_SKILLS_LEARNED 6
+#define RESEARCH_MARGIN 10
 
 //class Selection_Panel;
 class Game_Panel;
@@ -88,7 +89,7 @@ public:
 
 	virtual void LoadPanelFromXML(const pugi::xml_node&	conf);
 	virtual void UpgradeCurrentAge(uint curr_age = 1);
-	virtual bool UpgradeResearch(RESEARCH_TECH type) { return false; };
+	virtual bool UpgradeResearch(RESEARCH_TECH type);
 
 	const char*	 GetCellInfo(int i)const;
 protected:
@@ -117,26 +118,10 @@ public:
 	bool ActivateCell(int i);
 	void ChampionIsDead(UNIT_TYPE type);
 
-	bool UpgradeResearch(RESEARCH_TECH type);
-
 private:
 	bool		got_melechmp = false;
 	bool		got_wizchmp = false;
 	bool		got_archchmp = false;
-};
-
-// Barrack -----------------------------------------------------------------------------------------------
-
-class BarrackPanel : public Action_Panel_Elements
-{
-public:
-	BarrackPanel();
-	~BarrackPanel() {};
-
-	bool UpgradeResearch(RESEARCH_TECH type);
-
-private:
-
 };
 
 // General Units -------------------------------------------------------------------------------------------
@@ -332,7 +317,10 @@ private:
 	
 	// Building Panels
 	TownCenterPanel*			towncenterpanel = nullptr;
-	BarrackPanel*				barrackpanel = nullptr;
+	Action_Panel_Elements*		barrackpanel = nullptr;
+	Action_Panel_Elements*		archerypanel = nullptr;
+	Action_Panel_Elements*		stablepanel = nullptr;
+	Action_Panel_Elements*		blacksmithpanel = nullptr;
 	
 	// Units Panels
 	VillagerPanel*				villagerpanel = nullptr;
