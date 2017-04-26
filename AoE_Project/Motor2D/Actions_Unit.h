@@ -349,6 +349,8 @@ private:
 /// ---------------------------------------------
 
 
+//PASIVE ACTIONS_______________________________________________________________________________________________________________________________________________________________________________
+
 ///Scann for units action------------------------
 class ScannAction : public Action
 {
@@ -414,10 +416,30 @@ private:
 	std::vector<Unit*> surrounding_units;
 	std::vector<Building*> surrounding_buildings;
 };
-
-
-
-
 ///----------------------------------------------
+
+
+///Autoattack------------------------------------
+class AutoAttackPassiveAction : public Action
+{
+	AutoAttackPassiveAction(Unit* actor) : Action(actor, TASK_U_AA)
+	{};
+	~AutoAttackPassiveAction() {};
+
+public:
+	
+	bool Execute()
+	{
+	
+
+	};
+
+
+private:
+	std::vector<Unit*> surrounding_units;
+
+};
+///----------------------------------------------
+
 #endif // !__ACTION_UNIT_H__
 

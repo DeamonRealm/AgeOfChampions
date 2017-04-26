@@ -6,6 +6,7 @@
 #include "j1Map.h"
 #include "j1ActionManager.h"
 #include "Actions_Unit.h"
+#include "Actions_Building.h"
 #include "j1GroupMovement.h"
 
 j1AI::j1AI()
@@ -24,6 +25,7 @@ void j1AI::Enable()
 	//active = LoadEnemies("EnemiesSpawn.xml");
 	active = true;
 	
+	/*
 	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(0, 500)));
 	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(50, 500)));
 	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(100, 500)));
@@ -34,10 +36,10 @@ void j1AI::Enable()
 	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(100, 530)));
 	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-50, 530)));
 	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-100, 530)));
-	
+	*/
 
 
-	ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
+	//ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
 
 }
 
@@ -108,7 +110,7 @@ bool j1AI::LoadEnemies(const char * folder)
 		unit_node = unit_node.next_sibling();*/
 
 	
-		ai_worker->AddAICommand(new SpawnUnitCommand(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), fPoint(unit_node.attribute("pos_x").as_float(0), unit_node.attribute("pos_y").as_float(0))));
+		//ai_worker->AddAICommand(new SpawnUnitCommand(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), fPoint(unit_node.attribute("pos_x").as_float(0), unit_node.attribute("pos_y").as_float(0))));
 
 		unit_node = unit_node.next_sibling();
 
@@ -267,7 +269,7 @@ bool MoveUnitsCommand::Execute()
 
 
 //Spawn X unit-----------------
-SpawnUnitCommand::SpawnUnitCommand(UNIT_TYPE type, fPoint pos) : type(type), pos(pos)
+SpawnUnitCommand::SpawnUnitCommand(UNIT_TYPE type, ProductiveBuilding* generator) : type(type), generator(generator)
 {
 
 
@@ -280,9 +282,11 @@ SpawnUnitCommand::~SpawnUnitCommand()
 bool SpawnUnitCommand::Execute()
 {
 
-	Unit* new_unit = App->entities_manager->GenerateUnit(type, ENEMY);
-	new_unit->SetPosition(pos.x, pos.y);
+//	generator->GetWorker()->AddAction( 
 
+
+	Unit* new_unit = App->entities_manager->GenerateUnit(type, ENEMY);
+	
 	new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
 
 	App->AI->enemy_units.push_back(new_unit);

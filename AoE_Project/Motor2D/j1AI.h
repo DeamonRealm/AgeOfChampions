@@ -131,7 +131,7 @@ private:
 class SpawnUnitCommand : public AICommand
 {
 public:
-	SpawnUnitCommand(UNIT_TYPE type, fPoint pos);
+	SpawnUnitCommand(UNIT_TYPE type, ProductiveBuilding* generator);
 	~SpawnUnitCommand();
 
 public:
@@ -140,9 +140,11 @@ public:
 
 private:
 	UNIT_TYPE type = UNIT_TYPE::NO_UNIT;
-	fPoint pos = {0,0};
+	ProductiveBuilding* generator = nullptr;
 };
 //---------------------
+
+
 
 class MoveUnitsCommand : public AICommand
 {
