@@ -347,6 +347,16 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
  <sprite n="IU_Campions/IU_Ability5.png"  x="651" y="152" w="36" h="36" pX="0" pY="0"/>
  <sprite n="IU_Campions/IU_Ability6.png"  x="651" y="190" w="36" h="36" pX="0" pY="0"/>
 
+ <sprite n="IU_Campions/IU_Cooldown0.png"  x="689" y="259" w="36" h="36" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Cooldown1.png"  x="689" y="222" w="36" h="36" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Cooldown2.png"  x="689" y="185" w="36" h="36" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Cooldown3.png"  x="689" y="148" w="36" h="36" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Cooldown4.png"  x="689" y="111" w="36" h="36" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Cooldown5.png"  x="689" y="74" w="36" h="36" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Cooldown6.png"  x="689" y="37" w="36" h="36" pX="0" pY="0"/>
+<sprite n="IU_Campions/IU_Cooldown7.png"  x="689" y="0" w="36" h="36" pX="0" pY="0"/>
+
+
  <sprite n="IU_Campions/IU_SquareDown.png" x="650" y="330" w="40" h="40" pX="0" pY="0"/>
  <sprite n="IU_Campions/IU_SquareWood.png"  x="650" y="371" w="40" h="40" pX="0" pY="0"/>
  <sprite n="IU_Campions/IU_SquareUp.png"  x="650" y="412" w="40" h="40" pX="0" pY="0"/>
