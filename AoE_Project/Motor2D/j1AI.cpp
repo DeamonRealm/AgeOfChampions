@@ -282,13 +282,11 @@ SpawnUnitCommand::~SpawnUnitCommand()
 bool SpawnUnitCommand::Execute()
 {
 
-//	generator->GetWorker()->AddAction( 
+	generator->GetWorker()->AddAction(new SpawnUnitAction(generator, type, ENEMY));
 
 
 	Unit* new_unit = App->entities_manager->GenerateUnit(type, ENEMY);
-	
 	new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
-
 	App->AI->enemy_units.push_back(new_unit);
 	return true;
 }

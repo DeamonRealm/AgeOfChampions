@@ -240,7 +240,31 @@ private:
 };
 /// ---------------------------------------------
 
-/// Recollect Action ----------------------------
+/// ---------------------------------------------
+class HealAction : public Action
+{
+public: 
+	HealAction(Unit* actor, Unit** target) : Action(actor, TASK_U_HEAL_U), target(target)
+	{};
+	~HealAction() {};
+
+public:
+	
+	bool Execute()
+	{
+		if ((*target) == nullptr) return true;
+
+		return true;
+	}
+
+
+private:
+	Unit** target = nullptr;
+
+};
+/// ---------------------------------------------
+
+/// Recollect (pick resources) Action ----------------------------
 //Recollect resources
 class RecollectVillagerAction : public Action
 {
@@ -298,7 +322,7 @@ private:
 };
 /// ---------------------------------------------
 
-/// Recollect Action ----------------------------
+/// Recollect (saving resources) Action ----------------------------
 //Save the unit resources in a building
 class SaveResourcesVillagerAction : public Action
 {
@@ -411,6 +435,8 @@ public:
 	};
 
 
+
+
 private:
 
 	std::vector<Unit*> surrounding_units;
@@ -430,16 +456,92 @@ public:
 	
 	bool Execute()
 	{
-	
+		if (actor->GetWorker()->GetCurrentActionType() == TASK_U_DIE) return true;
 
+		surrounding_units.clear();
+		surrounding_buildings.clear();
+
+		//Units scann and attack
+		uint size = surrounding_units.size();
+		for (uint i = 0; i < size; i++)
+		{
+			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
+			{
+				actor->AddAction(App->action_manager->AttackToUnitAction((Unit*)actor, (Unit**)surrounding_units[i]->GetMe()), PRIMARY);
+				return false;
+			}
+		};
+
+
+		//Buildings scann and attack
+		uint sizeb = surrounding_buildings.size();
+		for (uint k = 0; k < sizeb; k++)
+		{
+			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy())
+			{
+				actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, (Building**)surrounding_buildings[k]->GetMe()), PRIMARY);
+				return false;
+			}
+		};
+
+		return false;
 	};
 
 
+	void CleanUp()
+	{
+		this->actor = nullptr;
+		surrounding_units.clear();
+		surrounding_buildings.clear();
+	};
+
 private:
+	std::vector<Unit*>		surrounding_units;
+	std::vector<Building*>	surrounding_buildings;
+
+};
+///----------------------------------------------
+
+///AutoHeal--------------------------------------
+class AutoHealPassiveAction : public Action
+{
+public:
+	AutoHealPassiveAction(Unit* actor) : Action(actor, TASK_U_AH)
+	{};
+	~AutoHealPassiveAction() {};
+
+public: 
+	
+	bool Execute()
+	{
+		surrounding_units.clear();
+
+		//Units scann and attack
+		uint size = surrounding_units.size();
+		for (uint i = 0; i < size; i++)
+		{
+			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
+			{
+				//Add HEAL ACTION
+				return false;
+			}
+		};
+		return false;
+	};
+
+	void CleanUp()
+	{
+		this->actor = nullptr;
+		surrounding_units.clear();
+	};
+
+
+private: 
 	std::vector<Unit*> surrounding_units;
 
 };
 ///----------------------------------------------
+
 
 #endif // !__ACTION_UNIT_H__
 
