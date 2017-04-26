@@ -1187,6 +1187,52 @@ bool Unit::AttackUnit(Unit** target)
 	return ret;
 }
 
+bool Unit::HealUnit(Unit ** target)
+{
+	bool ret = false;
+
+	//Check if the target is in the attack area
+	if ((*target) == nullptr)
+	{
+		return true;
+	}
+
+
+	if (!attack_area.Overlap(&((Unit*)(*target))->GetSoftCollider()))
+	{
+
+		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider() + attack_area.GetRad());
+
+		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
+		if (path == nullptr)return true;
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
+		return false;
+	}
+
+
+	//Control action rate
+	if (action_timer.Read() < attack_rate)return false;
+
+	//App->sound->PlayFXAudio(SWORD_ATTACK_SOUND);
+
+	//Set unit attack animation
+	if (action_type != ATTATCK)
+	{
+		action_type = ATTATCK;
+		App->animator->UnitPlay(this);
+	}
+	Focus((*target)->GetPositionRounded());
+
+	//Calculate the attack & apply the value at the target life points
+	((Unit*)(*target))->Heal(attack_hitpoints);
+	
+	//Reset action timer
+	action_timer.Start();
+
+	if ((*target)->GetLife() >= (*target)->GetMaxLife()) ret = true;
+	return ret;
+}
+
 bool Unit::AttackBuilding(Building ** target)
 {
 	//Check if the target is in the attack area
@@ -1250,15 +1296,15 @@ bool Unit::DirectDamage(uint damage)
 	{
 		ACTION_TYPE act = action_type;
 		if (act != DIE && act != DISAPPEAR) {
-			
-			action_worker.AddPriorizedAction(App->action_manager->DieAction(this));
+			action_worker.HardReset();
+			action_worker.AddAction(App->action_manager->DieAction(this));
 			ret = true;
 		}
 	}
 	return ret;
 }
 
-void Unit::HealUnit(uint heal)
+void Unit::Heal(uint heal)
 {
 	//Deal damage to the unit
 	if (life + heal > max_life) {

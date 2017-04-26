@@ -380,10 +380,11 @@ public:
 	void					Focus(const iPoint& target, bool play = true);
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
 	bool					AttackUnit(Unit** target);
+	bool					HealUnit(Unit** target);
 	bool					AttackBuilding(Building** target);
 	bool					Cover();
 	bool					DirectDamage(uint damage);
-	void					HealUnit(uint heal);
+	void					Heal(uint heal);
 
 	bool					Die();
 	void					Stun(uint time);

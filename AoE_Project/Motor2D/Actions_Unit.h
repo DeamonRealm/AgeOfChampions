@@ -241,12 +241,12 @@ private:
 /// ---------------------------------------------
 
 /// ---------------------------------------------
-class HealAction : public Action
+class HealUnitAction : public Action
 {
 public: 
-	HealAction(Unit* actor, Unit** target) : Action(actor, TASK_U_HEAL_U), target(target)
+	HealUnitAction(Unit* actor, Unit** target) : Action(actor, TASK_U_HEAL_U), target(target)
 	{};
-	~HealAction() {};
+	~HealUnitAction() {};
 
 public:
 	
@@ -254,7 +254,7 @@ public:
 	{
 		if ((*target) == nullptr) return true;
 
-		return true;
+		return ((Unit*)actor)->HealUnit(target);
 	}
 
 
@@ -520,9 +520,9 @@ public:
 		uint size = surrounding_units.size();
 		for (uint i = 0; i < size; i++)
 		{
-			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
+			if (actor->GetDiplomacy() == surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 			{
-				//Add HEAL ACTION
+				actor->AddAction(new HealUnitAction((Unit*)actor, &surrounding_units[i]));
 				return false;
 			}
 		};
