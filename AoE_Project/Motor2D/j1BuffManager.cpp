@@ -189,10 +189,15 @@ bool PassiveBuff::ApplyBuff()
 		target->SetDefenseBuff(buff);
 		break;
 	case VISION_BUFF:
+	{
 		base = target->GetVision().GetRad();
 		buff = base * value;
 		target->SetVisionBuff(buff);
+		Circle tmp = target->GetVision();
+		tmp.SetRad(tmp.GetRad() + target->GetVisionBuff());
+		target->SetVision(tmp);
 		break;
+	}
 	case LIFE_BUFF:
 		base = target->GetMaxLife();
 		buff = base * value;
@@ -215,7 +220,6 @@ bool PassiveBuff::RemoveBuff()
 
 	uint base;
 	float current_buff;
-	float buff;
 
 	switch (attribute_type)
 	{
@@ -235,14 +239,19 @@ bool PassiveBuff::RemoveBuff()
 		target->SetDefenseBuff(-current_buff);
 		break;
 	case VISION_BUFF:
+	{
+
 		base = target->GetVision().GetRad();
 		current_buff = base * value;
-		target->SetDefenseBuff(-current_buff);
+		Circle tmp = target->GetVision();
+		tmp.SetRad(tmp.GetRad() - target->GetVisionBuff());
+		target->SetVision(tmp);	
 		break;
+	}
 	case LIFE_BUFF:
 		base = target->GetMaxLife();
 		current_buff = base * value;
-		target->SetDefenseBuff(-current_buff);
+		target->SetLifeBuff(-current_buff);
 		break;
 	case TAUNT_BUFF:
 		target->QuitProtection();
@@ -317,9 +326,14 @@ bool Buff::ApplyBuff()
 		target->SetDefenseBuff(buff);
 		break;
 	case VISION_BUFF:
+	{
 		base = target->GetVision().GetRad();
 		buff = base * value;
 		target->SetVisionBuff(buff);
+		Circle tmp = target->GetVision();
+		tmp.SetRad(tmp.GetRad() + target->GetVisionBuff());
+		target->SetVision(tmp);
+	}
 		break;
 	case LIFE_BUFF:
 		base = target->GetDefense();

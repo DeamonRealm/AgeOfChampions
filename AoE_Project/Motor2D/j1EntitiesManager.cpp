@@ -457,13 +457,16 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	else if (unit_type == WIZARD_CHMP)
 	{
 		/*Circle Spell*/			Circle temp_circle;
-		/*limit Spell_2*/			temp_circle.SetRad(unit_node->attribute("area_limit_spell_2").as_uint());
-									((Wizard*)new_def)->SetSpecialAttackArea(temp_circle,"limit_lvl_2");
+									int limit = 0;
+		/*limit Spell_2*/			limit = unit_node->attribute("area_limit_spell_2").as_int();
+									((Wizard*)new_def)->SetAreaLimitLvl2(limit);
 		/*area Spell_2*/			temp_circle.SetRad(unit_node->attribute("area_attack_spell_2").as_uint());
+									temp_circle.SetColor({ 0,50,50,255 });
 									((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_2");
-		/*limit Spell_3*/			temp_circle.SetRad(unit_node->attribute("area_limit_spell_3").as_uint());
-									((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "limit_lvl_3");
+		/*limit Spell_3*/			limit = unit_node->attribute("area_limit_spell_3").as_int();
+									((Wizard*)new_def)->SetAreaLimitLvl3(limit);
 		/*area Spell_3*/			temp_circle.SetRad(unit_node->attribute("area_attack_spell_3").as_uint());
+									temp_circle.SetColor({ 0,50,50,255 });
 									((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
 	}
 

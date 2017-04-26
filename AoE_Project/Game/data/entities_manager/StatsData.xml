@@ -843,11 +843,11 @@
       speed_for_level="1.5"
       view_area_for_level="2"
       
-      area_attack_spell_2="300"
-      area_limit_spell_2="500"
+      area_attack_spell_2="100"
+      area_limit_spell_2="300"
       
       area_attack_spell_3="150"
-      area_limit_spell_3="350"
+      area_limit_spell_3="300"
       
     />
   </unit>

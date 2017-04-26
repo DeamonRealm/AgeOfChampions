@@ -751,7 +751,15 @@ bool Wizard::Draw(bool debug)
 	//Draw wizard Selection Mark
 	if (selected)
 	{
-	//	if (ability_lvl_2_prepare_mode)special_attack_area.Draw();
+		if (ability_lvl_2_prepare_mode)
+		{
+
+			area_attack_spell_2.Draw();
+			
+		}
+		else if(ability_lvl_3_prepare_mode){
+			area_attack_spell_3.Draw();
+		}
 		mark.Draw();
 	}
 
@@ -772,8 +780,11 @@ bool Wizard::Draw(bool debug)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y),true);
-	//if (debug && selected) special_attack_area.Draw();
+	if (debug && selected) {
+		//area_limit_spell_2.Draw();
+		//area_limit_spell_3.Draw();
 
+	}
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
 	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), &blit_color);
@@ -892,7 +903,7 @@ void Wizard::PrepareAbility_lvl_2()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
-	CalculateSpecialAttackArea(iPoint(x, y), true);
+	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true);
 
 }
 
@@ -903,8 +914,9 @@ void Wizard::Hability_lvl_2(int x, int y)
 	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
 
 	//Focus the wizard in the spell direction
-	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
-	CalculateSpecialAttackArea(iPoint(x, y),true);
+	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
+	if (!CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true))
+		return;
 	action_type = ATTATCK;
 	App->animator->UnitPlay(this);
 
@@ -960,6 +972,100 @@ void Wizard::CheckHability_lvl_2()
 		App->animator->UnitPlay(this);
 	}
 }
+void Wizard::SetAbility_lvl_3(bool choosed)
+{
+	if (level < 2) return;
+
+	if (choosed)
+	{
+		ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	}
+	else
+	{
+		ability_lvl_3_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+	}
+	ability[1] = choosed;
+}
+
+void Wizard::PrepareAbility_lvl_3()
+{
+	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
+
+	ability_lvl_3_prepare_mode = true;
+
+	//Focus the wizard in the attack direction
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
+	CalculateSpecialAttackArea(iPoint(x, y), true);
+
+}
+
+void Wizard::Hability_lvl_3(int x, int y)
+{
+	ability_lvl_3_prepare_mode = false;
+
+	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
+
+	//Focus the wizard in the spell direction
+	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
+	CalculateSpecialAttackArea(iPoint(x, y), false);
+	action_type = ATTATCK;
+	App->animator->UnitPlay(this);
+
+	if (ability[2])
+	{
+		ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+	}
+	else
+	{
+		ability_lvl_3_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
+
+	}
+
+
+
+	//Collect all the units in the buff area
+	std::vector<Unit*> units_in;
+	App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_2);
+
+	uint size = units_in.size();
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+
+		if (ability[2])
+		{
+
+			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
+		}
+		else
+		{
+		//	units_in[k]->HealUnit(ability_lvl_2_heal_value);
+		}
+	}
+
+	actived[2] = true;
+	ability_lvl_3_particle.animation.Reset();
+	ability_lvl_3_particle.position = GetPositionRounded();
+	ability_lvl_3_timer.Start();
+}
+
+void Wizard::CheckHability_lvl_3()
+{
+	if (!ability_lvl_3_particle.animation.IsEnd())
+	{
+		ability_lvl_3_particle.Draw();
+	}
+	else
+	{
+		actived[2] = false;
+		action_type = IDLE;
+		App->animator->UnitPlay(this);
+	}
+}
 
 iPoint Wizard::GetiPointFromDirection(DIRECTION_TYPE direction) const
 {
@@ -993,39 +1099,38 @@ iPoint Wizard::GetiPointFromDirection(DIRECTION_TYPE direction) const
 	return iPoint(position.x - 1, position.y - 1);;
 }
 
-void Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
+bool Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 {
 	if (attack_lvl_2)
 	{	
 		iPoint position = area_attack_spell_2.GetPosition();
-		if (!area_limit_spell_2.IsIn(&fPoint(position.x, position.y)))
+		if (area_attack_spell_2.GetPosition().DistanceTo(position)>area_limit_spell_2)
 		{
-			int temporal_radius = area_attack_spell_2.GetRad();
-			area_attack_spell_2.SetRad(0);
-			iPoint new_position = area_attack_spell_2.NearestPoint(&area_limit_spell_2);
-			area_attack_spell_2.SetPosition(new_position);
-			area_attack_spell_2.SetRad(temporal_radius);
+			area_attack_spell_2.SetPosition(base);
+
+			return false;
 		}
 		else
 		{
 			area_attack_spell_2.SetPosition(base);
+			return true;
 		}
 	}
 	else	
 	{
 
-		iPoint position = area_attack_spell_3.GetPosition();
-		if (!area_limit_spell_3.IsIn(&fPoint(position.x, position.y)))
+		iPoint position = this->GetPositionRounded();
+		if (area_attack_spell_3.GetPosition().DistanceTo(position)>area_limit_spell_3)
 		{
-			int temporal_radius = area_attack_spell_3.GetRad();
-			area_attack_spell_3.SetRad(0);
-			iPoint new_position = area_attack_spell_3.NearestPoint(&area_limit_spell_3);
-			area_attack_spell_3.SetPosition(new_position);
-			area_attack_spell_3.SetRad(temporal_radius);
+			area_attack_spell_3.SetPosition(base);
+			return false;
+
 		}
 		else
 		{
 			area_attack_spell_3.SetPosition(base);
+			return true;
+
 		}
 	}
 }
@@ -1081,8 +1186,8 @@ void Wizard::SetPosition(float x, float y, bool insert)
 	attack_area.SetPosition(pos);
 
 	//Set area limit position
-	area_limit_spell_2.SetPosition(pos);
-	area_limit_spell_3.SetPosition(pos);
+	//area_limit_spell_2.SetPosition(pos);
+	//area_limit_spell_3.SetPosition(pos);
 
 	//Add the unit with the correct position in the correct quad tree
 	if (insert)App->entities_manager->units_quadtree.Insert(this, &position);
@@ -1090,9 +1195,7 @@ void Wizard::SetPosition(float x, float y, bool insert)
 
 void Wizard::SetSpecialAttackArea(const Circle & circle, const char * name)
 {
-	if (strcmp("limit_lvl_2", name) == 0) area_limit_spell_2 = circle;
-	else if (strcmp("area_lvl_2", name) == 0)area_attack_spell_2 = circle;
-	else if (strcmp("limit_lvl_3", name) == 0)area_limit_spell_3 = circle;
+	if (strcmp("area_lvl_2", name) == 0)area_attack_spell_2 = circle;
 	else if (strcmp("area_lvl_3", name) == 0)area_attack_spell_3 = circle;
 
 }
@@ -1105,4 +1208,13 @@ void Wizard::SetAbility_lvl_2_HealValue(uint heal)
 void Wizard::SetAbility_lvl_3_AttackValue(uint attack)
 {
 	ability_lvl_3_attack_value = attack;
+}
+
+void Wizard::SetAreaLimitLvl2(int limit)
+{
+	area_limit_spell_2 = limit;
+}
+void Wizard::SetAreaLimitLvl3(int limit)
+{
+	area_limit_spell_3 = limit;
 }

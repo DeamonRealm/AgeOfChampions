@@ -171,17 +171,15 @@ private:
 	Circle				area_attack_spell_2;
 	Circle				area_attack_spell_3;
 
-	Circle				area_limit_spell_2;
-	Circle				area_limit_spell_3;
+	int					area_limit_spell_2;
+	int					area_limit_spell_3;
 
 	Particle			ability_lvl_2_particle;
 	Particle			ability_lvl_3_particle;
 
 	uint				ability_lvl_2_heal_value = 0;
-	uint				ability_lvl_2_cooldown = 0;
 
 	uint				ability_lvl_3_attack_value = 0;
-	uint				ability_lvl_3_cooldown = 0;
 
 
 public:
@@ -199,15 +197,20 @@ public:
 	void	PrepareAbility_lvl_2();
 	void	Hability_lvl_2(int x = 0, int y = 0);
 	void	CheckHability_lvl_2();
+	void	SetAbility_lvl_3(bool choosed);
+	void	PrepareAbility_lvl_3();
+	void	Hability_lvl_3(int x = 0, int y = 0);
+	void	CheckHability_lvl_3();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
-	void	CalculateSpecialAttackArea(const iPoint& base,bool attack_lvl_2);
+	bool	CalculateSpecialAttackArea(const iPoint& base,bool attack_lvl_2);
 	bool	Die();
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Circle& circle,const char* name);
 	void	SetAbility_lvl_2_HealValue(uint heal);
 	void	SetAbility_lvl_3_AttackValue(uint attack);
-
+	void	SetAreaLimitLvl2(int limit);
+	void	SetAreaLimitLvl3(int limit);
 
 };
 /// ---------------------------------------------

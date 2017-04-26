@@ -70,7 +70,7 @@
   </type>  
   <type enum="horse_death"  song_type ="fx">
     <sound soundPath="horse_death_01.wav" name="death"/>
-    <sound soundPath="horse_death02.wav" name="death"/>
+    <sound soundPath="horse_death_02.wav" name="death"/>
     <sound soundPath="horse_death_03.wav" name="death"/>
   </type>
   <type enum="horse_selected"  song_type ="fx">

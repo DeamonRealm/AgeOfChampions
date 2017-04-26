@@ -670,13 +670,10 @@ bool HeroPanel::ActivateCell(int i)
 		}
 		break;
 	case 1: {
-		if (champion_selected == WARRIOR_CHMP)
-		{
 			activate_skill = 1;
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 			((Champion*)entitis_panel)->PrepareAbility_lvl_2();
 			return true;
-		}
 		}
 		break;
 	case 2:

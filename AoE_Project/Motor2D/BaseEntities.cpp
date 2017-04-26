@@ -1410,7 +1410,7 @@ void Unit::SetFutureAction(const iPoint & position)
 
 void Unit::SetAttackBuff(float atk_buff)
 {
-	attack_buff = atk_buff;
+	attack_buff += atk_buff;
 }
 
 void Unit::SetUnitType(UNIT_TYPE type)
@@ -1505,17 +1505,22 @@ void Unit::SetDefenseBonus(uint def_bonus)
 
 void Unit::SetDefenseBuff(float def_buff)
 {
-	defense_buff = def_buff;
+	defense_buff += def_buff;
 }
 
 void Unit::SetVisionBuff(float vis_buff)
 {
-	vision_buff = vis_buff;
+	vision_buff += vis_buff;
 }
 
 void Unit::SetLifeBuff(float hp_buff)
 {
-	life_buff = hp_buff;
+	if (life - hp_buff < 0)
+	{
+		life = 1;
+	}
+	life += hp_buff;
+	life_buff += hp_buff;
 }
 
 void Unit::SetArmor(uint arm)
