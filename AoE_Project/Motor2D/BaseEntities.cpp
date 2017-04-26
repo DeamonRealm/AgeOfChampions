@@ -102,6 +102,11 @@ void Entity::SetBlitColor(const SDL_Color new_color)
 	blit_color = new_color;
 }
 
+void Entity::CleanFogAround()
+{
+
+}
+
 //Add Action ------------
 void Entity::AddAction(Action * action, TASK_CHANNELS channel)
 {
@@ -586,7 +591,10 @@ void Unit::NewPosition(const iPoint& goal, float & position_x, float & position_
 	int norm = location.DistanceTo(goal);
 	float x_step = GetSpeed() * (App->GetDT() * 100) * (goal.x - location.x) / norm;
 	float y_step = GetSpeed() * (App->GetDT() * 100) * (goal.y - location.y) / norm;
-
+	
+	this->distance_walked.x += x_step;
+	this->distance_walked.y += y_step;
+	
 	//Add the calculated values at the unit & mark position
 	position_x = position.x + x_step;
 	position_y = position.y + y_step;
@@ -1399,6 +1407,25 @@ COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 	return NO_COLLISION;
 }
 
+void Unit::CleanFogAround()
+{
+	uint size = in_vision_cells.size();
+	for (uint k = 0; k < size; k++)
+	{
+		in_vision_cells[k]->alpha = MID_ALPHA;
+		in_vision_cells[k]->locked = false;
+	}
+
+	in_vision_cells.clear();
+	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
+	if (!in_vision_cells.empty())
+	{
+		App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
+		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+	}
+	this->distance_walked.y = this->distance_walked.x = 0.01f;
+}
+
 void Unit::SetProtection(Warrior * warrior)
 {
 	unit_protected = true;
@@ -1418,12 +1445,7 @@ void Unit::SetPosition(float x, float y, bool insert)
 	//Extract the units to push it with the new position later
 	if(insert)App->entities_manager->units_quadtree.Exteract(this,&position);
 
-
-	uint size = in_vision_cells.size();
-	for (uint k = 0; k < size; k++)
-	{
-		in_vision_cells[k]->alpha = MID_ALPHA;
-	}
+	bool need_fog_update = (((abs(distance_walked.x) + abs(distance_walked.y)) > (App->fog_of_war->alpha_cell_size * 2)) || this->distance_walked.x == 0.00f);
 
 	//Set unit position
 	position.x = x;
@@ -1434,11 +1456,7 @@ void Unit::SetPosition(float x, float y, bool insert)
 	//Set unit render area position
 	render_area.SetPosition(pos);
 
-	if (entity_diplomacy == ALLY)
-	{
-		App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
-		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
-	}
+	if (entity_diplomacy == ALLY && need_fog_update)App->fog_of_war->CheckEntityFog(this);
 
 	//Set unit mark position
 	mark.SetPosition(pos);
@@ -1448,8 +1466,6 @@ void Unit::SetPosition(float x, float y, bool insert)
 	hard_collider.SetPosition(pos);
 	//Set unit attack area position
 	attack_area.SetPosition(pos);
-
-
 
 	//Add the unit with the correct position in the correct quad tree
 	if (insert)
@@ -2048,6 +2064,24 @@ void Building::CleanMapLogic()
 	App->map->ChangeLogicMap(world_coords, width_in_tiles, height_in_tiles, 1);
 }
 
+void Building::CleanFogAround()
+{
+	uint size = in_vision_cells.size();
+	for (uint k = 0; k < size; k++)
+	{
+		in_vision_cells[k]->alpha = MID_ALPHA;
+		in_vision_cells[k]->locked = false;
+	}
+
+	in_vision_cells.clear();
+	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
+	if (in_vision_cells.size())
+	{
+		App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
+		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+	}
+}
+
 bool Building::CheckZone(int x, int y)
 {
 	//Check the construction tiles
@@ -2223,9 +2257,7 @@ void Building::SetPosition(float x, float y, bool insert)
 
 	if (entity_diplomacy == ALLY)
 	{
-		in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision);
-		App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
-		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+		App->fog_of_war->CheckEntityFog(this);
 	}
 }
 

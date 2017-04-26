@@ -31,11 +31,11 @@ bool j1FogOfWar::PostUpdate()
 	uint size = cells_in_screen.size();
 	for (uint k = 0; k < size; k++)
 	{
-		if(cells_in_screen[k]->alpha)App->render->FogBlit(cells_in_screen[k]->position, alpha_cell_size, cells_in_screen[k]->alpha);
+		if(!cells_in_screen[k]->locked)App->render->FogBlit(cells_in_screen[k]->position, alpha_cell_size, cells_in_screen[k]->alpha);
 	}
 
 
-	if (update_timer.Read() > UPDATE_TIME)
+	if (update_timer.Read() > UPDATE_RATE)
 	{
 		fog_update = true;
 		update_timer.Start();
@@ -45,25 +45,23 @@ bool j1FogOfWar::PostUpdate()
 
 
 	j1Timer time;
+	while (time.Read() < UPDATE_TIME && !entities_to_update.empty())
+	{
+		entities_to_update.front()->CleanFogAround();
+		entities_to_update.pop_front();
+	
+	}
+	//LOG("%i", time.Read());
 
 	if (fog_update)
 	{
-
-	}
-	/*
-	std::vector<Unit*> units_in_screen;
-	size = App->entities_manager->units_quadtree.CollectCandidates(units_in_screen, App->render->camera_viewport);
-	std::vector<AlphaCell*> cells;
-	for (uint k = 0; k < size; k++)
-	{
-		if (units_in_screen[k]->GetDiplomacy() == ALLY)
+		std::vector<Unit*> units;
+		uint size = App->entities_manager->units_quadtree.CollectCandidates(units, App->render->camera_viewport);
+		for (uint k = 0; k < size; k++)
 		{
-			App->fog_of_war->ClearFogLayer(units_in_screen[k]->GetRenderArea(), GRAY_FOG);
-			App->fog_of_war->ClearFogLayer(units_in_screen[k]->GetVision(), NO_FOG);
-			App->fog_of_war->ClearAlphaLayer(units_in_screen[k]->GetVision(), 0);
+			if(units[k]->GetAction() != WALK)entities_to_update.push_front(units[k]);
 		}
 	}
-	*/
 
 	return true;
 }
@@ -133,14 +131,20 @@ FOG_TYPE j1FogOfWar::GetFogID(int x, int y) const
 std::vector<AlphaCell*> j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned short alpha)
 {
 	std::vector<AlphaCell*> fog_cells;
-	uint size = fog_quadtree.CollectCandidates(fog_cells, zone);
+	std::vector<AlphaCell*> definitive;
 
+	uint size = fog_quadtree.CollectCandidates(fog_cells, zone);
 	for (uint k = 0; k < size; k++)
 	{
-		if (fog_cells[k]->alpha > alpha)fog_cells[k]->alpha = alpha;
+		if (!fog_cells[k]->locked)
+		{
+			fog_cells[k]->alpha = alpha;
+			fog_cells[k]->locked = true;
+			definitive.push_back(fog_cells[k]);
+		}
 	}
 
-	return fog_cells;
+	return definitive;
 }
 
 void j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type)
@@ -154,5 +158,10 @@ void j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type)
 		fog_layer[tiles_in[k].y * App->map->data.width + tiles_in[k].x] = type;
 	}
 
+}
+
+void j1FogOfWar::CheckEntityFog(Entity * target)
+{
+	entities_to_update.push_back(target);
 }
 

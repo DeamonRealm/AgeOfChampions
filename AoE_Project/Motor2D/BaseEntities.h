@@ -254,6 +254,7 @@ public:
 	void			CleanAnimation();
 	virtual void	CleanMapLogic();
 	void			SetBlitColor(const SDL_Color new_color);
+	virtual	void	CleanFogAround();
 
 	//Add Action ------------
 	void			AddAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
@@ -324,6 +325,7 @@ protected:
 	DIRECTION_TYPE	direction_type = SOUTH;
 	iPoint			future_position = { 0,0 };
 	iPoint			last_position = { 0,0 };
+	fPoint			distance_walked = { 0.0f , 0.0f };
 	//Attack -----------
 	j1Timer			action_timer;
 	uint			attack_delay = 0;
@@ -393,6 +395,8 @@ public:
 	bool					Die();
 	void					Stun(uint time);
 	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
+	void					CleanFogAround();
+
 	//Set Quit Protection
 	void	SetProtection(Warrior* warrior);
 	void	QuitProtection();
@@ -542,6 +546,7 @@ protected:
 public:
 
 	void CleanMapLogic();
+	void CleanFogAround();
 
 	//Functionality -------------------
 	//Check is can be built in the position
