@@ -326,7 +326,6 @@ protected:
 	uint			attack_hitpoints = 0;
 	uint			attack_bonus = 0;
 	float			attack_buff = 0;
-	float			super_attack_buff = 0;
 	uint			siege_hitpoints = 0;
 	uint			attack_rate = 0;
 	ATTACK_TYPE		attack_type = NO_ATTACK;
@@ -410,7 +409,6 @@ public:
 	void	SetAttackHitPoints(uint atk_val);
 	void	SetAttackBonus(uint atk_bonus);
 	void	SetAttackBuff(float atk_buff);
-	void	SetSuperAttackBuff(float atk_buff);
 	void	SetSiegeHitPoints(uint siege_val);
 	void	SetAttackRate(uint atk_rate);
 	void	SetAttackType(ATTACK_TYPE atk_type);

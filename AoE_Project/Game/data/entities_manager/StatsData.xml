@@ -772,6 +772,8 @@
       ability_lvl_2_cooldown="5000"
       ability_lvl_2_attack_value = "10"
       ability_lvl_2_stun_value = "2000"
+      
+      ability_lvl_3_cooldown = "20000"
       area_ability_lvl_3="100"
       
       attack_for_level="1"

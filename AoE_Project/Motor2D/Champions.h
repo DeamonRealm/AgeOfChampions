@@ -70,6 +70,7 @@ public:
 	void	SetBuffArea(const Circle& area);
 	void	SetBuffToApply(const PassiveBuff* buff);
 	void	SetAbility_lvl_2_Cooldown(uint value);
+	void	SetAbility_lvl_3_Cooldown(uint value);
 	void	SetLevel(uint lvl);
 	void	SetAttackForLevel(uint atk_for_lvl);
 	void	SetRangeForLevel(uint rng_for_lvl);

@@ -1412,10 +1412,7 @@ void Unit::SetAttackBuff(float atk_buff)
 {
 	attack_buff = atk_buff;
 }
-void Unit::SetSuperAttackBuff(float atk_buff)
-{
-	super_attack_buff = atk_buff;
-}
+
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;

@@ -21,7 +21,7 @@ Champion::Champion() : Unit()
 }
 
 Champion::Champion(const Champion & copy) : Unit(copy), buff_area(copy.buff_area),buff_to_apply(copy.buff_to_apply), level(copy.level), attack_for_level(copy.attack_for_level), range_for_level(copy.range_for_level),
-defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_lvl_2_timer(copy.ability_lvl_2_timer)
+defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_lvl_2_cooldown(copy.ability_lvl_2_cooldown), ability_lvl_3_cooldown(copy.ability_lvl_3_cooldown)
 {
 
 }
@@ -141,6 +141,11 @@ void Champion::SetAbility_lvl_2_Cooldown(uint value)
 	ability_lvl_2_cooldown = value;
 }
 
+void Champion::SetAbility_lvl_3_Cooldown(uint value)
+{
+	ability_lvl_3_cooldown = value;
+}
+
 void Champion::SetLevel(uint lvl)
 {
 	level = lvl;
@@ -231,7 +236,7 @@ Warrior::Warrior() :Champion()
 
 }
 
-Warrior::Warrior(const Warrior & copy) : Champion(copy), special_attack_area(copy.special_attack_area), ability_lvl_2_attack_value(copy.ability_lvl_2_attack_value), ability_lvl_2_stun_value(copy.ability_lvl_2_stun_value)
+Warrior::Warrior(const Warrior & copy) : Champion(copy), special_attack_area(copy.special_attack_area), ability_lvl_2_attack_value(copy.ability_lvl_2_attack_value), ability_lvl_2_stun_value(copy.ability_lvl_2_stun_value), area_ability_lvl_3(copy.area_ability_lvl_3)
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
 	ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
@@ -516,6 +521,7 @@ void Warrior::SetAbility_lvl_3(bool choosed)
 	else
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(ONE_HIT_PARTICLE, NO_DIRECTION);
+
 	}
 	ability[2] = choosed;
 }

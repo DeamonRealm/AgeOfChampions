@@ -41,16 +41,17 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
 
       <direction enum="south-west">
-        <sprite n="monk_attack/010_monk_attack.bmp" x="495" y="1" w="32" h="45" pX="0.65625" pY="0.755556"/>
-        <sprite n="monk_attack/011_monk_attack.bmp" x="529" y="1" w="29" h="47" pX="0.689655" pY="0.744681"/>
+        <sprite n="monk_attack/010_monk_attack.bmp" x="495" y="3" w="34" h="52" pX="0.65625" pY="0.755556"/>
+        <sprite n="monk_attack/011_monk_attack.bmp" x="529" y="3
+" w="29" h="47" pX="0.689655" pY="0.744681"/>
         <sprite n="monk_attack/012_monk_attack.bmp" x="560" y="1" w="30" h="55" pX="0.666667" pY="0.818182"/>
         <sprite n="monk_attack/013_monk_attack.bmp" x="592" y="1" w="29" h="61" pX="0.655172" pY="0.852459"/>
         <sprite n="monk_attack/014_monk_attack.bmp" x="623" y="1" w="30" h="62" pX="0.633333" pY="0.870968"/>
         <sprite n="monk_attack/015_monk_attack.bmp" x="655" y="1" w="29" h="62" pX="0.655172" pY="0.870968"/>
         <sprite n="monk_attack/016_monk_attack.bmp" x="1" y="66" w="30" h="60" pX="0.633333" pY="0.85"/>
         <sprite n="monk_attack/017_monk_attack.bmp" x="33" y="66" w="30" h="55" pX="0.666667" pY="0.836364"/>
-        <sprite n="monk_attack/018_monk_attack.bmp" x="65" y="66" w="30" h="48" pX="0.666667" pY="0.791667"/>
-        <sprite n="monk_attack/019_monk_attack.bmp" x="97" y="66" w="31" h="45" pX="0.677419" pY="0.755556"/>
+        <sprite n="monk_attack/018_monk_attack.bmp" x="65" y="71" w="30" h="48" pX="0.666667" pY="0.791667"/>
+        <sprite n="monk_attack/019_monk_attack.bmp" x="97" y="71" w="31" h="45" pX="0.677419" pY="0.755556"/>
       </direction>
 
       <direction enum="west">
@@ -97,12 +98,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <!--Die Action-->
     <action enum ="die" speed="200">
       <direction enum="south">
-        <sprite n="monk_die/000_monk_die.bmp" x="1" y="192" w="30" h="44" pX="0.333333" pY="0.795455"/>
+        <sprite n="monk_die/000_monk_die.bmp" x="0" y="192" w="32" h="50" pX="0.333333" pY="0.795455"/>
         <sprite n="monk_die/001_monk_die.bmp" x="33" y="192" w="29" h="55" pX="0.482759" pY="0.945455"/>
         <sprite n="monk_die/002_monk_die.bmp" x="64" y="192" w="30" h="53" pX="0.466667" pY="0.716981"/>
         <sprite n="monk_die/003_monk_die.bmp" x="96" y="192" w="28" h="46" pX="0.428571" pY="0.652174"/>
         <sprite n="monk_die/004_monk_die.bmp" x="126" y="192" w="28" h="49" pX="0.464286" pY="0.653061"/>
-        <sprite n="monk_die/005_monk_die.bmp" x="156" y="192" w="47" h="37" pX="0.276596" pY="0.324324"/>
+        <sprite n="monk_die/005_monk_die.bmp" x="155" y="186" w="47" h="45" pX="0.276596" pY="0.324324"/>
         <sprite n="monk_die/006_monk_die.bmp" x="205" y="192" w="55" h="37" pX="0.236364" pY="0.189189"/>
         <sprite n="monk_die/007_monk_die.bmp" x="262" y="192" w="53" h="37" pX="0.245283" pY="0.0810811"/>
         <sprite n="monk_die/008_monk_die.bmp" x="317" y="192" w="62" h="34" pX="0.209677" pY="0"/>
@@ -110,12 +111,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
 
       <direction enum="south-west">
-        <sprite n="monk_die/010_monk_die.bmp" x="447" y="192" w="25" h="47" pX="0.6" pY="0.723404"/>
+        <sprite n="monk_die/010_monk_die.bmp" x="446" y="191" w="27" h="54" pX="0.6" pY="0.723404"/>
         <sprite n="monk_die/011_monk_die.bmp" x="474" y="192" w="32" h="55" pX="0.71875" pY="0.727273"/>
         <sprite n="monk_die/012_monk_die.bmp" x="508" y="192" w="35" h="53" pX="0.742857" pY="0.698113"/>
         <sprite n="monk_die/013_monk_die.bmp" x="545" y="192" w="28" h="44" pX="0.892857" pY="0.659091"/>
         <sprite n="monk_die/014_monk_die.bmp" x="575" y="192" w="27" h="46" pX="0.888889" pY="0.673913"/>
-        <sprite n="monk_die/015_monk_die.bmp" x="604" y="192" w="29" h="43" pX="0.827586" pY="0.302326"/>
+        <sprite n="monk_die/015_monk_die.bmp" x="603" y="186" w="31" h="50" pX="0.827586" pY="0.302326"/>
         <sprite n="monk_die/016_monk_die.bmp" x="635" y="192" w="35" h="44" pX="0.771429" pY="0.181818"/>
         <sprite n="monk_die/017_monk_die.bmp" x="1" y="249" w="37" h="41" pX="0.756757" pY="0.0731707"/>
         <sprite n="monk_die/018_monk_die.bmp" x="40" y="249" w="38" h="44" pX="0.789474" pY="0.0681818"/>
@@ -123,12 +124,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
 
       <direction enum="west">
-        <sprite n="monk_die/020_monk_die.bmp" x="122" y="249" w="28" h="44" pX="0.642857" pY="0.772727"/>
+        <sprite n="monk_die/020_monk_die.bmp" x="122" y="242" w="29" h="52" pX="0.642857" pY="0.772727"/>
         <sprite n="monk_die/021_monk_die.bmp" x="152" y="249" w="32" h="49" pX="0.75" pY="0.816327"/>
         <sprite n="monk_die/022_monk_die.bmp" x="186" y="249" w="33" h="47" pX="0.757576" pY="0.808511"/>
         <sprite n="monk_die/023_monk_die.bmp" x="221" y="249" w="29" h="43" pX="1" pY="0.790698"/>
         <sprite n="monk_die/024_monk_die.bmp" x="252" y="249" w="30" h="45" pX="1" pY="0.8"/>
-        <sprite n="monk_die/025_monk_die.bmp" x="284" y="249" w="51" h="40" pX="0.960784" pY="0.525"/>
+        <sprite n="monk_die/025_monk_die.bmp" x="283" y="244" w="53" h="46" pX="0.960784" pY="0.525"/>
         <sprite n="monk_die/026_monk_die.bmp" x="337" y="249" w="56" h="36" pX="0.982143" pY="0.388889"/>
         <sprite n="monk_die/027_monk_die.bmp" x="395" y="249" w="63" h="29" pX="1" pY="0.275862"/>
         <sprite n="monk_die/028_monk_die.bmp" x="460" y="249" w="61" h="34" pX="1.03279" pY="0.235294"/>
@@ -210,48 +211,48 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <!--Idle Action-->
     <action enum ="idle" speed="200">
       <direction enum="south">
-        <sprite n="monk_idle/000_monk_idle.bmp" x="292" y="433" w="23" h="45" pX="0.565217" pY="0.822222"/>
-        <sprite n="monk_idle/001_monk_idle.bmp" x="317" y="433" w="23" h="45" pX="0.521739" pY="0.822222"/>
-        <sprite n="monk_idle/002_monk_idle.bmp" x="342" y="433" w="24" h="46" pX="0.458333" pY="0.826087"/>
-        <sprite n="monk_idle/003_monk_idle.bmp" x="368" y="433" w="25" h="47" pX="0.44" pY="0.829787"/>
-        <sprite n="monk_idle/004_monk_idle.bmp" x="395" y="433" w="24" h="46" pX="0.5" pY="0.826087"/>
-        <sprite n="monk_idle/005_monk_idle.bmp" x="421" y="433" w="24" h="45" pX="0.541667" pY="0.822222"/>
+        <sprite n="monk_idle/000_monk_idle.bmp" x="292" y="433" w="23" h="57" pX="0.565217" pY="0.822222"/>
+        <sprite n="monk_idle/001_monk_idle.bmp" x="317" y="433" w="23" h="57" pX="0.521739" pY="0.822222"/>
+        <sprite n="monk_idle/002_monk_idle.bmp" x="342" y="433" w="24" h="58" pX="0.458333" pY="0.826087"/>
+        <sprite n="monk_idle/003_monk_idle.bmp" x="368" y="433" w="25" h="59" pX="0.44" pY="0.829787"/>
+        <sprite n="monk_idle/004_monk_idle.bmp" x="395" y="433" w="24" h="58" pX="0.5" pY="0.826087"/>
+        <sprite n="monk_idle/005_monk_idle.bmp" x="421" y="433" w="24" h="57" pX="0.541667" pY="0.822222"/>
       </direction>
 
       <direction enum="south-west">
-        <sprite n="monk_idle/006_monk_idle.bmp" x="447" y="433" w="31" h="46" pX="0.709677" pY="0.782609"/>
-        <sprite n="monk_idle/007_monk_idle.bmp" x="480" y="433" w="31" h="46" pX="0.709677" pY="0.782609"/>
-        <sprite n="monk_idle/008_monk_idle.bmp" x="513" y="433" w="31" h="46" pX="0.709677" pY="0.782609"/>
-        <sprite n="monk_idle/009_monk_idle.bmp" x="546" y="433" w="31" h="46" pX="0.709677" pY="0.782609"/>
-        <sprite n="monk_idle/010_monk_idle.bmp" x="579" y="433" w="32" h="46" pX="0.71875" pY="0.782609"/>
-        <sprite n="monk_idle/011_monk_idle.bmp" x="613" y="433" w="31" h="46" pX="0.709677" pY="0.782609"/>
+        <sprite n="monk_idle/006_monk_idle.bmp" x="447" y="433" w="31" h="60" pX="0.709677" pY="0.782609"/>
+        <sprite n="monk_idle/007_monk_idle.bmp" x="480" y="433" w="31" h="60" pX="0.709677" pY="0.782609"/>
+        <sprite n="monk_idle/008_monk_idle.bmp" x="513" y="433" w="31" h="60" pX="0.709677" pY="0.782609"/>
+        <sprite n="monk_idle/009_monk_idle.bmp" x="546" y="433" w="31" h="60" pX="0.709677" pY="0.782609"/>
+        <sprite n="monk_idle/010_monk_idle.bmp" x="579" y="433" w="32" h="60" pX="0.71875" pY="0.782609"/>
+        <sprite n="monk_idle/011_monk_idle.bmp" x="613" y="433" w="31" h="60" pX="0.709677" pY="0.782609"/>
       </direction>
 
       <direction enum="west">
-        <sprite n="monk_idle/012_monk_idle.bmp" x="646" y="433" w="28" h="44" pX="0.714286" pY="0.886364"/>
-        <sprite n="monk_idle/013_monk_idle.bmp" x="676" y="433" w="27" h="44" pX="0.666667" pY="0.863636"/>
-        <sprite n="monk_idle/014_monk_idle.bmp" x="1" y="482" w="26" h="44" pX="0.653846" pY="0.840909"/>
-        <sprite n="monk_idle/015_monk_idle.bmp" x="29" y="482" w="25" h="44" pX="0.68" pY="0.840909"/>
-        <sprite n="monk_idle/016_monk_idle.bmp" x="56" y="482" w="25" h="43" pX="0.68" pY="0.860465"/>
-        <sprite n="monk_idle/017_monk_idle.bmp" x="83" y="482" w="25" h="44" pX="0.68" pY="0.863636"/>
+        <sprite n="monk_idle/012_monk_idle.bmp" x="646" y="433" w="28" h="54" pX="0.714286" pY="0.886364"/>
+        <sprite n="monk_idle/013_monk_idle.bmp" x="676" y="433" w="27" h="54" pX="0.666667" pY="0.863636"/>
+        <sprite n="monk_idle/014_monk_idle.bmp" x="1" y="482" w="26" h="54" pX="0.653846" pY="0.840909"/>
+        <sprite n="monk_idle/015_monk_idle.bmp" x="29" y="482" w="25" h="54" pX="0.68" pY="0.840909"/>
+        <sprite n="monk_idle/016_monk_idle.bmp" x="56" y="482" w="25" h="53" pX="0.68" pY="0.860465"/>
+        <sprite n="monk_idle/017_monk_idle.bmp" x="83" y="482" w="25" h="54" pX="0.68" pY="0.863636"/>
       </direction>
 
       <direction enum="north-west">
-        <sprite n="monk_idle/018_monk_idle.bmp" x="110" y="482" w="31" h="47" pX="0.709677" pY="0.87234"/>
-        <sprite n="monk_idle/019_monk_idle.bmp" x="143" y="482" w="29" h="48" pX="0.689655" pY="0.875"/>
-        <sprite n="monk_idle/020_monk_idle.bmp" x="174" y="482" w="29" h="48" pX="0.689655" pY="0.875"/>
+        <sprite n="monk_idle/018_monk_idle.bmp" x="110" y="482" w="31" h="49" pX="0.709677" pY="0.87234"/>
+        <sprite n="monk_idle/019_monk_idle.bmp" x="143" y="482" w="29" h="49" pX="0.689655" pY="0.875"/>
+        <sprite n="monk_idle/020_monk_idle.bmp" x="174" y="482" w="29" h="49" pX="0.689655" pY="0.875"/>
         <sprite n="monk_idle/021_monk_idle.bmp" x="205" y="482" w="29" h="49" pX="0.689655" pY="0.877551"/>
-        <sprite n="monk_idle/022_monk_idle.bmp" x="236" y="482" w="31" h="48" pX="0.709677" pY="0.875"/>
-        <sprite n="monk_idle/023_monk_idle.bmp" x="269" y="482" w="32" h="47" pX="0.71875" pY="0.87234"/>
+        <sprite n="monk_idle/022_monk_idle.bmp" x="236" y="482" w="31" h="49" pX="0.709677" pY="0.875"/>
+        <sprite n="monk_idle/023_monk_idle.bmp" x="269" y="482" w="32" h="49" pX="0.71875" pY="0.87234"/>
       </direction>
 
       <direction enum="north">
-        <sprite n="monk_idle/024_monk_idle.bmp" x="303" y="482" w="24" h="52" pX="0.5" pY="0.903846"/>
-        <sprite n="monk_idle/025_monk_idle.bmp" x="329" y="482" w="26" h="51" pX="0.576923" pY="0.901961"/>
-        <sprite n="monk_idle/026_monk_idle.bmp" x="357" y="482" w="26" h="50" pX="0.653846" pY="0.9"/>
-        <sprite n="monk_idle/027_monk_idle.bmp" x="385" y="482" w="26" h="50" pX="0.653846" pY="0.9"/>
-        <sprite n="monk_idle/028_monk_idle.bmp" x="413" y="482" w="26" h="51" pX="0.615385" pY="0.901961"/>
-        <sprite n="monk_idle/029_monk_idle.bmp" x="441" y="482" w="24" h="51" pX="0.541667" pY="0.901961"/>
+        <sprite n="monk_idle/024_monk_idle.bmp" x="303" y="482" w="24" h="54" pX="0.5" pY="0.903846"/>
+        <sprite n="monk_idle/025_monk_idle.bmp" x="329" y="482" w="26" h="54" pX="0.576923" pY="0.901961"/>
+        <sprite n="monk_idle/026_monk_idle.bmp" x="357" y="482" w="26" h="54" pX="0.653846" pY="0.9"/>
+        <sprite n="monk_idle/027_monk_idle.bmp" x="385" y="482" w="26" h="54" pX="0.653846" pY="0.9"/>
+        <sprite n="monk_idle/028_monk_idle.bmp" x="413" y="482" w="26" h="54" pX="0.615385" pY="0.901961"/>
+        <sprite n="monk_idle/029_monk_idle.bmp" x="441" y="482" w="24" h="54" pX="0.541667" pY="0.901961"/>
       </direction>
     </action>
 
@@ -259,68 +260,70 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <!--Walk Action-->
     <action enum ="walk" speed="200">
       <direction enum="south">
-        <sprite n="monk_walk/000_monk_walk.bmp" x="467" y="482" w="24" h="48" pX="0.583333" pY="0.75"/>
-        <sprite n="monk_walk/001_monk_walk.bmp" x="493" y="482" w="24" h="47" pX="0.583333" pY="0.787234"/>
-        <sprite n="monk_walk/002_monk_walk.bmp" x="519" y="482" w="24" h="47" pX="0.541667" pY="0.808511"/>
-        <sprite n="monk_walk/003_monk_walk.bmp" x="545" y="482" w="26" h="46" pX="0.5" pY="0.826087"/>
-        <sprite n="monk_walk/004_monk_walk.bmp" x="573" y="482" w="25" h="45" pX="0.48" pY="0.822222"/>
-        <sprite n="monk_walk/005_monk_walk.bmp" x="600" y="482" w="26" h="46" pX="0.461538" pY="0.782609"/>
-        <sprite n="monk_walk/006_monk_walk.bmp" x="628" y="482" w="28" h="49" pX="0.428571" pY="0.755102"/>
-        <sprite n="monk_walk/007_monk_walk.bmp" x="658" y="482" w="25" h="51" pX="0.48" pY="0.745098"/>
-        <sprite n="monk_walk/008_monk_walk.bmp" x="1" y="536" w="25" h="51" pX="0.52" pY="0.745098"/>
-        <sprite n="monk_walk/009_monk_walk.bmp" x="28" y="536" w="23" h="50" pX="0.565217" pY="0.74"/>
+        <sprite n="monk_walk/000_monk_walk.bmp" x="467" y="482" w="24" h="54" pX="0.583333" pY="0.75"/>
+        <sprite n="monk_walk/001_monk_walk.bmp" x="493" y="482" w="25" h="54" pX="0.583333" pY="0.787234"/>
+        <sprite n="monk_walk/002_monk_walk.bmp" x="519" y="482" w="25" h="54" pX="0.541667" pY="0.808511"/>
+        <sprite n="monk_walk/003_monk_walk.bmp" x="546" y="482" w="25" h="54" pX="0.5" pY="0.826087"/>
+        <sprite n="monk_walk/004_monk_walk.bmp" x="573" y="482" w="25" h="54" pX="0.48" pY="0.822222"/>
+        <sprite n="monk_walk/005_monk_walk.bmp" x="601
+" y="482" w="25" h="54" pX="0.461538" pY="0.782609"/>
+        <sprite n="monk_walk/006_monk_walk.bmp" x="628" y="482" w="27" h="54" pX="0.428571" pY="0.755102"/>
+        <sprite n="monk_walk/007_monk_walk.bmp" x="657" y="482" w="27" h="57" pX="0.48" pY="0.745098"/>
+        <sprite n="monk_walk/008_monk_walk.bmp" x="1" y="537" w="27" h="57" pX="0.52" pY="0.745098"/>
+        <sprite n="monk_walk/009_monk_walk.bmp" x="28" y="536" w="27" h="54" pX="0.565217" pY="0.74"/>
       </direction>
 
       <direction enum="south-west">
-        <sprite n="monk_walk/010_monk_walk.bmp" x="53" y="536" w="29" h="46" pX="0.62069" pY="0.782609"/>
-        <sprite n="monk_walk/011_monk_walk.bmp" x="84" y="536" w="29" h="46" pX="0.586207" pY="0.804348"/>
-        <sprite n="monk_walk/012_monk_walk.bmp" x="115" y="536" w="26" h="47" pX="0.653846" pY="0.808511"/>
-        <sprite n="monk_walk/013_monk_walk.bmp" x="143" y="536" w="26" h="48" pX="0.615385" pY="0.791667"/>
-        <sprite n="monk_walk/014_monk_walk.bmp" x="171" y="536" w="28" h="47" pX="0.464286" pY="0.787234"/>
-        <sprite n="monk_walk/015_monk_walk.bmp" x="201" y="536" w="30" h="48" pX="0.5" pY="0.75"/>
-        <sprite n="monk_walk/016_monk_walk.bmp" x="233" y="536" w="32" h="51" pX="0.46875" pY="0.72549"/>
-        <sprite n="monk_walk/017_monk_walk.bmp" x="267" y="536" w="31" h="52" pX="0.516129" pY="0.730769"/>
-        <sprite n="monk_walk/018_monk_walk.bmp" x="300" y="536" w="27" h="49" pX="0.62963" pY="0.755102"/>
-        <sprite n="monk_walk/019_monk_walk.bmp" x="329" y="536" w="27" h="47" pX="0.666667" pY="0.787234"/>
+        <sprite n="monk_walk/010_monk_walk.bmp" x="53" y="536" w="29" h="53" pX="0.62069" pY="0.782609"/>
+        <sprite n="monk_walk/011_monk_walk.bmp" x="84" y="536" w="29" h="53" pX="0.586207" pY="0.804348"/>
+        <sprite n="monk_walk/012_monk_walk.bmp" x="114" y="536" w="29" h="53" pX="0.653846" pY="0.808511"/>
+        <sprite n="monk_walk/013_monk_walk.bmp" x="143" y="536" w="26" h="53" pX="0.615385" pY="0.791667"/>
+        <sprite n="monk_walk/014_monk_walk.bmp" x="171" y="536" w="28" h="53" pX="0.464286" pY="0.787234"/>
+        <sprite n="monk_walk/015_monk_walk.bmp" x="201" y="536" w="30" h="53" pX="0.5" pY="0.75"/>
+        <sprite n="monk_walk/016_monk_walk.bmp" x="234" y="536" w="30" h="56" pX="0.46875" pY="0.72549"/>
+        <sprite n="monk_walk/017_monk_walk.bmp" x="268" y="533" w="33" h="57" pX="0.516129" pY="0.730769"/>
+        <sprite n="monk_walk/018_monk_walk.bmp" x="299" y="535" w="28" h="55" pX="0.62963" pY="0.755102"/>
+        <sprite n="monk_walk/019_monk_walk.bmp" x="329" y="537" w="28" h="55" pX="0.666667" pY="0.787234"/>
       </direction>
 
       <direction enum="west">
-        <sprite n="monk_walk/020_monk_walk.bmp" x="358" y="536" w="40" h="44" pX="0.675" pY="0.886364"/>
-        <sprite n="monk_walk/021_monk_walk.bmp" x="400" y="536" w="36" h="43" pX="0.638889" pY="0.883721"/>
-        <sprite n="monk_walk/022_monk_walk.bmp" x="438" y="536" w="31" h="44" pX="0.677419" pY="0.863636"/>
-        <sprite n="monk_walk/023_monk_walk.bmp" x="471" y="536" w="28" h="45" pX="0.678571" pY="0.844444"/>
-        <sprite n="monk_walk/024_monk_walk.bmp" x="501" y="536" w="30" h="44" pX="0.633333" pY="0.840909"/>
-        <sprite n="monk_walk/025_monk_walk.bmp" x="533" y="536" w="37" h="43" pX="0.594595" pY="0.837209"/>
-        <sprite n="monk_walk/026_monk_walk.bmp" x="572" y="536" w="44" h="45" pX="0.590909" pY="0.822222"/>
-        <sprite n="monk_walk/027_monk_walk.bmp" x="618" y="536" w="43" h="44" pX="0.674419" pY="0.840909"/>
-        <sprite n="monk_walk/028_monk_walk.bmp" x="663" y="536" w="38" h="44" pX="0.763158" pY="0.840909"/>
-        <sprite n="monk_walk/029_monk_walk.bmp" x="1" y="590" w="39" h="43" pX="0.74359" pY="0.883721"/>
+        <sprite n="monk_walk/020_monk_walk.bmp" x="358" y="538" w="39" h="48" pX="0.675" pY="0.886364"/>
+        <sprite n="monk_walk/021_monk_walk.bmp" x="400" y="537" w="36" h="49" pX="0.638889" pY="0.883721"/>
+        <sprite n="monk_walk/022_monk_walk.bmp" x="438" y="536" w="31" h="50" pX="0.677419" pY="0.863636"/>
+        <sprite n="monk_walk/023_monk_walk.bmp" x="469" y="536" w="28" h="50" pX="0.678571" pY="0.844444"/>
+        <sprite n="monk_walk/024_monk_walk.bmp" x="500" y="536" w="31" h="50" pX="0.633333" pY="0.840909"/>
+        <sprite n="monk_walk/025_monk_walk.bmp" x="533" y="536" w="37" h="50" pX="0.594595" pY="0.837209"/>
+        <sprite n="monk_walk/026_monk_walk.bmp" x="573" y="536" w="43" h="51" pX="0.590909" pY="0.822222"/>
+        <sprite n="monk_walk/027_monk_walk.bmp" x="618" y="538" w="43" h="44" pX="0.674419" pY="0.840909"/>
+        <sprite n="monk_walk/028_monk_walk.bmp" x="662" y="536" w="40" h="52" pX="0.763158" pY="0.840909"/>
+        <sprite n="monk_walk/029_monk_walk.bmp" x="0" y="602
+" w="41" h="48" pX="0.74359" pY="0.883721"/>
       </direction>
 
       <direction enum="north-west">
-        <sprite n="monk_walk/030_monk_walk.bmp" x="42" y="590" w="31" h="53" pX="0.709677" pY="0.867925"/>
-        <sprite n="monk_walk/031_monk_walk.bmp" x="75" y="590" w="30" h="51" pX="0.7" pY="0.862745"/>
-        <sprite n="monk_walk/032_monk_walk.bmp" x="107" y="590" w="30" h="48" pX="0.7" pY="0.895833"/>
-        <sprite n="monk_walk/033_monk_walk.bmp" x="139" y="590" w="31" h="46" pX="0.709677" pY="0.891304"/>
-        <sprite n="monk_walk/034_monk_walk.bmp" x="172" y="590" w="31" h="45" pX="0.709677" pY="0.844444"/>
-        <sprite n="monk_walk/035_monk_walk.bmp" x="205" y="590" w="37" h="45" pX="0.675676" pY="0.8"/>
-        <sprite n="monk_walk/036_monk_walk.bmp" x="244" y="590" w="40" h="46" pX="0.725" pY="0.804348"/>
-        <sprite n="monk_walk/037_monk_walk.bmp" x="286" y="590" w="38" h="47" pX="0.763158" pY="0.808511"/>
-        <sprite n="monk_walk/038_monk_walk.bmp" x="326" y="590" w="36" h="49" pX="0.75" pY="0.877551"/>
-        <sprite n="monk_walk/039_monk_walk.bmp" x="364" y="590" w="32" h="51" pX="0.71875" pY="0.901961"/>
+        <sprite n="monk_walk/030_monk_walk.bmp" x="37" y="605" w="33" h="55" pX="0.709677" pY="0.867925"/>
+        <sprite n="monk_walk/031_monk_walk.bmp" x="70" y="605" w="32" h="53" pX="0.7" pY="0.862745"/>
+        <sprite n="monk_walk/032_monk_walk.bmp" x="103" y="605" w="31" h="50" pX="0.7" pY="0.895833"/>
+        <sprite n="monk_walk/033_monk_walk.bmp" x="134" y="603" w="33" h="50" pX="0.709677" pY="0.891304"/>
+        <sprite n="monk_walk/034_monk_walk.bmp" x="172" y="602" w="33" h="49" pX="0.709677" pY="0.844444"/>
+        <sprite n="monk_walk/035_monk_walk.bmp" x="204" y="603" w="38" h="51" pX="0.675676" pY="0.8"/>
+        <sprite n="monk_walk/036_monk_walk.bmp" x="244" y="601" w="40" h="52" pX="0.725" pY="0.804348"/>
+        <sprite n="monk_walk/037_monk_walk.bmp" x="285" y="603" w="39" h="51" pX="0.763158" pY="0.808511"/>
+        <sprite n="monk_walk/038_monk_walk.bmp" x="326" y="605" w="36" h="49" pX="0.75" pY="0.877551"/>
+        <sprite n="monk_walk/039_monk_walk.bmp" x="364" y="605" w="32" h="51" pX="0.71875" pY="0.901961"/>
       </direction>
 
       <direction enum="north">
-        <sprite n="monk_walk/040_monk_walk.bmp" x="398" y="590" w="25" h="56" pX="0.48" pY="0.875"/>
-        <sprite n="monk_walk/041_monk_walk.bmp" x="425" y="590" w="23" h="54" pX="0.478261" pY="0.87037"/>
-        <sprite n="monk_walk/042_monk_walk.bmp" x="450" y="590" w="26" h="52" pX="0.538462" pY="0.903846"/>
-        <sprite n="monk_walk/043_monk_walk.bmp" x="478" y="590" w="26" h="50" pX="0.576923" pY="0.9"/>
-        <sprite n="monk_walk/044_monk_walk.bmp" x="506" y="590" w="25" h="50" pX="0.6" pY="0.86"/>
-        <sprite n="monk_walk/045_monk_walk.bmp" x="533" y="590" w="26" h="50" pX="0.615385" pY="0.82"/>
-        <sprite n="monk_walk/046_monk_walk.bmp" x="561" y="590" w="27" h="50" pX="0.62963" pY="0.8"/>
-        <sprite n="monk_walk/047_monk_walk.bmp" x="590" y="590" w="26" h="51" pX="0.576923" pY="0.862745"/>
-        <sprite n="monk_walk/048_monk_walk.bmp" x="618" y="590" w="25" h="52" pX="0.52" pY="0.903846"/>
-        <sprite n="monk_walk/049_monk_walk.bmp" x="645" y="590" w="24" h="56" pX="0.5" pY="0.892857"/>
+        <sprite n="monk_walk/040_monk_walk.bmp" x="398" y="605" w="25" h="56" pX="0.48" pY="0.875"/>
+        <sprite n="monk_walk/041_monk_walk.bmp" x="425" y="605" w="23" h="54" pX="0.478261" pY="0.87037"/>
+        <sprite n="monk_walk/042_monk_walk.bmp" x="450" y="605" w="26" h="52" pX="0.538462" pY="0.903846"/>
+        <sprite n="monk_walk/043_monk_walk.bmp" x="478" y="605" w="26" h="50" pX="0.576923" pY="0.9"/>
+        <sprite n="monk_walk/044_monk_walk.bmp" x="506" y="605" w="25" h="50" pX="0.6" pY="0.86"/>
+        <sprite n="monk_walk/045_monk_walk.bmp" x="533" y="605" w="26" h="52" pX="0.615385" pY="0.82"/>
+        <sprite n="monk_walk/046_monk_walk.bmp" x="561" y="605" w="27" h="52" pX="0.62963" pY="0.8"/>
+        <sprite n="monk_walk/047_monk_walk.bmp" x="590" y="605" w="26" h="51" pX="0.576923" pY="0.862745"/>
+        <sprite n="monk_walk/048_monk_walk.bmp" x="618" y="605" w="25" h="52" pX="0.52" pY="0.903846"/>
+        <sprite n="monk_walk/049_monk_walk.bmp" x="645" y="605" w="24" h="56" pX="0.5" pY="0.892857"/>
       </direction>
     </action>
   </unit>
