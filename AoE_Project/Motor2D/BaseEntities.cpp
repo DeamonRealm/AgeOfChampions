@@ -1556,7 +1556,7 @@ void Unit::SetDefenseBuff(float def_buff)
 
 void Unit::SetVisionBuff(float vis_buff)
 {
-	vision_buff += vis_buff;
+	vision_buff = vis_buff;
 }
 
 void Unit::SetLifeBuff(float hp_buff)
@@ -1768,7 +1768,15 @@ uint Unit::GetArmorBonus() const
 {
 	return armor_bonus;
 }
-
+
+uint Unit::GetMaxLife() const
+{
+	return max_life+ life_buff;
+}
+uint Unit::GetBaseMaxLife() const
+{
+	return max_life;
+}
 float Unit::GetArmorBuff() const
 {
 	return armor_buff;

@@ -155,7 +155,7 @@ public:
 };
 /// ---------------------------------------------
 
-/// Class Warrior -------------------------------
+/// Class Wizard -------------------------------
 // Class that defines the warrior champion states
 class Wizard : public Champion
 {
@@ -209,6 +209,83 @@ public:
 	void	SetSpecialAttackArea(const Circle& circle,const char* name);
 	void	SetAbility_lvl_2_HealValue(uint heal);
 	void	SetAbility_lvl_3_AttackValue(uint attack);
+	void	SetAreaLimitLvl2(int limit);
+	void	SetAreaLimitLvl3(int limit);
+
+};
+/// ---------------------------------------------
+
+/// Class Hunter -------------------------------
+// Class that defines the hunter champion states
+class Hunter : public Champion
+{
+public:
+
+	Hunter();
+	Hunter(const Hunter& copy);
+	~Hunter();
+
+private:
+
+	/* extra data */
+	//Skill lvl 2 A
+	Triangle			area_triangle_attack_skill_A_lvl_2;
+	uint				ability_lvl_2_skill_A_attack_value = 0;
+	//Skill lvl 2 B
+	Circle				area_attack_skill_B_lvl_2;
+	int					area_limit_skill_B_lvl_2;
+	uint				ability_lvl_2_skill_B_attack_value = 0;
+	//Skill lvl 3 A
+	Circle				area_attack_skill_A_lvl_3;
+	int					area_limit_skill_A_lvl_3;
+	uint				ability_lvl_3_skill_A_attack_value = 0;
+	//Skill lvl 3 B
+	SDL_Rect			area_attack_skill_B_lvl_3;
+	uint				ability_lvl_3_skill_B_attack_value = 0;
+
+	//skill selected
+	uint				ability_lvl_2_attack_value;
+	uint				ability_lvl_3_attack_value;
+
+	Particle			ability_lvl_2_particle;
+	Particle			ability_lvl_3_particle;
+
+
+
+
+public:
+
+	//Functionality ---------
+	//Game Loop ---
+	bool Update();
+	//Draw --------
+	bool	Draw(bool debug);
+	//Actions -----
+	void	SetAbility_lvl_1(bool choosed);
+	void	Hability_lvl_1();
+	void	CheckHability_lvl_1();
+	void	SetAbility_lvl_2(bool choosed);
+	void	PrepareAbility_lvl_2();
+	void	Hability_lvl_2(int x = 0, int y = 0);
+	void	CheckHability_lvl_2();
+	void	SetAbility_lvl_3(bool choosed);
+	void	PrepareAbility_lvl_3();
+	void	Hability_lvl_3(int x = 0, int y = 0);
+	void	CheckHability_lvl_3();
+	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
+	bool	CalculateSpecialAttackArea(const iPoint& base, bool attack_lvl_2);
+	bool	Die();
+	//Set Methods -
+	void	SetPosition(float x, float y, bool insert = true);
+	void	SetSpecialAttackArea(const Circle& circle, const char* name);
+	void	SetSpecialAttackArea(const Triangle& triangle);
+	void	SetSpecialAttackArea(const SDL_Rect& rect);
+
+	void	SetAbility_lvl_2_A_AttackValue(uint attack);
+	void	SetAbility_lvl_2_B_AttackValue(uint attack);
+	void	SetAbility_lvl_3_A_AttackValue(uint attack);
+	void	SetAbility_lvl_3_B_AttackValue(uint attack);
+
 	void	SetAreaLimitLvl2(int limit);
 	void	SetAreaLimitLvl3(int limit);
 

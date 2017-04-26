@@ -199,7 +199,7 @@ bool PassiveBuff::ApplyBuff()
 		break;
 	}
 	case LIFE_BUFF:
-		base = target->GetMaxLife();
+		base = target->GetBaseMaxLife();
 		buff = base * value;
 		target->SetLifeBuff(buff);
 		break;
@@ -240,16 +240,17 @@ bool PassiveBuff::RemoveBuff()
 		break;
 	case VISION_BUFF:
 	{
-
-		base = target->GetVision().GetRad();
-		current_buff = base * value;
+		LOG("vision_buff %i", target->GetVisionBuff());
 		Circle tmp = target->GetVision();
 		tmp.SetRad(tmp.GetRad() - target->GetVisionBuff());
+		target->SetVisionBuff(0);
+		LOG("vision_buff %i", target->GetVisionBuff());
+
 		target->SetVision(tmp);	
 		break;
 	}
 	case LIFE_BUFF:
-		base = target->GetMaxLife();
+		base = target->GetBaseMaxLife();
 		current_buff = base * value;
 		target->SetLifeBuff(-current_buff);
 		break;
@@ -336,7 +337,7 @@ bool Buff::ApplyBuff()
 	}
 		break;
 	case LIFE_BUFF:
-		base = target->GetDefense();
+		base = target->GetBaseMaxLife();
 		buff = base * value;
 		target->SetLifeBuff(buff);
 		break;

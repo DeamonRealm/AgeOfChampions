@@ -20,6 +20,7 @@
    <id xml = "warrior_chmp.xml"/>
    <id xml = "wizard_chmp.xml"/>
    <id xml = "crossbowman.xml"/>
+   <id xml = "hunter_chmp.xml"/>
 
   </units>
   <buildings>

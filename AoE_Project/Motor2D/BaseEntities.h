@@ -279,7 +279,7 @@ public:
 	DIPLOMACY		GetDiplomacy()const;
 	Circle			GetVision()const;
 	Circle			GetRenderArea()const;
-	uint			GetMaxLife()const;
+	virtual uint	GetMaxLife()const;
 	int				GetLife()const;
 	Animation*		GetAnimation();
 	bool			GetFlipSprite()const;
@@ -465,6 +465,8 @@ public:
 	uint			GetExp()const;
 	std::vector<iPoint>* GetPath() const;
 	iPoint			GetFuturePosition() const;
+	uint			GetMaxLife() const;
+	uint			GetBaseMaxLife() const;
 
 	float			GetVisionBuff()const;
 	float			GetLifeBuff()const;
