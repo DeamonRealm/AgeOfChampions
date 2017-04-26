@@ -383,6 +383,7 @@ bool j1Map::CleanUp()
 	uint size = data.tilesets.size();
 	for (uint k = 0; k < size; k++)
 	{
+		if(!App->tex->UnLoad(data.tilesets[k]->texture))LOG("Tex unload error");
 		RELEASE(data.tilesets[k]);
 	}
 	data.tilesets.clear();

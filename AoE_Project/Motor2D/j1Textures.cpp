@@ -50,10 +50,13 @@ bool j1Textures::CleanUp()
 	//LOG("Freeing textures and Image library");
 	int i = 0;
 	std::list<SDL_Texture*>::iterator texture = textures.begin();
+	uint w = 0, h = 0;
+
 	while (texture != textures.end())
 	{
 		
 		SDL_Texture* current_tex = texture._Ptr->_Myval;
+		GetSize(current_tex, w, h);
 		LOG("texture number %i || %p", i++, &current_tex);
 		texture++;
 		SDL_DestroyTexture(current_tex);

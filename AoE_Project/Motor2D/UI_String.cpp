@@ -3,6 +3,7 @@
 #include "j1Fonts.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "p2Log.h"
 
 //Contructors =============================================
 UI_String::UI_String(const SDL_Rect& box, char * text, const SDL_Color& text_color, _TTF_Font * text_font) : UI_Element(box, STRING), text(text), text_font(text_font), text_color(text_color) {}
@@ -15,7 +16,9 @@ UI_String::UI_String() : UI_Element({0,0,0,0}, STRING), text(""), text_font(null
 UI_String::~UI_String()
 {
 	if (text_texture != nullptr)
-		App->tex->UnLoad(text_texture);
+	{
+		if (!App->tex->UnLoad(text_texture))LOG("Tex unload error");
+	}
 	text_texture = nullptr;
 	text_font = nullptr;
 }

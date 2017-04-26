@@ -33,6 +33,7 @@ bool j1Pathfinding::Start()
 
 bool j1Pathfinding::CleanUp()
 {
+	App->tex->UnLoad(path_texture);
 	RELEASE_ARRAY(path_nodes);
 	return true;
 }

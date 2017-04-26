@@ -177,11 +177,11 @@ bool j1Gui::CleanUp()
 	}
 	gui_elements.clear();
 
-	std::list<SDL_Texture*>::iterator text_ui = ui_textures.end();
-	while (text_ui != ui_textures.begin())
+	std::list<SDL_Texture*>::iterator text_ui = ui_textures.begin();
+	while (text_ui != ui_textures.end())
 	{
-		text_ui--;
-		App->tex->UnLoad(text_ui._Ptr->_Myval);
+		if(!App->tex->UnLoad(text_ui._Ptr->_Myval))LOG("Tex unload error");
+		text_ui++;
 	}
 	ui_textures.clear();
 

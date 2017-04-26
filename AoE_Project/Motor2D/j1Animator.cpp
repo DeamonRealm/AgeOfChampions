@@ -65,7 +65,7 @@ Animation::~Animation()
 //Functionality =======================
 void Animation::ReleaseTexture()
 {
-	App->tex->UnLoad(texture);
+	if (!App->tex->UnLoad(texture))LOG("Tex unload error");
 }
 
 void Animation::SetTexture(const SDL_Texture * tex)
@@ -258,8 +258,8 @@ DiplomaticAnimation::~DiplomaticAnimation()
 
 void DiplomaticAnimation::ReleaseTexture()
 {
-	App->tex->UnLoad(texture);
-	App->tex->UnLoad(red_texture);
+	if(!App->tex->UnLoad(texture))LOG("Tex unload error");
+	if(!App->tex->UnLoad(red_texture))LOG("Tex unload error");
 }
 
 void DiplomaticAnimation::SetRedTexture(const SDL_Texture * tex)
