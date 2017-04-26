@@ -59,8 +59,13 @@ Animation::Animation()
 Animation::~Animation()
 {
 	sprites.clear();
-	App->tex->UnLoad(texture);
 	texture = nullptr; /*This texture can't be unloaded*/
+}
+
+//Functionality =======================
+void Animation::ReleaseTexture()
+{
+	App->tex->UnLoad(texture);
 }
 
 void Animation::SetTexture(const SDL_Texture * tex)
@@ -68,7 +73,6 @@ void Animation::SetTexture(const SDL_Texture * tex)
 	texture = (SDL_Texture*)tex;
 }
 
-//Functionality =======================
 void Animation::SetLoop(bool loop_state)
 {
 	loop = loop_state;
@@ -252,6 +256,12 @@ DiplomaticAnimation::~DiplomaticAnimation()
 
 }
 
+void DiplomaticAnimation::ReleaseTexture()
+{
+	App->tex->UnLoad(texture);
+	App->tex->UnLoad(red_texture);
+}
+
 void DiplomaticAnimation::SetRedTexture(const SDL_Texture * tex)
 {
 	red_texture = (SDL_Texture*)tex;
@@ -299,7 +309,11 @@ void DiplomaticAnimation_Block::ClearAnimationBlocks()
 
 	}
 
-	if (animation != nullptr)delete animation;
+	if (animation != nullptr)
+	{
+		animation->ReleaseTexture();
+		delete animation;
+	}
 }
 
 void DiplomaticAnimation_Block::SetId(uint id)

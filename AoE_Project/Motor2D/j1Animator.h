@@ -75,6 +75,9 @@ protected:
 public:
 
 	//Functionality -------------------
+	//Called before clean ---
+	virtual void	ReleaseTexture();
+
 	//Set Methods -----------
 	void	SetTexture(const SDL_Texture* tex);
 	void	SetLoop(bool loop_state);
@@ -161,6 +164,9 @@ private:
 public:
 
 	//Functionality -------------------
+	//Called before clean ---
+	void	ReleaseTexture();
+
 	//Set Methods -----------
 	void	SetRedTexture(const SDL_Texture* tex);
 

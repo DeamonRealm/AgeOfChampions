@@ -87,7 +87,6 @@
     <ClCompile Include="j1AI.cpp" />
     <ClCompile Include="j1Animator.cpp" />
     <ClCompile Include="j1BuffManager.cpp" />
-    <ClCompile Include="j1Console.cpp" />
     <ClCompile Include="j1EntitiesManager.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1FogOfWar.cpp" />
@@ -131,13 +130,10 @@
     <ClInclude Include="Hud_GamePanel.h" />
     <ClInclude Include="Hud_SelectionPanel.h" />
     <ClInclude Include="Iso_Primitives.h" />
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="C_var.h" />
     <ClInclude Include="BaseEntities.h" />
     <ClInclude Include="j1AI.h" />
     <ClInclude Include="j1Animator.h" />
     <ClInclude Include="j1BuffManager.h" />
-    <ClInclude Include="j1Console.h" />
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1FogOfWar.h" />
     <ClInclude Include="j1Fonts.h" />

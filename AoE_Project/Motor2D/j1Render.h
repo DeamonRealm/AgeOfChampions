@@ -6,8 +6,6 @@
 #include "j1Module.h"
 #include <queue>
 
-class Cvar;
-
 ///Class Blit_Call ------------------------------
 //Little class to save all blit calls and organize them in a priority queue
 class Blit_Call
@@ -75,9 +73,6 @@ public:
 	// Load / Save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
-
-	//Console Input method
-	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
 
 private:
 

@@ -58,9 +58,6 @@
     <ClCompile Include="UI_Image.cpp">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClCompile>
-    <ClCompile Include="j1Console.cpp">
-      <Filter>UserInteraface\Console</Filter>
-    </ClCompile>
     <ClCompile Include="p2Log.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
@@ -194,15 +191,6 @@
     <ClInclude Include="UI_Image.h">
       <Filter>UserInteraface\UI_Elements</Filter>
     </ClInclude>
-    <ClInclude Include="j1Console.h">
-      <Filter>UserInteraface\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="C_var.h">
-      <Filter>UserInteraface\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>UserInteraface\Console</Filter>
-    </ClInclude>
     <ClInclude Include="p2Point.h">
       <Filter>Tools</Filter>
     </ClInclude>
@@ -308,9 +296,6 @@
     </Filter>
     <Filter Include="UserInteraface\UI_Elements">
       <UniqueIdentifier>{284cbc2b-c97f-4e37-9735-d7d07abfd941}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UserInteraface\Console">
-      <UniqueIdentifier>{c2b1b5cb-f746-4f36-ba24-80ebceee0eb7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Modules\EnititiesManager">
       <UniqueIdentifier>{bfaf59a6-f2ed-48ce-a361-e3cf11d3c42b}</UniqueIdentifier>

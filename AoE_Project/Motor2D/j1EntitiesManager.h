@@ -51,10 +51,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Handle Console Input ----------------------
-	void Console_Command_Input(Command* command, Cvar* cvar, std::string* input);
-	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
-
 private:
 
 	//Lists of current game entities
@@ -72,9 +68,6 @@ private:
 	std::vector<Unit*>		enemy_units_defs;
 	std::vector<Building*>	buildings_defs;
 	std::vector<Resource*>	resources_defs;
-
-	// Cvar that defines the console unit generator unit type
-	Cvar* unit_cvar;
 
 	//Methods to add entities definitions
 	bool		AddUnitDefinition(const pugi::xml_node* unit_node);

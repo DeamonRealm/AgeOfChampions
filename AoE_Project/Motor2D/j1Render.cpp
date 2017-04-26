@@ -3,7 +3,6 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Window.h"
-#include "j1Console.h"
 #include "j1Map.h"
 
 #include <math.h>
@@ -502,26 +501,5 @@ bool j1Render::DrawTriangle(const iPoint* pick, const iPoint* v_A, const iPoint*
 	App->render->DrawLine(v_A->x, v_A->y, v_B->x, v_B->y, r, g, b, a);
 
 	return true;
-}
-
-void j1Render::Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string * input)
-{
-	//Set command
-	if (*command_type->GetCommandStr() == "set")
-	{
-		if (*cvar->GetCvarName() == "vsync")
-		{
-			if (*input == "1")ChangeVSYNCstate(true);
-			else if (*input == "0")ChangeVSYNCstate(false);
-			else App->console->GenerateConsoleLabel("Value error vsync Cvar[0/1]");
-		}
-
-		//Unknown cvar
-		else
-		{
-			App->console->GenerateConsoleLabel("Cvar id Error at module Render");
-			return;
-		}
-	}
 }
 

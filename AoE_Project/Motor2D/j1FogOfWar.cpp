@@ -37,7 +37,7 @@ bool j1FogOfWar::PostUpdate()
 	}
 
 
-	if (update_timer.Read() > UPDATE_RATE)
+	if (update_timer.Read() > UPDATE_TIME)
 	{
 		fog_update = true;
 		update_timer.Start();

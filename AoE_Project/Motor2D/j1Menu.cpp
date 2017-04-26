@@ -8,7 +8,6 @@
 #include "j1Window.h"
 #include "j1FileSystem.h"
 #include "j1Gui.h"
-#include "j1Console.h"
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
 #include "j1Scene.h"

@@ -10,7 +10,7 @@
 #define MID_ALPHA 150			/* Values between 0 & 255 */
 #define	DIVISIONS_PER_PIXELS 60	/* Values between 20 & 60 in debug for >60 fps */ /* Values between 20 & 130 in release for >60 fps */
 #define RENDER_MARGIN 80		/* Values between 0 & INF */
-#define	UPDATE_RATE	100			/* DT between fog updates for optimize the process */
+#define	UPDATE_TIME	100			/* DT between fog updates for optimize the process */
 
 enum FOG_TYPE
 {
