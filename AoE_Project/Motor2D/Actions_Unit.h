@@ -86,6 +86,44 @@ private:
 };
 /// ---------------------------------------------
 
+/// Teleport Unit Action ----------------------------
+//Teleport the character
+class TeleportUnitAction : public Action
+{
+public:
+	//Constructor -----------
+	TeleportUnitAction(Unit* actor, const iPoint& displacement) : Action(actor, TASK_U_TELEPORT), displacement(displacement)
+	{
+	}
+	//Destructor ------------
+	~TeleportUnitAction()
+	{
+	}
+
+
+
+	bool Execute()
+	{
+		float or_x = actor->GetPosition().x;
+		float or_y = actor->GetPosition().y;
+		actor->OnlySetPosition(or_x, or_y);
+
+		return true;
+	}
+
+
+	void CleanUp()
+	{
+		this->actor = nullptr;
+	}
+
+
+private:
+	iPoint displacement;
+
+};
+/// ---------------------------------------------
+
 /// Attack Unit Action ----------------------------
 //Move the character
 class AttackUnitAction : public Action
