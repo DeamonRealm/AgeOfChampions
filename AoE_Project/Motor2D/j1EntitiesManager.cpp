@@ -189,13 +189,7 @@ bool j1EntitiesManager::Draw() const
 		fog_type = App->fog_of_war->GetFogID(pos.x, pos.y);
 		if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
 		if (units_vec[k]->GetDiplomacy() == NEUTRAL && fog_type == DARK_FOG)continue;
-		if (units_vec[k]->GetDiplomacy() == ALLY && App->fog_of_war->fog_update)
-		{
-			App->fog_of_war->ClearAlphaLayer(units_vec[k]->GetVision(), 0);
-			App->fog_of_war->ClearFogLayer(units_vec[k]->GetRenderArea(), GRAY_FOG);
-			App->fog_of_war->ClearFogLayer(units_vec[k]->GetVision(), NO_FOG);
 
-		}
 		units_vec[k]->Draw(App->debug_mode);
 	}
 
@@ -221,7 +215,7 @@ bool j1EntitiesManager::Draw() const
 	size = buildings_vec.size();
 	for (uint k = 0; k < size; k++)
 	{
-		pos = buildings_vec[k]->GetPositionRounded();
+		/*pos = buildings_vec[k]->GetPositionRounded();
 		pos = App->map->WorldToMap(pos.x, pos.y);
 		if (buildings_vec[k]->GetDiplomacy() == ALLY && App->fog_of_war->fog_update)
 		{
@@ -229,7 +223,9 @@ bool j1EntitiesManager::Draw() const
 			App->fog_of_war->ClearFogLayer(buildings_vec[k]->GetRenderArea(), NO_FOG);
 
 		}
-		if (App->fog_of_war->GetFogID(pos.x, pos.y) != DARK_FOG)buildings_vec[k]->Draw(App->debug_mode);
+		if (App->fog_of_war->GetFogID(pos.x, pos.y) != DARK_FOG)*/
+			
+		buildings_vec[k]->Draw(App->debug_mode);
 	}
 
 	//Draw Units quadtree in debug mode

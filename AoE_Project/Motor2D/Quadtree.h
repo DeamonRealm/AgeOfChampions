@@ -548,7 +548,10 @@ public:
 				SDL_Point point = { loc.x,loc.y };
 
 				if (SDL_PointInRect(&point, &rect))
+				{
 					nodes.push_back(object._Ptr->_Myval.data);
+					ret++;
+				}
 
 				object++;
 			}
@@ -617,7 +620,10 @@ public:
 				fPoint loc = object._Ptr->_Myval.location;
 
 				if (circle.IsIn(&loc))
+				{
 					nodes.push_back(object._Ptr->_Myval.data);
+					ret++;
+				}
 
 				object++;
 			}
@@ -818,7 +824,7 @@ public:
 
 	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const SDL_Rect& r) const
 	{
-		int tests = 1;
+		int tests = 0;
 
 		if (root != NULL && SDL_HasIntersection(&r, &root->aabb))
 			tests = root->CollectCandidates(nodes, r);
@@ -837,7 +843,7 @@ public:
 
 	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const Circle& circle) const
 	{
-		int tests = 1;
+		int tests = 0;
 
 		if (root != NULL && circle.Intersects(&root->aabb))
 			tests = root->CollectCandidates(nodes, circle);

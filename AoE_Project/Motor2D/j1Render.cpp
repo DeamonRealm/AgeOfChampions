@@ -4,6 +4,7 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Map.h"
+#include"j1FogOfWar.h"
 
 #include <math.h>
 
@@ -240,6 +241,7 @@ void j1Render::ResetViewPort()
 void j1Render::CalculateCameraViewport()
 {
 	camera_viewport = { -(App->render->camera.x + 50) - (int)App->map->data.tile_width, -App->render->camera.y, App->render->camera.w + 100 + (int)App->map->data.tile_width * 2, App->render->camera.h - (int)App->map->data.tile_height * 1 };
+	App->fog_of_war->CollectFogCells();
 }
 
 iPoint j1Render::ScreenToWorld(int x, int y) const

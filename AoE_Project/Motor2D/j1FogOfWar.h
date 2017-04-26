@@ -10,7 +10,9 @@
 #define MID_ALPHA 150			/* Values between 0 & 255 */
 #define	DIVISIONS_PER_PIXELS 60	/* Values between 20 & 60 in debug for >60 fps */ /* Values between 20 & 130 in release for >60 fps */
 #define RENDER_MARGIN 80		/* Values between 0 & INF */
-#define	UPDATE_TIME	100			/* DT between fog updates for optimize the process */
+#define	UPDATE_TIME	50			/* Time in MS that the fog have to do the update */
+
+class Unit;
 
 enum FOG_TYPE
 {
@@ -46,6 +48,9 @@ private:
 
 	//Timer that count last update time
 	j1Timer		update_timer;
+	std::vector<Unit*> collected_units;
+
+	std::vector<AlphaCell*> cells_in_screen;
 
 public:
 
@@ -53,11 +58,12 @@ public:
 	bool				fog_update = true;
 
 	void				GenerateFogOfWar();
+	void				CollectFogCells();
 
 	FOG_TYPE			GetFogID(int x, int y)const;
 
-	void				ClearAlphaLayer(const Circle zone, unsigned short alpha = 0);
-	void				ClearFogLayer(const Circle zone, FOG_TYPE type);
+	std::vector<AlphaCell*> 	ClearAlphaLayer(const Circle zone, unsigned short alpha = 0);
+	void						ClearFogLayer(const Circle zone, FOG_TYPE type);
 };
 
 #endif

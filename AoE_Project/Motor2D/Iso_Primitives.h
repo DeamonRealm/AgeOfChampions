@@ -202,6 +202,7 @@ public:
 
 	iPoint position = { 0,0 };
 	unsigned short alpha = 255;
+	bool locked = false;
 
 };
 /// ---------------------------------------------

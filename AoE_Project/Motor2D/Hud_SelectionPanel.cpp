@@ -1032,7 +1032,7 @@ bool Selection_Panel::WindowsMove()
 		ret = true;
 	}
 
-	App->render->CalculateCameraViewport();
+	if(ret)App->render->CalculateCameraViewport();
 
 	return ret;
 }

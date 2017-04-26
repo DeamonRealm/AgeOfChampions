@@ -28,12 +28,10 @@ bool j1FogOfWar::PostUpdate()
 {
 	if (App->map_debug_mode)return true;
 
-	std::vector<AlphaCell*> in_view_cells;
-
-	uint size = fog_quadtree.CollectCandidates(in_view_cells, App->render->camera_viewport);
+	uint size = cells_in_screen.size();
 	for (uint k = 0; k < size; k++)
 	{
-		App->render->FogBlit(in_view_cells[k]->position, alpha_cell_size, in_view_cells[k]->alpha);
+		if(cells_in_screen[k]->alpha)App->render->FogBlit(cells_in_screen[k]->position, alpha_cell_size, cells_in_screen[k]->alpha);
 	}
 
 
@@ -45,13 +43,27 @@ bool j1FogOfWar::PostUpdate()
 	else fog_update = false;
 
 
+
+	j1Timer time;
+
 	if (fog_update)
 	{
-		for (uint k = 0; k < size; k++)
+
+	}
+	/*
+	std::vector<Unit*> units_in_screen;
+	size = App->entities_manager->units_quadtree.CollectCandidates(units_in_screen, App->render->camera_viewport);
+	std::vector<AlphaCell*> cells;
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_in_screen[k]->GetDiplomacy() == ALLY)
 		{
-			if (in_view_cells[k]->alpha < MID_ALPHA)in_view_cells[k]->alpha = MID_ALPHA;
+			App->fog_of_war->ClearFogLayer(units_in_screen[k]->GetRenderArea(), GRAY_FOG);
+			App->fog_of_war->ClearFogLayer(units_in_screen[k]->GetVision(), NO_FOG);
+			App->fog_of_war->ClearAlphaLayer(units_in_screen[k]->GetVision(), 0);
 		}
 	}
+	*/
 
 	return true;
 }
@@ -107,12 +119,18 @@ void j1FogOfWar::GenerateFogOfWar()
 	LOG("%f", time.ReadSec());
 }
 
+void j1FogOfWar::CollectFogCells()
+{
+	cells_in_screen.clear();
+	fog_quadtree.CollectCandidates(cells_in_screen, App->render->camera_viewport);
+}
+
 FOG_TYPE j1FogOfWar::GetFogID(int x, int y) const
 {
 	return fog_layer[y * App->map->data.width + x];
 }
 
-void j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned short alpha)
+std::vector<AlphaCell*> j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned short alpha)
 {
 	std::vector<AlphaCell*> fog_cells;
 	uint size = fog_quadtree.CollectCandidates(fog_cells, zone);
@@ -121,6 +139,8 @@ void j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned short alpha)
 	{
 		if (fog_cells[k]->alpha > alpha)fog_cells[k]->alpha = alpha;
 	}
+
+	return fog_cells;
 }
 
 void j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type)
