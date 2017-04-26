@@ -1968,14 +1968,14 @@ void Building::CleanMapLogic()
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
-	if (building_type == RUBBLE_THREE || building_type == BARRACK)
+	if (building_type == RUBBLE_THREE || building_type == BARRACK || building_type == MARKET)
 	{
 		world_coords.x -= 1;
 		world_coords.y -= 1;
 	}
 
 	//Change walk & construction logic maps
-	App->map->ChangeConstructionMap(world_coords, width_in_tiles, height_in_tiles, 1);
+	App->map->ChangeConstructionMap(world_coords, width_in_tiles + 1, height_in_tiles + 1, 1);
 	App->map->ChangeLogicMap(world_coords, width_in_tiles, height_in_tiles, 1);
 }
 
@@ -1987,7 +1987,7 @@ bool Building::CheckZone(int x, int y)
 
 	world_coords.x -= 1;
 	world_coords.y -= 1;
-	if (App->map->CheckConstructionMap(world_coords, width_in_tiles, height_in_tiles))
+	if (App->map->CheckConstructionMap(world_coords, width_in_tiles + 1, height_in_tiles + 1))
 	{
 		//Check unit quadtree for units in build zone
 		Circle check_area;

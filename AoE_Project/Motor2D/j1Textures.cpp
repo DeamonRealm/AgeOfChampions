@@ -48,11 +48,13 @@ bool j1Textures::Start()
 bool j1Textures::CleanUp()
 {
 	//LOG("Freeing textures and Image library");
-
+	int i = 0;
 	std::list<SDL_Texture*>::iterator texture = textures.begin();
 	while (texture != textures.end())
 	{
-		SDL_Texture*current_tex = texture._Ptr->_Myval;
+		
+		SDL_Texture* current_tex = texture._Ptr->_Myval;
+		LOG("texture number %i || %p", i++, &current_tex);
 		texture++;
 		SDL_DestroyTexture(current_tex);
 	}
@@ -65,6 +67,8 @@ bool j1Textures::CleanUp()
 // Load new texture from file path
 SDL_Texture* const j1Textures::Load(const char* path)
 {
+	LOG("%s ||%i", path,textures.size());
+	
 	SDL_Texture* texture = NULL;
 	SDL_Surface* surface = IMG_Load_RW(App->fs->Load(path), 1);
 	
@@ -79,6 +83,7 @@ SDL_Texture* const j1Textures::Load(const char* path)
 		texture = LoadSurface(surface);
 		SDL_FreeSurface(surface);
 	}
+	LOG("%p", &texture);
 
 	return texture;
 }
@@ -87,7 +92,7 @@ SDL_Texture* const j1Textures::Load(const char* path)
 bool j1Textures::UnLoad(SDL_Texture* texture)
 {
 	std::list<SDL_Texture*>::iterator item = textures.begin();
-
+	
 	while(item != textures.end())
 	{
 		if(texture == item._Ptr->_Myval)

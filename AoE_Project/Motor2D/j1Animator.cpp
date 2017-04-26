@@ -59,6 +59,7 @@ Animation::Animation()
 Animation::~Animation()
 {
 	sprites.clear();
+	App->tex->UnLoad(texture);
 	texture = nullptr; /*This texture can't be unloaded*/
 }
 
