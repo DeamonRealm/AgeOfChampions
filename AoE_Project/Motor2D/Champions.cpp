@@ -949,7 +949,7 @@ void Wizard::Hability_lvl_2(int x, int y)
 			}
 			else
 			{
-				units_in[k]->HealUnit(ability_lvl_2_heal_value);
+				units_in[k]->Heal(ability_lvl_2_heal_value);
 			}
 	}
 
@@ -997,7 +997,7 @@ void Wizard::PrepareAbility_lvl_3()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
-	CalculateSpecialAttackArea(iPoint(x, y), true);
+	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true);
 
 }
 
@@ -1008,8 +1008,8 @@ void Wizard::Hability_lvl_3(int x, int y)
 	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
 
 	//Focus the wizard in the spell direction
-	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
-	CalculateSpecialAttackArea(iPoint(x, y), false);
+	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
+	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), false);
 	action_type = ATTATCK;
 	App->animator->UnitPlay(this);
 
@@ -1101,10 +1101,13 @@ iPoint Wizard::GetiPointFromDirection(DIRECTION_TYPE direction) const
 
 bool Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 {
+	iPoint position = this->GetPositionRounded();
+
 	if (attack_lvl_2)
 	{	
-		iPoint position = area_attack_spell_2.GetPosition();
-		if (area_attack_spell_2.GetPosition().DistanceTo(position)>area_limit_spell_2)
+		int distance = area_attack_spell_2.GetPosition().DistanceTo(position);
+		LOG("%i", area_attack_spell_2.GetPosition().DistanceTo(position));
+		if (distance>area_limit_spell_2)
 		{
 			area_attack_spell_2.SetPosition(base);
 
@@ -1118,9 +1121,9 @@ bool Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 	}
 	else	
 	{
+		int distance = area_attack_spell_3.GetPosition().DistanceTo(position);
 
-		iPoint position = this->GetPositionRounded();
-		if (area_attack_spell_3.GetPosition().DistanceTo(position)>area_limit_spell_3)
+		if (distance>area_limit_spell_3)
 		{
 			area_attack_spell_3.SetPosition(base);
 			return false;
