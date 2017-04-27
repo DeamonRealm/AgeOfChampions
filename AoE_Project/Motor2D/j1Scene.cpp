@@ -34,7 +34,7 @@ void j1Scene::Enable()
 {
 	active = true;
 	LoadScene();
-	App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
+	//App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
 }
 
 // Called before render is available

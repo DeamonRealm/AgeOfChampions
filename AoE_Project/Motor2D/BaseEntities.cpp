@@ -1324,14 +1324,6 @@ void Unit::Heal(uint heal)
 {
 	//Deal damage to the unit
 	life = MIN(max_life, life + heal);
-
-
-	/*if (life + heal >= max_life) {
-		life = max_life;
-		return;
-	}
-	life += heal;*/
-
 }
 
 bool Unit::Die()

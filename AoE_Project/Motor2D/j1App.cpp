@@ -336,6 +336,13 @@ bool j1App::PostUpdate()
 
 	if(ret)ret = !want_to_quit;
 
+	//Call save game method
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)App->SaveGame(save_game.c_str());
+	
+	//Call load game method 
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)App->LoadGame("");
+
+
 	return ret;
 }
 
@@ -352,8 +359,6 @@ bool j1App::CleanUp()
 		item--;
 	}
 
-	saved_games.clear();
-	
 	return ret;
 }
 
@@ -393,6 +398,7 @@ const char* j1App::GetOrganization() const
 // Load / Save
 void j1App::LoadGame(const char* file)
 {
+	/*
 	bool ret = false;
 	std::list<std::string*>::const_iterator item = saved_games.begin();
 
@@ -407,16 +413,18 @@ void j1App::LoadGame(const char* file)
 	}
 	if (ret)
 	{
-		want_to_load = true;
-		load_game = std::string(fs->GetSaveDirectory()) + std::string(file);
+
 	}
 	else LOG("Load Directory is no available!");
+	*/
+	want_to_load = true;
+	load_game = std::string(fs->GetSaveDirectory()) + std::string(file);
 }
 
 // ---------------------------------------
-void j1App::SaveGame(const char* file) const
+void j1App::SaveGame(const char* file)
 {
-	std::list<std::string*>::const_iterator item = saved_games.begin();
+	/*std::list<std::string*>::const_iterator item = saved_games.begin();
 	bool exist = false;
 	while (item != saved_games.end())
 	{
@@ -428,17 +436,13 @@ void j1App::SaveGame(const char* file) const
 		std::string* new_file_str = new std::string(file);
 		saved_games.push_back(new_file_str);
 
-	}
+	}*/
 
 	want_to_save = true;
 	save_game = file;
 }
 
 // ---------------------------------------
-void j1App::GetSaveGames(std::list<std::string*>& list_to_fill) const
-{
-	list_to_fill = saved_games;
-}
 
 bool j1App::IsXMLdir(const char * dir) const
 {

@@ -35,7 +35,7 @@ j1Menu::~j1Menu()
 void j1Menu::Enable()
 {
 	active = true;
-	App->sound->PlayMusicAudio(MAIN_MENU_SONG);
+	//App->sound->PlayMusicAudio(MAIN_MENU_SONG);
 }
 
 bool j1Menu::Awake(pugi::xml_node & config)
@@ -51,7 +51,7 @@ bool j1Menu::Start()
 {
 	App->gui->SetDefaultInputTarget(this);
 
-	App->sound->PlayMusicAudio(MAIN_MENU_SONG);
+	//App->sound->PlayMusicAudio(MAIN_MENU_SONG);
 
 	//Main menu screen
 	menu_screen = App->gui->GenerateUI_Element(UNDEFINED);

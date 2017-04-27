@@ -101,11 +101,11 @@ bool j1Gui::PostUpdate()
 	//Tab Input
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
 	{
-		if (ItemSelected == NULL)ItemSelected = GetTabElement(screens.front(), 1);
+		/*if (ItemSelected == NULL)ItemSelected = GetTabElement(screens.front(), 1);
 		else if (ItemSelected->GetInputTarget() != (j1Module*)App->console)
 		{
 			ItemSelected = GetTabElement(screens.front(), ItemSelected->GetTabNum() + 1);
-		}
+		}*/
 
 	}
 

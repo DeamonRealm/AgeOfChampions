@@ -23,7 +23,6 @@ class j1Menu;
 class j1Map;
 class j1Fonts;
 class j1Gui;
-class j1Console;
 class j1Module;
 class j1Animator;
 class j1SoundManager;
@@ -34,8 +33,6 @@ class j1ActionManager;
 class j1Player;
 class j1AI;
 class j1Pathfinding;
-class Command;
-class Cvar;
 class j1FogOfWar;
 
 class j1App
@@ -68,8 +65,7 @@ public:
 	float GetDT() const;
 
 	void LoadGame(const char* file);
-	void SaveGame(const char* file) const;
-	void GetSaveGames(std::list<std::string*>& list_to_fill) const;
+	void SaveGame(const char* file);
 
 	bool IsXMLdir(const char* dir)const;
 
@@ -111,7 +107,6 @@ public:
 	j1Map*				map = NULL;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
-	j1Console*			console = NULL;
 	j1Animator*			animator = NULL;
 	j1SoundManager*		sound = NULL;
 	j1GroupMovement*	group_move = NULL;
@@ -137,10 +132,6 @@ public:
 	//Get config xml file
 	pugi::xml_node GetConfigXML()const;
 
-	//Handle Console Input ----------------------
-	void Console_Command_Input(Command* command, Cvar* cvar, std::string* input);
-	void Console_Cvar_Input(Cvar* cvar, Command* command_type, std::string* input);
-
 private:
 
 	pugi::xml_node config_node;
@@ -152,10 +143,10 @@ private:
 	std::string				title;
 	std::string				organization;
 
-	mutable bool			want_to_save = false;
-	bool					want_to_load = false;
-	std::string				load_game;
-	mutable  std::string	save_game;
+	mutable bool			want_to_save = false;	/*True when save function called*/
+	bool					want_to_load = false;	/*True when load function called*/
+	std::string				load_game;	/*Folder where the game is loaded*/
+	std::string				save_game;	/*Folder where the game is saved*/
 
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
@@ -168,11 +159,6 @@ private:
 	int					capped_ms = -1;
 
 	bool				want_to_quit = false;
-
-	Cvar*				save_dir = nullptr;
-	Cvar*				load_dir = nullptr;
-
-	mutable std::list<std::string*>	saved_games;
 
 public:
 

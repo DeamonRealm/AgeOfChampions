@@ -639,7 +639,7 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	/*Max Life*/		new_def->SetMaxLife(building_node->attribute("max_life").as_uint());
 						new_def->SetLife(new_def->GetMaxLife());
 
-	if (building_type == TOWN_CENTER || building_type == BARRACK)
+	if (building_type == TOWN_CENTER || building_type == BARRACK || building_type == STABLE || building_type == ARCHERY_RANGE)
 	{
 		/*Units Capacity*/	((ProductiveBuilding*)new_def)->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
 		/*Units Spawn pnt*/	iPoint spawn(building_node->attribute("units_spawn_x").as_int(), building_node->attribute("units_spawn_y").as_int());
@@ -850,8 +850,8 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 	{
 		if (buildings_defs[k]->GetBuildingType() == type)
 		{
-			if(type == TOWN_CENTER || type == BARRACK)
-			{
+			if (type == TOWN_CENTER || type == BARRACK || type == STABLE || type == ARCHERY_RANGE)
+			{	
 				new_building = new ProductiveBuilding(*(ProductiveBuilding*)buildings_defs[k]);
 				
 			}
