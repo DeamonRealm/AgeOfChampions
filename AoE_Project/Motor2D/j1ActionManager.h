@@ -12,7 +12,7 @@ class Resource;
 class Building;
 class ProductiveBuilding;
 class Villager;
-
+class TeleportUnitAction;
 class MoveUnitAction;
 class AttackUnitAction;
 class AttackBuildingAction;
@@ -170,7 +170,8 @@ public:
 	//Move Functions
 	MoveUnitAction*				MoveAction(Unit* actor, const iPoint& destination, const iPoint& target = { -1,-1 });
 	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor, const iPoint& target = { -1,-1 });
-	
+	TeleportUnitAction*			TeleportAction(Unit* actor, const iPoint& displacement);
+
 	//Attack Functions
 	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit** target);
 	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building** target);

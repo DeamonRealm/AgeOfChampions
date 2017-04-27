@@ -972,8 +972,7 @@ void Wizard::Hability_lvl_2(int x, int y)
 		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
 			if (ability[1])
 			{
-
-			//	units_in[k]->DirectDamage(ability_B_attack_value);
+				units_in[k]->AddPriorizedAction((Action*)App->action_manager->TeleportAction(units_in[k], teleport_movement));
 			}
 			else
 			{

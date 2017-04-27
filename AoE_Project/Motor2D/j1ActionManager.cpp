@@ -73,6 +73,16 @@ MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * ac
 	return action;
 }
 
+TeleportUnitAction * j1ActionManager::TeleportAction(Unit * actor, const iPoint & displacement)
+{
+	TeleportUnitAction* action = new TeleportUnitAction(actor, displacement);
+
+	//Add the new action at the action manager
+	all_actions.push_back(action);
+
+	return action;
+}
+
 AttackUnitAction* j1ActionManager::AttackToUnitAction(Unit * actor, Unit ** target)
 {
 	//Generate a new attack action definition
