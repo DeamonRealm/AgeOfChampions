@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:274f424d562810df782e24f723daf3be:511ca047f2714758fce956d80b23e6cf:bbe05a595383ee2c1ffa75f1fd858b16$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Teleport.png" width="3015" height="2780">
+  <simple_particle particle_type="teleport_particle" direction="no_direction">
+        <anim_data speed="100" loop="0"/>
+
+    <sprite n="0001 shot.png" opacity ="255" x="1" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0002 shot.png" opacity ="255" x="1" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0003 shot.png" opacity ="255" x="604" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0004 shot.png" opacity ="255" x="1207" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0005 shot.png" opacity ="255" x="1810" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0006 shot.png" opacity ="255" x="2413" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0007 shot.png" opacity ="255" x="1" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0008 shot.png" opacity ="255" x="604" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0009 shot.png" opacity ="255" x="1207" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0010 shot.png" opacity ="255" x="1810" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0011 shot.png" opacity ="255" x="2413" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0012 shot.png" opacity ="255" x="1" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0013 shot.png" opacity ="255" x="604" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0014 shot.png" opacity ="255" x="1207" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0015 shot.png" opacity ="255" x="1810" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0016 shot.png" opacity ="255" x="2413" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0017 shot.png" opacity ="255" x="1" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0018 shot.png" opacity ="255" x="604" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0019 shot.png" opacity ="255" x="1207" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0020 shot.png" opacity ="255" x="1810" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
+    <sprite n="0021 shot.png" opacity ="255" x="2413" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
+  </simple_particle>
+
+</TextureAtlas>

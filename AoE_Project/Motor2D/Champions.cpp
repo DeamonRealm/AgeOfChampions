@@ -240,7 +240,7 @@ Warrior::Warrior(const Warrior & copy) : Champion(copy), special_attack_area(cop
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
 	ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
-	ability_lvl_3_particle = App->buff_manager->GetParticle(ONE_HIT_PARTICLE, NO_DIRECTION);
+	ability_lvl_3_particle = App->buff_manager->GetParticle(TAUNT_PARTICLE, NO_DIRECTION);
 
 	for (uint k = 0; k < 3; k++)
 	{
@@ -266,11 +266,15 @@ void Warrior::ClearProtectedUnits()
 
 bool Warrior::Update()
 {
-	if (actived[0] && level >= 1 )CheckHability_lvl_1();
+	if (actived[0] && level >= 0)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level > 2 )CheckHability_lvl_2();
+	else if (actived[1] && level >= 1)CheckHability_lvl_2();
 	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
-	else if (actived[2] && level >=2)CheckHability_lvl_3();
+	else if (actived[2] && level >= 2)CheckHability_lvl_3();
+
+	ability_lvl_2_current_time = ability_lvl_2_timer.Read();
+	ability_lvl_3_current_time = ability_lvl_3_timer.Read();
+
 	action_worker.Update();
 
 	return true;
@@ -505,7 +509,6 @@ void Warrior::Hability_lvl_2(int x, int y)
 
 void Warrior::CheckHability_lvl_2()
 {
-	ability_lvl_2_current_time = ability_lvl_2_timer.Read();
 	if (!ability_lvl_2_particle.animation.IsEnd())
 	{
 		ability_lvl_2_particle.Draw();
@@ -579,7 +582,6 @@ void Warrior::Hability_lvl_3(int x, int y)
 
 void Warrior::CheckHability_lvl_3()
 {
-	ability_lvl_3_current_time = ability_lvl_3_timer.Read();
 	if (ability[2]) return;
 	
 	if (!ability_lvl_3_particle.animation.IsEnd())
@@ -724,8 +726,8 @@ Wizard::Wizard() :Champion()
 Wizard::Wizard(const Wizard & copy) : Champion(copy), area_attack_spell_2(copy.area_attack_spell_2), area_limit_spell_2(copy.area_limit_spell_2), area_attack_spell_3(copy.area_attack_spell_3), area_limit_spell_3(copy.area_limit_spell_3), ability_lvl_2_heal_value(copy.ability_lvl_2_heal_value), ability_lvl_3_attack_value(copy.ability_lvl_3_attack_value)
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
-	ability_lvl_2_A_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
-	ability_lvl_2_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	ability_lvl_2_A_particle = App->buff_manager->GetParticle(HEAL_PARTICLE, NO_DIRECTION);
+	ability_lvl_2_B_particle = App->buff_manager->GetParticle(TELEPORT_PARTICLE, NO_DIRECTION);
 
 	for (uint k = 0; k < 3; k++)
 	{
@@ -741,13 +743,15 @@ Wizard::~Wizard()
 }
 bool Wizard::Update()
 {
-	if (actived[0] && level >= 1)CheckHability_lvl_1();
+	if (actived[0] && level >= 0)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level > 2)CheckHability_lvl_2();
+	else if (actived[1] && level >= 1)CheckHability_lvl_2();
 	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
 	else if (actived[2] && level >= 2)CheckHability_lvl_3();
 	action_worker.Update();
 
+	ability_lvl_2_current_time = ability_lvl_2_timer.Read();
+	ability_lvl_3_current_time = ability_lvl_3_timer.Read();
 	return true;
 }
 
@@ -765,6 +769,7 @@ bool Wizard::Draw(bool debug)
 			
 		}
 		else if(ability_lvl_3_prepare_mode){
+
 			area_attack_spell_3.Draw();
 		}
 		mark.Draw();
@@ -892,13 +897,13 @@ void Wizard::SetAbility_lvl_2(bool choosed)
 
 	if (choosed)
 	{
-		ability_lvl_2_A_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
-		ability_lvl_2_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_2_A_particle = App->buff_manager->GetParticle(TELEPORT_PARTICLE, NO_DIRECTION);
+		ability_lvl_2_B_particle = App->buff_manager->GetParticle(TELEPORT_PARTICLE, NO_DIRECTION);
 		ability_lvl_2_current_time = ability_lvl_2_cooldown;
 	}
 	else
 	{
-		ability_lvl_2_A_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+		ability_lvl_2_A_particle = App->buff_manager->GetParticle(HEAL_PARTICLE, NO_DIRECTION);
 		ability_lvl_2_current_time = ability_lvl_2_cooldown;
 	}
 	ability[1] = choosed;
@@ -925,13 +930,14 @@ void Wizard::Hability_lvl_2(int x, int y)
 	if (ability_lvl_2_current_time < ability_lvl_2_cooldown)return;
 
 	//Focus the wizard in the spell direction
-	iPoint destination = iPoint(x - App->render->camera.x, y - App->render->camera.y);
+	iPoint destination = iPoint(x, y );
 	direction_type = LookDirection(destination, GetPositionRounded());
 	if (!CalculateSpecialAttackArea(destination, true))
 		return;
 	action_type = ATTATCK;
 	App->animator->UnitPlay(this);
 	iPoint teleport_movement = { 0,0 };
+
 	std::vector<Unit*> units_in;
 
 	if (ability[1])
@@ -945,9 +951,9 @@ void Wizard::Hability_lvl_2(int x, int y)
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, temp_circle);
 		//Reset Particles
 		ability_lvl_2_A_particle.animation.Reset();
-		ability_lvl_2_A_particle.position = GetPositionRounded();
+		ability_lvl_2_A_particle.position = this->GetPositionRounded();
 		ability_lvl_2_B_particle.animation.Reset();
-		ability_lvl_2_B_particle.position = area_attack_spell_2.GetPosition();
+		ability_lvl_2_B_particle.position = destination;
 	}
 	else
 	{
@@ -957,7 +963,7 @@ void Wizard::Hability_lvl_2(int x, int y)
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_2);
 		//Reset Particles
 		ability_lvl_2_A_particle.animation.Reset();
-		ability_lvl_2_A_particle.position = area_attack_spell_2.GetPosition();
+		ability_lvl_2_A_particle.position = destination;
 	}
 	//Apply effects
 	uint size = units_in.size();
@@ -983,7 +989,6 @@ void Wizard::Hability_lvl_2(int x, int y)
 
 void Wizard::CheckHability_lvl_2()
 {
-	ability_lvl_2_current_time = ability_lvl_2_timer.Read();
 	if (ability[1])
 	{
 		if (!ability_lvl_2_A_particle.animation.IsEnd()) ability_lvl_2_A_particle.Draw();
@@ -1000,12 +1005,13 @@ void Wizard::CheckHability_lvl_2()
 	else
 	{
 		if (!ability_lvl_2_A_particle.animation.IsEnd()) ability_lvl_2_A_particle.Draw();
-		if (ability_lvl_2_B_particle.animation.IsEnd() && ability_lvl_2_A_particle.animation.IsEnd())
+		else
 		{
 			actived[1] = false;
 			action_type = IDLE;
 			App->animator->UnitPlay(this);
-		}
+
+		} 
 	}
 	
 }
@@ -1015,7 +1021,7 @@ void Wizard::SetAbility_lvl_3(bool choosed)
 
 	if (choosed)
 	{
-		ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_3_particle = App->buff_manager->GetParticle(THUNDER_PARTICLE, NO_DIRECTION);
 		ability_lvl_3_current_time = ability_lvl_3_cooldown;
 	}
 	else
@@ -1036,8 +1042,9 @@ void Wizard::PrepareAbility_lvl_3()
 	//Focus the wizard in the attack direction
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
-	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true);
+	iPoint mouse_position = iPoint(x - App->render->camera.x, y - App->render->camera.y);
+	direction_type = LookDirection(mouse_position, GetPositionRounded());
+	CalculateSpecialAttackArea(mouse_position, false);
 
 }
 
@@ -1048,14 +1055,15 @@ void Wizard::Hability_lvl_3(int x, int y)
 	if (ability_lvl_3_current_time< ability_lvl_3_cooldown)return;
 
 	//Focus the wizard in the spell direction
-	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
-	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), false);
+	iPoint destination = iPoint(x, y);
+	direction_type = LookDirection(destination, GetPositionRounded());
+	if (!CalculateSpecialAttackArea(destination, false))
+		return;
 	action_type = ATTATCK;
 	App->animator->UnitPlay(this);
-
 	if (ability[2])
 	{
-		ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+		ability_lvl_3_particle = App->buff_manager->GetParticle(THUNDER_PARTICLE, NO_DIRECTION);
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
 	}
 	else
@@ -1066,7 +1074,7 @@ void Wizard::Hability_lvl_3(int x, int y)
 	}
 	//Reset Particles
 	ability_lvl_3_particle.animation.Reset();
-	ability_lvl_3_particle.position = area_attack_spell_3.GetPosition();
+	ability_lvl_3_particle.position = destination;
 
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_in;
@@ -1084,6 +1092,7 @@ void Wizard::Hability_lvl_3(int x, int y)
 		}
 		else
 		{
+
 			//ress
 		}
 	}
@@ -1095,7 +1104,6 @@ void Wizard::Hability_lvl_3(int x, int y)
 
 void Wizard::CheckHability_lvl_3()
 {
-	ability_lvl_3_current_time = ability_lvl_3_timer.Read();
 	if (!ability_lvl_3_particle.animation.IsEnd())
 	{
 		ability_lvl_3_particle.Draw();
@@ -1146,7 +1154,7 @@ bool Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 
 	if (attack_lvl_2)
 	{	
-		int distance = area_attack_spell_2.GetPosition().DistanceTo(position);
+		int distance = position.DistanceTo(base);
 		if (distance>area_limit_spell_2)
 		{
 			area_attack_spell_2.SetPosition(base);
@@ -1161,7 +1169,7 @@ bool Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 	}
 	else	
 	{
-		int distance = area_attack_spell_3.GetPosition().DistanceTo(position);
+		int distance = position.DistanceTo(base);
 
 		if (distance>area_limit_spell_3)
 		{
@@ -1290,11 +1298,15 @@ Hunter::~Hunter()
 }
 bool Hunter::Update()
 {
-	if (actived[0] && level >= 1)CheckHability_lvl_1();
+	if (actived[0] && level >= 0)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level >= 2)CheckHability_lvl_2();
+	else if (actived[1] && level >= 1)CheckHability_lvl_2();
+	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
+	else if (actived[2] && level >= 2)CheckHability_lvl_3();
 	action_worker.Update();
 
+	ability_lvl_2_current_time = ability_lvl_2_timer.Read();
+	ability_lvl_3_current_time = ability_lvl_3_timer.Read();
 	return true;
 }
 

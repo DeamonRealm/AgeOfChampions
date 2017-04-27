@@ -620,10 +620,13 @@ BUFF_ATTRIBUTE_TYPE j1BuffManager::StrToBuffAttributeType(const char * str) cons
 
 PARTICLE_TYPE j1BuffManager::StrToParticleType(const char * str) const
 {
-	if (strcmp("buff_particle", str) == 0) 	return PARTICLE_TYPE::BUFF_PARTICLE;
-	if (strcmp("slash_particle", str) == 0)	return PARTICLE_TYPE::SLASH_PARTICLE;
-	if (strcmp("stun_particle", str) == 0)	return PARTICLE_TYPE::STUN_PARTICLE;
-	if (strcmp("taunt_particle", str) == 0)	return PARTICLE_TYPE::TAUNT_PARTICLE;
+	if (strcmp("buff_particle", str) == 0) 		return PARTICLE_TYPE::BUFF_PARTICLE;
+	if (strcmp("slash_particle", str) == 0)		return PARTICLE_TYPE::SLASH_PARTICLE;
+	if (strcmp("stun_particle", str) == 0)		return PARTICLE_TYPE::STUN_PARTICLE;
+	if (strcmp("taunt_particle", str) == 0)		return PARTICLE_TYPE::TAUNT_PARTICLE;
+	if (strcmp("teleport_particle", str) == 0)	return PARTICLE_TYPE::TELEPORT_PARTICLE;
+	if (strcmp("heal_particle", str) == 0)		return PARTICLE_TYPE::HEAL_PARTICLE;
+	if (strcmp("thunder_particle", str) == 0)	return PARTICLE_TYPE::THUNDER_PARTICLE;
 
 	return UNKNOWN_PARTICLE;
 }

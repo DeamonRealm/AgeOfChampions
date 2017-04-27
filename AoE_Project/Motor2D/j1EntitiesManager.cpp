@@ -468,6 +468,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 									((Hunter*)new_def)->SetAbility_lvl_2_B_AttackValue(unit_node->attribute("ability_lvl_2_skill_B_attack_value").as_uint());
 									((Hunter*)new_def)->SetAbility_lvl_3_A_AttackValue(unit_node->attribute("ability_lvl_3_skill_A_attack_value").as_uint());
 									((Hunter*)new_def)->SetAbility_lvl_3_B_AttackValue(unit_node->attribute("ability_lvl_3_skill_B_attack_value").as_uint());
+									chmp = true;
 
 	}
 	else if (unit_type == WIZARD_CHMP)
@@ -484,6 +485,10 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*area Spell_3*/			temp_circle.SetRad(unit_node->attribute("area_attack_spell_3").as_uint());
 									temp_circle.SetColor({ 0,50,50,255 });
 									((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
+									((Wizard*)new_def)->SetAbility_lvl_3_AttackValue(unit_node->attribute("ability_lvl_3_attack_value").as_int());
+										
+									((Wizard*)new_def)->SetAbility_lvl_2_HealValue(unit_node->attribute("ability_lvl_2_heal_value").as_int());
+
 									chmp = true;
 
 	}
@@ -501,6 +506,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Armor for level*/			((Champion*)new_def)->SetArmorForLevel(unit_node->attribute("armor_for_level").as_float());
 		/*Speed for level*/			((Champion*)new_def)->SetSpeedForLevel(unit_node->attribute("speed_for_level").as_float());
 		/*View Area for level*/		((Champion*)new_def)->SetViewAreaForLevel(unit_node->attribute("view_area_for_level").as_uint());
+	
 	}
 
 	//Add the generated unit in the units definitions entities manager array
