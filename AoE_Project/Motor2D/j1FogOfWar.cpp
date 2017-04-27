@@ -28,12 +28,7 @@ bool j1FogOfWar::PostUpdate()
 {
 	if (App->map_debug_mode)return true;
 
-	uint size = cells_in_screen.size();
-	for (uint k = 0; k < size; k++)
-	{
-		if(!cells_in_screen[k]->locked)App->render->FogBlit(cells_in_screen[k]->position, alpha_cell_size, cells_in_screen[k]->alpha);
-		if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA)cells_in_screen[k]->alpha = MID_ALPHA;
-	}
+
 
 	if (update_timer.Read() > UPDATE_RATE)
 	{
@@ -42,9 +37,21 @@ bool j1FogOfWar::PostUpdate()
 		for (uint k = 0; k < size; k++)
 		{
 			if (units[k]->GetAction() != WALK)entities_static_update.push_back(units[k]);
-			//else entities_static_update.push_back(units[k]);
+			else entities_static_update.push_back(units[k]);
 		}
 		update_timer.Start();
+
+		size = cells_in_screen.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA)cells_in_screen[k]->alpha = MID_ALPHA;
+		}
+	}
+
+	while (!entities_release.empty())
+	{
+		entities_release.back()->ResetFogAround();
+		entities_release.pop_back();
 	}
 
 	j1Timer time;
@@ -60,16 +67,20 @@ bool j1FogOfWar::PostUpdate()
 		entitites_updated.front()->CleanFogAround();
 		entitites_updated.pop_front();
 	}
+
 	j1Timer timer;
-	while (timer.Read() < UPDATE_TIME  && !entities_static_update.empty())
+	while (timer.Read() < UPDATE_TIME && !entities_static_update.empty())
 	{
 		entities_static_update.back()->CheckFogAround();
 		entities_static_update.pop_back();
 	}
 
-	//LOG("%i", timer.Read());
-
-
+	uint size = cells_in_screen.size();
+	for (uint k = 0; k < size; k++)
+	{
+		if(!cells_in_screen[k]->locked)App->render->FogBlit(cells_in_screen[k]->position, alpha_cell_size, cells_in_screen[k]->alpha);
+		
+	}
 
 	return true;
 }
@@ -128,7 +139,11 @@ void j1FogOfWar::GenerateFogOfWar()
 void j1FogOfWar::CollectFogCells()
 {
 	cells_in_screen.clear();
-	fog_quadtree.CollectCandidates(cells_in_screen, App->render->camera_viewport);
+	uint size = fog_quadtree.CollectCandidates(cells_in_screen, App->render->camera_viewport);
+	for (uint k = 0; k < size; k++)
+	{
+		if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA)cells_in_screen[k]->alpha = MID_ALPHA;
+	}
 }
 
 FOG_TYPE j1FogOfWar::GetFogID(int x, int y) const
@@ -171,5 +186,10 @@ void j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type)
 void j1FogOfWar::CheckEntityFog(Entity * target)
 {
 	entities_dinamic_update.push_back(target);
+}
+
+void j1FogOfWar::ReleaseEntityFog(Entity * target)
+{
+	entities_release.push_back(target);
 }
 

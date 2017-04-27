@@ -252,7 +252,7 @@
       attack_type="melee"
       
       vision_rad ="300"
-      mark_rad ="55"
+      mark_rad ="35"
       soft_rad ="30"
       hard_rad ="10"
       selection_x ="0"
@@ -471,7 +471,7 @@
       attack_hitpoints="5"
       attack_bonus="2"
       siege_hitpoints="10"
-      attack_rate="200"
+      attack_rate="1000"
       attack_range="25"
       defense="10"
       defense_bonus="5"
@@ -831,7 +831,7 @@
       
       
       ability_lvl_2_cooldown = "5000"
-      ability_lvl_2_heal_value = "10"
+      ability_lvl_2_heal_value = "20"
       
       ability_lvl_3_attack_value = "2000"
       ability_lvl_3_cooldown = "5000"

@@ -119,12 +119,8 @@ void Entity::CleanFogAround()
 
 void Entity::CheckFogAround()
 {
-	std::vector<AlphaCell*> new_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
-	uint size = new_cells.size();
-	for (uint k = 0; k < size; k++)
-	{
-		in_vision_cells.push_back(new_cells[k]);
-	}
+	this->ResetFogAround();
+	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
 }
 
 //Add Action ------------
@@ -1327,11 +1323,14 @@ bool Unit::DirectDamage(uint damage)
 void Unit::Heal(uint heal)
 {
 	//Deal damage to the unit
-	if (life + heal > max_life) {
+	life = MIN(max_life, life + heal);
+
+
+	/*if (life + heal >= max_life) {
 		life = max_life;
 		return;
 	}
-	life += heal;
+	life += heal;*/
 
 }
 
@@ -1364,6 +1363,7 @@ bool Unit::Die()
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
 		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
 	}
 	else if (current_animation->IsEnd())
 	{
@@ -1425,7 +1425,7 @@ void Unit::ResetFogAround()
 	uint size = in_vision_cells.size();
 	for (uint k = 0; k < size; k++)
 	{
-		in_vision_cells[k]->alpha = MID_ALPHA;
+		//in_vision_cells[k]->alpha = MID_ALPHA;
 		in_vision_cells[k]->locked = false;
 	}
 	in_vision_cells.clear();
@@ -1460,8 +1460,12 @@ void Unit::SetPosition(float x, float y, bool insert)
 	vision.SetPosition(pos);
 	//Set unit render area position
 	render_area.SetPosition(pos);
-
-	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * 2))App->fog_of_war->CheckEntityFog(this);
+	
+	//Check unit fog
+	SDL_Point point = { pos.x,pos.y };
+	int dist_mult = 10;
+	if (SDL_PointInRect(&point, &App->render->camera_viewport))dist_mult = 2;
+	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * dist_mult))App->fog_of_war->CheckEntityFog(this);
 
 	//Set unit mark position
 	mark.SetPosition(pos);
@@ -2058,7 +2062,7 @@ void Building::CleanMapLogic()
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
-	if (building_type == RUBBLE_THREE || building_type == BARRACK || building_type == MARKET)
+	if (building_type == RUBBLE_THREE || building_type == BARRACK)
 	{
 		world_coords.x -= 1;
 		world_coords.y -= 1;
@@ -2206,8 +2210,6 @@ void Building::SetPosition(float x, float y, bool insert)
 	//Check if the building is a town center to respect the build exception
 	switch (building_type)
 	{
-	case FARM:
-		break;
 	case TOWN_CENTER:
 		position.y -= App->map->data.tile_height * 0.5f;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2, 0);
@@ -2217,11 +2219,6 @@ void Building::SetPosition(float x, float y, bool insert)
 	case BLACKSMITH:
 	case STABLE:
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
-		break;
-	case MARKET:
-		position.y += (App->map->data.tile_height + 1) * 0.5f;
-		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
-		break;
 		break;
 	case HOUSE_A:
 	case HOUSE_B:
@@ -2268,12 +2265,9 @@ void Building::OnlySetPosition(float x, float y)
 	pos = App->map->MapToWorld(pos.x, pos.y);
 	switch (building_type)
 	{
-	case FARM:
-		break;
+
 	case TOWN_CENTER:
 		pos.y -= App->map->data.tile_height * 0.5f;
-	case MARKET:
-		pos.y += App->map->data.tile_height * 0.5f;
 		break;
 	case HOUSE_A:
 	case HOUSE_B:

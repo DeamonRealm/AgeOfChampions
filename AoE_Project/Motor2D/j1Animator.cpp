@@ -511,10 +511,8 @@ BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 {
 	if (strcmp(str, "town_center") == 0)	return TOWN_CENTER;
 	if (strcmp(str, "barrack") == 0)		return BARRACK;
-	if (strcmp(str, "farm") == 0)			return FARM;
 	if (strcmp(str, "archery_range") == 0)	return ARCHERY_RANGE;
 	if (strcmp(str, "blacksmith") == 0)		return BLACKSMITH;
-	if (strcmp(str, "market") == 0)			return MARKET;
 	if (strcmp(str, "stable") == 0)			return STABLE;
 	if (strcmp(str, "houseA") == 0)			return HOUSE_A;
 	if (strcmp(str, "houseB") == 0)			return HOUSE_B;
