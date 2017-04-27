@@ -133,8 +133,10 @@ public:
 	void HardReset();
 	void ResetChannel(TASK_CHANNELS channel);
 
-	TASK_TYPE GetCurrentActionType() const;
-	Action* GetCurrentAction() const;
+	TASK_TYPE	GetCurrentActionType() const;
+	Action*		GetCurrentAction() const;
+
+	bool IsBusy(TASK_CHANNELS channel);
 
 	void Pause();
 	void Restart();

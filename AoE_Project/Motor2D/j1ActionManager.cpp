@@ -399,6 +399,32 @@ Action * ActionWorker::GetCurrentAction() const
 	return current_primary_action;
 }
 
+bool ActionWorker::IsBusy(TASK_CHANNELS channel)
+{
+	switch (channel)
+	{
+
+	case PRIMARY:
+		if (current_primary_action == nullptr && primary_action_queue.empty())
+			return false;
+		break;
+	case SECONDARY:
+		if (current_secondary_action == nullptr && secondary_action_queue.empty())
+			return false;
+		break;
+	case PASSIVE:
+		if (current_passive_action == nullptr && passive_action_queue.empty())
+			return false;
+		break;
+	default:
+		break;
+
+	}
+
+
+	return true;;
+}
+
 void ActionWorker::Pause()
 {
 	paused = true;

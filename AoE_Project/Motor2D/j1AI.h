@@ -78,13 +78,28 @@ private:
 	bool LoadEnemies(const char* folder);
 
 
+
 private:
 	AIWorker* ai_worker = nullptr;
-
 	std::list<Entity*> units_to_spawn;
+	j1Timer update_timer;
+
+	ProductiveBuilding* ai_starting_tc;
+
+
 
 public:
-	std::list<Entity*> enemy_units;
+	std::list<Unit*> enemy_units;
+	
+	//AI resource information
+	int			wood = 0;
+	int			meat = 0;
+	int			gold = 0;
+	int			stone = 0;
+	int			population = 0;
+
+	void		GenerateDebugVillager();
+
 
 };
 
@@ -113,15 +128,15 @@ private:
 class SpawnUnitsFromListCommand : public AICommand
 {
 public:
-	SpawnUnitsFromListCommand(std::list<Entity*>* to_spawn);
+	SpawnUnitsFromListCommand(std::list<Unit*>* to_spawn);
 	~SpawnUnitsFromListCommand();
 
 public:
 	bool Execute();
 
 private:
-	std::list<Entity*>* to_spawn;
-	Entity* current_spawn = nullptr;
+	std::list<Unit*>* to_spawn;
+	Unit* current_spawn = nullptr;
 
 };
 //---------------------
@@ -145,6 +160,42 @@ private:
 //---------------------
 
 
+
+//---------------------
+class BuildStructureCommand : public AICommand
+{
+public:
+	BuildStructureCommand();
+	~BuildStructureCommand();
+
+public:
+	bool Execute();
+
+
+private:
+
+
+};
+//---------------------
+
+
+//---------------------
+class SendToRecollect : public AICommand
+{
+public:
+	SendToRecollect(std::list<Unit*> units, Resource** target);
+	~SendToRecollect();
+
+public:
+	bool Execute();
+
+
+private:
+
+	std::list<Unit*> units;
+	Resource** target;	
+};
+//---------------------
 
 class MoveUnitsCommand : public AICommand
 {

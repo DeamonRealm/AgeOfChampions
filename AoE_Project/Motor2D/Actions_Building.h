@@ -8,6 +8,7 @@
 #include "j1SoundManager.h"
 #include "Actions_Unit.h"
 #include "j1Player.h"
+#include "j1AI.h"
 
 enum RESEARCH_TECH
 {
@@ -125,6 +126,11 @@ public:
 
 			//Add an autoatack passive action
 			new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
+
+
+			//Add it to the AI units list if it is an enemy
+			if (new_unit->GetDiplomacy() == ENEMY)
+				App->AI->enemy_units.push_back(new_unit);
 
 			return true;
 		}

@@ -23,6 +23,11 @@
 #include "Hud_GamePanel.h"
 #include "Hud_ActionPanel.h"
 
+
+
+
+#include "j1AI.h"
+
 //j1Player Constructor ============================================================
 j1Player::j1Player()
 {
@@ -142,6 +147,11 @@ bool j1Player::PreUpdate()
 			center->SetDiplomacy(ALLY);
 
 			game_panel->IncressPopulation(15, true);
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		{
+			App->AI->GenerateDebugVillager();
 		}
 		//Generate Villager in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && game_panel->CheckPopulation())

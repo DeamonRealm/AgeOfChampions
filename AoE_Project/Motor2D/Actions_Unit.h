@@ -106,7 +106,7 @@ public:
 	{
 		float or_x = actor->GetPosition().x;
 		float or_y = actor->GetPosition().y;
-		actor->OnlySetPosition(or_x, or_y);
+		actor->SetPosition(or_x + displacement.x, or_y + displacement.y);
 
 		return true;
 	}

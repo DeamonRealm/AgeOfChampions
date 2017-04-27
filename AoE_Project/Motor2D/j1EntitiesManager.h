@@ -122,6 +122,10 @@ public:
 	bool UpgradeUnit(UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
 	
 	
+	//Get nearest Entity methods
+	Unit*		GetNearestUnit(iPoint point);
+	Building*	GetNearestBuilding(iPoint point);
+	Resource*	GetNearestResource(iPoint point, RESOURCE_TYPE type);
 
 };
 #endif // _ENTITIES_MANAGER_

@@ -3,11 +3,16 @@
 #include "j1AI.h"
 #include "j1EntitiesManager.h"
 #include "j1FileSystem.h"
+#include "BaseEntities.h"
 #include "j1Map.h"
 #include "j1ActionManager.h"
 #include "Actions_Unit.h"
 #include "Actions_Building.h"
 #include "j1GroupMovement.h"
+#include "Hud_GamePanel.h"
+
+
+#include "j1Input.h"
 
 j1AI::j1AI()
 {
@@ -20,27 +25,19 @@ j1AI::~j1AI()
 
 void j1AI::Enable()
 {
-	ai_worker->AddAICommand(new WaitAICommand(80000));
+	//ai_worker->AddAICommand(new WaitAICommand(80000));
 
 	//active = LoadEnemies("EnemiesSpawn.xml");
 	active = true;
+
+
+	update_timer.Start();
+
+	ai_starting_tc = (ProductiveBuilding*)App->entities_manager->GenerateBuilding(TOWN_CENTER, ENEMY);
+	iPoint pos = App->map->MapToWorldCenter(110, 100);
+	ai_starting_tc->SetPosition((float)pos.x, (float)pos.y);
 	
-	/*
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(0, 500)));
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(50, 500)));
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(100, 500)));
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-50, 500)));
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-100, 500)));
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(0, 530)));
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(50, 530)));
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(100, 530)));
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-50, 530)));
-	ai_worker->AddAICommand(new SpawnUnitCommand(MILITIA, fPoint(-100, 530)));
-	*/
-
-
 	//ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
-
 }
 
 void j1AI::Disable()
@@ -70,6 +67,8 @@ bool j1AI::Start()
 
 bool j1AI::PreUpdate()
 {
+	
+
 
 	return true;
 }
@@ -77,6 +76,35 @@ bool j1AI::PreUpdate()
 bool j1AI::Update(float dt)
 {
 	ai_worker->Update();
+
+	//only update every 2 seconds
+	if (update_timer.Read() < 2000)
+	{
+		return true;
+	}
+	Resource* to_recolect = App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), RESOURCE_TYPE::BERRY_BUSH);
+	//ai_worker->AddAICommand(new SendToRecollect(enemy_units, (Resource**)to_recolect->GetMe()));
+
+	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
+	while (unit_it != enemy_units.end())
+	{
+		//Check resource type
+		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER)
+		{
+			unit_it++;
+			continue;
+		}
+
+		if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(TASK_CHANNELS::SECONDARY))
+		{
+			unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)unit_it._Ptr->_Myval, (Resource**)to_recolect->GetMe()), SECONDARY);
+		}
+		unit_it++;
+	}
+
+	update_timer.Start();
+
+
 	return true;
 }
 
@@ -117,6 +145,13 @@ bool j1AI::LoadEnemies(const char * folder)
 	}
 	return true;
 }
+
+void j1AI::GenerateDebugVillager()
+{
+	ai_worker->AddAICommand(new SpawnUnitCommand(VILLAGER, ai_starting_tc));
+
+}
+
 
 
 
@@ -204,7 +239,7 @@ bool WaitAICommand::Execute()
 //---------------------------------------
 
 //Spawn all units in the waiting list----
-SpawnUnitsFromListCommand::SpawnUnitsFromListCommand(std::list<Entity*>* to_spawn) : to_spawn(to_spawn)
+SpawnUnitsFromListCommand::SpawnUnitsFromListCommand(std::list<Unit*>* to_spawn) : to_spawn(to_spawn)
 {
 }
 
@@ -230,13 +265,14 @@ bool SpawnUnitsFromListCommand::Execute()
 	uint size = App->AI->enemy_units.size();
 
 
-	std::list<Entity*>::iterator it = App->AI->enemy_units.begin();
+	std::list<Unit*>::iterator it = App->AI->enemy_units.begin();
 	while (it != App->AI->enemy_units.end())
 	{
 		it._Ptr->_Myval->AddAction(App->action_manager->ScanAction(it._Ptr->_Myval), TASK_CHANNELS::PASSIVE);
 
 		it++;
 	}
+
 
 
 	return true;
@@ -256,11 +292,12 @@ MoveUnitsCommand::~MoveUnitsCommand()
 bool MoveUnitsCommand::Execute()
 {
 
+
 	uint size = to_move_list.size();
 
 	App->group_move->GetGroupOfUnits(&to_move_list, new_pos.x, new_pos.y, false);
 	
-	std::list<Entity*>::iterator it = App->AI->enemy_units.begin();
+	std::list<Unit*>::iterator it = App->AI->enemy_units.begin();
 
 
 	return true;
@@ -281,19 +318,57 @@ SpawnUnitCommand::~SpawnUnitCommand()
 
 bool SpawnUnitCommand::Execute()
 {
+	//If AI already has max units end the spawn
+	if (App->AI->population >= MAX_POPULATION) return true;
 
 	generator->GetWorker()->AddAction(new SpawnUnitAction(generator, type, ENEMY));
 
-
-	Unit* new_unit = App->entities_manager->GenerateUnit(type, ENEMY);
+	/*Unit* new_unit = App->entities_manager->GenerateUnit(type, ENEMY);
 	new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
 	App->AI->enemy_units.push_back(new_unit);
+	*/
+
 	return true;
 }
 
 
 
 
+//-----------------------------
+
+
+//-----------------------------
+SendToRecollect::SendToRecollect(std::list<Unit*> units, Resource** target) : units(units), target(target)
+{
+}
+
+SendToRecollect::~SendToRecollect()
+{
+}
+
+bool SendToRecollect::Execute()
+{
+	if (units.empty()) return true;
+	//Iterate all enemy units to give orders
+	std::list<Unit*>::const_iterator unit_it = units.begin();
+	while (unit_it != units.end())
+	{
+		//Check resource type
+		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER)
+		{
+			unit_it++;
+			continue;
+		}
+
+		if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(TASK_CHANNELS::SECONDARY))
+		{
+			unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)unit_it._Ptr->_Myval, target), SECONDARY);
+		}
+		unit_it++;
+	}
+
+	return true;
+}
 //-----------------------------
 
 ///------------------------------------------------------------------------------------------------------------------

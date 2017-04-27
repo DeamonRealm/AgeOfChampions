@@ -187,8 +187,8 @@ bool j1EntitiesManager::Draw() const
 		pos = units_vec[k]->GetPositionRounded();
 		pos = App->map->WorldToMap(pos.x, pos.y);
 		fog_type = App->fog_of_war->GetFogID(pos.x, pos.y);
-		if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
-		if (units_vec[k]->GetDiplomacy() == NEUTRAL && fog_type == DARK_FOG)continue;
+	//	if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
+	//	if (units_vec[k]->GetDiplomacy() == NEUTRAL && fog_type == DARK_FOG)continue;
 
 		units_vec[k]->Draw(App->debug_mode);
 	}
@@ -1137,6 +1137,38 @@ bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 			}
 			unit++;
 		}
+	}
+
+	return ret;
+}
+
+Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE type)
+{
+	Resource* ret = nullptr;
+
+	std::list<Resource*>::const_iterator resource = resources.begin();
+	uint distance = 120 * 120 * 50;
+
+
+	while (resource != resources.end())
+	{
+		//Check resource type
+		if (resource._Ptr->_Myval->GetResourceType() != type)
+		{
+			resource++;
+			continue;
+		}
+
+		//Calculate distance between resource pos & point
+		uint dist = abs(resource._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
+		//Check if is the nearest resource from the point 
+		if (dist < distance)
+		{
+			distance = dist;
+			ret = resource._Ptr->_Myval;
+		}
+
+		resource++;
 	}
 
 	return ret;
