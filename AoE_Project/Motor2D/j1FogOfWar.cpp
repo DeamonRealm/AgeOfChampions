@@ -32,36 +32,44 @@ bool j1FogOfWar::PostUpdate()
 	for (uint k = 0; k < size; k++)
 	{
 		if(!cells_in_screen[k]->locked)App->render->FogBlit(cells_in_screen[k]->position, alpha_cell_size, cells_in_screen[k]->alpha);
+		if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA)cells_in_screen[k]->alpha = MID_ALPHA;
 	}
-
 
 	if (update_timer.Read() > UPDATE_RATE)
-	{
-		fog_update = true;
-		update_timer.Start();
-	}
-	else fog_update = false;
-
-
-
-	j1Timer time;
-	while (time.Read() < UPDATE_TIME && !entities_to_update.empty())
-	{
-		entities_to_update.front()->CleanFogAround();
-		entities_to_update.pop_front();
-	
-	}
-	//LOG("%i", time.Read());
-
-	if (fog_update)
 	{
 		std::vector<Unit*> units;
 		uint size = App->entities_manager->units_quadtree.CollectCandidates(units, App->render->camera_viewport);
 		for (uint k = 0; k < size; k++)
 		{
-			if(units[k]->GetAction() != WALK)entities_to_update.push_front(units[k]);
+			if (units[k]->GetAction() != WALK)entities_static_update.push_back(units[k]);
+			//else entities_static_update.push_back(units[k]);
 		}
+		update_timer.Start();
 	}
+
+	j1Timer time;
+	std::list<Entity*> entitites_updated;
+	while (time.Read() < UPDATE_TIME * 0.8 && !entities_dinamic_update.empty())
+	{
+		entities_dinamic_update.front()->ResetFogAround();
+		entitites_updated.push_back(entities_dinamic_update.front());
+		entities_dinamic_update.pop_front();
+	}
+	while (!entitites_updated.empty())
+	{
+		entitites_updated.front()->CleanFogAround();
+		entitites_updated.pop_front();
+	}
+	j1Timer timer;
+	while (timer.Read() < UPDATE_TIME  && !entities_static_update.empty())
+	{
+		entities_static_update.back()->CheckFogAround();
+		entities_static_update.pop_back();
+	}
+
+	//LOG("%i", timer.Read());
+
+
 
 	return true;
 }
@@ -162,6 +170,6 @@ void j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type)
 
 void j1FogOfWar::CheckEntityFog(Entity * target)
 {
-	entities_to_update.push_back(target);
+	entities_dinamic_update.push_back(target);
 }
 

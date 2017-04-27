@@ -102,9 +102,29 @@ void Entity::SetBlitColor(const SDL_Color new_color)
 	blit_color = new_color;
 }
 
-void Entity::CleanFogAround()
+void Entity::ResetFogAround()
 {
 
+}
+
+void Entity::CleanFogAround()
+{
+	//Collect the new cells in vision area
+	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
+	if (!in_vision_cells.empty())
+	{
+		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+	}
+}
+
+void Entity::CheckFogAround()
+{
+	std::vector<AlphaCell*> new_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
+	uint size = new_cells.size();
+	for (uint k = 0; k < size; k++)
+	{
+		in_vision_cells.push_back(new_cells[k]);
+	}
 }
 
 //Add Action ------------
@@ -645,7 +665,6 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 	switch (direction_type)
 	{
 	case NORTH:
-		LOG("NORTH");
 		while (i <= 5) {
 
 			cell_1.create(pos.x + radius*i, pos.y);
@@ -665,7 +684,6 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 		}
 		break;
 	case NORTH_EAST:
-		LOG("NORTH_EAST");
 		while (i <= 5) {
 			cell_1.create(pos.x + radius*i, pos.y + radius*i);
 			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
@@ -685,7 +703,6 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 		}
 		break;
 	case EAST:
-		LOG("EAST");
 		while (i <= 5) {
 
 			cell_1.create(pos.x, pos.y + radius*i);
@@ -706,7 +723,6 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 		}
 		break;
 	case SOUTH_EAST:
-		LOG("SOUTH_EAST");
 		while (i <= 5) {
 
 			cell_1.create(pos.x + radius*i, pos.y - radius*i);
@@ -727,7 +743,6 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 		}
 		break;
 	case SOUTH:
-		LOG("SOUTH");
 		while (i <= 5) {
 
 			cell_1.create(pos.x + radius*i, pos.y);
@@ -748,7 +763,6 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 		}
 		break;
 	case SOUTH_WEST:	
-		LOG("SOUTH_WEST");
 		while (i <= 5) {
 
 			cell_1.create(pos.x + radius*i, pos.y + radius*i);
@@ -769,7 +783,6 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 		}
 		break;
 	case WEST:
-		LOG("WEST");
 		while (i <= 5) {
 
 			cell_1.create(pos.x, pos.y + radius*i);
@@ -790,7 +803,6 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 		}
 		break;
 	case NORTH_WEST:
-		LOG("NORTH_WEST");
 		while (i <= 5) {
 
 			cell_1.create(pos.x + radius*i, pos.y + radius*i);
@@ -1407,22 +1419,17 @@ COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 	return NO_COLLISION;
 }
 
-void Unit::CleanFogAround()
+void Unit::ResetFogAround()
 {
+	//Reset unit locked cells
 	uint size = in_vision_cells.size();
 	for (uint k = 0; k < size; k++)
 	{
 		in_vision_cells[k]->alpha = MID_ALPHA;
 		in_vision_cells[k]->locked = false;
 	}
-
 	in_vision_cells.clear();
-	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
-	if (!in_vision_cells.empty())
-	{
-		App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
-		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
-	}
+	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
 	this->distance_walked.y = this->distance_walked.x = 0.01f;
 }
 
@@ -1445,8 +1452,6 @@ void Unit::SetPosition(float x, float y, bool insert)
 	//Extract the units to push it with the new position later
 	if(insert)App->entities_manager->units_quadtree.Exteract(this,&position);
 
-	bool need_fog_update = (((abs(distance_walked.x) + abs(distance_walked.y)) > (App->fog_of_war->alpha_cell_size * 2)) || this->distance_walked.x == 0.00f);
-
 	//Set unit position
 	position.x = x;
 	position.y = y;
@@ -1456,7 +1461,7 @@ void Unit::SetPosition(float x, float y, bool insert)
 	//Set unit render area position
 	render_area.SetPosition(pos);
 
-	if (entity_diplomacy == ALLY && need_fog_update)App->fog_of_war->CheckEntityFog(this);
+	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * 2))App->fog_of_war->CheckEntityFog(this);
 
 	//Set unit mark position
 	mark.SetPosition(pos);
@@ -2064,22 +2069,17 @@ void Building::CleanMapLogic()
 	App->map->ChangeLogicMap(world_coords, width_in_tiles, height_in_tiles, 1);
 }
 
-void Building::CleanFogAround()
+void Building::ResetFogAround()
 {
+	//Reset unit locked cells
 	uint size = in_vision_cells.size();
 	for (uint k = 0; k < size; k++)
 	{
 		in_vision_cells[k]->alpha = MID_ALPHA;
 		in_vision_cells[k]->locked = false;
 	}
-
 	in_vision_cells.clear();
-	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
-	if (in_vision_cells.size())
-	{
-		App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
-		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
-	}
+	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
 }
 
 bool Building::CheckZone(int x, int y)

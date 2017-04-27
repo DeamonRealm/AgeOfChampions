@@ -153,7 +153,7 @@ bool j1Player::PreUpdate()
 		}
 
 		//Generate a Militia unit in the mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ALLY);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);

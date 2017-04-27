@@ -277,7 +277,7 @@ void j1App::FinishUpdate()
 	}
 	else
 	{
-		sprintf_s(title, 50, "Age Of Champions");
+		sprintf_s(title, 50, "Age Of Champions|| FPS: %u", frames_on_last_update);
 	}
 
 	App->win->SetTitle(title);

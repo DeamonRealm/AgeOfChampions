@@ -254,7 +254,9 @@ public:
 	void			CleanAnimation();
 	virtual void	CleanMapLogic();
 	void			SetBlitColor(const SDL_Color new_color);
-	virtual	void	CleanFogAround();
+	virtual void	ResetFogAround();
+	void			CleanFogAround();
+	void			CheckFogAround();
 
 	//Add Action ------------
 	void			AddAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
@@ -395,7 +397,7 @@ public:
 	bool					Die();
 	void					Stun(uint time);
 	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
-	void					CleanFogAround();
+	void					ResetFogAround();
 
 	//Set Quit Protection
 	void	SetProtection(Warrior* warrior);
@@ -546,7 +548,7 @@ protected:
 public:
 
 	void CleanMapLogic();
-	void CleanFogAround();
+	void ResetFogAround();
 
 	//Functionality -------------------
 	//Check is can be built in the position
