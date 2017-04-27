@@ -331,7 +331,7 @@ bool j1EntitiesManager::CleanUp()
 
 bool j1EntitiesManager::Load(pugi::xml_node& data)
 {
-	// Resources Save ---------------------------
+	// Resources Load ---------------------------
 	//Resources node
 	pugi::xml_node resources_node = data.child("resources");
 
@@ -361,7 +361,7 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 	}
 	// ------------------------------------------
 
-	// Buildings Save ---------------------------
+	// Buildings Load ---------------------------
 	//Buildings node
 	pugi::xml_node buildings_node = data.child("buildings");
 
@@ -391,7 +391,7 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 		case BARRACK:
 		case STABLE:
 		case ARCHERY_RANGE:
-			/*Save productive building data*/
+			/*Load productive building data*/
 			/*
 			current_units
 			units_in <list>
@@ -562,6 +562,74 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 	}
 	// ------------------------------------------
 
+	// Units Save -------------------------------
+	//Units node
+	pugi::xml_node units_node = data.append_child("units");
+
+	//Iterate all the current buildings
+	std::list<Unit*>::const_iterator current_unit = units.begin();
+	while (current_unit != units.end())
+	{
+		/*
+		- UNIT_TYPE
+		- diplomacy
+		- life
+		- position
+		*/
+
+		//Node where the current unit is saved
+		pugi::xml_node cur_unit_node = units_node.append_child("unit");
+
+
+		//Save current unit type
+		UNIT_TYPE unit_type = current_unit._Ptr->_Myval->GetUnitType();
+		cur_unit_node.append_attribute("unit_type") = unit_type;
+
+		//Save current unit diplomacy
+		cur_unit_node.append_attribute("diplomacy") = current_unit._Ptr->_Myval->GetDiplomacy();
+
+		//Save current unit life
+		cur_unit_node.append_attribute("life") = current_unit._Ptr->_Myval->GetLife();
+
+		//Save current unit position
+		cur_unit_node.append_attribute("pos_x") = current_unit._Ptr->_Myval->GetPosition().x;
+		cur_unit_node.append_attribute("pos_y") = current_unit._Ptr->_Myval->GetPosition().y;
+
+		
+		switch (unit_type)
+		{
+		case VILLAGER:
+			/*
+			- resource_collected_type
+			- current_resources
+			*/
+
+			//Save collected resource type
+			cur_unit_node.append_attribute("res_collected_type") = ((Villager*)current_unit._Ptr->_Myval)->GetResourceCollectedType();
+
+			//Save current resources count
+			cur_unit_node.append_attribute("current_res") = ((Villager*)current_unit._Ptr->_Myval)->GetCurrentResources();
+
+			break;
+		case WARRIOR_CHMP:
+			/*
+			- level
+			- ability [3]
+			- ability_lvl_2_current_time
+			- ability_lvl_3_current_time
+			*/
+			break;
+		case ARCHER_CHMP:
+			break;
+		case WIZARD_CHMP:
+			break;
+		}
+
+		//Focus the next unit
+		current_unit++;
+	}
+
+	// ------------------------------------------
 	return true;
 }
 

@@ -67,6 +67,16 @@ ITEM_TYPE Villager::GetItemType() const
 	return this->item_type;
 }
 
+PLAYER_RESOURCES Villager::GetResourceCollectedType() const
+{
+	return resource_collected_type;
+}
+
+uint Villager::GetCurrentResources() const
+{
+	return current_resources;
+}
+
 //Set Methods ----------
 void Villager::SetItemType(ITEM_TYPE type)
 {

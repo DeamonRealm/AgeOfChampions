@@ -33,7 +33,9 @@ public:
 	bool Die();
 
 	//Get Methods -
-	ITEM_TYPE GetItemType()const;
+	ITEM_TYPE			GetItemType()const;
+	PLAYER_RESOURCES	GetResourceCollectedType()const;
+	uint				GetCurrentResources()const;
 
 	//Set Methods -
 	void SetItemType(ITEM_TYPE type);
