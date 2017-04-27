@@ -329,6 +329,74 @@ bool j1EntitiesManager::CleanUp()
 	return true;
 }
 
+bool j1EntitiesManager::Load(pugi::xml_node& data)
+{
+	//Resources node
+	pugi::xml_node resources_node = data.child("resources");
+
+	//Focus the first resource node
+	pugi::xml_node cur_res_node = resources_node.child("res");
+
+	//Iterate all the saved resources
+	while (cur_res_node != NULL)
+	{
+
+		/*
+		- Position
+		- RESOURCE_TYPE
+		- life
+		*/
+		
+		Resource* new_res = App->entities_manager->GenerateResource((RESOURCE_TYPE)cur_res_node.attribute("res_type").as_int());
+		
+		//Load position
+		new_res->SetPosition(cur_res_node.attribute("pos_x").as_float(), cur_res_node.attribute("pos_y").as_float());
+	
+		//Load life
+		new_res->SetLife(cur_res_node.attribute("life").as_int());		
+
+		//Focus the next resource
+		cur_res_node  = cur_res_node.next_sibling();
+	}
+
+	return true;
+}
+
+bool j1EntitiesManager::Save(pugi::xml_node& data) const
+{
+	//Resources node
+	pugi::xml_node resources_node = data.append_child("resources");
+
+	//Iterate all the current resources
+	std::list<Resource*>::const_iterator current_resource = resources.begin();
+	while (current_resource != resources.end())
+	{
+		//Node where current resource is saved
+		pugi::xml_node cur_res_node = resources_node.append_child("res");
+
+		/*
+		- Position
+		- RESOURCE_TYPE
+		- life
+		*/
+
+		//Save position
+		cur_res_node.append_attribute("pos_x") = current_resource._Ptr->_Myval->GetPosition().x;
+		cur_res_node.append_attribute("pos_y") = current_resource._Ptr->_Myval->GetPosition().y;
+
+		//Save resource type
+		cur_res_node.append_attribute("res_type") = current_resource._Ptr->_Myval->GetResourceType();
+
+		//Save life
+		cur_res_node.append_attribute("life") = current_resource._Ptr->_Myval->GetLife();
+
+		//Focus the next resource
+		current_resource++;
+	}
+
+	return true;
+}
+
 //Methods to add entities definitions
 bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 {

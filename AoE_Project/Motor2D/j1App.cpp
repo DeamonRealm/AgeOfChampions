@@ -249,11 +249,15 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
-	if(want_to_save == true)
+	if (want_to_save == true)
+	{
 		SavegameNow();
+	}
 
-	if(want_to_load == true)
+	if (want_to_load == true)
+	{
 		LoadGameNow();
+	}
 
 	// Framerate calculations --
 
@@ -337,10 +341,10 @@ bool j1App::PostUpdate()
 	if(ret)ret = !want_to_quit;
 
 	//Call save game method
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)App->SaveGame(save_game.c_str());
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)App->SaveGame("party_file.xml");
 	
 	//Call load game method 
-	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)App->LoadGame("");
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)App->LoadGame(save_game.c_str());
 
 
 	return ret;
@@ -476,7 +480,7 @@ bool j1App::LoadGameNow()
 	char* buffer;
 	uint size = fs->Load(load_game.c_str(), &buffer);
 
-	if(size > 0)
+	if (size > 0)
 	{
 		pugi::xml_document data;
 		pugi::xml_node root;
@@ -484,7 +488,7 @@ bool j1App::LoadGameNow()
 		pugi::xml_parse_result result = data.load_buffer(buffer, size);
 		RELEASE(buffer);
 
-		if(result != NULL)
+		if (result != NULL)
 		{
 			LOG("Loading new Game State from %s...", load_game.c_str());
 
@@ -493,14 +497,14 @@ bool j1App::LoadGameNow()
 			std::list<j1Module*>::const_iterator item = modules.begin();
 			ret = true;
 
-			while(item != modules.end() && ret == true)
+			while (item != modules.end() && ret == true)
 			{
 				ret = item._Ptr->_Myval->Load(root.child(item._Ptr->_Myval->name.c_str()));
 				item++;
 			}
 
 			data.reset();
-			if(ret == true)
+			if (ret == true)
 				LOG("...finished loading");
 			else
 				LOG("...loading process interrupted with error on module %s", (item._Ptr->_Myval != NULL) ? item._Ptr->_Myval->name.c_str() : "unknown");
@@ -542,13 +546,53 @@ bool j1App::SavegameNow()
 
 		// we are done, so write data to disk
 		fs->Save(save_game.c_str(), stream.str().c_str(), stream.str().length());
-		LOG("... finished saving", save_game.c_str());
+		LOG("... finished saving correctly", save_game.c_str());
 	}
 	else
 		LOG("Save process halted from an error in module %s", (item._Ptr->_Myval != NULL) ? item._Ptr->_Myval->name.c_str() : "unknown");
 
 	data.reset();
 	want_to_save = false;
+	return ret;
+}
+
+bool j1App::LoadDefaultGame()
+{
+	bool ret = true;
+	std::string folder = "scene/default_scene.xml";
+	pugi::xml_document scene_doc;
+	if (!App->fs->LoadXML(folder.c_str(), &scene_doc))
+	{
+		LOG("Error Loading Scene!");
+		return false;
+	}
+
+	if (scene_doc != NULL)
+	{
+
+		pugi::xml_node game_node = scene_doc.child("game_state");
+
+		LOG("Loading new Game State from %s...", load_game.c_str());
+
+		std::list<j1Module*>::const_iterator item = modules.begin();
+		ret = true;
+
+		while (item != modules.end() && ret == true)
+		{
+			ret = item._Ptr->_Myval->Load(game_node.child(item._Ptr->_Myval->name.c_str()));
+			item++;
+		}
+
+		scene_doc.reset();
+
+		if (ret == true)
+			LOG("...finished loading");
+		else
+			LOG("...loading process interrupted with error on module %s", (item._Ptr->_Myval != NULL) ? item._Ptr->_Myval->name.c_str() : "unknown");
+	}
+	else
+		LOG("Could not load game state xml file %s", load_game.c_str());
+
 	return ret;
 }
 

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<game_state>
+	<file_system />
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<map />
+	<fonts />
+	<pathfinding />
+	<gui />
+	<animator />
+	<sounds />
+	<group_movement />
+	<action_manager />
+	<entities_manager>
+		<resources>
+			<res pos_x="-432" pos_y="5040" res_type="4" life="200" />
+			<res pos_x="-240" pos_y="5136" res_type="4" life="200" />
+			<res pos_x="-384" pos_y="5064" res_type="4" life="200" />
+			<res pos_x="-336" pos_y="5088" res_type="4" life="200" />
+			<res pos_x="192" pos_y="5160" res_type="5" life="400" />
+			<res pos_x="0" pos_y="5208" res_type="7" life="400" />
+		</resources>
+	</entities_manager>
+	<buff_manager />
+	<fog_of_war />
+	<player />
+	<AI />
+	<scene />
+	<menu />
+	<renderer>
+		<camera x="-48" y="-4800" />
+	</renderer>
+</game_state>

@@ -95,6 +95,11 @@ private:
 
 public:
 
+	// Load the default game
+	bool LoadDefaultGame();
+
+public:
+
 	// Modules
 	j1Window*			win = NULL;
 	j1Input*			input = NULL;

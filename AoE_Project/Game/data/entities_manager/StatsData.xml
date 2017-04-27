@@ -947,6 +947,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="50"
+      vision_rad ="100"
       max_resources="250"
       />
   </unit>
@@ -968,7 +969,8 @@
       mark_y="0"
       mark_w="70"
       mark_h="70"
-     interaction_rad ="50"
+      interaction_rad ="50"
+      vision_rad ="100"
       max_resources="200"
       />
   </unit>
@@ -991,6 +993,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="50"
+      vision_rad ="100"
       max_resources="400"
       />
   </unit>
@@ -1013,6 +1016,7 @@
       mark_w="70"
       mark_h="70"
       interaction_rad ="50"
+      vision_rad ="100"
       max_resources="400"
       />
   </unit>

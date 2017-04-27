@@ -33,7 +33,7 @@ j1Scene::~j1Scene()
 void j1Scene::Enable()
 {
 	active = true;
-	LoadScene();
+	App->LoadDefaultGame();
 	//App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
 }
 
@@ -178,7 +178,8 @@ bool j1Scene::Load_Current_Map()
 
 bool j1Scene::LoadScene()
 {
-	//Load Initial Scene ----------------------------------
+	/*//Load Initial Scene ----------------------------------
+	bool ret = true;
 	std::string folder = name + "/" + "Scene_Data.xml";
 	pugi::xml_document scene_doc;
 	if (!App->fs->LoadXML(folder.c_str(), &scene_doc))
@@ -186,6 +187,24 @@ bool j1Scene::LoadScene()
 		LOG("Error Loading Scene!");
 		return false;
 	}
+	pugi::xml_node game_node = scene_doc.child("game_state");
+
+	std::list<j1Module*>::const_iterator item = modules.begin();
+	ret = true;
+
+	while (item != modules.end() && ret == true)
+	{
+		ret = item._Ptr->_Myval->Load(root.child(item._Ptr->_Myval->name.c_str()));
+		item++;
+	}
+
+	data.reset();
+	if (ret == true)
+		LOG("...finished loading");
+	else
+		LOG("...loading process interrupted with error on module %s", (item._Ptr->_Myval != NULL) ? item._Ptr->_Myval->name.c_str() : "unknown");
+
+	App->LoadGame("default_scene.xml");
 
 	//Load the camera position
 	pugi::xml_node camera_node = scene_doc.first_child().child("camera");
@@ -232,6 +251,7 @@ bool j1Scene::LoadScene()
 		entity_node = entity_node.next_sibling();
 	}
 	// ----------------------------------------------------
+	*/
 
 	return true;
 }

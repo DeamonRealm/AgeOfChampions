@@ -258,8 +258,8 @@ DiplomaticAnimation::~DiplomaticAnimation()
 
 void DiplomaticAnimation::ReleaseTexture()
 {
-	if(!App->tex->UnLoad(texture))LOG("Tex unload error");
-	if(!App->tex->UnLoad(red_texture))LOG("Tex unload error");
+	App->tex->UnLoad(texture);
+	App->tex->UnLoad(red_texture);
 }
 
 void DiplomaticAnimation::SetRedTexture(const SDL_Texture * tex)

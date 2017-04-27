@@ -190,6 +190,8 @@ bool j1Render::Load(pugi::xml_node& data)
 	camera.x = data.child("camera").attribute("x").as_int();
 	camera.y = data.child("camera").attribute("y").as_int();
 
+	this->CalculateCameraViewport();
+
 	return true;
 }
 
@@ -242,6 +244,7 @@ void j1Render::CalculateCameraViewport()
 {
 	camera_viewport = { -(App->render->camera.x + 50) - (int)App->map->data.tile_width, -App->render->camera.y, App->render->camera.w + 100 + (int)App->map->data.tile_width * 2, App->render->camera.h - (int)App->map->data.tile_height * 1 };
 	App->fog_of_war->CollectFogCells();
+	App->map->CalculateTilesInView();
 }
 
 iPoint j1Render::ScreenToWorld(int x, int y) const
