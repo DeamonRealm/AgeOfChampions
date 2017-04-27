@@ -33,7 +33,7 @@ j1Scene::~j1Scene()
 void j1Scene::Enable()
 {
 	active = true;
-	App->LoadDefaultGame();
+	//App->LoadDefaultGame();
 	//App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
 }
 

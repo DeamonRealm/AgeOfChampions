@@ -356,6 +356,7 @@ protected:
 	//Others
 	bool			unit_protected = false;
 	Warrior*		tank = nullptr;
+
 	// Attack area
 	Circle	attack_area;
 

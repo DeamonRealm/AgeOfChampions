@@ -331,6 +331,7 @@ bool j1EntitiesManager::CleanUp()
 
 bool j1EntitiesManager::Load(pugi::xml_node& data)
 {
+	// Resources Save ---------------------------
 	//Resources node
 	pugi::xml_node resources_node = data.child("resources");
 
@@ -358,12 +359,91 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 		//Focus the next resource
 		cur_res_node  = cur_res_node.next_sibling();
 	}
+	// ------------------------------------------
+
+	// Buildings Save ---------------------------
+	//Buildings node
+	pugi::xml_node buildings_node = data.child("buildings");
+
+
+	//Focus the first building node
+	pugi::xml_node cur_build_node = buildings_node.child("build");
+
+	//Iterate all the saved buildings
+	while (cur_build_node != NULL)
+	{
+		
+		//Load current building type
+		BUILDING_TYPE building_type = (BUILDING_TYPE)cur_build_node.attribute("build_type").as_int();
+
+		//Generate building from type and diplomacy
+		Building* new_building = GenerateBuilding(building_type, (DIPLOMACY)cur_build_node.attribute("diplomacy").as_int());
+
+		//Load building position
+		new_building->SetPosition(cur_build_node.attribute("pos_x").as_float(), cur_build_node.attribute("pos_y").as_float());
+
+		//Load building life
+		new_building->SetLife(cur_build_node.attribute("life").as_uint());
+
+		switch (building_type)
+		{
+		case TOWN_CENTER:
+		case BARRACK:
+		case STABLE:
+		case ARCHERY_RANGE:
+			/*Save productive building data*/
+			/*
+			current_units
+			units_in <list>
+
+			production_queue <priority_queue>
+			*/
+
+			//Load building current units count
+			((ProductiveBuilding*)new_building)->SetCurrentUnits(cur_build_node.attribute("cur_units_in").as_uint());
+
+			if (((ProductiveBuilding*)new_building)->GetCurrentUnits() > 0)
+			{
+				//Node where covered units are loaded
+				pugi::xml_node units_in_node = cur_build_node.child("units_in");
+
+				//Node focusing the current unit in
+				pugi::xml_node unit_in_node = units_in_node.first_child();
+
+				while (unit_in_node != NULL)
+				{
+					//Generate a unit in with type
+					Unit* new_unit_in = GenerateUnit((UNIT_TYPE)unit_in_node.attribute("unit_type").as_int(), ALLY, false);
+
+					//Load current unit in life
+					new_unit_in->SetLife(unit_in_node.attribute("life").as_uint());
+
+					//Focus next unit in node
+					unit_in_node = unit_in_node.next_sibling();
+
+				}
+			}
+
+			//Load building production queue (or not)
+
+			break;
+
+		default:
+			/**/
+			break;
+		}
+
+		//Focus the next building node
+		cur_build_node = cur_build_node.next_sibling();
+	}
+	// ------------------------------------------
 
 	return true;
 }
 
 bool j1EntitiesManager::Save(pugi::xml_node& data) const
 {
+	// Resources Save ---------------------------
 	//Resources node
 	pugi::xml_node resources_node = data.append_child("resources");
 
@@ -380,19 +460,107 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		- life
 		*/
 
-		//Save position
+		//Save resource position
 		cur_res_node.append_attribute("pos_x") = current_resource._Ptr->_Myval->GetPosition().x;
 		cur_res_node.append_attribute("pos_y") = current_resource._Ptr->_Myval->GetPosition().y;
 
 		//Save resource type
 		cur_res_node.append_attribute("res_type") = current_resource._Ptr->_Myval->GetResourceType();
 
-		//Save life
+		//Save resource life
 		cur_res_node.append_attribute("life") = current_resource._Ptr->_Myval->GetLife();
 
 		//Focus the next resource
 		current_resource++;
 	}
+	// ------------------------------------------
+
+	// Buildings Save ---------------------------
+	//Buildings node
+	pugi::xml_node buildings_node = data.append_child("buildings");
+
+	//Iterate all the current buildings
+	std::list<Building*>::const_iterator current_building = buildings.begin();
+	while (current_building != buildings.end())
+	{
+		//Node where current building is saved
+		pugi::xml_node cur_build_node = buildings_node.append_child("build");
+
+		/*
+		- Position
+		- BUILDING_TYPE
+		- life
+		*/
+
+		//Save building position
+		cur_build_node.append_attribute("pos_x") = current_building._Ptr->_Myval->GetPosition().x;
+		cur_build_node.append_attribute("pos_y") = current_building._Ptr->_Myval->GetPosition().y;
+
+		//Save building life
+		cur_build_node.append_attribute("life") = current_building._Ptr->_Myval->GetLife();
+
+		//Save building diplomacy
+		cur_build_node.append_attribute("diplomacy") = current_building._Ptr->_Myval->GetDiplomacy();
+
+		//Save building type
+		BUILDING_TYPE type = current_building._Ptr->_Myval->GetBuildingType();
+		cur_build_node.append_attribute("build_type") = type;
+
+		switch (type)
+		{
+		case TOWN_CENTER:
+		case BARRACK:
+		case STABLE:
+		case ARCHERY_RANGE:
+			/*Save productive building data*/
+			/*
+			current_units
+			units_in <list>
+
+			production_queue <priority_queue>
+			*/
+
+			//Save building current units count
+			cur_build_node.append_attribute("cur_units_in") = ((ProductiveBuilding*)current_building._Ptr->_Myval)->GetCurrentUnits();
+			
+			if (((ProductiveBuilding*)current_building._Ptr->_Myval)->GetCurrentUnits() > 0)
+			{
+				//Node where covered units are saved
+				pugi::xml_node units_in_node = cur_build_node.append_child("units_in");
+
+				//Iterate units in list to save units data
+				std::list<Unit*> units_in = ((ProductiveBuilding*)current_building._Ptr->_Myval)->GetUnitsIn();
+				std::list<Unit*>::const_iterator unit_in = units_in.begin();
+				while (unit_in != units_in.begin())
+				{
+					//Node where the current unit in is saved
+					pugi::xml_node cur_unit_in_node = units_in_node.append_child("unit_in");
+
+					//Save unit in unit type
+					cur_unit_in_node.append_attribute("unit_type") = unit_in._Ptr->_Myval->GetUnitType();
+
+					//Save unit in life
+					cur_unit_in_node.append_attribute("life") = unit_in._Ptr->_Myval->GetLife();
+
+					//Focus the next unit in
+					unit_in++;
+				}
+
+			}
+
+			//Save building production queue (or not)
+
+			break;
+
+		default:
+			/**/
+			break;
+		}
+
+		//Focus the next building
+		current_building++;
+	}
+	// ------------------------------------------
 
 	return true;
 }

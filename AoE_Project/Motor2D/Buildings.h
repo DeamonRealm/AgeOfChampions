@@ -23,6 +23,9 @@ private:
 public:
 
 	//Functionality -------------------
+	//Get units in list
+	std::list<Unit*>	GetUnitsIn()const;
+
 	//Cover / Release units -
 	bool	CoverUnit(const Unit* target);
 	void	ReleaseUnit(const Unit* target);
@@ -41,7 +44,7 @@ public:
 };
 /// ---------------------------------------------
 
-/// Procudtive Building ------------------------
+/// Productive Building ------------------------
 //Base class that define the productive buildings attributes
 class ProductiveBuilding :public HabitableBuilding
 {
@@ -59,11 +62,13 @@ private:
 public:
 
 	//Functionality ----------------------
+
 	//Set Methods -----------
 	void SetProductionCapacity(uint capacity);
 
 	//Get Methods -----------
 	uint GetProductionCapacity()const;
+	std::priority_queue<Unit*> GetProductionQueue()const;
 
 };
 /// ---------------------------------------------

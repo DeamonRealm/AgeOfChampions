@@ -29,7 +29,15 @@ HabitableBuilding::~HabitableBuilding()
 	units_in.clear();
 }
 
+
+
 //Functionality =======================
+//Get units in list
+std::list<Unit*> HabitableBuilding::GetUnitsIn() const
+{
+	return units_in;
+}
+
 //Cover / Release units -
 bool HabitableBuilding::CoverUnit(const Unit * target)
 {
@@ -123,4 +131,9 @@ void ProductiveBuilding::SetProductionCapacity(uint capacity)
 uint ProductiveBuilding::GetProductionCapacity() const
 {
 	return production_capacity;
+}
+
+std::priority_queue<Unit*> ProductiveBuilding::GetProductionQueue() const
+{
+	return production_queue;
 }

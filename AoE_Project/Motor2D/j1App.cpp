@@ -344,7 +344,7 @@ bool j1App::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)App->SaveGame("party_file.xml");
 	
 	//Call load game method 
-	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)App->LoadGame(save_game.c_str());
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)App->LoadGame("party_file.xml");
 
 
 	return ret;
