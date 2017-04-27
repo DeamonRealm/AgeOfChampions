@@ -5,6 +5,7 @@
   <particle document = "One_Hit.xml"/>
   <particle document = "Area_Fire.xml"/>
   <particle document = "Taunt.xml"/>
+  <particle document = "Taunt_Particle.xml"/>
   <particle document = "Slash_Effect.xml"/>
   <particle document = "Stun_Effect.xml"/>
   <particle document = "Stun_Effect_Particle.xml"/>
@@ -23,7 +24,7 @@
   <buff
     buff_type ="timed"
     attribute_type="super_attack"
-    buff_duration ="1000"
+    buff_duration ="5000"
 
     actor="1"
     value="7"

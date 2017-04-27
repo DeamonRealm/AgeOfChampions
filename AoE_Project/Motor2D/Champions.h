@@ -30,9 +30,13 @@ protected:
 	//Attack area lvl 2
 	j1Timer			ability_lvl_2_timer;
 	uint			ability_lvl_2_cooldown = 0;
+	uint			ability_lvl_2_current_time = 0;
+
 	//Attack area lvl 3
 	j1Timer			ability_lvl_3_timer;
 	uint			ability_lvl_3_cooldown = 0;
+	uint			ability_lvl_3_current_time = 0;
+
 	//Stats bonus for level
 	uint	attack_for_level = 0;
 	uint	range_for_level = 0;
@@ -174,7 +178,8 @@ private:
 	int					area_limit_spell_2;
 	int					area_limit_spell_3;
 
-	Particle			ability_lvl_2_particle;
+	Particle			ability_lvl_2_A_particle;
+	Particle			ability_lvl_2_B_particle;
 	Particle			ability_lvl_3_particle;
 
 	uint				ability_lvl_2_heal_value = 0;

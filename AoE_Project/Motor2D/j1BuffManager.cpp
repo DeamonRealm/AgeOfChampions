@@ -623,6 +623,8 @@ PARTICLE_TYPE j1BuffManager::StrToParticleType(const char * str) const
 	if (strcmp("buff_particle", str) == 0) 	return PARTICLE_TYPE::BUFF_PARTICLE;
 	if (strcmp("slash_particle", str) == 0)	return PARTICLE_TYPE::SLASH_PARTICLE;
 	if (strcmp("stun_particle", str) == 0)	return PARTICLE_TYPE::STUN_PARTICLE;
+	if (strcmp("taunt_particle", str) == 0)	return PARTICLE_TYPE::TAUNT_PARTICLE;
+
 	return UNKNOWN_PARTICLE;
 }
 

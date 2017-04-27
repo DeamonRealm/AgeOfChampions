@@ -268,9 +268,9 @@ bool Warrior::Update()
 {
 	if (actived[0] && level >= 1 )CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level >= 2 )CheckHability_lvl_2();
+	else if (actived[1] && level > 2 )CheckHability_lvl_2();
 	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
-	else if (actived[2] && level >= 3)CheckHability_lvl_3();
+	else if (actived[2] && level >=2)CheckHability_lvl_3();
 	action_worker.Update();
 
 	return true;
@@ -411,17 +411,20 @@ void Warrior::SetAbility_lvl_2(bool choosed)
 	if (choosed)
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_2_current_time = ability_lvl_2_cooldown;
 	}
 	else
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+		ability_lvl_2_current_time = ability_lvl_2_cooldown;
+
 	}
 	ability[1] = choosed;
 }
 
 void Warrior::PrepareAbility_lvl_2()
 {
-	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
+	if (ability_lvl_2_current_time < ability_lvl_2_cooldown)return;
 
 	ability_lvl_2_prepare_mode = true;
 
@@ -446,7 +449,7 @@ void Warrior::Hability_lvl_2(int x, int y)
 {
 	ability_lvl_2_prepare_mode = false;
 
-	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
+	if (ability_lvl_2_current_time < ability_lvl_2_cooldown)return;
 
 	//Focus the warrior in the attack direction
 	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
@@ -465,13 +468,15 @@ void Warrior::Hability_lvl_2(int x, int y)
 		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
 	}
-
-
+	//Reset Particles
+	ability_lvl_2_particle.animation.Reset();
+	ability_lvl_2_particle.position = GetPositionRounded();
 
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_in;
 	App->entities_manager->units_quadtree.CollectCandidates(units_in, special_attack_area);
 
+	//Apply effects
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
@@ -493,13 +498,14 @@ void Warrior::Hability_lvl_2(int x, int y)
 	}
 
 	actived[1] = true;
-	ability_lvl_2_particle.animation.Reset();
-	ability_lvl_2_particle.position = GetPositionRounded();
+
 	ability_lvl_2_timer.Start();
+	ability_lvl_2_current_time = 0;
 }
 
 void Warrior::CheckHability_lvl_2()
 {
+	ability_lvl_2_current_time = ability_lvl_2_timer.Read();
 	if (!ability_lvl_2_particle.animation.IsEnd())
 	{
 		ability_lvl_2_particle.Draw();
@@ -518,40 +524,35 @@ void Warrior::SetAbility_lvl_3(bool choosed)
 
 	if (choosed)
 	{
-		ability_lvl_3_particle = App->buff_manager->GetParticle(TAUNT_PARTICLE, NO_DIRECTION);
+		ability_lvl_3_current_time = ability_lvl_3_cooldown;
 	}
 	else
 	{
-		ability_lvl_3_particle = App->buff_manager->GetParticle(ONE_HIT_PARTICLE, NO_DIRECTION);
-
+		ability_lvl_3_particle = App->buff_manager->GetParticle(TAUNT_PARTICLE, NO_DIRECTION);
+		ability_lvl_3_current_time = ability_lvl_3_cooldown;
 	}
 	ability[2] = choosed;
 }
 
 void Warrior::PrepareAbility_lvl_3()
 {
-	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
+	if (ability_lvl_3_current_time< ability_lvl_3_cooldown)return;
 
 	ability_lvl_3_prepare_mode = true;
 }
 
 void Warrior::Hability_lvl_3(int x, int y)
 {
-
 	ability_lvl_3_prepare_mode = false;
-
-	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
-
+	if (ability_lvl_3_current_time < ability_lvl_3_cooldown)return;
 
 	if (ability[2])
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(ONE_HIT_PARTICLE, NO_DIRECTION);
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);//lvl_3_defense
 		App->buff_manager->CallBuff(this, TIMED_BUFF, SUPER_ATTACK_BUFF, true);
 	}
 	else
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(TAUNT_PARTICLE, NO_DIRECTION);
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);//lvl_3_attack
 		//Collect all the units in the buff area
 		std::vector<Unit*> units_in;
@@ -567,20 +568,20 @@ void Warrior::Hability_lvl_3(int x, int y)
 				protected_units.push_back(units_in[k]);
 			}
 		}
+		//Particle Reset
+		ability_lvl_3_particle.animation.Reset();
+		ability_lvl_3_particle.position = GetPositionRounded();
 	}
-
-
-
-
-
 	actived[2] = true;
-	ability_lvl_3_particle.animation.Reset();
-	ability_lvl_3_particle.position = GetPositionRounded();
 	ability_lvl_3_timer.Start();
+	ability_lvl_3_current_time = 0;
 }
 
 void Warrior::CheckHability_lvl_3()
 {
+	ability_lvl_3_current_time = ability_lvl_3_timer.Read();
+	if (ability[2]) return;
+	
 	if (!ability_lvl_3_particle.animation.IsEnd())
 	{
 		ability_lvl_3_particle.Draw();
@@ -723,7 +724,9 @@ Wizard::Wizard() :Champion()
 Wizard::Wizard(const Wizard & copy) : Champion(copy), area_attack_spell_2(copy.area_attack_spell_2), area_limit_spell_2(copy.area_limit_spell_2), area_attack_spell_3(copy.area_attack_spell_3), area_limit_spell_3(copy.area_limit_spell_3), ability_lvl_2_heal_value(copy.ability_lvl_2_heal_value), ability_lvl_3_attack_value(copy.ability_lvl_3_attack_value)
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
-	ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	ability_lvl_2_A_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	ability_lvl_2_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+
 	for (uint k = 0; k < 3; k++)
 	{
 		actived[k] = false;
@@ -740,7 +743,9 @@ bool Wizard::Update()
 {
 	if (actived[0] && level >= 1)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level >= 2)CheckHability_lvl_2();
+	else if (actived[1] && level > 2)CheckHability_lvl_2();
+	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
+	else if (actived[2] && level >= 2)CheckHability_lvl_3();
 	action_worker.Update();
 
 	return true;
@@ -887,18 +892,21 @@ void Wizard::SetAbility_lvl_2(bool choosed)
 
 	if (choosed)
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_2_A_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_2_B_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_2_current_time = ability_lvl_2_cooldown;
 	}
 	else
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+		ability_lvl_2_A_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+		ability_lvl_2_current_time = ability_lvl_2_cooldown;
 	}
 	ability[1] = choosed;
 }
 
 void Wizard::PrepareAbility_lvl_2()
 {
-	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
+	if (ability_lvl_2_current_time < ability_lvl_2_cooldown)return;
 
 	ability_lvl_2_prepare_mode = true;
 
@@ -914,7 +922,7 @@ void Wizard::Hability_lvl_2(int x, int y)
 {
 	ability_lvl_2_prepare_mode = false;
 
-	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
+	if (ability_lvl_2_current_time < ability_lvl_2_cooldown)return;
 
 	//Focus the wizard in the spell direction
 	iPoint destination = iPoint(x - App->render->camera.x, y - App->render->camera.y);
@@ -924,26 +932,34 @@ void Wizard::Hability_lvl_2(int x, int y)
 	action_type = ATTATCK;
 	App->animator->UnitPlay(this);
 	iPoint teleport_movement = { 0,0 };
+	std::vector<Unit*> units_in;
 
 	if (ability[1])
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
-		
+		iPoint wizard_position = this->GetPositionRounded();
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
+		teleport_movement = destination - wizard_position;
+		Circle temp_circle = area_attack_spell_2;
+		temp_circle.SetPosition(wizard_position);
+		//Get Candidates
+		App->entities_manager->units_quadtree.CollectCandidates(units_in, temp_circle);
+		//Reset Particles
+		ability_lvl_2_A_particle.animation.Reset();
+		ability_lvl_2_A_particle.position = GetPositionRounded();
+		ability_lvl_2_B_particle.animation.Reset();
+		ability_lvl_2_B_particle.position = area_attack_spell_2.GetPosition();
 	}
 	else
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
-		teleport_movement = destination - this->GetPositionRounded();
+
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+		//Get Candidates
+		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_2);
+		//Reset Particles
+		ability_lvl_2_A_particle.animation.Reset();
+		ability_lvl_2_A_particle.position = area_attack_spell_2.GetPosition();
 	}
-
-
-
-	//Collect all the units in the buff area
-	std::vector<Unit*> units_in;
-	App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_2);
-
+	//Apply effects
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
@@ -959,24 +975,39 @@ void Wizard::Hability_lvl_2(int x, int y)
 			}
 	}
 
+
 	actived[1] = true;
-	ability_lvl_2_particle.animation.Reset();
-	ability_lvl_2_particle.position = GetPositionRounded();
 	ability_lvl_2_timer.Start();
+	ability_lvl_2_current_time = 0;
 }
 
 void Wizard::CheckHability_lvl_2()
 {
-	if (!ability_lvl_2_particle.animation.IsEnd())
+	ability_lvl_2_current_time = ability_lvl_2_timer.Read();
+	if (ability[1])
 	{
-		ability_lvl_2_particle.Draw();
+		if (!ability_lvl_2_A_particle.animation.IsEnd()) ability_lvl_2_A_particle.Draw();
+		
+		if (!ability_lvl_2_B_particle.animation.IsEnd()) ability_lvl_2_B_particle.Draw();
+		
+		if (ability_lvl_2_B_particle.animation.IsEnd() && ability_lvl_2_A_particle.animation.IsEnd())
+		{
+			actived[1] = false;
+			action_type = IDLE;
+			App->animator->UnitPlay(this);
+		}
 	}
 	else
 	{
-		actived[1] = false;
-		action_type = IDLE;
-		App->animator->UnitPlay(this);
+		if (!ability_lvl_2_A_particle.animation.IsEnd()) ability_lvl_2_A_particle.Draw();
+		if (ability_lvl_2_B_particle.animation.IsEnd() && ability_lvl_2_A_particle.animation.IsEnd())
+		{
+			actived[1] = false;
+			action_type = IDLE;
+			App->animator->UnitPlay(this);
+		}
 	}
+	
 }
 void Wizard::SetAbility_lvl_3(bool choosed)
 {
@@ -985,17 +1016,20 @@ void Wizard::SetAbility_lvl_3(bool choosed)
 	if (choosed)
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_3_current_time = ability_lvl_3_cooldown;
 	}
 	else
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+		ability_lvl_3_current_time = ability_lvl_3_cooldown;
+
 	}
-	ability[1] = choosed;
+	ability[2] = choosed;
 }
 
 void Wizard::PrepareAbility_lvl_3()
 {
-	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
+	if (ability_lvl_3_current_time < ability_lvl_3_cooldown)return;
 
 	ability_lvl_3_prepare_mode = true;
 
@@ -1011,7 +1045,7 @@ void Wizard::Hability_lvl_3(int x, int y)
 {
 	ability_lvl_3_prepare_mode = false;
 
-	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
+	if (ability_lvl_3_current_time< ability_lvl_3_cooldown)return;
 
 	//Focus the wizard in the spell direction
 	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
@@ -1025,17 +1059,18 @@ void Wizard::Hability_lvl_3(int x, int y)
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
 	}
 	else
-	{
+	{ 
 		ability_lvl_3_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
 
 	}
-
-
+	//Reset Particles
+	ability_lvl_3_particle.animation.Reset();
+	ability_lvl_3_particle.position = area_attack_spell_3.GetPosition();
 
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_in;
-	App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_2);
+	App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_3);
 
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
@@ -1044,23 +1079,23 @@ void Wizard::Hability_lvl_3(int x, int y)
 
 		if (ability[2])
 		{
-
 			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
+
 		}
 		else
 		{
-		//	units_in[k]->HealUnit(ability_lvl_2_heal_value);
+			//ress
 		}
 	}
 
 	actived[2] = true;
-	ability_lvl_3_particle.animation.Reset();
-	ability_lvl_3_particle.position = GetPositionRounded();
 	ability_lvl_3_timer.Start();
+	ability_lvl_3_current_time = 0;
 }
 
 void Wizard::CheckHability_lvl_3()
 {
+	ability_lvl_3_current_time = ability_lvl_3_timer.Read();
 	if (!ability_lvl_3_particle.animation.IsEnd())
 	{
 		ability_lvl_3_particle.Draw();

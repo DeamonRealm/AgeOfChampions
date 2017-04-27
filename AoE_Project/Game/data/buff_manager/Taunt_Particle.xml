@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:09f8c60aa193f5fcad32bd9d75c7b473:b2f5e78ceed66efbb42c594fe5a4f119:5c2a2c00668ec52693550397bb7ea822$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Taunt_Particle.png" width="1298" height="1298">
+  <simple_particle particle_type="taunt_particle">
+    <anim_data speed="150" loop="0"/>
+    <sprite n="FireArea/FireArea_00.png" opacity ="255" x="1" y="1" w="392" h="241" pX="0.5" pY="0.5"/>
+    <sprite n="FireArea/FireArea_01.png" opacity ="255" x="395" y="1" w="402" h="246" pX="0.5" pY="0.5"/>
+    <sprite n="FireArea/FireArea_02.png" opacity ="255" x="799" y="1" w="410" h="252" pX="0.525" pY="0.5"/>
+    <sprite n="FireArea/FireArea_03.png" opacity ="255" x="1" y="255" w="406" h="267" pX="0.5" pY="0.5"/>
+    <sprite n="FireArea/FireArea_04.png" opacity ="255" x="409" y="255" w="417" h="270" pX="0.5" pY="0.5"/>
+    <sprite n="FireArea/FireArea_05.png" opacity ="255" x="828" y="255" w="433" h="283" pX="0.5" pY="0.5"/>
+    <sprite n="FireArea/FireArea_06.png" opacity ="255" x="1" y="540" w="425" h="283" pX="0.5" pY="0.5"/>
+    <sprite n="FireArea/FireArea_07.png" opacity ="255" x="428" y="540" w="425" h="290" pX="0.51" pY="0.53"/>
+    <sprite n="FireArea/FireArea_08.png" opacity ="255" x="855" y="540" w="442" h="300" pX="0.51" pY="0.53"/>
+    <sprite n="FireArea/FireArea_09.png" opacity ="255" x="1" y="842" w="417" h="302" pX="0.53" pY="0.51"/>
+    <sprite n="FireArea/FireArea_10.png" opacity ="255" x="420" y="842" w="395" h="281" pX="0.54" pY="0.5"/>
+    <sprite n="FireArea/FireArea_11.png" opacity ="255" x="817" y="842" w="395" h="281" pX="0.54" pY="0.5"/>
+  </simple_particle>
+</TextureAtlas>
