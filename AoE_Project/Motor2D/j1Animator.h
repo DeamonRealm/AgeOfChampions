@@ -54,7 +54,7 @@ class Animation
 public:
 
 	Animation();
-	~Animation();
+	virtual ~Animation();
 
 protected:
 

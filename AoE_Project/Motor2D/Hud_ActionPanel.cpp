@@ -606,16 +606,22 @@ void HeroPanel::HeroisDead(UNIT_TYPE u_type)
 {
 
 	if (u_type == WARRIOR_CHMP) {
-		champion_mele = nullptr;
 		memset(mele_learned, 0, 5);
+		if(champion_mele != nullptr)
+			champion_mele = nullptr;
+		else return;
 	}
 	else if (u_type == WIZARD_CHMP) {
-		champion_wizard = nullptr;
 		memset(wizard_learned, 0, 5);
+		if (champion_wizard != nullptr)
+			champion_wizard = nullptr;
+		else return;
 	}
 	else {
-		champion_archer = nullptr;
 		memset(archer_learned, 0, 5);
+		if (champion_archer != nullptr)
+			champion_archer = nullptr;
+		else return;
 	}
 	champion_row.clear();
 	if (champion_mele != nullptr) champion_row.push_back(champion_mele);
@@ -727,6 +733,8 @@ bool HeroPanel::ActivateCell(int i)
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		HeroisDead(u_type);
+		champion_selected = NO_UNIT;
+		activate_skill = -1;
 		}
 		break;
 	default:
@@ -751,7 +759,10 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 			{
 				if (ui_element == skills_buttons[i])
 				{
-					if (cell_lvl[i / 2] != 0)return false;
+					int r = i;
+					if (entitis_panel == champion_row[1]) r += 10;
+					else if (entitis_panel == champion_row[2]) r += 20;
+					if (cell_lvl[r / 2] != 0)return false;
 					LearnSkill(i);
 					App->sound->PlayGUIAudio(CLICK_INGAME);
 					bool skill = false;

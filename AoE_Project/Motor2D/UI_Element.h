@@ -26,7 +26,7 @@ public:
 	UI_Element(const UI_Element* copy);
 	UI_Element();
 
-	~UI_Element();
+	virtual ~UI_Element();
 
 protected:
 

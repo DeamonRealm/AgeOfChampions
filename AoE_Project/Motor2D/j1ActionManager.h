@@ -70,7 +70,7 @@ public:
 
 	//Set all the Actions to a list on the Entities manager to clean them up at closing the app.
 	Action(Entity* actor, TASK_TYPE type);
-	~Action();
+	virtual ~Action();
 
 protected:
 

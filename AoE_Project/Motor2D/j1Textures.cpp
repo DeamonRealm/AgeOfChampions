@@ -52,7 +52,7 @@ bool j1Textures::CleanUp()
 	std::list<SDL_Texture*>::iterator texture = textures.begin();
 	uint w = 0, h = 0;
 
-	while (texture != textures.end())
+	/*while (texture != textures.end())
 	{
 		
 		SDL_Texture* current_tex = texture._Ptr->_Myval;
@@ -60,7 +60,7 @@ bool j1Textures::CleanUp()
 		LOG("texture number %i || %p", i++, &current_tex);
 		texture++;
 		SDL_DestroyTexture(current_tex);
-	}
+	}*/
 
 	textures.clear();
 	IMG_Quit();
@@ -104,7 +104,6 @@ bool j1Textures::UnLoad(SDL_Texture* texture)
 			SDL_DestroyTexture(texture);			
 			return true;
 		}
-
 		item++;
 	}
 

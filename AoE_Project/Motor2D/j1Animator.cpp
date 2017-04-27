@@ -401,6 +401,7 @@ bool j1Animator::CleanUp()
 	for (uint k = 0; k < size; k++)
 	{
 		unit_blocks[k]->ClearAnimationBlocks();
+		delete unit_blocks[k];
 	}
 	unit_blocks.clear();
 
@@ -410,6 +411,7 @@ bool j1Animator::CleanUp()
 	for (uint k = 0; k < size; k++)
 	{
 		building_blocks[k]->ClearAnimationBlocks();
+		delete building_blocks[k];
 	}
 	building_blocks.clear();
 
@@ -419,6 +421,7 @@ bool j1Animator::CleanUp()
 	for (uint k = 0; k < size; k++)
 	{
 		resource_blocks[k]->ClearAnimationBlocks();
+		delete resource_blocks[k];
 	}
 	resource_blocks.clear();
 

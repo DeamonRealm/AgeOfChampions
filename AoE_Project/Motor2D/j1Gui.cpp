@@ -151,29 +151,7 @@ bool j1Gui::CleanUp()
 	while (item != gui_elements.begin())
 	{
 		item--;
-		//._Ptr->_Myval->CleanUp();
-		gui_type = item._Ptr->_Myval->GetUItype();
-		switch (gui_type)
-		{
-		case UNDEFINED: delete item._Ptr->_Myval;
-			break;
-		case BUTTON:	delete ((UI_Button*)item._Ptr->_Myval);
-			break;
-		case TEXT_BOX:	delete ((UI_Text_Box*)item._Ptr->_Myval);
-			break;
-		case STRING:	delete ((UI_String*)item._Ptr->_Myval);
-			break;
-		case IMG:		delete ((UI_Image*)item._Ptr->_Myval);
-			break;
-		case SCROLL:	delete ((UI_Scroll*)item._Ptr->_Myval);
-			break;
-		case POPUP_MENU:delete ((UI_Popup_menu*)item._Ptr->_Myval);
-			break;
-		case FIXED_BUTTON:delete ((UI_Fixed_Button*)item._Ptr->_Myval);
-			break;
-		default:	delete item._Ptr->_Myval;
-			break;
-		}
+		delete item._Ptr->_Myval;
 	}
 	gui_elements.clear();
 

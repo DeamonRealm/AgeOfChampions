@@ -202,7 +202,7 @@ public:
 	Entity();
 	Entity(const Entity& copy);
 
-	~Entity();
+	virtual ~Entity();
 
 protected:
 
