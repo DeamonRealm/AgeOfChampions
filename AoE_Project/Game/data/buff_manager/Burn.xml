@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:a9f39b4d74ed5602d9c98b2dd2e245f1:04d8498baf52c266f1bc0ef03dce195f:d9863e7a8c7de8627669e7a95792d069$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Burn.png" width="79" height="207">
+  <particle particle_type="buff_particle" actor="0" buff_type="timed" attribute_type="burn" draw_rate ="0">
+    <anim_data speed="150" loop="1"/>
+      <sprite n="StunAffect_00.png" opacity ="255"  x="1" y="0" w="77" h="41" pX="0.5" pY="0.5"/>
+      <sprite n="StunAffect_01.png" opacity ="255"  x="1" y="44" w="75" h="41" pX="0.5" pY="0.5"/>
+      <sprite n="StunAffect_02.png" opacity ="255"  x="1" y="87" w="73" h="39" pX="0.5" pY="0.5"/>
+      <sprite n="StunAffect_03.png" opacity ="255"  x="1" y="128" w="73" h="38" pX="0.5" pY="0.5"/>
+      <sprite n="StunAffect_04.png" opacity ="255"  x="1" y="168" w="73" h="38" pX="0.5" pY="0.5"/>
+  </particle>
+</TextureAtlas>

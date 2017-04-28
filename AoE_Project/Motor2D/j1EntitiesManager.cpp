@@ -598,13 +598,26 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 			/*
 			- level
 			- ability [3]
+			- actived[3];
 			- ability_lvl_2_current_time
 			- ability_lvl_3_current_time
 			*/
 			break;
 		case ARCHER_CHMP:
+			/*
+			- ability [3]
+			- actived[3];
+			- ability_lvl_2_current_time
+			- ability_lvl_3_current_time
+			*/
 			break;
 		case WIZARD_CHMP:
+			/*
+			- ability [3]
+			- actived[3];
+			- ability_lvl_2_current_time
+			- ability_lvl_3_current_time
+			*/
 			break;
 		}
 

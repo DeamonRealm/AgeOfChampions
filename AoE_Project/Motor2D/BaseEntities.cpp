@@ -1546,6 +1546,11 @@ void Unit::SetSpeed(float speed_val)
 	speed = speed_val;
 }
 
+void Unit::SetSpeedBuff(float speed_val)
+{
+	speed_buff = speed_buff;
+}
+
 void Unit::SetAction(ACTION_TYPE action_val)
 {
 	action_type = action_val;
@@ -1581,6 +1586,11 @@ void Unit::SetAttackRate(uint atk_rate)
 	attack_rate = atk_rate;
 }
 
+void Unit::SetAttackRateBuff(uint atk_rate)
+{
+	attack_rate_buff = atk_rate;
+}
+
 void Unit::SetAttackType(ATTACK_TYPE atk_type)
 {
 	attack_type = atk_type;
@@ -1589,6 +1599,11 @@ void Unit::SetAttackType(ATTACK_TYPE atk_type)
 void Unit::SetAttackArea(const Circle & atk_area)
 {
 	attack_area = atk_area;
+}
+
+void Unit::SetAttackAreaBuff(uint atk_range)
+{
+	attack_area_buff = atk_range;
 }
 
 void Unit::SetDefense(uint def)
@@ -1745,6 +1760,11 @@ float Unit::GetSpeed()const
 	return speed+mutable_speed;
 }
 
+float Unit::GetSpeedBuff() const
+{
+	return speed_buff;
+}
+
 ACTION_TYPE Unit::GetAction()const
 {
 	return action_type;
@@ -1786,6 +1806,11 @@ uint Unit::GetAttackRate()const
 	return attack_rate;
 }
 
+uint Unit::GetAttackRateBuff() const
+{
+	return attack_rate_buff;
+}
+
 ATTACK_TYPE Unit::GetAttackType()const
 {
 	return attack_type;
@@ -1796,11 +1821,13 @@ uint Unit::GetAttackRange()const
 	return attack_area.GetRad();
 }
 
+
 const Circle * Unit::GetAttackArea() const
 {
 	return &attack_area;
 }
-
+{
+}
 uint Unit::GetDefense()const
 {
 	return defense;

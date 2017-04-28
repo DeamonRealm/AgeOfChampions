@@ -324,6 +324,8 @@ protected:
 	uint			view_area = 0;
 	float			speed = 0.0f;
 	float			mutable_speed = 0.0f;
+	float			speed_buff = 0.0f;
+
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = SOUTH;
 	iPoint			future_position = { 0,0 };
@@ -335,8 +337,11 @@ protected:
 	uint			attack_hitpoints = 0;
 	uint			attack_bonus = 0;
 	float			attack_buff = 0;
+	uint			attack_area_buff = 0;
 	uint			siege_hitpoints = 0;
 	uint			attack_rate = 0;
+	uint			attack_rate_buff = 0;
+
 	ATTACK_TYPE		attack_type = NO_ATTACK;
 	//Defense/Armor ----
 	uint			defense = 0; /*Used in melee damage*/
@@ -418,6 +423,8 @@ public:
 	void	SetHardCollider(const Circle& new_hard_collider);
 	void	SetViewArea(uint area_val);
 	void	SetSpeed(float speed_val);
+	void	SetSpeedBuff(float speed_val);
+
 	void	SetAction(ACTION_TYPE action_val);
 	void	SetDirection(DIRECTION_TYPE direction_val);
 	void	SetAttackDelay(uint atk_delay);
@@ -426,8 +433,11 @@ public:
 	void	SetAttackBuff(float atk_buff);
 	void	SetSiegeHitPoints(uint siege_val);
 	void	SetAttackRate(uint atk_rate);
+	void	SetAttackRateBuff(uint atk_rate);
+
 	void	SetAttackType(ATTACK_TYPE atk_type);
 	void	SetAttackArea(const Circle& atk_area);
+	void	SetAttackAreaBuff(uint atk_range);
 	void	SetDefense(uint def);
 	void	SetDefenseBonus(uint def_bonus);
 	void	SetDefenseBuff(float def_buff);
@@ -453,18 +463,26 @@ public:
 	const Entity*	GetInteractionTarget();
 	uint			GetViewArea()const;
 	float			GetSpeed()const;
+	float			GetSpeedBuff()const;
 	ACTION_TYPE		GetAction()const;
 	DIRECTION_TYPE	GetDirection()const;
 	uint			GetAttackDelay()const;
 	uint			GetAttackHitPoints()const;
 
 	uint			GetAttackBonus()const;
+
 	float			GetAttackBuff()const;
 	uint			GetSiegeHitPoints()const;
 	uint			GetAttackRate()const;
+	uint			GetAttackRateBuff()const;
+
 	ATTACK_TYPE		GetAttackType()const;
 	uint			GetAttackRange()const;
+
 	const Circle*	GetAttackArea()const;
+
+	uint			GetAttackAreaBuff()const;
+	
 	uint			GetDefense()const;
 	uint			GetDefenseBonus()const;
 	float			GetDefenseBuff()const;

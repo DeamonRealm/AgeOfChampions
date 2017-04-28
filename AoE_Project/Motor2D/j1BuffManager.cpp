@@ -168,8 +168,10 @@ bool PassiveBuff::ApplyBuff()
 		return false;
 	}
 
-	uint base;
-	float buff;
+	uint base = 0;
+	float base_float = 0.0f;
+
+	float buff = 0.0f;
 
 	switch (attribute_type)
 	{
@@ -203,7 +205,27 @@ bool PassiveBuff::ApplyBuff()
 		buff = base * value;
 		target->SetLifeBuff(buff);
 		break;
+	case SPEED_BUFF:
+		base = target->GetAttackRateBuff();
+		buff = base * value;
+		target->SetAttackRateBuff(buff);
+		break;
+	case RANGE_BUFF:
+	{
+		base = target->GetAttackArea()->GetRad();
+		buff = base * value;
+		Circle tmp = *target->GetAttackArea();
+		target->SetAttackAreaBuff(buff);
+		tmp.SetRad(base + buff);
+		break;
 	}
+	case BURN_BUFF:
+		base_float = target->GetSpeedBuff();
+		buff = base_float * value;
+		target->SetLifeBuff(buff);
+		break;
+	}
+
 
 	particle.draw_timer.Start();
 	particle.animation.Reset();
@@ -218,8 +240,9 @@ bool PassiveBuff::RemoveBuff()
 		return false;
 	}
 
-	uint base;
-	float current_buff;
+	uint base=0;
+	float base_float=0.0f;
+	float current_buff=0.0f;
 
 	switch (attribute_type)
 	{
@@ -256,6 +279,27 @@ bool PassiveBuff::RemoveBuff()
 		break;
 	case TAUNT_BUFF:
 		target->QuitProtection();
+		break;
+	case SPEED_BUFF:
+		base = target->GetAttackRate();
+		current_buff = base * value;
+		target->SetAttackRateBuff(-current_buff);
+		break;
+	case RANGE_BUFF:
+	{
+		base = target->GetAttackArea()->GetRad();
+		int buff = target->GetAttackAreaBuff();
+		Circle tmp = *target->GetAttackArea();
+		tmp.SetRad(base - buff);
+		current_buff = base * value;
+		target->SetAttackAreaBuff(-current_buff);	
+		break;
+	}
+		break;
+	case BURN_BUFF:
+		base_float = target->GetAttackArea()->GetRad();
+		current_buff = base_float * value;
+		target->SetAttackAreaBuff(-current_buff);
 		break;
 	}
 
@@ -306,8 +350,9 @@ bool Buff::ApplyBuff()
 		return false;
 	}
 
-	uint base;
-	float buff;
+	uint base=0;
+	float base_float=0.0f;
+	float buff = 0.0f;
 
 	switch (attribute_type)
 	{
@@ -339,6 +384,25 @@ bool Buff::ApplyBuff()
 	case LIFE_BUFF:
 		base = target->GetBaseMaxLife();
 		buff = base * value;
+		target->SetLifeBuff(buff);
+		break;
+	case SPEED_BUFF:
+		base = target->GetAttackRateBuff();
+		buff = base * value;
+		target->SetAttackRateBuff(buff);
+		break;
+	case RANGE_BUFF:
+	{
+		base = target->GetAttackArea()->GetRad();
+		buff = base * value;
+		Circle tmp = *target->GetAttackArea();
+		target->SetAttackAreaBuff(buff);
+		tmp.SetRad(base + buff);
+		break;
+	}
+	case BURN_BUFF:
+		base_float = target->GetSpeedBuff();
+		buff = base_float * value;
 		target->SetLifeBuff(buff);
 		break;
 	}
@@ -614,19 +678,25 @@ BUFF_ATTRIBUTE_TYPE j1BuffManager::StrToBuffAttributeType(const char * str) cons
 	if (strcmp("life", str) == 0)			return BUFF_ATTRIBUTE_TYPE::LIFE_BUFF;
 	if (strcmp("stun", str) == 0)			return BUFF_ATTRIBUTE_TYPE::STUN_BUFF;
 	if (strcmp("taunt", str) == 0)			return BUFF_ATTRIBUTE_TYPE::TAUNT_BUFF;
+	if (strcmp("speed_attack", str) == 0)	return BUFF_ATTRIBUTE_TYPE::SPEED_BUFF;
+	if (strcmp("range_attack", str) == 0)	return BUFF_ATTRIBUTE_TYPE::RANGE_BUFF;
+	if (strcmp("burn", str) == 0)			return BUFF_ATTRIBUTE_TYPE::BURN_BUFF;
 
 	return NO_ATTRIBUTE;
 }
 
 PARTICLE_TYPE j1BuffManager::StrToParticleType(const char * str) const
 {
-	if (strcmp("buff_particle", str) == 0) 		return PARTICLE_TYPE::BUFF_PARTICLE;
-	if (strcmp("slash_particle", str) == 0)		return PARTICLE_TYPE::SLASH_PARTICLE;
-	if (strcmp("stun_particle", str) == 0)		return PARTICLE_TYPE::STUN_PARTICLE;
-	if (strcmp("taunt_particle", str) == 0)		return PARTICLE_TYPE::TAUNT_PARTICLE;
-	if (strcmp("teleport_particle", str) == 0)	return PARTICLE_TYPE::TELEPORT_PARTICLE;
-	if (strcmp("heal_particle", str) == 0)		return PARTICLE_TYPE::HEAL_PARTICLE;
-	if (strcmp("thunder_particle", str) == 0)	return PARTICLE_TYPE::THUNDER_PARTICLE;
+	if (strcmp("buff_particle", str) == 0) 				return PARTICLE_TYPE::BUFF_PARTICLE;
+	if (strcmp("slash_particle", str) == 0)				return PARTICLE_TYPE::SLASH_PARTICLE;
+	if (strcmp("stun_particle", str) == 0)				return PARTICLE_TYPE::STUN_PARTICLE;
+	if (strcmp("taunt_particle", str) == 0)				return PARTICLE_TYPE::TAUNT_PARTICLE;
+	if (strcmp("teleport_particle", str) == 0)			return PARTICLE_TYPE::TELEPORT_PARTICLE;
+	if (strcmp("heal_particle", str) == 0)				return PARTICLE_TYPE::HEAL_PARTICLE;
+	if (strcmp("thunder_particle", str) == 0)			return PARTICLE_TYPE::THUNDER_PARTICLE;
+	if (strcmp("multi_shot_particle", str) == 0)		return PARTICLE_TYPE::MULTI_SHOT_PARTICLE;
+	if (strcmp("area_fire_shot_particle", str) == 0)	return PARTICLE_TYPE::AREA_FIRE_PARTICLE;
+	if (strcmp("dragon_shot_particle", str) == 0)		return PARTICLE_TYPE::DRAGON_SHOT_PARTICLE;
 
 	return UNKNOWN_PARTICLE;
 }

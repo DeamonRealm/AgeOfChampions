@@ -1461,11 +1461,11 @@ void Hunter::SetAbility_lvl_1(bool choosed)
 
 	if (choosed)
 	{
-		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, LIFE_BUFF, false);
+		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, SPEED_BUFF, true);
 	}
 	else
 	{
-		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, VISION_BUFF, false);
+		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, RANGE_BUFF, true);
 	}
 	ability[0] = choosed;
 
@@ -1497,14 +1497,14 @@ void Hunter::SetAbility_lvl_2(bool choosed)
 
 	if (choosed)
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_2_particle = App->buff_manager->GetParticle(MULTI_SHOT_PARTICLE, SOUTH);
 		ability_lvl_2_attack_value = ability_lvl_2_skill_B_attack_value;
 		ability_lvl_2_prepare_mode = true;
 
 	}
 	else
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+		ability_lvl_2_particle = App->buff_manager->GetParticle(DRAGON_SHOT_PARTICLE, SOUTH);
 		ability_lvl_2_attack_value = ability_lvl_2_skill_A_attack_value;
 		ability_lvl_2_prepare_mode = true;
 
@@ -1544,6 +1544,8 @@ void Hunter::Hability_lvl_2(int x, int y)
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_triangle_attack_skill_A_lvl_2);
+		ability_lvl_2_particle.animation.Reset();
+		ability_lvl_2_particle.position = GetPositionRounded();
 	}
 	else
 	{
@@ -1552,6 +1554,8 @@ void Hunter::Hability_lvl_2(int x, int y)
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_2);
+		ability_lvl_2_particle.animation.Reset();
+		ability_lvl_2_particle.position = area_attack_skill_B_lvl_2.GetPosition();
 	}
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
@@ -1565,8 +1569,7 @@ void Hunter::Hability_lvl_2(int x, int y)
 
 	actived[1] = true;
 	
-	ability_lvl_2_particle.animation.Reset();
-	ability_lvl_2_particle.position = GetPositionRounded();
+
 	ability_lvl_2_timer.Start();
 	ability_lvl_2_current_time = 0;
 }
@@ -1590,7 +1593,7 @@ void Hunter::SetAbility_lvl_3(bool choosed)
 
 	if (choosed)
 	{
-		ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+		ability_lvl_3_particle = App->buff_manager->GetParticle(AREA_FIRE_PARTICLE, SOUTH);
 		ability_lvl_3_attack_value = ability_lvl_3_skill_B_attack_value;
 		ability_lvl_3_prepare_mode = true;
 
@@ -1633,14 +1636,15 @@ void Hunter::Hability_lvl_3(int x, int y)
 	App->animator->UnitPlay(this);
 	std::vector<Unit*> units_in;
 
-	if (ability[1])
+	if (ability[2])
 	{
 		if (!CalculateSpecialAttackArea(destination, false))
 			return;
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_A_lvl_3);
-		
+		ability_lvl_3_particle.animation.Reset();
+		ability_lvl_3_particle.position = area_attack_skill_A_lvl_3.GetPosition();
 	}
 	else
 	{
@@ -1652,15 +1656,16 @@ void Hunter::Hability_lvl_3(int x, int y)
 	for (uint k = 0; k < size; k++)
 	{
 		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
-		if (ability[1])
+		if (ability[2]) {
+			App->buff_manager->CallBuff(units_in[k], TIMED_BUFF, BURN_BUFF);
 			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
+		}
 		else
 			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 	}
 
 	actived[2] = true;
-	ability_lvl_3_particle.animation.Reset();
-	ability_lvl_3_particle.position = GetPositionRounded();
+
 	ability_lvl_3_timer.Start();
 }
 

@@ -12,6 +12,7 @@
   <particle document = "Slash_Effect.xml"/>
   <particle document = "Stun_Effect.xml"/>
   <particle document = "Stun_Effect_Particle.xml"/>
+
   <buff
     buff_type ="passive"
     attribute_type="attack"
@@ -67,6 +68,26 @@
   attribute_type="life"
   actor="0"
   value="0.2"
+  />
+  <buff
+  buff_type ="passive"
+  attribute_type="speed_attack"
+  actor="1"
+  value="0.2"
+  />
+  <buff
+    buff_type ="passive"
+    attribute_type="range_attack"
+    actor="1"
+    value="0.2"
+  />
+  <buff
+    buff_type ="timed"
+    attribute_type="burn"
+    buff_duration ="5000"
+
+    actor="0"
+    value="0.2"
   />
   <buff
     buff_type ="timed"
