@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:295ace5a80b4c2b5213c851dc5c72c55:fbc9e9bd2ac1875d9f327062f9071910:a028c238505d429dc0fa1def919ca8cf$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Resurrection.png" width="1700" height="1245">
+ <simple_particle particle_type="resurrection_particle" direction="no_direction">
+    <anim_data speed="100" loop="0"/>
+
+    <sprite n="Resurrection_0002_0002-shot.png.png" opacity ="255" x="1" y="1" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0003_0003-shot.png.png" opacity ="255" x="426" y="1" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0004_0004-shot.png.png" opacity ="255" x="851" y="1" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0005_0005-shot.png.png" opacity ="255" x="1276" y="1" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0006_0006-shot.png.png" opacity ="255" x="1" y="250" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0007_0007-shot.png.png" opacity ="255" x="426" y="250" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0008_0008-shot.png.png" opacity ="255" x="851" y="250" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0009_0009-shot.png.png" opacity ="255" x="1276" y="250" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0010_0010-shot.png.png" opacity ="255" x="1" y="499" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0011_0011-shot.png.png" opacity ="255" x="426" y="499" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0012_0012-shot.png.png" opacity ="255" x="851" y="499" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0013_0013-shot.png.png" opacity ="255" x="1276" y="499" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0014_0014-shot.png.png" opacity ="255" x="1" y="748" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0015_0015-shot.png.png" opacity ="255" x="426" y="748" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0016_0016-shot.png.png" opacity ="255" x="851" y="748" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0017_0017-shot.png.png" opacity ="255" x="1276" y="748" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0018_0018-shot.png.png" opacity ="255" x="1" y="997" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0019_0019-shot.png.png" opacity ="255" x="426" y="997" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0020_0020-shot.png.png" opacity ="255" x="851" y="997" w="423" h="247" pX="0.498818" pY="0.716599"/>
+    <sprite n="Resurrection_0021_0021-shot.png.png" opacity ="255" x="1276" y="997" w="423" h="247" pX="0.498818" pY="0.716599"/>
+
+</simple_particle>
+</TextureAtlas>
