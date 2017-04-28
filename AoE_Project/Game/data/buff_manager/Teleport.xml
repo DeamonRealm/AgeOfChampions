@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:274f424d562810df782e24f723daf3be:511ca047f2714758fce956d80b23e6cf:bbe05a595383ee2c1ffa75f1fd858b16$ -->
+<!-- $TexturePacker:SmartUpdate:a06f036aaa897fd0bd7b4c7b9aa360c4:c7f5db7b41587826004ffa0415effe16:bbe05a595383ee2c1ffa75f1fd858b16$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,31 +19,25 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Teleport.png" width="3015" height="2780">
-  <simple_particle particle_type="teleport_particle" direction="no_direction">
-        <anim_data speed="100" loop="0"/>
-
-    <sprite n="0001 shot.png" opacity ="255" x="1" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0002 shot.png" opacity ="255" x="1" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0003 shot.png" opacity ="255" x="604" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0004 shot.png" opacity ="255" x="1207" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0005 shot.png" opacity ="255" x="1810" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0006 shot.png" opacity ="255" x="2413" y="1" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0007 shot.png" opacity ="255" x="1" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0008 shot.png" opacity ="255" x="604" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0009 shot.png" opacity ="255" x="1207" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0010 shot.png" opacity ="255" x="1810" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0011 shot.png" opacity ="255" x="2413" y="696" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0012 shot.png" opacity ="255" x="1" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0013 shot.png" opacity ="255" x="604" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0014 shot.png" opacity ="255" x="1207" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0015 shot.png" opacity ="255" x="1810" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0016 shot.png" opacity ="255" x="2413" y="1391" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0017 shot.png" opacity ="255" x="1" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0018 shot.png" opacity ="255" x="604" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0019 shot.png" opacity ="255" x="1207" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0020 shot.png" opacity ="255" x="1810" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
-    <sprite n="0021 shot.png" opacity ="255" x="2413" y="2086" w="601" h="693" pX="0.5" pY="0.5"/>
-  </simple_particle>
-
+<TextureAtlas imagePath="Teleport.png" width="902" height="1593">
+    <sprite n="0002 shot.png" x="1" y="1" w="293" h="172" pX="0.5" pY="1" oX="7" oY="1" oW="300" oH="173"/>
+    <sprite n="0003 shot.png" x="296" y="1" w="295" h="191" pX="0.5" pY="1" oX="5" oY="1" oW="300" oH="192"/>
+    <sprite n="0004 shot.png" x="593" y="1" w="289" h="198" pX="0.5" pY="1" oX="8" oY="0" oW="300" oH="199"/>
+    <sprite n="0005 shot.png" x="1" y="201" w="298" h="208" pX="0.5" pY="1" oX="2" oY="0" oW="300" oH="208"/>
+    <sprite n="0006 shot.png" x="301" y="201" w="293" h="215" pX="0.5" pY="1" oX="7" oY="0" oW="300" oH="215"/>
+    <sprite n="0007 shot.png" x="596" y="201" w="298" h="194" pX="0.5" pY="1" oX="2" oY="0" oW="300" oH="194"/>
+    <sprite n="0008 shot.png" x="1" y="418" w="298" h="201" pX="0.5" pY="1" oX="2" oY="2" oW="300" oH="203"/>
+    <sprite n="0009 shot.png" x="301" y="418" w="296" h="208" pX="0.5" pY="1" oX="4" oY="1" oW="300" oH="209"/>
+    <sprite n="0010 shot.png" x="599" y="418" w="299" h="214" pX="0.5" pY="1" oX="1" oY="1" oW="300" oH="215"/>
+    <sprite n="0011 shot.png" x="1" y="634" w="299" h="221" pX="0.5" pY="1" oX="1" oY="0" oW="300" oH="221"/>
+    <sprite n="0012 shot.png" x="302" y="634" w="299" h="224" pX="0.5" pY="1" oX="1" oY="0" oW="300" oH="224"/>
+    <sprite n="0013 shot.png" x="1" y="860" w="299" h="215" pX="0.5" pY="1" oX="1" oY="3" oW="300" oH="218"/>
+    <sprite n="0014 shot.png" x="302" y="860" w="298" h="222" pX="0.5" pY="1" oX="2" oY="1" oW="300" oH="223"/>
+    <sprite n="0015 shot.png" x="602" y="860" w="298" h="236" pX="0.5" pY="1" oX="2" oY="0" oW="300" oH="236"/>
+    <sprite n="0016 shot.png" x="1" y="1098" w="299" h="254" pX="0.5" pY="1" oX="1" oY="0" oW="300" oH="254"/>
+    <sprite n="0017 shot.png" x="302" y="1098" w="299" h="231" pX="0.5" pY="1" oX="1" oY="0" oW="300" oH="231"/>
+    <sprite n="0018 shot.png" x="603" y="1098" w="298" h="242" pX="0.5" pY="1" oX="2" oY="0" oW="300" oH="242"/>
+    <sprite n="0019 shot.png" x="1" y="1354" w="296" h="230" pX="0.5" pY="1" oX="4" oY="0" oW="300" oH="230"/>
+    <sprite n="0020 shot.png" x="299" y="1354" w="299" h="238" pX="0.5" pY="1" oX="1" oY="0" oW="300" oH="238"/>
+    <sprite n="0021 shot.png" x="600" y="1354" w="297" h="236" pX="0.5" pY="1" oX="3" oY="0" oW="300" oH="236"/>
 </TextureAtlas>
