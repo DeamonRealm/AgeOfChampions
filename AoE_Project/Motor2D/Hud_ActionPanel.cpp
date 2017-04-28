@@ -913,7 +913,7 @@ void HeroPanel::ChangePanelTarget(Entity * new_target)
 		champion_row.push_back(nullptr);
 	}
 	entitis_panel = champion_row[0];
-	champion_selected = ((Unit*)entitis_panel)->GetUnitType();
+	if (entitis_panel != nullptr) champion_selected = ((Unit*)entitis_panel)->GetUnitType();
 	SetNewOrder();
 }
 

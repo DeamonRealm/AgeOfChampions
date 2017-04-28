@@ -47,27 +47,15 @@ void j1EntitiesManager::Disable()
 	while (units_item != units.end())
 	{
 		App->buff_manager->RemoveTargetBuffs(units_item._Ptr->_Myval);
-		switch (units_item._Ptr->_Myval->GetUnitType())
-		{
-		case VILLAGER:
-			delete ((Villager*)units_item._Ptr->_Myval);
-			break;
-		case WARRIOR_CHMP:
-			delete ((Warrior*)units_item._Ptr->_Myval);
-			break;
-		case WIZARD_CHMP:
-			delete ((Wizard*)units_item._Ptr->_Myval);
-			break;
-		default:
-			RELEASE(units_item._Ptr->_Myval);
-			break;
-		}
-	
+		RELEASE(units_item._Ptr->_Myval);
 		units_item++;
 	}
 	units.clear();
 	units_quadtree.Reset();
 	
+	//Clean Up death units list (already deleted with Units CleanUp)
+	death_units.clear();
+
 	//Clean Up resources list
 	std::list<Resource*>::iterator resources_item = resources.begin();
 	while (resources_item != resources.end())
