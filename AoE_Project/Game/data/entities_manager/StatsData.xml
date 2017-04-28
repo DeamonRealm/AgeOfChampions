@@ -41,6 +41,7 @@
       gold_cost="5"
       population_cost="2"
       train_time="8000"
+      unit_experience = "50"
     />
   </unit>
   <!--Crossbowman-->
@@ -81,6 +82,7 @@
         gold_cost="5"
         population_cost="2"
         train_time="8000"
+        unit_experience = "50"
     />
   </unit>
   <!--Two Handed Swordman-->
@@ -121,6 +123,7 @@
         gold_cost="5"
         population_cost="2"
         train_time="8000"
+        unit_experience = "50"
     />
   </unit>
 
@@ -162,6 +165,7 @@
         gold_cost="5"
         population_cost="2"
         train_time="8000"
+        unit_experience = "50"
     />
   </unit>
   <!--Champion-->
@@ -202,6 +206,7 @@
         gold_cost="5"
         population_cost="2"
         train_time="8000"
+        unit_experience = "50"
     />
   </unit>
   <!--Man At Arms-->
@@ -242,6 +247,7 @@
         gold_cost="5"
         population_cost="2"
         train_time="8000"
+        unit_experience = "50"
     />
   </unit>
   <!--Militia-->
@@ -282,6 +288,7 @@
       gold_cost="20"
       poblation_cost="2"
       train_time="3000"
+      unit_experience = "50"
     />
   </unit>
   <!--Archer-->
@@ -322,6 +329,7 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8000"
+      unit_experience = "50"
     />
   </unit>
   <!--Cavalier-->
@@ -362,6 +370,7 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8"
+      unit_experience = "50"
     />
   </unit>
   <!--Cavalry Archer-->
@@ -402,6 +411,7 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8"
+      unit_experience = "50"
     />
   </unit>
   <!--Elite Skirmisher-->
@@ -442,6 +452,7 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8"
+      unit_experience = "50"
     />
   </unit>
   <!--Heavy Cavalry Archer-->
@@ -482,6 +493,7 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8"
+      unit_experience = "50"
     />
   </unit>
   <!--Knight-->
@@ -522,6 +534,7 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8"
+      unit_experience = "50"
     />
   </unit>
   <!--Monk-->
@@ -562,6 +575,7 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8"
+      unit_experience = "50"
     />
   </unit>
   <!--Paladin-->
@@ -602,6 +616,7 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8"
+      unit_experience = "50"
     />
   </unit>
   <!--Pikeman-->
@@ -642,6 +657,7 @@
       gold_cost="5"
       poblation_cost="2"
       train_time="8"
+      unit_experience = "50"
     />
   </unit>
   <!--Spearman-->
@@ -663,7 +679,7 @@
       icon_y="621"
       icon_w="36"
       icon_h="36"
-      
+      unit_experience = "50"
       max_life="150"
       view_area="15"
       speed="2.5"
@@ -722,7 +738,7 @@
       gold_cost="20"
       poblation_cost="2"
       train_time="2500"
-      
+      unit_experience = "50"
       resources_capacity ="90"
       recollect_capacity ="10"
       recollect_rate ="450"
@@ -735,6 +751,7 @@
       name="Warrior"
       unit_type ="warrior_chmp"
       attack_type="melee"
+      
       
       buff_area_rad ="250"
       vision_rad ="300"
@@ -769,6 +786,10 @@
       poblation_cost="2"
       train_time="4000"
       
+      unit_experience = "50"
+      experience_lvl_2="150"
+      experience_lvl_3="450"
+      
       ability_lvl_2_cooldown="5000"
       ability_lvl_2_attack_value = "10"
       ability_lvl_2_stun_value = "2000"
@@ -778,8 +799,9 @@
       
       attack_for_level="1"
       range_for_level="1"
+      life_for_level= "5"
       defense_for_level="1.5"
-      armor_for_level="1.5"
+      armor_for_level="2"
       speed_for_level="1.5"
       view_area_for_level="2"
       
@@ -828,8 +850,10 @@
       gold_cost="60"
       poblation_cost="2"
       train_time="4000"
-      
-      
+      unit_experience = "50"
+      experience_lvl_2="150"
+      experience_lvl_3="450"
+
       ability_lvl_2_cooldown = "5000"
       ability_lvl_2_heal_value = "20"
       
@@ -838,8 +862,10 @@
 
       attack_for_level="1"
       range_for_level="1"
+      life_for_level= "5"
+
       defense_for_level="1.5"
-      armor_for_level="1.5"
+      armor_for_level="2"
       speed_for_level="1.5"
       view_area_for_level="2"
       
@@ -851,7 +877,7 @@
       
     />
   </unit>
-  <!--Wizard-->
+  <!--Hunter-->
   <unit civ="Teutons" id="unit">
     <stats
       name="Hunter"
@@ -891,7 +917,10 @@
       gold_cost="60"
       poblation_cost="2"
       train_time="4000"
-      
+      unit_experience = "50"
+      experience_lvl_2="150"
+      experience_lvl_3="450"
+
       area_triangle_length="210"
       area_triangle_width_angle="125"
       area_triangle_X_angle="12"
@@ -916,8 +945,9 @@
 
       attack_for_level="1"
       range_for_level="1"
+      life_for_level= "5"
       defense_for_level="1.5"
-      armor_for_level="1.5"
+      armor_for_level="2"
       speed_for_level="1.5"
       view_area_for_level="2"
       

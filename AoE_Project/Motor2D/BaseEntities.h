@@ -354,6 +354,7 @@ protected:
 	//Life
 	float			life_buff = 0;
 	//Others
+	uint			unit_experience = 0;
 	bool			unit_protected = false;
 	Warrior*		tank = nullptr;
 
@@ -438,7 +439,7 @@ public:
 	void	SetTrainTime(uint train_time_val);
 	void	SetExp(uint experience);
 	void	SetUpgrade(Unit* previous_unit);
-
+	void	SetUnitExperience(uint value);
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
 	const Circle&	GetMark()const;

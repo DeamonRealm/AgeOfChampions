@@ -62,6 +62,8 @@ private:
 	std::list<Unit*>		death_units;
 	std::list<Resource*>	resources;
 	std::list<Building*>	buildings;
+	std::list<Champion*>	champions_blue;
+	std::list<Champion*>	champions_red;
 
 
 	//Vector where all the killed/destroyed entities are placed
@@ -82,7 +84,11 @@ private:
 	bool		CivilizationCheck(char* civs_str, const char* chosen_civ);
 
 public:
+	void GetChampion(Champion* champion, DIPLOMACY diplomacy);
+	void ExtractChampion(Champion* champion, DIPLOMACY diplomacy);
 
+	//Send Experience to champions
+	void GetExperienceFromUnit(int exp,DIPLOMACY diplomacy);
 	//Entities Quad Trees to help other modules work with entities
 	m_QuadTree<Unit*>			units_quadtree;
 	m_QuadTree<Resource*>		resources_quadtree;

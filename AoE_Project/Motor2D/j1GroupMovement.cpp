@@ -50,7 +50,7 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y, boo
 		group_size = units->size();
 		formation.SetFormation(group_size);
 		//Get the middle point and set the lead of formation
-		middle_point = GetMiddlePoint();
+	//	middle_point = GetMiddlePoint();
 		lead = *(units->begin());
 		//Create the lead path
 		std::vector<iPoint>* first_destination = nullptr;
@@ -70,8 +70,8 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y, boo
 
 void j1GroupMovement::OtherUnitsPath(bool active)
 {
-	iPoint new_middle_point;
-	iPoint new_destination;
+	//iPoint new_middle_point;
+	iPoint new_destination = { 0,0 };
 	int current_width = 0;
 	int current_height = 0;
 	int i = 0;

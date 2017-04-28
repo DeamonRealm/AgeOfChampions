@@ -1331,10 +1331,12 @@ bool Unit::Die()
 	if (GetDiplomacy() == DIPLOMACY::ALLY)
 	{
 		App->player->game_panel->IncreaseDeathAllies();
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
 	}
 	if (GetDiplomacy() == DIPLOMACY::ENEMY)
 	{
 		//App->player->game_panel->IncreaseDeathEnemies();
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
 
 		std::list<Unit*>::const_iterator it = App->entities_manager->UnitsList()->begin();
 		bool lastenemy = true;
@@ -1675,6 +1677,11 @@ void Unit::SetUpgrade(Unit * upgraded)
 	armor = upgraded->armor;
 
 	attack_area = upgraded->attack_area;
+}
+
+void Unit::SetUnitExperience(uint value)
+{
+	unit_experience = value;
 }
 
 // ----------------

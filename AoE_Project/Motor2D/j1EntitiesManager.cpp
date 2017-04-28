@@ -77,6 +77,10 @@ void j1EntitiesManager::Disable()
 	buildings.clear();
 	buildings_quadtree.Reset();
 
+	//Clear champions list
+	champions_blue.clear();
+	champions_red.clear();
+
 }
 
 bool j1EntitiesManager::Start()
@@ -713,7 +717,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Gold Cost*/		new_def->SetGoldCost(unit_node->attribute("gold_cost").as_uint());
 	/*Population Cost*/	new_def->SetPopulationCost(unit_node->attribute("population_cost").as_uint());
 	/*Train Time*/		new_def->SetTrainTime(unit_node->attribute("train_time").as_uint());
-
+	/*Unit Experience*/	new_def->SetUnitExperience(unit_node->attribute("unit_experience").as_uint());
 
 	//Fill the extra allocated special unit stats
 	bool chmp = false;
@@ -790,12 +794,15 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Buff Area*/				Circle buff_area({ 0,0 }, unit_node->attribute("buff_area_rad").as_uint());
 									buff_area.SetColor({ 255,50,50,255 });
 									((Champion*)new_def)->SetBuffArea(buff_area);
+		/*level 2 cap*/				((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("experience_lvl_2").as_uint());
+		/*level 3 cap*/				((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("experience_lvl_3").as_uint());
 		/*Ability lvl 3 Cooldown*/	((Champion*)new_def)->SetAbility_lvl_2_Cooldown(unit_node->attribute("ability_lvl_2_cooldown").as_uint());
 		/*Ability lvl 2 Cooldown*/	((Champion*)new_def)->SetAbility_lvl_3_Cooldown(unit_node->attribute("ability_lvl_3_cooldown").as_uint());
 		/*Attack for level*/		((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("attack_for_level").as_uint());
 		/*Range for level*/			((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("range_for_level").as_uint());
+		/*Life for level*/			((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("life_for_level").as_uint());
+		/*Armor for level*/			((Champion*)new_def)->SetArmorForLevel(unit_node->attribute("armor_for_level").as_uint());
 		/*Defense for level*/		((Champion*)new_def)->SetDefenseForLevel(unit_node->attribute("defense_for_level").as_float());
-		/*Armor for level*/			((Champion*)new_def)->SetArmorForLevel(unit_node->attribute("armor_for_level").as_float());
 		/*Speed for level*/			((Champion*)new_def)->SetSpeedForLevel(unit_node->attribute("speed_for_level").as_float());
 		/*View Area for level*/		((Champion*)new_def)->SetViewAreaForLevel(unit_node->attribute("view_area_for_level").as_uint());
 	
@@ -960,6 +967,77 @@ bool j1EntitiesManager::CivilizationCheck(char * civs_str, const char * chosen_c
 
 	}
 	return false;
+}
+
+void j1EntitiesManager::GetChampion(Champion * champion, DIPLOMACY diplomacy)
+{
+	if (diplomacy == ENEMY) 
+		champions_red.push_back(champion);
+	else 
+		champions_blue.push_back(champion);
+	
+}
+
+void j1EntitiesManager::ExtractChampion(Champion * champion, DIPLOMACY diplomacy)
+{
+	if (diplomacy == ENEMY) 
+		champions_red.remove(champion);
+	else
+		champions_blue.remove(champion);
+}
+
+void j1EntitiesManager::GetExperienceFromUnit(int exp, DIPLOMACY diplomacy)
+{
+	if (diplomacy == ENEMY || diplomacy == NEUTRAL) {
+		if (!champions_blue.empty()) {
+			std::list<Champion*>::const_iterator champion = champions_blue.begin();
+			Champion* current_chmp = nullptr;
+			int no_maxed_chmp = 0;
+			while (champion != champions_blue.end())
+			{
+				current_chmp = champion._Ptr->_Myval;
+				if (current_chmp->GetLevel() != MAX_LEVEL)	no_maxed_chmp++;
+				champion++;
+			}
+			//check if champions need exp;
+			if (no_maxed_chmp == 0)	return;
+
+			champion = champions_blue.begin();
+			int exp_partition = exp / no_maxed_chmp;
+			while (champion != champions_blue.end())
+			{
+				current_chmp = champion._Ptr->_Myval;
+				if (current_chmp->GetLevel() != MAX_LEVEL)	current_chmp->SetExperience(exp_partition);
+				champion++;
+
+			}
+		}
+	}
+	if (diplomacy == ALLY || diplomacy == NEUTRAL) {
+		if (!champions_red.empty()) {
+			std::list<Champion*>::const_iterator champion = champions_red.begin();
+			Champion* current_chmp = nullptr;
+			int no_maxed_chmp = 0;
+			while (champion != champions_red.end())
+			{
+				current_chmp = champion._Ptr->_Myval;
+				if (current_chmp->GetLevel() != MAX_LEVEL)	no_maxed_chmp++;
+				champion++;
+
+			}
+			//check if champions need exp;
+			if (no_maxed_chmp == 0)	return;
+
+			champion = champions_red.begin();
+			int exp_partition = exp / no_maxed_chmp;
+			while (champion != champions_red.end())
+			{
+				current_chmp = champion._Ptr->_Myval;
+				if (current_chmp->GetLevel() != MAX_LEVEL)	current_chmp->SetExperience(exp_partition);
+				champion++;
+			}
+		}
+	}
 }
 
 //Functionality =======================

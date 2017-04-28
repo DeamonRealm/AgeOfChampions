@@ -100,6 +100,42 @@ void Champion::CheckHability_lvl_3()
 {
 }
 
+void Champion::LevelUp()
+{
+	to_level_up = false;
+	//Upgrade level
+	level++;
+	//Upgrade attack
+	attack_hitpoints += attack_for_level;
+	//Upgrade armor
+	armor += armor_for_level;
+	//Upgrade life
+	max_life += life_for_level;
+	life += life_for_level;
+}
+
+void Champion::SetExperience(int exp)
+{
+	if (level == MAX_LEVEL) return;
+
+	current_experience += exp;
+	if (level < 1)
+	{
+		if (current_experience > experience_lvl_2)
+		{
+			to_level_up = true;
+
+		}
+	}
+	else
+	{
+		if (current_experience > experience_lvl_3) 
+		{
+			to_level_up = true;
+		}
+	}
+}
+
 //Set Methods ---------------
 void Champion::SetPosition(float x, float y, bool insert)
 {
@@ -136,6 +172,16 @@ void Champion::SetBuffToApply(const PassiveBuff * buff)
 	buff_to_apply = (PassiveBuff*)buff;
 }
 
+void Champion::SetLvl2Cap(uint value)
+{
+	experience_lvl_2 = value;
+}
+
+void Champion::SetLvl3Cap(uint value)
+{
+	experience_lvl_3 = value;
+}
+
 void Champion::SetAbility_lvl_2_Cooldown(uint value)
 {
 	ability_lvl_2_cooldown = value;
@@ -166,7 +212,7 @@ void Champion::SetDefenseForLevel(float def_for_lvl)
 	defense_for_level = def_for_lvl;
 }
 
-void Champion::SetArmorForLevel(float arm_for_lvl)
+void Champion::SetArmorForLevel(uint arm_for_lvl)
 {
 	armor_for_level = arm_for_lvl;
 }
@@ -241,7 +287,6 @@ Warrior::Warrior(const Warrior & copy) : Champion(copy), special_attack_area(cop
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
 	ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
 	ability_lvl_3_particle = App->buff_manager->GetParticle(TAUNT_PARTICLE, NO_DIRECTION);
-
 	for (uint k = 0; k < 3; k++)
 	{
 		actived[k] = false;
@@ -266,6 +311,9 @@ void Warrior::ClearProtectedUnits()
 
 bool Warrior::Update()
 {
+	//Check if champion lvl up;
+	if (to_level_up) LevelUp();
+
 	if (actived[0] && level >= 0)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
 	else if (actived[1] && level >= 1)CheckHability_lvl_2();
@@ -276,7 +324,7 @@ bool Warrior::Update()
 	ability_lvl_3_current_time = ability_lvl_3_timer.Read();
 
 	action_worker.Update();
-
+	
 	return true;
 }
 
@@ -638,8 +686,14 @@ void Warrior::CalculateSpecialAttackArea(const iPoint& base)
 
 bool Warrior::Die()
 {
+	if (GetDiplomacy() == DIPLOMACY::ALLY)
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
+	else 	
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
+	App->entities_manager->ExtractChampion(this, this->GetDiplomacy());
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
+
 		App->player->action_panel->HeroIsDead(this->unit_type);
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
@@ -743,6 +797,9 @@ Wizard::~Wizard()
 }
 bool Wizard::Update()
 {
+	//Check if champion lvl up;
+	if (to_level_up) LevelUp();
+
 	if (actived[0] && level >= 0)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
 	else if (actived[1] && level >= 1)CheckHability_lvl_2();
@@ -1187,6 +1244,11 @@ bool Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 
 bool Wizard::Die()
 {
+	if (GetDiplomacy() == DIPLOMACY::ALLY)
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
+	else
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
+	App->entities_manager->ExtractChampion(this, this->GetDiplomacy());
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
 		App->player->action_panel->HeroIsDead(this->unit_type);
@@ -1282,6 +1344,9 @@ area_attack_skill_A_lvl_3(copy.area_attack_skill_A_lvl_3), area_limit_skill_A_lv
 {
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
 	ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+	ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
+
+
 	for (uint k = 0; k < 3; k++)
 	{
 		actived[k] = false;
@@ -1296,7 +1361,10 @@ Hunter::~Hunter()
 
 }
 bool Hunter::Update()
-{
+{	
+	//Check if champion lvl up;
+	if (to_level_up) LevelUp();
+
 	if (actived[0] && level >= 0)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
 	else if (actived[1] && level >= 1)CheckHability_lvl_2();
@@ -1392,70 +1460,19 @@ void Hunter::Hability_lvl_1()
 
 	if (actived[0])return;
 	//Collect all the units in the buff area
-	std::vector<Unit*> units_around;
-	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
-	uint size = units_around.size();
+	
 
 	//Update units buffs (check for new units and old ones)
-	for (uint k = 0; k < size; k++)
-	{
-		if (units_around[k]->GetDiplomacy() == entity_diplomacy)
-		{
-			if (units_around[k]->GetPosition() != position)
-			{
-				App->buff_manager->CallBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), false);
-				buffed_units.push_back(units_around[k]);
-			}
-			else
-			{
-				App->buff_manager->CallBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), true);
-				buffed_units.push_back(units_around[k]);
-			}
-		}
-	}
+	App->buff_manager->CallBuff(this, buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), true);
+			
+		
+	
 	actived[0] = true;
 }
 
 void Hunter::CheckHability_lvl_1()
 {
-	//Collect all the units in the buff area
-	std::vector<Unit*> units_around;
-	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
-	uint size = units_around.size();
-
-	//Deactivate all the units buffs that are not in the buff area
-	std::list<Unit*>::iterator unit = buffed_units.begin();
-	while (unit != buffed_units.end())
-	{
-		bool found = false;
-		for (uint k = 0; k < size; k++)
-		{
-			if (unit._Ptr->_Myval == units_around[k])
-			{
-				units_around[k] = nullptr;
-				found = true;
-				break;
-			}
-		}
-
-		if (!found)
-		{
-			App->buff_manager->RemoveTargetBuff(unit._Ptr->_Myval, buff_to_apply);
-			buffed_units.remove(unit._Ptr->_Myval);
-		}
-		unit++;
-	}
-
-	//Update units buffs (check for new units and old ones)
-	for (uint k = 0; k < size; k++)
-	{
-		if (units_around[k] == nullptr)continue;
-		if (units_around[k]->GetDiplomacy() == entity_diplomacy && units_around[k]->GetPosition() != position)
-		{
-			App->buff_manager->CallBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), false);
-			buffed_units.push_back(units_around[k]);
-		}
-	}
+	App->buff_manager->CallBuff(this, buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), true);
 }
 
 void Hunter::SetAbility_lvl_2(bool choosed)
@@ -1729,6 +1746,11 @@ bool Hunter::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 
 bool Hunter::Die()
 {
+	if (GetDiplomacy() == DIPLOMACY::ALLY)
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
+	else
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
+	App->entities_manager->ExtractChampion(this, this->GetDiplomacy());
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
 		App->player->action_panel->HeroIsDead(this->unit_type);

@@ -3,7 +3,7 @@
 
 #include "Units.h"
 #include "j1BuffManager.h"
-
+#define MAX_LEVEL 2
 ///Class Champion -------------------------------
 //Base class that define the champions bases
 class Champion : public Unit
@@ -18,15 +18,19 @@ protected:
 
 	//Hero level
 	uint	level = 2;
-	bool	ability[3];
-	bool	actived[3];
-	bool	ability_lvl_2_prepare_mode = false;
-	bool	ability_lvl_3_prepare_mode = false;
-
+	uint	current_experience = 0;
+	uint	experience_lvl_2 = 0;
+	uint	experience_lvl_3 = 0;
+	bool	to_level_up = false;
 	//Buff area
 	Circle			buff_area;
 	PassiveBuff*	buff_to_apply = nullptr;
 
+	//ability area 
+	bool	ability[3];
+	bool	actived[3];
+	bool	ability_lvl_2_prepare_mode = false;
+	bool	ability_lvl_3_prepare_mode = false;
 	//Attack area lvl 2
 	j1Timer			ability_lvl_2_timer;
 	uint			ability_lvl_2_cooldown = 0;
@@ -36,12 +40,14 @@ protected:
 	j1Timer			ability_lvl_3_timer;
 	uint			ability_lvl_3_cooldown = 0;
 	uint			ability_lvl_3_current_time = 0;
-
+	
 	//Stats bonus for level
 	uint	attack_for_level = 0;
+	uint	armor_for_level = 0;
+	uint	life_for_level = 0;
+
 	uint	range_for_level = 0;
 	float	defense_for_level = 0;
-	float	armor_for_level = 0;
 	float	speed_for_level = 0;
 	uint	view_area_for_level = 0;
 
@@ -63,25 +69,28 @@ public:
 	virtual void Hability_lvl_2(int x = 0, int y = 0);
 	virtual void CheckHability_lvl_2();
 	//Ability lvl3 methods
-
 	virtual void SetAbility_lvl_3(bool choosed);
 	virtual void PrepareAbility_lvl_3();
 	virtual void Hability_lvl_3(int x = 0, int y = 0);
 	virtual void CheckHability_lvl_3();
-
+	//Level system methods
+	void	LevelUp();
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetBuffArea(const Circle& area);
 	void	SetBuffToApply(const PassiveBuff* buff);
+	void	SetLvl2Cap(uint value);
+	void	SetLvl3Cap(uint value);
 	void	SetAbility_lvl_2_Cooldown(uint value);
 	void	SetAbility_lvl_3_Cooldown(uint value);
 	void	SetLevel(uint lvl);
 	void	SetAttackForLevel(uint atk_for_lvl);
 	void	SetRangeForLevel(uint rng_for_lvl);
 	void	SetDefenseForLevel(float def_for_lvl);
-	void	SetArmorForLevel(float arm_for_lvl);
+	void	SetArmorForLevel(uint arm_for_lvl);
 	void	SetSpeedForLevel(float spd_for_lvl);
 	void	SetViewAreaForLevel(uint view_for_level);
+	void	SetExperience(int exp);
 
 	//Get Methods -
 	Circle			GetBuffArea()const;
@@ -93,7 +102,7 @@ public:
 	float			GetArmorForLevel()const;
 	float			GetSpeedForLevel()const;
 	uint			GetViewAreaForLevel()const;
-
+	
 };
 /// ---------------------------------------------
 
