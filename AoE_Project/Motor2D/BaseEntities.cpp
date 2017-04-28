@@ -110,10 +110,11 @@ void Entity::ResetFogAround()
 void Entity::CleanFogAround()
 {
 	//Collect the new cells in vision area
-	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
+	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision);
 	if (!in_vision_cells.empty())
 	{
-		App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+		in_vision_tiles = App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+		App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG, false);
 	}
 }
 
@@ -121,6 +122,8 @@ void Entity::CheckFogAround()
 {
 	this->ResetFogAround();
 	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
+	in_vision_tiles = App->fog_of_war->ClearFogLayer(vision, NO_FOG);
+	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG,false);
 }
 
 //Add Action ------------
@@ -1432,11 +1435,19 @@ void Unit::ResetFogAround()
 	uint size = in_vision_cells.size();
 	for (uint k = 0; k < size; k++)
 	{
-		//in_vision_cells[k]->alpha = MID_ALPHA;
 		in_vision_cells[k]->locked = false;
 	}
+
+	//Reset unit locked tiles
+	size = in_vision_tiles.size();
+	for (uint k = 0; k < size; k++)
+	{
+		in_vision_tiles[k]->locked = false;
+		in_vision_tiles[k]->type = GRAY_FOG;
+	}
+
 	in_vision_cells.clear();
-	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
+	in_vision_tiles.clear();
 	this->distance_walked.y = this->distance_walked.x = 0.01f;
 }
 
@@ -2094,8 +2105,28 @@ void Building::ResetFogAround()
 		in_vision_cells[k]->alpha = MID_ALPHA;
 		in_vision_cells[k]->locked = false;
 	}
+
+	//Reset unit locked tiles
+	size = in_vision_tiles.size();
+	for (uint k = 0; k < size; k++)
+	{
+		in_vision_tiles[k]->locked = false;
+		in_vision_tiles[k]->type = GRAY_FOG;
+	}
+
 	in_vision_cells.clear();
+	in_vision_tiles.clear();
+}
+
+void Building::DiscoverFogAround()
+{
+	//Calculate the zone that have to be discovered
+	Circle zone = vision;
+	zone.SetRad(width_in_tiles * App->map->data.tile_width);
+	
+	//Clear the discover zone around the building
 	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
+	App->fog_of_war->ClearAlphaLayer(zone, MID_ALPHA);
 }
 
 bool Building::CheckZone(int x, int y)
@@ -2202,6 +2233,22 @@ bool Building::Draw(bool debug)
 	}
 
 	return ret;
+}
+
+bool Building::Update()
+{
+	action_worker.Update();
+	if (!fog_discovered)
+	{
+		iPoint map_loc = App->map->WorldToMap(position.x, position.y);
+		if (App->fog_of_war->GetFogID(map_loc.x, map_loc.y) != DARK_FOG)
+		{
+			DiscoverFogAround();
+			fog_discovered = true;
+		}
+
+	}
+	return true;
 }
 
 //Set Methods ---------------
@@ -2331,6 +2378,11 @@ void Building::SetDirectionType(DIRECTION_TYPE type)
 	direction_type = type;
 }
 
+void Building::SetFogDiscovered(bool val)
+{
+	fog_discovered = val;
+}
+
 const Rectng & Building::GetMark() const
 {
 	return mark;
@@ -2355,6 +2407,11 @@ ACTION_TYPE Building::GetActionType() const
 DIRECTION_TYPE Building::GetDirectionType() const
 {
 	return direction_type;
+}
+
+bool Building::GetFogDiscovered() const
+{
+	return fog_discovered;
 }
 
 ///----------------------------------------------

@@ -17,6 +17,7 @@ struct	PathNode;
 class	Warrior;
 enum	CURSOR_TARGET;
 class AlphaCell;
+class FogTile;
 
 #define FOCUS_MARGIN 12
 
@@ -228,6 +229,7 @@ protected:
 
 	//Fog Tiles --------
 	std::vector<AlphaCell*> in_vision_cells;
+	std::vector<FogTile*>	in_vision_tiles;
 
 public:
 
@@ -252,6 +254,7 @@ public:
 	void			CleanAnimation();
 	virtual void	CleanMapLogic();
 	void			SetBlitColor(const SDL_Color new_color);
+
 	virtual void	ResetFogAround();
 	void			CleanFogAround();
 	void			CheckFogAround();
@@ -545,11 +548,13 @@ protected:
 	BUILDING_TYPE	building_type = NO_BUILDING;
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = NO_DIRECTION;
+	bool			fog_discovered = false;
 
 public:
 
 	void CleanMapLogic();
 	void ResetFogAround();
+	void DiscoverFogAround();
 
 	//Functionality -------------------
 	//Check is can be built in the position
@@ -560,8 +565,9 @@ public:
 	void	ReleaseAllUnits();
 	bool	Die();
 
-	//Draw ------------------
+	//Game Loop -------------
 	bool	Draw(bool debug);
+	bool	Update();
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y, bool insert = true);
@@ -573,6 +579,7 @@ public:
 	void	SetBuildingType(BUILDING_TYPE type);
 	void	SetActionType(ACTION_TYPE type);
 	void	SetDirectionType(DIRECTION_TYPE type);
+	void	SetFogDiscovered(bool val);
 
 	//Get Methods -----------
 	const Rectng&	GetMark()const;
@@ -580,7 +587,7 @@ public:
 	BUILDING_TYPE	GetBuildingType()const;
 	ACTION_TYPE		GetActionType()const;
 	DIRECTION_TYPE	GetDirectionType()const;
-
+	bool			GetFogDiscovered()const;
 };
 /// ---------------------------------------------
 #endif // _ENTITY_

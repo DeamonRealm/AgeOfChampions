@@ -24,6 +24,24 @@ enum FOG_TYPE
 	DARK_FOG
 };
 
+class FogTile
+{
+public:
+
+	FogTile()
+	{
+	
+	}
+	~FogTile()
+	{
+	
+	}
+
+	FOG_TYPE type = DARK_FOG;
+	bool locked = false;
+
+};
+
 class j1FogOfWar : public j1Module
 {
 public:
@@ -43,7 +61,7 @@ public:
 
 private:
 
-	FOG_TYPE*				fog_layer = nullptr;	/*Layer that contains fog types*/
+	FogTile*				fog_layer = nullptr;	/*Layer that contains fog types*/
 	AlphaCell*				alpha_layer = nullptr;	/*Layer that contains fog alpha values*/
 	QuadTree<AlphaCell*>	fog_quadtree;			/*Contains the same data as the alpha layer but organized in a quadtree*/
 
@@ -73,7 +91,7 @@ public:
 	FOG_TYPE			GetFogID(int x, int y)const;
 
 	std::vector<AlphaCell*> ClearAlphaLayer(const Circle zone, unsigned short alpha = 0);
-	void					ClearFogLayer(const Circle zone, FOG_TYPE type);
+	std::vector<FogTile*>	ClearFogLayer(const Circle zone, FOG_TYPE type = NO_FOG, bool lock = true);
 
 	void	CheckEntityFog(Entity* target);
 	void	ReleaseEntityFog(Entity* target);

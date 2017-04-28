@@ -179,8 +179,9 @@ bool j1EntitiesManager::Draw() const
 		pos = units_vec[k]->GetPositionRounded();
 		pos = App->map->WorldToMap(pos.x, pos.y);
 		fog_type = App->fog_of_war->GetFogID(pos.x, pos.y);
-	//	if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
-	//	if (units_vec[k]->GetDiplomacy() == NEUTRAL && fog_type == DARK_FOG)continue;
+		if (fog_type == DARK_FOG)continue;
+		if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
+		
 
 		units_vec[k]->Draw(App->debug_mode);
 	}
@@ -207,16 +208,6 @@ bool j1EntitiesManager::Draw() const
 	size = buildings_vec.size();
 	for (uint k = 0; k < size; k++)
 	{
-		/*pos = buildings_vec[k]->GetPositionRounded();
-		pos = App->map->WorldToMap(pos.x, pos.y);
-		if (buildings_vec[k]->GetDiplomacy() == ALLY && App->fog_of_war->fog_update)
-		{
-			App->fog_of_war->ClearAlphaLayer(buildings_vec[k]->GetVision(), 0);
-			App->fog_of_war->ClearFogLayer(buildings_vec[k]->GetRenderArea(), NO_FOG);
-
-		}
-		if (App->fog_of_war->GetFogID(pos.x, pos.y) != DARK_FOG)*/
-			
 		buildings_vec[k]->Draw(App->debug_mode);
 	}
 
@@ -1240,6 +1231,9 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 			Circle rend = new_building->GetVision();
 			rend.SetRad(rend.GetRad() + RENDER_MARGIN);
 			new_building->SetRenderArea(rend);
+			
+			//If the building is an ally fog is already discovered
+			if (diplomacy == ALLY)new_building->SetFogDiscovered(true);
 
 			//Set building myself pointer
 			new_building->myself = new_building;

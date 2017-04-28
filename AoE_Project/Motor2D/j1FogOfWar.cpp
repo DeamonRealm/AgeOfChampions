@@ -26,9 +26,6 @@ void j1FogOfWar::Init()
 
 bool j1FogOfWar::PostUpdate()
 {
-	if (App->map_debug_mode)return true;
-
-
 
 	if (update_timer.Read() > UPDATE_RATE)
 	{
@@ -36,6 +33,8 @@ bool j1FogOfWar::PostUpdate()
 		uint size = App->entities_manager->units_quadtree.CollectCandidates(units, App->render->camera_viewport);
 		for (uint k = 0; k < size; k++)
 		{
+			if (units[k]->GetDiplomacy() != ALLY)continue;
+
 			if (units[k]->GetAction() != WALK)entities_static_update.push_back(units[k]);
 			else entities_static_update.push_back(units[k]);
 		}
@@ -74,6 +73,8 @@ bool j1FogOfWar::PostUpdate()
 		entities_static_update.back()->CheckFogAround();
 		entities_static_update.pop_back();
 	}
+
+	if (App->map_debug_mode)return true;
 
 	uint size = cells_in_screen.size();
 	for (uint k = 0; k < size; k++)
@@ -168,15 +169,9 @@ void j1FogOfWar::GenerateFogOfWar()
 		}
 	}
 
-	fog_layer = new FOG_TYPE[App->map->data.width * App->map->data.height];
+	fog_layer = new FogTile[App->map->data.width * App->map->data.height];
 
-	for (uint y = 0; y < App->map->data.height; y++)
-	{
-		for (uint x = 0; x < App->map->data.width; x++)
-		{
-			fog_layer[y * App->map->data.width + x] = DARK_FOG;
-		}
-	}
+
 
 	LOG("%f", time.ReadSec());
 }
@@ -193,7 +188,7 @@ void j1FogOfWar::CollectFogCells()
 
 FOG_TYPE j1FogOfWar::GetFogID(int x, int y) const
 {
-	return fog_layer[y * App->map->data.width + x];
+	return fog_layer[y * App->map->data.width + x].type;
 }
 
 std::vector<AlphaCell*> j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned short alpha)
@@ -215,17 +210,27 @@ std::vector<AlphaCell*> j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned 
 	return definitive;
 }
 
-void j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type)
+std::vector<FogTile*> j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type, bool lock)
 {
-
 	std::vector<iPoint> tiles_in;
 	uint size = App->map->map_quadtree.CollectCandidates(tiles_in, zone);
 
+	std::vector<FogTile*> resulting_tiles;
+
 	for (uint k = 0; k < size; k++)
 	{
-		fog_layer[tiles_in[k].y * App->map->data.width + tiles_in[k].x] = type;
+		uint index = tiles_in[k].y * App->map->data.width + tiles_in[k].x;
+
+		if (!fog_layer[index].locked)
+		{
+			fog_layer[index].locked = lock;
+			fog_layer[index].type = type;
+
+			resulting_tiles.push_back(&fog_layer[index]);
+		}
 	}
 
+	return resulting_tiles;
 }
 
 void j1FogOfWar::CheckEntityFog(Entity * target)
