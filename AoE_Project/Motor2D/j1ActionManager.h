@@ -138,6 +138,8 @@ public:
 
 	bool IsBusy(TASK_CHANNELS channel);
 
+	std::list<Action*>* GetActionList(TASK_CHANNELS channel);
+
 	void Pause();
 	void Restart();
 

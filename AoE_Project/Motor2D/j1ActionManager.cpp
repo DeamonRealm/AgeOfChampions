@@ -425,6 +425,32 @@ bool ActionWorker::IsBusy(TASK_CHANNELS channel)
 	return true;;
 }
 
+std::list<Action*>* ActionWorker::GetActionList(TASK_CHANNELS channel)
+{
+	std::list<Action*> ret;
+
+	switch (channel)
+	{
+	case PRIMARY:
+		ret = primary_action_queue;
+		ret.push_back(current_primary_action);
+		break;
+	case SECONDARY:
+		ret = secondary_action_queue;
+		ret.push_back(current_secondary_action);
+		break;
+	case PASSIVE:
+		ret = passive_action_queue;
+		ret.push_back(current_passive_action);
+		break;
+	default:
+		break;
+	}
+	
+
+	return &ret;
+}
+
 void ActionWorker::Pause()
 {
 	paused = true;
