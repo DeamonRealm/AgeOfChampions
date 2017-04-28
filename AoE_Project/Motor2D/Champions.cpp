@@ -464,11 +464,15 @@ void Warrior::SetAbility_lvl_2(bool choosed)
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
 		ability_lvl_2_current_time = ability_lvl_2_cooldown;
+		ability_lvl_2_prepare_mode = true;
+
 	}
 	else
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
 		ability_lvl_2_current_time = ability_lvl_2_cooldown;
+		ability_lvl_2_prepare_mode = true;
+
 
 	}
 	ability[1] = choosed;
@@ -576,11 +580,15 @@ void Warrior::SetAbility_lvl_3(bool choosed)
 	if (choosed)
 	{
 		ability_lvl_3_current_time = ability_lvl_3_cooldown;
+		ability_lvl_3_prepare_mode = true;
+
 	}
 	else
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(TAUNT_PARTICLE, NO_DIRECTION);
 		ability_lvl_3_current_time = ability_lvl_3_cooldown;
+		ability_lvl_3_prepare_mode = true;
+
 	}
 	ability[2] = choosed;
 }
@@ -957,11 +965,15 @@ void Wizard::SetAbility_lvl_2(bool choosed)
 		ability_lvl_2_A_particle = App->buff_manager->GetParticle(TELEPORT_PARTICLE, NO_DIRECTION);
 		ability_lvl_2_B_particle = App->buff_manager->GetParticle(TELEPORT_PARTICLE, NO_DIRECTION);
 		ability_lvl_2_current_time = ability_lvl_2_cooldown;
+		ability_lvl_2_prepare_mode = true;
+
 	}
 	else
 	{
 		ability_lvl_2_A_particle = App->buff_manager->GetParticle(HEAL_PARTICLE, NO_DIRECTION);
 		ability_lvl_2_current_time = ability_lvl_2_cooldown;
+		ability_lvl_2_prepare_mode = true;
+
 	}
 	ability[1] = choosed;
 }
@@ -1079,11 +1091,15 @@ void Wizard::SetAbility_lvl_3(bool choosed)
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(THUNDER_PARTICLE, NO_DIRECTION);
 		ability_lvl_3_current_time = ability_lvl_3_cooldown;
+		ability_lvl_3_prepare_mode = true;
+
 	}
 	else
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
 		ability_lvl_3_current_time = ability_lvl_3_cooldown;
+		ability_lvl_3_prepare_mode = true;
+
 
 	}
 	ability[2] = choosed;
@@ -1483,12 +1499,14 @@ void Hunter::SetAbility_lvl_2(bool choosed)
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
 		ability_lvl_2_attack_value = ability_lvl_2_skill_B_attack_value;
+		ability_lvl_2_prepare_mode = true;
 
 	}
 	else
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
 		ability_lvl_2_attack_value = ability_lvl_2_skill_A_attack_value;
+		ability_lvl_2_prepare_mode = true;
 
 	}
 	ability[1] = choosed;
@@ -1496,64 +1514,53 @@ void Hunter::SetAbility_lvl_2(bool choosed)
 
 void Hunter::PrepareAbility_lvl_2()
 {
-	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
-
+	if (ability_lvl_2_current_time < ability_lvl_2_cooldown)return;
 	ability_lvl_2_prepare_mode = true;
-
 	//Focus the wizard in the attack direction
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
-	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true);
-
+	iPoint destination = iPoint(x - App->render->camera.x, y - App->render->camera.y);
+	direction_type = LookDirection(destination, GetPositionRounded());
+	CalculateSpecialAttackArea(destination, true);
+	CalculateTriangleAttackArea(destination);
 }
 
 void Hunter::Hability_lvl_2(int x, int y)
 {
 	ability_lvl_2_prepare_mode = false;
 
-	if (ability_lvl_2_timer.Read() < ability_lvl_2_cooldown)return;
+	if (ability_lvl_2_current_time < ability_lvl_2_cooldown)return;
 
 	//Focus the wizard in the spell direction
-	iPoint destination = iPoint(x - App->render->camera.x, y - App->render->camera.y);
+	iPoint destination = iPoint(x , y);
 	direction_type = LookDirection(destination, GetPositionRounded());
-	if (!CalculateSpecialAttackArea(destination, true))
-		return;
 	action_type = ATTATCK;
 	App->animator->UnitPlay(this);
-	iPoint teleport_movement = { 0,0 };
+	std::vector<Unit*> units_in;
 
 	if (ability[1])
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
+		CalculateTriangleAttackArea(destination);
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
-
+		//Collect all the units in the buff area
+		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_triangle_attack_skill_A_lvl_2);
 	}
 	else
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
+		if (!CalculateSpecialAttackArea(destination, true))
+			return;
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
-		teleport_movement = destination - this->GetPositionRounded();
+		//Collect all the units in the buff area
+		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_2);
 	}
-
-
-
-	//Collect all the units in the buff area
-	std::vector<Unit*> units_in;
-	App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_2);
-
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
 		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
-		if (ability[1])
-		{
-
-			//	units_in[k]->DirectDamage(ability_B_attack_value);
-		}
-		else
-		{
-		}
+		if (ability[1])		
+			units_in[k]->DirectDamage(ability_lvl_2_attack_value);		
+		else		
+			units_in[k]->DirectDamage(ability_lvl_2_attack_value);		
 	}
 
 	actived[1] = true;
@@ -1561,6 +1568,7 @@ void Hunter::Hability_lvl_2(int x, int y)
 	ability_lvl_2_particle.animation.Reset();
 	ability_lvl_2_particle.position = GetPositionRounded();
 	ability_lvl_2_timer.Start();
+	ability_lvl_2_current_time = 0;
 }
 
 void Hunter::CheckHability_lvl_2()
@@ -1584,12 +1592,14 @@ void Hunter::SetAbility_lvl_3(bool choosed)
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
 		ability_lvl_3_attack_value = ability_lvl_3_skill_B_attack_value;
+		ability_lvl_3_prepare_mode = true;
 
 	}
 	else
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
 		ability_lvl_3_attack_value = ability_lvl_3_skill_A_attack_value;
+		ability_lvl_3_prepare_mode = true;
 
 	}
 	ability[1] = choosed;
@@ -1604,8 +1614,9 @@ void Hunter::PrepareAbility_lvl_3()
 	//Focus the wizard in the attack direction
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
-	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true);
+	iPoint mouse_position = iPoint(x - App->render->camera.x, y - App->render->camera.y);
+	direction_type = LookDirection(mouse_position, GetPositionRounded());
+	CalculateSpecialAttackArea(mouse_position, false);
 
 }
 
@@ -1616,42 +1627,35 @@ void Hunter::Hability_lvl_3(int x, int y)
 	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
 
 	//Focus the wizard in the spell direction
-	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
-	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), false);
+	iPoint destination = iPoint(x, y);
+	direction_type = LookDirection(destination, GetPositionRounded());
 	action_type = ATTATCK;
 	App->animator->UnitPlay(this);
+	std::vector<Unit*> units_in;
 
-	if (ability[2])
+	if (ability[1])
 	{
-		ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, direction_type);
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+		if (!CalculateSpecialAttackArea(destination, false))
+			return;
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
+		//Collect all the units in the buff area
+		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_A_lvl_3);
+		
 	}
 	else
 	{
-		ability_lvl_3_particle = App->buff_manager->GetParticle(STUN_PARTICLE, direction_type);
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
-
+		//long range skill
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+		//Collect all the units in the buff area
 	}
-
-
-
-	//Collect all the units in the buff area
-	std::vector<Unit*> units_in;
-	App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_2);
-
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
-
-		if (ability[2])
-		{
-
-		}
+		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
+		if (ability[1])
+			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 		else
-		{
-			//	units_in[k]->HealUnit(ability_lvl_2_heal_value);
-		}
+			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 	}
 
 	actived[2] = true;
@@ -1704,6 +1708,14 @@ iPoint Hunter::GetiPointFromDirection(DIRECTION_TYPE direction) const
 		break;
 	}
 	return iPoint(position.x - 1, position.y - 1);;
+}
+
+void Hunter::CalculateTriangleAttackArea(const iPoint & base)
+{
+	//Update the triangle base
+	area_triangle_attack_skill_A_lvl_2.SetBase(base);
+	//Recalculate the triangle vertex with the new base
+	area_triangle_attack_skill_A_lvl_2.CalculateVertex();
 }
 
 bool Hunter::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)

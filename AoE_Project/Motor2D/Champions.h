@@ -287,6 +287,8 @@ public:
 	void	Hability_lvl_3(int x = 0, int y = 0);
 	void	CheckHability_lvl_3();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
+	void	CalculateTriangleAttackArea(const iPoint& base);
+
 	bool	CalculateSpecialAttackArea(const iPoint& base, bool attack_lvl_2);
 	bool	Die();
 	//Set Methods -
