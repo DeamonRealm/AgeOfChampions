@@ -117,6 +117,7 @@ public:
 	//Units lists movement units used in buildings cover
 	void		AddUnit(Unit* unit);
 	void		AddDeathUnit(Unit* unit);
+	void		ResurrectUnit(Unit* unit);
 	void		RemoveDeathUnit(Unit* unit);
 
 	Unit*		PopUnit(const Unit* unit);

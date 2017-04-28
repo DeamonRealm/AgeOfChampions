@@ -395,6 +395,7 @@ public:
 	void					Heal(uint heal);
 
 	bool					Die();
+	bool					Resurrect();
 	void					Stun(uint time);
 	COLLISION_TYPE			CheckColision(const Unit* current, const Unit* other);
 	void					ResetFogAround();

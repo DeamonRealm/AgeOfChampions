@@ -486,6 +486,7 @@ private:
 ///Autoattack------------------------------------
 class AutoAttackPassiveAction : public Action
 {
+public:
 	AutoAttackPassiveAction(Unit* actor) : Action(actor, TASK_U_AA)
 	{};
 	~AutoAttackPassiveAction() {};
@@ -494,7 +495,11 @@ public:
 	
 	bool Execute()
 	{
+		//Check if the unit is dying
 		if (actor->GetWorker()->GetCurrentActionType() == TASK_U_DIE) return true;
+
+		//Chek if it is a unit that can attack
+		if (((Unit*)actor)->GetUnitType() != WIZARD_CHMP && ((Unit*)actor)->GetUnitType() != MONK) return true;
 
 		surrounding_units.clear();
 		surrounding_buildings.clear();

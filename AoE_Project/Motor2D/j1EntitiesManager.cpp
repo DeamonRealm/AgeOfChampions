@@ -1374,6 +1374,13 @@ void j1EntitiesManager::AddDeathUnit(Unit * unit)
 
 }
 
+void j1EntitiesManager::ResurrectUnit(Unit * unit)
+{
+	death_units.remove(unit);
+	units_quadtree.Insert(unit, &unit->GetPosition());
+}
+
+
 void j1EntitiesManager::RemoveDeathUnit(Unit * unit)
 {
 	death_units.remove(unit);

@@ -25,6 +25,8 @@ class ResearchTecAction;
 class SaveResourcesVillagerAction;
 class StunUnitAction;
 class ScannAction;
+class AutoAttackPassiveAction;
+class AutoHealPassiveAction;
 
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
@@ -194,6 +196,13 @@ public:
 	//Passive actions----------------
 	//Scann for units
 	ScannAction*				ScanAction(Entity* actor);
+	AutoAttackPassiveAction*	AutoAttackAction(Entity* actor);
+	AutoHealPassiveAction*		AutoHealAction(Entity* actor);
+
+
+	//Set the passive actions--------
+	void						SetUnitAutoPassive(Unit* actor);
+
 
 private:
 

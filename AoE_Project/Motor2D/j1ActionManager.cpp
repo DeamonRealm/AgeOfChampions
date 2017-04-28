@@ -187,6 +187,37 @@ ScannAction * j1ActionManager::ScanAction(Entity * actor)
 	return action;
 }
 
+AutoAttackPassiveAction * j1ActionManager::AutoAttackAction(Entity * actor)
+{
+	AutoAttackPassiveAction* action = new AutoAttackPassiveAction((Unit*)actor);
+
+	all_actions.push_back(action);
+
+	return action;
+}
+
+AutoHealPassiveAction * j1ActionManager::AutoHealAction(Entity * actor)
+{
+	AutoHealPassiveAction* action = new AutoHealPassiveAction((Unit*)actor);
+
+	all_actions.push_back(action);
+
+	return action;
+}
+
+
+void j1ActionManager::SetUnitAutoPassive(Unit * actor)
+{
+	if (actor->GetUnitType() == MONK || actor->GetUnitType() == WIZARD_CHMP)
+	{
+		actor->GetWorker()->AddAction(AutoHealAction(actor), PASSIVE);
+	}
+	else
+	{
+		actor->GetWorker()->AddAction(AutoAttackAction(actor), PASSIVE);
+	}
+
+}
 /// ---------------------------------------------
 
 

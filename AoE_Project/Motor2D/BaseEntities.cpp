@@ -1372,12 +1372,25 @@ bool Unit::Die()
 			{
 				App->player->game_panel->IncreaseDeathEnemies();
 			}
-			App->entities_manager->RemoveDeathUnit(this);
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
 	}
 	return false;
+}
+
+bool Unit::Resurrect()
+{
+
+	if (action_type == DIE || action_type == DISAPPEAR)
+	{
+		action_type = IDLE;
+		App->animator->UnitPlay(this);
+		action_worker.HardReset();
+		App->action_manager->SetUnitAutoPassive(this);
+	}
+
+	return true;
 }
 
 void Unit::Stun(uint time)
