@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:9ecfd2822ed1c12f2ab2fd2434270dc9:840eb2a9e5498f187cc38f725f2c3ee3:09a34f8619e471b1fae0cbe366a5de06$ -->
+<!-- $TexturePacker:SmartUpdate:0ed040c88ad1d0c963bf70a8e315c378:f47f67305a8c10f10d1559907444f25f:3f223ab5b2a6f73253ae86a2221e7720$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,31 +19,38 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Heal.png" width="2153" height="2153">
+<TextureAtlas imagePath="Heal.png" width="921" height="1673">
   <simple_particle particle_type="heal_particle" direction="no_direction">
     <anim_data speed="100" loop="0"/>
 
-    <sprite n="0001 shot.png" opacity ="255" x="1" y="1" w="270" h="163" pX="0.5" pY="0.5" oX="124" oY="307" oW="520" oH="693"/>
-    <sprite n="0002 shot.png" opacity ="255" x="1" y="1" w="270" h="163" pX="0.5" pY="0.5" oX="124" oY="307" oW="520" oH="693"/>
-    <sprite n="0003 shot.png" opacity ="255" x="273" y="1" w="440" h="262" pX="0.5" pY="0.5" oX="40" oY="281" oW="520" oH="693"/>
-    <sprite n="0004 shot.png" opacity ="255" x="715" y="1" w="461" h="288" pX="0.5" pY="0.5" oX="29" oY="261" oW="520" oH="693"/>
-    <sprite n="0005 shot.png" opacity ="255" x="1178" y="1" w="468" h="360" pX="0.5" pY="0.5" oX="26" oY="190" oW="520" oH="693"/>
-    <sprite n="0006 shot.png" opacity ="255" x="1648" y="1" w="468" h="374" pX="0.5" pY="0.5" oX="26" oY="177" oW="520" oH="693"/>
-    <sprite n="0007 shot.png" opacity ="255" x="1" y="377" w="461" h="374" pX="0.5" pY="0.5" oX="29" oY="175" oW="520" oH="693"/>
-    <sprite n="0008 shot.png" opacity ="255" x="464" y="377" w="468" h="405" pX="0.5" pY="0.5" oX="26" oY="145" oW="520" oH="693"/>
-    <sprite n="0009 shot.png" opacity ="255" x="934" y="377" w="468" h="436" pX="0.5" pY="0.5" oX="26" oY="115" oW="520" oH="693"/>
-    <sprite n="0010 shot.png" opacity ="255" x="1404" y="377" w="461" h="464" pX="0.5" pY="0.5" oX="29" oY="85" oW="520" oH="693"/>
-    <sprite n="0011 shot.png" opacity ="255" x="1" y="843" w="468" h="494" pX="0.5" pY="0.5" oX="26" oY="56" oW="520" oH="693"/>
-    <sprite n="0012 shot.png" opacity ="255" x="471" y="843" w="468" h="462" pX="0.5" pY="0.5" oX="26" oY="89" oW="520" oH="693"/>
-    <sprite n="0013 shot.png" opacity ="255" x="941" y="843" w="461" h="420" pX="0.5" pY="0.5" oX="29" oY="129" oW="520" oH="693"/>
-    <sprite n="0014 shot.png" opacity ="255" x="1404" y="843" w="468" h="449" pX="0.5" pY="0.5" oX="26" oY="101" oW="520" oH="693"/>
-    <sprite n="0015 shot.png" opacity ="255" x="1" y="1339" w="468" h="383" pX="0.5" pY="0.5" oX="26" oY="168" oW="520" oH="693"/>
-    <sprite n="0016 shot.png" opacity ="255" x="471" y="1339" w="461" h="363" pX="0.5" pY="0.5" oX="29" oY="186" oW="520" oH="693"/>
-    <sprite n="0017 shot.png" opacity ="255" x="934" y="1339" w="468" h="388" pX="0.5" pY="0.5" oX="26" oY="162" oW="520" oH="693"/>
-    <sprite n="0018 shot.png" opacity ="255" x="1404" y="1339" w="468" h="406" pX="0.5" pY="0.5" oX="26" oY="145" oW="520" oH="693"/>
-    <sprite n="0019 shot.png" opacity ="255" x="1" y="1747" w="461" h="345" pX="0.5" pY="0.5" oX="29" oY="204" oW="520" oH="693"/>
-    <sprite n="0020 shot.png" opacity ="255" x="464" y="1747" w="468" h="374" pX="0.5" pY="0.5" oX="26" oY="176" oW="520" oH="693"/>
-    <sprite n="0021 shot.png" opacity ="255" x="934" y="1747" w="468" h="405" pX="0.5" pY="0.5" oX="26" oY="146" oW="520" oH="693"/>
-  </simple_particle>
+    <sprite n="a_0001_0001-shot.png.png" opacity ="255" x="1" y="1" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0003_0003-shot.png.png" opacity ="255" x="308" y="1" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0004_0004-shot.png.png" opacity ="255" x="615" y="1" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0005_0005-shot.png.png" opacity ="255" x="1" y="240" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0006_0006-shot.png.png" opacity ="255" x="308" y="240" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0007_0007-shot.png.png" opacity ="255" x="615" y="240" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0008_0008-shot.png.png" opacity ="255" x="1" y="479" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0009_0009-shot.png.png" opacity ="255" x="308" y="479" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0010_0010-shot.png.png" opacity ="255" x="615" y="479" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0011_0011-shot.png.png" opacity ="255" x="1" y="718" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0012_0012-shot.png.png" opacity ="255" x="308" y="718" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0013_0013-shot.png.png" opacity ="255" x="615" y="718" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0014_0014-shot.png.png" opacity ="255" x="1" y="957" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0015_0015-shot.png.png" opacity ="255" x="308" y="957" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0016_0016-shot.png.png" opacity ="255" x="615" y="957" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0017_0017-shot.png.png" opacity ="255" x="1" y="1196" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0018_0018-shot.png.png" opacity ="255" x="308" y="1196" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0019_0019-shot.png.png" opacity ="255" x="615" y="1196" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0020_0020-shot.png.png" opacity ="255" x="1" y="1435" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0021_0021-shot.png.png" opacity ="255" x="308" y="1435" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0008_0008-shot.png.png" opacity ="255" x="1" y="479" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0007_0007-shot.png.png" opacity ="255" x="615" y="240" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0006_0006-shot.png.png" opacity ="255" x="308" y="240" w="305" h="237" pX="0.5" pY="0.5"/>
+<sprite n="a_0005_0005-shot.png.png" opacity ="255" x="1" y="240" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0004_0004-shot.png.png" opacity ="255" x="615" y="1" w="305" h="237" pX="0.5" pY="0.5"/>
+    <sprite n="a_0003_0003-shot.png.png" opacity ="255" x="308" y="1" w="305" h="237" pX="0.5" pY="0.5"/>
+ <sprite n="a_0001_0001-shot.png.png" opacity ="255" x="1" y="1" w="305" h="237" pX="0.5" pY="0.5"/>
+
+</simple_particle>
 
 </TextureAtlas>
