@@ -85,6 +85,51 @@ bool j1FogOfWar::PostUpdate()
 	return true;
 }
 
+bool j1FogOfWar::Load(pugi::xml_node& data)
+{
+	return true;
+}
+
+bool j1FogOfWar::Save(pugi::xml_node& data) const
+{
+	if (fog_layer == nullptr || alpha_layer == nullptr)
+	{
+		LOG("Can't save fog of war!");
+		return true;
+	}
+	
+	//Node where alpha layer data is saved
+	pugi::xml_node alpha_layer_node = data.append_child("alpha_layer");
+
+	//Save alpha layer width
+	alpha_layer_node.append_attribute("layer_width") = alpha_layer_width;
+	//Save alpha layer height
+	alpha_layer_node.append_attribute("layer_height") = alpha_layer_height;
+
+	//Save alpha cell size 
+	alpha_layer_node.append_attribute("cell_size") = alpha_cell_size;
+
+	
+	//Iterate all the alpha layer to save alpha values
+	for (uint x = 0; x < alpha_layer_width; x++)
+	{
+		for (uint y = 0; y < alpha_layer_height; y++)
+		{
+			//First alpha cell node from alpha layer
+			pugi::xml_node alpha_cell_node = alpha_layer_node.append_child("cell");
+
+			//Save current alpha cell alpha value
+			alpha_cell_node.append_attribute("alpha") = alpha_layer[x + y * alpha_layer_width].alpha;
+
+			//Save current alpha cell position
+			alpha_cell_node.append_attribute("pos_x") = alpha_layer[x + y * alpha_layer_width].position.x;
+			alpha_cell_node.append_attribute("pos_y") = alpha_layer[x + y * alpha_layer_width].position.y;
+		}
+	}
+
+	return true;
+}
+
 //Functionality =======================
 void j1FogOfWar::GenerateFogOfWar()
 {

@@ -38,6 +38,9 @@ public:
 	// Called each loop iteration
 	bool PostUpdate();
 
+	bool Load(pugi::xml_node& data);
+	bool Save(pugi::xml_node& data) const;
+
 private:
 
 	FOG_TYPE*				fog_layer = nullptr;	/*Layer that contains fog types*/

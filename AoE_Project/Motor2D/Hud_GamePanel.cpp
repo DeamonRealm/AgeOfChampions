@@ -9,6 +9,7 @@
 #include "j1Menu.h"
 #include "j1AI.h"
 #include "j1EntitiesManager.h"
+#include "j1FogOfWar.h"
 
 #include "BaseEntities.h"
 
@@ -218,6 +219,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			App->AI->Disable();
 			App->entities_manager->Disable();
 			App->menu->Enable();
+			App->fog_of_war->Disable();
 		}
 		if (ui_element == cancel_game_menu)
 		{
