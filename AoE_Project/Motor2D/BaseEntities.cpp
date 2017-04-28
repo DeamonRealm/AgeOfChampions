@@ -1826,7 +1826,9 @@ const Circle * Unit::GetAttackArea() const
 {
 	return &attack_area;
 }
+uint Unit::GetAttackAreaBuff()const
 {
+	return attack_area_buff;
 }
 uint Unit::GetDefense()const
 {
