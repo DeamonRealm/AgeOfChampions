@@ -23,8 +23,6 @@
 			<res pos_x="0" pos_y="5208" res_type="7" life="400" />
 		</resources>
 		<buildings>
-			<build pos_x="480" pos_y="5040.5" life="50" diplomacy="2" build_type="1" cur_units_in="0" />
-			<build pos_x="480" pos_y="4992.5" life="50" diplomacy="2" build_type="1" cur_units_in="0" />
 			<build pos_x="48" pos_y="4872.5" life="50" diplomacy="1" build_type="1" cur_units_in="0" />
 			<build pos_x="-288" pos_y="4896" life="50" diplomacy="1" build_type="6" />
 			<build pos_x="-384" pos_y="4848" life="50" diplomacy="1" build_type="6" />
