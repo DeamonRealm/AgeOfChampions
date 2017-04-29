@@ -248,14 +248,18 @@ bool j1ActionManager::SaveTask(pugi::xml_node& node, Action* action)
 			return false;
 		}
 		//Save target unit type
-		node.append_attribute("type") = target->GetUnitType();
+		node.append_attribute("tar_type") = target->GetUnitType();
 		//Save target position
 		node.append_attribute("tar_pos_x") = target->GetPosition().x;
 		node.append_attribute("tar_pos_y") = target->GetPosition().y;
 		break;
 	}
 	case TASK_U_ATTACK_B:
+	{
+		//Save 
+
 		break;
+	}
 	case TASK_U_HEAL_U:
 		break;
 	case TASK_U_DIE:
@@ -305,28 +309,46 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		//Build move action from entity position and goal
 		new_action = new MoveUnitAction((Unit*)actor, App->pathfinding->SimpleAstar(actor->GetPositionRounded(), goal), goal);
 		//Add the task at the chosen channel
-		actor->AddPriorizedAction(new_action, channel);
+		actor->AddAction(new_action, channel);
 		break;
 	}
 	case TASK_U_TELEPORT:
-		/*//Save teleport action displacement
-		node.append_attribute("disp_x") = ((TeleportUnitAction*)action)->GetDisplacement().x;
-		node.append_attribute("disp_y") = ((TeleportUnitAction*)action)->GetDisplacement().y;*/
+	{
+		//Load teleport action displacement
+		iPoint displacement;
+		displacement.x = node.attribute("disp_x").as_int();
+		displacement.y = node.attribute("disp_y").as_int();
+		//Build teleport action from actor and displacement
+		new_action = new TeleportUnitAction((Unit*)actor, displacement);
+		//Add the task at the chosen channel
+		actor->AddAction(new_action, channel);
 		break;
+	}
 	case TASK_U_ATTACK_U:
 	{
-		/*//Save attack action target
-		Unit* target = ((AttackUnitAction*)action)->GetTarget();
+		//Load target characteristics
+		fPoint position = { node.attribute("tar_pos_x").as_float(),node.attribute("tar_pos_y").as_float() };
+		UNIT_TYPE unit_type = (UNIT_TYPE)node.attribute("tar_type").as_int();
+		//Search attack action target in units list
+		Unit** target = nullptr;
+		const std::list<Unit*>* units = App->entities_manager->UnitsList();
+		std::list<Unit*>::const_iterator unit = units->begin();
+		while (unit != units->end())
+		{
+
+			if (unit._Ptr->_Myval->GetPosition() == position && unit._Ptr->_Myval->GetUnitType() == unit_type)
+			{
+				target = &unit._Ptr->_Myval;
+			}
+			unit++;
+		}
 		if (target == nullptr)
 		{
-			LOG("Error in attack action target");
+			LOG("Error loading attack action target");
 			return false;
 		}
-		//Save target unit type
-		node.append_attribute("type") = target->GetUnitType();
-		//Save target position
-		node.append_attribute("tar_pos_x") = target->GetPosition().x;
-		node.append_attribute("tar_pos_y") = target->GetPosition().y;*/
+		//Build the task with the actor and the target found
+		actor->AddAction(App->action_manager->AttackToUnitAction((Unit*)actor, target));
 		break;
 	}
 	case TASK_U_ATTACK_B:
@@ -607,15 +629,15 @@ std::list<Action*> ActionWorker::GetActionList(TASK_CHANNELS channel)
 	{
 	case PRIMARY:
 		ret = primary_action_queue;
-		ret.push_front(current_primary_action);
+		if (current_primary_action != NULL)ret.push_front(current_primary_action);
 		break;
 	case SECONDARY:
 		ret = secondary_action_queue;
-		ret.push_front(current_secondary_action);
+		if (current_secondary_action != NULL)ret.push_front(current_secondary_action);
 		break;
 	case PASSIVE:
 		ret = passive_action_queue;
-		ret.push_front(current_passive_action);
+		if (current_passive_action != NULL)ret.push_front(current_passive_action);
 		break;
 	default:
 		break;

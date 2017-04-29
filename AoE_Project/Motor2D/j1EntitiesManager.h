@@ -69,7 +69,7 @@ private:
 	//Vector where all the killed/destroyed entities are placed
 	std::vector<Entity*>	wasted_units;
 
-	//Vector of predefined units
+	//Vectors of predefined units
 	std::vector<Unit*>		ally_units_defs;
 	std::vector<Unit*>		enemy_units_defs;
 	std::vector<Building*>	buildings_defs;
