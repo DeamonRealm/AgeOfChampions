@@ -422,6 +422,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 	// ------------------------------------------
 
 	// Units Load -------------------------------
+	//Vector where loaded units are allocated to load actions later
+	std::vector<Unit*> loaded_units;
+
 	//Units node
 	pugi::xml_node units_node = data.child("units");
 
@@ -486,17 +489,46 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 			((Champion*)new_unit)->SetAbility_lvl_2(cur_unit_node.attribute("ability_2").as_bool());
 			((Champion*)new_unit)->SetAbility_lvl_3(cur_unit_node.attribute("ability_3").as_bool());
 
-			/*//Load champion ability level 2 current time
-			((Champion*)new_unit)->SetAbility2CurrentTime(cur_unit_node.attribute("ability_2_cur_time").as_uint());
-			//Load champion ability level 3 current time
-			((Champion*)new_unit)->SetAbility3CurrentTime(cur_unit_node.attribute("ability_3_cur_time").as_uint());*/
-
 			break;
 		}
+
+		//Save loaded units in units loaded vector 
+		loaded_units.push_back(new_unit);
 
 		//Focus the next unit node
 		cur_unit_node = cur_unit_node.next_sibling();
 	}
+
+	//Load loaded units tasks ---------
+	
+	//Focus unit node to the first unit saved
+	cur_unit_node = units_node.first_child();
+
+	//Iterate all saved units again
+	uint k = 0;
+	while (cur_unit_node != NULL)
+	{
+		//Focus current unit actions node
+		pugi::xml_node action_node = cur_unit_node.child("actions");
+
+		//Focus current unit primary actions node
+		pugi::xml_node primary_act_node = action_node.child("primary").first_child();
+		while (primary_act_node != NULL)
+		{
+
+			App->action_manager->LoadTask(primary_act_node, (Entity*)loaded_units[k], PRIMARY);
+
+			//Focus next primary action node
+			primary_act_node = primary_act_node.next_sibling();
+		}
+
+		//Focus next saved unit node
+		cur_unit_node = cur_unit_node.next_sibling();
+
+		//Focus next saved unit
+		k++;
+	}
+	// --------------------------------
 
 	// ------------------------------------------
 
@@ -691,13 +723,45 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 			cur_unit_node.append_attribute("ability_2") = ((Champion*)current_unit._Ptr->_Myval)->GetAbilityChosen(1);
 			cur_unit_node.append_attribute("ability_3") = ((Champion*)current_unit._Ptr->_Myval)->GetAbilityChosen(2);
 
-			//Save champion ability level 2 current time
-			cur_unit_node.append_attribute("ability_2_cur_time") = ((Champion*)current_unit._Ptr->_Myval)->GetAbility2CurrentTime();
-			//Save champion ability level 3 current time
-			cur_unit_node.append_attribute("ability_3_cur_time") = ((Champion*)current_unit._Ptr->_Myval)->GetAbility3CurrentTime();
-
 			break;
 		}
+
+		//Save current unit tasks -----
+
+		//Resources don't do actions so we don't need to save it
+		if (current_unit._Ptr->_Myval->GetEntityType() == RESOURCE)
+		{
+			current_unit++;
+			continue;
+		}
+
+		//Node where entity actions are saved
+		pugi::xml_node actions_node = cur_unit_node.append_child("actions");
+
+		//Get entity worker
+		ActionWorker* worker = current_unit._Ptr->_Myval->GetWorker();
+
+		//Node where primary actions data area saved
+		pugi::xml_node primary_actions_node = actions_node.append_child("primary");
+
+		//Get worker current primary action
+		std::list<Action*> primary_list = worker->GetActionList(TASK_CHANNELS::PRIMARY);
+
+		//Iterate primary actions & save them
+		std::list<Action*>::const_iterator cur_primary_act = primary_list.begin();
+		while (cur_primary_act != primary_list.end())
+		{
+			//Node where current primary action is saved
+			pugi::xml_node cur_primary_act_node = primary_actions_node.append_child("action");
+
+			//Save the current primary action in the node
+			App->action_manager->SaveTask(cur_primary_act_node, cur_primary_act._Ptr->_Myval);
+
+			cur_primary_act++;
+		}
+
+		
+		// ----------------------------
 
 		//Focus the next unit
 		current_unit++;

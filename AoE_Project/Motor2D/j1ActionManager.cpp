@@ -218,6 +218,149 @@ void j1ActionManager::SetUnitAutoPassive(Unit * actor)
 	}
 
 }
+
+//Methods used in Load/Save -----------
+bool j1ActionManager::SaveTask(pugi::xml_node& node, Action* action)
+{
+
+	//Save action type
+	node.append_attribute("type") = action->GetType();
+
+	switch (action->GetType())
+	{
+	case TASK_U_MOVE:
+		//Save move action goal
+		node.append_attribute("goal_x") = ((MoveUnitAction*)action)->GetGoal().x;
+		node.append_attribute("goal_y") = ((MoveUnitAction*)action)->GetGoal().y;
+		break;
+	case TASK_U_TELEPORT:
+		//Save teleport action displacement
+		node.append_attribute("disp_x") = ((TeleportUnitAction*)action)->GetDisplacement().x;
+		node.append_attribute("disp_y") = ((TeleportUnitAction*)action)->GetDisplacement().y;
+		break;
+	case TASK_U_ATTACK_U:
+	{
+		//Save attack action target
+		Unit* target = ((AttackUnitAction*)action)->GetTarget();
+		if (target == nullptr)
+		{
+			LOG("Error in attack action target");
+			return false;
+		}
+		//Save target unit type
+		node.append_attribute("type") = target->GetUnitType();
+		//Save target position
+		node.append_attribute("tar_pos_x") = target->GetPosition().x;
+		node.append_attribute("tar_pos_y") = target->GetPosition().y;
+		break;
+	}
+	case TASK_U_ATTACK_B:
+		break;
+	case TASK_U_HEAL_U:
+		break;
+	case TASK_U_DIE:
+		break;
+	case TASK_B_DIE:
+		break;
+	case TASK_U_STUN:
+		break;
+	case TASK_U_RECOLLECT:
+		break;
+	case TASK_U_SAVE_RESOURCES:
+		break;
+	case TASK_U_SCANN:
+		break;
+	case TASK_U_AA:
+		break;
+	case TASK_U_AH:
+		break;
+	case TASK_B_SPAWN_UNITS:
+		break;
+	case TASK_B_RESEARCH:
+		break;
+	case TASK_NONE:
+		LOG("Error Saving Task");
+		return false;
+		break;
+	}
+
+	return true;
+}
+bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNELS channel)
+{
+	//Load action type
+	TASK_TYPE task_type = (TASK_TYPE)node.attribute("type").as_int();
+
+	//New action pointer
+	Action* new_action = nullptr;
+
+	switch (task_type)
+	{
+	case TASK_U_MOVE:
+	{
+		//Load move action goal
+		iPoint goal;
+		goal.x = node.attribute("goal_x").as_int();
+		goal.y = node.attribute("goal_y").as_int();
+		//Build move action from entity position and goal
+		new_action = new MoveUnitAction((Unit*)actor, App->pathfinding->SimpleAstar(actor->GetPositionRounded(), goal), goal);
+		//Add the task at the chosen channel
+		actor->AddPriorizedAction(new_action, channel);
+		break;
+	}
+	case TASK_U_TELEPORT:
+		/*//Save teleport action displacement
+		node.append_attribute("disp_x") = ((TeleportUnitAction*)action)->GetDisplacement().x;
+		node.append_attribute("disp_y") = ((TeleportUnitAction*)action)->GetDisplacement().y;*/
+		break;
+	case TASK_U_ATTACK_U:
+	{
+		/*//Save attack action target
+		Unit* target = ((AttackUnitAction*)action)->GetTarget();
+		if (target == nullptr)
+		{
+			LOG("Error in attack action target");
+			return false;
+		}
+		//Save target unit type
+		node.append_attribute("type") = target->GetUnitType();
+		//Save target position
+		node.append_attribute("tar_pos_x") = target->GetPosition().x;
+		node.append_attribute("tar_pos_y") = target->GetPosition().y;*/
+		break;
+	}
+	case TASK_U_ATTACK_B:
+		break;
+	case TASK_U_HEAL_U:
+		break;
+	case TASK_U_DIE:
+		break;
+	case TASK_B_DIE:
+		break;
+	case TASK_U_STUN:
+		break;
+	case TASK_U_RECOLLECT:
+		break;
+	case TASK_U_SAVE_RESOURCES:
+		break;
+	case TASK_U_SCANN:
+		break;
+	case TASK_U_AA:
+		break;
+	case TASK_U_AH:
+		break;
+	case TASK_B_SPAWN_UNITS:
+		break;
+	case TASK_B_RESEARCH:
+		break;
+	case TASK_NONE:
+		LOG("Error Saving Task");
+		return false;
+		break;
+	}
+
+	return true;
+}
 /// ---------------------------------------------
 
 
@@ -425,7 +568,7 @@ TASK_TYPE ActionWorker::GetCurrentActionType() const
 	return TASK_TYPE::TASK_NONE;
 }
 
-Action * ActionWorker::GetCurrentAction() const
+Action * ActionWorker::GetCurrentPrimaryAction() const
 {
 	return current_primary_action;
 }
@@ -456,7 +599,7 @@ bool ActionWorker::IsBusy(TASK_CHANNELS channel)
 	return true;;
 }
 
-std::list<Action*>* ActionWorker::GetActionList(TASK_CHANNELS channel)
+std::list<Action*> ActionWorker::GetActionList(TASK_CHANNELS channel)
 {
 	std::list<Action*> ret;
 
@@ -479,7 +622,7 @@ std::list<Action*>* ActionWorker::GetActionList(TASK_CHANNELS channel)
 	}
 	
 
-	return &ret;
+	return ret;
 }
 
 void ActionWorker::Pause()
