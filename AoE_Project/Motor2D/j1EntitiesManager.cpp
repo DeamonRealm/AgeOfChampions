@@ -651,7 +651,8 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	}
 	else if (unit_type == ARCHER_CHMP)
 	{
-
+		Hunter* new_hunter = new Hunter();
+		new_def = new_hunter;
 	}
 	else if (unit_type == WIZARD_CHMP)
 	{
@@ -820,7 +821,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		new_def_enemy = new Warrior(*(Warrior*)new_def);
 		break;
 	case ARCHER_CHMP:
-
+		new_def_enemy = new Hunter(*(Hunter*)new_def);
 		break;
 	case WIZARD_CHMP:
 		new_def_enemy = new Wizard(*(Wizard*)new_def);
@@ -1172,7 +1173,11 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 			}
 			else if (type == ARCHER_CHMP)
 			{
+				Hunter* new_hunter;
+				if (diplomacy == ALLY)new_hunter = new Hunter(*(Hunter*)ally_units_defs[k]);
+				else new_hunter = new Hunter(*(Hunter*)enemy_units_defs[k]);
 
+				new_unit = new_hunter;
 			}
 			else if (type == WIZARD_CHMP)
 			{

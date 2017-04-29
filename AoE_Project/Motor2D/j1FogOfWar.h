@@ -90,7 +90,7 @@ public:
 
 	FOG_TYPE			GetFogID(int x, int y)const;
 
-	std::vector<AlphaCell*> ClearAlphaLayer(const Circle zone, unsigned short alpha = 0);
+	std::vector<AlphaCell*> ClearAlphaLayer(const Circle zone, unsigned short alpha = 0, bool lock = true);
 	std::vector<FogTile*>	ClearFogLayer(const Circle zone, FOG_TYPE type = NO_FOG, bool lock = true);
 
 	void	CheckEntityFog(Entity* target);

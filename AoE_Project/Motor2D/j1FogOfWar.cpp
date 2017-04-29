@@ -191,7 +191,7 @@ FOG_TYPE j1FogOfWar::GetFogID(int x, int y) const
 	return fog_layer[y * App->map->data.width + x].type;
 }
 
-std::vector<AlphaCell*> j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned short alpha)
+std::vector<AlphaCell*> j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned short alpha, bool lock)
 {
 	std::vector<AlphaCell*> fog_cells;
 	std::vector<AlphaCell*> definitive;
@@ -202,7 +202,7 @@ std::vector<AlphaCell*> j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned 
 		if (!fog_cells[k]->locked)
 		{
 			fog_cells[k]->alpha = alpha;
-			fog_cells[k]->locked = true;
+			fog_cells[k]->locked = lock;
 			definitive.push_back(fog_cells[k]);
 		}
 	}

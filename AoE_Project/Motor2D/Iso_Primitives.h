@@ -122,6 +122,43 @@ public:
 };
 /// ---------------------------------------------
 
+///Class PivotedRect ----------------------------
+class PivotedRect : public Primitive
+{
+public:
+
+	PivotedRect(const iPoint& origin = { 0,0 }, const iPoint& goal = { 0,0 }, uint width = 0, uint height = 0);
+	PivotedRect(const PivotedRect& copy);
+	~PivotedRect();
+
+private:
+
+	iPoint	goal = { 0,0 };
+	uint	width = 0;
+	uint	height = 0;
+	uint	pivot_distance = 0;
+
+	iPoint vertex[4];
+
+public:
+
+	//Functionality ---------
+	//Draw -------------
+	bool	Draw();
+
+	//Set Methods ------
+	void	SetGoal(const iPoint& new_goal);
+	void	SetWidth(uint new_width);
+	void	SetHeight(uint new_height);
+	void	SetPivotDistance(uint new_pivot_distance);
+
+	void	CalculateVertex();
+	bool	IsIn(const fPoint* loc) const;
+	bool	Intersects(const SDL_Rect* rect)const;
+
+};
+/// ---------------------------------------------
+
 ///Class Line -----------------------------------
 //Line isometric primitive
 class Line : public Primitive

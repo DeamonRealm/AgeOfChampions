@@ -1390,6 +1390,18 @@ bool Hunter::Update()
 
 	ability_lvl_2_current_time = ability_lvl_2_timer.Read();
 	ability_lvl_3_current_time = ability_lvl_3_timer.Read();
+
+
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	CalculateArrorwAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y));
+	std::vector<Unit*> units_in;
+	uint size = App->entities_manager->units_quadtree.CollectCandidates(units_in, arrow_rect);
+	for (uint k = 0; k < size; k++)
+	{
+		units_in[k]->SetBlitColor({ 255,0,0,255 });
+	}
+
 	return true;
 }
 
@@ -1436,6 +1448,7 @@ bool Hunter::Draw(bool debug)
 			hard_collider.Draw();
 			vision.Draw();
 			buff_area.Draw();
+			arrow_rect.Draw();
 		}
 	}
 
@@ -1721,6 +1734,17 @@ void Hunter::CalculateTriangleAttackArea(const iPoint & base)
 	area_triangle_attack_skill_A_lvl_2.SetBase(base);
 	//Recalculate the triangle vertex with the new base
 	area_triangle_attack_skill_A_lvl_2.CalculateVertex();
+}
+
+void Hunter::CalculateArrorwAttackArea(const iPoint & base)
+{
+	arrow_rect.SetPosition(this->GetPositionRounded());
+	arrow_rect.SetColor({ 50,255,150,255 });
+	arrow_rect.SetPivotDistance(20);
+	arrow_rect.SetGoal(iPoint(base.x, base.y));
+	arrow_rect.SetHeight(200);
+	arrow_rect.SetWidth(50);
+	arrow_rect.CalculateVertex();
 }
 
 bool Hunter::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)

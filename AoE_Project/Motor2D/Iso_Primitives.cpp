@@ -250,6 +250,141 @@ uint Rectng::GetHeight() const
 }
 /// ---------------------------------------------
 
+///Class PivotedRect ----------------------------
+//Constructors ==============
+PivotedRect::PivotedRect(const iPoint & origin, const iPoint & goal, uint width, uint height) :Primitive(origin), goal(goal), width(width), height(height)
+{
+
+}
+
+PivotedRect::PivotedRect(const PivotedRect & copy) : Primitive(copy), goal(copy.goal), width(copy.width), height(copy.height)
+{
+
+}
+
+//Destructors ===============
+PivotedRect::~PivotedRect()
+{
+
+}
+
+//Functionality =============
+bool PivotedRect::Draw()
+{
+	App->render->DrawLine(vertex[0].x, vertex[0].y, vertex[1].x, vertex[1].y, color.r, color.g, color.b, color.a);
+	App->render->DrawLine(vertex[2].x, vertex[2].y, vertex[0].x, vertex[0].y, color.r, color.g, color.b, color.a);
+	App->render->DrawLine(vertex[2].x, vertex[2].y, vertex[3].x, vertex[3].y, color.r, color.g, color.b, color.a);
+	App->render->DrawLine(vertex[3].x, vertex[3].y, vertex[1].x, vertex[1].y, color.r, color.g, color.b, color.a);
+
+	return true;
+}
+
+void PivotedRect::SetGoal(const iPoint & new_goal)
+{
+	goal = new_goal;
+}
+
+void PivotedRect::SetWidth(uint new_width)
+{
+	width = new_width;
+}
+
+void PivotedRect::SetHeight(uint new_height)
+{
+	height = new_height;
+}
+
+void PivotedRect::SetPivotDistance(uint new_pivot_distance)
+{
+	pivot_distance = new_pivot_distance;
+}
+
+void PivotedRect::CalculateVertex()
+{
+	/*
+	A-----G-----B
+	-			-
+	-			-
+	-			-
+	-			-
+	-			-
+	C-----M-----D
+	 -         -
+	  -   d   -
+	   -     -
+	    -   -
+		 - -
+		  P
+	P is the pivot
+	d is the pivot distance
+	G is the goal
+	*/
+
+	//Calculate P -> G vector
+	fPoint dir_vector(goal.x - this->position.x, goal.y - this->position.y);
+	dir_vector.Norm();
+
+	fPoint side_vec;
+	side_vec.x = width * -dir_vector.y;
+	side_vec.y = width * dir_vector.x * sin(x_angle);
+
+	iPoint M_point = position;
+	M_point.x += pivot_distance * dir_vector.x;
+	M_point.y += pivot_distance * dir_vector.y * sin(x_angle);
+
+	iPoint G_Point = M_point;
+	G_Point.x += height * dir_vector.x;
+	G_Point.y += height * dir_vector.y * sin(x_angle);
+
+	//Calculate A vertex
+	vertex[0].x = G_Point.x - side_vec.x;
+	vertex[0].y = G_Point.y - side_vec.y;
+
+	//Calculate B vertex
+	vertex[1].x = G_Point.x + side_vec.x;
+	vertex[1].y = G_Point.y + side_vec.y;
+
+	//Calculate C vertex
+	vertex[2].x = M_point.x - side_vec.x;
+	vertex[2].y = M_point.y - side_vec.y;
+	
+	//Calculate D vertex
+	vertex[3].x = M_point.x + side_vec.x;
+	vertex[3].y = M_point.y + side_vec.y;
+
+
+}
+
+bool PivotedRect::IsIn(const fPoint* loc) const
+{
+
+	float posible_rect_area = ((vertex[0].y - vertex[3].y) * (vertex[2].x - vertex[1].x) + (vertex[1].y - vertex[2].y) * (vertex[0].x - vertex[3].x));
+	float rect_area = width * height;
+
+	// AB
+	float area_tri_AB = (vertex[0].x*(vertex[1].y - loc->y) + vertex[1].x * (loc->y - vertex[0].y) + loc->x * (vertex[0].y - vertex[1].y)) * 0.5;
+	// DB
+	float area_tri_DB = (vertex[3].x*(vertex[1].y - loc->y) + vertex[1].x * (loc->y - vertex[3].y) + loc->x * (vertex[3].y - vertex[1].y)) * 0.5;
+	// AC
+	float area_tri_AC = (vertex[0].x*(vertex[2].y - loc->y) + vertex[2].x * (loc->y - vertex[0].y) + loc->x * (vertex[0].y - vertex[2].y)) * 0.5;
+	// DC
+	float area_tri_DC = (vertex[3].x*(vertex[2].y - loc->y) + vertex[2].x * (loc->y - vertex[3].y) + loc->x * (vertex[3].y - vertex[2].y)) * 0.5;
+
+	return (!((abs(area_tri_AB) + abs(area_tri_AC) + abs(area_tri_DB) + abs(area_tri_DC)) > rect_area));
+
+}
+bool PivotedRect::Intersects(const SDL_Rect* rect) const
+{
+	iPoint n_vertex[4];
+	for (uint k = 0; k < 4; k++)n_vertex[k] = vertex[k];
+
+	if (SDL_IntersectRectAndLine(rect, &n_vertex[0].x, &n_vertex[0].y, &n_vertex[1].x, &n_vertex[1].y))return true;
+	if (SDL_IntersectRectAndLine(rect, &n_vertex[0].x, &n_vertex[0].y, &n_vertex[2].x, &n_vertex[2].y))return true;
+	if (SDL_IntersectRectAndLine(rect, &n_vertex[2].x, &n_vertex[2].y, &n_vertex[3].x, &n_vertex[3].y))return true;
+	if (SDL_IntersectRectAndLine(rect, &n_vertex[3].x, &n_vertex[3].y, &n_vertex[1].x, &n_vertex[1].y))return true;
+	return false;
+}
+/// ---------------------------------------------
 
 ///Class Line -----------------------------------
 //Constructors ==============
@@ -426,3 +561,5 @@ AlphaCell::~AlphaCell()
 
 }
 /// ---------------------------------------------
+
+

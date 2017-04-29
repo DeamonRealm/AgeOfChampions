@@ -667,6 +667,42 @@ public:
 		return ret;
 	}
 
+	int CollectCandidates(std::vector<DATA_TYPE>& nodes, const PivotedRect& pivrect)
+	{
+		uint ret = 0;
+
+		// If range is not in the quad-tree, return
+		if (!pivrect.Intersects(&this->aabb))return 0;/*TEMP_CASE*/
+
+		// See if the points of this node are in range and pushback them to the vector
+		if (full)
+		{
+			// Otherwise, add the points from the children
+			ret += children[0]->CollectCandidates(nodes, pivrect);
+			ret += children[1]->CollectCandidates(nodes, pivrect);
+			ret += children[2]->CollectCandidates(nodes, pivrect);
+			ret += children[3]->CollectCandidates(nodes, pivrect);
+		}
+		else
+		{
+			std::list<m_TreeItem<DATA_TYPE>>::const_iterator object = objects.begin();
+			while (object != objects.end())
+			{
+				fPoint loc = object._Ptr->_Myval.location;
+
+				if (pivrect.IsIn(&loc))
+				{
+					nodes.push_back(object._Ptr->_Myval.data);
+					ret++;
+				}
+
+				object++;
+			}
+		}
+
+		return ret;
+	}
+
 	void Reset()
 	{
 		if (full)
@@ -892,6 +928,16 @@ public:
 
 		if (root != NULL && circle.Intersects(&root->aabb))
 			tests = root->CollectCandidates(nodes, circle);
+
+		return tests;
+	}
+
+	int	CollectCandidates(std::vector<DATA_TYPE>& nodes, const PivotedRect& pivrect) const
+	{
+		int tests = 0;
+
+		if (root != NULL && pivrect.Intersects(&root->aabb))
+			tests = root->CollectCandidates(nodes, pivrect);
 
 		return tests;
 	}

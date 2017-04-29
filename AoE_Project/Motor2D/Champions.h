@@ -257,6 +257,8 @@ private:
 	SDL_Rect			area_attack_skill_B_lvl_3;
 	uint				ability_lvl_3_skill_B_attack_value = 0;
 
+	PivotedRect			arrow_rect;
+
 	//skill selected
 	uint				ability_lvl_2_attack_value;
 	uint				ability_lvl_3_attack_value;
@@ -288,6 +290,7 @@ public:
 	void	CheckHability_lvl_3();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
 	void	CalculateTriangleAttackArea(const iPoint& base);
+	void	CalculateArrorwAttackArea(const iPoint& base);
 
 	bool	CalculateSpecialAttackArea(const iPoint& base, bool attack_lvl_2);
 	bool	Die();

@@ -2154,8 +2154,8 @@ void Building::DiscoverFogAround()
 	zone.SetRad(width_in_tiles * App->map->data.tile_width);
 	
 	//Clear the discover zone around the building
-	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG);
-	App->fog_of_war->ClearAlphaLayer(zone, MID_ALPHA);
+	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG, false);
+	App->fog_of_war->ClearAlphaLayer(zone, MID_ALPHA, false);
 }
 
 bool Building::CheckZone(int x, int y)

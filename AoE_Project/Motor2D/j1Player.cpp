@@ -162,6 +162,8 @@ bool j1Player::PreUpdate()
 			game_panel->IncressPopulation(1, false);
 		}
 
+		
+
 		//Generate a Militia unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		{
@@ -211,6 +213,13 @@ bool j1Player::PreUpdate()
 		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && game_panel->CheckPopulation())
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(WIZARD_CHMP, ALLY);
+			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
+		}
+
+		//Generate Archer unit in mouse coordinates
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && game_panel->CheckPopulation())
+		{
+			Unit* new_unit = App->entities_manager->GenerateUnit(ARCHER_CHMP, ALLY);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 
