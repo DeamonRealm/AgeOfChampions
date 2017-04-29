@@ -1062,6 +1062,35 @@ void Wizard::PrepareAbility_lvl_2()
 	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
 	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true);
 
+	//Collect all the units in the buff area
+	std::vector<Unit*> units_in;
+	uint size = 0;
+	if (ability[1])
+	{
+		Circle temp_circle = area_attack_spell_2;
+		temp_circle.SetPosition(this->GetPositionRounded());
+		size = App->entities_manager->units_quadtree.CollectCandidates(units_in, temp_circle);
+
+	}
+	else
+	{
+		LOG("skill %i %i wizard %i %i", area_attack_spell_2.GetPosition().x, area_attack_spell_2.GetPosition().y, this->GetPositionRounded().x, this->GetPositionRounded().y);
+		size = App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_2);
+		LOG("size %i ", size);
+
+	}
+
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
+
+		if (ability[1]) {
+			units_in[k]->SetBlitColor({ 0,50,255,255 });
+		}
+		else {
+			units_in[k]->SetBlitColor({ 0,255,50,255 });
+		}
+	}
 }
 
 void Wizard::Hability_lvl_2(int x, int y)
@@ -1193,6 +1222,43 @@ void Wizard::PrepareAbility_lvl_3()
 	direction_type = LookDirection(mouse_position, GetPositionRounded());
 	CalculateSpecialAttackArea(mouse_position, false);
 
+
+	
+	if (ability[2])
+	{
+		std::vector<Unit*> units_in;
+		uint size = App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_3);
+
+		for (uint k = 0; k < size; k++)
+		{
+			if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+
+			units_in[k]->SetBlitColor({ 255,50,0,255 });	
+		}
+	}
+	else {	
+		if (!App->entities_manager->GetDeathUnitList().empty()) 
+		{
+			std::list<Unit*> temp_list = App->entities_manager->GetDeathUnitList();
+
+			std::list<Unit*>::iterator units_in = temp_list.begin();
+			for (; units_in != temp_list.end(); units_in++)
+			{
+				Unit* current_unit = units_in._Ptr->_Myval;
+				if (area_attack_spell_3.IsIn(&(current_unit->GetPosition())))
+				{
+					if (current_unit->GetDiplomacy() != entity_diplomacy || current_unit == this)continue;
+
+					if (current_unit->GetAction() == DIE || current_unit->GetAction() == DISAPPEAR)
+					{
+
+						current_unit->SetBlitColor({ 200,200,150,255 });
+					}
+				}
+
+			}
+		}
+	}
 }
 
 void Wizard::Hability_lvl_3(int x, int y)
@@ -1228,10 +1294,11 @@ void Wizard::Hability_lvl_3(int x, int y)
 	}
 	else
 	{
-		std::vector<Unit*> to_revive;
+		//std::vector<Unit*> to_revive;
 		std::list<Unit*>::iterator units_in = App->entities_manager->GetDeathUnitList().begin();
+		std::list<Unit*> temp_list = App->entities_manager->GetDeathUnitList();
 
-		for (; units_in != App->entities_manager->GetDeathUnitList().end(); units_in++)
+		for (; units_in != temp_list.end(); units_in++)
 		{
 			Unit* current_unit = units_in._Ptr->_Myval;
 			if (area_attack_spell_3.IsIn(&(current_unit->GetPosition())))
@@ -1240,16 +1307,19 @@ void Wizard::Hability_lvl_3(int x, int y)
 
 				if (current_unit->GetAction() == DIE || current_unit->GetAction() == DISAPPEAR)
 				{
-					to_revive.push_back(current_unit);
+					current_unit->Resurrect();
+				//	to_revive.push_back(current_unit);
 				}
 			}
 	
 		}
+		/*
 		while (!to_revive.empty())
 		{
 			to_revive.back()->Resurrect();
 			to_revive.pop_back();
 		}
+		*/
 		ability_lvl_3_particle = App->buff_manager->GetParticle(RESURRECTION_PARTICLE, NO_DIRECTION);
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
 

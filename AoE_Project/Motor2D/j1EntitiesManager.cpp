@@ -112,6 +112,14 @@ bool j1EntitiesManager::Update(float dt)
 		item++;
 	}
 
+	//Draw all death units
+	std::list<Unit*>::const_iterator death_unit = death_units.begin();
+	for (; death_unit != death_units.end(); death_unit++)
+	{
+
+		death_unit._Ptr->_Myval->Update();
+
+	}
 	std::list<Building*>::const_iterator item_build = buildings.begin();
 
 	while (item_build != buildings.end())
@@ -151,7 +159,6 @@ bool j1EntitiesManager::PostUpdate()
 		else if (type == UNIT)
 		{
 			wasted_units[k]->GetWorker()->HardReset();
-			units.remove((Unit*)wasted_units[k]);
 			death_units.remove((Unit*)wasted_units[k]);
 			units_quadtree.Exteract((Unit*)wasted_units[k], &wasted_units[k]->GetPosition());
 
@@ -185,11 +192,13 @@ bool j1EntitiesManager::Draw() const
 
 		units_vec[k]->Draw(App->debug_mode);
 	}
-
+	//Draw all death units
 	std::list<Unit*>::const_iterator death_unit = death_units.begin();
 	for (; death_unit != death_units.end(); death_unit++)
 	{
+
 		death_unit._Ptr->_Myval->Draw(App->debug_mode);
+
 	}
 	//Draw all Resources
 	std::vector<Resource*> resources_vec;
@@ -1139,7 +1148,7 @@ void j1EntitiesManager::ExtractChampion(Champion * champion, DIPLOMACY diplomacy
 
 void j1EntitiesManager::GetExperienceFromUnit(int exp, DIPLOMACY diplomacy)
 {
-	if (diplomacy != ENEMY || diplomacy != NEUTRAL) {
+	if (diplomacy == ENEMY || diplomacy == NEUTRAL) {
 		if (!champions_blue.empty()) {
 			std::list<Champion*>::const_iterator champion = champions_blue.begin();
 			Champion* current_chmp = nullptr;
@@ -1537,13 +1546,15 @@ void j1EntitiesManager::AddDeathUnit(Unit * unit)
 {
 
 	death_units.push_back((Unit*)unit);
+	units.remove((Unit*)unit);
 	units_quadtree.Exteract(unit, &unit->GetPosition());
 
 }
 
 void j1EntitiesManager::ResurrectUnit(Unit * unit)
 {
-	death_units.remove(unit);
+	units.push_back((Unit*)unit);
+	death_units.remove(unit);	
 	units_quadtree.Insert(unit, &unit->GetPosition());
 }
 
