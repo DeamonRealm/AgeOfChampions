@@ -1075,7 +1075,7 @@ void j1EntitiesManager::ExtractChampion(Champion * champion, DIPLOMACY diplomacy
 
 void j1EntitiesManager::GetExperienceFromUnit(int exp, DIPLOMACY diplomacy)
 {
-	if (diplomacy == ENEMY || diplomacy == NEUTRAL) {
+	if (diplomacy != ENEMY || diplomacy != NEUTRAL) {
 		if (!champions_blue.empty()) {
 			std::list<Champion*>::const_iterator champion = champions_blue.begin();
 			Champion* current_chmp = nullptr;

@@ -698,6 +698,7 @@ PARTICLE_TYPE j1BuffManager::StrToParticleType(const char * str) const
 	if (strcmp("area_fire_shot_particle", str) == 0)	return PARTICLE_TYPE::AREA_FIRE_PARTICLE;
 	if (strcmp("dragon_shot_particle", str) == 0)		return PARTICLE_TYPE::DRAGON_SHOT_PARTICLE;
 	if (strcmp("resurrection_particle", str) == 0)		return PARTICLE_TYPE::RESURRECTION_PARTICLE;
+	if (strcmp("lvlup_particle", str) == 0)				return PARTICLE_TYPE::LEVEL_UP_PARTICLE;
 
 	return UNKNOWN_PARTICLE;
 }

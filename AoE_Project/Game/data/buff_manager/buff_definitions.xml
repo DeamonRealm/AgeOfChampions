@@ -18,6 +18,7 @@
   <particle document = "Multi_Shot.xml"/>
   <particle document = "Dragon_Shot.xml"/>
   <particle document = "Resurrection.xml"/>
+  <particle document = "LvlUp.xml"/>
 
   <particle document = "Burn.xml"/>
 

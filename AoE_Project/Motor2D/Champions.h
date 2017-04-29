@@ -17,11 +17,13 @@ public:
 protected:
 
 	//Hero level
-	uint	level = 2;
-	uint	current_experience = 0;
-	uint	experience_lvl_2 = 0;
-	uint	experience_lvl_3 = 0;
-	bool	to_level_up = false;
+	Particle	level_up_particle;
+	uint		current_experience = 0;
+	uint		experience_lvl_2 = 0;
+	uint		experience_lvl_3 = 0;
+	bool		to_level_up = false;
+	bool		level_up_animation = false;
+
 	//Buff area
 	Circle			buff_area;
 	PassiveBuff*	buff_to_apply = nullptr;
@@ -61,7 +63,7 @@ public:
 
 	//Functionality ---------
 	//Actions -----
-	void		 CleanBuffedUnits();
+	void		CleanBuffedUnits();
 	void		CheckCooldown();
 	//Ability lvl1 methods
 	virtual void SetAbility_lvl_1(bool choosed);
@@ -79,7 +81,10 @@ public:
 	virtual void CheckHability_lvl_3();
 	//Level system methods
 	void	LevelUp();
+	void	LevelUpAnimation();
+
 	//Set Methods -
+	void	SetLevelUpParticle();
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetBuffArea(const Circle& area);
 	void	SetBuffToApply(const PassiveBuff* buff);

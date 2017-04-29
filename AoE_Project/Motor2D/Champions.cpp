@@ -21,7 +21,8 @@ Champion::Champion() : Unit()
 }
 
 Champion::Champion(const Champion & copy) : Unit(copy), buff_area(copy.buff_area),buff_to_apply(copy.buff_to_apply), level(copy.level), attack_for_level(copy.attack_for_level), range_for_level(copy.range_for_level),
-defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_lvl_2_cooldown(copy.ability_lvl_2_cooldown), ability_lvl_3_cooldown(copy.ability_lvl_3_cooldown)
+defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_lvl_2_cooldown(copy.ability_lvl_2_cooldown), ability_lvl_3_cooldown(copy.ability_lvl_3_cooldown),
+level_up_particle(copy.level_up_particle), experience_lvl_2(copy.experience_lvl_2), experience_lvl_3(copy.experience_lvl_3)
 {
 
 }
@@ -52,7 +53,7 @@ void Champion::CheckCooldown()
 		ability_lvl_2_current_time = ability_lvl_2_timer.Read();
 	else
 		ability_lvl_2_ready = true;
-	if (ability_lvl_3_current_time < ability_lvl_2_cooldown)
+	if (ability_lvl_3_current_time < ability_lvl_3_cooldown)
 		ability_lvl_3_current_time = ability_lvl_3_timer.Read();
 	else
 		ability_lvl_3_ready = true;
@@ -114,7 +115,11 @@ void Champion::CheckHability_lvl_3()
 
 void Champion::LevelUp()
 {
+	SetLevelUpParticle();
+
 	to_level_up = false;
+	level_up_particle.position= this->GetPositionRounded();
+	level_up_particle.animation.Reset();
 	//Upgrade level
 	level++;
 	//Upgrade attack
@@ -124,6 +129,19 @@ void Champion::LevelUp()
 	//Upgrade life
 	max_life += life_for_level;
 	life += life_for_level;
+	level_up_animation = true;
+}
+
+void Champion::LevelUpAnimation()
+{
+	if (!level_up_particle.animation.IsEnd())
+	{
+		level_up_particle.Draw();
+	}
+	else 
+	{
+		level_up_animation = false;
+	}
 }
 
 void Champion::SetExperience(int exp)
@@ -156,6 +174,12 @@ void Champion::SetAbility2CurrentTime(uint value)
 void Champion::SetAbility3CurrentTime(uint value)
 {
 	ability_lvl_3_current_time = value;
+}
+
+void Champion::SetLevelUpParticle()
+{
+	level_up_particle = App->buff_manager->GetParticle(LEVEL_UP_PARTICLE, NO_DIRECTION);
+
 }
 
 //Set Methods ---------------
@@ -352,7 +376,7 @@ bool Warrior::Update()
 {
 	//Check if champion lvl up;
 	if (to_level_up) LevelUp();
-
+	if (level_up_animation) LevelUpAnimation();
 	if (actived[0] && level >= 0)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
 	else if (actived[1] && level >= 1)CheckHability_lvl_2();
@@ -852,6 +876,7 @@ bool Wizard::Update()
 {
 	//Check if champion lvl up;
 	if (to_level_up) LevelUp();
+	if (level_up_animation) LevelUpAnimation();
 
 	if (actived[0] && level >= 0)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
@@ -1449,7 +1474,7 @@ bool Hunter::Update()
 {	
 	//Check if champion lvl up;
 	if (to_level_up) LevelUp();
-
+	if (level_up_animation) LevelUpAnimation();
 	if (actived[0] && level >= 0)CheckHability_lvl_1();
 	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
 	else if (actived[1] && level >= 1)CheckHability_lvl_2();
@@ -1633,7 +1658,8 @@ void Hunter::Hability_lvl_2(int x, int y)
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
+		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+
 			units_in[k]->DirectDamage(ability_lvl_2_attack_value);		
 	}
 
@@ -1742,7 +1768,7 @@ void Hunter::Hability_lvl_3(int x, int y)
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
+		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
 		if (ability[2]) 
 			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 
