@@ -483,7 +483,7 @@ void Warrior::CheckHability_lvl_1()
 
 void Warrior::SetAbility_lvl_2(bool choosed)
 {
-	if (level < 2) return;
+	if (level < 1) return;
 
 	if (choosed)
 	{
@@ -983,7 +983,7 @@ void Wizard::CheckHability_lvl_1()
 
 void Wizard::SetAbility_lvl_2(bool choosed)
 {
-	if (level < 2) return;
+	if (level < 1) return;
 
 	if (choosed)
 	{
@@ -1526,24 +1526,24 @@ void Hunter::Hability_lvl_1()
 
 void Hunter::CheckHability_lvl_1()
 {
-	App->buff_manager->CallBuff(this, buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), true);
+//	App->buff_manager->CallBuff(this, buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), true);
 }
 
 void Hunter::SetAbility_lvl_2(bool choosed)
 {
-	if (level < 2) return;
+	if (level < 1) return;
 
 	if (choosed)
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(MULTI_SHOT_PARTICLE, SOUTH);
-		ability_lvl_2_attack_value = ability_lvl_2_skill_B_attack_value;
+		ability_lvl_2_particle = App->buff_manager->GetParticle(DRAGON_SHOT_PARTICLE, SOUTH);
+		ability_lvl_2_attack_value = ability_lvl_2_skill_A_attack_value;
 		ability_lvl_2_prepare_mode = true;
 
 	}
 	else
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(DRAGON_SHOT_PARTICLE, SOUTH);
-		ability_lvl_2_attack_value = ability_lvl_2_skill_A_attack_value;
+		ability_lvl_2_particle = App->buff_manager->GetParticle(MULTI_SHOT_PARTICLE, SOUTH);
+		ability_lvl_2_attack_value = ability_lvl_2_skill_B_attack_value;
 		ability_lvl_2_prepare_mode = true;
 
 	}
@@ -1578,15 +1578,6 @@ void Hunter::Hability_lvl_2(int x, int y)
 
 	if (ability[1])
 	{
-		CalculateTriangleAttackArea(destination);
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
-		//Collect all the units in the buff area
-		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_triangle_attack_skill_A_lvl_2);
-		ability_lvl_2_particle.animation.Reset();
-		ability_lvl_2_particle.position = GetPositionRounded();
-	}
-	else
-	{
 		if (!CalculateSpecialAttackArea(destination, true))
 			return;
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
@@ -1595,13 +1586,19 @@ void Hunter::Hability_lvl_2(int x, int y)
 		ability_lvl_2_particle.animation.Reset();
 		ability_lvl_2_particle.position = area_attack_skill_B_lvl_2.GetPosition();
 	}
+	else
+	{
+		CalculateTriangleAttackArea(destination);
+		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+		//Collect all the units in the buff area
+		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_triangle_attack_skill_A_lvl_2);
+		ability_lvl_2_particle.animation.Reset();
+		ability_lvl_2_particle.position = GetPositionRounded();
+	}
 	uint size = units_in.size();
 	for (uint k = 0; k < size; k++)
 	{
 		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
-		if (ability[1])		
-			units_in[k]->DirectDamage(ability_lvl_2_attack_value);		
-		else		
 			units_in[k]->DirectDamage(ability_lvl_2_attack_value);		
 	}
 
