@@ -17,6 +17,7 @@ public:
 protected:
 
 	//Hero level
+	uint		level = 0;
 	Particle	level_up_particle;
 	uint		current_experience = 0;
 	uint		experience_lvl_2 = 0;
