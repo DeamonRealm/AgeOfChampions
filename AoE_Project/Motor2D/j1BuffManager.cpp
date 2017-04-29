@@ -297,9 +297,9 @@ bool PassiveBuff::RemoveBuff()
 	}
 		break;
 	case BURN_BUFF:
-		base_float = target->GetAttackArea()->GetRad();
+		base_float = target->GetSpeed();
 		current_buff = base_float * value;
-		target->SetAttackAreaBuff(-current_buff);
+		target->SetSpeedBuff(-current_buff);
 		break;
 	}
 

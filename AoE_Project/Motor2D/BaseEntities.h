@@ -464,6 +464,7 @@ public:
 	uint			GetViewArea()const;
 	float			GetSpeed()const;
 	float			GetSpeedBuff()const;
+	float			GetTotalSpeed()const;
 	ACTION_TYPE		GetAction()const;
 	DIRECTION_TYPE	GetDirection()const;
 	uint			GetAttackDelay()const;

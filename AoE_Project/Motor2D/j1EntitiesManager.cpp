@@ -1166,9 +1166,11 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 			else if (type == WARRIOR_CHMP)
 			{
 				Warrior* new_warrior;
-				if (diplomacy == ALLY)new_warrior = new Warrior(*(Warrior*)ally_units_defs[k]);
+				if (diplomacy == ALLY)
+					new_warrior = new Warrior(*(Warrior*)ally_units_defs[k]);
 				else new_warrior = new Warrior(*(Warrior*)enemy_units_defs[k]);
 
+				GetChampion(new_warrior, diplomacy);
 				new_unit = new_warrior;
 			}
 			else if (type == ARCHER_CHMP)
@@ -1176,7 +1178,8 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 				Hunter* new_hunter;
 				if (diplomacy == ALLY)new_hunter = new Hunter(*(Hunter*)ally_units_defs[k]);
 				else new_hunter = new Hunter(*(Hunter*)enemy_units_defs[k]);
-
+				
+				GetChampion(new_hunter, diplomacy);
 				new_unit = new_hunter;
 			}
 			else if (type == WIZARD_CHMP)
@@ -1184,7 +1187,8 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 				Wizard* new_wizard;
 				if (diplomacy == ALLY)new_wizard = new Wizard(*(Wizard*)ally_units_defs[k]);
 				else new_wizard = new Wizard(*(Wizard*)enemy_units_defs[k]);
-
+				
+				GetChampion(new_wizard, diplomacy);
 				new_unit = new_wizard;
 			}
 			else

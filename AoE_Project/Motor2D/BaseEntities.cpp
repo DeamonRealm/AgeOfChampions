@@ -608,8 +608,8 @@ void Unit::NewPosition(const iPoint& goal, float & position_x, float & position_
 	iPoint location = iPoint(position.x, position.y);
 
 	int norm = location.DistanceTo(goal);
-	float x_step = GetSpeed() * (App->GetDT() * 100) * (goal.x - location.x) / norm;
-	float y_step = GetSpeed() * (App->GetDT() * 100) * (goal.y - location.y) / norm;
+	float x_step = GetTotalSpeed() * (App->GetDT() * 100) * (goal.x - location.x) / norm;
+	float y_step = GetTotalSpeed() * (App->GetDT() * 100) * (goal.y - location.y) / norm;
 	
 	this->distance_walked.x += x_step;
 	this->distance_walked.y += y_step;
@@ -1757,12 +1757,17 @@ uint Unit::GetViewArea()const
 
 float Unit::GetSpeed()const
 {
-	return speed+mutable_speed;
+	return speed;
 }
 
 float Unit::GetSpeedBuff() const
 {
 	return speed_buff;
+}
+
+float Unit::GetTotalSpeed() const
+{
+	return speed + mutable_speed + speed_buff;
 }
 
 ACTION_TYPE Unit::GetAction()const
