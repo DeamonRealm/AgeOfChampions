@@ -23,23 +23,36 @@
 			<res pos_x="0" pos_y="5208" res_type="7" life="400" />
 		</resources>
 		<buildings>
-			<build pos_x="48" pos_y="4872.5" life="50" diplomacy="1" build_type="1" cur_units_in="0" />
-			<build pos_x="-288" pos_y="4896" life="50" diplomacy="1" build_type="6" />
-			<build pos_x="-384" pos_y="4848" life="50" diplomacy="1" build_type="6" />
-			<build pos_x="-480" pos_y="4800" life="50" diplomacy="1" build_type="6" />
+			<build pos_x="48" pos_y="4824.5" life="50" diplomacy="1" build_type="1" cur_units_in="0" />
+			<build pos_x="-288" pos_y="4848" life="50" diplomacy="1" build_type="6" />
+			<build pos_x="-384" pos_y="4800" life="50" diplomacy="1" build_type="6" />
+			<build pos_x="-480" pos_y="4752" life="50" diplomacy="1" build_type="6" />
 			<build pos_x="-192" pos_y="4728" life="50" diplomacy="1" build_type="2" cur_units_in="0" />
 			<build pos_x="-432" pos_y="4608" life="50" diplomacy="1" build_type="3" cur_units_in="0" />
 			<build pos_x="-720" pos_y="4752" life="50" diplomacy="1" build_type="5" cur_units_in="0" />
 			<build pos_x="-720" pos_y="4992" life="50" diplomacy="1" build_type="4" />
+			<build pos_x="480" pos_y="5040.5" life="50" diplomacy="2" build_type="1" cur_units_in="0" />
 		</buildings>
+		<units>
+			<unit unit_type="18" diplomacy="1" life="120" pos_x="-1050" pos_y="5083" lvl="2" ability_1="false" ability_2="false" ability_3="false" ability_2_cur_time="17625" ability_3_cur_time="17625" />
+			<unit unit_type="20" diplomacy="1" life="120" pos_x="-930" pos_y="5086" lvl="2" ability_1="false" ability_2="false" ability_3="false" ability_2_cur_time="17233" ability_3_cur_time="17233" />
+			<unit unit_type="19" diplomacy="1" life="120" pos_x="-782" pos_y="5093" lvl="2" ability_1="false" ability_2="false" ability_3="false" ability_2_cur_time="16672" ability_3_cur_time="16672" />
+			<unit unit_type="1" diplomacy="1" life="40" pos_x="-1064" pos_y="5165" />
+			<unit unit_type="1" diplomacy="1" life="40" pos_x="-922" pos_y="5177" />
+			<unit unit_type="7" diplomacy="2" life="150" pos_x="-722" pos_y="5193" />
+			<unit unit_type="13" diplomacy="1" life="25" pos_x="-960" pos_y="4977" res_collected_type="4" current_res="0" />
+			<unit unit_type="13" diplomacy="1" life="25" pos_x="-1117" pos_y="4993" res_collected_type="4" current_res="0" />
+			<unit unit_type="13" diplomacy="1" life="25" pos_x="-1218" pos_y="5088" res_collected_type="4" current_res="0" />
+		</units>
 	</entities_manager>
 	<buff_manager />
-	<fog_of_war />
+	<fog_of_war>
+	</fog_of_war>
 	<player />
 	<AI />
 	<scene />
 	<menu />
 	<renderer>
-		<camera x="940" y="-4559" />
+		<camera x="1398" y="-4738" />
 	</renderer>
 </game_state>

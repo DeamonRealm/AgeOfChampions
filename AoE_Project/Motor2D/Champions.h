@@ -91,6 +91,8 @@ public:
 	void	SetSpeedForLevel(float spd_for_lvl);
 	void	SetViewAreaForLevel(uint view_for_level);
 	void	SetExperience(int exp);
+	void	SetAbility2CurrentTime(uint value);
+	void	SetAbility3CurrentTime(uint value);
 
 	//Get Methods -
 	Circle			GetBuffArea()const;
@@ -102,7 +104,9 @@ public:
 	float			GetArmorForLevel()const;
 	float			GetSpeedForLevel()const;
 	uint			GetViewAreaForLevel()const;
-	
+	bool			GetAbilityChosen(uint index)const;
+	uint			GetAbility2CurrentTime()const;
+	uint			GetAbility3CurrentTime()const;
 };
 /// ---------------------------------------------
 

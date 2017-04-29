@@ -100,6 +100,10 @@ void Villager::SetRecollectRate(uint value)
 {
 	recollect_rate = value;
 }
+void Villager::SetCurrentResources(uint value)
+{
+	current_resources = value;
+}
 //Actions --------------
 bool Villager::Recollect(Resource** target)
 {

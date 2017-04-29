@@ -43,6 +43,7 @@ public:
 	void SetResourcesCapacity(uint value);
 	void SetRecollectCapacity(uint value);
 	void SetRecollectRate(uint value);
+	void SetCurrentResources(uint value);
 
 	//Actions -----
 	bool Recollect(Resource** target);

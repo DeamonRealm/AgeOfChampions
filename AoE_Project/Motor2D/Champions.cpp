@@ -136,6 +136,16 @@ void Champion::SetExperience(int exp)
 	}
 }
 
+void Champion::SetAbility2CurrentTime(uint value)
+{
+	ability_lvl_2_current_time = value;
+}
+
+void Champion::SetAbility3CurrentTime(uint value)
+{
+	ability_lvl_3_current_time = value;
+}
+
 //Set Methods ---------------
 void Champion::SetPosition(float x, float y, bool insert)
 {
@@ -271,6 +281,21 @@ float Champion::GetSpeedForLevel() const
 uint Champion::GetViewAreaForLevel() const
 {
 	return view_area_for_level;
+}
+
+bool Champion::GetAbilityChosen(uint index) const
+{
+	return ability[index];
+}
+
+uint Champion::GetAbility2CurrentTime() const
+{
+	return ability_lvl_2_current_time;
+}
+
+uint Champion::GetAbility3CurrentTime() const
+{
+	return ability_lvl_3_current_time;
 }
 /// ---------------------------------------------
 

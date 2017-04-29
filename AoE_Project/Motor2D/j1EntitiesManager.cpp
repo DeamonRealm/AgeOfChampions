@@ -421,6 +421,85 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 	}
 	// ------------------------------------------
 
+	// Units Load -------------------------------
+	//Units node
+	pugi::xml_node units_node = data.child("units");
+
+	//Node where the unit is loaded
+	pugi::xml_node cur_unit_node = units_node.child("unit");
+
+	//Iterate all the saved units
+	while (cur_unit_node != NULL)
+	{
+		/*
+		- UNIT_TYPE
+		- diplomacy
+		- life
+		- position
+		*/
+
+
+
+		//Load current unit type
+		UNIT_TYPE unit_type = (UNIT_TYPE)cur_unit_node.attribute("unit_type").as_int();
+	
+
+		//Generate unit from unit type and diplomacy
+		Unit* new_unit = GenerateUnit(unit_type, (DIPLOMACY)cur_unit_node.attribute("diplomacy").as_int());
+		
+
+		//Load current unit life
+		new_unit->SetLife(cur_unit_node.attribute("life").as_uint());
+
+		//Load current unit position
+		new_unit->SetPosition(cur_unit_node.attribute("pos_x").as_float(), cur_unit_node.attribute("pos_y").as_float());
+
+		switch (unit_type)
+		{
+		case VILLAGER:
+			/*
+			- resource_collected_type
+			- current_resources
+			*/
+
+			//Load collected resource type
+			((Villager*)new_unit)->SetResourceCollectedType((PLAYER_RESOURCES)cur_unit_node.attribute("res_collected_type").as_int());
+			//Load current resources count
+			((Villager*)new_unit)->SetCurrentResources(cur_unit_node.attribute("current_res").as_uint());
+
+			break;
+		case WARRIOR_CHMP:
+		case ARCHER_CHMP:
+		case WIZARD_CHMP:
+			/*
+			- level
+			- ability [3]
+			- actived[3];
+			- ability_lvl_2_current_time
+			- ability_lvl_3_current_time
+			*/
+			//Load champion level
+			cur_unit_node.attribute("lvl") = ((Champion*)new_unit)->GetLevel();
+
+			//Load champion abilities chosen
+			((Champion*)new_unit)->SetAbility_lvl_1(cur_unit_node.attribute("ability_1").as_bool());
+			((Champion*)new_unit)->SetAbility_lvl_2(cur_unit_node.attribute("ability_2").as_bool());
+			((Champion*)new_unit)->SetAbility_lvl_3(cur_unit_node.attribute("ability_3").as_bool());
+
+			/*//Load champion ability level 2 current time
+			((Champion*)new_unit)->SetAbility2CurrentTime(cur_unit_node.attribute("ability_2_cur_time").as_uint());
+			//Load champion ability level 3 current time
+			((Champion*)new_unit)->SetAbility3CurrentTime(cur_unit_node.attribute("ability_3_cur_time").as_uint());*/
+
+			break;
+		}
+
+		//Focus the next unit node
+		cur_unit_node = cur_unit_node.next_sibling();
+	}
+
+	// ------------------------------------------
+
 	return true;
 }
 
@@ -549,7 +628,7 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 	//Units node
 	pugi::xml_node units_node = data.append_child("units");
 
-	//Iterate all the current buildings
+	//Iterate all the current units
 	std::list<Unit*>::const_iterator current_unit = units.begin();
 	while (current_unit != units.end())
 	{
@@ -595,6 +674,8 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 
 			break;
 		case WARRIOR_CHMP:
+		case ARCHER_CHMP:
+		case WIZARD_CHMP:
 			/*
 			- level
 			- ability [3]
@@ -602,22 +683,19 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 			- ability_lvl_2_current_time
 			- ability_lvl_3_current_time
 			*/
-			break;
-		case ARCHER_CHMP:
-			/*
-			- ability [3]
-			- actived[3];
-			- ability_lvl_2_current_time
-			- ability_lvl_3_current_time
-			*/
-			break;
-		case WIZARD_CHMP:
-			/*
-			- ability [3]
-			- actived[3];
-			- ability_lvl_2_current_time
-			- ability_lvl_3_current_time
-			*/
+			//Save champion level
+			cur_unit_node.append_attribute("lvl") = ((Champion*)current_unit._Ptr->_Myval)->GetLevel();
+
+			//Save champion abilities chosen
+			cur_unit_node.append_attribute("ability_1") = ((Champion*)current_unit._Ptr->_Myval)->GetAbilityChosen(0);
+			cur_unit_node.append_attribute("ability_2") = ((Champion*)current_unit._Ptr->_Myval)->GetAbilityChosen(1);
+			cur_unit_node.append_attribute("ability_3") = ((Champion*)current_unit._Ptr->_Myval)->GetAbilityChosen(2);
+
+			//Save champion ability level 2 current time
+			cur_unit_node.append_attribute("ability_2_cur_time") = ((Champion*)current_unit._Ptr->_Myval)->GetAbility2CurrentTime();
+			//Save champion ability level 3 current time
+			cur_unit_node.append_attribute("ability_3_cur_time") = ((Champion*)current_unit._Ptr->_Myval)->GetAbility3CurrentTime();
+
 			break;
 		}
 

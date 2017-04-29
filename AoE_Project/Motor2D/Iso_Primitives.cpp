@@ -357,8 +357,6 @@ void PivotedRect::CalculateVertex()
 
 bool PivotedRect::IsIn(const fPoint* loc) const
 {
-
-	float posible_rect_area = ((vertex[0].y - vertex[3].y) * (vertex[2].x - vertex[1].x) + (vertex[1].y - vertex[2].y) * (vertex[0].x - vertex[3].x));
 	float rect_area = width * height;
 
 	// AB
