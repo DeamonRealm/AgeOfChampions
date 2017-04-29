@@ -29,18 +29,21 @@ protected:
 	//ability area 
 	bool	ability[3];
 	bool	actived[3];
+	bool	skill_choosed[3];
+
 	bool	ability_lvl_2_prepare_mode = false;
 	bool	ability_lvl_3_prepare_mode = false;
 	//Attack area lvl 2
-	j1Timer			ability_lvl_2_timer;
-	uint			ability_lvl_2_cooldown = 0;
-	uint			ability_lvl_2_current_time = 0;
-
+	j1Timer	ability_lvl_2_timer;
+	uint	ability_lvl_2_cooldown = 0;
+	uint	ability_lvl_2_current_time = 0;
+	bool	ability_lvl_2_ready = false;
 	//Attack area lvl 3
-	j1Timer			ability_lvl_3_timer;
-	uint			ability_lvl_3_cooldown = 0;
-	uint			ability_lvl_3_current_time = 0;
-	
+	j1Timer	ability_lvl_3_timer;
+	uint	ability_lvl_3_cooldown = 0;
+	uint	ability_lvl_3_current_time = 0;
+	bool	ability_lvl_3_ready = false;
+
 	//Stats bonus for level
 	uint	attack_for_level = 0;
 	uint	armor_for_level = 0;
@@ -59,6 +62,7 @@ public:
 	//Functionality ---------
 	//Actions -----
 	void		 CleanBuffedUnits();
+	void		CheckCooldown();
 	//Ability lvl1 methods
 	virtual void SetAbility_lvl_1(bool choosed);
 	virtual void Hability_lvl_1();
@@ -309,8 +313,8 @@ public:
 	void	SetAbility_lvl_3_A_AttackValue(uint attack);
 	void	SetAbility_lvl_3_B_AttackValue(uint attack);
 
-	void	SetAreaLimitLvl2(int limit);
-	void	SetAreaLimitLvl3(int limit);
+	void	SetAreaLimitLvl2(uint limit);
+	void	SetAreaLimitLvl3(uint limit);
 
 };
 /// ---------------------------------------------

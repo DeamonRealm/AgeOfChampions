@@ -19,7 +19,7 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Area_Fire.png" width="1298" height="1298">
+<TextureAtlas imagePath="Area_Attack.png" width="1298" height="1298">
   <particle particle_type="buff_particle" actor="1" buff_type="passive" attribute_type="attack" draw_rate="2500">
     <anim_data speed="150" loop="0"/>
     <sprite n="FireArea/FireArea_00.png" opacity ="255" x="1" y="1" w="392" h="241" pX="0.5" pY="0.5"/>

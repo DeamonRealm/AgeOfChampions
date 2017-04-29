@@ -2,8 +2,10 @@
 
 <data>
   <particle document = "Area_Defense.xml"/>
+  <particle document = "Aura_Range_Attack.xml"/>
+  <particle document = "Aura_Speed_Attack.xml"/>
+  <particle document = "Area_Attack.xml"/>
   <particle document = "One_Hit.xml"/>
-  <particle document = "Area_Fire.xml"/>
   <particle document = "Teleport.xml"/>
   <particle document = "Thunder.xml"/>
   <particle document = "Heal.xml"/>
@@ -12,6 +14,12 @@
   <particle document = "Slash_Effect.xml"/>
   <particle document = "Stun_Effect.xml"/>
   <particle document = "Stun_Effect_Particle.xml"/>
+  <particle document = "Area_Fire_Shot.xml"/>
+  <particle document = "Multi_Shot.xml"/>
+  <particle document = "Dragon_Shot.xml"/>
+  <particle document = "Resurrection.xml"/>
+
+  <particle document = "Burn.xml"/>
 
   <buff
     buff_type ="passive"

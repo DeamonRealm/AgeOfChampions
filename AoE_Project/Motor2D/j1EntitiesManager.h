@@ -115,6 +115,7 @@ public:
 	bool		SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal);
 
 	//Units lists movement units used in buildings cover
+	std::list<Unit*>	GetDeathUnitList();
 	void		AddUnit(Unit* unit);
 	void		AddDeathUnit(Unit* unit);
 	void		ResurrectUnit(Unit* unit);

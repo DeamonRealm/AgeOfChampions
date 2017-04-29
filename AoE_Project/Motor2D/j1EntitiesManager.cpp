@@ -847,6 +847,10 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 									((Hunter*)new_def)->SetAbility_lvl_2_B_AttackValue(unit_node->attribute("ability_lvl_2_skill_B_attack_value").as_uint());
 									((Hunter*)new_def)->SetAbility_lvl_3_A_AttackValue(unit_node->attribute("ability_lvl_3_skill_A_attack_value").as_uint());
 									((Hunter*)new_def)->SetAbility_lvl_3_B_AttackValue(unit_node->attribute("ability_lvl_3_skill_B_attack_value").as_uint());
+									((Hunter*)new_def)->SetAreaLimitLvl2(unit_node->attribute("ability_lvl_2_cooldown").as_uint());
+									((Hunter*)new_def)->SetAreaLimitLvl3(unit_node->attribute("ability_lvl_3_cooldown").as_uint());
+
+									
 									chmp = true;
 
 	}
@@ -1451,6 +1455,11 @@ bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iP
 	}
 	*/
 	return true;
+}
+
+std::list<Unit*> j1EntitiesManager::GetDeathUnitList()
+{
+	return death_units;
 }
 
 void j1EntitiesManager::AddUnit(Unit* unit)

@@ -21,7 +21,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Area_Fire_Shot.png" width="2107" height="1920">
   <simple_particle particle_type="area_fire_shot_particle" direction="no_direction">
-<anim_data speed="100" loop="0"/>
+    <anim_data speed="100" loop="0"/>
 
     <sprite n="Lightning_0000_0001-shot.png.png" opacity ="255" x="1" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
     <sprite n="Lightning_0001_0002-shot.png.png" opacity ="255" x="1" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>

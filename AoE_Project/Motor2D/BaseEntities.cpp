@@ -1387,6 +1387,8 @@ bool Unit::Resurrect()
 
 	if (action_type == DIE || action_type == DISAPPEAR)
 	{
+		this->Heal(5);
+		App->entities_manager->ResurrectUnit(this);
 		action_type = IDLE;
 		App->animator->UnitPlay(this);
 		action_worker.HardReset();
