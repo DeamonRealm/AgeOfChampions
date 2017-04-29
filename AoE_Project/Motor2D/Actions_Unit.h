@@ -71,11 +71,16 @@ public:
 		}
 	}
 
-	//Returns the path 
+	//Get Methods ------
 	std::vector<iPoint>* GetPath() const
 	{
 		return path;
 	};
+
+	iPoint GetGoal()const
+	{
+		return destination;
+	}
 
 private:
 
@@ -117,8 +122,14 @@ public:
 		this->actor = nullptr;
 	}
 
+	//Get Methods ------
+	iPoint GetDisplacement()const
+	{
+		return displacement;
+	}
 
 private:
+
 	iPoint displacement;
 
 };
@@ -151,6 +162,12 @@ public:
 
 		//Actor attack the target
 		return ((Unit*)actor)->AttackUnit(target);
+	}
+
+	//Get Methods -----------
+	Unit*	GetTarget()const
+	{
+		return *target;
 	}
 
 private:

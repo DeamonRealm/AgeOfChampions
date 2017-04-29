@@ -93,6 +93,8 @@ bool j1FogOfWar::Load(pugi::xml_node& data)
 
 bool j1FogOfWar::Save(pugi::xml_node& data) const
 {
+	return true;
+
 	if (fog_layer == nullptr || alpha_layer == nullptr)
 	{
 		LOG("Can't save fog of war!");

@@ -131,16 +131,18 @@ public:
 	void AddPriorizedAction(Action* action, TASK_CHANNELS channel = TASK_CHANNELS::PRIMARY);
 	void PopAction(Action* action);
 
-	//Clean all actionss of the worker
+	//Clean all actions of the worker
 	void HardReset();
 	void ResetChannel(TASK_CHANNELS channel);
 
+	//Get Methods -----------
 	TASK_TYPE	GetCurrentActionType() const;
-	Action*		GetCurrentAction() const;
+
+	Action*		GetCurrentPrimaryAction() const;
 
 	bool IsBusy(TASK_CHANNELS channel);
 
-	std::list<Action*>* GetActionList(TASK_CHANNELS channel);
+	std::list<Action*> GetActionList(TASK_CHANNELS channel);
 
 	void Pause();
 	void Restart();
@@ -193,16 +195,19 @@ public:
 	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy);
 	ResearchTecAction*			ResearchAction(RESEARCH_TECH type, uint r_time, j1Module* callback, DIPLOMACY diplomacy);
 	
-	//Passive actions----------------
+	//Passive actions------------------
 	//Scann for units
 	ScannAction*				ScanAction(Entity* actor);
 	AutoAttackPassiveAction*	AutoAttackAction(Entity* actor);
 	AutoHealPassiveAction*		AutoHealAction(Entity* actor);
 
 
-	//Set the passive actions--------
+	//Set the passive actions----------
 	void						SetUnitAutoPassive(Unit* actor);
 
+	//Methods used in Load/Save -------
+	bool	SaveTask(pugi::xml_node& node, Action* action);
+	bool	LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNELS channel);
 
 private:
 

@@ -1911,7 +1911,7 @@ std::vector<iPoint>* Unit::GetPath() const
 	if (action_worker.GetCurrentActionType() != TASK_U_MOVE)
 		return nullptr;
 
-	return ((MoveUnitAction*)action_worker.GetCurrentAction())->GetPath();
+	return ((MoveUnitAction*)action_worker.GetCurrentPrimaryAction())->GetPath();
 }
 iPoint Unit::GetFuturePosition() const
 {
