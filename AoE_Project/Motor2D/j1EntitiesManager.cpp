@@ -491,7 +491,14 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 			- ability_lvl_3_current_time
 			*/
 			//Load champion level
-			cur_unit_node.attribute("lvl") = ((Champion*)new_unit)->GetLevel();
+			uint level = cur_unit_node.attribute("lvl").as_uint();
+			((Champion*)new_unit)->SetLevel(level);
+			for (uint k = 0; k < level; k++)((Champion*)new_unit)->LevelUp(false);
+
+			//Load champion abilities choosed state
+			((Champion*)new_unit)->SetSkillChoosed(cur_unit_node.attribute("ab_choosed_1").as_bool(), 0);
+			((Champion*)new_unit)->SetSkillChoosed(cur_unit_node.attribute("ab_choosed_2").as_bool(), 1);
+			((Champion*)new_unit)->SetSkillChoosed(cur_unit_node.attribute("ab_choosed_3").as_bool(), 2);
 
 			//Load champion abilities chosen
 			((Champion*)new_unit)->SetAbility_lvl_1(cur_unit_node.attribute("ability_1").as_bool());
@@ -726,6 +733,11 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 			*/
 			//Save champion level
 			cur_unit_node.append_attribute("lvl") = ((Champion*)current_unit._Ptr->_Myval)->GetLevel();
+
+			//Save champion abilities choosed state
+			cur_unit_node.append_attribute("ab_choosed_1") = ((Champion*)current_unit._Ptr->_Myval)->GetSkillChoosed(0);
+			cur_unit_node.append_attribute("ab_choosed_2") = ((Champion*)current_unit._Ptr->_Myval)->GetSkillChoosed(1);
+			cur_unit_node.append_attribute("ab_choosed_3") = ((Champion*)current_unit._Ptr->_Myval)->GetSkillChoosed(2);
 
 			//Save champion abilities chosen
 			cur_unit_node.append_attribute("ability_1") = ((Champion*)current_unit._Ptr->_Myval)->GetAbilityChosen(0);

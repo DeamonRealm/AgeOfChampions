@@ -23,28 +23,34 @@
 			<res pos_x="0" pos_y="5208" res_type="7" life="400" />
 		</resources>
 		<buildings>
-			<build pos_x="48" pos_y="4728.5" life="50" diplomacy="1" build_type="1" cur_units_in="0" />
-			<build pos_x="-288" pos_y="4752" life="50" diplomacy="1" build_type="6" />
-			<build pos_x="-384" pos_y="4704" life="50" diplomacy="1" build_type="6" />
-			<build pos_x="-480" pos_y="4656" life="50" diplomacy="1" build_type="6" />
+			<build pos_x="48" pos_y="4680.5" life="50" diplomacy="1" build_type="1" cur_units_in="0" />
+			<build pos_x="-288" pos_y="4704" life="50" diplomacy="1" build_type="6" />
+			<build pos_x="-384" pos_y="4656" life="50" diplomacy="1" build_type="6" />
+			<build pos_x="-480" pos_y="4608" life="50" diplomacy="1" build_type="6" />
 			<build pos_x="-192" pos_y="4728" life="50" diplomacy="1" build_type="2" cur_units_in="0" />
 			<build pos_x="-432" pos_y="4608" life="50" diplomacy="1" build_type="3" cur_units_in="0" />
 			<build pos_x="-720" pos_y="4752" life="50" diplomacy="1" build_type="5" cur_units_in="0" />
 			<build pos_x="-720" pos_y="4992" life="50" diplomacy="1" build_type="4" />
-			<build pos_x="480" pos_y="5040.5" life="50" diplomacy="2" build_type="1" cur_units_in="0" />
 		</buildings>
 		<units>
-			<unit unit_type="13" diplomacy="1" life="25" pos_x="-1101.01648" pos_y="5033.26807" res_collected_type="4" current_res="0">
+			<unit unit_type="1" diplomacy="2" life="40" pos_x="-863" pos_y="5153">
 				<actions>
 					<primary>
-						<action type="1" goal_x="-913" goal_y="5141" />
-						<action type="3" tar_type="1" tar_pos_x="-863" tar_pos_y="5153" />
+						<action type="8" time="2000" />
 					</primary>
 				</actions>
 			</unit>
-			<unit unit_type="1" diplomacy="2" life="40" pos_x="-863" pos_y="5153">
+			<unit unit_type="18" diplomacy="1" life="120" pos_x="-970" pos_y="5092" lvl="2" ab_choosed_1="false" ab_choosed_2="true" ab_choosed_3="false" ability_1="false" ability_2="false" ability_3="false">
 				<actions>
 					<primary />
+				</actions>
+			</unit>
+    			<unit unit_type="13" diplomacy="1" life="25" pos_x="-619.042969" pos_y="5063.24023" res_collected_type="1" current_res="0">
+				<actions>
+					<primary>
+						<action type="1" goal_x="-506" goal_y="5047" />
+						<action type="9" tar_pos_x="-432" tar_pos_y="5040" tar_type="4" />
+					</primary>
 				</actions>
 			</unit>
 		</units>

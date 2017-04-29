@@ -113,9 +113,9 @@ void Champion::CheckHability_lvl_3()
 {
 }
 
-void Champion::LevelUp()
+void Champion::LevelUp(bool particle)
 {
-	SetLevelUpParticle();
+	if(particle)SetLevelUpParticle();
 
 	to_level_up = false;
 	level_up_particle.position= this->GetPositionRounded();
@@ -129,7 +129,7 @@ void Champion::LevelUp()
 	//Upgrade life
 	max_life += life_for_level;
 	life += life_for_level;
-	level_up_animation = true;
+	level_up_animation = particle;
 }
 
 void Champion::LevelUpAnimation()
@@ -166,14 +166,9 @@ void Champion::SetExperience(int exp)
 	}
 }
 
-void Champion::SetAbility2CurrentTime(uint value)
+void Champion::SetSkillChoosed(bool val, uint index)
 {
-	ability_lvl_2_current_time = value;
-}
-
-void Champion::SetAbility3CurrentTime(uint value)
-{
-	ability_lvl_3_current_time = value;
+	skill_choosed[index] = val;
 }
 
 void Champion::SetLevelUpParticle()
@@ -324,14 +319,9 @@ bool Champion::GetAbilityChosen(uint index) const
 	return ability[index];
 }
 
-uint Champion::GetAbility2CurrentTime() const
+bool Champion::GetSkillChoosed(uint index) const
 {
-	return ability_lvl_2_current_time;
-}
-
-uint Champion::GetAbility3CurrentTime() const
-{
-	return ability_lvl_3_current_time;
+	return skill_choosed[index];
 }
 /// ---------------------------------------------
 

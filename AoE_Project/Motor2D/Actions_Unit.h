@@ -202,6 +202,12 @@ public:
 		return ((Unit*)actor)->AttackBuilding(target);
 	}
 
+	//Get Methods -----------
+	Building*	GetTarget()const
+	{
+		return *target;
+	}
+
 private:
 
 	Building** target = nullptr;
@@ -262,6 +268,7 @@ public:
 	//Constructor -----------
 	StunUnitAction(Unit* actor, uint time) : Action(actor, TASK_U_STUN), time(time)
 	{
+
 	}
 
 	//Functionality ---------
@@ -285,6 +292,12 @@ public:
 	{
 		//Actor attack the target
 		return timer.Read() > time;
+	}
+
+	//Get Methods -----------
+	uint GetTime()const
+	{
+		return time;
 	}
 
 private:
@@ -369,6 +382,11 @@ public:
 		return ((Villager*)actor)->Recollect(target);
 	}
 
+	//Get Methods -----------
+	Resource*	GetTarget()const
+	{
+		return *target;
+	}
 	
 private:
 

@@ -81,7 +81,7 @@ public:
 	virtual void Hability_lvl_3(int x = 0, int y = 0);
 	virtual void CheckHability_lvl_3();
 	//Level system methods
-	void	LevelUp();
+	void	LevelUp(bool particle = true);
 	void	LevelUpAnimation();
 
 	//Set Methods -
@@ -101,8 +101,7 @@ public:
 	void	SetSpeedForLevel(float spd_for_lvl);
 	void	SetViewAreaForLevel(uint view_for_level);
 	void	SetExperience(int exp);
-	void	SetAbility2CurrentTime(uint value);
-	void	SetAbility3CurrentTime(uint value);
+	void	SetSkillChoosed(bool val, uint index);
 
 	//Get Methods -
 	Circle			GetBuffArea()const;
@@ -115,8 +114,8 @@ public:
 	float			GetSpeedForLevel()const;
 	uint			GetViewAreaForLevel()const;
 	bool			GetAbilityChosen(uint index)const;
-	uint			GetAbility2CurrentTime()const;
-	uint			GetAbility3CurrentTime()const;
+	bool			GetSkillChoosed(uint index)const;
+
 };
 /// ---------------------------------------------
 

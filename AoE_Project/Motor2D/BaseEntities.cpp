@@ -2014,6 +2014,7 @@ bool Resource::ExtractResources(uint* value)
 		life = 0;
 		App->entities_manager->DeleteEntity(this);
 		App->entities_manager->resources_quadtree.Exteract(&position);
+		App->entities_manager->resources.remove(this);
 		this->CleanMapLogic();
 		return false;
 	}

@@ -256,20 +256,35 @@ bool j1ActionManager::SaveTask(pugi::xml_node& node, Action* action)
 	}
 	case TASK_U_ATTACK_B:
 	{
-		//Save 
-
+		//Save attack action target
+		Building* target = ((AttackBuildingAction*)action)->GetTarget();
+		if (target == nullptr)
+		{
+			LOG("Error in attack action target");
+			return false;
+		}
+		//Save target unit type
+		node.append_attribute("tar_type") = target->GetBuildingType();
+		//Save target position
+		node.append_attribute("tar_pos_x") = target->GetPosition().x;
+		node.append_attribute("tar_pos_y") = target->GetPosition().y;
 		break;
 	}
-	case TASK_U_HEAL_U:
-		break;
-	case TASK_U_DIE:
-		break;
-	case TASK_B_DIE:
-		break;
 	case TASK_U_STUN:
+		//Save stun time
+		node.append_attribute("time") = ((StunUnitAction*)action)->GetTime();
 		break;
 	case TASK_U_RECOLLECT:
+	{
+		//Save recollect target characteristics
+		Resource* target = ((RecollectVillagerAction*)action)->GetTarget();
+		//Save target position
+		node.append_attribute("tar_pos_x") = target->GetPosition().x;
+		node.append_attribute("tar_pos_y") = target->GetPosition().y;
+		//Save target resource type
+		node.append_attribute("tar_type") = target->GetResourceType();
 		break;
+	}
 	case TASK_U_SAVE_RESOURCES:
 		break;
 	case TASK_U_SCANN:
@@ -352,16 +367,63 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		break;
 	}
 	case TASK_U_ATTACK_B:
+	{
+		//Load target characteristics
+		fPoint position = { node.attribute("tar_pos_x").as_float(),node.attribute("tar_pos_y").as_float() };
+		BUILDING_TYPE unit_type = (BUILDING_TYPE)node.attribute("tar_type").as_int();
+		//Search attack action target in units list
+		Building** target = nullptr;
+		const std::list<Building*>* buildings = App->entities_manager->BuildingList();
+		std::list<Building*>::const_iterator building = buildings->begin();
+		while (building != buildings->end())
+		{
+
+			if (building._Ptr->_Myval->GetPosition() == position && building._Ptr->_Myval->GetBuildingType() == unit_type)
+			{
+				target = &building._Ptr->_Myval;
+			}
+			building++;
+		}
+		if (target == nullptr)
+		{
+			LOG("Error loading attack action target");
+			return false;
+		}
+		//Build the task with the actor and the target found
+		actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, target));
 		break;
-	case TASK_U_HEAL_U:
-		break;
-	case TASK_U_DIE:
-		break;
-	case TASK_B_DIE:
-		break;
+	}
 	case TASK_U_STUN:
+		//Load stun time
+		 actor->AddAction(App->action_manager->StunAction((Unit*)actor, node.attribute("time").as_uint()), channel);
+		 App->buff_manager->CallBuff((Unit*)actor, TIMED_BUFF, STUN_BUFF);
 		break;
 	case TASK_U_RECOLLECT:
+	{
+		//Load target characteristics
+		fPoint position = { node.attribute("tar_pos_x").as_float(),node.attribute("tar_pos_y").as_float() };
+		RESOURCE_TYPE resource_type = (RESOURCE_TYPE)node.attribute("tar_type").as_int();
+		//Iterate resources to find the target
+		Resource** target = nullptr;
+		const std::list<Resource*>* resources = App->entities_manager->ResourceList();
+		std::list<Resource*>::const_iterator resource = resources->begin();
+		while (resource != resources->end())
+		{
+			if (resource._Ptr->_Myval->GetPosition() == position && resource._Ptr->_Myval->GetResourceType() == resource_type)
+			{
+				target = &resource._Ptr->_Myval;
+			}
+			resource++;
+		}
+		if (target == nullptr)
+		{
+			LOG("Error loading recollect action target");
+			return false;
+		}
+		//Build the task with the actor and the target found
+		actor->AddAction(App->action_manager->RecollectAction((Villager*)actor, target));
+		break;
+	}
 		break;
 	case TASK_U_SAVE_RESOURCES:
 		break;

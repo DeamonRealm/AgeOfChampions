@@ -55,13 +55,16 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&)const;
 
-private:
+public:
 
 	//Lists of current game entities
 	std::list<Unit*>		units;
-	std::list<Unit*>		death_units;
 	std::list<Resource*>	resources;
 	std::list<Building*>	buildings;
+
+private:
+
+	std::list<Unit*>		death_units;
 	std::list<Champion*>	champions_blue;
 	std::list<Champion*>	champions_red;
 
