@@ -17,7 +17,7 @@ public:
 protected:
 
 	//Hero level
-	uint		level = 0;
+	uint		level = 2;
 	Particle	level_up_particle;
 	uint		current_experience = 0;
 	uint		experience_lvl_2 = 0;
@@ -268,10 +268,9 @@ private:
 	int					area_limit_skill_A_lvl_3;
 	uint				ability_lvl_3_skill_A_attack_value = 0;
 	//Skill lvl 3 B
-	SDL_Rect			area_attack_skill_B_lvl_3;
+	PivotedRect			area_attack_skill_B_lvl_3;
 	uint				ability_lvl_3_skill_B_attack_value = 0;
 
-	PivotedRect			arrow_rect;
 
 	//skill selected
 	uint				ability_lvl_2_attack_value;
@@ -312,7 +311,7 @@ public:
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Circle& circle, const char* name);
 	void	SetSpecialAttackArea(const Triangle& triangle);
-	void	SetSpecialAttackArea(const SDL_Rect& rect);
+	void	SetSpecialAttackArea(const PivotedRect& rect);
 
 	void	SetAbility_lvl_2_A_AttackValue(uint attack);
 	void	SetAbility_lvl_2_B_AttackValue(uint attack);

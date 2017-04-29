@@ -935,9 +935,9 @@
       area_attack_skill_A_lvl_3="150"
       area_limit_skill_A_lvl_3="300"
       ability_lvl_3_skill_A_attack_value="100"
-      
-      rect_attack_w="400"
-      rect_attack_h="60"
+      rect_pivot_distance="20"
+      rect_attack_w="20"
+      rect_attack_h="800"
       ability_lvl_3_skill_B_attack_value="100"
 
       ability_lvl_2_cooldown = "5000"

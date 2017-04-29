@@ -904,6 +904,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Atk Triangle Length*/		atk_triangle.SetLength(unit_node->attribute("area_triangle_length").as_uint());
 		/*Atk Triangle Width*/		atk_triangle.SetWidthAngle(unit_node->attribute("area_triangle_width_angle").as_float());
 									atk_triangle.SetXAngle(unit_node->attribute("area_triangle_X_angle").as_float());
+									atk_triangle.SetColor({ 0, 0, 0, 255 });
 									((Hunter*)new_def)->SetSpecialAttackArea(atk_triangle);
 		/*Circle Spell*/			Circle temp_circle;
 									temp_circle.SetRad(unit_node->attribute("area_attack_skill_B_lvl_2").as_uint());
@@ -912,9 +913,11 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 									temp_circle.SetRad(unit_node->attribute("area_attack_skill_A_lvl_3").as_uint());
 									temp_circle.SetColor({ 0,50,50,255 });
 									((Hunter*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
-									SDL_Rect temp_rect;
-									temp_rect.w = unit_node->attribute("rect_attack_w").as_uint();
-									temp_rect.h = unit_node->attribute("rect_attack_h").as_uint();
+									PivotedRect temp_rect;
+									temp_rect.SetPivotDistance(unit_node->attribute("rect_displacament").as_uint());
+									temp_rect.SetWidth(unit_node->attribute("rect_attack_w").as_uint());
+									temp_rect.SetHeight(unit_node->attribute("rect_attack_h").as_uint());
+									temp_rect.SetColor({ 50,255,150,255 });
 									((Hunter*)new_def)->SetSpecialAttackArea(temp_rect);
 									((Hunter*)new_def)->SetAbility_lvl_2_A_AttackValue(unit_node->attribute("ability_lvl_2_skill_A_attack_value").as_uint());
 									((Hunter*)new_def)->SetAbility_lvl_2_B_AttackValue(unit_node->attribute("ability_lvl_2_skill_B_attack_value").as_uint());

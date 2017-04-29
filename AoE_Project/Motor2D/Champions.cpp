@@ -1582,7 +1582,7 @@ bool Hunter::Draw(bool debug)
 		else if (ability_lvl_3_prepare_mode) {
 			if (ability[2])
 			{
-				arrow_rect.Draw();
+				area_attack_skill_B_lvl_3.Draw();
 			}
 			else
 			{
@@ -1602,7 +1602,7 @@ bool Hunter::Draw(bool debug)
 			hard_collider.Draw();
 			vision.Draw();
 			buff_area.Draw();
-			arrow_rect.Draw();
+			area_attack_skill_B_lvl_3.Draw();
 		}
 	}
 
@@ -1673,7 +1673,7 @@ void Hunter::SetAbility_lvl_2(bool choosed)
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(MULTI_SHOT_PARTICLE, SOUTH);
 		ability_lvl_2_attack_value = ability_lvl_2_skill_B_attack_value;
-		ability_lvl_3_ready = true;
+		ability_lvl_2_ready = true;
 
 	}
 	skill_choosed[1] = true;
@@ -1762,7 +1762,7 @@ void Hunter::SetAbility_lvl_3(bool choosed)
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
 		ability_lvl_3_attack_value = ability_lvl_3_skill_A_attack_value;
-		ability_lvl_2_ready = true;
+		ability_lvl_3_ready = true;
 	}
 	else
 	{
@@ -1794,9 +1794,11 @@ void Hunter::PrepareAbility_lvl_3()
 	{
 		CalculateArrorwAttackArea(mouse_position);
 		std::vector<Unit*> units_in;
-		uint size = App->entities_manager->units_quadtree.CollectCandidates(units_in, arrow_rect);
+		uint size = App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_3);
 		for (uint k = 0; k < size; k++)
 		{
+			if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+
 			units_in[k]->SetBlitColor({ 255,0,0,255 });
 		}
 	}
@@ -1912,13 +1914,10 @@ void Hunter::CalculateTriangleAttackArea(const iPoint & base)
 
 void Hunter::CalculateArrorwAttackArea(const iPoint & base)
 {
-	arrow_rect.SetPosition(this->GetPositionRounded());
-	arrow_rect.SetColor({ 50,255,150,255 });
-	arrow_rect.SetPivotDistance(20);
-	arrow_rect.SetGoal(iPoint(base.x, base.y));
-	arrow_rect.SetHeight(200);
-	arrow_rect.SetWidth(50);
-	arrow_rect.CalculateVertex();
+	area_attack_skill_B_lvl_3.SetPosition(this->GetPositionRounded());
+	area_attack_skill_B_lvl_3.SetGoal(iPoint(base.x, base.y));
+
+	area_attack_skill_B_lvl_3.CalculateVertex();
 }
 
 bool Hunter::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
@@ -2017,6 +2016,8 @@ void Hunter::SetPosition(float x, float y, bool insert)
 	//Set area limit position
 	//area_limit_spell_2.SetPosition(pos);
 	//area_limit_spell_3.SetPosition(pos);
+	CalculateArrorwAttackArea(pos);
+	area_triangle_attack_skill_A_lvl_2.SetPosition(pos);
 
 	//Add the unit with the correct position in the correct quad tree
 	if (insert)App->entities_manager->units_quadtree.Insert(this, &position);
@@ -2034,7 +2035,7 @@ void Hunter::SetSpecialAttackArea(const Triangle & triangle)
 	area_triangle_attack_skill_A_lvl_2 = triangle;
 }
 
-void Hunter::SetSpecialAttackArea(const SDL_Rect & rect)
+void Hunter::SetSpecialAttackArea(const PivotedRect & rect)
 {
 	area_attack_skill_B_lvl_3 = rect;
 }
