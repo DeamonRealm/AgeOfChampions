@@ -175,6 +175,7 @@ private:
 
 	bool					isbuilding = false;
 	Entity*					buildingthis = nullptr;
+	int					buliding_population = 0;
 };
 
 // Hero Panel	-------------------------------------------------------------------------------------------

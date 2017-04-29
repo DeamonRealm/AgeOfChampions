@@ -25,8 +25,9 @@ pc => population cost to activate cell
   <Buildings>
     <TownCenter>
       <cell cp ="0" cl ="0" al ="1" x="576" y="585" w="36" h="36" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="13" ci ="Create Villager"/>
-      <cell cp ="1" cl ="0" al ="1" x="288" y="585" w="36" h="36" wc ="0" fc ="180" gc ="60" sc ="0" pc ="1" ut ="18" ci ="Create Warrior Champion"/>
-      <cell cp ="2" cl ="0" al ="1" x="540" y="585" w="36" h="36" wc ="0" fc ="180" gc ="60" sc ="0" pc ="1" ut ="20" ci ="Create Wizard Champion"/>
+      <cell cp ="1" cl ="0" al ="1" x="288" y="585" w="36" h="36" wc ="0" fc ="50" gc ="60" sc ="0" pc ="1" ut ="18" ci ="Create Warrior Champion"/>
+      <cell cp ="2" cl ="0" al ="1" x="108" y="621" w="36" h="36" wc ="0" fc ="50" gc ="60" sc ="0" pc ="1" ut ="20" ci ="Create Wizard Champion"/>
+      <cell cp ="3" cl ="0" al ="1" x="432" y="585" w="36" h="36" wc ="0" fc ="50" gc ="60" sc ="0" pc ="1" ut ="19" ci ="Create Archer Champion"/>
       <cell cp ="5" cl ="0" al ="1" x="540" y="477" w="36" h="36" wc ="0" fc ="0" gc ="50" sc ="0" pc ="0" rt ="34" ci ="Research Loom (+15 villager hitpoints, +1/+2P armor)"/>
       <cell cp ="6" cl ="0" al ="2" x="0" y="513" w="36" h="36" wc ="50" fc ="175" gc ="0" sc ="0" pc ="0" rt ="37" ci ="Research Wheelbarrow (+10% villager speed; +25% capacity)"/>
       <cell cp ="6" cl ="1" al ="3" x="468" y="477" w="36" h="36" wc ="0" fc ="0" gc ="50" sc ="0" pc ="0" rt ="38" ci ="Research Hand Cart (+10% villager speed; +50% capacity)"/>
@@ -120,13 +121,13 @@ pc => population cost to activate cell
       <cell cp ="1" cl ="0" al ="1" x="593" y="36" w="36" h="36"   ci ="Militari Building"/>
       <cell cp ="2" cl ="0" al ="1" x="405" y="36" w="36" h="36"   ci ="Repair Building"/>
       <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Unit"/>
-      <cell cp ="0" cl ="1" al ="1" x="348" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="6" ci ="Bulid House"/>
+      <cell cp ="0" cl ="1" al ="1" x="348" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-5" bt="6" ci ="Bulid House"/>
       <cell cp ="2" cl ="1" al ="1" x="492" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3" ci ="Bulid Mining Camp"/>
       <cell cp ="3" cl ="1" al ="1" x="384" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3" ci ="Bulid Lumber Camp"/>
       <cell cp ="6" cl ="1" al ="1" x="168" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="4" ci ="Bulid Blacksmith"/>
       <cell cp ="8" cl ="1" al ="2" x="528" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3" ci ="Bulid Monastery"/>
       <cell cp ="9" cl ="1" al ="2" x="144" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3" ci ="Bulid University"/>    
-      <cell cp ="10" cl ="1" al ="2" x="108" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="1" ci ="Bulid Town Center"/>
+      <cell cp ="10" cl ="1" al ="2" x="108" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-15" bt="1" ci ="Bulid Town Center"/>
       <cell cp ="13" cl ="1" al ="1" x="332" y="36" w="36" h="36"  ci ="Build Military"/>
       <cell cp ="14" cl ="1" al ="1" x="477" y="36" w="36" h="36"  ci ="Menu"/>
       <cell cp ="0" cl ="2" al ="1" x="132" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="2" ci ="Bulid Barrack"/>

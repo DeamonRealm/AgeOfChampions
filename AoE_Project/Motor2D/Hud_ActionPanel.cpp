@@ -384,8 +384,9 @@ bool VillagerPanel::ActivateCell(int i)
 	if (panel_icons[i].b_type != NO_BUILDING)
 	{
 		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost, 
-			panel_icons[i].stone_cost, panel_icons[i].population_cost))
+			panel_icons[i].stone_cost, 0))
 		{
+			buliding_population = panel_icons[i].population_cost;
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 			buildingthis = App->entities_manager->GenerateBuilding(panel_icons[i].b_type, ALLY, true);
 			isbuilding = true;
@@ -466,6 +467,7 @@ bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 			App->input->GetMousePosition(x, y);
 			if (((Building*)buildingthis)->CheckZone(x - App->render->camera.x, y - App->render->camera.y))
 			{
+				player_game_panel_resources->IncressPopulation(-buliding_population, true);
 				buildingthis->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y, true);
 			}
 			else {
@@ -849,7 +851,7 @@ void HeroPanel::SetNewOrder()
 		else if (champion_row[count] == champion_mele) cell_lvl[i] = mele_learned[i];
 		else if (champion_row[count] == champion_wizard)
 			cell_lvl[i] = wizard_learned[i - (count * 5)];
-		else if (champion_row[count] == champion_archer) cell_lvl[i] = archer_learned[i - (count * 10)];
+		else if (champion_row[count] == champion_archer) cell_lvl[i] = archer_learned[i - (count * 5)];
 		panel_icons.push_back(celldata);
 	}
 	
@@ -890,7 +892,7 @@ void HeroPanel::SetNewOrder()
 		for (int i = 0; i < size; i++)
 		{
 			pos = cell_data[i].cell_position;
-			if (pos == 10)break;
+			if (pos < 10)continue;
 			else if (cell_data[i].cell_at_level == cell_lvl[pos + place] && cell_data[i].cell_at_age <= current_age)
 			{
 				panel_icons[pos + place] = cell_data[i];

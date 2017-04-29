@@ -339,7 +339,7 @@ bool Game_Panel::UseResource(int amount_wood, int amount_food, int amount_gold, 
 		if (amount_food != 0) AddResource(-amount_food, GP_MEAT);
 		if (amount_gold != 0) AddResource(-amount_gold, GP_GOLD);
 		if (amount_stone != 0) AddResource(-amount_stone, GP_STONE);
-		if (used_population != 0) IncressPopulation(used_population);
+		if (used_population >= 0) IncressPopulation(used_population);
 		return true;
 	}
 	else return false;
