@@ -286,7 +286,16 @@ bool j1ActionManager::SaveTask(pugi::xml_node& node, Action* action)
 		break;
 	}
 	case TASK_U_SAVE_RESOURCES:
+	{
+		//Save save resources target characteristics
+		Building* target = ((SaveResourcesVillagerAction*)action)->GetTarget();
+		//Save target position
+		node.append_attribute("tar_pos_x") = target->GetPosition().x;
+		node.append_attribute("tar_pos_y") = target->GetPosition().y;
+		//Save target resource type
+		node.append_attribute("tar_type") = target->GetBuildingType();
 		break;
+	}
 	case TASK_U_SCANN:
 		break;
 	case TASK_U_AA:
@@ -421,12 +430,36 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 			return false;
 		}
 		//Build the task with the actor and the target found
-		actor->AddAction(App->action_manager->RecollectAction((Villager*)actor, target));
+		actor->AddAction(App->action_manager->RecollectAction((Villager*)actor, target),channel);
 		break;
 	}
 		break;
 	case TASK_U_SAVE_RESOURCES:
+	{
+		//Load save resources target characteristics
+		fPoint position = { node.attribute("tar_pos_x").as_float(),node.attribute("tar_pos_y").as_float() };
+		BUILDING_TYPE building_type = (BUILDING_TYPE)node.attribute("tar_type").as_int();
+		//Iterate buildings to find the target
+		Building** target = nullptr;
+		const std::list<Building*>* buildings = App->entities_manager->BuildingList();
+		std::list<Building*>::const_iterator building = buildings->begin();
+		while (building != buildings->end())
+		{
+			if (building._Ptr->_Myval->GetPosition() == position && building._Ptr->_Myval->GetBuildingType() == building_type)
+			{
+				target = &building._Ptr->_Myval;
+			}
+			building++;
+		}
+		if (target == nullptr)
+		{
+			LOG("Error loading save resources action target");
+			return false;
+		}
+		//Build the task with the actor and the target found
+		actor->AddAction(App->action_manager->SaveResourcesAction((Villager*)actor, *target), channel);
 		break;
+	}
 	case TASK_U_SCANN:
 		break;
 	case TASK_U_AA:

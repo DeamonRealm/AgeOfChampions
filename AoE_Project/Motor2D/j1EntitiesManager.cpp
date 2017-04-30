@@ -479,6 +479,8 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 			//Load current resources count
 			((Villager*)new_unit)->SetCurrentResources(cur_unit_node.attribute("current_res").as_uint());
 
+			App->animator->UnitPlay(new_unit);
+			
 			break;
 		case WARRIOR_CHMP:
 		case ARCHER_CHMP:

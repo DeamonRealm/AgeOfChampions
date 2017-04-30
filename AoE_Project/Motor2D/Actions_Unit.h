@@ -436,7 +436,11 @@ public:
 		return ((Villager*)actor)->SaveResources();
 	}
 
-	
+	//Get Methods -----------
+	Building*	GetTarget()const
+	{
+		return target;
+	}
 
 private:
 

@@ -45,10 +45,19 @@
 					<primary />
 				</actions>
 			</unit>
-    			<unit unit_type="13" diplomacy="1" life="25" pos_x="-619.042969" pos_y="5063.24023" res_collected_type="1" current_res="0">
+    	<unit unit_type="13" diplomacy="1" life="25" pos_x="-619.042969" pos_y="5063.24023" res_collected_type="1" current_res="0">
 				<actions>
 					<primary>
 						<action type="1" goal_x="-506" goal_y="5047" />
+						<action type="9" tar_pos_x="-432" tar_pos_y="5040" tar_type="4" />
+					</primary>
+				</actions>
+			</unit>
+    	<unit unit_type="13" diplomacy="1" life="25" pos_x="-326.776917" pos_y="4909.68359" res_collected_type="1" current_res="90">
+				<actions>
+					<primary>
+						<action type="1" goal_x="-69" goal_y="4756" />
+						<action type="10" tar_pos_x="48" tar_pos_y="4632.5" tar_type="1" />
 						<action type="9" tar_pos_x="-432" tar_pos_y="5040" tar_type="4" />
 					</primary>
 				</actions>
