@@ -70,7 +70,11 @@ class Action_Panel_Elements
 public:
 	Action_Panel_Elements();
 	~Action_Panel_Elements();
-	
+
+	//Save and Load Methods
+	virtual bool Load(pugi::xml_node &data);
+	virtual bool Save(pugi::xml_node &data) const;
+
 	// Reset Panel
 	void		 SetDataFromXML();
 	virtual void UpdateCells();
@@ -186,6 +190,10 @@ public:
 	HeroPanel();
 	~HeroPanel();
 
+	//Save and Load Methods
+	bool Load(pugi::xml_node &data);
+	bool Save(pugi::xml_node &data) const;
+
 	// Reset Panel
 	void ResetPanel();
 	void HeroisDead(UNIT_TYPE type);
@@ -258,6 +266,10 @@ public:
 
 	// Draw Game Panel
 	bool Draw();
+	
+	bool Load(pugi::xml_node &data);
+
+	bool Save(pugi::xml_node &data) const;
 
 	// Set Pointer To Selection Panel
 	void SetSelectionPanelPointer(Selection_Panel* selection_panel);

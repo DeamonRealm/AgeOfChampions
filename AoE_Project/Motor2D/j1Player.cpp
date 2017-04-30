@@ -289,6 +289,34 @@ bool j1Player::CleanUp()
 	return true;
 }
 
+bool j1Player::Load(pugi::xml_node & data)
+{
+	// Player Load ---------------------------
+	//Player node
+	pugi::xml_node player_node = data.child("player_data");
+
+	if (player_node == NULL) return true;
+
+	game_panel->Load(player_node);
+	selection_panel->Load(player_node);
+	action_panel->Load(player_node);
+
+	return true;
+}
+
+bool j1Player::Save(pugi::xml_node &data) const
+{
+	// Player Save ---------------------------
+	//Player node
+	pugi::xml_node player_node = data.append_child("player_data");
+
+	game_panel->Save(player_node);
+	selection_panel->Save(player_node);
+	action_panel->Save(player_node);
+
+	return true;
+}
+
 void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 {
 	game_panel->Handle_Input(target, input);

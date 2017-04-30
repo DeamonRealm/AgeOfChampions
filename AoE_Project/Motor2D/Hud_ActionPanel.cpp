@@ -59,6 +59,36 @@ Action_Panel_Elements::~Action_Panel_Elements()
 	cell_data.clear();
 }
 
+bool Action_Panel_Elements::Load(pugi::xml_node & data)
+{
+	// Load cell levels
+	if (data != NULL)
+	{
+		pugi::xml_node curr_cell = data.first_child();
+		int i = 0;
+		while (curr_cell != NULL)
+		{
+			cell_lvl[i] = curr_cell.attribute("level").as_int(0);
+			curr_cell = curr_cell.next_sibling();
+			i++;
+		}
+		UpdateCells();
+	}
+	return true;
+}
+
+bool Action_Panel_Elements::Save(pugi::xml_node & data) const
+{
+	// Save Panel Cell Levels
+	pugi::xml_node curr_cell;
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		curr_cell = data.append_child("cell");
+		curr_cell.append_attribute("level") = cell_lvl[i];
+	}
+	return true;
+}
+
 void Action_Panel_Elements::SetDataFromXML()
 {
 	current_age = 2;
@@ -569,6 +599,59 @@ HeroPanel::~HeroPanel()
 {
 	skills.clear();
 	skills_buttons.clear();
+}
+
+bool HeroPanel::Load(pugi::xml_node & data)
+{
+	// Load Panel Cell Levels
+	pugi::xml_node curr_cell = data.child("warrior_levels").first_child();
+	for (int i = 0; i < 5; i++)
+	{
+		mele_learned[i] = curr_cell.attribute("level").as_int(0);
+		curr_cell = curr_cell.next_sibling();
+	}
+
+	curr_cell = data.child("wizard_levels").first_child();
+	for (int i = 0; i < 5; i++)
+	{
+		wizard_learned[i] = curr_cell.attribute("level").as_int(0);
+		curr_cell = curr_cell.next_sibling();
+	}
+
+	curr_cell = data.child("archer_levels").first_child();
+	for (int i = 0; i < 5; i++)
+	{
+		archer_learned[i] = curr_cell.attribute("level").as_int(0);
+		curr_cell = curr_cell.next_sibling();
+	}
+	return true;
+}
+
+bool HeroPanel::Save(pugi::xml_node & data) const
+{
+	// Save Panel Cell Levels
+	pugi::xml_node curr_cell = data.append_child("warrior_levels");
+	for (int i = 0; i < 5; i++)
+	{
+		curr_cell = data.append_child("cell");
+		curr_cell.append_attribute("level") = mele_learned[i];
+	}
+
+	curr_cell = data.append_child("wizard_levels");
+	for (int i = 0; i < 5; i++)
+	{
+		curr_cell = data.append_child("cell");
+		curr_cell.append_attribute("level") = wizard_learned[i];
+	}
+
+	curr_cell = data.append_child("archer_levels");
+	for (int i = 0; i < 5; i++)
+	{
+		curr_cell = data.append_child("cell");
+		curr_cell.append_attribute("level") = archer_learned[i];
+	}
+
+	return true;
 }
 
 void HeroPanel::ResetPanel()
@@ -1199,6 +1282,51 @@ bool Action_Panel::Draw()
 	{
 		cell_information->Draw(false);
 	}
+	return true;
+}
+
+bool Action_Panel::Load(pugi::xml_node & data)
+{
+	// Action Panel Load ---------------------------
+	// Action Panel node
+	pugi::xml_node game_panel_data = data.child("hud_action_panel");
+
+	// Load Panel Data
+	pugi::xml_node curr_data = game_panel_data.child("action_panel");
+
+	current_age = curr_data.attribute("current_age").as_int(2);
+
+	// Load Player Action Panels
+	towncenterpanel->Load(game_panel_data.child("town_center"));
+	barrackpanel->Load(game_panel_data.child("barrack"));
+	archerypanel->Load(game_panel_data.child("archery"));
+	stablepanel->Load(game_panel_data.child("stable"));
+	blacksmithpanel->Load(game_panel_data.child("blacksmmith"));
+	heropanel->Load(game_panel_data.child("heroes"));
+
+	SetPanelType();
+
+	return true;
+}
+
+bool Action_Panel::Save(pugi::xml_node & data) const
+{
+	// Action Panel Save ---------------------------
+	// Action Panel node
+	pugi::xml_node game_panel_data = data.append_child("hud_action_panel");
+
+	// Save Panel Data
+	pugi::xml_node curr_data = game_panel_data.append_child("action_panel");
+	curr_data.append_attribute("current_age") = current_age;
+
+	// Save Player Action Panels
+	towncenterpanel->Save(game_panel_data.append_child("town_center"));
+	barrackpanel->Save(game_panel_data.append_child("barrack"));
+	archerypanel->Save(game_panel_data.append_child("archery"));
+	stablepanel->Save(game_panel_data.append_child("stable"));
+	blacksmithpanel->Save(game_panel_data.append_child("blacksmmith"));
+	heropanel->Save(game_panel_data.append_child("heroes"));
+
 	return true;
 }
 

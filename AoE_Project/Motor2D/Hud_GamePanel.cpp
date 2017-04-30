@@ -19,8 +19,7 @@
 #include "UI_Element.h"
 
 // Constructor ================================================================
-Game_Panel::Game_Panel() : wood(0), meat(0), gold(0), stone(0), population(0), max_population(5),
-wood_width(0), meat_width(0), gold_width(0), stone_width(0), population_width(0)
+Game_Panel::Game_Panel() : wood(0), meat(0), gold(0), stone(0), population(0), max_population(5)
 {
 	player_resources.reserve(MAX_GAME_RESOURCES);
 
@@ -274,6 +273,72 @@ void Game_Panel::Disable()
 	exit_menu_screen->DesactivateChids();
 }
 
+bool Game_Panel::Load(pugi::xml_node &data)
+{
+	// Load Game Panel Data ------------------------------
+	// Game Panel node
+	pugi::xml_node game_panel_data = data.child("hud_game_panel");
+	
+	// Player resources node
+	pugi::xml_node curr_data = game_panel_data.child("player_resources");
+
+	// Load Resources
+	if (curr_data != NULL)
+	{
+		wood = 0;
+		meat = 0;
+		gold = 0;
+		stone = 0;
+		population = 0;
+		max_population = 0;
+		AddResource(curr_data.attribute("wood").as_int(500), GP_WOOD);
+		AddResource(curr_data.attribute("meat").as_int(500), GP_MEAT);
+		AddResource(curr_data.attribute("gold").as_int(500), GP_GOLD);
+		AddResource(curr_data.attribute("stone").as_int(300), GP_STONE);
+		IncressPopulation(curr_data.attribute("max_population").as_int(5),true);
+		IncressPopulation(curr_data.attribute("population").as_int(0));
+	}
+	
+	// Player score node
+	curr_data = game_panel_data.child("player_score");
+
+	// Load Score
+	if (curr_data != NULL)
+	{
+		all_resources = curr_data.attribute("all_resources").as_int(0);
+		player_death_units = curr_data.attribute("player_death_units").as_int(0);
+		player_death_enemies = curr_data.attribute("player_death_enemies").as_int(0);
+		player_all_units = curr_data.attribute("player_all_units").as_int(0);
+	}
+	
+	return true;
+}
+
+bool Game_Panel::Save(pugi::xml_node &data) const
+{
+	// Game Panel Save ---------------------------
+	// Game Panel node
+	pugi::xml_node game_panel_data = data.append_child("hud_game_panel");
+
+	// Save Player Resources
+	pugi::xml_node curr_data = game_panel_data.append_child("player_resources");
+	curr_data.append_attribute("wood") = wood;
+	curr_data.append_attribute("meat") = meat;
+	curr_data.append_attribute("gold") = gold;
+	curr_data.append_attribute("stone") = stone;
+	curr_data.append_attribute("population") = population;
+	curr_data.append_attribute("max_population") = max_population;
+
+	// Save Player Score
+	curr_data = game_panel_data.append_child("player_score");
+	curr_data.append_attribute("all_resources") = all_resources;
+	curr_data.append_attribute("player_death_units") = player_death_units;
+	curr_data.append_attribute("player_death_enemies") = player_death_enemies;
+	curr_data.append_attribute("player_all_units") = player_all_units;
+
+	return true;
+}
+
 bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 {
 	bool ret = false;
@@ -283,6 +348,8 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 	if (amount > 0)
 		all_resources += amount;
 
+	int width = 0;
+
 	switch (resource_type)
 	{
 	case GP_WOOD:
@@ -290,8 +357,8 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 		{
 			wood += amount;
 			player_resources[resource_type]->SetString(App->gui->SetStringFromInt(wood));
-			App->font->CalcSize(player_resources[resource_type]->GetString(), wood_width, height);
-			player_resources[resource_type]->SetBoxPosition(73 + 77 * resource_type - wood_width, 5);
+			App->font->CalcSize(player_resources[resource_type]->GetString(), width, height);
+			player_resources[resource_type]->SetBoxPosition(73 + 77 * resource_type - width, 5);
 			ret = true;
 		}
 		break;
@@ -300,8 +367,8 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 		{
 			meat += amount;
 			player_resources[resource_type]->SetString(App->gui->SetStringFromInt(meat));
-			App->font->CalcSize(player_resources[resource_type]->GetString(), meat_width, height);
-			player_resources[resource_type]->SetBoxPosition(73 + 77 * resource_type - meat_width, 5);
+			App->font->CalcSize(player_resources[resource_type]->GetString(), width, height);
+			player_resources[resource_type]->SetBoxPosition(73 + 77 * resource_type - width, 5);
 			ret = true;
 		}
 		break;
@@ -310,8 +377,8 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 		{
 			gold += amount;
 			player_resources[resource_type]->SetString(App->gui->SetStringFromInt(gold));
-			App->font->CalcSize(player_resources[resource_type]->GetString(), gold_width, height);
-			player_resources[resource_type]->SetBoxPosition(73 + 77 * resource_type - gold_width, 5);
+			App->font->CalcSize(player_resources[resource_type]->GetString(), width, height);
+			player_resources[resource_type]->SetBoxPosition(73 + 77 * resource_type - width, 5);
 			ret = true;
 		}
 		break;
@@ -320,8 +387,8 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 		{
 			stone += amount;
 			player_resources[resource_type]->SetString(App->gui->SetStringFromInt(stone));
-			App->font->CalcSize(player_resources[resource_type]->GetString(), stone_width, height);
-			player_resources[resource_type]->SetBoxPosition(73 + 77 * resource_type - stone_width, 5);
+			App->font->CalcSize(player_resources[resource_type]->GetString(), width, height);
+			player_resources[resource_type]->SetBoxPosition(73 + 77 * resource_type - width, 5);
 			ret = true;
 		}
 		break;
@@ -370,9 +437,10 @@ bool Game_Panel::IncressPopulation(int amount, bool increase_max)
 		}
 		else return false;
 	}
+	int width = 0;
 	player_resources[4]->SetString((char*)hud_game_text.c_str());
-	App->font->CalcSize(player_resources[4]->GetString(), population_width, height);
-	player_resources[4]->SetBoxPosition(381 - population_width, 5);
+	App->font->CalcSize(player_resources[4]->GetString(), width, height);
+	player_resources[4]->SetBoxPosition(381 - width, 5);
 
 	return true;
 }

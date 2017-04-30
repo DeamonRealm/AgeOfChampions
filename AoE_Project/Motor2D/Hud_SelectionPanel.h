@@ -117,6 +117,10 @@ public:
 	void Enable();
 	void Disable();
 
+	bool Load(pugi::xml_node &data);
+
+	bool Save(pugi::xml_node &data) const;
+
 	// Draw Selection Panel
 	bool Draw();
 	void DrawGroup();

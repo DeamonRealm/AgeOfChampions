@@ -61,6 +61,10 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+	
+	bool Load(pugi::xml_node&data);
+
+	bool Save(pugi::xml_node&data) const;
 
 	// GUI_INPUT
 	void GUI_Input(UI_Element* target, GUI_INPUT input);

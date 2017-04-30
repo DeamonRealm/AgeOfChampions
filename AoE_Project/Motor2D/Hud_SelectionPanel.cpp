@@ -507,7 +507,6 @@ void Selection_Panel::Handle_Input(UI_Element * target, GUI_INPUT input)
 
 void Selection_Panel::Enable()
 {
-	//Selected = new Entity_Profile();
 	UpperEntity = nullptr;
 	action_command = nullptr;
 	champions_selected = false;
@@ -522,6 +521,109 @@ void Selection_Panel::Disable()
 	building_quad_selection.clear();
 	resource_quad_selection.clear();
 	Selected->Reset();
+}
+
+bool Selection_Panel::Load(pugi::xml_node & data)
+{
+	// Load Selection Panel Data ------------------------------
+	// Selection Panel node
+	pugi::xml_node selection_panel_data = data.child("hud_selection_panel");
+
+	// Player Selected Entities data node
+	pugi::xml_node curr_data = selection_panel_data.child("selected_type");
+
+	// Load Selected Type
+	if (curr_data != NULL)
+	{
+		selected_entity_type = (ENTITY_TYPE)curr_data.attribute("entity").as_int(0);
+		selected_diplomacy = (DIPLOMACY)curr_data.attribute("diplomacy").as_int(0);
+		selected_unit_type = (UNIT_TYPE)curr_data.attribute("unit").as_int(0);
+		selected_building_type = (BUILDING_TYPE)curr_data.attribute("building").as_int(0);
+		champions_selected = curr_data.attribute("champion_selected").as_bool(0);
+
+		// Select Units
+		if (selected_entity_type != NO_ENTITY)
+		{
+			if (selected_entity_type == UNIT)
+			{
+				std::list<Unit*>::const_iterator unit_start = App->entities_manager->units.begin();
+				std::list<Unit*>::const_iterator unit_end = App->entities_manager->units.end();
+
+				while (unit_start != unit_end)
+				{
+					if (unit_start._Ptr->_Myval->GetIfSelected() == true)
+					{
+						selected_elements.push_back(unit_start._Ptr->_Myval);
+					}
+					unit_start++;
+				}
+			}
+			else if (selected_entity_type == BUILDING)
+			{
+				std::list<Building*>::const_iterator building_start = App->entities_manager->buildings.begin();
+				std::list<Building*>::const_iterator building_end = App->entities_manager->buildings.end();
+
+				while (building_start != building_end)
+				{
+					if (building_start._Ptr->_Myval->GetIfSelected() == true)
+					{
+						selected_building_type = building_start._Ptr->_Myval->GetBuildingType();
+						selected_elements.push_back(building_start._Ptr->_Myval);
+						break;
+					}
+					building_start++;
+				}
+			}
+			else if (selected_entity_type == RESOURCE)
+			{
+				std::list<Resource*>::const_iterator resources_start = App->entities_manager->resources.begin();
+				std::list<Resource*>::const_iterator resources_end = App->entities_manager->resources.end();
+
+				while (resources_start != resources_end)
+				{
+
+					if (resources_start._Ptr->_Myval->GetIfSelected() == true)
+					{
+						selected_elements.push_back(resources_start._Ptr->_Myval);
+						break;
+					}
+					resources_start++;
+				}
+			}
+
+			//Configure Selection Panel
+			if (selected_elements.size() > 1)
+			{
+				max_row_units = 16;
+				SetGroupProfile();
+				Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+			}
+			else if (selected_elements.size() == 1)
+			{
+				Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+			}
+		}
+	}
+	return true;
+}
+
+bool Selection_Panel::Save(pugi::xml_node & data) const
+{
+	// Save Selection Panel Data ------------------------------
+	// Selection Panel node
+	pugi::xml_node selection_panel_data = data.append_child("hud_selection_panel");
+
+	// Player Selected Entities data node
+	pugi::xml_node curr_data = selection_panel_data.append_child("selected_type");
+
+	// Save Selected Type
+	curr_data.append_attribute("entity") = selected_entity_type;
+	curr_data.append_attribute("diplomacy") = selected_diplomacy;
+	curr_data.append_attribute("unit") = selected_unit_type;
+	curr_data.append_attribute("building") = selected_building_type;
+	curr_data.append_attribute("champion_selected") = champions_selected;
+
+	return true;
 }
 
 bool Selection_Panel::Draw()

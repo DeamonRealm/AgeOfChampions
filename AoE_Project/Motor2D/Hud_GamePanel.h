@@ -3,7 +3,7 @@
 
 #include "p2Defs.h"
 #include <vector>
-
+#include "PugiXml\src\pugixml.hpp"
 
 class UI_String;
 class UI_Element;
@@ -50,6 +50,10 @@ public:
 	void Enable();
 	void Disable();
 
+	bool Load(pugi::xml_node &data);
+
+	bool Save(pugi::xml_node &data) const;
+
 	// Add Resource
 	bool AddResource(int amount, PLAYER_RESOURCES resource_type);
 	bool UseResource(int amount_wood = 0, int amount_food = 0, int amount_gold = 0, int amount_stone = 0, int used_population = 0);
@@ -90,12 +94,6 @@ private:
 	int			player_death_enemies = 0;
 	int			player_all_units = 0;
 	uint		max_population = 0;
-
-	int				wood_width = 0;
-	int				meat_width = 0;
-	int				gold_width = 0;
-	int				stone_width = 0;
-	int				population_width = 0;
 
 	std::string		hud_game_text;
 
