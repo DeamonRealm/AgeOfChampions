@@ -62,6 +62,7 @@ public:
 	PARTICLE_TYPE	particle_type = UNKNOWN_PARTICLE;
 	DIRECTION_TYPE	direction_type = NO_DIRECTION;
 	iPoint			position = { 0,0 };
+	int				z_depth = 0;
 	Animation		animation;
 	bool			flip_sprite = false;
 

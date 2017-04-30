@@ -17,7 +17,7 @@ Particle::Particle()
 
 }
 
-Particle::Particle(const Particle & copy) :position(copy.position), particle_type(copy.particle_type),direction_type(copy.direction_type), animation(copy.animation), flip_sprite(copy.flip_sprite)
+Particle::Particle(const Particle & copy) :position(copy.position),z_depth(copy.z_depth), particle_type(copy.particle_type),direction_type(copy.direction_type), animation(copy.animation), flip_sprite(copy.flip_sprite)
 {
 
 }
@@ -31,7 +31,7 @@ Particle::~Particle()
 void Particle::Draw()
 {
 	Sprite* sprite = (Sprite*)animation.GetCurrentSprite();
-	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, 0, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - z_depth, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
 }
 
 /// -----------------------------------
@@ -71,7 +71,7 @@ void BuffParticle::Draw()
 	else
 	{
 		Sprite* sprite = (Sprite*)animation.GetCurrentSprite();
-		App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), animation.GetLoop(),0, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+		App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), animation.GetLoop(), -position.y - z_depth, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
 		draw_timer.Start();
 	}
 
@@ -481,6 +481,7 @@ bool j1BuffManager::Start()
 				/*Set Attribute Type*/	((BuffParticle*)particle_def)->attribute_type = StrToBuffAttributeType(particle_node.attribute("attribute_type").as_string());
 				/*Set actor*/			((BuffParticle*)particle_def)->actor = particle_node.attribute("actor").as_bool();
 				/*Set Draw rate*/		((BuffParticle*)particle_def)->draw_rate = particle_node.attribute("draw_rate").as_uint();
+
 			}
 			else
 			{
@@ -490,7 +491,8 @@ bool j1BuffManager::Start()
 
 			/*Set Particle Type*/	particle_def->particle_type = StrToParticleType(particle_node.attribute("particle_type").as_string());
 			/*Set Particle Dir*/	particle_def->direction_type = App->animator->StrToDirectionEnum(particle_node.attribute("direction").as_string());
-			
+			/*Set z depth*/			particle_def->z_depth = particle_node.attribute("z").as_int();
+
 			//Build particle animation
 			Animation animation;
 

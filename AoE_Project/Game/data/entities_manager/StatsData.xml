@@ -319,7 +319,7 @@
       attack_bonus="2"
       siege_hitpoints="10"
       attack_rate="200"
-      attack_range="25"
+      attack_range="300"
       defense="10"
       defense_bonus="5"
       armor="12"
@@ -871,7 +871,7 @@
       view_area_for_level="2"
       
       area_attack_spell_2="100"
-      area_limit_spell_2="300"
+      area_limit_spell_2="600"
       
       area_attack_spell_3="150"
       area_limit_spell_3="300"
@@ -928,8 +928,8 @@
 
       ability_lvl_2_skill_A_attack_value="100"
       
-      area_attack_skill_B_lvl_2="150"
-      area_limit_skill_B_lvl_2="300"
+      area_attack_skill_B_lvl_2="30"
+      area_limit_skill_B_lvl_2="500"
       ability_lvl_2_skill_B_attack_value="100"
 
       area_attack_skill_A_lvl_3="150"

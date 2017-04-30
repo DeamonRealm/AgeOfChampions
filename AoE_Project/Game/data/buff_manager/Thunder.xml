@@ -20,7 +20,7 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Thunder.png" width="2107" height="1920">
-  <simple_particle particle_type="thunder_particle" direction="no_direction">
+  <simple_particle particle_type="thunder_particle" direction="no_direction" z="50">
 <anim_data speed="100" loop="0"/>
 
     <sprite n="Lightning_0000_0001-shot.png.png" opacity ="255" x="1" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
