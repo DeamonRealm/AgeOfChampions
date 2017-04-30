@@ -101,7 +101,7 @@ bool j1FogOfWar::CleanUp()
 	//Clear cells in screen vector
 	cells_in_screen.clear();
 
-	return false;
+	return true;
 }
 
 bool j1FogOfWar::Load(pugi::xml_node& data)

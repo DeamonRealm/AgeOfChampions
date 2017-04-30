@@ -177,6 +177,8 @@ Animation_Block::Animation_Block(uint enum_id) :enum_id(enum_id)
 Animation_Block::~Animation_Block()
 {
 	ClearAnimationBlocks();
+
+	if (animation != nullptr)delete animation;
 }
 
 //Functionality =======================
@@ -297,6 +299,7 @@ DiplomaticAnimation_Block::DiplomaticAnimation_Block(uint enum_id) :enum_id(enum
 DiplomaticAnimation_Block::~DiplomaticAnimation_Block()
 {
 	ClearAnimationBlocks();
+	if (animation != nullptr)delete animation;
 }
 
 //Functionality =======================
@@ -400,7 +403,6 @@ bool j1Animator::CleanUp()
 
 	for (uint k = 0; k < size; k++)
 	{
-		unit_blocks[k]->ClearAnimationBlocks();
 		delete unit_blocks[k];
 	}
 	unit_blocks.clear();
@@ -410,7 +412,6 @@ bool j1Animator::CleanUp()
 
 	for (uint k = 0; k < size; k++)
 	{
-		building_blocks[k]->ClearAnimationBlocks();
 		delete building_blocks[k];
 	}
 	building_blocks.clear();
@@ -420,7 +421,6 @@ bool j1Animator::CleanUp()
 
 	for (uint k = 0; k < size; k++)
 	{
-		resource_blocks[k]->ClearAnimationBlocks();
 		delete resource_blocks[k];
 	}
 	resource_blocks.clear();

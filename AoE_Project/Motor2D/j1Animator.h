@@ -115,7 +115,7 @@ public:
 
 	~Animation_Block();
 
-private:
+protected:
 
 	//Vector of other animation blocks
 	std::vector<Animation_Block*>	childs;
