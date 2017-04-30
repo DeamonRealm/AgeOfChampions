@@ -761,18 +761,21 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 			{
 				if (ui_element == skills_buttons[i])
 				{
+					App->sound->PlayGUIAudio(CLICK_INGAME);
 					int r = i;
 					if (entitis_panel == champion_row[1]) r += 10;
 					else if (entitis_panel == champion_row[2]) r += 20;
-					if (cell_lvl[r / 2] != 0)return false;
-					LearnSkill(i);
-					App->sound->PlayGUIAudio(CLICK_INGAME);
-					bool skill = false;
-					if (i % 2 == 1) skill = true;
-					if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1(skill);
-					else if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
-					else if (i / 2 == 2)((Champion*)entitis_panel)->SetAbility_lvl_3(skill);
-					return true;
+
+					if (cell_lvl[r / 2] == 0 && ((Champion*)entitis_panel)->GetLevel() >= (i / 2))
+					{
+						LearnSkill(i);
+						return true;
+					}
+					else
+					{
+						skills_buttons[i]->button_state = UP;
+						return false;
+					}
 				}
 			}
 		}
@@ -827,6 +830,13 @@ void HeroPanel::LearnSkill(int i)
 	if (champion_selected == WIZARD_CHMP && wizard_learned[skill_cell] == 0) wizard_learned[skill_cell] = (i % 2) + 1;
 	else if (champion_selected == ARCHER_CHMP && archer_learned[skill_cell] == 0) archer_learned[skill_cell] = (i % 2) + 1;
 	else if(champion_selected == WARRIOR_CHMP && mele_learned[skill_cell] == 0) mele_learned[skill_cell] = (i % 2) + 1;
+	
+	bool skill = false;
+	if (i % 2 == 1) skill = true;
+	if (i / 2 == 0)((Champion*)entitis_panel)->SetAbility_lvl_1(skill);
+	else if (i / 2 == 1)((Champion*)entitis_panel)->SetAbility_lvl_2(skill);
+	else if (i / 2 == 2)((Champion*)entitis_panel)->SetAbility_lvl_3(skill);
+
 	SetNewOrder();
 }
 
