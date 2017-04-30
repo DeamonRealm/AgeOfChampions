@@ -354,6 +354,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 	// ------------------------------------------
 
 	// Buildings Load ---------------------------
+	//Vector where loaded buildings are allocated to load actions later
+	std::vector<Building*> loaded_buildings;
+
 	//Buildings node
 	pugi::xml_node buildings_node = data.child("buildings");
 
@@ -424,6 +427,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 			/**/
 			break;
 		}
+
+		//Add new building loaded to the loaded vector to load actions later
+		loaded_buildings.push_back(new_building);
 
 		//Focus the next building node
 		cur_build_node = cur_build_node.next_sibling();
@@ -544,6 +550,37 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 		cur_unit_node = cur_unit_node.next_sibling();
 
 		//Focus next saved unit
+		k++;
+	}
+	// --------------------------------
+
+	//Load loaded buildings tasks ---------
+
+	//Focus building node to the first building saved
+	cur_build_node = buildings_node.first_child();
+
+	//Iterate all saved buildings again
+	k = 0;
+	while (cur_build_node != NULL)
+	{
+		//Focus current building actions node
+		pugi::xml_node action_node = cur_build_node.child("actions");
+
+		//Focus current building primary actions node
+		pugi::xml_node primary_act_node = action_node.child("primary").first_child();
+		while (primary_act_node != NULL)
+		{
+
+			App->action_manager->LoadTask(primary_act_node, (Entity*)loaded_buildings[k], PRIMARY);
+
+			//Focus next primary action node
+			primary_act_node = primary_act_node.next_sibling();
+		}
+
+		//Focus next saved building node
+		cur_build_node = cur_build_node.next_sibling();
+
+		//Focus next saved building
 		k++;
 	}
 	// --------------------------------
@@ -669,6 +706,35 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 			break;
 		}
 
+		//Save current building tasks -----
+
+		//Node where entity actions are saved
+		pugi::xml_node actions_node = cur_build_node.append_child("actions");
+
+		//Get entity worker
+		ActionWorker* worker = current_building._Ptr->_Myval->GetWorker();
+
+		//Node where primary actions data area saved
+		pugi::xml_node primary_actions_node = actions_node.append_child("primary");
+
+		//Get worker current primary action
+		std::list<Action*> primary_list = worker->GetActionList(TASK_CHANNELS::PRIMARY);
+
+		//Iterate primary actions & save them
+		std::list<Action*>::const_iterator cur_primary_act = primary_list.begin();
+		while (cur_primary_act != primary_list.end())
+		{
+			//Node where current primary action is saved
+			pugi::xml_node cur_primary_act_node = primary_actions_node.append_child("action");
+
+			//Save the current primary action in the node
+			App->action_manager->SaveTask(cur_primary_act_node, cur_primary_act._Ptr->_Myval);
+
+			cur_primary_act++;
+		}
+		
+		// ----------------------------
+
 		//Focus the next building
 		current_building++;
 	}
@@ -750,13 +816,6 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		}
 
 		//Save current unit tasks -----
-
-		//Resources don't do actions so we don't need to save it
-		if (current_unit._Ptr->_Myval->GetEntityType() == RESOURCE)
-		{
-			current_unit++;
-			continue;
-		}
 
 		//Node where entity actions are saved
 		pugi::xml_node actions_node = cur_unit_node.append_child("actions");

@@ -22,16 +22,57 @@
 			<res pos_x="192" pos_y="5160" res_type="5" life="400" />
 			<res pos_x="0" pos_y="5208" res_type="7" life="400" />
 		</resources>
-		<buildings>
-			<build pos_x="48" pos_y="4680.5" life="50" diplomacy="1" build_type="1" cur_units_in="0" />
-			<build pos_x="-288" pos_y="4704" life="50" diplomacy="1" build_type="6" />
-			<build pos_x="-384" pos_y="4656" life="50" diplomacy="1" build_type="6" />
-			<build pos_x="-480" pos_y="4608" life="50" diplomacy="1" build_type="6" />
-			<build pos_x="-192" pos_y="4728" life="50" diplomacy="1" build_type="2" cur_units_in="0" />
-			<build pos_x="-432" pos_y="4608" life="50" diplomacy="1" build_type="3" cur_units_in="0" />
-			<build pos_x="-720" pos_y="4752" life="50" diplomacy="1" build_type="5" cur_units_in="0" />
-			<build pos_x="-720" pos_y="4992" life="50" diplomacy="1" build_type="4" />
-		</buildings>
+    <buildings>
+			<build pos_x="48" pos_y="4584.5" life="50" diplomacy="1" build_type="1" cur_units_in="0">
+				<actions>
+					<primary>
+						<action type="14" unit_type="18" unit_diplomacy="1" time="859" />
+					</primary>
+				</actions>
+			</build>
+      <build pos_x="-288" pos_y="4656" life="50" diplomacy="1" build_type="6">
+        <actions>
+          <primary />
+        </actions>
+      </build>
+      <build pos_x="-384" pos_y="4608" life="50" diplomacy="1" build_type="6">
+        <actions>
+          <primary />
+        </actions>
+      </build>
+      <build pos_x="-480" pos_y="4560" life="50" diplomacy="1" build_type="6">
+        <actions>
+          <primary />
+        </actions>
+      </build>
+      <build pos_x="-192" pos_y="4728" life="50" diplomacy="1" build_type="2" cur_units_in="0">
+        <actions>
+          <primary>
+            <action type="14" unit_type="1" unit_diplomacy="1" time="4330" />
+            <action type="15" research_type="6" research_diplomacy="1" research_time="3000" res_cur_time="595" />
+          </primary>
+        </actions>
+      </build>
+      <build pos_x="-1152" pos_y="4872" life="50" diplomacy="1" build_type="3" cur_units_in="0">
+        <actions>
+          <primary>
+            <action type="14" unit_type="3" unit_diplomacy="1" time="836" />
+            <action type="14" unit_type="3" unit_diplomacy="1" time="0" />
+            <action type="14" unit_type="3" unit_diplomacy="1" time="0" />
+          </primary>
+        </actions>
+      </build>
+      <build pos_x="-720" pos_y="4752" life="50" diplomacy="1" build_type="5" cur_units_in="0">
+        <actions>
+          <primary />
+        </actions>
+      </build>
+      <build pos_x="-720" pos_y="4992" life="50" diplomacy="1" build_type="4">
+        <actions>
+          <primary />
+        </actions>
+      </build>
+    </buildings>
 		<units>
 			<unit unit_type="1" diplomacy="2" life="40" pos_x="-863" pos_y="5153">
 				<actions>
@@ -57,7 +98,7 @@
 				<actions>
 					<primary>
 						<action type="1" goal_x="-69" goal_y="4756" />
-						<action type="10" tar_pos_x="48" tar_pos_y="4632.5" tar_type="1" />
+						<action type="10" tar_pos_x="48" tar_pos_y="4536.5" tar_type="1" />
 						<action type="9" tar_pos_x="-432" tar_pos_y="5040" tar_type="4" />
 					</primary>
 				</actions>
@@ -71,6 +112,6 @@
 	<scene />
 	<menu />
 	<renderer>
-		<camera x="1398" y="-4738" />
+    <camera x="1352" y="-4628" />
 	</renderer>
 </game_state>

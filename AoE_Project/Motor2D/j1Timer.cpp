@@ -29,3 +29,8 @@ float j1Timer::ReadSec() const
 {
 	return float(SDL_GetTicks() - started_at) / 1000.0f;
 }
+
+void j1Timer::AddTime(uint val)
+{
+	started_at -= val;
+}

@@ -121,7 +121,7 @@ bool Action_Panel_Elements::ActivateCell(int i)
 		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
 			panel_icons[i].stone_cost, panel_icons[i].population_cost))
 		{
-			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
+			entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, ALLY));
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 			cell_lvl[i] -= RESEARCH_MARGIN;
 			UpdateCells();
@@ -285,7 +285,7 @@ bool TownCenterPanel::ActivateCell(int i)
 			if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
 				panel_icons[i].stone_cost, panel_icons[i].population_cost))
 			{
-				entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, App->player, ALLY));
+				entitis_panel->AddAction(App->action_manager->ResearchAction(panel_icons[i].r_type, 3000, ALLY));
 				App->sound->PlayGUIAudio(CLICK_INGAME);
 				cell_lvl[i] -= RESEARCH_MARGIN;
 				UpdateCells();

@@ -161,18 +161,18 @@ SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * ac
 	return action;
 }
 
-SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type, DIPLOMACY diplomacy)
+SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time)
 {
-	SpawnUnitAction* action = new SpawnUnitAction(actor, type, diplomacy);
+	SpawnUnitAction* action = new SpawnUnitAction(actor, type, diplomacy, runned_time);
 
 	all_actions.push_back(action);
 
 	return action;
 }
 
-ResearchTecAction * j1ActionManager::ResearchAction(RESEARCH_TECH type, uint r_time, j1Module * callback, DIPLOMACY diplomacy)
+ResearchTecAction * j1ActionManager::ResearchAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy)
 {
-	ResearchTecAction* action = new ResearchTecAction(type, r_time, callback, diplomacy);
+	ResearchTecAction* action = new ResearchTecAction(type, r_time, diplomacy);
 
 	all_actions.push_back(action);
 	return action;
@@ -303,8 +303,22 @@ bool j1ActionManager::SaveTask(pugi::xml_node& node, Action* action)
 	case TASK_U_AH:
 		break;
 	case TASK_B_SPAWN_UNITS:
+		//Save unit to spawn type
+		node.append_attribute("unit_type") = ((SpawnUnitAction*)action)->GetUnitType();
+		//Save unit to spawn diplomacy
+		node.append_attribute("unit_diplomacy") = ((SpawnUnitAction*)action)->GetUnitDiplomacy();
+		//Save spawn current time 
+		node.append_attribute("time") = ((SpawnUnitAction*)action)->GetTime();
 		break;
 	case TASK_B_RESEARCH:
+		//Save research type
+		node.append_attribute("research_type") = ((ResearchTecAction*)action)->GetResearchType();
+		//Save research diplomacy
+		node.append_attribute("research_diplomacy") = ((ResearchTecAction*)action)->GetDiplomacy();
+		//Save research time
+		node.append_attribute("research_time") = ((ResearchTecAction*)action)->GetResearchTime();
+		//Save research current time
+		node.append_attribute("res_cur_time") = ((ResearchTecAction*)action)->GetTime();
 		break;
 	case TASK_NONE:
 		LOG("Error Saving Task");
@@ -467,9 +481,27 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 	case TASK_U_AH:
 		break;
 	case TASK_B_SPAWN_UNITS:
+	{
+		//Load unit to spawn type
+		UNIT_TYPE unit_type = (UNIT_TYPE)node.attribute("unit_type").as_int();
+		//Load unit to spawn diplomacy
+		DIPLOMACY diplomacy = (DIPLOMACY)node.attribute("unit_diplomacy").as_int();
+		//Build spawn action from unit type, diplomacy and timer runned
+		actor->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)actor, unit_type, diplomacy, node.attribute("time").as_uint()));
 		break;
+	}
 	case TASK_B_RESEARCH:
+	{
+		//Load research type
+		RESEARCH_TECH research_type = (RESEARCH_TECH)node.attribute("research_type").as_int();
+		//Load research diplomacy
+		DIPLOMACY research_diplomacy = (DIPLOMACY)node.attribute("research_diplomacy").as_int();
+		//Load research time
+		uint time = MAX(node.attribute("research_time").as_int() - node.attribute("res_cur_time").as_int(), 0);
+		//Build research with the loaded characteristics
+		actor->AddAction(App->action_manager->ResearchAction(research_type, time, research_diplomacy), channel);
 		break;
+	}
 	case TASK_NONE:
 		LOG("Error Saving Task");
 		return false;

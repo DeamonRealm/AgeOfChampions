@@ -91,11 +91,12 @@ class SpawnUnitAction : public Action
 {
 public:
 	
-	SpawnUnitAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy) : Action(actor,TASK_B_SPAWN_UNITS), type(type), diplomacy(diplomacy)
+	SpawnUnitAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0) : Action(actor,TASK_B_SPAWN_UNITS), type(type), diplomacy(diplomacy)
 	{
 		new_unit = App->entities_manager->GenerateUnit(type, diplomacy, false);
 		new_unit->SetDiplomacy(diplomacy);
-		time = new_unit->GetTrainTime();
+		if (runned_time > new_unit->GetTrainTime())time = 0;
+		else time = new_unit->GetTrainTime() - runned_time;
 	}
 	
 	~SpawnUnitAction()
@@ -124,7 +125,7 @@ public:
 
 			new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)), TASK_CHANNELS::PRIMARY);
 
-			//Add an autoatack passive action
+			//Add an autoattack passive action
 			new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
 
 
@@ -136,6 +137,22 @@ public:
 		}
 
 		return false;
+	}
+
+	//Get Methods -----------
+	DIPLOMACY GetUnitDiplomacy()const
+	{
+		return diplomacy;
+	}
+
+	UNIT_TYPE GetUnitType()const
+	{
+		return type;
+	}
+
+	uint GetTime()const
+	{
+		return timer.Read();
 	}
 
 private:
@@ -151,7 +168,7 @@ private:
 class ResearchTecAction : public Action
 {
 public:
-	ResearchTecAction(RESEARCH_TECH type, uint r_time, j1Module* callback, DIPLOMACY diplomacy = ALLY) : Action(nullptr, TASK_B_SPAWN_UNITS), type(type), civilization(callback),diplomacy(diplomacy), research_time(r_time) {};
+	ResearchTecAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy = ALLY) : Action(nullptr, TASK_B_RESEARCH), type(type),diplomacy(diplomacy), research_time(r_time) {};
 	~ResearchTecAction() {};
 
 	bool Activation()
@@ -162,10 +179,9 @@ public:
 
 	bool Execute()
 	{
-		time = timer.Read();
-		if (research_time <= time)
+		if (research_time <= timer.Read())
 		{
-			if (civilization == App->player)
+			if (diplomacy == ALLY)
 			{
 				App->entities_manager->UpgradeEntity(type, diplomacy);
 				App->player->UpgradeCivilization(type);
@@ -176,9 +192,30 @@ public:
 
 		return false;
 	}
+
+	//Get Methods -----------
+	RESEARCH_TECH GetResearchType()const
+	{
+		return type;
+	}
+
+	DIPLOMACY GetDiplomacy()const
+	{
+		return diplomacy;
+	}
+
+	uint GetTime()const
+	{
+		return timer.Read();
+	}
+
+	uint GetResearchTime()const
+	{
+		return research_time;
+	}
+
 private:
-	j1Module*		civilization = nullptr;
-	uint			time = 0;
+
 	uint			research_time = 0;
 	j1Timer			timer;
 	RESEARCH_TECH	type = RESEARCH_TECH::NO_TECH;

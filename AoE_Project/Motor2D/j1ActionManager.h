@@ -192,8 +192,8 @@ public:
 	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building* target);
 
 	// Building Functions
-	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy);
-	ResearchTecAction*			ResearchAction(RESEARCH_TECH type, uint r_time, j1Module* callback, DIPLOMACY diplomacy);
+	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0);
+	ResearchTecAction*			ResearchAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy);
 	
 	//Passive actions------------------
 	//Scann for units
