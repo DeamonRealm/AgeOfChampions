@@ -1059,16 +1059,16 @@ void Wizard::PrepareAbility_lvl_2()
 	{
 		Circle temp_circle = area_attack_spell_2;
 		temp_circle.SetPosition(this->GetPositionRounded());
+
 		size = App->entities_manager->units_quadtree.CollectCandidates(units_in, temp_circle);
 
 	}
 	else
 	{
-		LOG("skill %i %i wizard %i %i", area_attack_spell_2.GetPosition().x, area_attack_spell_2.GetPosition().y, this->GetPositionRounded().x, this->GetPositionRounded().y);
 		size = App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_2);
-		LOG("size %i ", size);
 
 	}
+
 
 	for (uint k = 0; k < size; k++)
 	{
@@ -1682,6 +1682,30 @@ void Hunter::PrepareAbility_lvl_2()
 	direction_type = LookDirection(destination, GetPositionRounded());
 	CalculateSpecialAttackArea(destination, true);
 	CalculateTriangleAttackArea(destination);
+
+
+	//Collect all the units in the buff area
+	std::vector<Unit*> units_in;
+	uint size = 0;
+	if (ability[1])
+	{
+	
+
+		size = App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_2);
+
+	}
+	else
+	{
+		size = App->entities_manager->units_quadtree.CollectCandidates(units_in, area_triangle_attack_skill_A_lvl_2);
+
+	}
+
+
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+			units_in[k]->SetBlitColor({ 255,50,0,255 });		
+	}
 }
 
 void Hunter::Hability_lvl_2(int x, int y)
@@ -1778,20 +1802,27 @@ void Hunter::PrepareAbility_lvl_3()
 	App->input->GetMousePosition(x, y);
 	iPoint mouse_position = iPoint(x - App->render->camera.x, y - App->render->camera.y);
 	direction_type = LookDirection(mouse_position, GetPositionRounded());
-	CalculateSpecialAttackArea(mouse_position, false);
-	
+
+	std::vector<Unit*> units_in;
+	uint size = 0;
 	if (ability[2])
 	{
 		CalculateArrorwAttackArea(mouse_position);
-		std::vector<Unit*> units_in;
-		uint size = App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_3);
-		for (uint k = 0; k < size; k++)
-		{
-			if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+		size = App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_3);
 
-			units_in[k]->SetBlitColor({ 255,0,0,255 });
-		}
 	}
+	else
+	{
+		CalculateSpecialAttackArea(mouse_position, false);
+		size = App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_A_lvl_3);
+
+	}
+	for (uint k = 0; k < size; k++)
+	{
+		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+		units_in[k]->SetBlitColor({ 255,50,0,255 });
+	}
+
 
 
 
