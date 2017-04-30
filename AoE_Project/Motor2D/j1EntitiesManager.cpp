@@ -89,11 +89,11 @@ bool j1EntitiesManager::Start()
 	bool ret = LoadCivilization("Teutons.xml");
 
 	//Built entities quad trees
-	units_quadtree.SetMaxObjects(8);
+	units_quadtree.SetMaxObjects(3);
 	units_quadtree.SetDebugColor({ 255,0,255,255 });
 	resources_quadtree.SetMaxObjects(8);
 	resources_quadtree.SetDebugColor({ 0,255,255,255 });
-	buildings_quadtree.SetMaxObjects(3);
+	buildings_quadtree.SetMaxObjects(8);
 	buildings_quadtree.SetDebugColor({ 255,255,0,255 });
 
 
@@ -232,42 +232,27 @@ bool j1EntitiesManager::Draw() const
 bool j1EntitiesManager::CleanUp()
 {
 	//Clean Up Units List
+	units_quadtree.Clear();
 	std::list<Unit*>::iterator units_item = units.begin();
 	while (units_item != units.end())
 	{
-		switch (units_item._Ptr->_Myval->GetUnitType())
-		{
-		case VILLAGER:
-			delete ((Villager*)units_item._Ptr->_Myval);
-			break;
-		case WARRIOR_CHMP:
-			delete ((Warrior*)units_item._Ptr->_Myval);
-			break;
-		case WIZARD_CHMP:
-			delete ((Wizard*)units_item._Ptr->_Myval);
-			break;
-		default:
-			RELEASE(units_item._Ptr->_Myval);
-			break;
-		}
+		RELEASE(units_item._Ptr->_Myval);
 		units_item++;
 	}
 	units.clear();
-	units_quadtree.Reset();
-	units_quadtree.Clear();
 
 	//Clean Up resources list
+	resources_quadtree.Clear();
 	std::list<Resource*>::iterator resources_item = resources.begin();
 	while (resources_item != resources.end())
 	{
 		RELEASE(resources_item._Ptr->_Myval);
 		resources_item++;
 	}
-	resources.clear();
-	resources_quadtree.Reset();
-	resources_quadtree.Clear();
+	resources.clear();	
 
 	//Clean Up buildings list
+	buildings_quadtree.Clear();
 	std::list<Building*>::iterator buildings_item = buildings.begin();
 	while (buildings_item != buildings.end())
 	{
@@ -275,28 +260,13 @@ bool j1EntitiesManager::CleanUp()
 		buildings_item++;
 	}
 	buildings.clear();
-	buildings_quadtree.Reset();
-	buildings_quadtree.Clear();
 
 	//Clean Up units_defs vector
 	uint size = ally_units_defs.size();
 	for (uint k = 0; k < size; k++)
 	{
-		switch (ally_units_defs[k]->GetUnitType())
-		{
-		case VILLAGER:
-			delete ((Villager*)ally_units_defs[k]);
-			delete ((Villager*)enemy_units_defs[k]);
-			break;
-		case WARRIOR_CHMP:
-			delete ((Warrior*)ally_units_defs[k]);
-			delete ((Warrior*)enemy_units_defs[k]);
-			break;
-		default:
-			RELEASE(ally_units_defs[k]);
-			RELEASE(enemy_units_defs[k]);
-			break;
-		}
+		RELEASE(ally_units_defs[k]);
+		RELEASE(enemy_units_defs[k]);
 	}
 	ally_units_defs.clear();
 	enemy_units_defs.clear();
@@ -348,6 +318,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 		//Load life
 		new_res->SetLife(cur_res_node.attribute("life").as_int());		
 
+		//Load current building selected
+		if (cur_res_node.attribute("selected").as_bool() == true) new_res->Select();
+
 		//Focus the next resource
 		cur_res_node  = cur_res_node.next_sibling();
 	}
@@ -379,6 +352,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 
 		//Load building life
 		new_building->SetLife(cur_build_node.attribute("life").as_uint());
+
+		//Load current building selected
+		if (cur_build_node.attribute("selected").as_bool() == true) new_building->Select();
 
 		switch (building_type)
 		{
@@ -471,6 +447,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 
 		//Load current unit position
 		new_unit->SetPosition(cur_unit_node.attribute("pos_x").as_float(), cur_unit_node.attribute("pos_y").as_float());
+
+		//Load current unit selected
+		if (cur_unit_node.attribute("selected").as_bool() == true) new_unit->Select();
 
 		switch (unit_type)
 		{
@@ -585,6 +564,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 	}
 	// --------------------------------
 
+	loaded_buildings.clear();
+	loaded_units.clear();
+
 	// ------------------------------------------
 
 	return true;
@@ -618,6 +600,9 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 
 		//Save resource life
 		cur_res_node.append_attribute("life") = current_resource._Ptr->_Myval->GetLife();
+
+		//Save current resource selected
+		cur_res_node.append_attribute("selected") = current_resource._Ptr->_Myval->GetIfSelected();
 
 		//Focus the next resource
 		current_resource++;
@@ -660,6 +645,8 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		//Save building diplomacy
 		cur_build_node.append_attribute("diplomacy") = current_building._Ptr->_Myval->GetDiplomacy();
 
+		//Save current building selected
+		cur_build_node.append_attribute("selected") = current_building._Ptr->_Myval->GetIfSelected();
 
 
 		switch (type)
@@ -780,7 +767,9 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		cur_unit_node.append_attribute("pos_x") = current_unit._Ptr->_Myval->GetPosition().x;
 		cur_unit_node.append_attribute("pos_y") = current_unit._Ptr->_Myval->GetPosition().y;
 
-		
+		//Save current unit selected
+		cur_unit_node.append_attribute("selected") = current_unit._Ptr->_Myval->GetIfSelected();
+
 		switch (unit_type)
 		{
 		case VILLAGER:

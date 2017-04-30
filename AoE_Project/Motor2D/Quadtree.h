@@ -68,11 +68,12 @@ public:
 	{
 		if (full)
 		{
-			for (int i = 0; i < 4; ++i)
+			for (int i = 0; i < 4; i++)
 			{
 				if (children[i] != nullptr)
 				{
 					delete children[i];
+					children[i] = nullptr;
 				}
 			}
 		}
@@ -299,11 +300,12 @@ public:
 	{
 		if (full)
 		{
-			for (int i = 0; i < 4; ++i)
+			for (int i = 0; i < 4; i++)
 			{
 				if (children[i] != nullptr)
 				{
 					delete children[i];
+					children[i] = nullptr;
 				}
 			}
 		}
@@ -712,7 +714,10 @@ public:
 				{
 					children[k]->Reset();
 				}
-				else delete children[k];
+				else {
+					delete children[k];
+					children[k] = nullptr;
+				}
 			}
 		}
 		this->full = false;
@@ -953,7 +958,6 @@ public:
 	{
 		if (root != NULL)
 		{
-			root->Reset();
 			delete root;
 			root = NULL;
 		}

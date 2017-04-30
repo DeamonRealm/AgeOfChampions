@@ -184,17 +184,17 @@ Animation_Block::~Animation_Block()
 //Functionality =======================
 void Animation_Block::ClearAnimationBlocks()
 {
-	while (!childs.empty())
+	uint size = childs.size();
+	for (uint k = 0; k < size; k++)
 	{
-		childs.back()->ClearAnimationBlocks();
-		childs.pop_back();
-
+		delete childs[k];
 	}
 
 	if (animation != nullptr)
 	{
+		animation->ReleaseTexture();
 		delete animation;
-		animation = nullptr;
+		animation = nullptr;		
 	}
 }
 
@@ -305,18 +305,19 @@ DiplomaticAnimation_Block::~DiplomaticAnimation_Block()
 //Functionality =======================
 void DiplomaticAnimation_Block::ClearAnimationBlocks()
 {
-	while (childs.size() > 0)
+	uint size = childs.size();
+	for (uint k = 0; k < size; k++)
 	{
-		childs.back()->ClearAnimationBlocks();
-		childs.pop_back();
-
+		delete childs[k];
 	}
 
 	if (animation != nullptr)
 	{
 		animation->ReleaseTexture();
 		delete animation;
+		animation = nullptr;
 	}
+	
 }
 
 void DiplomaticAnimation_Block::SetId(uint id)
@@ -1049,6 +1050,7 @@ bool j1Animator::BuildingPlay(Building* target)
 			{
 				DiplomaticAnimation* anim = new DiplomaticAnimation(*block->GetAnimation());
 				if (anim == nullptr)LOG("Error in building Play");
+				target->CleanAnimation();
 				target->SetAnimation((Animation*)anim);
 				return true;
 			}
@@ -1058,6 +1060,7 @@ bool j1Animator::BuildingPlay(Building* target)
 			{
 				DiplomaticAnimation* anim = new DiplomaticAnimation(*block->GetAnimation());
 				if (anim == nullptr)LOG("Error in building Play");
+				target->CleanAnimation();
 				target->SetAnimation((Animation*)anim);
 				return true;
 			}
@@ -1087,6 +1090,7 @@ bool j1Animator::ResourcePlay(Resource * target)
 
 			if (anim != nullptr)
 			{
+				target->CleanAnimation();
 				target->SetAnimation(anim);
 				return true;
 			}

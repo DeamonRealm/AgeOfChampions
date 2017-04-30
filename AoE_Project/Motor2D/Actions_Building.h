@@ -101,7 +101,10 @@ public:
 	
 	~SpawnUnitAction()
 	{
-	
+		if (new_unit != nullptr)
+		{
+			delete new_unit;
+		}
 	}
 
 	bool Activation()
@@ -133,6 +136,7 @@ public:
 			if (new_unit->GetDiplomacy() == ENEMY)
 				App->AI->enemy_units.push_back(new_unit);
 
+			new_unit = nullptr;
 			return true;
 		}
 
