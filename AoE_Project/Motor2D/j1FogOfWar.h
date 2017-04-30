@@ -56,6 +56,9 @@ public:
 	// Called each loop iteration
 	bool PostUpdate();
 
+	// Called before quitting
+	bool CleanUp();
+
 	bool Load(pugi::xml_node& data);
 	bool Save(pugi::xml_node& data) const;
 

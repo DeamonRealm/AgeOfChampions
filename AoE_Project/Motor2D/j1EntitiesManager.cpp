@@ -641,9 +641,18 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		- life
 		*/
 
+		//Save building type
+		BUILDING_TYPE type = current_building._Ptr->_Myval->GetBuildingType();
+		cur_build_node.append_attribute("build_type") = type;
+
 		//Save building position
-		cur_build_node.append_attribute("pos_x") = current_building._Ptr->_Myval->GetPosition().x;
-		cur_build_node.append_attribute("pos_y") = current_building._Ptr->_Myval->GetPosition().y;
+		fPoint pos = current_building._Ptr->_Myval->GetPosition();
+		if (type == TOWN_CENTER || type == HOUSE_A || type == HOUSE_B || type == HOUSE_C)
+		{
+			pos.y += App->map->data.tile_height * 0.5f;
+		}
+		cur_build_node.append_attribute("pos_x") = pos.x;
+		cur_build_node.append_attribute("pos_y") = pos.y;
 
 		//Save building life
 		cur_build_node.append_attribute("life") = current_building._Ptr->_Myval->GetLife();
@@ -651,9 +660,7 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		//Save building diplomacy
 		cur_build_node.append_attribute("diplomacy") = current_building._Ptr->_Myval->GetDiplomacy();
 
-		//Save building type
-		BUILDING_TYPE type = current_building._Ptr->_Myval->GetBuildingType();
-		cur_build_node.append_attribute("build_type") = type;
+
 
 		switch (type)
 		{
@@ -1464,16 +1471,8 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 	{
 		if (buildings_defs[k]->GetBuildingType() == type)
 		{
-			if (type == TOWN_CENTER || type == BARRACK || type == STABLE || type == ARCHERY_RANGE)
-			{	
-				new_building = new ProductiveBuilding(*(ProductiveBuilding*)buildings_defs[k]);
+			new_building = new ProductiveBuilding(*(ProductiveBuilding*)buildings_defs[k]);
 				
-			}
-			else
-			{
-				//Build unit
-				new_building = new Building(*buildings_defs[k]);
-			}
 			//Set unit animation
 			App->animator->BuildingPlay(new_building);
 			

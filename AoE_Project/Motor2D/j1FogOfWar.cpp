@@ -86,6 +86,24 @@ bool j1FogOfWar::PostUpdate()
 	return true;
 }
 
+bool j1FogOfWar::CleanUp()
+{
+	//Delete fog cells & tile information
+	delete[] fog_layer;
+	delete[] alpha_layer;
+	fog_quadtree.Clear();
+
+	//Clear fog entities lists
+	entities_dinamic_update.clear();
+	entities_static_update.clear();
+	entities_release.clear();
+
+	//Clear cells in screen vector
+	cells_in_screen.clear();
+
+	return false;
+}
+
 bool j1FogOfWar::Load(pugi::xml_node& data)
 {
 	return true;

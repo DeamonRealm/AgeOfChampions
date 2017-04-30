@@ -76,7 +76,6 @@ public:
 				}
 			}
 		}
-
 		this->objects.clear();
 	}
 
@@ -308,7 +307,7 @@ public:
 				}
 			}
 		}
-
+		full = false;
 		this->objects.clear();
 	}
 
@@ -743,9 +742,9 @@ public:
 
 private:
 
-	AABB<DATA_TYPE>*		root = nullptr;
-	uint		max_objects = 0;
-	SDL_Color	color = { 255,255,255,255 };
+	AABB<DATA_TYPE>*	root = nullptr;
+	uint				max_objects = 0;
+	SDL_Color			color = { 255,255,255,255 };
 
 public:
 
@@ -753,9 +752,13 @@ public:
 	void SetBoundaries(const SDL_Rect& r)
 	{
 		if (root != NULL)
-			delete root;
-
-		root = new AABB<DATA_TYPE>(r, max_objects);
+		{
+			root->aabb = r;
+		}
+		else
+		{
+			root = new AABB<DATA_TYPE>(r, max_objects);
+		}
 	}
 
 	void SetMaxObjects(uint max)
@@ -855,9 +858,13 @@ public:
 	void SetBoundaries(const SDL_Rect& r)
 	{
 		if (root != NULL)
-			delete root;
-
-		root = new m_AABB<DATA_TYPE>(r, max_objects);
+		{
+			root->aabb = r;
+		}
+		else
+		{
+			root = new m_AABB<DATA_TYPE>(r, max_objects);
+		}
 	}
 
 	void SetMaxObjects(uint max)
@@ -946,6 +953,7 @@ public:
 	{
 		if (root != NULL)
 		{
+			root->Reset();
 			delete root;
 			root = NULL;
 		}
