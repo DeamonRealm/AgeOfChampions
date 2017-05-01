@@ -308,7 +308,7 @@ Selection_Panel::Selection_Panel() : selection_rect({ 0,0,0,0 }), map_viewport({
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
 
 	viewport = App->gui->GenerateUI_Element(UNDEFINED);
-	viewport->SetBox({ 0, 23,1366,574 });
+	viewport->SetBox(map_viewport);
 	viewport->Activate();
 	viewport->SetInputTarget((j1Module*)App->player);
 
@@ -682,6 +682,28 @@ bool Selection_Panel::PointisInViewport(int x, int y)
 	SDL_Point p = { x,y };
 	if (SDL_PointInRect(&p, &map_viewport) == SDL_TRUE) return true;
 	else return false;
+}
+
+void Selection_Panel::MoveSelectedToPoint(int x, int y)
+{
+	if (selected_entity_type == UNIT && selected_diplomacy == ALLY)
+	{
+		if (selected_elements.size() > 1)
+		{
+			std::list<Entity*>::iterator unit = selected_elements.begin();
+			while (unit != selected_elements.end())
+			{
+				unit._Ptr->_Myval->GetWorker()->ResetChannel(PRIMARY);
+				unit++;
+			}
+			App->group_move->GetGroupOfUnits(&(selected_elements), x, y, true);
+		}
+		else if (Selected->GetEntity() != nullptr)
+		{
+			Selected->GetEntity()->GetWorker()->ResetChannel(PRIMARY);
+			Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), iPoint(x, y)));
+		}
+	}
 }
 
 // Change to quads

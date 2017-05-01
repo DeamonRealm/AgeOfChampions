@@ -18,9 +18,11 @@ class UI_String;
 class UI_Image;
 
 class Entity_Profile;
+
 class Selection_Panel;
 class Game_Panel;
 class Action_Panel;
+class Minimap_Panel;
 
 enum RESEARCH_TECH;
 
@@ -43,9 +45,9 @@ public:
 
 
 	//Enable and disable modules
-	virtual void Enable();
+	void Enable();
 
-	virtual void Disable();
+	void Disable();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -84,6 +86,7 @@ public: /*This is temporal*/
 	Selection_Panel*		selection_panel = nullptr;
 	Game_Panel*				game_panel = nullptr;
 	Action_Panel*			action_panel = nullptr;
+	Minimap_Panel*			minimap_panel = nullptr;
 
 public:
 

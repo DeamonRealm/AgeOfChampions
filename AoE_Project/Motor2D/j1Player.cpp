@@ -22,8 +22,7 @@
 #include "Hud_SelectionPanel.h"
 #include "Hud_GamePanel.h"
 #include "Hud_ActionPanel.h"
-
-
+#include "Hud_MinimapPanel.h"
 
 
 #include "j1AI.h"
@@ -53,6 +52,7 @@ void j1Player::Enable()
 	selection_panel->Enable();
 	game_panel->Enable();
 	action_panel->Enable();
+	minimap_panel->Enable();
 }
 
 void j1Player::Disable()
@@ -60,6 +60,8 @@ void j1Player::Disable()
 	active = false;
 	selection_panel->Disable();
 	game_panel->Disable();
+	action_panel->Disable();
+	minimap_panel->Disable();
 }
 
 bool j1Player::Awake(pugi::xml_node& config)
@@ -84,6 +86,7 @@ bool j1Player::Start()
 	game_panel = new Game_Panel();
 	selection_panel = new Selection_Panel();
 	action_panel = new Action_Panel();
+	minimap_panel = new Minimap_Panel();
 
 	action_panel->SetSelectionPanelPointer(selection_panel);
 	action_panel->SetGamePanelPointer(game_panel);
@@ -93,6 +96,8 @@ bool j1Player::Start()
 	action_panel->GetHeroSkillTree()->SetLayer(5);
 	game_hud->AddChild(action_panel->GetActionScreen());
 	game_hud->AddChild(game_panel->GetExitMenu());
+	game_hud->AddChild(minimap_panel->minimap_background);
+	minimap_panel->minimap_background->SetLayer(20);
 	App->gui->PushScreen(game_hud);
 
 	return true;
@@ -109,6 +114,7 @@ bool j1Player::PreUpdate()
 	selection_panel->PreUpdate();
 	action_panel->PreUpdate();
 	game_panel->PreUpdate();
+	minimap_panel->PreUpdate();
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
@@ -285,6 +291,7 @@ bool j1Player::CleanUp()
 	delete game_panel;
 	delete selection_panel;
 	delete action_panel;
+	delete minimap_panel;
 
 	return true;
 }
@@ -300,6 +307,7 @@ bool j1Player::Load(pugi::xml_node & data)
 	game_panel->Load(player_node);
 	selection_panel->Load(player_node);
 	action_panel->Load(player_node);
+	minimap_panel->Load(player_node);
 
 	return true;
 }
@@ -313,6 +321,7 @@ bool j1Player::Save(pugi::xml_node &data) const
 	game_panel->Save(player_node);
 	selection_panel->Save(player_node);
 	action_panel->Save(player_node);
+	minimap_panel->Save(player_node);
 
 	return true;
 }
@@ -333,6 +342,7 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 		break;
 	case MOUSE_LEFT_BUTTON_DOWN:
 		{
+			minimap_panel->Handle_Input(target, input);
 			action_panel->Handle_Input(target, input);
 		}
 		break;
@@ -344,6 +354,9 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 		}
 		break;
 	case MOUSE_RIGHT_BUTTON:
+		{
+			minimap_panel->Handle_Input(target, input);
+		}
 		break;
 	case MOUSE_IN:
 		{
@@ -352,6 +365,7 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 				selection_panel->Handle_Input(target, input);
 			}
 			action_panel->Handle_Input(target, input);
+			minimap_panel->Handle_Input(target, input);
 		}
 		break;
 	case MOUSE_OUT: 
@@ -361,6 +375,7 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 				selection_panel->Handle_Input(selection_panel->GetViewport(), input);
 			}
 			action_panel->Handle_Input(target, input);
+			minimap_panel->Handle_Input(target, input);
 		}
 	case SUPR:
 		break;

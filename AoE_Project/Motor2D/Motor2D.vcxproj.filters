@@ -129,6 +129,9 @@
     <ClCompile Include="j1FogOfWar.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Hud_MinimapPanel.cpp">
+      <Filter>UserInteraface\Hud</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -276,6 +279,9 @@
     </ClInclude>
     <ClInclude Include="j1FogOfWar.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud_MinimapPanel.h">
+      <Filter>UserInteraface\Hud</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
