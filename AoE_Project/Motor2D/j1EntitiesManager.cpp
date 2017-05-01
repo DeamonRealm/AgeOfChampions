@@ -196,8 +196,11 @@ bool j1EntitiesManager::Draw() const
 		pos = units_vec[k]->GetPositionRounded();
 		pos = App->map->WorldToMap(pos.x, pos.y);
 		fog_type = App->fog_of_war->GetFogID(pos.x, pos.y);
-		if (fog_type == DARK_FOG)continue;
-		if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
+		if (!App->map_debug_mode)
+		{
+			if (fog_type == DARK_FOG)continue;
+			if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
+		}
 		
 
 		units_vec[k]->Draw(App->debug_mode);

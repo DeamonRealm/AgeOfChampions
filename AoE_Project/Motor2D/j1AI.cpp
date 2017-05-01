@@ -91,12 +91,14 @@ bool j1AI::Update(float dt)
 		return true;
 	}
 
-	Resource* to_recolect = App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), RESOURCE_TYPE::BERRY_BUSH, ENEMY);
+	Resource* to_recolect = App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), RESOURCE_TYPE::BERRY_BUSH, NEUTRAL);
 	//ai_worker->AddAICommand(new SendToRecollect(enemy_units, (Resource**)to_recolect->GetMe()));
 
 	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
+
 	while (unit_it != enemy_units.end())
 	{
+		if (to_recolect == nullptr) break;
 		//Check resource type
 		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER)
 		{
@@ -111,7 +113,7 @@ bool j1AI::Update(float dt)
 		unit_it++;
 	}
 
-
+/*
 	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
 	while (building_it != enemy_buildings.end())
 	{
@@ -122,7 +124,7 @@ bool j1AI::Update(float dt)
 		}
 		building_it++;
 	}
-
+	*/
 
 	update_timer.Start();
 
