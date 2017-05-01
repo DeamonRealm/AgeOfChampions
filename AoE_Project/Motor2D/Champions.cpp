@@ -769,6 +769,8 @@ bool Warrior::Die()
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
 		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
+
 	}
 	else if (current_animation->IsEnd())
 	{
@@ -779,7 +781,7 @@ bool Warrior::Die()
 		}
 		else
 		{
-			App->entities_manager->RemoveDeathUnit(this);
+			//App->entities_manager->RemoveDeathUnit(this);
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
@@ -1443,6 +1445,8 @@ bool Wizard::Die()
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
 		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
+
 	}
 	else if (current_animation->IsEnd())
 	{
@@ -1453,7 +1457,7 @@ bool Wizard::Die()
 		}
 		else
 		{
-			App->entities_manager->RemoveDeathUnit(this);
+		//	App->entities_manager->RemoveDeathUnit(this);
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
@@ -2027,6 +2031,8 @@ bool Hunter::Die()
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
 		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
+
 	}
 	else if (current_animation->IsEnd())
 	{
@@ -2037,7 +2043,7 @@ bool Hunter::Die()
 		}
 		else
 		{
-			App->entities_manager->RemoveDeathUnit(this);
+		//	App->entities_manager->RemoveDeathUnit(this);
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
