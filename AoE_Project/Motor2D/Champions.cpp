@@ -551,7 +551,8 @@ bool Warrior::PrepareAbility_lvl_2()
 
 	for (uint k = 0; k < size; k++)
 	{
-		if (units_in[k]->GetPosition() != position)units_in[k]->SetBlitColor({ 255,120,120,255 });
+		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+			units_in[k]->SetBlitColor({ 255,150,150,255 });
 	}
 	return true;
 }
@@ -1090,10 +1091,10 @@ bool Wizard::PrepareAbility_lvl_2()
 		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
 
 		if (ability[1]) {
-			units_in[k]->SetBlitColor({ 0,50,255,255 });
+			units_in[k]->SetBlitColor({ 150,150,255,255 });
 		}
 		else {
-			units_in[k]->SetBlitColor({ 0,255,50,255 });
+			units_in[k]->SetBlitColor({ 150,255,150,255 });
 		}
 	}
 	return true;
@@ -1239,7 +1240,7 @@ bool Wizard::PrepareAbility_lvl_3()
 		{
 			if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
 
-			units_in[k]->SetBlitColor({ 255,50,0,255 });	
+			units_in[k]->SetBlitColor({ 255,150,150,255 });
 		}
 	}
 	else {	
@@ -1734,7 +1735,7 @@ bool Hunter::PrepareAbility_lvl_2()
 	for (uint k = 0; k < size; k++)
 	{
 		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
-			units_in[k]->SetBlitColor({ 255,50,0,255 });		
+		units_in[k]->SetBlitColor({ 255,150,150,255 });
 	}
 	return true;
 
@@ -1852,7 +1853,7 @@ bool Hunter::PrepareAbility_lvl_3()
 	for (uint k = 0; k < size; k++)
 	{
 		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
-		units_in[k]->SetBlitColor({ 255,50,0,255 });
+		units_in[k]->SetBlitColor({ 255,150,150,255 });
 	}
 
 	return true;
