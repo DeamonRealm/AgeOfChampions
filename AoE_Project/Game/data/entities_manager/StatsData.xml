@@ -708,7 +708,7 @@
       unit_type ="villager"
       attack_type="melee"
       
-      vision_rad ="100"
+      vision_rad ="300"
       mark_rad ="55"
       soft_rad ="30"
       hard_rad ="10"

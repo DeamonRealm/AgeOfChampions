@@ -112,7 +112,7 @@ bool j1EntitiesManager::Update(float dt)
 		item++;
 	}
 
-	//Draw all death units
+	//Update all death units
 	std::list<Unit*>::const_iterator death_unit = death_units.begin();
 	for (; death_unit != death_units.end(); death_unit++)
 	{
@@ -120,6 +120,16 @@ bool j1EntitiesManager::Update(float dt)
 		death_unit._Ptr->_Myval->Update();
 
 	}
+
+	//Update all death buildings
+	std::list<Building*>::const_iterator death_building = death_buildings.begin();
+	for (; death_building != death_buildings.end(); death_building++)
+	{
+
+		death_building._Ptr->_Myval->Update();
+
+	}
+
 	std::list<Building*>::const_iterator item_build = buildings.begin();
 
 	while (item_build != buildings.end())
@@ -200,6 +210,16 @@ bool j1EntitiesManager::Draw() const
 		death_unit._Ptr->_Myval->Draw(App->debug_mode);
 
 	}
+
+	//Draw all death buildings
+	std::list<Building*>::const_iterator death_building = death_buildings.begin();
+	for (; death_building != death_buildings.end(); death_building++)
+	{
+
+		death_building._Ptr->_Myval->Draw(App->debug_mode);
+
+	}
+
 	//Draw all Resources
 	std::vector<Resource*> resources_vec;
 	resources_quadtree.CollectCandidates(resources_vec, App->render->camera_viewport);
@@ -1632,6 +1652,16 @@ Unit * j1EntitiesManager::PopUnit(const Unit * unit)
 {
 	units.remove((Unit*)unit);
 	return (Unit*)unit;
+}
+
+void j1EntitiesManager::AddDeadBuilding(Building * build)
+{
+	death_buildings.push_back(build);
+}
+
+void j1EntitiesManager::RemoveDeathBuilding(Building * build)
+{
+	death_buildings.remove(build);
 }
 
 Building * j1EntitiesManager::SearchNearestSavePoint(const iPoint & point)

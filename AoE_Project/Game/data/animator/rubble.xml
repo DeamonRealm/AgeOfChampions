@@ -32,4 +32,10 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       <sprite n="Rubble_03.bmp" opacity ="255" x="1" y="82" w="235" h="122" pX="0.421277" pY="0.434426"/>
     </action>
   </building>
+  <!-- Define the building type-->
+  <building id ="rubble_two">
+    <action enum ="disappear" speed="4500" loop="0">
+      <sprite n="Rubble_02.bmp" opacity ="255" x="233" y="1" w="153" h="79" pX="0.398693" pY="0.417722"/>
+    </action>
+  </building>
 </TextureAtlas>

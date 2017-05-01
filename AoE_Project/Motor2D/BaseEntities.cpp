@@ -2122,7 +2122,7 @@ void Building::CleanMapLogic()
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
-	if (building_type == RUBBLE_THREE || building_type == BARRACK)
+	if (building_type == RUBBLE_THREE || building_type == BARRACK || building_type == ARCHERY_RANGE)
 	{
 		world_coords.x -= 1;
 		world_coords.y -= 1;
@@ -2202,9 +2202,10 @@ bool Building::Die()
 
 		action_type = DISAPPEAR;
 		if (building_type == TOWN_CENTER)building_type = RUBBLE_FOUR;
-		else if (building_type == BARRACK)building_type = RUBBLE_THREE;
-
+		else if (building_type == BARRACK || building_type == ARCHERY_RANGE || building_type == BLACKSMITH)building_type = RUBBLE_THREE;
+		else if (building_type == HOUSE_A || building_type == HOUSE_B || building_type == HOUSE_C)building_type = RUBBLE_TWO;
 		App->entities_manager->buildings_quadtree.Exteract(this, &this->position);
+		App->entities_manager->AddDeadBuilding(this);
 		App->animator->BuildingPlay(this);
 		current_animation->Reset();
 	}
@@ -2215,7 +2216,7 @@ bool Building::Die()
 		current_animation->GetCurrentSprite();
 		if (current_animation->IsEnd())
 		{
-			
+			App->entities_manager->RemoveDeathBuilding(this);
 			this->CleanMapLogic();
 			App->entities_manager->DeleteEntity(this);
 			return true;

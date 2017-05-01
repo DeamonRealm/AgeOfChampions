@@ -522,6 +522,7 @@ BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 	if (strcmp(str, "houseA") == 0)			return HOUSE_A;
 	if (strcmp(str, "houseB") == 0)			return HOUSE_B;
 	if (strcmp(str, "houseC") == 0)			return HOUSE_C;
+	if (strcmp(str, "rubble_two") == 0)		return RUBBLE_TWO;
 	if (strcmp(str, "rubble_three") == 0)	return RUBBLE_THREE;
 	if (strcmp(str, "rubble_four") == 0)	return RUBBLE_FOUR;
 	return NO_BUILDING;

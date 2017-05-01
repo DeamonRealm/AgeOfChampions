@@ -65,6 +65,7 @@ public:
 private:
 
 	std::list<Unit*>		death_units;
+	std::list<Building*>	death_buildings;
 	std::list<Champion*>	champions_blue;
 	std::list<Champion*>	champions_red;
 
@@ -119,12 +120,15 @@ public:
 
 	//Units lists movement units used in buildings cover
 	std::list<Unit*>	GetDeathUnitList();
-	void		AddUnit(Unit* unit);
-	void		AddDeathUnit(Unit* unit);
-	void		ResurrectUnit(Unit* unit);
-	void		RemoveDeathUnit(Unit* unit);
+	void				AddUnit(Unit* unit);
+	void				AddDeathUnit(Unit* unit);
+	void				ResurrectUnit(Unit* unit);
+	void				RemoveDeathUnit(Unit* unit);
 
-	Unit*		PopUnit(const Unit* unit);
+	Unit*				PopUnit(const Unit* unit);
+
+	void				AddDeadBuilding(Building* build);
+	void				RemoveDeathBuilding(Building* build);
 
 	//Get the nearest resource save point from the coordinate
 	Building* SearchNearestSavePoint(const iPoint& point);

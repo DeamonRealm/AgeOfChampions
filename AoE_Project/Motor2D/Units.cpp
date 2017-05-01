@@ -5,6 +5,7 @@
 #include "p2Log.h"
 #include "Hud_GamePanel.h"
 #include "j1Player.h"
+#include "j1FogOfWar.h"
 
 /// Class Villager --------------------
 //Constructors ========================
@@ -30,18 +31,40 @@ Villager::~Villager()
 //Actions -----
 bool Villager::Die()
 {
+	if (GetDiplomacy() == DIPLOMACY::ALLY)
+	{
+		App->player->game_panel->IncreaseDeathAllies();
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
+	}
+	if (GetDiplomacy() == DIPLOMACY::ENEMY)
+	{
+		//App->player->game_panel->IncreaseDeathEnemies();
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
+
+		std::list<Unit*>::const_iterator it = App->entities_manager->UnitsList()->begin();
+		bool lastenemy = true;
+		while (it != App->entities_manager->UnitsList()->end())
+		{
+			if (it._Ptr->_Myval->GetDiplomacy() == ENEMY && it._Ptr->_Myval->GetEntityType() == UNIT && it._Ptr->_Myval != this)
+				lastenemy = false;
+			it++;
+		}
+		if (lastenemy && !App->debug_mode) App->player->game_panel->DoWin();
+	}
+
+
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
-		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
-
+		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
 		if (item_type == GOLD || item_type == STONE || item_type == MEAT)
 		{
 			item_type = NO_ITEM;
 		}
 		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
 	}
 	else if (current_animation->IsEnd())
 	{
@@ -52,8 +75,10 @@ bool Villager::Die()
 		}
 		else
 		{
-			//action_worker.HardReset();
-			App->entities_manager->RemoveDeathUnit(this);
+			if (GetDiplomacy() == DIPLOMACY::ENEMY)
+			{
+				App->player->game_panel->IncreaseDeathEnemies();
+			}
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
