@@ -82,8 +82,9 @@ void Champion::SetAbility_lvl_2(bool choosed)
 	ability[1] = choosed;
 }
 
-void Champion::PrepareAbility_lvl_2()
+bool Champion::PrepareAbility_lvl_2()
 {
+	return true;
 
 }
 
@@ -101,8 +102,9 @@ void Champion::SetAbility_lvl_3(bool choosed)
 {
 }
 
-void Champion::PrepareAbility_lvl_3()
+bool Champion::PrepareAbility_lvl_3()
 {
+	return true;
 }
 
 void Champion::Hability_lvl_3(int x, int y)
@@ -530,9 +532,9 @@ void Warrior::SetAbility_lvl_2(bool choosed)
 	ability[1] = choosed;
 }
 
-void Warrior::PrepareAbility_lvl_2()
+bool Warrior::PrepareAbility_lvl_2()
 {
-	if (!ability_lvl_2_ready)return;
+	if (!ability_lvl_2_ready)return false;
 
 	ability_lvl_2_prepare_mode = true;
 
@@ -550,7 +552,7 @@ void Warrior::PrepareAbility_lvl_2()
 	{
 		if (units_in[k]->GetPosition() != position)units_in[k]->SetBlitColor({ 255,120,120,255 });
 	}
-
+	return true;
 }
 
 void Warrior::Hability_lvl_2(int x, int y)
@@ -648,11 +650,12 @@ void Warrior::SetAbility_lvl_3(bool choosed)
 	ability[2] = choosed;
 }
 
-void Warrior::PrepareAbility_lvl_3()
+bool Warrior::PrepareAbility_lvl_3()
 {
-	if (!ability_lvl_3_ready)return;
+	if (!ability_lvl_3_ready)return false;
 
 	ability_lvl_3_prepare_mode = true;
+	return true;
 }
 
 void Warrior::Hability_lvl_3(int x, int y)
@@ -1040,9 +1043,9 @@ void Wizard::SetAbility_lvl_2(bool choosed)
 	ability[1] = choosed;
 }
 
-void Wizard::PrepareAbility_lvl_2()
+bool Wizard::PrepareAbility_lvl_2()
 {
-	if (!ability_lvl_2_ready)return;
+	if (!ability_lvl_2_ready)return false;
 
 	ability_lvl_2_prepare_mode = true;
 
@@ -1081,6 +1084,7 @@ void Wizard::PrepareAbility_lvl_2()
 			units_in[k]->SetBlitColor({ 0,255,50,255 });
 		}
 	}
+	return true;
 }
 
 void Wizard::Hability_lvl_2(int x, int y)
@@ -1199,9 +1203,9 @@ void Wizard::SetAbility_lvl_3(bool choosed)
 	ability[2] = choosed;
 }
 
-void Wizard::PrepareAbility_lvl_3()
+bool Wizard::PrepareAbility_lvl_3()
 {
-	if (ability_lvl_3_current_time < ability_lvl_3_cooldown)return;
+	if (ability_lvl_3_current_time < ability_lvl_3_cooldown)return false;
 
 	ability_lvl_3_prepare_mode = true;
 
@@ -1249,6 +1253,7 @@ void Wizard::PrepareAbility_lvl_3()
 			}
 		}
 	}
+	return true;
 }
 
 void Wizard::Hability_lvl_3(int x, int y)
@@ -1671,9 +1676,9 @@ void Hunter::SetAbility_lvl_2(bool choosed)
 	ability[1] = choosed;
 }
 
-void Hunter::PrepareAbility_lvl_2()
+bool Hunter::PrepareAbility_lvl_2()
 {
-	if (!ability_lvl_2_ready)return;
+	if (!ability_lvl_2_ready)return false;
 	ability_lvl_2_prepare_mode = true;
 	//Focus the wizard in the attack direction
 	int x, y;
@@ -1706,6 +1711,8 @@ void Hunter::PrepareAbility_lvl_2()
 		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
 			units_in[k]->SetBlitColor({ 255,50,0,255 });		
 	}
+	return true;
+
 }
 
 void Hunter::Hability_lvl_2(int x, int y)
@@ -1791,9 +1798,9 @@ void Hunter::SetAbility_lvl_3(bool choosed)
 	ability[2] = choosed;
 }
 
-void Hunter::PrepareAbility_lvl_3()
+bool Hunter::PrepareAbility_lvl_3()
 {
-	if (!ability_lvl_3_ready)return;
+	if (!ability_lvl_3_ready)return false;
 
 	ability_lvl_3_prepare_mode = true;
 
@@ -1823,7 +1830,7 @@ void Hunter::PrepareAbility_lvl_3()
 		units_in[k]->SetBlitColor({ 255,50,0,255 });
 	}
 
-
+	return true;
 
 
 }
