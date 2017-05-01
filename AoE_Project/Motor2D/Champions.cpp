@@ -10,6 +10,7 @@
 #include "j1SoundManager.h"
 #include "Hud_ActionPanel.h"
 #include "Hud_GamePanel.h"
+#include "j1FogOfWar.h"
 
 ///Class Champion -------------------------------
 //Base class that define the champions bases
@@ -790,7 +791,7 @@ bool Warrior::Die()
 void Warrior::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
-	App->entities_manager->units_quadtree.Exteract(this,&position);
+	if (insert)App->entities_manager->units_quadtree.Exteract(this,&position);
 
 	//Set unit position
 	position.x = x;
@@ -798,6 +799,8 @@ void Warrior::SetPosition(float x, float y, bool insert)
 	iPoint pos(position.x, position.y);
 	//Set unit vision position
 	vision.SetPosition(pos);
+	//Set unit render area position
+	render_area.SetPosition(pos);
 	//Set unit mark position
 	mark.SetPosition(pos);
 	//Set soft_collider mark position
@@ -811,6 +814,13 @@ void Warrior::SetPosition(float x, float y, bool insert)
 	//Set attack area position
 	special_attack_area.SetPosition(pos);
 	area_ability_lvl_3.SetPosition(pos);
+
+	//Check unit fog
+	SDL_Point point = { pos.x,pos.y };
+	int dist_mult = 10;
+	if (SDL_PointInRect(&point, &App->render->camera_viewport))dist_mult = 2;
+	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * dist_mult))App->fog_of_war->CheckEntityFog(this);
+
 	//Add the unit with the correct position in the correct quad tree
 	if(insert)App->entities_manager->units_quadtree.Insert(this, &position);
 }
@@ -1462,6 +1472,8 @@ void Wizard::SetPosition(float x, float y, bool insert)
 	iPoint pos(position.x, position.y);
 	//Set unit vision position
 	vision.SetPosition(pos);
+	//Set unit render area position
+	render_area.SetPosition(pos);
 	//Set unit mark position
 	mark.SetPosition(pos);
 	//Set soft_collider mark position
@@ -1472,6 +1484,12 @@ void Wizard::SetPosition(float x, float y, bool insert)
 	buff_area.SetPosition(pos);
 	//Set unit attack area position
 	attack_area.SetPosition(pos);
+
+	//Check unit fog
+	SDL_Point point = { pos.x,pos.y };
+	int dist_mult = 10;
+	if (SDL_PointInRect(&point, &App->render->camera_viewport))dist_mult = 2;
+	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * dist_mult))App->fog_of_war->CheckEntityFog(this);
 
 	//Set area limit position
 	//area_limit_spell_2.SetPosition(pos);
@@ -2033,6 +2051,8 @@ void Hunter::SetPosition(float x, float y, bool insert)
 	iPoint pos(position.x, position.y);
 	//Set unit vision position
 	vision.SetPosition(pos);
+	//Set unit render area position
+	render_area.SetPosition(pos);
 	//Set unit mark position
 	mark.SetPosition(pos);
 	//Set soft_collider mark position
@@ -2043,6 +2063,12 @@ void Hunter::SetPosition(float x, float y, bool insert)
 	buff_area.SetPosition(pos);
 	//Set unit attack area position
 	attack_area.SetPosition(pos);
+
+	//Check unit fog
+	SDL_Point point = { pos.x,pos.y };
+	int dist_mult = 10;
+	if (SDL_PointInRect(&point, &App->render->camera_viewport))dist_mult = 2;
+	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * dist_mult))App->fog_of_war->CheckEntityFog(this);
 
 	//Set area limit position
 	//area_limit_spell_2.SetPosition(pos);

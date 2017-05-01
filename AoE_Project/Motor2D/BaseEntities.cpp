@@ -534,7 +534,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	if (action_type != WALK)
 	{
 		action_type = WALK;
-		Focus(goal);
+		Focus(goal,false);
 	}
 
 	//Calculate the X/Y values that the unit have to move 
@@ -599,7 +599,7 @@ iPoint Unit::NextGoal(std::vector<iPoint>* path)
 	goal = path->back();
 
 	//Focus the unit at the next goal
-	Focus(goal);
+	Focus(goal,false);
 	return goal;
 }
 
