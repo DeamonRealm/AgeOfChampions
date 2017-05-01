@@ -1272,6 +1272,7 @@ void Wizard::Hability_lvl_3(int x, int y)
 
 	std::vector<Unit*> units_in;
 
+	//Thunder skill
 	if (ability[2])
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(THUNDER_PARTICLE, NO_DIRECTION);
@@ -1287,11 +1288,13 @@ void Wizard::Hability_lvl_3(int x, int y)
 			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 		}
 	}
+
+	//Resurrect skill
 	else
 	{
 		//std::vector<Unit*> to_revive;
-		std::list<Unit*>::iterator units_in = App->entities_manager->GetDeathUnitList().begin();
 		std::list<Unit*> temp_list = App->entities_manager->GetDeathUnitList();
+		std::list<Unit*>::iterator units_in = temp_list.begin();
 
 		for (; units_in != temp_list.end(); units_in++)
 		{
