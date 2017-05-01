@@ -369,7 +369,7 @@ bool PivotedRect::IsIn(const fPoint* loc) const
 	float area_tri_AC = (vertex[0].x*(vertex[2].y - loc->y) + vertex[2].x * (loc->y - vertex[0].y) + loc->x * (vertex[0].y - vertex[2].y)) * 0.5* sin(x_angle);
 	// DC
 	float area_tri_DC = (vertex[3].x*(vertex[2].y - loc->y) + vertex[2].x * (loc->y - vertex[3].y) + loc->x * (vertex[3].y - vertex[2].y)) * 0.5* sin(x_angle);
-	LOG("area_tri_AB %f area_tri_DB %f area_tri_AC %f area_tri_DC %f", area_tri_AB, area_tri_DB, area_tri_AC, area_tri_DC);
+
 	return (!((abs(area_tri_AB) + abs(area_tri_AC) + abs(area_tri_DB) + abs(area_tri_DC)) > rect_area));
 
 }

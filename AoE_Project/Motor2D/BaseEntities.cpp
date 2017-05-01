@@ -512,9 +512,6 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 
 			//Set unit at the goal pixel position
 			SetPosition((float)goal.x, (float)goal.y);
-			//Stop idle walk animation
-			action_type = IDLE;
-			App->animator->UnitPlay(this);
 
 			//Delete unit path
 			delete path;
@@ -1140,7 +1137,7 @@ bool Unit::AttackUnit(Unit** target)
 {
 	bool ret = false;
 	//Check if the target is in the attack area
-	if ((*target) == nullptr || (*target)->GetAction() == DIE || (*target)->GetAction() == DISAPPEAR)
+	if (target == nullptr || (*target) == nullptr || (*target)->GetAction() == DIE || (*target)->GetAction() == DISAPPEAR)
 	{
 		return true;
 	}
@@ -1194,7 +1191,7 @@ bool Unit::HealUnit(Unit ** target)
 	bool ret = false;
 
 	//Check if the target is in the attack area
-	if ((*target) == nullptr)
+	if (target == nullptr || (*target) == nullptr)
 	{
 		return true;
 	}
@@ -1237,6 +1234,11 @@ bool Unit::HealUnit(Unit ** target)
 
 bool Unit::AttackBuilding(Building ** target)
 {
+	if (target == nullptr || (*target) == nullptr)
+	{
+		return true;
+	}
+
 	//Check if the target is in the attack area
 	if (!attack_area.Intersects((*target)->GetInteractArea()))
 	{

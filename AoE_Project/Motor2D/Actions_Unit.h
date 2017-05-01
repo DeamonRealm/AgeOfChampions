@@ -44,7 +44,10 @@ public:
 			path = nullptr;
 		}
 		path = App->pathfinding->SimpleAstar(origin, destination);
-		if (path == nullptr)return false;
+		if (path == nullptr)
+		{
+			return false;
+		}
 		
 		((Unit*)actor)->SetAction(WALK);
 		((Unit*)actor)->Focus(path->back(),true);
@@ -56,7 +59,28 @@ public:
 
 	bool Execute()
 	{
-		return ((Unit*)actor)->Move(path,target);
+		if (((Unit*)actor)->Move(path, target))
+		{
+			//Stop idle walk animation
+			bool exception = false;
+			ITEM_TYPE item_type;
+			((Unit*)actor)->SetAction(IDLE);
+			if (((Unit*)actor)->GetUnitType() == VILLAGER) {
+				item_type = ((Villager*)actor)->GetItemType();
+				if (item_type != ITEM_TYPE::NO_ITEM)
+				{
+					((Villager*)actor)->SetItemType(NO_ITEM);
+					exception = true;
+				}
+			}
+			App->animator->UnitPlay((Unit*)actor);
+			if (exception)
+			{
+				((Villager*)actor)->SetItemType(item_type);
+			}
+			return true;
+		}
+		return false;
 	}
 
 
@@ -158,7 +182,7 @@ public:
 	//Functionality ---------
 	bool Execute()
 	{
-		if ((*target) == nullptr) return true;
+		if (target == nullptr || (*target) == nullptr) return true;
 
 		//Actor attack the target
 		return ((Unit*)actor)->AttackUnit(target);
@@ -198,6 +222,8 @@ public:
 	//Functionality ---------
 	bool Execute()
 	{
+		if (target == nullptr || (*target) == nullptr) return true;
+
 		//Actor attack the target
 		return ((Unit*)actor)->AttackBuilding(target);
 	}
@@ -354,7 +380,7 @@ public:
 	bool Activation()
 	{
 		//Check it the resource hasn't been yet depleted
-		if (*target == nullptr)return false;
+		if (target == nullptr || *target == nullptr)return false;
 		if ((*target)->GetEntityType() != RESOURCE) return false;
 
 		//Set actor animation

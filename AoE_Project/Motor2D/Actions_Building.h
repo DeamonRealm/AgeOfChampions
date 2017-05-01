@@ -124,7 +124,7 @@ public:
 			App->entities_manager->AddUnit(new_unit);
 			new_unit->SetPosition((float)x, (float)y);
 			App->animator->UnitPlay(new_unit);
-			App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
+			if(diplomacy == ALLY)App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
 
 			new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)), TASK_CHANNELS::PRIMARY);
 
