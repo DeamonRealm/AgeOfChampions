@@ -922,9 +922,9 @@
       experience_lvl_2="150"
       experience_lvl_3="450"
 
-      area_triangle_length="210"
-      area_triangle_width_angle="125"
-      area_triangle_X_angle="12"
+      area_triangle_length="300"
+      area_triangle_width_angle="200"
+      area_triangle_X_angle="15"
 
       ability_lvl_2_skill_A_attack_value="100"
       

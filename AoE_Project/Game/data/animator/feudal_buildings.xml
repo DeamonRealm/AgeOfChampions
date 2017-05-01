@@ -68,7 +68,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       <sprite n="Feudal/Town_Center/000_TownCenterLeftSideFeudal.bmp" opacity ="255" x="841" y="453" z="100" w="145" h="141" pX="1.27586" pY="0.33"/>
       <sprite n="Feudal/Town_Center/000_TownCenterRightPilonsFeudal.bmp" opacity ="255" x="133" y="761" z ="60" w="112" h="51" pX="-0.410714" pY="-0.43"/>
       <sprite n="Feudal/Town_Center/000_TownCenterRightPilonsFeudal2.bmp" opacity ="255" x="247" y="761" z="45" w="25" h="48" pX="-6.44" pY="-0.12"/>
-      <sprite n="Feudal/Town_Center/000_TownCenterRightSideFeudal.bmp" opacity ="255" x="274" y="761" z="100" w="145" h="141" pX="1.27586" pY="0.33"/>
+      <sprite n="Feudal/Town_Center/000_TownCenterRightSideFeudal.bmp" opacity ="255" x="274" y="761" z="100" w="145" h="141" pX="-0.31" pY="0.33"/>
       <sprite n="Feudal/Town_Center/000_TownCenterShadowFeudal.bmp" opacity ="100" x="419" y="761" z ="90" w="376" h="73" pX="0.526596" pY="-0.245"/>
       <sprite n="Feudal/Town_Center/000_TownCenterTopPieceFeudal.bmp" opacity ="255" x="797" y="761" z ="25" w="193" h="199" pX="0.481865" pY="0.768844"/>
     </action>

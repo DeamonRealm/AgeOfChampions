@@ -257,7 +257,7 @@ PivotedRect::PivotedRect(const iPoint & origin, const iPoint & goal, uint width,
 
 }
 
-PivotedRect::PivotedRect(const PivotedRect & copy) : Primitive(copy), goal(copy.goal), width(copy.width), height(copy.height)
+PivotedRect::PivotedRect(const PivotedRect & copy) : Primitive(copy), goal(copy.goal), width(copy.width), height(copy.height), pivot_distance(copy.pivot_distance)
 {
 
 }
@@ -324,6 +324,8 @@ void PivotedRect::CalculateVertex()
 	fPoint dir_vector(goal.x - this->position.x, goal.y - this->position.y);
 	dir_vector.Norm();
 
+	
+
 	fPoint side_vec;
 	side_vec.x = width * -dir_vector.y;
 	side_vec.y = width * dir_vector.x * sin(x_angle);
@@ -334,7 +336,7 @@ void PivotedRect::CalculateVertex()
 
 	iPoint G_Point = M_point;
 	G_Point.x += height * dir_vector.x;
-	G_Point.y += height * dir_vector.y * sin(x_angle);
+	G_Point.y += height * dir_vector.y;
 
 	//Calculate A vertex
 	vertex[0].x = G_Point.x - side_vec.x;
@@ -360,14 +362,14 @@ bool PivotedRect::IsIn(const fPoint* loc) const
 	float rect_area = width * height;
 
 	// AB
-	float area_tri_AB = (vertex[0].x*(vertex[1].y - loc->y) + vertex[1].x * (loc->y - vertex[0].y) + loc->x * (vertex[0].y - vertex[1].y)) * 0.5;
+	float area_tri_AB = (vertex[0].x*(vertex[1].y - loc->y) + vertex[1].x * (loc->y - vertex[0].y) + loc->x * (vertex[0].y - vertex[1].y)) * 0.5* sin(x_angle);
 	// DB
-	float area_tri_DB = (vertex[3].x*(vertex[1].y - loc->y) + vertex[1].x * (loc->y - vertex[3].y) + loc->x * (vertex[3].y - vertex[1].y)) * 0.5;
+	float area_tri_DB = (vertex[3].x*(vertex[1].y - loc->y) + vertex[1].x * (loc->y - vertex[3].y) + loc->x * (vertex[3].y - vertex[1].y)) * 0.5* sin(x_angle);
 	// AC
-	float area_tri_AC = (vertex[0].x*(vertex[2].y - loc->y) + vertex[2].x * (loc->y - vertex[0].y) + loc->x * (vertex[0].y - vertex[2].y)) * 0.5;
+	float area_tri_AC = (vertex[0].x*(vertex[2].y - loc->y) + vertex[2].x * (loc->y - vertex[0].y) + loc->x * (vertex[0].y - vertex[2].y)) * 0.5* sin(x_angle);
 	// DC
-	float area_tri_DC = (vertex[3].x*(vertex[2].y - loc->y) + vertex[2].x * (loc->y - vertex[3].y) + loc->x * (vertex[3].y - vertex[2].y)) * 0.5;
-
+	float area_tri_DC = (vertex[3].x*(vertex[2].y - loc->y) + vertex[2].x * (loc->y - vertex[3].y) + loc->x * (vertex[3].y - vertex[2].y)) * 0.5* sin(x_angle);
+	LOG("area_tri_AB %f area_tri_DB %f area_tri_AC %f area_tri_DC %f", area_tri_AB, area_tri_DB, area_tri_AC, area_tri_DC);
 	return (!((abs(area_tri_AB) + abs(area_tri_AC) + abs(area_tri_DB) + abs(area_tri_DC)) > rect_area));
 
 }
@@ -383,7 +385,6 @@ bool PivotedRect::Intersects(const SDL_Rect* rect) const
 	return false;
 }
 /// ---------------------------------------------
-
 ///Class Line -----------------------------------
 //Constructors ==============
 Line::Line(const iPoint & position, const iPoint & position_2, const SDL_Color& color, const iPoint& desplacement) :Primitive(position, desplacement, color), position_2(position_2)
@@ -494,7 +495,7 @@ void Triangle::CalculateVertex()
 	A_vector.y = mid_vector.x * sin((width_angle * 0.5)) + mid_vector.y * cos((width_angle * 0.5));
 	A_vector.Norm();
 	A_vector *= length;
-	A_vector.y *= -sin(x_angle);
+	//A_vector.y *= -sin(x_angle);
 
 	//Calculate 0 -> B vector
 	fPoint B_vector;
@@ -502,7 +503,7 @@ void Triangle::CalculateVertex()
 	B_vector.y = mid_vector.x * sin((-width_angle * 0.5)) + mid_vector.y * cos((-width_angle * 0.5));
 	B_vector.Norm();
 	B_vector *= length;
-	B_vector.y *= -sin(x_angle);
+	//B_vector.y *= -sin(x_angle);
 
 	//Calculate v_A vertex with vector 0 -> A
 	v_A.x = position.x + A_vector.x;

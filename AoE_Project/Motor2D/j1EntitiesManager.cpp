@@ -983,7 +983,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 									temp_circle.SetColor({ 0,50,50,255 });
 									((Hunter*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
 									PivotedRect temp_rect;
-									temp_rect.SetPivotDistance(unit_node->attribute("rect_displacament").as_uint());
+									temp_rect.SetPivotDistance(unit_node->attribute("rect_pivot_distance").as_uint());
 									temp_rect.SetWidth(unit_node->attribute("rect_attack_w").as_uint());
 									temp_rect.SetHeight(unit_node->attribute("rect_attack_h").as_uint());
 									temp_rect.SetColor({ 50,255,150,255 });

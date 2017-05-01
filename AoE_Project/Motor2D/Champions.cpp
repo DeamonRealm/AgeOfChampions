@@ -1707,7 +1707,7 @@ bool Hunter::PrepareAbility_lvl_2()
 	iPoint destination = iPoint(x - App->render->camera.x, y - App->render->camera.y);
 	direction_type = LookDirection(destination, GetPositionRounded());
 	CalculateSpecialAttackArea(destination, true);
-	CalculateTriangleAttackArea(destination);
+	CalculateTriangleAttackArea(GetiPointFromDirection(direction_type));
 
 
 	//Collect all the units in the buff area
@@ -1871,9 +1871,13 @@ void Hunter::Hability_lvl_3(int x, int y)
 
 	if (ability[2])
 	{
+		CalculateArrorwAttackArea(destination);
 		//long range skill
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
 		//Collect all the units in the buff area
+		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_3);
+		ability_lvl_3_particle.animation.Reset();
+		ability_lvl_3_particle.position = area_attack_skill_A_lvl_3.GetPosition();
 	}
 	else
 	{
@@ -1890,6 +1894,7 @@ void Hunter::Hability_lvl_3(int x, int y)
 	for (uint k = 0; k < size; k++)
 	{
 		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+
 		if (ability[2]) 
 			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 
