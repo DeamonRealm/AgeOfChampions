@@ -320,7 +320,6 @@ protected:
 	Circle			mark;
 	Circle			soft_collider;
 	Circle			hard_collider;
-	Entity*			interaction_target = nullptr;
 
 	//Movement ---------
 	uint			view_area = 0;
@@ -418,7 +417,6 @@ public:
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetFutureAction(const iPoint& future_position);
 	void	SetUnitType(UNIT_TYPE type);
-	void	SetInteractionTarget(const Entity* target);
 
 	void	SetMark(const Circle& new_mark);
 	void	SetSoftCollider(const Circle& new_soft_collider);
@@ -462,7 +460,6 @@ public:
 	const Circle&	GetSoftCollider()const;
 	const Circle&	GetHardCollider()const;
 
-	const Entity*	GetInteractionTarget();
 	uint			GetViewArea()const;
 	float			GetSpeed()const;
 	float			GetSpeedBuff()const;

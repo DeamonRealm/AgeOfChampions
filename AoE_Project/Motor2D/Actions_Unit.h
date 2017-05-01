@@ -369,7 +369,7 @@ public:
 		if (*target == nullptr)
 		{
 			//If resource is deplated execute a SaveResourceAction
-			Building* save_point = App->entities_manager->GetNearestBuilding(actor->GetPositionRounded(), TOWN_CENTER);
+			Building* save_point = App->entities_manager->GetNearestBuilding(actor->GetPositionRounded(), TOWN_CENTER, actor->GetDiplomacy());
 			if (save_point != nullptr)
 			{
 				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, (Building**)save_point->GetMe()), TASK_CHANNELS::PRIMARY);

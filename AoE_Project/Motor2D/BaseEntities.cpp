@@ -1030,8 +1030,6 @@ while (!other_units.empty())
 	goal = FindWalkableAdjacent(unit->GetPositionRounded());
 	if (goal != iPoint(-1, -1)) 
 	{
-
-		SetInteractionTarget(unit);
 		return (Unit**)unit->GetMe();
 	}
 }
@@ -1150,26 +1148,11 @@ bool Unit::AttackUnit(Unit** target)
 	{
 
 		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider());
-		/*
-		if (UnitHere(goal,GetSoftCollider().GetRad()))
-		{
-			goal = FindWalkableAdjacent(((Unit*)(*target))->GetPositionRounded());
-			if (goal == iPoint(-1, -1))
-			{
-				Unit** new_target;
-				new_target = FindNewTarget();
-				if (new_target != nullptr) {
-					this->AddAction((Action*)App->action_manager->AttackToUnitAction(this, new_target));
-					return true;
-				}
-				return true;
-			}
-		}
-	*/
-			std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
-			if (path == nullptr)return true;
-			this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
-			return false;
+
+		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
+		if (path == nullptr)return true;
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
+		return false;
 	
 	
 	}
@@ -1299,7 +1282,7 @@ bool Unit::AttackBuilding(Building ** target)
 
 bool Unit::Cover()
 {
-	return ((HabitableBuilding*)interaction_target)->CoverUnit(this);
+	return true;
 }
 
 bool Unit::DirectDamage(uint damage)
@@ -1517,11 +1500,6 @@ void Unit::SetAttackBuff(float atk_buff)
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
-}
-
-void Unit::SetInteractionTarget(const Entity * target)
-{
-	interaction_target = (Entity*)target;
 }
 
 void Unit::SetMark(const Circle & new_mark)
@@ -1746,11 +1724,6 @@ const Circle & Unit::GetSoftCollider() const
 const Circle & Unit::GetHardCollider() const
 {
 	return hard_collider;
-}
-
-const Entity * Unit::GetInteractionTarget()
-{
-	return interaction_target;
 }
 
 uint Unit::GetViewArea()const

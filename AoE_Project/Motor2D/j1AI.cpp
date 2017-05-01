@@ -91,7 +91,7 @@ bool j1AI::Update(float dt)
 		return true;
 	}
 
-	Resource* to_recolect = App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), RESOURCE_TYPE::BERRY_BUSH);
+	Resource* to_recolect = App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), RESOURCE_TYPE::BERRY_BUSH, ENEMY);
 	//ai_worker->AddAICommand(new SendToRecollect(enemy_units, (Resource**)to_recolect->GetMe()));
 
 	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();

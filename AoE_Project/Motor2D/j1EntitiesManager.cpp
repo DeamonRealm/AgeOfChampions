@@ -1764,7 +1764,7 @@ bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 	return ret;
 }
 
-Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type)
+Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy)
 {
 	Building* ret = nullptr;
 
@@ -1775,7 +1775,7 @@ Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE typ
 	while (building_it != buildings.end())
 	{
 		//Check resource type
-		if (building_it._Ptr->_Myval->GetBuildingType() != type)
+		if (building_it._Ptr->_Myval->GetBuildingType() != type || building_it._Ptr->_Myval->GetDiplomacy() != diplomacy) 
 		{
 			building_it++;
 			continue;
@@ -1796,7 +1796,7 @@ Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE typ
 	return ret;
 }
 
-Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE type)
+Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE type, DIPLOMACY diplomacy)
 {
 	Resource* ret = nullptr;
 
@@ -1807,7 +1807,7 @@ Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE typ
 	while (resource != resources.end())
 	{
 		//Check resource type
-		if (resource._Ptr->_Myval->GetResourceType() != type)
+		if (resource._Ptr->_Myval->GetResourceType() != type || resource._Ptr->_Myval->GetDiplomacy() != diplomacy)
 		{
 			resource++;
 			continue;
