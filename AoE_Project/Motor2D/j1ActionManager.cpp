@@ -149,7 +149,7 @@ RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resou
 	return action;
 }
 
-SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * actor, Building * target)
+SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * actor, Building** target)
 {
 	//Generate a new move action definition
 	SaveResourcesVillagerAction* action = new SaveResourcesVillagerAction(actor, target);
@@ -471,7 +471,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 			return false;
 		}
 		//Build the task with the actor and the target found
-		actor->AddAction(App->action_manager->SaveResourcesAction((Villager*)actor, *target), channel);
+		actor->AddAction(App->action_manager->SaveResourcesAction((Villager*)actor, target), channel);
 		break;
 	}
 	case TASK_U_SCANN:

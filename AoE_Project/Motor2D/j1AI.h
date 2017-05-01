@@ -86,7 +86,7 @@ private:
 
 	ProductiveBuilding* ai_starting_tc;
 
-
+	std::list<Building*> enemy_buildings;
 
 public:
 	std::list<Unit*> enemy_units;

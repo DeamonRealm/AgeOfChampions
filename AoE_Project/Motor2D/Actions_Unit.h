@@ -371,13 +371,14 @@ public:
 			Building* save_point = App->entities_manager->SearchNearestSavePoint(actor->GetPositionRounded());
 			if (save_point != nullptr)
 			{
-				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, save_point), TASK_CHANNELS::PRIMARY);
+				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, (Building**)save_point->GetMe()), TASK_CHANNELS::PRIMARY);
 			}
 
 			//Reset the animation
 			App->animator->UnitPlay((Villager*)actor);
 			return true;
 		}
+
 		//Actor recollect
 		return ((Villager*)actor)->Recollect(target);
 	}
@@ -402,7 +403,7 @@ class SaveResourcesVillagerAction : public Action
 public:
 
 	//Constructor -----------
-	SaveResourcesVillagerAction(Villager* actor, Building* target) : Action(actor,TASK_U_SAVE_RESOURCES), target(target)
+	SaveResourcesVillagerAction(Villager* actor, Building** target) : Action(actor,TASK_U_SAVE_RESOURCES), target(target)
 	{
 
 	}
@@ -411,21 +412,21 @@ public:
 	~SaveResourcesVillagerAction()
 	{
 		this->actor = nullptr;
-		this->target = nullptr;
+		target = nullptr;
 	}
 
 	//Functionality ---------
 	bool Activation()
 	{
 		//Set actor interaction target
-		if (target == nullptr)
+		if ((*target) == nullptr)
 		{
 			((Villager*)actor)->ResetResourcesData();
 			App->animator->UnitPlay((Villager*)actor);
 			return false;
 		}
 
-		((Unit*)actor)->SetInteractionTarget(target);
+		((Unit*)actor)->SetInteractionTarget(*target);
 		((Villager*)actor)->CheckCarryResource();
 		return true;
 	}
@@ -439,12 +440,12 @@ public:
 	//Get Methods -----------
 	Building*	GetTarget()const
 	{
-		return target;
+		return *target;
 	}
 
 private:
 
-	Building* target = nullptr;
+	Building** target = nullptr;
 
 };
 /// ---------------------------------------------

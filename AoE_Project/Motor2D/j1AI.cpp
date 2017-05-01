@@ -37,6 +37,14 @@ void j1AI::Enable()
 	iPoint pos = App->map->MapToWorldCenter(110, 100);
 	ai_starting_tc->SetPosition((float)pos.x, (float)pos.y);
 	
+
+	//temporary enemy barracks
+	pos = App->map->MapToWorldCenter(115, 95);
+	Building* new_building;
+	new_building = App->entities_manager->GenerateBuilding(BARRACK, ENEMY);
+	new_building->SetPosition((float)pos.x, (float)pos.y);
+	enemy_buildings.push_back(new_building);
+
 	//ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
 }
 

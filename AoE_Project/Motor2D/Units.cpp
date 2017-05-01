@@ -132,7 +132,7 @@ bool Villager::Recollect(Resource** target)
 			Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
 			if (save_point == nullptr)return true;
 			//Set the carry action animation type
-			AddAction((Action*)App->action_manager->SaveResourcesAction(this, save_point), TASK_CHANNELS::PRIMARY);
+			AddAction((Action*)App->action_manager->SaveResourcesAction(this, (Building**)save_point->GetMe()), TASK_CHANNELS::PRIMARY);
 			return true;
 		}
 		else
@@ -153,7 +153,7 @@ bool Villager::Recollect(Resource** target)
 		Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
 		if (save_point == nullptr)return true;
 		//Set the carry action animation type
-		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, save_point));
+		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, (Building**)save_point->GetMe()));
 		return false;
 	}
 
