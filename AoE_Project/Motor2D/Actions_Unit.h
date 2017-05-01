@@ -355,6 +355,7 @@ public:
 	{
 		//Check it the resource hasn't been yet depleted
 		if (*target == nullptr)return false;
+		if ((*target)->GetEntityType() != RESOURCE) return false;
 
 		//Set actor animation
 		((Villager*)actor)->Focus((*target)->GetPositionRounded(), true);
@@ -368,7 +369,7 @@ public:
 		if (*target == nullptr)
 		{
 			//If resource is deplated execute a SaveResourceAction
-			Building* save_point = App->entities_manager->SearchNearestSavePoint(actor->GetPositionRounded());
+			Building* save_point = App->entities_manager->GetNearestBuilding(actor->GetPositionRounded(), TOWN_CENTER);
 			if (save_point != nullptr)
 			{
 				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, (Building**)save_point->GetMe()), TASK_CHANNELS::PRIMARY);
@@ -426,7 +427,6 @@ public:
 			return false;
 		}
 
-		((Unit*)actor)->SetInteractionTarget(*target);
 		((Villager*)actor)->CheckCarryResource();
 		return true;
 	}
@@ -434,7 +434,7 @@ public:
 	bool Execute()
 	{
 		//Actor save resources
-		return ((Villager*)actor)->SaveResources();
+		return ((Villager*)actor)->SaveResources(target);
 	}
 
 	//Get Methods -----------

@@ -86,10 +86,11 @@ bool j1AI::Update(float dt)
 	ai_worker->Update();
 
 	//only update every 2 seconds
-	if (update_timer.Read() < 2000)
+	if (update_timer.Read() < 10000)
 	{
 		return true;
 	}
+
 	Resource* to_recolect = App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), RESOURCE_TYPE::BERRY_BUSH);
 	//ai_worker->AddAICommand(new SendToRecollect(enemy_units, (Resource**)to_recolect->GetMe()));
 
@@ -110,8 +111,20 @@ bool j1AI::Update(float dt)
 		unit_it++;
 	}
 
-	update_timer.Start();
 
+	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
+	while (building_it != enemy_buildings.end())
+	{
+		if (building_it._Ptr->_Myval->GetBuildingType() == BARRACK)
+		{
+			building_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)building_it._Ptr->_Myval, MILITIA, ENEMY));
+
+		}
+		building_it++;
+	}
+
+
+	update_timer.Start();
 
 	return true;
 }

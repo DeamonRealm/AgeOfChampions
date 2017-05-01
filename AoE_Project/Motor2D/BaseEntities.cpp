@@ -1142,7 +1142,7 @@ bool Unit::AttackUnit(Unit** target)
 {
 	bool ret = false;
 	//Check if the target is in the attack area
-	if ((*target) == nullptr)
+	if ((*target) == nullptr || (*target)->GetAction() == DIE || (*target)->GetAction() == DISAPPEAR)
 	{
 		return true;
 	}
@@ -1261,7 +1261,8 @@ bool Unit::AttackBuilding(Building ** target)
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
-		this->AddAction((Action*)App->action_manager->MoveAction(path, this), TASK_CHANNELS::SECONDARY);
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this), TASK_CHANNELS::SECONDARY);
+		return false;
 	}
 
 	//Control action rate

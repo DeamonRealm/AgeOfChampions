@@ -154,7 +154,7 @@ bool Villager::Recollect(Resource** target)
 		if (current_resources > 0)
 		{
 			//Go to the nearest download point
-			Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
+			Building* save_point = App->entities_manager->GetNearestBuilding(GetPositionRounded(), TOWN_CENTER);
 			if (save_point == nullptr)return true;
 			//Set the carry action animation type
 			AddAction((Action*)App->action_manager->SaveResourcesAction(this, (Building**)save_point->GetMe()), TASK_CHANNELS::PRIMARY);
@@ -175,7 +175,7 @@ bool Villager::Recollect(Resource** target)
 	if (current_resources == resources_capacity)
 	{
 		//Go to the nearest download point
-		Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
+		Building* save_point = App->entities_manager->GetNearestBuilding(GetPositionRounded(), TOWN_CENTER);
 		if (save_point == nullptr)return true;
 		//Set the carry action animation type
 		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, (Building**)save_point->GetMe()));
@@ -188,12 +188,12 @@ bool Villager::Recollect(Resource** target)
 	return false;
 }
 
-bool Villager::SaveResources()
+bool Villager::SaveResources(Building** save_point)
 {
 	//Check if the target building is in the "attack" (in this case used for save resources) area
-	if (!attack_area.Intersects(((Building*)interaction_target)->GetInteractArea()))
+	if (!attack_area.Intersects((*save_point)->GetInteractArea()))
 	{
-		iPoint intersect_point = attack_area.NearestPoint(((Building*)interaction_target)->GetInteractArea());
+		iPoint intersect_point = attack_area.NearestPoint((*save_point)->GetInteractArea());
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, iPoint(intersect_point.x, intersect_point.y)));
 		return false;
 	}

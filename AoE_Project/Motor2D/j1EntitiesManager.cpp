@@ -89,7 +89,7 @@ bool j1EntitiesManager::Start()
 	bool ret = LoadCivilization("Teutons.xml");
 
 	//Built entities quad trees
-	units_quadtree.SetMaxObjects(3);
+	units_quadtree.SetMaxObjects(12);
 	units_quadtree.SetDebugColor({ 255,0,255,255 });
 	resources_quadtree.SetMaxObjects(8);
 	resources_quadtree.SetDebugColor({ 0,255,255,255 });
@@ -1664,33 +1664,6 @@ void j1EntitiesManager::RemoveDeathBuilding(Building * build)
 	death_buildings.remove(build);
 }
 
-Building * j1EntitiesManager::SearchNearestSavePoint(const iPoint & point)
-{
-	std::list<Building*>::const_iterator building = buildings.begin();
-	uint distance = 120 * 120 * 50;
-	Building* nearest_building = nullptr;
-	while (building != buildings.end())
-	{
-		//Check building type
-		if (building._Ptr->_Myval->GetBuildingType() != TOWN_CENTER)
-		{
-			building++;
-			continue;
-		}
-		//Calculate distance between building pos & point
-		uint dist = abs(building._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
-		//Check if is the nearest building from the point 
-		if ( dist < distance)
-		{
-			distance = dist;
-			nearest_building = building._Ptr->_Myval;
-		}
-
-		building++;
-	}
-
-	return nearest_building;
-}
 
 std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > j1EntitiesManager::OrganizeByNearest(std::vector<Unit*>& vec, Circle& target)
 {
@@ -1786,6 +1759,38 @@ bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 			}
 			unit++;
 		}
+	}
+
+	return ret;
+}
+
+Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type)
+{
+	Building* ret = nullptr;
+
+	std::list<Building*>::const_iterator building_it = buildings.begin();
+	uint distance = 120 * 120 * 50;
+
+
+	while (building_it != buildings.end())
+	{
+		//Check resource type
+		if (building_it._Ptr->_Myval->GetBuildingType() != type)
+		{
+			building_it++;
+			continue;
+		}
+
+		//Calculate distance between resource pos & point
+		uint dist = abs(building_it._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
+		//Check if is the nearest resource from the point 
+		if (dist < distance)
+		{
+			distance = dist;
+			ret = building_it._Ptr->_Myval;
+		}
+
+		building_it	++;
 	}
 
 	return ret;

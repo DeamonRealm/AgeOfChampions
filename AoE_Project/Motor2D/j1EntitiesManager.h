@@ -130,8 +130,6 @@ public:
 	void				AddDeadBuilding(Building* build);
 	void				RemoveDeathBuilding(Building* build);
 
-	//Get the nearest resource save point from the coordinate
-	Building* SearchNearestSavePoint(const iPoint& point);
 
 	//Organize unit vector
 	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);
@@ -142,8 +140,8 @@ public:
 	
 	
 	//Get nearest Entity methods
-	Unit*		GetNearestUnit(iPoint point);
-	Building*	GetNearestBuilding(iPoint point);
+	Unit*		GetNearestUnit(iPoint point, UNIT_TYPE type);
+	Building*	GetNearestBuilding(iPoint point, BUILDING_TYPE type);
 	Resource*	GetNearestResource(iPoint point, RESOURCE_TYPE type);
 
 };
