@@ -71,8 +71,6 @@ private:
 	uint alpha_layer_width = 0;		/*Number of cells in the fog width*/
 	uint alpha_layer_height = 0;	/*Number of cells in the fog height*/
 
-
-
 	//Timer that count last update time
 	j1Timer		update_timer;
 
@@ -81,6 +79,7 @@ private:
 	std::vector<Entity*> entities_release;
 
 	std::vector<AlphaCell*> cells_in_screen;
+	iPoint last_camera_update_position = { 0,0 };
 
 public:
 

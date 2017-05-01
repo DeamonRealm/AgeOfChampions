@@ -86,7 +86,7 @@ public:
 	SDL_Rect		viewport;
 	SDL_Rect		camera_viewport;
 	SDL_Color		background;
-
+	
 public:
 
 	//Add blit call ---------

@@ -106,13 +106,51 @@ bool j1FogOfWar::CleanUp()
 
 bool j1FogOfWar::Load(pugi::xml_node& data)
 {
+	if (fog_layer == nullptr || alpha_layer == nullptr)
+	{
+		LOG("Can't load fog of war!");
+		return true;
+	}
+
+	//Node where alpha layer data is saved
+	pugi::xml_node alpha_layer_node = data.child("alpha_layer");
+
+	//First alpha cell node from alpha layer
+	pugi::xml_node alpha_cell_node = alpha_layer_node.first_child();
+	
+	//Iterate all alpha cells saved
+	uint k = 0;
+	while (alpha_cell_node != NULL)
+	{
+		//Get saved cell alpha
+		alpha_layer[k].alpha = alpha_cell_node.attribute("alpha").as_uint();
+		
+		//Focus next saved cell
+		k++;
+		alpha_cell_node = alpha_cell_node.next_sibling();
+	}
+
+	//Node where logic layer is saved
+	pugi::xml_node logic_layer_node = data.child("logic_layer");
+
+	//Node where tile characteristics are saved
+	pugi::xml_node fog_tile_node = logic_layer_node.first_child();
+
+	k = 0;
+	while (fog_tile_node != NULL)
+	{
+		fog_layer[k].type = (FOG_TYPE)fog_tile_node.attribute("id").as_int();
+
+
+		k++;
+		fog_tile_node = fog_tile_node.next_sibling();
+	}
+
 	return true;
 }
 
 bool j1FogOfWar::Save(pugi::xml_node& data) const
 {
-	return true;
-
 	if (fog_layer == nullptr || alpha_layer == nullptr)
 	{
 		LOG("Can't save fog of war!");
@@ -122,30 +160,30 @@ bool j1FogOfWar::Save(pugi::xml_node& data) const
 	//Node where alpha layer data is saved
 	pugi::xml_node alpha_layer_node = data.append_child("alpha_layer");
 
-	//Save alpha layer width
-	alpha_layer_node.append_attribute("layer_width") = alpha_layer_width;
-	//Save alpha layer height
-	alpha_layer_node.append_attribute("layer_height") = alpha_layer_height;
-
-	//Save alpha cell size 
-	alpha_layer_node.append_attribute("cell_size") = alpha_cell_size;
-
-	
 	//Iterate all the alpha layer to save alpha values
-	for (uint x = 0; x < alpha_layer_width; x++)
+	uint size = alpha_layer_width * alpha_layer_height;
+	for (uint k = 0; k < size; k++)
 	{
-		for (uint y = 0; y < alpha_layer_height; y++)
-		{
-			//First alpha cell node from alpha layer
-			pugi::xml_node alpha_cell_node = alpha_layer_node.append_child("cell");
+		//First alpha cell node from alpha layer
+		pugi::xml_node alpha_cell_node = alpha_layer_node.append_child("cell");
 
-			//Save current alpha cell alpha value
-			alpha_cell_node.append_attribute("alpha") = alpha_layer[x + y * alpha_layer_width].alpha;
+		//Save current alpha cell alpha value
+		alpha_cell_node.append_attribute("alpha") = alpha_layer[k].alpha;
+	}
 
-			//Save current alpha cell position
-			alpha_cell_node.append_attribute("pos_x") = alpha_layer[x + y * alpha_layer_width].position.x;
-			alpha_cell_node.append_attribute("pos_y") = alpha_layer[x + y * alpha_layer_width].position.y;
-		}
+	//Node where logic layer is saved
+	pugi::xml_node logic_layer_node = data.append_child("logic_layer");
+
+	//Iterate all the logic layer to save values
+	size = App->map->data.width * App->map->data.height;
+
+	for (uint k = 0; k < size; k++)
+	{
+		//Node where current tile characteristics are saved
+		pugi::xml_node fog_tile_node = logic_layer_node.append_child("tile");
+
+		//Save tile id
+		fog_tile_node.append_attribute("id") = fog_layer[k].type;
 	}
 
 	return true;
