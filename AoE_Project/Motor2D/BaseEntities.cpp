@@ -2349,9 +2349,21 @@ void Building::SetPosition(float x, float y, bool insert)
 	//Add building at the correct quad tree
 	App->entities_manager->buildings_quadtree.Insert(this, &position);
 
-	if (entity_diplomacy == ALLY)
+	if (entity_diplomacy != ALLY)return;
+
+	//Collect all the units around to release the fog
+	std::vector<Unit*> coll_units;
+	Circle coll_area = render_area;
+	coll_area.SetRad(coll_area.GetRad() + 400);
+	uint size = App->entities_manager->units_quadtree.CollectCandidates(coll_units, coll_area);
+	for (uint k = 0; k < size; k++)
 	{
-		App->fog_of_war->CheckEntityFog(this);
+		coll_units[k]->ResetFogAround();
+	}
+	this->CleanFogAround();
+	for (uint k = 0; k < size; k++)
+	{
+		coll_units[k]->CleanFogAround();
 	}
 }
 

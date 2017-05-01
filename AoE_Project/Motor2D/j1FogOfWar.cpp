@@ -26,25 +26,15 @@ void j1FogOfWar::Init()
 
 bool j1FogOfWar::PostUpdate()
 {
-
 	if (update_timer.Read() > UPDATE_RATE)
 	{
 		std::vector<Unit*> units;
 		uint size = App->entities_manager->units_quadtree.CollectCandidates(units, App->render->camera_viewport);
 		for (uint k = 0; k < size; k++)
 		{
-			if (units[k]->GetDiplomacy() != ALLY)continue;
-
-			if (units[k]->GetAction() != WALK)entities_static_update.push_back(units[k]);
-			else entities_static_update.push_back(units[k]);
+			if (units[k]->GetDiplomacy() == ALLY)entities_static_update.push_back(units[k]);
 		}
 		update_timer.Start();
-
-		size = cells_in_screen.size();
-		for (uint k = 0; k < size; k++)
-		{
-			if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA)cells_in_screen[k]->alpha = MID_ALPHA;
-		}
 	}
 
 	while (!entities_release.empty())
@@ -53,22 +43,8 @@ bool j1FogOfWar::PostUpdate()
 		entities_release.pop_back();
 	}
 
-	j1Timer time;
-	std::list<Entity*> entitites_updated;
-	while (time.Read() < UPDATE_TIME * 0.8 && !entities_dinamic_update.empty())
-	{
-		entities_dinamic_update.front()->ResetFogAround();
-		entitites_updated.push_back(entities_dinamic_update.front());
-		entities_dinamic_update.pop_front();
-	}
-	while (!entitites_updated.empty())
-	{
-		entitites_updated.front()->CleanFogAround();
-		entitites_updated.pop_front();
-	}
-
 	j1Timer timer;
-	while (timer.Read() < UPDATE_TIME && !entities_static_update.empty())
+	while (timer.Read() < UPDATE_TIME  && !entities_static_update.empty())
 	{
 		entities_static_update.back()->CheckFogAround();
 		entities_static_update.pop_back();
@@ -79,8 +55,8 @@ bool j1FogOfWar::PostUpdate()
 	uint size = cells_in_screen.size();
 	for (uint k = 0; k < size; k++)
 	{
+		if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA)cells_in_screen[k]->alpha = MID_ALPHA;
 		if(!cells_in_screen[k]->locked)App->render->FogBlit(cells_in_screen[k]->position, alpha_cell_size, cells_in_screen[k]->alpha);
-		
 	}
 
 	return true;
@@ -106,6 +82,9 @@ bool j1FogOfWar::CleanUp()
 
 bool j1FogOfWar::Load(pugi::xml_node& data)
 {
+
+	return true;
+
 	if (fog_layer == nullptr || alpha_layer == nullptr)
 	{
 		LOG("Can't load fog of war!");
@@ -207,7 +186,7 @@ void j1FogOfWar::GenerateFogOfWar()
 
 	//Build fog quadtree boundaries & limit
 	fog_quadtree.SetBoundaries({ (int)mid_map_lenght, 0, (int)alpha_cell_size * (int)alpha_layer_width, (int)alpha_cell_size * (int)alpha_layer_height });
-	fog_quadtree.SetMaxObjects(120);
+	fog_quadtree.SetMaxObjects(800);
 	fog_quadtree.SetDebugColor({ 255,255,0,255 });
 
 	j1Timer time;
@@ -293,7 +272,7 @@ std::vector<FogTile*> j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type
 
 void j1FogOfWar::CheckEntityFog(Entity * target)
 {
-	entities_dinamic_update.push_back(target);
+	entities_static_update.push_back(target);
 }
 
 void j1FogOfWar::ReleaseEntityFog(Entity * target)
