@@ -3,13 +3,26 @@
 
 #include "j1Module.h"
 #include "p2Point.h"
+#include "BaseEntities.h"
 #include <queue>
 #define INVALID_WALK_CODE 255
+#define MAX_PATH_TIME 255
 
 struct PathList;
 struct Node;
 struct SDL_Texture;
 struct PathNode;
+struct ToPath
+{
+	ToPath( Unit* unit, const iPoint& destination, const iPoint& target = { -1,-1 }, bool priority = true);
+	~ToPath();
+	Unit* unit = nullptr;
+	iPoint destination = { -1,-1 };
+	iPoint target = { -1,-1 };
+	bool priority = true;
+	bool operator ==(const ToPath& unit)const ;
+
+};
 ///class Pathfinding ------------------
 class j1Pathfinding : public j1Module
 {
@@ -20,7 +33,7 @@ public:
 
 	// Called before the first frame
 	bool Start();
-
+	bool PreUpdate();
 	// Called before quitting
 	bool CleanUp();
 	void SetMap(uint width, uint height);
@@ -48,6 +61,7 @@ public:
 	//Functionality ---------
 	//Methods used during the paths creation to work with map data
 	// Check if the cell coordinate is walkable
+
 	void	InitClusterAbstraction();
 	bool	IsWalkable(const iPoint& destination)const;
 	// Check if the boundaries of x coordinate are walkable
@@ -58,9 +72,10 @@ public:
 	// Create a path with two nodes
 
 	std::vector<iPoint>* SimpleAstar(const iPoint& origin, const iPoint& goal);
-
 	// Create a path with two coordinates
-
+	std::list<ToPath> to_path;
+	void PushPath( Unit* unit, iPoint destination);
+	j1Timer pathTime;
 };
 /// -----------------------------------
 

@@ -2,6 +2,7 @@
 #include "j1Map.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "Actions_Unit.h"
 #include "p2Log.h"
 
 ///class Pathfinding ------------------
@@ -31,8 +32,33 @@ bool j1Pathfinding::Start()
 	return true;
 }
 
+bool j1Pathfinding::PreUpdate()
+{
+	if (to_path.empty())return true;
+
+	pathTime.Start();
+	std::list<ToPath>::const_iterator unit_it = to_path.begin();
+
+	while (!to_path.empty())
+	{
+		if (pathTime.Read() > MAX_PATH_TIME) return true;
+		ToPath current_unit=unit_it._Ptr->_Myval;
+		std::vector<iPoint>* path= SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
+		if(current_unit.priority)
+			current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
+		else
+			current_unit.unit->AddAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
+
+		unit_it++;
+		to_path.pop_front();
+	}
+
+	return true;
+}
+
 bool j1Pathfinding::CleanUp()
 {
+	to_path.clear();
 	App->tex->UnLoad(path_texture);
 	RELEASE_ARRAY(path_nodes);
 	return true;
@@ -205,6 +231,13 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 	return nullptr;
 }
 
+void j1Pathfinding::PushPath( Unit * unit, iPoint destination)
+{
+	ToPath getUnit(unit, destination);
+	to_path.remove(getUnit);
+	to_path.push_back(getUnit);
+}
+
 /// -----------------------------------
 
 
@@ -347,20 +380,7 @@ float PathNode::Score() const
 
 int PathNode::CalculateF(const iPoint & destination)
 {
-	/*switch (parent->pos.DistanceOctile(pos))
-	{
-	case 10:
-		g = parent->g + 10;
-		break;
-	case 14:
-		g = parent->g + 14; // we assume here that our parent is in diagonal from us
-		break;
-	default:
-		g = parent->g + 14; // we assume here that our parent is in diagonal from us
 
-		break;
-	}
-	*/
 	g = parent->g + parent->pos.DistanceOctile(pos);
 	h = pos.DistanceOctile(destination) * 10;
 	return  g + h;
@@ -384,38 +404,17 @@ bool PathNode::operator!=(const PathNode & node) const
 /// -----------------------------------
 
 
-///Struct PathList --------------------
-//Functionality =============
-/*
-std::list<PathNode>::iterator PathList::Find(const iPoint & point)
+
+ToPath::ToPath( Unit * getUnit, const iPoint & destination, const iPoint& target,bool priority) :unit(getUnit), destination(destination), target(target), priority(priority)
 {
-	std::list<PathNode*>::iterator item = list.begin();
-	while (item != list.end())
-	{
-		if (item->pos == point) {
-			return item;
-		}
-		++item;
-	}
-	
 }
-*/
-/*
-PathNode* PathList::GetNodeLowestScore() const
+
+ToPath::~ToPath()
 {
-	PathNode* ret = nullptr;
-	std::list<PathNode>::const_reverse_iterator item = list.crbegin();
-	float min = 65535;
-	while (item != list.crend())
-	{
-		if (item->Score() < min)
-		{
-			min = item->Score();
-			ret = &item.base()._Ptr->_Prev->_Myval;
-		}
-		++item;
-	}
-	return ret;
+	unit = nullptr;
 }
-*/
-/// -----------------------------------
+
+bool ToPath::operator==(const ToPath& unit)const
+{
+	return *this->unit == *unit.unit;
+}

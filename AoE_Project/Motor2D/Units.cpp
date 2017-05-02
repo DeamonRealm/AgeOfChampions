@@ -6,6 +6,7 @@
 #include "Hud_GamePanel.h"
 #include "j1Player.h"
 #include "j1FogOfWar.h"
+#include "j1Pathfinding.h"
 
 /// Class Villager --------------------
 //Constructors ========================
@@ -137,7 +138,9 @@ bool Villager::Recollect(Resource** target)
 	if (!attack_area.Intersects((*target)->GetInteractArea()))
 	{
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
+		App->pathfinding->PushPath(this, goal);
+
+		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
 		return false;
 	}
 
@@ -194,7 +197,9 @@ bool Villager::SaveResources(Building** save_point)
 	if (!attack_area.Intersects((*save_point)->GetInteractArea()))
 	{
 		iPoint intersect_point = attack_area.NearestPoint((*save_point)->GetInteractArea());
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, iPoint(intersect_point.x, intersect_point.y)));
+		App->pathfinding->PushPath(this, intersect_point);
+
+		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, iPoint(intersect_point.x, intersect_point.y)));
 		return false;
 	}
 

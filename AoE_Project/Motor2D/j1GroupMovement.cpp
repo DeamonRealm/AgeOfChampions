@@ -513,8 +513,12 @@ std::vector<iPoint>* j1GroupMovement::LeaderPath()
 
 void Formation::SetFormation(int size)
 {
-	if (size <= 40 && size > 10) {
+	if (size <= 40 && size > 27) {
 		width = 10;
+		height = 3;
+	}
+	if (size <= 27 && size > 10) {
+		width = 7;
 		height = 3;
 	}
 	if (size <= 10&& size > 5) {

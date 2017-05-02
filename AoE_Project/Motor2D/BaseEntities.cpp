@@ -1146,9 +1146,12 @@ bool Unit::AttackUnit(Unit** target)
 
 		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider());
 
+		App->pathfinding->PushPath(this, goal);
+		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
+		*/
 		return false;
 	
 	
@@ -1201,10 +1204,13 @@ bool Unit::HealUnit(Unit ** target)
 	{
 
 		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider() + attack_area.GetRad());
-
+		App->pathfinding->PushPath(this, goal);
+		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
+	
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
+		*/
 		return false;
 	}
 
@@ -1244,9 +1250,12 @@ bool Unit::AttackBuilding(Building ** target)
 	{
 
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
+		App->pathfinding->PushPath(this, goal);
+		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this), TASK_CHANNELS::SECONDARY);
+		*/
 		return false;
 	}
 
