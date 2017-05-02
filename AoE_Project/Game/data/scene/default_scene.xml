@@ -37,56 +37,56 @@
       <unit unit_type="13" diplomacy="1" life="25" pos_x="-321" pos_y="4435" selected="false" res_collected_type="4" current_res="0">
 				<actions>
 					<primary>
-						<action type="9" tar_pos_x="-288" tar_pos_y="4632" tar_type="4" />
+						<!--<action type="9" tar_pos_x="-288" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-384" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-480" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-576" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-672" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-768" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-864" tar_pos_y="4632" tar_type="4" />
-            <action type="9" tar_pos_x="-960" tar_pos_y="4632" tar_type="4" />
+            <action type="9" tar_pos_x="-960" tar_pos_y="4632" tar_type="4" />-->
 					</primary>
 				</actions>
 			</unit>
 			<unit unit_type="13" diplomacy="1" life="25" pos_x="-407" pos_y="4434" selected="false" res_collected_type="4" current_res="0">
 				<actions>
 					<primary>
-						<action type="9" tar_pos_x="-288" tar_pos_y="4632" tar_type="4" />
+						<!--<action type="9" tar_pos_x="-288" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-384" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-480" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-576" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-672" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-768" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-864" tar_pos_y="4632" tar_type="4" />
-            <action type="9" tar_pos_x="-960" tar_pos_y="4632" tar_type="4" />
+            <action type="9" tar_pos_x="-960" tar_pos_y="4632" tar_type="4" />-->
 					</primary>
 				</actions>
 			</unit>
       <unit unit_type="13" diplomacy="1" life="25" pos_x="-307" pos_y="4434" selected="false" res_collected_type="4" current_res="0">
 				<actions>
 					<primary>
-						<action type="9" tar_pos_x="-288" tar_pos_y="4632" tar_type="4" />
+						<!--<action type="9" tar_pos_x="-288" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-384" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-480" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-576" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-672" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-768" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-864" tar_pos_y="4632" tar_type="4" />
-            <action type="9" tar_pos_x="-960" tar_pos_y="4632" tar_type="4" />
+            <action type="9" tar_pos_x="-960" tar_pos_y="4632" tar_type="4" />-->
 					</primary>
 				</actions>
 			</unit>
       <unit unit_type="13" diplomacy="1" life="25" pos_x="-357" pos_y="4434" selected="false" res_collected_type="4" current_res="0">
 				<actions>
 					<primary>
-						<action type="9" tar_pos_x="-288" tar_pos_y="4632" tar_type="4" />
+						<!--<action type="9" tar_pos_x="-288" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-384" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-480" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-576" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-672" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-768" tar_pos_y="4632" tar_type="4" />
             <action type="9" tar_pos_x="-864" tar_pos_y="4632" tar_type="4" />
-            <action type="9" tar_pos_x="-960" tar_pos_y="4632" tar_type="4" />
+            <action type="9" tar_pos_x="-960" tar_pos_y="4632" tar_type="4" />-->
 					</primary>
 				</actions>
 			</unit>

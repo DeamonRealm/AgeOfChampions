@@ -106,6 +106,7 @@ bool Circle::IsIn(const fPoint* loc) const
 
 bool Circle::Intersects(const SDL_Rect * rect) const
 {
+	if (rect == nullptr)return false;
 	float dx = abs(position.x - (rect->x + rect->w * 0.5));
 	float dy = abs(position.y - (rect->y + rect->h * 0.5));
 
@@ -127,6 +128,7 @@ bool Circle::Intersects(const SDL_Rect * rect) const
 
 bool Circle::Intersects(const Circle * target) const
 {
+	if (target == nullptr)return false;
 	iPoint vec(target->position.x - position.x, target->position.y - position.y);
 	fPoint cpy(vec.x, vec.y);
 	cpy.Norm();
@@ -137,6 +139,7 @@ bool Circle::Intersects(const Circle * target) const
 }
 bool Circle::Overlap(const Circle* target) const
 {
+	if (target == nullptr)return false;
 	int radius = GetRad() + target->GetRad()+2;
 	int deltaX = GetPosition().x - target->GetPosition().x;
 	int deltaY = GetPosition().y - target->GetPosition().y;
@@ -144,6 +147,7 @@ bool Circle::Overlap(const Circle* target) const
 }
 bool Circle::Intersects(const Rectng * target) const
 {
+	if (target == nullptr)return false;
 	iPoint vec = (target->GetPosition() + target->GetDisplacement()) - position;
 	fPoint norm(vec.x,vec.y);
 	norm.Norm();
@@ -155,6 +159,7 @@ bool Circle::Intersects(const Rectng * target) const
 
 bool Circle::Intersects(const iPoint* point) const
 {
+	if (point == nullptr)return false;
 	iPoint loc(point->x - position.x, point->y - position.y);
 	return (abs(loc.x) <= rad && abs(loc.y) <= rad);
 }
@@ -375,6 +380,7 @@ bool PivotedRect::IsIn(const fPoint* loc) const
 }
 bool PivotedRect::Intersects(const SDL_Rect* rect) const
 {
+	if (rect == nullptr)return false;
 	iPoint n_vertex[4];
 	for (uint k = 0; k < 4; k++)n_vertex[k] = vertex[k];
 
@@ -464,6 +470,7 @@ bool Triangle::IsIn(const fPoint* loc) const
 
 bool Triangle::Intersects(const SDL_Rect * rect) const
 {
+	if (rect == nullptr)return false;
 	SDL_Point pos = { position.x,position.y };
 	SDL_Point A = { v_A.x,v_A.y };
 	SDL_Point B = { v_B.x,v_B.y };
