@@ -49,7 +49,6 @@ protected:
 
 	//Stats bonus for level
 	uint	attack_for_level = 0;
-	uint	armor_for_level = 0;
 	uint	life_for_level = 0;
 
 	uint	range_for_level = 0;
@@ -97,7 +96,6 @@ public:
 	void	SetAttackForLevel(uint atk_for_lvl);
 	void	SetRangeForLevel(uint rng_for_lvl);
 	void	SetDefenseForLevel(float def_for_lvl);
-	void	SetArmorForLevel(uint arm_for_lvl);
 	void	SetSpeedForLevel(float spd_for_lvl);
 	void	SetViewAreaForLevel(uint view_for_level);
 	void	SetExperience(int exp);
@@ -110,7 +108,6 @@ public:
 	uint			GetAttackForLevel()const;
 	uint			GetRangeForLevel()const;
 	float			GetDefenseForLevel()const;
-	float			GetArmorForLevel()const;
 	float			GetSpeedForLevel()const;
 	uint			GetViewAreaForLevel()const;
 	bool			GetAbilityChosen(uint index)const;

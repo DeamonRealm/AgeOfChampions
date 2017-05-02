@@ -306,7 +306,7 @@ Unit::Unit() :Entity()
 
 Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), soft_collider(copy.soft_collider), hard_collider(copy.hard_collider), view_area(copy.view_area),
 speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
-attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
+attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus),
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time), unit_experience(copy.unit_experience)
 {
 
@@ -1513,6 +1513,11 @@ void Unit::SetUnitType(UNIT_TYPE type)
 	unit_type = type;
 }
 
+void Unit::SetUnitClass(UNIT_CLASS type)
+{
+	unit_class = type;
+}
+
 void Unit::SetMark(const Circle & new_mark)
 {
 	mark = new_mark;
@@ -1628,21 +1633,6 @@ void Unit::SetLifeBuff(float hp_buff)
 	life_buff += hp_buff;
 }
 
-void Unit::SetArmor(uint arm)
-{
-	armor = arm;
-}
-
-void Unit::SetArmorBonus(uint arm_bonus)
-{
-	armor_bonus = arm_bonus;
-}
-
-void Unit::SetArmorBuff(float arm_buff)
-{
-	armor_buff = arm_buff;
-}
-
 void Unit::SetFoodCost(uint food_cst)
 {
 	food_cost = food_cst;
@@ -1705,7 +1695,6 @@ void Unit::SetUpgrade(Unit * upgraded)
 	attack_type = upgraded->attack_type;
 
 	defense = upgraded->defense;
-	armor = upgraded->armor;
 
 	attack_area = upgraded->attack_area;
 }
@@ -1720,6 +1709,11 @@ void Unit::SetUnitExperience(uint value)
 UNIT_TYPE Unit::GetUnitType()const
 {
 	return unit_type;
+}
+
+UNIT_CLASS Unit::GetUnitClass() const
+{
+	return unit_class;
 }
 
 const Circle& Unit::GetMark() const
@@ -1837,17 +1831,6 @@ float Unit::GetDefenseBuff() const
 	return defense_buff;
 }
 
-uint Unit::GetArmor() const
-{
-	return armor;
-}
-
-uint Unit::GetArmorBonus() const
-{
-	return armor_bonus;
-}
-
-
 uint Unit::GetMaxLife() const
 {
 	return max_life + life_buff;
@@ -1855,10 +1838,6 @@ uint Unit::GetMaxLife() const
 uint Unit::GetBaseMaxLife() const
 {
 	return max_life;
-}
-float Unit::GetArmorBuff() const
-{
-	return armor_buff;
 }
 
 uint Unit::GetFoodCost() const

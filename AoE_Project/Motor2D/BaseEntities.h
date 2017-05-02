@@ -57,11 +57,11 @@ enum UNIT_TYPE
 };
 enum UNIT_CLASS
 {
-	CIVILIAN = 0,
+	NO_CLASS = 0,
+	CIVILIAN,
 	INFANTRY,
 	ARCHERY,
-	CAVALRY,
-	SIEGE
+	CAVALRY
 };
 enum RESOURCE_TYPE
 {
@@ -316,7 +316,7 @@ protected:
 
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
-
+	UNIT_CLASS		unit_class = NO_CLASS;
 	Circle			mark;
 	Circle			soft_collider;
 	Circle			hard_collider;
@@ -344,13 +344,10 @@ protected:
 	uint			attack_rate_buff = 0;
 
 	ATTACK_TYPE		attack_type = NO_ATTACK;
-	//Defense/Armor ----
+	//Defense  ---------
 	uint			defense = 0; /*Used in melee damage*/
 	uint			defense_bonus = 0;
 	float			defense_buff = 0;
-	uint			armor = 0; /*Used in distance damage*/
-	uint			armor_bonus = 0;
-	float			armor_buff = 0;
 	//Resources --------
 	uint			food_cost = 0;
 	uint			wood_cost = 0;
@@ -417,6 +414,7 @@ public:
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetFutureAction(const iPoint& future_position);
 	void	SetUnitType(UNIT_TYPE type);
+	void	SetUnitClass(UNIT_CLASS type);
 
 	void	SetMark(const Circle& new_mark);
 	void	SetSoftCollider(const Circle& new_soft_collider);
@@ -443,9 +441,6 @@ public:
 	void	SetDefenseBuff(float def_buff);
 	void	SetVisionBuff(float vis_buff);
 	void	SetLifeBuff(float hp_buff);
-	void	SetArmor(uint arm);
-	void	SetArmorBonus(uint arm_bonus);
-	void	SetArmorBuff(float arm_buff);
 	void	SetFoodCost(uint food_cst);
 	void	SetWoodCost(uint wood_cst);
 	void	SetGoldCost(uint coin_cst);
@@ -456,6 +451,7 @@ public:
 	void	SetUnitExperience(uint value);
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
+	UNIT_CLASS		GetUnitClass()const;
 	const Circle&	GetMark()const;
 	const Circle&	GetSoftCollider()const;
 	const Circle&	GetHardCollider()const;
@@ -486,9 +482,6 @@ public:
 	uint			GetDefense()const;
 	uint			GetDefenseBonus()const;
 	float			GetDefenseBuff()const;
-	uint			GetArmor()const;
-	uint			GetArmorBonus()const;
-	float			GetArmorBuff()const;
 	uint			GetFoodCost()const;
 	uint			GetWoodCost()const;
 	uint			GetGoldCost()const;

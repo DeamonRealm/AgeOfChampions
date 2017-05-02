@@ -934,36 +934,37 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Name*/			new_def->SetName(unit_node->attribute("name").as_string());
 	/*Entity Type*/		new_def->SetEntityType(UNIT);
 	/*Unit Type*/		new_def->SetUnitType(unit_type);
+	/*Unit Class*/		new_def->SetUnitClass(App->animator->StrToUnitClassEnum(unit_node->attribute("unit_class").as_string()));
 	/*Attack Type*/		new_def->SetAttackType(App->animator->StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
 	//Unit Primitives -------
 	/*Vision*/			Circle vision;
 	/*Vision Radius*/	vision.SetRad(unit_node->attribute("vision_rad").as_uint());
 	/*Vision Color*/	vision.SetColor({ 0,255,255,255 });
-	new_def->SetVision(vision);
+						new_def->SetVision(vision);
 	/*Mark*/			Circle mark;
 	/*Mark Radius*/		mark.SetRad(unit_node->attribute("mark_rad").as_uint());
 	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
-	new_def->SetMark(mark);
+						new_def->SetMark(mark);
 	/*Soft.C*/			Circle soft_collider;
 	/*Soft.C Radius*/	soft_collider.SetRad(unit_node->attribute("soft_rad").as_uint());
 	/*Soft.C Color*/	soft_collider.SetColor({ 255,0,255,255 });
-	new_def->SetSoftCollider(soft_collider);
+						new_def->SetSoftCollider(soft_collider);
 	/*Hard.C*/			Circle hard_collider;
 	/*Hard.C Radius*/	hard_collider.SetRad(unit_node->attribute("hard_rad").as_uint());
 	/*Hard.C Color*/	hard_collider.SetColor({ 255,0,0,255 });
-	new_def->SetHardCollider(hard_collider);
+						new_def->SetHardCollider(hard_collider);
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = unit_node->attribute("selection_x").as_int();
 	/*S.Rect Y*/		selection_rect.y = unit_node->attribute("selection_y").as_int();
 	/*S.Rect W*/		selection_rect.w = unit_node->attribute("selection_w").as_int();
 	/*S.Rect H*/		selection_rect.h = unit_node->attribute("selection_h").as_int();
-	new_def->SetSelectionRect(selection_rect);
+						new_def->SetSelectionRect(selection_rect);
 	/*Icon Rect*/		SDL_Rect icon_rect;
 	/*I.Rect X*/		icon_rect.x = unit_node->attribute("icon_x").as_int();
 	/*I.Rect Y*/		icon_rect.y = unit_node->attribute("icon_y").as_int();
 	/*I.Rect W*/		icon_rect.w = unit_node->attribute("icon_w").as_int();
 	/*I.Rect H*/		icon_rect.h = unit_node->attribute("icon_h").as_int();
-	new_def->SetIcon(icon_rect);
+						new_def->SetIcon(icon_rect);
 
 	//Unit Metrics ----------
 	/*Max Life*/		new_def->SetMaxLife(unit_node->attribute("max_life").as_uint());
@@ -976,12 +977,10 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Siege Points*/	new_def->SetSiegeHitPoints(unit_node->attribute("siege_hitpoints").as_uint());
 	/*Attack Rate*/		new_def->SetAttackRate(unit_node->attribute("attack_rate").as_uint());
 	/*Attack Area*/		Circle area({ 0,0 }, unit_node->attribute("attack_range").as_uint(), { 0,0 });
-	area.SetColor({ 0, 0, 255, 255 });
-	new_def->SetAttackArea(area);
+						area.SetColor({ 0, 0, 255, 255 });
+						new_def->SetAttackArea(area);
 	/*Defense*/			new_def->SetDefense(unit_node->attribute("defense").as_uint());
 	/*Defense Bonus*/	new_def->SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
-	/*Armor*/			new_def->SetArmor(unit_node->attribute("armor").as_uint());
-	/*Armor Bonus*/		new_def->SetArmorBonus(unit_node->attribute("armor_bonus").as_uint());
 	/*Food Cost*/		new_def->SetFoodCost(unit_node->attribute("food_cost").as_uint());
 	/*Wood Cost*/		new_def->SetWoodCost(unit_node->attribute("wood_cost").as_uint());
 	/*Gold Cost*/		new_def->SetGoldCost(unit_node->attribute("gold_cost").as_uint());
@@ -1002,12 +1001,12 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Attakc Triangle*/			Triangle atk_triangle;
 		/*Atk Triangle Length*/		atk_triangle.SetLength(unit_node->attribute("atk_triangle_length").as_uint());
 		/*Atk Triangle Width*/		atk_triangle.SetWidthAngle(unit_node->attribute("atk_triangle_width_angle").as_float());
-		atk_triangle.SetXAngle(12.0);
-		((Warrior*)new_def)->SetSpecialAttackArea(atk_triangle);
-		Circle circle;
-		circle.SetColor({ 100, 100, 100, 255 });
+									atk_triangle.SetXAngle(12.0);
+									((Warrior*)new_def)->SetSpecialAttackArea(atk_triangle);
+									Circle circle;
+									circle.SetColor({ 100, 100, 100, 255 });
 		/*Ability lvl 3 area*/		circle.SetRad(unit_node->attribute("area_ability_lvl_3").as_uint());
-		((Warrior*)new_def)->SetAreaAbilityLvl3(circle);
+									((Warrior*)new_def)->SetAreaAbilityLvl3(circle);
 		/*Ability lvl 2 Atk Val*/	((Warrior*)new_def)->SetAbility_lvl_2_AttackValue(unit_node->attribute("ability_lvl_2_attack_value").as_uint());
 		/*Ability lvl 2 Stun Val*/	((Warrior*)new_def)->SetAbility_lvl_2_StunValue(unit_node->attribute("ability_lvl_2_stun_value").as_uint());
 		chmp = true;
@@ -1017,29 +1016,28 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Attakc Triangle*/			Triangle atk_triangle;
 		/*Atk Triangle Length*/		atk_triangle.SetLength(unit_node->attribute("area_triangle_length").as_uint());
 		/*Atk Triangle Width*/		atk_triangle.SetWidthAngle(unit_node->attribute("area_triangle_width_angle").as_float());
-		atk_triangle.SetXAngle(unit_node->attribute("area_triangle_X_angle").as_float());
-		atk_triangle.SetColor({ 0, 0, 0, 255 });
-		((Hunter*)new_def)->SetSpecialAttackArea(atk_triangle);
+									atk_triangle.SetXAngle(unit_node->attribute("area_triangle_X_angle").as_float());
+									atk_triangle.SetColor({ 0, 0, 0, 255 });
+									((Hunter*)new_def)->SetSpecialAttackArea(atk_triangle);
 		/*Circle Spell*/			Circle temp_circle;
-		temp_circle.SetRad(unit_node->attribute("area_attack_skill_B_lvl_2").as_uint());
-		temp_circle.SetColor({ 0,50,50,255 });
-		((Hunter*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_2");
-		temp_circle.SetRad(unit_node->attribute("area_attack_skill_A_lvl_3").as_uint());
-		temp_circle.SetColor({ 0,50,50,255 });
-		((Hunter*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
-		PivotedRect temp_rect;
-		temp_rect.SetPivotDistance(unit_node->attribute("rect_pivot_distance").as_uint());
-		temp_rect.SetWidth(unit_node->attribute("rect_attack_w").as_uint());
-		temp_rect.SetHeight(unit_node->attribute("rect_attack_h").as_uint());
-		temp_rect.SetColor({ 50,255,150,255 });
-		((Hunter*)new_def)->SetSpecialAttackArea(temp_rect);
-		((Hunter*)new_def)->SetAbility_lvl_2_A_AttackValue(unit_node->attribute("ability_lvl_2_skill_A_attack_value").as_uint());
-		((Hunter*)new_def)->SetAbility_lvl_2_B_AttackValue(unit_node->attribute("ability_lvl_2_skill_B_attack_value").as_uint());
-		((Hunter*)new_def)->SetAbility_lvl_3_A_AttackValue(unit_node->attribute("ability_lvl_3_skill_A_attack_value").as_uint());
-		((Hunter*)new_def)->SetAbility_lvl_3_B_AttackValue(unit_node->attribute("ability_lvl_3_skill_B_attack_value").as_uint());
-		((Hunter*)new_def)->SetAreaLimitLvl2(unit_node->attribute("ability_lvl_2_cooldown").as_uint());
-		((Hunter*)new_def)->SetAreaLimitLvl3(unit_node->attribute("ability_lvl_3_cooldown").as_uint());
-
+									temp_circle.SetRad(unit_node->attribute("area_attack_skill_B_lvl_2").as_uint());
+									temp_circle.SetColor({ 0,50,50,255 });
+									((Hunter*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_2");
+									temp_circle.SetRad(unit_node->attribute("area_attack_skill_A_lvl_3").as_uint());
+									temp_circle.SetColor({ 0,50,50,255 });
+									((Hunter*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
+									PivotedRect temp_rect;
+									temp_rect.SetPivotDistance(unit_node->attribute("rect_pivot_distance").as_uint());
+									temp_rect.SetWidth(unit_node->attribute("rect_attack_w").as_uint());
+									temp_rect.SetHeight(unit_node->attribute("rect_attack_h").as_uint());
+									temp_rect.SetColor({ 50,255,150,255 });
+									((Hunter*)new_def)->SetSpecialAttackArea(temp_rect);
+									((Hunter*)new_def)->SetAbility_lvl_2_A_AttackValue(unit_node->attribute("ability_lvl_2_skill_A_attack_value").as_uint());
+									((Hunter*)new_def)->SetAbility_lvl_2_B_AttackValue(unit_node->attribute("ability_lvl_2_skill_B_attack_value").as_uint());
+									((Hunter*)new_def)->SetAbility_lvl_3_A_AttackValue(unit_node->attribute("ability_lvl_3_skill_A_attack_value").as_uint());
+									((Hunter*)new_def)->SetAbility_lvl_3_B_AttackValue(unit_node->attribute("ability_lvl_3_skill_B_attack_value").as_uint());
+									((Hunter*)new_def)->SetAreaLimitLvl2(unit_node->attribute("ability_lvl_2_cooldown").as_uint());
+									((Hunter*)new_def)->SetAreaLimitLvl3(unit_node->attribute("ability_lvl_3_cooldown").as_uint());
 
 		chmp = true;
 
@@ -1047,20 +1045,19 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	else if (unit_type == WIZARD_CHMP)
 	{
 		/*Circle Spell*/			Circle temp_circle;
-		int limit = 0;
+									int limit = 0;
 		/*limit Spell_2*/			limit = unit_node->attribute("area_limit_spell_2").as_int();
-		((Wizard*)new_def)->SetAreaLimitLvl2(limit);
+									((Wizard*)new_def)->SetAreaLimitLvl2(limit);
 		/*area Spell_2*/			temp_circle.SetRad(unit_node->attribute("area_attack_spell_2").as_uint());
-		temp_circle.SetColor({ 0,50,50,255 });
-		((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_2");
+									temp_circle.SetColor({ 0,50,50,255 });
+									((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_2");
 		/*limit Spell_3*/			limit = unit_node->attribute("area_limit_spell_3").as_int();
-		((Wizard*)new_def)->SetAreaLimitLvl3(limit);
+									((Wizard*)new_def)->SetAreaLimitLvl3(limit);
 		/*area Spell_3*/			temp_circle.SetRad(unit_node->attribute("area_attack_spell_3").as_uint());
-		temp_circle.SetColor({ 0,50,50,255 });
-		((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
-		((Wizard*)new_def)->SetAbility_lvl_3_AttackValue(unit_node->attribute("ability_lvl_3_attack_value").as_int());
-
-		((Wizard*)new_def)->SetAbility_lvl_2_HealValue(unit_node->attribute("ability_lvl_2_heal_value").as_int());
+									temp_circle.SetColor({ 0,50,50,255 });
+									((Wizard*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
+									((Wizard*)new_def)->SetAbility_lvl_3_AttackValue(unit_node->attribute("ability_lvl_3_attack_value").as_int());
+									((Wizard*)new_def)->SetAbility_lvl_2_HealValue(unit_node->attribute("ability_lvl_2_heal_value").as_int());
 
 		chmp = true;
 
@@ -1069,8 +1066,8 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	if (chmp)
 	{
 		/*Buff Area*/				Circle buff_area({ 0,0 }, unit_node->attribute("buff_area_rad").as_uint());
-		buff_area.SetColor({ 255,50,50,255 });
-		((Champion*)new_def)->SetBuffArea(buff_area);
+									buff_area.SetColor({ 255,50,50,255 });
+									((Champion*)new_def)->SetBuffArea(buff_area);
 		/*level 2 cap*/				((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("experience_lvl_2").as_uint());
 		/*level 3 cap*/				((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("experience_lvl_3").as_uint());
 		/*Ability lvl 3 Cooldown*/	((Champion*)new_def)->SetAbility_lvl_2_Cooldown(unit_node->attribute("ability_lvl_2_cooldown").as_uint());
@@ -1078,7 +1075,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Attack for level*/		((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("attack_for_level").as_uint());
 		/*Range for level*/			((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("range_for_level").as_uint());
 		/*Life for level*/			((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("life_for_level").as_uint());
-		/*Armor for level*/			((Champion*)new_def)->SetArmorForLevel(unit_node->attribute("armor_for_level").as_uint());
 		/*Defense for level*/		((Champion*)new_def)->SetDefenseForLevel(unit_node->attribute("defense_for_level").as_float());
 		/*Speed for level*/			((Champion*)new_def)->SetSpeedForLevel(unit_node->attribute("speed_for_level").as_float());
 		/*View Area for level*/		((Champion*)new_def)->SetViewAreaForLevel(unit_node->attribute("view_area_for_level").as_uint());
@@ -1129,22 +1125,22 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_no
 	/*Mark Width*/		mark.SetWidth(resource_node->attribute("mark_w").as_uint());
 	/*Mark Height*/		mark.SetHeight(resource_node->attribute("mark_h").as_uint());
 	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
-	new_def->SetMark(mark);
+						new_def->SetMark(mark);
 	/*Interaction Area*/Circle area({ 0,0 }, resource_node->attribute("interaction_rad").as_uint(), { 0,0 });
-	area.SetColor({ 0, 0, 255, 255 });
-	new_def->SetInteractArea(area);
+						area.SetColor({ 0, 0, 255, 255 });
+						new_def->SetInteractArea(area);
 	/*Selection Rect*/	SDL_Rect selection_rect;
 	/*S.Rect X*/		selection_rect.x = resource_node->attribute("selection_x").as_int();
 	/*S.Rect Y*/		selection_rect.y = resource_node->attribute("selection_y").as_int();
 	/*S.Rect W*/		selection_rect.w = resource_node->attribute("selection_w").as_int();
 	/*S.Rect H*/		selection_rect.h = resource_node->attribute("selection_h").as_int();
-	new_def->SetSelectionRect(selection_rect);
+						new_def->SetSelectionRect(selection_rect);
 	/*Icon Rect*/		SDL_Rect icon_rect;
 	/*I.Rect X*/		icon_rect.x = resource_node->attribute("icon_x").as_int();
 	/*I.Rect Y*/		icon_rect.y = resource_node->attribute("icon_y").as_int();
 	/*I.Rect W*/		icon_rect.w = resource_node->attribute("icon_w").as_int();
 	/*I.Rect H*/		icon_rect.h = resource_node->attribute("icon_h").as_int();
-	new_def->SetIcon(icon_rect);
+						new_def->SetIcon(icon_rect);
 
 	//Resource Metrics ------
 	/*Max Resources*/	new_def->SetMaxLife(resource_node->attribute("max_resources").as_uint());
@@ -1181,21 +1177,21 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	/*Vision*/			Circle vision;
 	/*Vision Radius*/	vision.SetRad(building_node->attribute("vision_rad").as_uint());
 	/*Vision Color*/	vision.SetColor({ 0,255,255,255 });
-	new_def->SetVision(vision);
+						new_def->SetVision(vision);
 	/*Mark*/			Rectng mark;
 	/*Mark Width*/		mark.SetWidth(building_node->attribute("mark_w").as_uint());
 	/*Mark Height*/		mark.SetHeight(building_node->attribute("mark_h").as_uint());
 	/*Mark Displace*/	iPoint displacement(building_node->attribute("mark_x").as_int(), building_node->attribute("mark_y").as_int());
-	mark.SetDisplacement(displacement);
+						mark.SetDisplacement(displacement);
 	/*Mark Color*/		mark.SetColor({ 55,255,255,255 });
-	new_def->SetMark(mark);
+						new_def->SetMark(mark);
 	/*Interaction Area*/Rectng area;
 	/*I.Area Width*/	area.SetWidth(building_node->attribute("interaction_area_w").as_uint());
 	/*I.Area Height*/	area.SetHeight(building_node->attribute("intaraction_area_h").as_uint());
 	/*I.Area Displace*/	displacement.create(building_node->attribute("interaction_area_x").as_int(), building_node->attribute("intaraction_area_y").as_int());
-	area.SetDisplacement(displacement);
+						area.SetDisplacement(displacement);
 	/*I.Area Color*/	area.SetColor({ 0,0,255,255 });
-	new_def->SetInteractArea(area);
+						new_def->SetInteractArea(area);
 	/*W. in Tiles*/		new_def->SetWidthInTiles(building_node->attribute("width_in_tiles").as_uint());
 	/*H. in Tiles*/		new_def->SetHeightInTiles(building_node->attribute("height_in_tiles").as_uint());
 	/*Selection Rect*/	SDL_Rect selection_rect;
@@ -1203,26 +1199,26 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	/*S.Rect Y*/		selection_rect.y = building_node->attribute("selection_y").as_int();
 	/*S.Rect W*/		selection_rect.w = building_node->attribute("selection_w").as_int();
 	/*S.Rect H*/		selection_rect.h = building_node->attribute("selection_h").as_int();
-	new_def->SetSelectionRect(selection_rect);
+						new_def->SetSelectionRect(selection_rect);
 	/*Icon Rect*/		SDL_Rect icon_rect;
 	/*I.Rect X*/		icon_rect.x = building_node->attribute("icon_x").as_int();
 	/*I.Rect Y*/		icon_rect.y = building_node->attribute("icon_y").as_int();
 	/*I.Rect W*/		icon_rect.w = building_node->attribute("icon_w").as_int();
 	/*I.Rect H*/		icon_rect.h = building_node->attribute("icon_h").as_int();
-	new_def->SetIcon(icon_rect);
+						new_def->SetIcon(icon_rect);
 
 	//Building Stats --------
 	/*Max Life*/		new_def->SetMaxLife(building_node->attribute("max_life").as_uint());
-	new_def->SetLife(new_def->GetMaxLife());
+						new_def->SetLife(new_def->GetMaxLife());
 
 	if (building_type == TOWN_CENTER || building_type == BARRACK || building_type == STABLE || building_type == ARCHERY_RANGE)
 	{
 		/*Units Capacity*/	((ProductiveBuilding*)new_def)->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
 		/*Units Spawn pnt*/	iPoint spawn(building_node->attribute("units_spawn_x").as_int(), building_node->attribute("units_spawn_y").as_int());
-		((ProductiveBuilding*)new_def)->SetUnitsSpawnPoint(spawn);
+							((ProductiveBuilding*)new_def)->SetUnitsSpawnPoint(spawn);
 		/*Production Cap*/	((ProductiveBuilding*)new_def)->SetProductionCapacity(building_node->attribute("production_capacity").as_uint());
-
 	}
+
 	buildings_defs.push_back(new_def);
 
 	LOG("%s definition built!", new_def->GetName());
