@@ -22,7 +22,7 @@ Minimap_Panel::Minimap_Panel() : map_rect({1030,600,325,161})
 	minimap_background->SetBox(map_rect);
 	minimap_background->ChangeTextureRect({1030, 600, 325, 161});
 	minimap_background->ChangeTextureId(HUD);
-
+	
 	map_size.x = 120;
 	map_size.y = 120;
 
@@ -44,6 +44,9 @@ Minimap_Panel::Minimap_Panel() : map_rect({1030,600,325,161})
 		cells[i].cell_position.y += pos.y;
 	}
 
+	//minimap_fow = SDL_CreateRGBSurface(NULL, map_rect.w, map_rect.h, 32, 0x00FF0000, 0x0000FF00, 0x000000FF, 0x0000000);
+	update_timer.Start();
+
 }
 
 Minimap_Panel::~Minimap_Panel()
@@ -54,7 +57,8 @@ Minimap_Panel::~Minimap_Panel()
 bool Minimap_Panel::CleanUp()
 {
 	cells.clear();
-	cells_to_print.clear();
+	units_to_print.clear();
+	buildings_to_print.clear();
 
 	return false;
 }
@@ -63,8 +67,8 @@ bool Minimap_Panel::PreUpdate()
 {
 	if (update_timer.Read() > MINIMAP_UPDATE_RATE)
 	{
-		cells_to_print.clear();
-		cells_to_print.reserve(App->entities_manager->units.size());
+		units_to_print.clear();
+		units_to_print.reserve(App->entities_manager->units.size());
 		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
 		std::list<Unit*>::const_iterator end = App->entities_manager->units.end();
 
@@ -78,11 +82,11 @@ bool Minimap_Panel::PreUpdate()
 			{
 			case ALLY:
 				cells[120 * pos.y + pos.x].cell_color = { 0,0,200,255 };
-				cells_to_print.push_back(cells[120 * pos.y + pos.x]);
+				units_to_print.push_back(cells[120 * pos.y + pos.x]);
 				break;
 			case ENEMY:
 				cells[120 * pos.y + pos.x].cell_color = { 200,0,0,255 };
-				cells_to_print.push_back(cells[120 * pos.y + pos.x]);
+				units_to_print.push_back(cells[120 * pos.y + pos.x]);
 				break;
 			default: break;
 			}
@@ -102,12 +106,25 @@ bool Minimap_Panel::PostUpdate()
 
 bool Minimap_Panel::Draw()
 {
+	// Draw Units in Minimap
 	SDL_Color color;
-	int size = cells_to_print.size();
+	int size = units_to_print.size();
 	for (int i = 0; i < size; i++)
 	{
-		color = cells_to_print[i].cell_color;
-		App->render->DrawQuad({ cells_to_print[i].cell_position.x, cells_to_print[i].cell_position.y,3,3 }, color.r, color.g, color.b, color.a, true, false);
+		color = units_to_print[i].cell_color;
+		App->render->DrawQuad({ units_to_print[i].cell_position.x, units_to_print[i].cell_position.y,3,3 }, color.r, color.g, color.b, color.a, true, false);
+	}
+
+	// Draw Buildings in Minimap
+	minimap_cell cell;
+	std::list<minimap_cell>::const_iterator building = buildings_to_print.end();
+	while(building != buildings_to_print.begin())
+	{
+		building--;
+		cell = building._Ptr->_Myval;
+		color = cell.cell_color;
+		App->render->DrawQuad({ cell.cell_position.x, cell.cell_position.y,4,4 }, color.r, color.g, color.b, color.a, true, false);
+		
 	}
 	return false;
 }
@@ -134,11 +151,39 @@ void Minimap_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 
 void Minimap_Panel::Enable()
 {
+	units_to_print.clear();
+	units_to_print.reserve(App->entities_manager->units.size());
+	std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+	std::list<Unit*>::const_iterator end = App->entities_manager->units.end();
+
+	iPoint pos = { 0,0 };
+	while (unit != end)
+	{
+		pos = unit._Ptr->_Myval->GetPositionRounded();
+
+		pos = App->map->WorldToMap(pos.x, pos.y);
+		switch (unit._Ptr->_Myval->GetDiplomacy())
+		{
+		case ALLY:
+			cells[120 * pos.y + pos.x].cell_color = { 0,0,200,255 };
+			units_to_print.push_back(cells[120 * pos.y + pos.x]);
+			break;
+		case ENEMY:
+			cells[120 * pos.y + pos.x].cell_color = { 200,0,0,255 };
+			units_to_print.push_back(cells[120 * pos.y + pos.x]);
+			break;
+		default: break;
+		}
+
+		unit++;
+	}
 	update_timer.Start();
 }
 
 void Minimap_Panel::Disable()
 {
+	units_to_print.clear();
+	buildings_to_print.clear();
 }
 
 bool Minimap_Panel::Load(pugi::xml_node & data)
@@ -192,4 +237,43 @@ bool Minimap_Panel::MiniMToMap(int& x, int& y)
 iPoint Minimap_Panel::MiniMToScreen(int x, int y)
 {
 	return iPoint((int)(x - y) * (half_tile_size.x),(int)(x + y) * (half_tile_size.y));
+}
+
+void Minimap_Panel::SetBuildingToPrint(int x, int y, DIPLOMACY diplomacy_type)
+{
+	iPoint pos = { x,y };
+	
+	pos = App->map->WorldToMap(pos.x, pos.y);
+ 
+	switch (diplomacy_type)
+	{
+	case ALLY:
+		cells[120 * pos.y + pos.x].cell_color = { 0,0,200,255 };
+		break;
+	case ENEMY:
+		cells[120 * pos.y + pos.x].cell_color = { 200,0,0,255 };
+		break;
+	default: break;
+	}
+	buildings_to_print.push_back(cells[120 * pos.y + pos.x]);
+}
+
+void Minimap_Panel::RemoveBuildingToPrint(int x, int y, DIPLOMACY diplomacy_type)
+{
+	/*
+	iPoint pos = { x,y };
+
+	pos = App->map->WorldToMap(pos.x, pos.y);
+	pos = MiniMToScreen(pos.x, pos.y);
+	std::list<minimap_cell>::iterator building = buildings_to_print.end();
+	
+	while (building != buildings_to_print.begin())
+	{
+		building--;
+		if (building._Ptr->_Myval.cell_position == pos)
+		{
+			buildings_to_print.remove(building._Ptr->_Myval);
+			break;
+		}
+	}*/
 }

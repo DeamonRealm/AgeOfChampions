@@ -4,6 +4,7 @@
 #include "p2Defs.h"
 #include "p2Point.h"
 #include <vector>
+#include <list>
 #include "PugiXml\src\pugixml.hpp"
 
 #include "j1Timer.h"
@@ -14,6 +15,7 @@ class UI_Element;
 class UI_Image;
 
 enum GUI_INPUT;
+enum DIPLOMACY;
 
 #define MINIMAP_UPDATE_RATE 1000
 #define MINIMAP_TIME_TO_UPDATE 1
@@ -22,6 +24,12 @@ struct minimap_cell
 {
 	SDL_Color cell_color = { 255,255,255,255 };
 	iPoint    cell_position = { 0,0 };
+
+	bool operator==(const minimap_cell& target)
+	{
+		if (cell_position == target.cell_position) return true;
+		else return false;
+	}
 };
 
 class Minimap_Panel
@@ -62,6 +70,10 @@ public:
 	bool MiniMToMap(int& x, int& y);
 	iPoint MiniMToScreen(int x, int y);
 
+	// Set cells to print
+	void SetBuildingToPrint(int x, int y, DIPLOMACY diplomacy_type);
+	void RemoveBuildingToPrint(int x, int y, DIPLOMACY diplomacy_type);
+
 public:
 
 	//HUD Panels
@@ -76,10 +88,13 @@ private:
 
 	// Map Cells
 	std::vector<minimap_cell>	cells;
-	std::vector<minimap_cell>	cells_to_print;
+	std::vector<minimap_cell>	units_to_print;
+	std::list<minimap_cell>		buildings_to_print;
+
 
 	j1Timer			update_timer;
-	SDL_Surface*	minimap_fow;
+	SDL_Surface*	minimap_fow = nullptr;
+	SDL_Texture*	minimap_fow_texture = nullptr;
 
 };
 

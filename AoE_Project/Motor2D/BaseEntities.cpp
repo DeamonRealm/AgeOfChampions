@@ -15,6 +15,7 @@
 #include "Actions_Unit.h"
 
 #include "Hud_GamePanel.h"
+#include "Hud_MinimapPanel.h"
 
 ///Class Entity ---------------------------------
 //Constructors ========================
@@ -2180,6 +2181,10 @@ bool Building::Die()
 		current_animation->GetCurrentSprite();
 		if (current_animation->IsEnd())
 		{
+			//Remove from minimap
+			iPoint pos = GetPositionRounded();
+			App->player->minimap_panel->RemoveBuildingToPrint(pos.x, pos.y, entity_diplomacy);
+
 			App->entities_manager->RemoveDeathBuilding(this);
 			this->CleanMapLogic();
 			App->entities_manager->DeleteEntity(this);
@@ -2263,6 +2268,10 @@ void Building::SetPosition(float x, float y, bool insert)
 	position.y = world_coords.y;
 
 	if (!insert)return;
+
+	//Set Position in Minimap
+	iPoint map_pos = this->GetPositionRounded();
+	App->player->minimap_panel->SetBuildingToPrint(map_pos.x, map_pos.y, entity_diplomacy);
 
 	//Calculate the upper tile of the building zone
 	iPoint upper_tile(map_coords.x - 1, map_coords.y - 1);
