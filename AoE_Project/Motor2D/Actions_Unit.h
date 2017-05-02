@@ -44,7 +44,10 @@ public:
 			path = nullptr;
 		}
 		path = App->pathfinding->SimpleAstar(origin, destination);
-		if (path == nullptr)return false;
+		if (path == nullptr)
+		{
+			return false;
+		}
 		
 		((Unit*)actor)->SetAction(WALK);
 		((Unit*)actor)->Focus(path->back(),true);
@@ -56,7 +59,28 @@ public:
 
 	bool Execute()
 	{
-		return ((Unit*)actor)->Move(path,target);
+		if (((Unit*)actor)->Move(path, target))
+		{
+			//Stop idle walk animation
+			bool exception = false;
+			ITEM_TYPE item_type;
+			((Unit*)actor)->SetAction(IDLE);
+			if (((Unit*)actor)->GetUnitType() == VILLAGER) {
+				item_type = ((Villager*)actor)->GetItemType();
+				if (item_type != ITEM_TYPE::NO_ITEM)
+				{
+					((Villager*)actor)->SetItemType(NO_ITEM);
+					exception = true;
+				}
+			}
+			App->animator->UnitPlay((Unit*)actor);
+			if (exception)
+			{
+				((Villager*)actor)->SetItemType(item_type);
+			}
+			return true;
+		}
+		return false;
 	}
 
 
@@ -158,7 +182,7 @@ public:
 	//Functionality ---------
 	bool Execute()
 	{
-		if ((*target) == nullptr) return true;
+		if (target == nullptr || (*target) == nullptr) return true;
 
 		//Actor attack the target
 		return ((Unit*)actor)->AttackUnit(target);
@@ -198,6 +222,8 @@ public:
 	//Functionality ---------
 	bool Execute()
 	{
+		if (target == nullptr || (*target) == nullptr) return true;
+
 		//Actor attack the target
 		return ((Unit*)actor)->AttackBuilding(target);
 	}
@@ -354,7 +380,8 @@ public:
 	bool Activation()
 	{
 		//Check it the resource hasn't been yet depleted
-		if (*target == nullptr)return false;
+		if (target == nullptr || *target == nullptr)return false;
+		if ((*target)->GetEntityType() != RESOURCE) return false;
 
 		//Set actor animation
 		((Villager*)actor)->Focus((*target)->GetPositionRounded(), true);
@@ -368,16 +395,17 @@ public:
 		if (*target == nullptr)
 		{
 			//If resource is deplated execute a SaveResourceAction
-			Building* save_point = App->entities_manager->SearchNearestSavePoint(actor->GetPositionRounded());
+			Building* save_point = App->entities_manager->GetNearestBuilding(actor->GetPositionRounded(), TOWN_CENTER, actor->GetDiplomacy());
 			if (save_point != nullptr)
 			{
-				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, save_point), TASK_CHANNELS::PRIMARY);
+				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, (Building**)save_point->GetMe()), TASK_CHANNELS::PRIMARY);
 			}
 
 			//Reset the animation
 			App->animator->UnitPlay((Villager*)actor);
 			return true;
 		}
+
 		//Actor recollect
 		return ((Villager*)actor)->Recollect(target);
 	}
@@ -402,7 +430,7 @@ class SaveResourcesVillagerAction : public Action
 public:
 
 	//Constructor -----------
-	SaveResourcesVillagerAction(Villager* actor, Building* target) : Action(actor,TASK_U_SAVE_RESOURCES), target(target)
+	SaveResourcesVillagerAction(Villager* actor, Building** target) : Action(actor,TASK_U_SAVE_RESOURCES), target(target)
 	{
 
 	}
@@ -411,21 +439,20 @@ public:
 	~SaveResourcesVillagerAction()
 	{
 		this->actor = nullptr;
-		this->target = nullptr;
+		target = nullptr;
 	}
 
 	//Functionality ---------
 	bool Activation()
 	{
 		//Set actor interaction target
-		if (target == nullptr)
+		if ((*target) == nullptr)
 		{
 			((Villager*)actor)->ResetResourcesData();
 			App->animator->UnitPlay((Villager*)actor);
 			return false;
 		}
 
-		((Unit*)actor)->SetInteractionTarget(target);
 		((Villager*)actor)->CheckCarryResource();
 		return true;
 	}
@@ -433,18 +460,18 @@ public:
 	bool Execute()
 	{
 		//Actor save resources
-		return ((Villager*)actor)->SaveResources();
+		return ((Villager*)actor)->SaveResources(target);
 	}
 
 	//Get Methods -----------
 	Building*	GetTarget()const
 	{
-		return target;
+		return *target;
 	}
 
 private:
 
-	Building* target = nullptr;
+	Building** target = nullptr;
 
 };
 /// ---------------------------------------------

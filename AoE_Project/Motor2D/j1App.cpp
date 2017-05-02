@@ -341,11 +341,17 @@ bool j1App::PostUpdate()
 	if(ret)ret = !want_to_quit;
 
 	//Call save game method
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)App->SaveGame("party_file.xml");
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) SaveGame("party_file.xml");
 	
 	//Call load game method 
-	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)App->LoadGame("party_file.xml");
-
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		player->Disable();
+		entities_manager->Disable();
+		player->Enable();
+		entities_manager->Enable();
+		LoadGame("party_file.xml");
+	}
 
 	return ret;
 }

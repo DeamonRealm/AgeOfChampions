@@ -8,6 +8,7 @@
   <stats
       name="Arbalest"  
       unit_type ="arbalest"
+      unit_class ="archery"
       attack_type="melee"
       
       vision_rad ="225"
@@ -34,8 +35,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -44,11 +43,12 @@
       unit_experience = "50"
     />
   </unit>
-  <!--Crossbowman-->
+<!--Skirmisher-->
   <unit civ="Teutons" id="unit">
     <stats
-        name="Crossbowman"
-        unit_type ="crossbowman"
+        name="Skirmisher"
+        unit_type ="skirmisher"
+        unit_class ="archery"
         attack_type="melee"
       
         vision_rad ="225"
@@ -75,8 +75,46 @@
         attack_range="25"
         defense="10"
         defense_bonus="5"
-        armor="12"
-        armor_bonus="5"
+        food_cost="5"
+        wood_cost="5"
+        gold_cost="5"
+        population_cost="2"
+        train_time="8000"
+        unit_experience = "50"
+    />
+  </unit>
+  <!--Crossbowman-->
+  <unit civ="Teutons" id="unit">
+    <stats
+        name="Crossbowman"
+        unit_type ="crossbowman"
+        unit_class ="archery"
+        attack_type="melee"
+      
+        vision_rad ="225"
+        mark_rad ="55"
+        soft_rad ="30"
+        hard_rad ="10"
+        selection_x ="0"
+        selection_y ="0"
+        selection_w="50"
+        selection_h="50"
+        icon_x="324"
+        icon_y="549"
+        icon_w="36"
+        icon_h="36"
+      
+        max_life="150"
+        view_area="15"
+        speed="2.5"
+        attack_delay ="50"
+        attack_hitpoints="5"
+        attack_bonus="2"
+        siege_hitpoints="10"
+        attack_rate="200"
+        attack_range="25"
+        defense="10"
+        defense_bonus="5"
         food_cost="5"
         wood_cost="5"
         gold_cost="5"
@@ -90,6 +128,7 @@
     <stats
         name="Two Handed Swordman"
         unit_type ="two_handed_swordman"
+        unit_class ="infantry"
         attack_type="melee"
       
         vision_rad ="225"
@@ -116,8 +155,6 @@
         attack_range="25"
         defense="10"
         defense_bonus="5"
-        armor="12"
-        armor_bonus="5"
         food_cost="5"
         wood_cost="5"
         gold_cost="5"
@@ -132,6 +169,7 @@
     <stats
         name="Long Swordman"
         unit_type ="long_swordman"
+        unit_class ="infantry"
         attack_type="melee"
       
         vision_rad ="225"
@@ -158,8 +196,6 @@
         attack_range="25"
         defense="10"
         defense_bonus="5"
-        armor="12"
-        armor_bonus="5"
         food_cost="5"
         wood_cost="5"
         gold_cost="5"
@@ -173,6 +209,7 @@
     <stats
         name="Champion"
         unit_type ="champion"
+        unit_class ="infantry"
         attack_type="melee"
       
         vision_rad ="225"
@@ -199,8 +236,6 @@
         attack_range="25"
         defense="10"
         defense_bonus="5"
-        armor="12"
-        armor_bonus="5"
         food_cost="5"
         wood_cost="5"
         gold_cost="5"
@@ -214,6 +249,7 @@
     <stats
         name="Man At Arms"
         unit_type ="man_at_arms"
+        unit_class ="infantry"
         attack_type="melee"
       
         vision_rad ="225"
@@ -240,8 +276,6 @@
         attack_range="25"
         defense="10"
         defense_bonus="5"
-        armor="12"
-        armor_bonus="5"
         food_cost="5"
         wood_cost="5"
         gold_cost="5"
@@ -255,6 +289,7 @@
     <stats
       name="Militia"
       unit_type ="militia"
+      unit_class ="infantry"
       attack_type="melee"
       
       vision_rad ="300"
@@ -281,8 +316,6 @@
       attack_range="50"
       defense="0"
       defense_bonus="5"
-      armor="0"
-      armor_bonus="5"
       food_cost="60"
       wood_cost="0"
       gold_cost="20"
@@ -296,6 +329,7 @@
     <stats
       name="Archer"
       unit_type ="archer"
+      unit_class ="archery"
       attack_type="distance"
       
       vision_rad ="100"
@@ -322,8 +356,6 @@
       attack_range="300"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -337,6 +369,7 @@
     <stats
       name="Cavalier"
       unit_type ="cavalier"
+      unit_class ="cavalry"
       attack_type="melee"
       
       vision_rad ="100"
@@ -363,8 +396,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -378,6 +409,7 @@
     <stats
       name="Cavalry Archer"
       unit_type ="cavalry_archer"
+      unit_class ="archery"
       attack_type="distance"
       
       vision_rad ="100"
@@ -404,8 +436,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -419,6 +449,7 @@
     <stats
       name="Elite Skirmisher"
       unit_type ="elite_skirmisher"
+      unit_class ="archery"
       attack_type="melee"
       
       vision_rad ="100"
@@ -445,8 +476,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -460,6 +489,7 @@
     <stats
       name="Heavy Cavalry Archer"
       unit_type ="heavy_cavalry_archer"
+      unit_class ="archery"
       attack_type="distance"
       
       vision_rad ="100"
@@ -486,8 +516,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -501,6 +529,7 @@
     <stats
       name="Knight"
       unit_type ="knight"
+      unit_class ="cavalry"
       attack_type="melee"
       
       vision_rad ="100"
@@ -527,8 +556,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -542,6 +569,7 @@
     <stats
       name="Monk"
       unit_type ="monk"
+      unit_class =""
       attack_type="distance"
       
       vision_rad ="100"
@@ -568,8 +596,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -583,6 +609,7 @@
     <stats
       name="Paladin"
       unit_type ="paladin"
+      unit_class ="cavalry"
       attack_type="melee"
       
       vision_rad ="100"
@@ -609,8 +636,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -624,6 +649,7 @@
     <stats
       name="Pikeman"
       unit_type ="pikeman"
+      unit_class ="infantry"
       attack_type="melee"
       
       vision_rad ="100"
@@ -650,8 +676,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -665,6 +689,7 @@
     <stats
       name="Spearman"
       unit_type ="spearman"
+      unit_class ="infantry"
       attack_type="melee"
       
       vision_rad ="100"
@@ -692,8 +717,6 @@
       attack_range="25"
       defense="10"
       defense_bonus="5"
-      armor="12"
-      armor_bonus="5"
       food_cost="5"
       wood_cost="5"
       gold_cost="5"
@@ -706,9 +729,10 @@
     <stats
       name="Villager"
       unit_type ="villager"
+      unit_class ="civilian"
       attack_type="melee"
       
-      vision_rad ="100"
+      vision_rad ="300"
       mark_rad ="55"
       soft_rad ="30"
       hard_rad ="10"
@@ -732,8 +756,6 @@
       attack_range="25"
       defense="0"
       defense_bonus="5"
-      armor="0"
-      armor_bonus="5"
       food_cost="60"
       wood_cost="0"
       gold_cost="20"
@@ -751,6 +773,7 @@
     <stats
       name="Warrior"
       unit_type ="warrior_chmp"
+      unit_class ="infantry"
       attack_type="melee"
       
       
@@ -779,8 +802,6 @@
       attack_range="25"
       defense="1"
       defense_bonus="2"
-      armor="12"
-      armor_bonus="5"
       food_cost="180"
       wood_cost="0"
       gold_cost="60"
@@ -802,7 +823,6 @@
       range_for_level="1"
       life_for_level= "5"
       defense_for_level="1.5"
-      armor_for_level="2"
       speed_for_level="1.5"
       view_area_for_level="2"
       
@@ -816,6 +836,7 @@
     <stats
       name="Wizard"
       unit_type ="wizard_chmp"
+      unit_class =""
       attack_type="distance"
       
       buff_area_rad ="250"
@@ -844,8 +865,6 @@
       attack_range="25"
       defense="1"
       defense_bonus="2"
-      armor="12"
-      armor_bonus="5"
       food_cost="180"
       wood_cost="0"
       gold_cost="60"
@@ -866,7 +885,6 @@
       life_for_level= "5"
 
       defense_for_level="1.5"
-      armor_for_level="2"
       speed_for_level="1.5"
       view_area_for_level="2"
       
@@ -883,6 +901,7 @@
     <stats
       name="Hunter"
       unit_type ="hunter_chmp"
+      unit_class ="archery"
       attack_type="distance"
       
       buff_area_rad ="250"
@@ -911,8 +930,6 @@
       attack_range="25"
       defense="1"
       defense_bonus="2"
-      armor="12"
-      armor_bonus="5"
       food_cost="180"
       wood_cost="0"
       gold_cost="60"
@@ -922,9 +939,9 @@
       experience_lvl_2="150"
       experience_lvl_3="450"
 
-      area_triangle_length="210"
-      area_triangle_width_angle="125"
-      area_triangle_X_angle="12"
+      area_triangle_length="300"
+      area_triangle_width_angle="200"
+      area_triangle_X_angle="15"
 
       ability_lvl_2_skill_A_attack_value="100"
       
@@ -948,7 +965,6 @@
       range_for_level="1"
       life_for_level= "5"
       defense_for_level="1.5"
-      armor_for_level="2"
       speed_for_level="1.5"
       view_area_for_level="2"
       

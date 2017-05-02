@@ -304,9 +304,9 @@ Unit::Unit() :Entity()
 
 }
 
-Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark),soft_collider(copy.soft_collider),hard_collider(copy.hard_collider), view_area(copy.view_area),
+Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type),unit_class(copy.unit_class), mark(copy.mark),soft_collider(copy.soft_collider),hard_collider(copy.hard_collider), view_area(copy.view_area),
 speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
-attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
+attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus), 
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time),unit_experience(copy.unit_experience)
 {
 
@@ -512,9 +512,6 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 
 			//Set unit at the goal pixel position
 			SetPosition((float)goal.x, (float)goal.y);
-			//Stop idle walk animation
-			action_type = IDLE;
-			App->animator->UnitPlay(this);
 
 			//Delete unit path
 			delete path;
@@ -534,7 +531,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	if (action_type != WALK)
 	{
 		action_type = WALK;
-		Focus(goal);
+		Focus(goal,false);
 	}
 
 	//Calculate the X/Y values that the unit have to move 
@@ -599,7 +596,7 @@ iPoint Unit::NextGoal(std::vector<iPoint>* path)
 	goal = path->back();
 
 	//Focus the unit at the next goal
-	Focus(goal);
+	Focus(goal,false);
 	return goal;
 }
 
@@ -1030,8 +1027,6 @@ while (!other_units.empty())
 	goal = FindWalkableAdjacent(unit->GetPositionRounded());
 	if (goal != iPoint(-1, -1)) 
 	{
-
-		SetInteractionTarget(unit);
 		return (Unit**)unit->GetMe();
 	}
 }
@@ -1142,7 +1137,7 @@ bool Unit::AttackUnit(Unit** target)
 {
 	bool ret = false;
 	//Check if the target is in the attack area
-	if ((*target) == nullptr)
+	if (target == nullptr || (*target) == nullptr || (*target)->GetAction() == DIE || (*target)->GetAction() == DISAPPEAR)
 	{
 		return true;
 	}
@@ -1150,26 +1145,14 @@ bool Unit::AttackUnit(Unit** target)
 	{
 
 		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider());
+
+		App->pathfinding->PushPath(this, goal);
 		/*
-		if (UnitHere(goal,GetSoftCollider().GetRad()))
-		{
-			goal = FindWalkableAdjacent(((Unit*)(*target))->GetPositionRounded());
-			if (goal == iPoint(-1, -1))
-			{
-				Unit** new_target;
-				new_target = FindNewTarget();
-				if (new_target != nullptr) {
-					this->AddAction((Action*)App->action_manager->AttackToUnitAction(this, new_target));
-					return true;
-				}
-				return true;
-			}
-		}
-	*/
-			std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
-			if (path == nullptr)return true;
-			this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
-			return false;
+		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
+		if (path == nullptr)return true;
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
+		*/
+		return false;
 	
 	
 	}
@@ -1211,7 +1194,7 @@ bool Unit::HealUnit(Unit ** target)
 	bool ret = false;
 
 	//Check if the target is in the attack area
-	if ((*target) == nullptr)
+	if (target == nullptr || (*target) == nullptr)
 	{
 		return true;
 	}
@@ -1221,10 +1204,13 @@ bool Unit::HealUnit(Unit ** target)
 	{
 
 		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider() + attack_area.GetRad());
-
+		App->pathfinding->PushPath(this, goal);
+		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
+	
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
+		*/
 		return false;
 	}
 
@@ -1254,14 +1240,23 @@ bool Unit::HealUnit(Unit ** target)
 
 bool Unit::AttackBuilding(Building ** target)
 {
+	if (target == nullptr || (*target) == nullptr)
+	{
+		return true;
+	}
+
 	//Check if the target is in the attack area
 	if (!attack_area.Intersects((*target)->GetInteractArea()))
 	{
 
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
+		App->pathfinding->PushPath(this, goal);
+		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
-		this->AddAction((Action*)App->action_manager->MoveAction(path, this), TASK_CHANNELS::SECONDARY);
+		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this), TASK_CHANNELS::SECONDARY);
+		*/
+		return false;
 	}
 
 	//Control action rate
@@ -1298,7 +1293,7 @@ bool Unit::AttackBuilding(Building ** target)
 
 bool Unit::Cover()
 {
-	return ((HabitableBuilding*)interaction_target)->CoverUnit(this);
+	return true;
 }
 
 bool Unit::DirectDamage(uint damage)
@@ -1518,9 +1513,9 @@ void Unit::SetUnitType(UNIT_TYPE type)
 	unit_type = type;
 }
 
-void Unit::SetInteractionTarget(const Entity * target)
+void Unit::SetUnitClass(UNIT_CLASS type)
 {
-	interaction_target = (Entity*)target;
+	unit_class = type;
 }
 
 void Unit::SetMark(const Circle & new_mark)
@@ -1638,21 +1633,6 @@ void Unit::SetLifeBuff(float hp_buff)
 	life_buff += hp_buff;
 }
 
-void Unit::SetArmor(uint arm)
-{
-	armor = arm;
-}
-
-void Unit::SetArmorBonus(uint arm_bonus)
-{
-	armor_bonus = arm_bonus;
-}
-
-void Unit::SetArmorBuff(float arm_buff)
-{
-	armor_buff = arm_buff;
-}
-
 void Unit::SetFoodCost(uint food_cst)
 {
 	food_cost = food_cst;
@@ -1715,7 +1695,6 @@ void Unit::SetUpgrade(Unit * upgraded)
 	attack_type = upgraded->attack_type;
 
 	defense = upgraded->defense;
-	armor = upgraded->armor;
 
 	attack_area = upgraded->attack_area;
 }
@@ -1732,6 +1711,11 @@ UNIT_TYPE Unit::GetUnitType()const
 	return unit_type;
 }
 
+UNIT_CLASS Unit::GetUnitClass() const
+{
+	return unit_class;
+}
+
 const Circle& Unit::GetMark() const
 {
 	return mark;
@@ -1745,11 +1729,6 @@ const Circle & Unit::GetSoftCollider() const
 const Circle & Unit::GetHardCollider() const
 {
 	return hard_collider;
-}
-
-const Entity * Unit::GetInteractionTarget()
-{
-	return interaction_target;
 }
 
 uint Unit::GetViewArea()const
@@ -1852,17 +1831,6 @@ float Unit::GetDefenseBuff() const
 	return defense_buff;
 }
 
-uint Unit::GetArmor() const
-{
-	return armor;
-}
-
-uint Unit::GetArmorBonus() const
-{
-	return armor_bonus;
-}
-
-
 uint Unit::GetMaxLife() const
 {
 	return max_life+ life_buff;
@@ -1870,10 +1838,6 @@ uint Unit::GetMaxLife() const
 uint Unit::GetBaseMaxLife() const
 {
 	return max_life;
-}
-float Unit::GetArmorBuff() const
-{
-	return armor_buff;
 }
 
 uint Unit::GetFoodCost() const
@@ -2122,7 +2086,7 @@ void Building::CleanMapLogic()
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
-	if (building_type == RUBBLE_THREE || building_type == BARRACK)
+	if (building_type == RUBBLE_THREE || building_type == BARRACK || building_type == ARCHERY_RANGE)
 	{
 		world_coords.x -= 1;
 		world_coords.y -= 1;
@@ -2202,9 +2166,10 @@ bool Building::Die()
 
 		action_type = DISAPPEAR;
 		if (building_type == TOWN_CENTER)building_type = RUBBLE_FOUR;
-		else if (building_type == BARRACK)building_type = RUBBLE_THREE;
-
+		else if (building_type == BARRACK || building_type == ARCHERY_RANGE || building_type == BLACKSMITH)building_type = RUBBLE_THREE;
+		else if (building_type == HOUSE_A || building_type == HOUSE_B || building_type == HOUSE_C)building_type = RUBBLE_TWO;
 		App->entities_manager->buildings_quadtree.Exteract(this, &this->position);
+		App->entities_manager->AddDeadBuilding(this);
 		App->animator->BuildingPlay(this);
 		current_animation->Reset();
 	}
@@ -2215,7 +2180,7 @@ bool Building::Die()
 		current_animation->GetCurrentSprite();
 		if (current_animation->IsEnd())
 		{
-			
+			App->entities_manager->RemoveDeathBuilding(this);
 			this->CleanMapLogic();
 			App->entities_manager->DeleteEntity(this);
 			return true;
@@ -2348,9 +2313,21 @@ void Building::SetPosition(float x, float y, bool insert)
 	//Add building at the correct quad tree
 	App->entities_manager->buildings_quadtree.Insert(this, &position);
 
-	if (entity_diplomacy == ALLY)
+	if (entity_diplomacy != ALLY)return;
+
+	//Collect all the units around to release the fog
+	std::vector<Unit*> coll_units;
+	Circle coll_area = render_area;
+	coll_area.SetRad(coll_area.GetRad() + 400);
+	uint size = App->entities_manager->units_quadtree.CollectCandidates(coll_units, coll_area);
+	for (uint k = 0; k < size; k++)
 	{
-		App->fog_of_war->CheckEntityFog(this);
+		coll_units[k]->ResetFogAround();
+	}
+	this->CleanFogAround();
+	for (uint k = 0; k < size; k++)
+	{
+		coll_units[k]->CleanFogAround();
 	}
 }
 

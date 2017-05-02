@@ -177,22 +177,24 @@ Animation_Block::Animation_Block(uint enum_id) :enum_id(enum_id)
 Animation_Block::~Animation_Block()
 {
 	ClearAnimationBlocks();
+
+	if (animation != nullptr)delete animation;
 }
 
 //Functionality =======================
 void Animation_Block::ClearAnimationBlocks()
 {
-	while (!childs.empty())
+	uint size = childs.size();
+	for (uint k = 0; k < size; k++)
 	{
-		childs.back()->ClearAnimationBlocks();
-		childs.pop_back();
-
+		delete childs[k];
 	}
 
 	if (animation != nullptr)
 	{
+		animation->ReleaseTexture();
 		delete animation;
-		animation = nullptr;
+		animation = nullptr;		
 	}
 }
 
@@ -297,23 +299,25 @@ DiplomaticAnimation_Block::DiplomaticAnimation_Block(uint enum_id) :enum_id(enum
 DiplomaticAnimation_Block::~DiplomaticAnimation_Block()
 {
 	ClearAnimationBlocks();
+	if (animation != nullptr)delete animation;
 }
 
 //Functionality =======================
 void DiplomaticAnimation_Block::ClearAnimationBlocks()
 {
-	while (childs.size() > 0)
+	uint size = childs.size();
+	for (uint k = 0; k < size; k++)
 	{
-		childs.back()->ClearAnimationBlocks();
-		childs.pop_back();
-
+		delete childs[k];
 	}
 
 	if (animation != nullptr)
 	{
 		animation->ReleaseTexture();
 		delete animation;
+		animation = nullptr;
 	}
+	
 }
 
 void DiplomaticAnimation_Block::SetId(uint id)
@@ -400,7 +404,6 @@ bool j1Animator::CleanUp()
 
 	for (uint k = 0; k < size; k++)
 	{
-		unit_blocks[k]->ClearAnimationBlocks();
 		delete unit_blocks[k];
 	}
 	unit_blocks.clear();
@@ -410,7 +413,6 @@ bool j1Animator::CleanUp()
 
 	for (uint k = 0; k < size; k++)
 	{
-		building_blocks[k]->ClearAnimationBlocks();
 		delete building_blocks[k];
 	}
 	building_blocks.clear();
@@ -420,7 +422,6 @@ bool j1Animator::CleanUp()
 
 	for (uint k = 0; k < size; k++)
 	{
-		resource_blocks[k]->ClearAnimationBlocks();
 		delete resource_blocks[k];
 	}
 	resource_blocks.clear();
@@ -464,12 +465,22 @@ UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 	if (strcmp(str, "man_at_arms") == 0)			return MAN_AT_ARMS;
 	if (strcmp(str, "long_swordman") == 0)			return LONG_SWORDMAN;
 	if (strcmp(str, "crossbowman") == 0)			return CROSSBOWMAN;
+	if (strcmp(str, "skirmisher") == 0)				return SKIRMISHER;
 	if (strcmp(str, "champion") == 0)				return CHAMPION;
 	if (strcmp(str, "warrior_chmp") == 0)			return WARRIOR_CHMP;
 	if (strcmp(str, "wizard_chmp") == 0)			return WIZARD_CHMP;
 	if (strcmp(str, "hunter_chmp") == 0)			return ARCHER_CHMP;
 
 	return NO_UNIT;
+}
+
+UNIT_CLASS j1Animator::StrToUnitClassEnum(const char * str) const
+{
+	if (strcmp(str, "civilian") == 0)	return CIVILIAN;
+	if (strcmp(str, "infantry") == 0)	return INFANTRY;
+	if (strcmp(str, "archery") == 0)	return ARCHERY;
+	if (strcmp(str, "cavalry") == 0)	return CAVALRY;
+	return NO_CLASS;
 }
 
 ACTION_TYPE j1Animator::StrToActionEnum(const char* str) const
@@ -521,6 +532,7 @@ BUILDING_TYPE j1Animator::StrToBuildingEnum(const char* str) const
 	if (strcmp(str, "houseA") == 0)			return HOUSE_A;
 	if (strcmp(str, "houseB") == 0)			return HOUSE_B;
 	if (strcmp(str, "houseC") == 0)			return HOUSE_C;
+	if (strcmp(str, "rubble_two") == 0)		return RUBBLE_TWO;
 	if (strcmp(str, "rubble_three") == 0)	return RUBBLE_THREE;
 	if (strcmp(str, "rubble_four") == 0)	return RUBBLE_FOUR;
 	return NO_BUILDING;
@@ -1049,6 +1061,7 @@ bool j1Animator::BuildingPlay(Building* target)
 			{
 				DiplomaticAnimation* anim = new DiplomaticAnimation(*block->GetAnimation());
 				if (anim == nullptr)LOG("Error in building Play");
+				target->CleanAnimation();
 				target->SetAnimation((Animation*)anim);
 				return true;
 			}
@@ -1058,6 +1071,7 @@ bool j1Animator::BuildingPlay(Building* target)
 			{
 				DiplomaticAnimation* anim = new DiplomaticAnimation(*block->GetAnimation());
 				if (anim == nullptr)LOG("Error in building Play");
+				target->CleanAnimation();
 				target->SetAnimation((Animation*)anim);
 				return true;
 			}
@@ -1087,6 +1101,7 @@ bool j1Animator::ResourcePlay(Resource * target)
 
 			if (anim != nullptr)
 			{
+				target->CleanAnimation();
 				target->SetAnimation(anim);
 				return true;
 			}

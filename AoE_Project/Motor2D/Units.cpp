@@ -5,6 +5,8 @@
 #include "p2Log.h"
 #include "Hud_GamePanel.h"
 #include "j1Player.h"
+#include "j1FogOfWar.h"
+#include "j1Pathfinding.h"
 
 /// Class Villager --------------------
 //Constructors ========================
@@ -30,18 +32,40 @@ Villager::~Villager()
 //Actions -----
 bool Villager::Die()
 {
+	if (GetDiplomacy() == DIPLOMACY::ALLY)
+	{
+		App->player->game_panel->IncreaseDeathAllies();
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
+	}
+	if (GetDiplomacy() == DIPLOMACY::ENEMY)
+	{
+		//App->player->game_panel->IncreaseDeathEnemies();
+		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
+
+		std::list<Unit*>::const_iterator it = App->entities_manager->UnitsList()->begin();
+		bool lastenemy = true;
+		while (it != App->entities_manager->UnitsList()->end())
+		{
+			if (it._Ptr->_Myval->GetDiplomacy() == ENEMY && it._Ptr->_Myval->GetEntityType() == UNIT && it._Ptr->_Myval != this)
+				lastenemy = false;
+			it++;
+		}
+		if (lastenemy && !App->debug_mode) App->player->game_panel->DoWin();
+	}
+
+
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
-		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
-
+		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
 		if (item_type == GOLD || item_type == STONE || item_type == MEAT)
 		{
 			item_type = NO_ITEM;
 		}
 		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
 	}
 	else if (current_animation->IsEnd())
 	{
@@ -52,8 +76,10 @@ bool Villager::Die()
 		}
 		else
 		{
-			//action_worker.HardReset();
-			App->entities_manager->RemoveDeathUnit(this);
+			if (GetDiplomacy() == DIPLOMACY::ENEMY)
+			{
+				App->player->game_panel->IncreaseDeathEnemies();
+			}
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
@@ -112,7 +138,9 @@ bool Villager::Recollect(Resource** target)
 	if (!attack_area.Intersects((*target)->GetInteractArea()))
 	{
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
+		App->pathfinding->PushPath(this, goal);
+
+		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
 		return false;
 	}
 
@@ -129,10 +157,10 @@ bool Villager::Recollect(Resource** target)
 		if (current_resources > 0)
 		{
 			//Go to the nearest download point
-			Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
+			Building* save_point = App->entities_manager->GetNearestBuilding(GetPositionRounded(), TOWN_CENTER, this->GetDiplomacy());
 			if (save_point == nullptr)return true;
 			//Set the carry action animation type
-			AddAction((Action*)App->action_manager->SaveResourcesAction(this, save_point), TASK_CHANNELS::PRIMARY);
+			AddAction((Action*)App->action_manager->SaveResourcesAction(this, (Building**)save_point->GetMe()), TASK_CHANNELS::PRIMARY);
 			return true;
 		}
 		else
@@ -150,10 +178,10 @@ bool Villager::Recollect(Resource** target)
 	if (current_resources == resources_capacity)
 	{
 		//Go to the nearest download point
-		Building* save_point = App->entities_manager->SearchNearestSavePoint(GetPositionRounded());
+		Building* save_point = App->entities_manager->GetNearestBuilding(GetPositionRounded(), TOWN_CENTER, this->GetDiplomacy());
 		if (save_point == nullptr)return true;
 		//Set the carry action animation type
-		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, save_point));
+		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, (Building**)save_point->GetMe()));
 		return false;
 	}
 
@@ -163,13 +191,15 @@ bool Villager::Recollect(Resource** target)
 	return false;
 }
 
-bool Villager::SaveResources()
+bool Villager::SaveResources(Building** save_point)
 {
 	//Check if the target building is in the "attack" (in this case used for save resources) area
-	if (!attack_area.Intersects(((Building*)interaction_target)->GetInteractArea()))
+	if (!attack_area.Intersects((*save_point)->GetInteractArea()))
 	{
-		iPoint intersect_point = attack_area.NearestPoint(((Building*)interaction_target)->GetInteractArea());
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, iPoint(intersect_point.x, intersect_point.y)));
+		iPoint intersect_point = attack_area.NearestPoint((*save_point)->GetInteractArea());
+		App->pathfinding->PushPath(this, intersect_point);
+
+		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, iPoint(intersect_point.x, intersect_point.y)));
 		return false;
 	}
 

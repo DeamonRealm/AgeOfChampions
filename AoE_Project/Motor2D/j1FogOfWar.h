@@ -11,11 +11,12 @@
 #define MID_ALPHA 150			/* Values between 0 & 255 */
 #define	DIVISIONS_PER_PIXELS 40	/* Values between 20 & 60 in debug for >60 fps */ /* Values between 20 & 130 in release for >60 fps */
 #define RENDER_MARGIN 80		/* Values between 0 & INF */
-#define	UPDATE_TIME	20			/* Time in MS that the fog have to do the update */
+#define	UPDATE_TIME	4.5			/* Time in MS that the fog have to do the update */
 #define UPDATE_RATE 500			/* Time in MS between the fog update call */
 
 class Unit;
 class Entity;
+class Building;
 
 enum FOG_TYPE
 {
@@ -56,6 +57,9 @@ public:
 	// Called each loop iteration
 	bool PostUpdate();
 
+	// Called before quitting
+	bool CleanUp();
+
 	bool Load(pugi::xml_node& data);
 	bool Save(pugi::xml_node& data) const;
 
@@ -68,16 +72,16 @@ private:
 	uint alpha_layer_width = 0;		/*Number of cells in the fog width*/
 	uint alpha_layer_height = 0;	/*Number of cells in the fog height*/
 
-
-
 	//Timer that count last update time
 	j1Timer		update_timer;
 
-	std::list<Entity*> entities_dinamic_update;
-	std::vector<Entity*> entities_static_update;
-	std::vector<Entity*> entities_release;
+	std::list<Entity*>		entities_dinamic_update;
+	std::vector<Entity*>	entities_static_update;
+	std::vector<Entity*>	entities_release;
+	std::vector<Building*>	buildings_to_spawn;
 
 	std::vector<AlphaCell*> cells_in_screen;
+	iPoint last_camera_update_position = { 0,0 };
 
 public:
 
@@ -95,6 +99,9 @@ public:
 
 	void	CheckEntityFog(Entity* target);
 	void	ReleaseEntityFog(Entity* target);
+
+	void	ClearBuildingFog(Building* target);
+
 };
 
 #endif

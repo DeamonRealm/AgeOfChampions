@@ -10,6 +10,7 @@ class Unit;
 class Building;
 class Resource;
 enum UNIT_TYPE;
+enum UNIT_CLASS;
 enum ACTION_TYPE;
 enum DIRECTION_TYPE;
 enum BUILDING_TYPE;
@@ -115,14 +116,14 @@ public:
 
 	~Animation_Block();
 
-private:
+protected:
 
 	//Vector of other animation blocks
 	std::vector<Animation_Block*>	childs;
 	//Enum id of this block
 	uint							enum_id = 0;
 	//Pointer to a vector of animations 
-	Animation*		animation = nullptr;
+	Animation*						animation = nullptr;
 
 public:
 
@@ -255,6 +256,7 @@ public:
 	ENTITY_TYPE		StrToEntityEnum(const char* str)const;
 	DIPLOMACY		StrToDiplomacyEnum(const char* str)const;
 	UNIT_TYPE		StrToUnitEnum(const char* str)const;
+	UNIT_CLASS		StrToUnitClassEnum(const char* str)const;
 	ACTION_TYPE		StrToActionEnum(const char* str)const;
 	ITEM_TYPE		StrToItemEnum(const char* str)const;
 	DIRECTION_TYPE	StrToDirectionEnum(const char* str)const;

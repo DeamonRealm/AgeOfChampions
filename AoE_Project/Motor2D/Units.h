@@ -47,7 +47,7 @@ public:
 
 	//Actions -----
 	bool Recollect(Resource** target);
-	bool SaveResources();
+	bool SaveResources(Building** save_point);
 	void CheckRecollectResource(RESOURCE_TYPE type);
 	void CheckCarryResource();
 	void ResetResourcesData();

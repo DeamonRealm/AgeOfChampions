@@ -189,7 +189,7 @@ public:
 
 	//Recollect Functions
 	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource** target);
-	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building* target);
+	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building** target);
 
 	// Building Functions
 	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0);

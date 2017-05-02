@@ -37,6 +37,14 @@ void j1AI::Enable()
 	iPoint pos = App->map->MapToWorldCenter(110, 100);
 	ai_starting_tc->SetPosition((float)pos.x, (float)pos.y);
 	
+
+	//temporary enemy barracks
+	pos = App->map->MapToWorldCenter(115, 95);
+	Building* new_building;
+	new_building = App->entities_manager->GenerateBuilding(BARRACK, ENEMY);
+	new_building->SetPosition((float)pos.x, (float)pos.y);
+	enemy_buildings.push_back(new_building);
+
 	//ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
 }
 
@@ -78,16 +86,19 @@ bool j1AI::Update(float dt)
 	ai_worker->Update();
 
 	//only update every 2 seconds
-	if (update_timer.Read() < 2000)
+	if (update_timer.Read() < 10000)
 	{
 		return true;
 	}
-	Resource* to_recolect = App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), RESOURCE_TYPE::BERRY_BUSH);
+
+	Resource* to_recolect = App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), RESOURCE_TYPE::BERRY_BUSH, NEUTRAL);
 	//ai_worker->AddAICommand(new SendToRecollect(enemy_units, (Resource**)to_recolect->GetMe()));
 
 	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
+
 	while (unit_it != enemy_units.end())
 	{
+		if (to_recolect == nullptr) break;
 		//Check resource type
 		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER)
 		{
@@ -102,8 +113,20 @@ bool j1AI::Update(float dt)
 		unit_it++;
 	}
 
-	update_timer.Start();
+/*
+	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
+	while (building_it != enemy_buildings.end())
+	{
+		if (building_it._Ptr->_Myval->GetBuildingType() == BARRACK)
+		{
+			building_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)building_it._Ptr->_Myval, MILITIA, ENEMY));
 
+		}
+		building_it++;
+	}
+	*/
+
+	update_timer.Start();
 
 	return true;
 }

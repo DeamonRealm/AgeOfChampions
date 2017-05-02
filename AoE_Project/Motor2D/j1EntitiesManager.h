@@ -65,6 +65,7 @@ public:
 private:
 
 	std::list<Unit*>		death_units;
+	std::list<Building*>	death_buildings;
 	std::list<Champion*>	champions_blue;
 	std::list<Champion*>	champions_red;
 
@@ -75,7 +76,8 @@ private:
 	//Vectors of predefined units
 	std::vector<Unit*>		ally_units_defs;
 	std::vector<Unit*>		enemy_units_defs;
-	std::vector<Building*>	buildings_defs;
+	std::vector<Building*>	ally_buildings_defs;
+	std::vector<Building*>	enemy_buildings_defs;
 	std::vector<Resource*>	resources_defs;
 
 	//Methods to add entities definitions
@@ -119,15 +121,16 @@ public:
 
 	//Units lists movement units used in buildings cover
 	std::list<Unit*>	GetDeathUnitList();
-	void		AddUnit(Unit* unit);
-	void		AddDeathUnit(Unit* unit);
-	void		ResurrectUnit(Unit* unit);
-	void		RemoveDeathUnit(Unit* unit);
+	void				AddUnit(Unit* unit);
+	void				AddDeathUnit(Unit* unit);
+	void				ResurrectUnit(Unit* unit);
+	void				RemoveDeathUnit(Unit* unit);
 
-	Unit*		PopUnit(const Unit* unit);
+	Unit*				PopUnit(const Unit* unit);
 
-	//Get the nearest resource save point from the coordinate
-	Building* SearchNearestSavePoint(const iPoint& point);
+	void				AddDeadBuilding(Building* build);
+	void				RemoveDeathBuilding(Building* build);
+
 
 	//Organize unit vector
 	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);
@@ -135,12 +138,12 @@ public:
 	//Upgrade Entity
 	void UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy);
 	bool UpgradeUnit(UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
-	
+	void UpgradeUnitResearch(RESEARCH_TECH research_type, DIPLOMACY diplomacy);
 	
 	//Get nearest Entity methods
-	Unit*		GetNearestUnit(iPoint point);
-	Building*	GetNearestBuilding(iPoint point);
-	Resource*	GetNearestResource(iPoint point, RESOURCE_TYPE type);
+	Unit*		GetNearestUnit(iPoint point, UNIT_TYPE type);
+	Building*	GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy);
+	Resource*	GetNearestResource(iPoint point, RESOURCE_TYPE type, DIPLOMACY diplomacy);
 
 };
 #endif // _ENTITIES_MANAGER_

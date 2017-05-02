@@ -777,10 +777,12 @@ bool HeroPanel::ActivateCell(int i)
 		}
 		break;
 	case 1: {
-			activate_skill = 1;
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			((Champion*)entitis_panel)->PrepareAbility_lvl_2();
-			return true;
+			if (((Champion*)entitis_panel)->PrepareAbility_lvl_2()) {
+				activate_skill = 1;
+				App->sound->PlayGUIAudio(CLICK_INGAME);
+				return true;
+			}
+			else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
 		break;
 	case 2:
@@ -792,10 +794,13 @@ bool HeroPanel::ActivateCell(int i)
 		}
 		else
 		{
-			activate_skill = 2;
-			App->sound->PlayGUIAudio(CLICK_INGAME);
-			((Champion*)entitis_panel)->PrepareAbility_lvl_3();
-			return true;
+			if (((Champion*)entitis_panel)->PrepareAbility_lvl_3())
+			{
+				activate_skill = 2;
+				App->sound->PlayGUIAudio(CLICK_INGAME);
+				return true;
+			}
+			else App->sound->PlayGUIAudio(ERROR_SOUND);
 		}
 		break;
 	case 3:

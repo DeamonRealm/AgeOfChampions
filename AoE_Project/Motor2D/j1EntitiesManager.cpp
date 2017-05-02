@@ -89,11 +89,11 @@ bool j1EntitiesManager::Start()
 	bool ret = LoadCivilization("Teutons.xml");
 
 	//Built entities quad trees
-	units_quadtree.SetMaxObjects(8);
+	units_quadtree.SetMaxObjects(12);
 	units_quadtree.SetDebugColor({ 255,0,255,255 });
 	resources_quadtree.SetMaxObjects(8);
 	resources_quadtree.SetDebugColor({ 0,255,255,255 });
-	buildings_quadtree.SetMaxObjects(3);
+	buildings_quadtree.SetMaxObjects(8);
 	buildings_quadtree.SetDebugColor({ 255,255,0,255 });
 
 
@@ -112,7 +112,7 @@ bool j1EntitiesManager::Update(float dt)
 		item++;
 	}
 
-	//Draw all death units
+	//Update all death units
 	std::list<Unit*>::const_iterator death_unit = death_units.begin();
 	for (; death_unit != death_units.end(); death_unit++)
 	{
@@ -120,6 +120,16 @@ bool j1EntitiesManager::Update(float dt)
 		death_unit._Ptr->_Myval->Update();
 
 	}
+
+	//Update all death buildings
+	std::list<Building*>::const_iterator death_building = death_buildings.begin();
+	for (; death_building != death_buildings.end(); death_building++)
+	{
+
+		death_building._Ptr->_Myval->Update();
+
+	}
+
 	std::list<Building*>::const_iterator item_build = buildings.begin();
 
 	while (item_build != buildings.end())
@@ -186,8 +196,11 @@ bool j1EntitiesManager::Draw() const
 		pos = units_vec[k]->GetPositionRounded();
 		pos = App->map->WorldToMap(pos.x, pos.y);
 		fog_type = App->fog_of_war->GetFogID(pos.x, pos.y);
-		if (fog_type == DARK_FOG)continue;
-		if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
+		if (!App->map_debug_mode)
+		{
+			if (fog_type == DARK_FOG)continue;
+			if (units_vec[k]->GetDiplomacy() == ENEMY && fog_type != NO_FOG)continue;
+		}
 		
 
 		units_vec[k]->Draw(App->debug_mode);
@@ -200,6 +213,16 @@ bool j1EntitiesManager::Draw() const
 		death_unit._Ptr->_Myval->Draw(App->debug_mode);
 
 	}
+
+	//Draw all death buildings
+	std::list<Building*>::const_iterator death_building = death_buildings.begin();
+	for (; death_building != death_buildings.end(); death_building++)
+	{
+
+		death_building._Ptr->_Myval->Draw(App->debug_mode);
+
+	}
+
 	//Draw all Resources
 	std::vector<Resource*> resources_vec;
 	resources_quadtree.CollectCandidates(resources_vec, App->render->camera_viewport);
@@ -232,42 +255,27 @@ bool j1EntitiesManager::Draw() const
 bool j1EntitiesManager::CleanUp()
 {
 	//Clean Up Units List
+	units_quadtree.Clear();
 	std::list<Unit*>::iterator units_item = units.begin();
 	while (units_item != units.end())
 	{
-		switch (units_item._Ptr->_Myval->GetUnitType())
-		{
-		case VILLAGER:
-			delete ((Villager*)units_item._Ptr->_Myval);
-			break;
-		case WARRIOR_CHMP:
-			delete ((Warrior*)units_item._Ptr->_Myval);
-			break;
-		case WIZARD_CHMP:
-			delete ((Wizard*)units_item._Ptr->_Myval);
-			break;
-		default:
-			RELEASE(units_item._Ptr->_Myval);
-			break;
-		}
+		RELEASE(units_item._Ptr->_Myval);
 		units_item++;
 	}
 	units.clear();
-	units_quadtree.Reset();
-	units_quadtree.Clear();
 
 	//Clean Up resources list
+	resources_quadtree.Clear();
 	std::list<Resource*>::iterator resources_item = resources.begin();
 	while (resources_item != resources.end())
 	{
 		RELEASE(resources_item._Ptr->_Myval);
 		resources_item++;
 	}
-	resources.clear();
-	resources_quadtree.Reset();
-	resources_quadtree.Clear();
+	resources.clear();	
 
 	//Clean Up buildings list
+	buildings_quadtree.Clear();
 	std::list<Building*>::iterator buildings_item = buildings.begin();
 	while (buildings_item != buildings.end())
 	{
@@ -275,28 +283,13 @@ bool j1EntitiesManager::CleanUp()
 		buildings_item++;
 	}
 	buildings.clear();
-	buildings_quadtree.Reset();
-	buildings_quadtree.Clear();
 
 	//Clean Up units_defs vector
 	uint size = ally_units_defs.size();
 	for (uint k = 0; k < size; k++)
 	{
-		switch (ally_units_defs[k]->GetUnitType())
-		{
-		case VILLAGER:
-			delete ((Villager*)ally_units_defs[k]);
-			delete ((Villager*)enemy_units_defs[k]);
-			break;
-		case WARRIOR_CHMP:
-			delete ((Warrior*)ally_units_defs[k]);
-			delete ((Warrior*)enemy_units_defs[k]);
-			break;
-		default:
-			RELEASE(ally_units_defs[k]);
-			RELEASE(enemy_units_defs[k]);
-			break;
-		}
+		RELEASE(ally_units_defs[k]);
+		RELEASE(enemy_units_defs[k]);
 	}
 	ally_units_defs.clear();
 	enemy_units_defs.clear();
@@ -310,13 +303,20 @@ bool j1EntitiesManager::CleanUp()
 	resources_defs.clear();
 
 	//Clean Up buildings_defs vector
-	size = buildings_defs.size();
+	size = ally_buildings_defs.size();
 	for (uint k = 0; k < size; k++)
 	{
-		RELEASE(buildings_defs[k]);
+		RELEASE(ally_buildings_defs[k]);
 	}
-	buildings_defs.clear();
+	ally_buildings_defs.clear();
 
+	//Clean Up buildings_defs vector
+	size = ally_buildings_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(ally_buildings_defs[k]);
+	}
+	ally_buildings_defs.clear();
 
 	return true;
 }
@@ -347,6 +347,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 	
 		//Load life
 		new_res->SetLife(cur_res_node.attribute("life").as_int());		
+
+		//Load current building selected
+		if (cur_res_node.attribute("selected").as_bool() == true) new_res->Select();
 
 		//Focus the next resource
 		cur_res_node  = cur_res_node.next_sibling();
@@ -379,6 +382,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 
 		//Load building life
 		new_building->SetLife(cur_build_node.attribute("life").as_uint());
+
+		//Load current building selected
+		if (cur_build_node.attribute("selected").as_bool() == true) new_building->Select();
 
 		switch (building_type)
 		{
@@ -471,6 +477,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 
 		//Load current unit position
 		new_unit->SetPosition(cur_unit_node.attribute("pos_x").as_float(), cur_unit_node.attribute("pos_y").as_float());
+
+		//Load current unit selected
+		if (cur_unit_node.attribute("selected").as_bool() == true) new_unit->Select();
 
 		switch (unit_type)
 		{
@@ -585,6 +594,9 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 	}
 	// --------------------------------
 
+	loaded_buildings.clear();
+	loaded_units.clear();
+
 	// ------------------------------------------
 
 	return true;
@@ -619,6 +631,9 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		//Save resource life
 		cur_res_node.append_attribute("life") = current_resource._Ptr->_Myval->GetLife();
 
+		//Save current resource selected
+		cur_res_node.append_attribute("selected") = current_resource._Ptr->_Myval->GetIfSelected();
+
 		//Focus the next resource
 		current_resource++;
 	}
@@ -641,9 +656,18 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		- life
 		*/
 
+		//Save building type
+		BUILDING_TYPE type = current_building._Ptr->_Myval->GetBuildingType();
+		cur_build_node.append_attribute("build_type") = type;
+
 		//Save building position
-		cur_build_node.append_attribute("pos_x") = current_building._Ptr->_Myval->GetPosition().x;
-		cur_build_node.append_attribute("pos_y") = current_building._Ptr->_Myval->GetPosition().y;
+		fPoint pos = current_building._Ptr->_Myval->GetPosition();
+		if (type == TOWN_CENTER || type == HOUSE_A || type == HOUSE_B || type == HOUSE_C)
+		{
+			pos.y += App->map->data.tile_height * 0.5f;
+		}
+		cur_build_node.append_attribute("pos_x") = pos.x;
+		cur_build_node.append_attribute("pos_y") = pos.y;
 
 		//Save building life
 		cur_build_node.append_attribute("life") = current_building._Ptr->_Myval->GetLife();
@@ -651,9 +675,9 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		//Save building diplomacy
 		cur_build_node.append_attribute("diplomacy") = current_building._Ptr->_Myval->GetDiplomacy();
 
-		//Save building type
-		BUILDING_TYPE type = current_building._Ptr->_Myval->GetBuildingType();
-		cur_build_node.append_attribute("build_type") = type;
+		//Save current building selected
+		cur_build_node.append_attribute("selected") = current_building._Ptr->_Myval->GetIfSelected();
+
 
 		switch (type)
 		{
@@ -773,7 +797,9 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		cur_unit_node.append_attribute("pos_x") = current_unit._Ptr->_Myval->GetPosition().x;
 		cur_unit_node.append_attribute("pos_y") = current_unit._Ptr->_Myval->GetPosition().y;
 
-		
+		//Save current unit selected
+		cur_unit_node.append_attribute("selected") = current_unit._Ptr->_Myval->GetIfSelected();
+
 		switch (unit_type)
 		{
 		case VILLAGER:
@@ -893,6 +919,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Name*/			new_def->SetName(unit_node->attribute("name").as_string());
 	/*Entity Type*/		new_def->SetEntityType(UNIT);
 	/*Unit Type*/		new_def->SetUnitType(unit_type);
+	/*Unit Class*/		new_def->SetUnitClass(App->animator->StrToUnitClassEnum(unit_node->attribute("unit_class").as_string()));
 	/*Attack Type*/		new_def->SetAttackType(App->animator->StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
 	//Unit Primitives -------
 	/*Vision*/			Circle vision;
@@ -939,8 +966,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 						new_def->SetAttackArea(area);
 	/*Defense*/			new_def->SetDefense(unit_node->attribute("defense").as_uint());
 	/*Defense Bonus*/	new_def->SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
-	/*Armor*/			new_def->SetArmor(unit_node->attribute("armor").as_uint());
-	/*Armor Bonus*/		new_def->SetArmorBonus(unit_node->attribute("armor_bonus").as_uint());
 	/*Food Cost*/		new_def->SetFoodCost(unit_node->attribute("food_cost").as_uint());
 	/*Wood Cost*/		new_def->SetWoodCost(unit_node->attribute("wood_cost").as_uint());
 	/*Gold Cost*/		new_def->SetGoldCost(unit_node->attribute("gold_cost").as_uint());
@@ -987,7 +1012,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 									temp_circle.SetColor({ 0,50,50,255 });
 									((Hunter*)new_def)->SetSpecialAttackArea(temp_circle, "area_lvl_3");
 									PivotedRect temp_rect;
-									temp_rect.SetPivotDistance(unit_node->attribute("rect_displacament").as_uint());
+									temp_rect.SetPivotDistance(unit_node->attribute("rect_pivot_distance").as_uint());
 									temp_rect.SetWidth(unit_node->attribute("rect_attack_w").as_uint());
 									temp_rect.SetHeight(unit_node->attribute("rect_attack_h").as_uint());
 									temp_rect.SetColor({ 50,255,150,255 });
@@ -1037,7 +1062,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Attack for level*/		((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("attack_for_level").as_uint());
 		/*Range for level*/			((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("range_for_level").as_uint());
 		/*Life for level*/			((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("life_for_level").as_uint());
-		/*Armor for level*/			((Champion*)new_def)->SetArmorForLevel(unit_node->attribute("armor_for_level").as_uint());
 		/*Defense for level*/		((Champion*)new_def)->SetDefenseForLevel(unit_node->attribute("defense_for_level").as_float());
 		/*Speed for level*/			((Champion*)new_def)->SetSpeedForLevel(unit_node->attribute("speed_for_level").as_float());
 		/*View Area for level*/		((Champion*)new_def)->SetViewAreaForLevel(unit_node->attribute("view_area_for_level").as_uint());
@@ -1124,7 +1148,7 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	BUILDING_TYPE building_type = App->animator->StrToBuildingEnum(building_node->attribute("building_type").as_string());
 
 	//Generate a new building definition from the node
-	Building* new_def = nullptr;
+	ProductiveBuilding* new_def = nullptr;
 
 	//Allocate the correct class
 
@@ -1182,7 +1206,10 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 		/*Production Cap*/	((ProductiveBuilding*)new_def)->SetProductionCapacity(building_node->attribute("production_capacity").as_uint());
 
 	}
-	buildings_defs.push_back(new_def);
+
+	ProductiveBuilding* new_def_enemy = new ProductiveBuilding(*new_def);
+	ally_buildings_defs.push_back(new_def);
+	enemy_buildings_defs.push_back(new_def_enemy);
 
 	LOG("%s definition built!", new_def->GetName());
 
@@ -1459,21 +1486,14 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 {
 	Building* new_building = nullptr;
 
-	uint def_num = buildings_defs.size();
+	uint def_num = ally_buildings_defs.size();
 	for (uint k = 0; k < def_num; k++)
 	{
-		if (buildings_defs[k]->GetBuildingType() == type)
+		if (ally_buildings_defs[k]->GetBuildingType() == type)
 		{
-			if (type == TOWN_CENTER || type == BARRACK || type == STABLE || type == ARCHERY_RANGE)
-			{	
-				new_building = new ProductiveBuilding(*(ProductiveBuilding*)buildings_defs[k]);
+			if(diplomacy == ALLY)new_building = new ProductiveBuilding(*(ProductiveBuilding*)ally_buildings_defs[k]);
+			else new_building = new ProductiveBuilding(*(ProductiveBuilding*)enemy_buildings_defs[k]);
 				
-			}
-			else
-			{
-				//Build unit
-				new_building = new Building(*buildings_defs[k]);
-			}
 			//Set unit animation
 			App->animator->BuildingPlay(new_building);
 			
@@ -1646,33 +1666,16 @@ Unit * j1EntitiesManager::PopUnit(const Unit * unit)
 	return (Unit*)unit;
 }
 
-Building * j1EntitiesManager::SearchNearestSavePoint(const iPoint & point)
+void j1EntitiesManager::AddDeadBuilding(Building * build)
 {
-	std::list<Building*>::const_iterator building = buildings.begin();
-	uint distance = 120 * 120 * 50;
-	Building* nearest_building = nullptr;
-	while (building != buildings.end())
-	{
-		//Check building type
-		if (building._Ptr->_Myval->GetBuildingType() != TOWN_CENTER)
-		{
-			building++;
-			continue;
-		}
-		//Calculate distance between building pos & point
-		uint dist = abs(building._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
-		//Check if is the nearest building from the point 
-		if ( dist < distance)
-		{
-			distance = dist;
-			nearest_building = building._Ptr->_Myval;
-		}
-
-		building++;
-	}
-
-	return nearest_building;
+	death_buildings.push_back(build);
 }
+
+void j1EntitiesManager::RemoveDeathBuilding(Building * build)
+{
+	death_buildings.remove(build);
+}
+
 
 std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > j1EntitiesManager::OrganizeByNearest(std::vector<Unit*>& vec, Circle& target)
 {
@@ -1738,7 +1741,7 @@ void j1EntitiesManager::UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy)
 		break;
 	case S_SCOUTC_UP:		
 		break;
-	default:
+	default:		
 		break;
 	}
 }
@@ -1759,6 +1762,7 @@ bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 				break;
 			}
 		}
+
 		std::list<Unit*>::iterator unit = units.begin();
 		while (unit != units.end())
 		{
@@ -1773,7 +1777,130 @@ bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 	return ret;
 }
 
-Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE type)
+void j1EntitiesManager::UpgradeUnitResearch(RESEARCH_TECH research_type, DIPLOMACY diplomacy)
+{
+	switch (research_type)
+	{
+	case BS_PADDED_AA:
+		break;
+	case BS_LEATHER_AA:
+		break;
+	case BS_RING_AA:
+		break;
+	case BS_FLETCHING:
+		break;
+	case BS_BODKINARROW:
+		break;
+	case BS_BRACER:
+		break;
+	case BS_FORGING:
+		break;
+	case BS_IRONCASTING:
+		break;
+	case BS_BLASTFURNACE:
+		break;
+	case BS_SCALE_BA:
+		break;
+	case BS_CHAIN_BA:
+		break;
+	case BS_PLATE_BA:
+		break;
+	case BS_SCALE_MAIL_ARMOR:
+		break;
+	case BS_CHAIN_MAIL_ARMOR:
+		break;
+	case BS_PLATE_MAIL_ARMOR:
+		break;
+	case S_BLOODLINES:
+		break;
+	case S_HUSBANDRY:
+		break;
+	case TC_FEUDAL:
+		break;
+	case TC_CASTLE:
+		break;
+	case TC_IMPERIAL:
+		break;
+	case TC_LOOM:
+	{
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (ally_buildings_defs[k]->GetEntityType() == VILLAGER)
+			{
+				Villager* target = nullptr;
+				if (diplomacy == ALLY)target = (Villager*)ally_units_defs[k];
+				else target = (Villager*)enemy_units_defs[k];
+				target->SetMaxLife(target->GetMaxLife() + 15);
+				target->SetDefense(target->GetDefense() + 1);
+			}
+		}
+		break;
+	}
+	case TC_PATROL:
+	case TC_TOWNWATCH:
+
+		break;
+	case TC_WHEELBARROW:
+		break;
+	case TC_HANDCART:
+		break;
+	case M_HORSECOLLAR:
+		break;
+	case M_HEAVYPLOW:
+		break;
+	case M_CROPROTATION:
+		break;
+	case LC_DOUBLEBIT_AXE:
+		break;
+	case LC_BOW_SAW:
+		break;
+	case LC_TWOMAN_SAW:
+		break;
+	case MC_GOLD_MINING:
+		break;
+	case MC_GOLD_SHAFT:
+		break;
+	case MC_STONE_MINING:
+		break;
+	case MC_STONE_SHAFT:
+		break;
+	}
+}
+
+Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy)
+{
+	Building* ret = nullptr;
+
+	std::list<Building*>::const_iterator building_it = buildings.begin();
+	uint distance = 120 * 120 * 50;
+
+
+	while (building_it != buildings.end())
+	{
+		//Check resource type
+		if (building_it._Ptr->_Myval->GetBuildingType() != type || building_it._Ptr->_Myval->GetDiplomacy() != diplomacy) 
+		{
+			building_it++;
+			continue;
+		}
+
+		//Calculate distance between resource pos & point
+		uint dist = abs(building_it._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
+		//Check if is the nearest resource from the point 
+		if (dist < distance)
+		{
+			distance = dist;
+			ret = building_it._Ptr->_Myval;
+		}
+
+		building_it	++;
+	}
+
+	return ret;
+}
+
+Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE type, DIPLOMACY diplomacy)
 {
 	Resource* ret = nullptr;
 
@@ -1784,7 +1911,7 @@ Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE typ
 	while (resource != resources.end())
 	{
 		//Check resource type
-		if (resource._Ptr->_Myval->GetResourceType() != type)
+		if (resource._Ptr->_Myval->GetResourceType() != type || resource._Ptr->_Myval->GetDiplomacy() != diplomacy)
 		{
 			resource++;
 			continue;

@@ -49,7 +49,6 @@ protected:
 
 	//Stats bonus for level
 	uint	attack_for_level = 0;
-	uint	armor_for_level = 0;
 	uint	life_for_level = 0;
 
 	uint	range_for_level = 0;
@@ -72,12 +71,12 @@ public:
 	virtual void CheckHability_lvl_1();
 	//Ability lvl2 methods
 	virtual void SetAbility_lvl_2(bool choosed);
-	virtual void PrepareAbility_lvl_2();
+	virtual bool PrepareAbility_lvl_2();
 	virtual void Hability_lvl_2(int x = 0, int y = 0);
 	virtual void CheckHability_lvl_2();
 	//Ability lvl3 methods
 	virtual void SetAbility_lvl_3(bool choosed);
-	virtual void PrepareAbility_lvl_3();
+	virtual bool PrepareAbility_lvl_3();
 	virtual void Hability_lvl_3(int x = 0, int y = 0);
 	virtual void CheckHability_lvl_3();
 	//Level system methods
@@ -97,7 +96,6 @@ public:
 	void	SetAttackForLevel(uint atk_for_lvl);
 	void	SetRangeForLevel(uint rng_for_lvl);
 	void	SetDefenseForLevel(float def_for_lvl);
-	void	SetArmorForLevel(uint arm_for_lvl);
 	void	SetSpeedForLevel(float spd_for_lvl);
 	void	SetViewAreaForLevel(uint view_for_level);
 	void	SetExperience(int exp);
@@ -110,7 +108,6 @@ public:
 	uint			GetAttackForLevel()const;
 	uint			GetRangeForLevel()const;
 	float			GetDefenseForLevel()const;
-	float			GetArmorForLevel()const;
 	float			GetSpeedForLevel()const;
 	uint			GetViewAreaForLevel()const;
 	bool			GetAbilityChosen(uint index)const;
@@ -159,12 +156,12 @@ public:
 	void	Hability_lvl_1();
 	void	CheckHability_lvl_1();
 	void	SetAbility_lvl_2(bool choosed);
-	void	PrepareAbility_lvl_2();
+	bool	PrepareAbility_lvl_2();
 	void	Hability_lvl_2(int x = 0, int y = 0);
 	void	CheckHability_lvl_2();
 
 	void	SetAbility_lvl_3(bool choosed);
-	void	PrepareAbility_lvl_3();
+	bool	PrepareAbility_lvl_3();
 	void	Hability_lvl_3(int x = 0, int y = 0);
 	void	CheckHability_lvl_3();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
@@ -221,11 +218,11 @@ public:
 	void	Hability_lvl_1();
 	void	CheckHability_lvl_1();
 	void	SetAbility_lvl_2(bool choosed);
-	void	PrepareAbility_lvl_2();
+	bool	PrepareAbility_lvl_2();
 	void	Hability_lvl_2(int x = 0, int y = 0);
 	void	CheckHability_lvl_2();
 	void	SetAbility_lvl_3(bool choosed);
-	void	PrepareAbility_lvl_3();
+	bool	PrepareAbility_lvl_3();
 	void	Hability_lvl_3(int x = 0, int y = 0);
 	void	CheckHability_lvl_3();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
@@ -293,11 +290,11 @@ public:
 	void	Hability_lvl_1();
 	void	CheckHability_lvl_1();
 	void	SetAbility_lvl_2(bool choosed);
-	void	PrepareAbility_lvl_2();
+	bool	PrepareAbility_lvl_2();
 	void	Hability_lvl_2(int x = 0, int y = 0);
 	void	CheckHability_lvl_2();
 	void	SetAbility_lvl_3(bool choosed);
-	void	PrepareAbility_lvl_3();
+	bool	PrepareAbility_lvl_3();
 	void	Hability_lvl_3(int x = 0, int y = 0);
 	void	CheckHability_lvl_3();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;

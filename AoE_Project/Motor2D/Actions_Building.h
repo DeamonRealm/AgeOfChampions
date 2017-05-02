@@ -101,7 +101,10 @@ public:
 	
 	~SpawnUnitAction()
 	{
-	
+		if (new_unit != nullptr)
+		{
+			delete new_unit;
+		}
 	}
 
 	bool Activation()
@@ -121,10 +124,10 @@ public:
 			App->entities_manager->AddUnit(new_unit);
 			new_unit->SetPosition((float)x, (float)y);
 			App->animator->UnitPlay(new_unit);
-			App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
+			if(diplomacy == ALLY)App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
 
-			new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)), TASK_CHANNELS::PRIMARY);
-
+		//	new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)), TASK_CHANNELS::PRIMARY);
+			App->pathfinding->PushPath(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1),iPoint(-1,-1),false);
 			//Add an autoattack passive action
 			new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
 
@@ -133,6 +136,7 @@ public:
 			if (new_unit->GetDiplomacy() == ENEMY)
 				App->AI->enemy_units.push_back(new_unit);
 
+			new_unit = nullptr;
 			return true;
 		}
 

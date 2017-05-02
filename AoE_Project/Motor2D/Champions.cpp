@@ -10,6 +10,7 @@
 #include "j1SoundManager.h"
 #include "Hud_ActionPanel.h"
 #include "Hud_GamePanel.h"
+#include "j1FogOfWar.h"
 
 ///Class Champion -------------------------------
 //Base class that define the champions bases
@@ -21,7 +22,7 @@ Champion::Champion() : Unit()
 }
 
 Champion::Champion(const Champion & copy) : Unit(copy), buff_area(copy.buff_area),buff_to_apply(copy.buff_to_apply), level(copy.level), attack_for_level(copy.attack_for_level), range_for_level(copy.range_for_level),
-defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_lvl_2_cooldown(copy.ability_lvl_2_cooldown), ability_lvl_3_cooldown(copy.ability_lvl_3_cooldown),
+defense_for_level(copy.defense_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_lvl_2_cooldown(copy.ability_lvl_2_cooldown), ability_lvl_3_cooldown(copy.ability_lvl_3_cooldown),
 level_up_particle(copy.level_up_particle), experience_lvl_2(copy.experience_lvl_2), experience_lvl_3(copy.experience_lvl_3)
 {
 
@@ -82,8 +83,9 @@ void Champion::SetAbility_lvl_2(bool choosed)
 	ability[1] = choosed;
 }
 
-void Champion::PrepareAbility_lvl_2()
+bool Champion::PrepareAbility_lvl_2()
 {
+	return true;
 
 }
 
@@ -101,8 +103,9 @@ void Champion::SetAbility_lvl_3(bool choosed)
 {
 }
 
-void Champion::PrepareAbility_lvl_3()
+bool Champion::PrepareAbility_lvl_3()
 {
+	return true;
 }
 
 void Champion::Hability_lvl_3(int x, int y)
@@ -124,8 +127,6 @@ void Champion::LevelUp(bool particle)
 	level++;
 	//Upgrade attack
 	attack_hitpoints += attack_for_level;
-	//Upgrade armor
-	armor += armor_for_level;
 	//Upgrade life
 	max_life += life_for_level;
 	life += life_for_level;
@@ -253,11 +254,6 @@ void Champion::SetDefenseForLevel(float def_for_lvl)
 	defense_for_level = def_for_lvl;
 }
 
-void Champion::SetArmorForLevel(uint arm_for_lvl)
-{
-	armor_for_level = arm_for_lvl;
-}
-
 void Champion::SetSpeedForLevel(float spd_for_lvl)
 {
 	speed_for_level = spd_for_lvl;
@@ -297,11 +293,6 @@ uint Champion::GetRangeForLevel() const
 float Champion::GetDefenseForLevel() const
 {
 	return defense_for_level;
-}
-
-float Champion::GetArmorForLevel() const
-{
-	return armor_for_level;
 }
 
 float Champion::GetSpeedForLevel() const
@@ -530,9 +521,9 @@ void Warrior::SetAbility_lvl_2(bool choosed)
 	ability[1] = choosed;
 }
 
-void Warrior::PrepareAbility_lvl_2()
+bool Warrior::PrepareAbility_lvl_2()
 {
-	if (!ability_lvl_2_ready)return;
+	if (!ability_lvl_2_ready)return false;
 
 	ability_lvl_2_prepare_mode = true;
 
@@ -548,9 +539,10 @@ void Warrior::PrepareAbility_lvl_2()
 
 	for (uint k = 0; k < size; k++)
 	{
-		if (units_in[k]->GetPosition() != position)units_in[k]->SetBlitColor({ 255,120,120,255 });
+		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+			units_in[k]->SetBlitColor({ 255,150,150,255 });
 	}
-
+	return true;
 }
 
 void Warrior::Hability_lvl_2(int x, int y)
@@ -648,11 +640,12 @@ void Warrior::SetAbility_lvl_3(bool choosed)
 	ability[2] = choosed;
 }
 
-void Warrior::PrepareAbility_lvl_3()
+bool Warrior::PrepareAbility_lvl_3()
 {
-	if (!ability_lvl_3_ready)return;
+	if (!ability_lvl_3_ready)return false;
 
 	ability_lvl_3_prepare_mode = true;
+	return true;
 }
 
 void Warrior::Hability_lvl_3(int x, int y)
@@ -765,6 +758,8 @@ bool Warrior::Die()
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
 		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
+
 	}
 	else if (current_animation->IsEnd())
 	{
@@ -775,7 +770,7 @@ bool Warrior::Die()
 		}
 		else
 		{
-			App->entities_manager->RemoveDeathUnit(this);
+			//App->entities_manager->RemoveDeathUnit(this);
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
@@ -787,7 +782,7 @@ bool Warrior::Die()
 void Warrior::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
-	App->entities_manager->units_quadtree.Exteract(this,&position);
+	if (insert)App->entities_manager->units_quadtree.Exteract(this,&position);
 
 	//Set unit position
 	position.x = x;
@@ -795,6 +790,8 @@ void Warrior::SetPosition(float x, float y, bool insert)
 	iPoint pos(position.x, position.y);
 	//Set unit vision position
 	vision.SetPosition(pos);
+	//Set unit render area position
+	render_area.SetPosition(pos);
 	//Set unit mark position
 	mark.SetPosition(pos);
 	//Set soft_collider mark position
@@ -808,6 +805,13 @@ void Warrior::SetPosition(float x, float y, bool insert)
 	//Set attack area position
 	special_attack_area.SetPosition(pos);
 	area_ability_lvl_3.SetPosition(pos);
+
+	//Check unit fog
+	SDL_Point point = { pos.x,pos.y };
+	int dist_mult = 10;
+	if (SDL_PointInRect(&point, &App->render->camera_viewport))dist_mult = 2;
+	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * dist_mult))App->fog_of_war->CheckEntityFog(this);
+
 	//Add the unit with the correct position in the correct quad tree
 	if(insert)App->entities_manager->units_quadtree.Insert(this, &position);
 }
@@ -1040,9 +1044,9 @@ void Wizard::SetAbility_lvl_2(bool choosed)
 	ability[1] = choosed;
 }
 
-void Wizard::PrepareAbility_lvl_2()
+bool Wizard::PrepareAbility_lvl_2()
 {
-	if (!ability_lvl_2_ready)return;
+	if (!ability_lvl_2_ready)return false;
 
 	ability_lvl_2_prepare_mode = true;
 
@@ -1075,12 +1079,13 @@ void Wizard::PrepareAbility_lvl_2()
 		if (units_in[k]->GetDiplomacy() != entity_diplomacy)continue;
 
 		if (ability[1]) {
-			units_in[k]->SetBlitColor({ 0,50,255,255 });
+			units_in[k]->SetBlitColor({ 150,150,255,255 });
 		}
 		else {
-			units_in[k]->SetBlitColor({ 0,255,50,255 });
+			units_in[k]->SetBlitColor({ 150,255,150,255 });
 		}
 	}
+	return true;
 }
 
 void Wizard::Hability_lvl_2(int x, int y)
@@ -1199,9 +1204,9 @@ void Wizard::SetAbility_lvl_3(bool choosed)
 	ability[2] = choosed;
 }
 
-void Wizard::PrepareAbility_lvl_3()
+bool Wizard::PrepareAbility_lvl_3()
 {
-	if (ability_lvl_3_current_time < ability_lvl_3_cooldown)return;
+	if (ability_lvl_3_current_time < ability_lvl_3_cooldown)return false;
 
 	ability_lvl_3_prepare_mode = true;
 
@@ -1223,7 +1228,7 @@ void Wizard::PrepareAbility_lvl_3()
 		{
 			if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
 
-			units_in[k]->SetBlitColor({ 255,50,0,255 });	
+			units_in[k]->SetBlitColor({ 255,150,150,255 });
 		}
 	}
 	else {	
@@ -1249,6 +1254,7 @@ void Wizard::PrepareAbility_lvl_3()
 			}
 		}
 	}
+	return true;
 }
 
 void Wizard::Hability_lvl_3(int x, int y)
@@ -1267,6 +1273,7 @@ void Wizard::Hability_lvl_3(int x, int y)
 
 	std::vector<Unit*> units_in;
 
+	//Thunder skill
 	if (ability[2])
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(THUNDER_PARTICLE, NO_DIRECTION);
@@ -1282,11 +1289,13 @@ void Wizard::Hability_lvl_3(int x, int y)
 			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 		}
 	}
+
+	//Resurrect skill
 	else
 	{
 		//std::vector<Unit*> to_revive;
-		std::list<Unit*>::iterator units_in = App->entities_manager->GetDeathUnitList().begin();
 		std::list<Unit*> temp_list = App->entities_manager->GetDeathUnitList();
+		std::list<Unit*>::iterator units_in = temp_list.begin();
 
 		for (; units_in != temp_list.end(); units_in++)
 		{
@@ -1425,6 +1434,8 @@ bool Wizard::Die()
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
 		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
+
 	}
 	else if (current_animation->IsEnd())
 	{
@@ -1435,7 +1446,7 @@ bool Wizard::Die()
 		}
 		else
 		{
-			App->entities_manager->RemoveDeathUnit(this);
+		//	App->entities_manager->RemoveDeathUnit(this);
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
@@ -1454,6 +1465,8 @@ void Wizard::SetPosition(float x, float y, bool insert)
 	iPoint pos(position.x, position.y);
 	//Set unit vision position
 	vision.SetPosition(pos);
+	//Set unit render area position
+	render_area.SetPosition(pos);
 	//Set unit mark position
 	mark.SetPosition(pos);
 	//Set soft_collider mark position
@@ -1464,6 +1477,12 @@ void Wizard::SetPosition(float x, float y, bool insert)
 	buff_area.SetPosition(pos);
 	//Set unit attack area position
 	attack_area.SetPosition(pos);
+
+	//Check unit fog
+	SDL_Point point = { pos.x,pos.y };
+	int dist_mult = 10;
+	if (SDL_PointInRect(&point, &App->render->camera_viewport))dist_mult = 2;
+	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * dist_mult))App->fog_of_war->CheckEntityFog(this);
 
 	//Set area limit position
 	//area_limit_spell_2.SetPosition(pos);
@@ -1671,9 +1690,9 @@ void Hunter::SetAbility_lvl_2(bool choosed)
 	ability[1] = choosed;
 }
 
-void Hunter::PrepareAbility_lvl_2()
+bool Hunter::PrepareAbility_lvl_2()
 {
-	if (!ability_lvl_2_ready)return;
+	if (!ability_lvl_2_ready)return false;
 	ability_lvl_2_prepare_mode = true;
 	//Focus the wizard in the attack direction
 	int x, y;
@@ -1681,7 +1700,7 @@ void Hunter::PrepareAbility_lvl_2()
 	iPoint destination = iPoint(x - App->render->camera.x, y - App->render->camera.y);
 	direction_type = LookDirection(destination, GetPositionRounded());
 	CalculateSpecialAttackArea(destination, true);
-	CalculateTriangleAttackArea(destination);
+	CalculateTriangleAttackArea(GetiPointFromDirection(direction_type));
 
 
 	//Collect all the units in the buff area
@@ -1704,8 +1723,10 @@ void Hunter::PrepareAbility_lvl_2()
 	for (uint k = 0; k < size; k++)
 	{
 		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
-			units_in[k]->SetBlitColor({ 255,50,0,255 });		
+		units_in[k]->SetBlitColor({ 255,150,150,255 });
 	}
+	return true;
+
 }
 
 void Hunter::Hability_lvl_2(int x, int y)
@@ -1791,9 +1812,9 @@ void Hunter::SetAbility_lvl_3(bool choosed)
 	ability[2] = choosed;
 }
 
-void Hunter::PrepareAbility_lvl_3()
+bool Hunter::PrepareAbility_lvl_3()
 {
-	if (!ability_lvl_3_ready)return;
+	if (!ability_lvl_3_ready)return false;
 
 	ability_lvl_3_prepare_mode = true;
 
@@ -1820,10 +1841,10 @@ void Hunter::PrepareAbility_lvl_3()
 	for (uint k = 0; k < size; k++)
 	{
 		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
-		units_in[k]->SetBlitColor({ 255,50,0,255 });
+		units_in[k]->SetBlitColor({ 255,150,150,255 });
 	}
 
-
+	return true;
 
 
 }
@@ -1843,9 +1864,13 @@ void Hunter::Hability_lvl_3(int x, int y)
 
 	if (ability[2])
 	{
+		CalculateArrorwAttackArea(destination);
 		//long range skill
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
 		//Collect all the units in the buff area
+		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_3);
+		ability_lvl_3_particle.animation.Reset();
+		ability_lvl_3_particle.position = area_attack_skill_A_lvl_3.GetPosition();
 	}
 	else
 	{
@@ -1862,6 +1887,7 @@ void Hunter::Hability_lvl_3(int x, int y)
 	for (uint k = 0; k < size; k++)
 	{
 		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
+
 		if (ability[2]) 
 			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 
@@ -1994,6 +2020,8 @@ bool Hunter::Die()
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
 		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
+
 	}
 	else if (current_animation->IsEnd())
 	{
@@ -2004,7 +2032,7 @@ bool Hunter::Die()
 		}
 		else
 		{
-			App->entities_manager->RemoveDeathUnit(this);
+		//	App->entities_manager->RemoveDeathUnit(this);
 			App->entities_manager->DeleteEntity(this);
 			return true;
 		}
@@ -2023,6 +2051,8 @@ void Hunter::SetPosition(float x, float y, bool insert)
 	iPoint pos(position.x, position.y);
 	//Set unit vision position
 	vision.SetPosition(pos);
+	//Set unit render area position
+	render_area.SetPosition(pos);
 	//Set unit mark position
 	mark.SetPosition(pos);
 	//Set soft_collider mark position
@@ -2033,6 +2063,12 @@ void Hunter::SetPosition(float x, float y, bool insert)
 	buff_area.SetPosition(pos);
 	//Set unit attack area position
 	attack_area.SetPosition(pos);
+
+	//Check unit fog
+	SDL_Point point = { pos.x,pos.y };
+	int dist_mult = 10;
+	if (SDL_PointInRect(&point, &App->render->camera_viewport))dist_mult = 2;
+	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * dist_mult))App->fog_of_war->CheckEntityFog(this);
 
 	//Set area limit position
 	//area_limit_spell_2.SetPosition(pos);

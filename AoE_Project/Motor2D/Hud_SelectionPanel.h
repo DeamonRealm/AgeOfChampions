@@ -128,6 +128,9 @@ public:
 	// Coordinates Methods
 	bool PointisInViewport(int x = 0, int y = 0) ;
 
+	// Move Methods
+	void MoveSelectedToPoint(int x, int y);
+
 	// Select Methods
 	void Select(SELECT_TYPE type);
 	void UpdateSelected();
