@@ -72,9 +72,11 @@ pc => population cost to activate cell
       <cell cp ="2" cl ="0" al ="2" x="396" y="369" w="36" h="36" wc ="0" fc ="150" gc ="0"   sc ="0" pc ="0" rt ="23" ci ="Research Forging (Infantry, Cavalry +1 Attack)"/>
       <cell cp ="2" cl ="1" al ="3" x="432" y="369" w="36" h="36" wc ="0" fc ="220" gc ="120" sc ="0" pc ="0" rt ="24" ci ="Research Iron Casting (Infantry, Cavalry +1 Attack)"/>
       <cell cp ="2" cl ="2" al ="4" x="180" y="369" w="36" h="36" wc ="0" fc ="275" gc ="225" sc ="0" pc ="0" rt ="25" ci ="Research Blast Furnace (Infantry, Cavalry +2 Attack)"/>
+      
       <cell cp ="5" cl ="0" al ="2" x="0"   y="405" w="36" h="36" wc ="0" fc ="150" gc ="0"   sc ="0" pc ="0" rt ="26" ci ="Research Scale Barding Armor (Cavalry +1/+1P Armor)"/>
       <cell cp ="5" cl ="1" al ="3" x="288" y="369" w="36" h="36" wc ="0" fc ="250" gc ="150" sc ="0" pc ="0" rt ="27" ci ="Research Chain Barding Armor (Cavalry +1/+1P Armor)"/>
       <cell cp ="5" cl ="2" al ="4" x="540" y="369" w="36" h="36" wc ="0" fc ="350" gc ="200" sc ="0" pc ="0" rt ="28" ci ="Research Plate Barding Armor (Cavalry +1/+2P Armor)"/>
+      
       <cell cp ="6" cl ="0" al ="2" x="36"  y="405" w="36" h="36" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="29" ci ="Research Scale Mail Armor (Infantry +1/+1P Armor)"/>
       <cell cp ="6" cl ="1" al ="3" x="324" y="369" w="36" h="36" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="30" ci ="Research Chain Mail Armor (Infantry +1/+1P Armor)"/>
       <cell cp ="6" cl ="2" al ="4" x="576" y="369" w="36" h="36" wc ="0" fc ="300" gc ="150" sc ="0" pc ="0" rt ="31" ci ="Research Plate Mail Armor (Infantry +1/+2P Armor)"/>

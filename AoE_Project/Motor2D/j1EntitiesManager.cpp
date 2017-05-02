@@ -117,12 +117,9 @@ bool j1EntitiesManager::Update(float dt)
 
 	while (item != units.end())
 	{
-		if (unit_update_timer.Read() > 20) break;
 		ret = item._Ptr->_Myval->Update();
 		item++;
 	}
-	unit_update_timer.Start();
-	
 
 	//Update all death units
 	std::list<Unit*>::const_iterator death_unit = death_units.begin();
@@ -325,13 +322,14 @@ bool j1EntitiesManager::CleanUp()
 	resources_defs.clear();
 
 	//Clean Up buildings_defs vector
-	size = buildings_defs.size();
+	size = ally_buildings_defs.size();
 	for (uint k = 0; k < size; k++)
 	{
-		RELEASE(buildings_defs[k]);
+		RELEASE(ally_buildings_defs[k]);
+		RELEASE(enemy_buildings_defs[k]);
 	}
-	buildings_defs.clear();
-
+	ally_buildings_defs.clear();
+	enemy_buildings_defs.clear();
 
 	return true;
 }
@@ -994,7 +992,10 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	{
 		/*Resources Capacity*/		((Villager*)new_def)->SetResourcesCapacity(unit_node->attribute("resources_capacity").as_uint());
 		/*Recollect Capacity*/		((Villager*)new_def)->SetRecollectCapacity(unit_node->attribute("recollect_capacity").as_uint());
-		/*Recollect Rate*/			((Villager*)new_def)->SetRecollectRate(unit_node->attribute("recollect_rate").as_uint());
+		/*Stone Recollect Rate*/	((Villager*)new_def)->SetRecollectRate(unit_node->attribute("stone_recollect_rate").as_uint(),RESOURCE_TYPE::STONE_ORE);
+		/*Gold Recollect Rate*/		((Villager*)new_def)->SetRecollectRate(unit_node->attribute("gold_recollect_rate").as_uint(), RESOURCE_TYPE::GOLD_ORE);
+		/*Tree Recollect Rate*/		((Villager*)new_def)->SetRecollectRate(unit_node->attribute("tree_recollect_rate").as_uint(), RESOURCE_TYPE::TREE);
+		/*Bush Recollect Rate*/		((Villager*)new_def)->SetRecollectRate(unit_node->attribute("bush_recollect_rate").as_uint(), RESOURCE_TYPE::BERRY_BUSH);
 	}
 	else if (unit_type == WARRIOR_CHMP)
 	{
@@ -1161,12 +1162,7 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	BUILDING_TYPE building_type = App->animator->StrToBuildingEnum(building_node->attribute("building_type").as_string());
 
 	//Generate a new building definition from the node
-	Building* new_def = nullptr;
-
-	//Allocate the correct class
-
-	new_def = new ProductiveBuilding();
-
+	ProductiveBuilding* new_def = new ProductiveBuilding();
 
 	//Building ID -----------
 	/*Name*/			new_def->SetName(building_node->attribute("name").as_string());
@@ -1219,7 +1215,9 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 		/*Production Cap*/	((ProductiveBuilding*)new_def)->SetProductionCapacity(building_node->attribute("production_capacity").as_uint());
 	}
 
-	buildings_defs.push_back(new_def);
+	ally_buildings_defs.push_back(new_def);
+	ProductiveBuilding* enemy_new_def = new ProductiveBuilding(*new_def);
+	enemy_buildings_defs.push_back(enemy_new_def);
 
 	LOG("%s definition built!", new_def->GetName());
 
@@ -1496,12 +1494,13 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 {
 	Building* new_building = nullptr;
 
-	uint def_num = buildings_defs.size();
+	uint def_num = ally_buildings_defs.size();
 	for (uint k = 0; k < def_num; k++)
 	{
-		if (buildings_defs[k]->GetBuildingType() == type)
+		if (ally_buildings_defs[k]->GetBuildingType() == type)
 		{
-			new_building = new ProductiveBuilding(*(ProductiveBuilding*)buildings_defs[k]);
+			if(diplomacy == ALLY)new_building = new ProductiveBuilding(*(ProductiveBuilding*)ally_buildings_defs[k]);
+			else new_building = new ProductiveBuilding(*(ProductiveBuilding*)enemy_buildings_defs[k]);
 
 			//Set unit animation
 			App->animator->BuildingPlay(new_building);
@@ -1751,6 +1750,9 @@ void j1EntitiesManager::UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy)
 	case S_SCOUTC_UP:
 		break;
 	default:
+
+		//Researches upgrades
+		UpgradeResearch(type, diplomacy);
 		break;
 	}
 }
@@ -1783,6 +1785,412 @@ bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 	}
 
 	return ret;
+}
+
+bool j1EntitiesManager::UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY diplomacy)
+{
+	switch (research_type)
+	{
+	case BS_PADDED_AA:
+	case BS_LEATHER_AA:
+	case BS_RING_AA:
+	{
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitClass() == UNIT_CLASS::ARCHERY)
+			{
+				Unit* target = nullptr;
+				if (diplomacy == ALLY)target = App->entities_manager->ally_units_defs[k];
+				else target = App->entities_manager->enemy_units_defs[k];
+
+				target->SetDefense(target->GetDefense() + 1);
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitClass() == ARCHERY && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetDefense(unit._Ptr->_Myval->GetDefense() + 1);
+			}
+			unit++;
+		}
+		break;
+	}
+	case BS_FLETCHING:
+	case BS_BODKINARROW:
+	case BS_BRACER:
+	{
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitClass() == UNIT_CLASS::ARCHERY)
+			{
+				Unit* target = nullptr;
+				if (diplomacy == ALLY)target = App->entities_manager->ally_units_defs[k];
+				else target = App->entities_manager->enemy_units_defs[k];
+
+				target->SetAttackHitPoints(target->GetAttackHitPoints() + 1);
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitClass() == ARCHERY && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetAttackHitPoints(unit._Ptr->_Myval->GetAttackHitPoints() + 1);
+			}
+			unit++;
+		}
+		break;
+	}
+	case BS_FORGING:
+	case BS_IRONCASTING:
+	case BS_BLASTFURNACE:
+	{
+		uint upgrade_value = 1;
+		if (research_type == BS_BLASTFURNACE)upgrade_value = 2;
+
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			UNIT_CLASS unit_class = App->entities_manager->ally_units_defs[k]->GetUnitClass();
+			if (unit_class == ARCHERY || unit_class == INFANTRY || unit_class == CAVALRY)
+			{
+				Unit* target = nullptr;
+				if (diplomacy == ALLY)target = App->entities_manager->ally_units_defs[k];
+				else target = App->entities_manager->enemy_units_defs[k];
+
+				target->SetAttackHitPoints(target->GetAttackHitPoints() + upgrade_value);
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			UNIT_CLASS unit_class = unit._Ptr->_Myval->GetUnitClass();
+			if (unit_class == ARCHERY || unit_class == INFANTRY || unit_class == CAVALRY && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetAttackHitPoints(unit._Ptr->_Myval->GetAttackHitPoints() + upgrade_value);
+			}
+			unit++;
+		}
+		break;
+	}
+	case BS_SCALE_BA:
+	case BS_CHAIN_BA:
+	case BS_PLATE_BA:
+	{
+		uint upgrade_value = 1;
+		if (research_type == BS_PLATE_BA)upgrade_value = 2;
+
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitClass() == CAVALRY)
+			{
+				Unit* target = nullptr;
+				if (diplomacy == ALLY)target = App->entities_manager->ally_units_defs[k];
+				else target = App->entities_manager->enemy_units_defs[k];
+
+				target->SetDefense(target->GetDefense() + upgrade_value);
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitClass() == CAVALRY && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetDefense(unit._Ptr->_Myval->GetDefense() + upgrade_value);
+			}
+			unit++;
+		}
+		break;
+	}
+	case BS_SCALE_MAIL_ARMOR:
+	case BS_CHAIN_MAIL_ARMOR:
+	case BS_PLATE_MAIL_ARMOR:
+	{
+		uint upgrade_value = 1;
+		if (research_type == BS_PLATE_MAIL_ARMOR)upgrade_value = 2;
+
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitClass() == INFANTRY)
+			{
+				Unit* target = nullptr;
+				if (diplomacy == ALLY)target = App->entities_manager->ally_units_defs[k];
+				else target = App->entities_manager->enemy_units_defs[k];
+
+				target->SetDefense(target->GetDefense() + upgrade_value);
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitClass() == INFANTRY && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetDefense(unit._Ptr->_Myval->GetDefense() + upgrade_value);
+			}
+			unit++;
+		}
+		break;
+	}
+	case S_BLOODLINES:
+	{
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitClass() == CAVALRY)
+			{
+				Unit* target = nullptr;
+				if (diplomacy == ALLY)target = App->entities_manager->ally_units_defs[k];
+				else target = App->entities_manager->enemy_units_defs[k];
+
+				target->SetMaxLife(target->GetMaxLife() + 20);
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitClass() == CAVALRY && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetMaxLife(unit._Ptr->_Myval->GetMaxLife() + 20);
+			}
+			unit++;
+		}
+		break;
+	}
+	case S_HUSBANDRY:
+	{
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitClass() == CAVALRY)
+			{
+				Unit* target = nullptr;
+				if (diplomacy == ALLY)target = App->entities_manager->ally_units_defs[k];
+				else target = App->entities_manager->enemy_units_defs[k];
+
+				target->SetSpeed(target->GetSpeed() * 1.10);
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitClass() == CAVALRY && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetSpeed(unit._Ptr->_Myval->GetSpeed() * 1.10);
+			}
+			unit++;
+		}
+		break;
+	}
+	case TC_FEUDAL:
+		break;
+	case TC_CASTLE:
+		break;
+	case TC_IMPERIAL:
+		break;
+	case TC_LOOM:
+	{
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitType() == VILLAGER)
+			{
+				Villager* target = nullptr;
+				if (diplomacy == ALLY)target = (Villager*)App->entities_manager->ally_units_defs[k];
+				else target = (Villager*)App->entities_manager->enemy_units_defs[k];
+
+				target->SetMaxLife(target->GetMaxLife() + 15);
+				target->SetDefense(target->GetDefense() + 2);
+				break;
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitType() == VILLAGER && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetMaxLife(unit._Ptr->_Myval->GetMaxLife() + 15);
+				unit._Ptr->_Myval->SetDefense(unit._Ptr->_Myval->GetDefense() + 2);
+			}
+			unit++;
+		}
+		break;
+	}
+	case TC_PATROL:
+	case TC_TOWNWATCH:
+	{
+		uint size = App->entities_manager->ally_buildings_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_buildings_defs[k]->GetBuildingType() == TOWN_CENTER)
+			{
+				Building* target = nullptr;
+				if (diplomacy == ALLY)target = App->entities_manager->ally_buildings_defs[k];
+				else App->entities_manager->enemy_buildings_defs[k];
+
+				Circle vis = target->GetVision();
+				vis.SetRad(vis.GetRad() + 50);
+				target->SetVision(vis);
+				Circle rend = target->GetRenderArea();
+				rend.SetRad(rend.GetRad() + 50);
+				target->SetRenderArea(rend);
+				break;
+			}
+		}
+		std::list<Building*>::const_iterator build = App->entities_manager->buildings.begin();
+		while (build != App->entities_manager->buildings.end())
+		{
+			if (build._Ptr->_Myval->GetBuildingType() == TOWN_CENTER && build._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				Circle vis = build._Ptr->_Myval->GetVision();
+				vis.SetRad(vis.GetRad() + 80);
+				build._Ptr->_Myval->SetVision(vis);
+				Circle rend = build._Ptr->_Myval->GetRenderArea();
+				rend.SetRad(rend.GetRad() + 80);
+				build._Ptr->_Myval->SetRenderArea(rend);
+
+				const fPoint pos = build._Ptr->_Myval->GetPosition();
+				build._Ptr->_Myval->SetPosition(pos.x, pos.y + App->map->data.tile_height * 0.5);
+			}
+			build++;
+		}
+		break;
+	}
+	case TC_WHEELBARROW:
+	{
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitType() == VILLAGER)
+			{
+				Villager* target = nullptr;
+				if (diplomacy == ALLY)target = (Villager*)App->entities_manager->ally_units_defs[k];
+				else target = (Villager*)App->entities_manager->enemy_units_defs[k];
+
+				target->SetSpeed(target->GetSpeed() * 1.10);
+				target->SetResourcesCapacity(target->GetResourcesCapacity() * 1.25);
+
+				break;
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitType() == VILLAGER && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetSpeed(unit._Ptr->_Myval->GetSpeed() * 1.10);
+				((Villager*)unit._Ptr->_Myval)->SetRecollectCapacity(((Villager*)unit._Ptr->_Myval)->GetRecollectCapacity() * 1.25);
+			}
+			unit++;
+		}
+		break;
+	}
+	case TC_HANDCART:
+	{
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitType() == VILLAGER)
+			{
+				Villager* target = nullptr;
+				if (diplomacy == ALLY)target = (Villager*)App->entities_manager->ally_units_defs[k];
+				else target = (Villager*)App->entities_manager->enemy_units_defs[k];
+
+				target->SetSpeed(target->GetSpeed() * 1.10);
+				target->SetResourcesCapacity(target->GetResourcesCapacity() * 1.50);
+
+				break;
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitType() == VILLAGER && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				unit._Ptr->_Myval->SetSpeed(unit._Ptr->_Myval->GetSpeed() * 1.10);
+				((Villager*)unit._Ptr->_Myval)->SetRecollectCapacity(((Villager*)unit._Ptr->_Myval)->GetRecollectCapacity() * 1.50);
+			}
+			unit++;
+		}
+		break;
+	}
+	case M_HORSECOLLAR:
+		break;
+	case M_HEAVYPLOW:
+		break;
+	case M_CROPROTATION:
+		break;
+	case LC_DOUBLEBIT_AXE:
+	case LC_BOW_SAW:
+	case LC_TWOMAN_SAW:
+	{
+		float val = 1.2;
+		if (research_type == LC_TWOMAN_SAW)val = 1.1;
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitType() == VILLAGER)
+			{
+				Villager* target = nullptr;
+				if (diplomacy == ALLY)target = (Villager*)App->entities_manager->ally_units_defs[k];
+				else target = (Villager*)App->entities_manager->enemy_units_defs[k];
+
+				target->SetRecollectRate(target->GetRecollectRate(TREE) * val, TREE);
+
+				break;
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitType() == VILLAGER && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				((Villager*)unit._Ptr->_Myval)->SetRecollectRate(((Villager*)unit._Ptr->_Myval)->GetRecollectRate(TREE) * val, TREE);
+			}
+			unit++;
+		}
+		break;
+	}
+	case MC_GOLD_MINING:
+	case MC_GOLD_SHAFT:
+	case MC_STONE_MINING:
+	case MC_STONE_SHAFT:
+	{
+		RESOURCE_TYPE res_target_type = GOLD_ORE;
+		if (research_type == MC_STONE_MINING || research_type == MC_STONE_SHAFT)res_target_type = STONE_ORE;
+
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (App->entities_manager->ally_units_defs[k]->GetUnitType() == VILLAGER)
+			{
+				Villager* target = nullptr;
+				if (diplomacy == ALLY)target = (Villager*)App->entities_manager->ally_units_defs[k];
+				else target = (Villager*)App->entities_manager->enemy_units_defs[k];
+
+				target->SetRecollectRate(target->GetRecollectRate(res_target_type) * 1.15, res_target_type);
+
+				break;
+			}
+		}
+		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+		while (unit != App->entities_manager->units.end())
+		{
+			if (unit._Ptr->_Myval->GetUnitType() == VILLAGER && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
+			{
+				((Villager*)unit._Ptr->_Myval)->SetRecollectRate(((Villager*)unit._Ptr->_Myval)->GetRecollectRate(res_target_type) * 1.15, res_target_type);
+			}
+			unit++;
+		}
+		break;
+	}
+	}
+	return false;
 }
 
 Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy)

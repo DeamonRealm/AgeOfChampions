@@ -24,7 +24,10 @@ private:
 	uint resources_capacity = 0;
 	uint current_resources = 0;
 	uint recollect_capacity = 0;
-	uint recollect_rate = 0;
+	uint stone_recollect_rate = 0;
+	uint gold_recollect_rate = 0;
+	uint tree_recollect_rate = 0;
+	uint bush_recollect_rate = 0;
 
 public:
 
@@ -36,13 +39,16 @@ public:
 	ITEM_TYPE			GetItemType()const;
 	PLAYER_RESOURCES	GetResourceCollectedType()const;
 	uint				GetCurrentResources()const;
+	uint				GetRecollectCapacity()const;
+	uint				GetResourcesCapacity()const;
+	uint				GetRecollectRate(RESOURCE_TYPE type)const;
 
 	//Set Methods -
 	void SetItemType(ITEM_TYPE type);
 	void SetResourceCollectedType(PLAYER_RESOURCES type);
 	void SetResourcesCapacity(uint value);
 	void SetRecollectCapacity(uint value);
-	void SetRecollectRate(uint value);
+	void SetRecollectRate(uint value, RESOURCE_TYPE res_type);
 	void SetCurrentResources(uint value);
 
 	//Actions -----

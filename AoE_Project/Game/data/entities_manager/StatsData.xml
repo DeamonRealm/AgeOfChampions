@@ -764,7 +764,10 @@
       unit_experience = "50"
       resources_capacity ="90"
       recollect_capacity ="10"
-      recollect_rate ="450"
+      stone_recollect_rate ="450"
+      gold_recollect_rate ="450"
+      tree_recollect_rate ="450"
+      bush_recollect_rate ="450"
       
     />
   </unit>

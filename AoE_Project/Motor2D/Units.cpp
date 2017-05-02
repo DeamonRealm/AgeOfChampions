@@ -15,7 +15,7 @@ Villager::Villager() : resource_collected_type(PLAYER_RESOURCES::GP_NO_RESOURCE)
 
 }
 
-Villager::Villager(const Villager & copy) : Unit(copy), item_type(copy.item_type), resource_collected_type(copy.resource_collected_type), resources_capacity(copy.resources_capacity), current_resources(copy.current_resources), recollect_capacity(copy.recollect_capacity), recollect_rate(copy.recollect_rate)
+Villager::Villager(const Villager & copy) : Unit(copy), item_type(copy.item_type), resource_collected_type(copy.resource_collected_type), resources_capacity(copy.resources_capacity), current_resources(copy.current_resources), recollect_capacity(copy.recollect_capacity), stone_recollect_rate(copy.stone_recollect_rate), gold_recollect_rate(copy.gold_recollect_rate), tree_recollect_rate(copy.tree_recollect_rate), bush_recollect_rate(copy.bush_recollect_rate)
 {
 
 }
@@ -103,6 +103,39 @@ uint Villager::GetCurrentResources() const
 	return current_resources;
 }
 
+uint Villager::GetRecollectCapacity() const
+{
+	return recollect_capacity;
+}
+
+uint Villager::GetResourcesCapacity() const
+{
+	return resources_capacity;
+}
+
+uint Villager::GetRecollectRate(RESOURCE_TYPE type) const
+{
+	switch (type)
+	{
+	case TREE:
+	case TREE_CUT:
+	case CHOP:
+		return tree_recollect_rate;
+		break;
+	case BERRY_BUSH:
+		return bush_recollect_rate;
+		break;
+	case GOLD_ORE:
+	case TINY_GOLD_ORE:
+		return gold_recollect_rate;
+		break;
+	case STONE_ORE:
+	case TINY_STONE_ORE:
+		return stone_recollect_rate;
+		break;
+	};
+}
+
 //Set Methods ----------
 void Villager::SetItemType(ITEM_TYPE type)
 {
@@ -122,10 +155,25 @@ void Villager::SetRecollectCapacity(uint value)
 {
 	recollect_capacity = value;
 }
-void Villager::SetRecollectRate(uint value)
+void Villager::SetRecollectRate(uint value, RESOURCE_TYPE res_type)
 {
-	recollect_rate = value;
+	switch (res_type)
+	{
+	case TREE:
+		tree_recollect_rate = value;
+		break;
+	case BERRY_BUSH:
+		bush_recollect_rate = value;
+		break;
+	case GOLD_ORE:
+		gold_recollect_rate = value;
+		break;
+	case STONE_ORE:
+		stone_recollect_rate = value;
+		break;
+	}
 }
+
 void Villager::SetCurrentResources(uint value)
 {
 	current_resources = value;

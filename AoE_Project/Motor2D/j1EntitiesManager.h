@@ -68,7 +68,6 @@ private:
 	std::list<Building*>	death_buildings;
 	std::list<Champion*>	champions_blue;
 	std::list<Champion*>	champions_red;
-	j1Timer					unit_update_timer;
 
 	//Vector where all the killed/destroyed entities are placed
 	std::vector<Entity*>	wasted_units;
@@ -76,7 +75,8 @@ private:
 	//Vectors of predefined units
 	std::vector<Unit*>		ally_units_defs;
 	std::vector<Unit*>		enemy_units_defs;
-	std::vector<Building*>	buildings_defs;
+	std::vector<Building*>	ally_buildings_defs;
+	std::vector<Building*>	enemy_buildings_defs;
 	std::vector<Resource*>	resources_defs;
 
 	//Methods to add entities definitions
@@ -137,7 +137,7 @@ public:
 	//Upgrade Entity
 	void UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy);
 	bool UpgradeUnit(UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
-
+	bool UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY diplomacy);
 
 	//Get nearest Entity methods
 	Unit*		GetNearestUnit(iPoint point, UNIT_TYPE type);
