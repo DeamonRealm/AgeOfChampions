@@ -22,7 +22,7 @@ Champion::Champion() : Unit()
 }
 
 Champion::Champion(const Champion & copy) : Unit(copy), buff_area(copy.buff_area),buff_to_apply(copy.buff_to_apply), level(copy.level), attack_for_level(copy.attack_for_level), range_for_level(copy.range_for_level),
-defense_for_level(copy.defense_for_level), armor_for_level(copy.armor_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_lvl_2_cooldown(copy.ability_lvl_2_cooldown), ability_lvl_3_cooldown(copy.ability_lvl_3_cooldown),
+defense_for_level(copy.defense_for_level), speed_for_level(copy.speed_for_level), view_area_for_level(copy.view_area_for_level), ability_lvl_2_cooldown(copy.ability_lvl_2_cooldown), ability_lvl_3_cooldown(copy.ability_lvl_3_cooldown),
 level_up_particle(copy.level_up_particle), experience_lvl_2(copy.experience_lvl_2), experience_lvl_3(copy.experience_lvl_3)
 {
 
@@ -127,8 +127,6 @@ void Champion::LevelUp(bool particle)
 	level++;
 	//Upgrade attack
 	attack_hitpoints += attack_for_level;
-	//Upgrade armor
-	armor += armor_for_level;
 	//Upgrade life
 	max_life += life_for_level;
 	life += life_for_level;
@@ -256,11 +254,6 @@ void Champion::SetDefenseForLevel(float def_for_lvl)
 	defense_for_level = def_for_lvl;
 }
 
-void Champion::SetArmorForLevel(uint arm_for_lvl)
-{
-	armor_for_level = arm_for_lvl;
-}
-
 void Champion::SetSpeedForLevel(float spd_for_lvl)
 {
 	speed_for_level = spd_for_lvl;
@@ -300,11 +293,6 @@ uint Champion::GetRangeForLevel() const
 float Champion::GetDefenseForLevel() const
 {
 	return defense_for_level;
-}
-
-float Champion::GetArmorForLevel() const
-{
-	return armor_for_level;
 }
 
 float Champion::GetSpeedForLevel() const

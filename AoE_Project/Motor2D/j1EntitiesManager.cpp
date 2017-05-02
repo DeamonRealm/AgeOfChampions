@@ -303,13 +303,20 @@ bool j1EntitiesManager::CleanUp()
 	resources_defs.clear();
 
 	//Clean Up buildings_defs vector
-	size = buildings_defs.size();
+	size = ally_buildings_defs.size();
 	for (uint k = 0; k < size; k++)
 	{
-		RELEASE(buildings_defs[k]);
+		RELEASE(ally_buildings_defs[k]);
 	}
-	buildings_defs.clear();
+	ally_buildings_defs.clear();
 
+	//Clean Up buildings_defs vector
+	size = ally_buildings_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(ally_buildings_defs[k]);
+	}
+	ally_buildings_defs.clear();
 
 	return true;
 }
@@ -912,6 +919,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	/*Name*/			new_def->SetName(unit_node->attribute("name").as_string());
 	/*Entity Type*/		new_def->SetEntityType(UNIT);
 	/*Unit Type*/		new_def->SetUnitType(unit_type);
+	/*Unit Class*/		new_def->SetUnitClass(App->animator->StrToUnitClassEnum(unit_node->attribute("unit_class").as_string()));
 	/*Attack Type*/		new_def->SetAttackType(App->animator->StrToAttackEnum(unit_node->attribute("attack_type").as_string()));
 	//Unit Primitives -------
 	/*Vision*/			Circle vision;
@@ -958,8 +966,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 						new_def->SetAttackArea(area);
 	/*Defense*/			new_def->SetDefense(unit_node->attribute("defense").as_uint());
 	/*Defense Bonus*/	new_def->SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
-	/*Armor*/			new_def->SetArmor(unit_node->attribute("armor").as_uint());
-	/*Armor Bonus*/		new_def->SetArmorBonus(unit_node->attribute("armor_bonus").as_uint());
 	/*Food Cost*/		new_def->SetFoodCost(unit_node->attribute("food_cost").as_uint());
 	/*Wood Cost*/		new_def->SetWoodCost(unit_node->attribute("wood_cost").as_uint());
 	/*Gold Cost*/		new_def->SetGoldCost(unit_node->attribute("gold_cost").as_uint());
@@ -1056,7 +1062,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 		/*Attack for level*/		((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("attack_for_level").as_uint());
 		/*Range for level*/			((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("range_for_level").as_uint());
 		/*Life for level*/			((Champion*)new_def)->SetRangeForLevel(unit_node->attribute("life_for_level").as_uint());
-		/*Armor for level*/			((Champion*)new_def)->SetArmorForLevel(unit_node->attribute("armor_for_level").as_uint());
 		/*Defense for level*/		((Champion*)new_def)->SetDefenseForLevel(unit_node->attribute("defense_for_level").as_float());
 		/*Speed for level*/			((Champion*)new_def)->SetSpeedForLevel(unit_node->attribute("speed_for_level").as_float());
 		/*View Area for level*/		((Champion*)new_def)->SetViewAreaForLevel(unit_node->attribute("view_area_for_level").as_uint());
@@ -1143,7 +1148,7 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	BUILDING_TYPE building_type = App->animator->StrToBuildingEnum(building_node->attribute("building_type").as_string());
 
 	//Generate a new building definition from the node
-	Building* new_def = nullptr;
+	ProductiveBuilding* new_def = nullptr;
 
 	//Allocate the correct class
 
@@ -1201,7 +1206,10 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 		/*Production Cap*/	((ProductiveBuilding*)new_def)->SetProductionCapacity(building_node->attribute("production_capacity").as_uint());
 
 	}
-	buildings_defs.push_back(new_def);
+
+	ProductiveBuilding* new_def_enemy = new ProductiveBuilding(*new_def);
+	ally_buildings_defs.push_back(new_def);
+	enemy_buildings_defs.push_back(new_def_enemy);
 
 	LOG("%s definition built!", new_def->GetName());
 
@@ -1478,12 +1486,13 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 {
 	Building* new_building = nullptr;
 
-	uint def_num = buildings_defs.size();
+	uint def_num = ally_buildings_defs.size();
 	for (uint k = 0; k < def_num; k++)
 	{
-		if (buildings_defs[k]->GetBuildingType() == type)
+		if (ally_buildings_defs[k]->GetBuildingType() == type)
 		{
-			new_building = new ProductiveBuilding(*(ProductiveBuilding*)buildings_defs[k]);
+			if(diplomacy == ALLY)new_building = new ProductiveBuilding(*(ProductiveBuilding*)ally_buildings_defs[k]);
+			else new_building = new ProductiveBuilding(*(ProductiveBuilding*)enemy_buildings_defs[k]);
 				
 			//Set unit animation
 			App->animator->BuildingPlay(new_building);
@@ -1732,7 +1741,7 @@ void j1EntitiesManager::UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy)
 		break;
 	case S_SCOUTC_UP:		
 		break;
-	default:
+	default:		
 		break;
 	}
 }
@@ -1753,6 +1762,7 @@ bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 				break;
 			}
 		}
+
 		std::list<Unit*>::iterator unit = units.begin();
 		while (unit != units.end())
 		{
@@ -1765,6 +1775,97 @@ bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 	}
 
 	return ret;
+}
+
+void j1EntitiesManager::UpgradeUnitResearch(RESEARCH_TECH research_type, DIPLOMACY diplomacy)
+{
+	switch (research_type)
+	{
+	case BS_PADDED_AA:
+		break;
+	case BS_LEATHER_AA:
+		break;
+	case BS_RING_AA:
+		break;
+	case BS_FLETCHING:
+		break;
+	case BS_BODKINARROW:
+		break;
+	case BS_BRACER:
+		break;
+	case BS_FORGING:
+		break;
+	case BS_IRONCASTING:
+		break;
+	case BS_BLASTFURNACE:
+		break;
+	case BS_SCALE_BA:
+		break;
+	case BS_CHAIN_BA:
+		break;
+	case BS_PLATE_BA:
+		break;
+	case BS_SCALE_MAIL_ARMOR:
+		break;
+	case BS_CHAIN_MAIL_ARMOR:
+		break;
+	case BS_PLATE_MAIL_ARMOR:
+		break;
+	case S_BLOODLINES:
+		break;
+	case S_HUSBANDRY:
+		break;
+	case TC_FEUDAL:
+		break;
+	case TC_CASTLE:
+		break;
+	case TC_IMPERIAL:
+		break;
+	case TC_LOOM:
+	{
+		uint size = App->entities_manager->ally_units_defs.size();
+		for (uint k = 0; k < size; k++)
+		{
+			if (ally_buildings_defs[k]->GetEntityType() == VILLAGER)
+			{
+				Villager* target = nullptr;
+				if (diplomacy == ALLY)target = (Villager*)ally_units_defs[k];
+				else target = (Villager*)enemy_units_defs[k];
+				target->SetMaxLife(target->GetMaxLife() + 15);
+				target->SetDefense(target->GetDefense() + 1);
+			}
+		}
+		break;
+	}
+	case TC_PATROL:
+	case TC_TOWNWATCH:
+
+		break;
+	case TC_WHEELBARROW:
+		break;
+	case TC_HANDCART:
+		break;
+	case M_HORSECOLLAR:
+		break;
+	case M_HEAVYPLOW:
+		break;
+	case M_CROPROTATION:
+		break;
+	case LC_DOUBLEBIT_AXE:
+		break;
+	case LC_BOW_SAW:
+		break;
+	case LC_TWOMAN_SAW:
+		break;
+	case MC_GOLD_MINING:
+		break;
+	case MC_GOLD_SHAFT:
+		break;
+	case MC_STONE_MINING:
+		break;
+	case MC_STONE_SHAFT:
+		break;
+	}
 }
 
 Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy)

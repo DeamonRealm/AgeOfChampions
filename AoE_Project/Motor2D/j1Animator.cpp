@@ -474,6 +474,15 @@ UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 	return NO_UNIT;
 }
 
+UNIT_CLASS j1Animator::StrToUnitClassEnum(const char * str) const
+{
+	if (strcmp(str, "civilian") == 0)	return CIVILIAN;
+	if (strcmp(str, "infantry") == 0)	return INFANTRY;
+	if (strcmp(str, "archery") == 0)	return ARCHERY;
+	if (strcmp(str, "cavalry") == 0)	return CAVALRY;
+	return NO_CLASS;
+}
+
 ACTION_TYPE j1Animator::StrToActionEnum(const char* str) const
 {
 	if (strcmp(str, "attack") == 0)		return ATTATCK;

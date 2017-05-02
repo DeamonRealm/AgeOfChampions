@@ -35,6 +35,7 @@ bool j1FogOfWar::PostUpdate()
 			if (units[k]->GetDiplomacy() == ALLY)entities_static_update.push_back(units[k]);
 		}
 		update_timer.Start();
+		CollectFogCells();
 	}
 
 	while (!entities_release.empty())
