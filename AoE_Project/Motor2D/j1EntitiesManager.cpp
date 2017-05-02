@@ -307,8 +307,10 @@ bool j1EntitiesManager::CleanUp()
 	for (uint k = 0; k < size; k++)
 	{
 		RELEASE(ally_buildings_defs[k]);
+		RELEASE(enemy_buildings_defs[k]);
 	}
 	ally_buildings_defs.clear();
+	enemy_buildings_defs.clear();
 
 	//Clean Up buildings_defs vector
 	size = ally_buildings_defs.size();

@@ -454,9 +454,9 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
 				}
 			}
-			else  App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y), TASK_CHANNELS::PRIMARY,iPoint(-1,-1),false);
+			else // App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y), TASK_CHANNELS::PRIMARY,iPoint(-1,-1),false);
 
-				//Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(),iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
+				Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(),iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
 
 		}
 		else if (selected_elements.size() > 1 && selected_entity_type == UNIT) {

@@ -279,6 +279,9 @@ bool j1Player::PostUpdate()
 	// Draw Action Panel
 	action_panel->Draw();
 
+	// Draw Minimap
+	minimap_panel->Draw();
+
 	//Draw Mouse Last one
 	if (SDL_ShowCursor(-1) == 0) App->gui->DrawMouseTexture();
 

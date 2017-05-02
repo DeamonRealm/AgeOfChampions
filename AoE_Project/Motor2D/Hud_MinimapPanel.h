@@ -6,12 +6,23 @@
 #include <vector>
 #include "PugiXml\src\pugixml.hpp"
 
+#include "j1Timer.h"
 #include "SDL\include\SDL_rect.h"
+#include "SDL_image\include\SDL_image.h"
 
 class UI_Element;
 class UI_Image;
 
 enum GUI_INPUT;
+
+#define MINIMAP_UPDATE_RATE 1000
+#define MINIMAP_TIME_TO_UPDATE 1
+
+struct minimap_cell
+{
+	SDL_Color cell_color = { 255,255,255,255 };
+	iPoint    cell_position = { 0,0 };
+};
 
 class Minimap_Panel
 {
@@ -49,7 +60,7 @@ public:
 
 	// Minimap to Map 
 	bool MiniMToMap(int& x, int& y);
-
+	iPoint MiniMToScreen(int x, int y);
 
 public:
 
@@ -60,7 +71,15 @@ private:
 	// Map Data
 	bool		in_minimap = false;
 	SDL_Rect    map_rect = { 0,0,0,0 };
+	fPoint		half_tile_size = { 0.0f,0.0f };
 	iPoint		map_size;
+
+	// Map Cells
+	std::vector<minimap_cell>	cells;
+	std::vector<minimap_cell>	cells_to_print;
+
+	j1Timer			update_timer;
+	SDL_Surface*	minimap_fow;
 
 };
 
