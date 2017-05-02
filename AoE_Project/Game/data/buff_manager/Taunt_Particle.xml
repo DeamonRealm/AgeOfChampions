@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:12d6c1a5621c251b04cffb2b0dfef704:dbdf99ceea34218c373de7415b4e8d14:6d740f59b4066b475ce80e7d5935bf9b$ -->
+<!-- $TexturePacker:SmartUpdate:9f099b7c5f44a562a0206c43f46ad843:5bbee7a9c4a2783070993366bc2545c9:6d740f59b4066b475ce80e7d5935bf9b$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,28 +19,46 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Taunt_Particle.png" width="1925" height="976">
+<TextureAtlas imagePath="Taunt_Particle.png" width="2022" height="1692">
  <simple_particle particle_type="taunt_particle" direction="no_direction">
     <anim_data speed="100" loop="0"/>
 
-    <sprite n="Deflvl3_0004_0005-shot.png.png" opacity ="255" x="1" y="1" w="238" h="213" pX="0.498818" pY="0.712121" oX="97" oY="7" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0005_0006-shot.png.png" opacity ="255" x="241" y="1" w="318" h="198" pX="0.498818" pY="0.712121" oX="52" oY="66" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0006_0007-shot.png.png" opacity ="255" x="561" y="1" w="331" h="213" pX="0.498818" pY="0.712121" oX="40" oY="51" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0007_0008-shot.png.png" opacity ="255" x="894" y="1" w="338" h="223" pX="0.498818" pY="0.712121" oX="31" oY="41" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0008_0009-shot.png.png" opacity ="255" x="1234" y="1" w="342" h="246" pX="0.498818" pY="0.712121" oX="28" oY="18" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0009_0010-shot.png.png" opacity ="255" x="1578" y="1" w="346" h="249" pX="0.498818" pY="0.712121" oX="27" oY="15" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0010_0011-shot.png.png" opacity ="255" x="1" y="252" w="366" h="264" pX="0.498818" pY="0.712121" oX="28" oY="0" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0011_0012-shot.png.png" opacity ="255" x="369" y="252" w="363" h="220" pX="0.498818" pY="0.712121" oX="31" oY="44" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0012_0013-shot.png.png" opacity ="255" x="734" y="252" w="363" h="215" pX="0.498818" pY="0.712121" oX="28" oY="49" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0013_0014-shot.png.png" opacity ="255" x="1099" y="252" w="367" h="236" pX="0.498818" pY="0.712121" oX="27" oY="28" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0014_0015-shot.png.png" opacity ="255" x="1468" y="252" w="366" h="253" pX="0.498818" pY="0.712121" oX="28" oY="11" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0015_0016-shot.png.png" opacity ="255" x="1" y="518" w="363" h="243" pX="0.498818" pY="0.712121" oX="31" oY="21" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0016_0017-shot.png.png" opacity ="255" x="366" y="518" w="356" h="264" pX="0.498818" pY="0.712121" oX="35" oY="0" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0017_0018-shot.png.png" opacity ="255" x="724" y="518" w="358" h="237" pX="0.498818" pY="0.712121" oX="36" oY="27" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0018_0019-shot.png.png" opacity ="255" x="1084" y="518" w="359" h="212" pX="0.498818" pY="0.712121" oX="35" oY="52" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0019_0020-shot.png.png" opacity ="255" x="1445" y="518" w="353" h="230" pX="0.498818" pY="0.712121" oX="39" oY="34" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0020_0021-shot.png.png" opacity ="255" x="1" y="784" w="340" h="191" pX="0.498818" pY="0.712121" oX="35" oY="73" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0021_0022-shot.png.png" opacity ="255" x="343" y="784" w="330" h="188" pX="0.498818" pY="0.712121" oX="36" oY="76" oW="423" oH="264"/>
-    <sprite n="Deflvl3_0022_0023-shot.png.png" opacity ="255" x="675" y="784" w="324" h="184" pX="0.498818" pY="0.712121" oX="40" oY="80" oW="423" oH="264"/>
+    <sprite n="lvl3WDef_0004_0005-shot.png.png" opacity ="255" x="1" y="1" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0005_0006-shot.png.png" opacity ="255" x="338" y="1" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0006_0007-shot.png.png" opacity ="255" x="675" y="1" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0007_0008-shot.png.png" opacity ="255" x="1012" y="1" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0008_0009-shot.png.png" opacity ="255" x="1349" y="1" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0009_0010-shot.png.png" opacity ="255" x="1686" y="1" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0010_0011-shot.png.png" opacity ="255" x="1" y="283" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0011_0012-shot.png.png" opacity ="255" x="338" y="283" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0012_0013-shot.png.png" opacity ="255" x="675" y="283" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0013_0014-shot.png.png" opacity ="255" x="1012" y="283" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0014_0015-shot.png.png" opacity ="255" x="1349" y="283" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0015_0016-shot.png.png" opacity ="255" x="1686" y="283" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0016_0017-shot.png.png" opacity ="255" x="1" y="565" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0017_0018-shot.png.png" opacity ="255" x="338" y="565" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0018_0019-shot.png.png" opacity ="255" x="675" y="565" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0019_0020-shot.png.png" opacity ="255" x="1012" y="565" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0020_0021-shot.png.png" opacity ="255" x="1349" y="565" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0021_0022-shot.png.png" opacity ="255" x="1686" y="565" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0022_0023-shot.png.png" opacity ="255" x="1" y="847" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0023_0024-shot.png.png" opacity ="255" x="338" y="847" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0024_0025-shot.png.png" opacity ="255" x="675" y="847" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0025_0026-shot.png.png" opacity ="255" x="1012" y="847" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0026_0027-shot.png.png" opacity ="255" x="1349" y="847" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0027_0028-shot.png.png" opacity ="255" x="1686" y="847" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0028_0029-shot.png.png" opacity ="255" x="1" y="1129" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0029_0030-shot.png.png" opacity ="255" x="338" y="1129" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0030_0031-shot.png.png" opacity ="255" x="675" y="1129" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0031_0032-shot.png.png" opacity ="255" x="1012" y="1129" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0032_0033-shot.png.png" opacity ="255" x="1349" y="1129" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0033_0034-shot.png.png" opacity ="255" x="1686" y="1129" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0034_0035-shot.png.png" x="1" y="1411" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0035_0036-shot.png.png" opacity ="255" x="338" y="1411" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0036_0037-shot.png.png" opacity ="255" x="675" y="1411" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0037_0038-shot.png.png" opacity ="255" x="1012" y="1411" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0038_0039-shot.png.png" opacity ="255" x="1349" y="1411" w="335" h="280" pX="0.498507" pY="0.746429"/>
+    <sprite n="lvl3WDef_0039_0040-shot.png.png" opacity ="255" x="1686" y="1411" w="335" h="280" pX="0.498507" pY="0.746429"/>
 </simple_particle>
+
 </TextureAtlas>
