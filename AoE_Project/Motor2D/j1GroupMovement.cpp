@@ -60,9 +60,9 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y, boo
 		//second_destination->insert(second_destination->end(), first_destination->begin(), first_destination->end());
 		//push action
 		lead->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
-		if (active)	App->pathfinding->PushPath((Unit*)lead, destination, iPoint(-1, -1), false);
+		if (active)	App->pathfinding->PushPath((Unit*)lead, destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
 		//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-		else	App->pathfinding->PushPath((Unit*)lead, destination, iPoint(-1, -1), false);
+		else	App->pathfinding->PushPath((Unit*)lead, destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 		//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
 		
 		/*
@@ -117,9 +117,9 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
 			left = !left;
 			i *= -1;
@@ -158,9 +158,9 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
 			left = !left;
 			i *= -1;
@@ -198,9 +198,9 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			if (active)	App->pathfinding->PushPath((Unit*)lead, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			else	App->pathfinding->PushPath((Unit*)lead, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
 			left = !left;
 			i *= -1;
@@ -239,9 +239,9 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
 			left = !left;
 			i *= -1;
@@ -279,9 +279,9 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
 			left = !left;
 			i *= -1;
@@ -320,9 +320,9 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
 			left = !left;
 			i *= -1;
@@ -360,9 +360,9 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
+			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
 			left = !left;
 			i *= -1;
@@ -400,10 +400,10 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			
-				if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
-				//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-				else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, iPoint(-1, -1), false);
-				//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
+			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
+			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
+			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
 						
 			left = !left;
 			i *= -1;

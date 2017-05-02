@@ -14,11 +14,12 @@ struct SDL_Texture;
 struct PathNode;
 struct ToPath
 {
-	ToPath( Unit* unit, const iPoint& destination, const iPoint& target = { -1,-1 }, bool priority = true);
+	ToPath( Unit* unit, const iPoint& destination, TASK_CHANNELS task, const iPoint& target = { -1,-1 }, bool priority = true);
 	~ToPath();
 	Unit* unit = nullptr;
 	iPoint destination = { -1,-1 };
 	iPoint target = { -1,-1 };
+	TASK_CHANNELS task;
 	bool priority = true;
 	bool operator ==(const ToPath& unit)const ;
 
@@ -74,7 +75,7 @@ public:
 	std::vector<iPoint>* SimpleAstar(const iPoint& origin, const iPoint& goal);
 	// Create a path with two coordinates
 	std::list<ToPath> to_path;
-	void PushPath(Unit* unit, iPoint destination, iPoint target = { -1,-1 }, bool primary = true);
+	void PushPath(Unit* unit, iPoint destination, TASK_CHANNELS task = PRIMARY, iPoint target = { -1,-1 }, bool primary = true);
 	j1Timer pathTime;
 };
 /// -----------------------------------

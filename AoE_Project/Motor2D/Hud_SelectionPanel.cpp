@@ -454,7 +454,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
 				}
 			}
-			else  App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y),iPoint(-1,-1),false);
+			else  App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y), TASK_CHANNELS::PRIMARY,iPoint(-1,-1),false);
 
 				//Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(),iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
 
@@ -703,9 +703,10 @@ void Selection_Panel::MoveSelectedToPoint(int x, int y)
 		else if (Selected->GetEntity() != nullptr)
 		{
 			Selected->GetEntity()->GetWorker()->ResetChannel(PRIMARY);
-			App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(x, y), iPoint(-1,-1),false);
+			App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(x, y), TASK_CHANNELS::PRIMARY, iPoint(-1,-1),false);
 			//Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), iPoint(x, y)));
 		}
+		
 	}
 }
 
