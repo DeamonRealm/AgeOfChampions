@@ -40,7 +40,6 @@ public:
 	void GetGroupOfUnits(std::list<Entity*>* units, int x, int y, bool active);
 
 private:
-	iPoint GetMiddlePoint();
 	void OtherUnitsPath(bool active);
 	bool GroupCanWalk(const iPoint& position);
 	bool PlaceTaken(const std::vector<iPoint> positions, const iPoint& check);

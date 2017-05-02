@@ -12,28 +12,7 @@ j1GroupMovement::~j1GroupMovement()
 {
 }
 
-iPoint j1GroupMovement::GetMiddlePoint()
-{
-	iPoint ret = { 0,0 };
-	for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
-	{
-		Entity* single_unit = item._Ptr->_Myval;
-		ret += single_unit->GetPositionRounded();
-	}
-	ret /= units->size();
-	//Get all positions and add them on one ipoint and then divide them with the size of the units 
-	// if that position is walkable return that position if is not look destination and get values 
-	iPoint checker = App->map->WorldToMap(ret.x, ret.y);
 
-	while (!App->pathfinding->IsWalkable(checker)) {
-		if (checker.x < destination.x)	checker.x++;
-		else checker.x--;
-		if (checker.y < destination.y)	checker.y++;
-		else checker.y--;
-	}
-	ret = App->map->MapToWorldCenter(checker.x, checker.y);
-	return ret;
-}
 
 void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y, bool active)
 {
@@ -49,28 +28,22 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y, boo
 		//get the size of units and set formation
 		group_size = units->size();
 		formation.SetFormation(group_size);
-		//Get the middle point and set the lead of formation
-	//	middle_point = GetMiddlePoint();
 		lead = *(units->begin());
-		//Create the lead path
-		//std::vector<iPoint>* first_destination = nullptr;
 		std::vector<iPoint>* second_destination = nullptr;
-	//	first_destination = CreateFirstDestination();
 		second_destination = LeaderPath();
-		//second_destination->insert(second_destination->end(), first_destination->begin(), first_destination->end());
+	
 		//push action
 		lead->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
+
 		if (active)	App->pathfinding->PushPath((Unit*)lead, destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-		//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
 		else	App->pathfinding->PushPath((Unit*)lead, destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-		//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
-		
 		/*
 		if(active)lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead), TASK_CHANNELS::PRIMARY);
 		else lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead), TASK_CHANNELS::SECONDARY);
 		*/
 		lead_direcction = ((Unit*)lead)->LookDirection(*(second_destination->begin()), *(second_destination->begin() + 1));
-
+		delete second_destination;
+		second_destination = nullptr;
 		//do the other units path
 		OtherUnitsPath(active);
 	
