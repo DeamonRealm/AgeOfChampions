@@ -35,12 +35,11 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get ,int x, int y, boo
 		//push action
 		lead->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 
-		if (active)	App->pathfinding->PushPath((Unit*)lead, destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-		else	App->pathfinding->PushPath((Unit*)lead, destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-		/*
-		if(active)lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead), TASK_CHANNELS::PRIMARY);
+		if (active)	lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead), TASK_CHANNELS::PRIMARY);
+			//App->pathfinding->PushPath((Unit*)lead, destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
 		else lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead), TASK_CHANNELS::SECONDARY);
-		*/
+			//App->pathfinding->PushPath((Unit*)lead, destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
+		
 		lead_direcction = ((Unit*)lead)->LookDirection(*(second_destination->begin()), *(second_destination->begin() + 1));
 		delete second_destination;
 		second_destination = nullptr;
@@ -65,7 +64,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 	{
 	case NORTH:
 		//iterate list of units
-		
+
 		for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 		{
 			loop = 0;
@@ -80,6 +79,8 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 
 			//set path for the other units
+			std::vector<iPoint>* unit_destination = nullptr;
+
 			new_destination.create(copy_destination.x + radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
@@ -89,11 +90,11 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
-
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
+			if (active)single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
+			//	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
+			else single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			//App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -121,6 +122,8 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 
 			//set path for the other units
+			std::vector<iPoint>* unit_destination = nullptr;
+
 			new_destination.create(copy_destination.x + radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
@@ -130,11 +133,11 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
-
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
+			if (active)single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
+			//	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
+			else single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			//App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -161,6 +164,8 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 
 			//set path for the other units
+			std::vector<iPoint>* unit_destination = nullptr;
+
 			new_destination.create(copy_destination.x + radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
@@ -170,11 +175,11 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
-
-			if (active)	App->pathfinding->PushPath((Unit*)lead, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)lead, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
+			if (active)single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
+			//	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
+			else single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			//App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -185,6 +190,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 
 			}
 		}
+
 		break;
 	case SOUTH_EAST:
 		//iterate list of units
@@ -202,6 +208,8 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 
 			//set path for the other units
+			std::vector<iPoint>* unit_destination = nullptr;
+
 			new_destination.create(copy_destination.x + radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
@@ -211,11 +219,11 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
-
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
+			if (active)single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
+			//	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
+			else single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			//App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -225,6 +233,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 				current_width = 0;
 
 			}
+
 		}
 		break;
 	case SOUTH:
@@ -242,6 +251,8 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 
 			//set path for the other units
+			std::vector<iPoint>* unit_destination = nullptr;
+
 			new_destination.create(copy_destination.x + radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
@@ -251,11 +262,11 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
-
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
+			if (active)single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
+			//	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
+			else single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			//App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -263,6 +274,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 				copy_destination.create(destination.x, destination.y - radius * current_height);
 				i = 0;
 				current_width = 0;
+
 
 			}
 		}
@@ -283,6 +295,8 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 
 			//set path for the other units
+			std::vector<iPoint>* unit_destination = nullptr;
+
 			new_destination.create(copy_destination.x + radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
@@ -292,11 +306,11 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
-
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
+			if (active)single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
+			//	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
+			else single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			//App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -306,6 +320,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 				current_width = 0;
 
 			}
+
 		}
 		break;
 	case WEST:
@@ -323,6 +338,8 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 
 			//set path for the other units
+			std::vector<iPoint>* unit_destination = nullptr;
+
 			new_destination.create(copy_destination.x + radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
@@ -332,11 +349,11 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
-
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
+			if (active)single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
+			//	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
+			else single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			//App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -344,6 +361,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 				copy_destination.create(destination.x + radius * current_height, destination.y);
 				i = 0;
 				current_width = 0;
+
 
 			}
 		}
@@ -363,6 +381,8 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 
 			//set path for the other units
+			std::vector<iPoint>* unit_destination = nullptr;
+
 			new_destination.create(copy_destination.x + radius * i, copy_destination.y - radius * i);
 			iPoint check = App->map->WorldToMap(new_destination.x, new_destination.y);
 			while (!App->pathfinding->IsWalkable(check) && !PlaceTaken(locations_takens, new_destination)) {
@@ -372,12 +392,13 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			}
 			locations_takens.push_back(new_destination);
 			single_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
-			
-			if (active)	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
-			else	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
-			//single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
-						
+			unit_destination = App->pathfinding->SimpleAstar(single_unit->GetPositionRounded(), new_destination);
+
+			if (active)single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::PRIMARY);
+				//App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::PRIMARY, iPoint(-1, -1), false);
+			else	single_unit->AddAction((Action*)App->action_manager->MoveAction(unit_destination, (Unit*)single_unit), TASK_CHANNELS::SECONDARY);
+			//	App->pathfinding->PushPath((Unit*)single_unit, new_destination, TASK_CHANNELS::SECONDARY, iPoint(-1, -1), false);
+
 			left = !left;
 			i *= -1;
 			if (current_width == formation.width) {
@@ -388,6 +409,7 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 
 			}
 		}
+
 		break;
 	default:
 		break;
@@ -414,20 +436,13 @@ void j1GroupMovement::OtherUnitsPath(bool active)
 			//push action
 			single_unit->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)single_unit));
 			i++;
-		
+
 	}
 	*/
+
 }
 
-bool j1GroupMovement::GroupCanWalk(const iPoint & position)
-{
-	iPoint check = position;
-	for (int i = 0; i < group_size; i++)
-	{
 
-	}
-	return false;
-}
 
 bool j1GroupMovement::PlaceTaken(const std::vector<iPoint> positions, const iPoint& check)
 {

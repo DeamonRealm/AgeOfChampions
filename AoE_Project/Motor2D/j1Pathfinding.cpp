@@ -45,12 +45,14 @@ bool j1Pathfinding::PreUpdate()
 		if (pathTime.Read() > MAX_PATH_TIME)
 			return true;
 		ToPath current_unit=unit_it._Ptr->_Myval;
-		std::vector<iPoint>* path= SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
-		if (path != nullptr) {
-			if (current_unit.priority)
-				current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
-			else
-				current_unit.unit->AddAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
+		if (current_unit.unit != nullptr) {
+			std::vector<iPoint>* path = SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
+			if (path != nullptr) {
+				if (current_unit.priority)
+					current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
+				else
+					current_unit.unit->AddAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
+			}
 		}
 		unit_it++;
 		to_path.pop_front();

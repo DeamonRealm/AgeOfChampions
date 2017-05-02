@@ -63,7 +63,7 @@ public:
 	//Methods used during the paths creation to work with map data
 	// Check if the cell coordinate is walkable
 
-	void	InitClusterAbstraction();
+//	void	InitClusterAbstraction();
 	bool	IsWalkable(const iPoint& destination)const;
 	// Check if the boundaries of x coordinate are walkable
 	bool	CheckBoundaries(const iPoint& pos) const;
