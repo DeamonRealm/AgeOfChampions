@@ -46,8 +46,6 @@ public:
 
 	//Load the selected Map
 	bool Load_Current_Map();
-
-	bool LoadScene();
 };
 
 #endif // __j1SCENE_H__

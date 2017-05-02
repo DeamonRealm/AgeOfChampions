@@ -66,15 +66,13 @@ public:
 	//Destructors =========================
 	~AABB()
 	{
-		if (full)
+
+		for (int i = 0; i < 4; i++)
 		{
-			for (int i = 0; i < 4; i++)
+			if (children[i] != nullptr)
 			{
-				if (children[i] != nullptr)
-				{
-					delete children[i];
-					children[i] = nullptr;
-				}
+				delete children[i];
+				children[i] = nullptr;
 			}
 		}
 		this->objects.clear();
@@ -88,7 +86,7 @@ public:
 	bool								full = false;
 	AABB*								root = nullptr;
 	AABB*								children[NODE_SUBDIVISION];
-	
+
 public:
 
 	// Functionality =======================
@@ -170,7 +168,7 @@ public:
 		{
 			for (uint k = 0; k < NODE_SUBDIVISION; k++)
 			{
-				if (children[k]->Insert(objects[h].data,&objects[h].location)) break;
+				if (children[k]->Insert(objects[h].data, &objects[h].location)) break;
 			}
 		}
 		objects.clear();
@@ -298,7 +296,7 @@ public:
 	//Destructors =========================
 	~m_AABB()
 	{
-		if (full)
+		//if (full)
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -309,7 +307,7 @@ public:
 				}
 			}
 		}
-		full = false;
+		//full = false;
 		this->objects.clear();
 	}
 
@@ -675,7 +673,7 @@ public:
 		// If range is not in the quad-tree, return
 		if (!pivrect.Intersects(&this->aabb))return 0;/*TEMP_CASE*/
 
-		// See if the points of this node are in range and pushback them to the vector
+													  // See if the points of this node are in range and pushback them to the vector
 		if (full)
 		{
 			// Otherwise, add the points from the children
@@ -706,20 +704,17 @@ public:
 
 	void Reset()
 	{
-		if (full)
+		//if (full)
+		//{
+		for (uint k = 0; k < 4; k++)
 		{
-			for (uint k = 0; k < 4; k++)
+			if (children[k] != nullptr)
 			{
-				if (children[k]->full)
-				{
-					children[k]->Reset();
-				}
-				else {
-					delete children[k];
-					children[k] = nullptr;
-				}
+				delete children[k];
+				children[k] = nullptr;
 			}
 		}
+		//}
 		this->full = false;
 		objects.clear();
 	}
@@ -777,7 +772,7 @@ public:
 		color = new_color;
 	}
 
-	bool Insert(DATA_TYPE data,const iPoint* newpoint)
+	bool Insert(DATA_TYPE data, const iPoint* newpoint)
 	{
 		if (root != NULL)
 		{
@@ -905,7 +900,7 @@ public:
 	{
 		if (root != NULL)
 		{
-			return root->Extract(data,loc);
+			return root->Extract(data, loc);
 		}
 		return false;
 	}

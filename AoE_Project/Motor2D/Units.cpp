@@ -10,12 +10,12 @@
 
 /// Class Villager --------------------
 //Constructors ========================
-Villager::Villager(): resource_collected_type(PLAYER_RESOURCES::GP_NO_RESOURCE)
+Villager::Villager() : resource_collected_type(PLAYER_RESOURCES::GP_NO_RESOURCE)
 {
 
 }
 
-Villager::Villager(const Villager & copy) :Unit(copy), item_type(copy.item_type),resource_collected_type(copy.resource_collected_type), resources_capacity(copy.resources_capacity), current_resources(copy.current_resources), recollect_capacity(copy.recollect_capacity), recollect_rate(copy.recollect_rate)
+Villager::Villager(const Villager & copy) : Unit(copy), item_type(copy.item_type), resource_collected_type(copy.resource_collected_type), resources_capacity(copy.resources_capacity), current_resources(copy.current_resources), recollect_capacity(copy.recollect_capacity), recollect_rate(copy.recollect_rate)
 {
 
 }
@@ -138,9 +138,9 @@ bool Villager::Recollect(Resource** target)
 	if (!attack_area.Intersects((*target)->GetInteractArea()))
 	{
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
-		//App->pathfinding->PushPath(this, goal);
+		App->pathfinding->PushPath(this, goal);
 
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
+		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
 		return false;
 	}
 
@@ -197,9 +197,9 @@ bool Villager::SaveResources(Building** save_point)
 	if (!attack_area.Intersects((*save_point)->GetInteractArea()))
 	{
 		iPoint intersect_point = attack_area.NearestPoint((*save_point)->GetInteractArea());
-		//App->pathfinding->PushPath(this, intersect_point);
+		App->pathfinding->PushPath(this, intersect_point);
 
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, iPoint(intersect_point.x, intersect_point.y)));
+		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, iPoint(intersect_point.x, intersect_point.y)));
 		return false;
 	}
 

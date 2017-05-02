@@ -90,7 +90,7 @@ private:
 
 public:
 	std::list<Unit*> enemy_units;
-	
+
 	//AI resource information
 	int			wood = 0;
 	int			meat = 0;
@@ -112,7 +112,7 @@ public:
 	WaitAICommand(uint time);
 	~WaitAICommand();
 
-public: 
+public:
 	bool Activation();
 	bool Execute();
 
@@ -193,7 +193,7 @@ public:
 private:
 
 	std::list<Unit*> units;
-	Resource** target;	
+	Resource** target;
 };
 //---------------------
 

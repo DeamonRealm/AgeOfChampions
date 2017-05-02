@@ -6,7 +6,7 @@
 ///Class Action ---------------------------------
 //Base class to build action definitions
 //Constructors ========================
-Action::Action(Entity* actor, TASK_TYPE type) : actor(actor), type (type)
+Action::Action(Entity* actor, TASK_TYPE type) : actor(actor), type(type)
 {
 
 }
@@ -62,10 +62,10 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destinat
 	return action;
 }
 
-MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor, const iPoint& target )
+MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor, const iPoint& target)
 {
 	//Generate a new move action definition
-	MoveUnitAction* action = new MoveUnitAction(actor, path,target);
+	MoveUnitAction* action = new MoveUnitAction(actor, path, target);
 
 	//Add the new action at the action manager
 	all_actions.push_back(action);
@@ -418,8 +418,8 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 	}
 	case TASK_U_STUN:
 		//Load stun time
-		 actor->AddAction(App->action_manager->StunAction((Unit*)actor, node.attribute("time").as_uint()), channel);
-		 App->buff_manager->CallBuff((Unit*)actor, TIMED_BUFF, STUN_BUFF);
+		actor->AddAction(App->action_manager->StunAction((Unit*)actor, node.attribute("time").as_uint()), channel);
+		App->buff_manager->CallBuff((Unit*)actor, TIMED_BUFF, STUN_BUFF);
 		break;
 	case TASK_U_RECOLLECT:
 	{
@@ -444,10 +444,10 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 			return false;
 		}
 		//Build the task with the actor and the target found
-		actor->AddAction(App->action_manager->RecollectAction((Villager*)actor, target),channel);
+		actor->AddAction(App->action_manager->RecollectAction((Villager*)actor, target), channel);
 		break;
 	}
-		break;
+	break;
 	case TASK_U_SAVE_RESOURCES:
 	{
 		//Load save resources target characteristics
@@ -532,14 +532,14 @@ void ActionWorker::Update()
 	//Don't update if the worker is paused
 	if (paused)
 		return;
-		
+
 	//If the worker has a current action execute it
 	if (DoWork(&primary_action_queue, &current_primary_action))
 	{
 
 		//Reeactive all actions form passive flows when any active action finshes
-		if(current_secondary_action != nullptr)	current_secondary_action->Activation();
-		if(current_passive_action != nullptr)	current_passive_action->Activation();
+		if (current_secondary_action != nullptr)	current_secondary_action->Activation();
+		if (current_passive_action != nullptr)	current_passive_action->Activation();
 	}
 
 	//Secondary and passive actions take place when there is no active_action
@@ -658,9 +658,9 @@ void ActionWorker::PopAction(Action * action)
 
 void ActionWorker::HardReset()
 {
-	ResetQueue(&primary_action_queue,	&current_primary_action);
+	ResetQueue(&primary_action_queue, &current_primary_action);
 	ResetQueue(&secondary_action_queue, &current_secondary_action);
-	ResetQueue(&passive_action_queue,	&current_passive_action);
+	ResetQueue(&passive_action_queue, &current_passive_action);
 
 	paused = false;
 }
@@ -769,7 +769,7 @@ std::list<Action*> ActionWorker::GetActionList(TASK_CHANNELS channel)
 	default:
 		break;
 	}
-	
+
 
 	return ret;
 }

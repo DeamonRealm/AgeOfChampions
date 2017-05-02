@@ -22,7 +22,7 @@ struct Formation
 	FormationType formation_type = NO_FORMATION;
 
 };
-class j1GroupMovement:public j1Module
+class j1GroupMovement :public j1Module
 {
 public:
 	j1GroupMovement();
@@ -30,16 +30,17 @@ public:
 
 	//Functions
 	//CreatePath
-		//Set middle_point
-		//leader path on middle_point other units path around the middle_point
-		//leader do path to destination other units copy the path with minor modifications
-		//return the path to units
+	//Set middle_point
+	//leader path on middle_point other units path around the middle_point
+	//leader do path to destination other units copy the path with minor modifications
+	//return the path to units
 	iPoint destination;
 	iPoint map_destination;
 
 	void GetGroupOfUnits(std::list<Entity*>* units, int x, int y, bool active);
 
 private:
+	iPoint GetMiddlePoint();
 	void OtherUnitsPath(bool active);
 	bool GroupCanWalk(const iPoint& position);
 	bool PlaceTaken(const std::vector<iPoint> positions, const iPoint& check);
@@ -49,7 +50,7 @@ private:
 private:
 	// list of units selected
 	// Pointer first unit "leader"
-	std::list<Entity*>* units =nullptr;
+	std::list<Entity*>* units = nullptr;
 	Entity* lead = nullptr;
 	iPoint middle_point;
 	Formation formation;

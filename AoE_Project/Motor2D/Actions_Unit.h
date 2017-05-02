@@ -20,7 +20,7 @@ public:
 	{
 	}
 
-	MoveUnitAction(Unit* actor, std::vector<iPoint>* path, const iPoint& target) : Action(actor, TASK_U_MOVE), path(path),target(target)
+	MoveUnitAction(Unit* actor, std::vector<iPoint>* path, const iPoint& target) : Action(actor, TASK_U_MOVE), path(path), target(target)
 	{
 		destination = path->front();
 	}
@@ -34,7 +34,7 @@ public:
 	//Functionality ---------
 	bool Activation()
 	{
-		
+
 		//Calculate the path
 		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
 		if (path != nullptr)
@@ -48,9 +48,9 @@ public:
 		{
 			return false;
 		}
-		
+
 		((Unit*)actor)->SetAction(WALK);
-		((Unit*)actor)->Focus(path->back(),true);
+		((Unit*)actor)->Focus(path->back(), true);
 		if (path->size() > 2)	((Unit*)actor)->SetFutureAction(*(path->rbegin() + 1));
 		else					((Unit*)actor)->SetFutureAction(iPoint(-1, -1));
 
@@ -166,10 +166,10 @@ class AttackUnitAction : public Action
 public:
 
 	//Constructor -----------
-	AttackUnitAction(Unit* actor,Unit** target) : Action(actor, TASK_U_ATTACK_U), target(target)
+	AttackUnitAction(Unit* actor, Unit** target) : Action(actor, TASK_U_ATTACK_U), target(target)
 	{
 		//Set actor interaction target
-	//	((Unit*)actor)->SetInteractionTarget(target);
+		//	((Unit*)actor)->SetInteractionTarget(target);
 	}
 
 	//Destructor ------------
@@ -252,7 +252,7 @@ public:
 	}
 
 	//Functionality ---------
-	bool Activation() 
+	bool Activation()
 	{
 		App->sound->PlayFXAudio(DEATH_SOUND);
 		return true;
@@ -337,13 +337,13 @@ private:
 /// ---------------------------------------------
 class HealUnitAction : public Action
 {
-public: 
+public:
 	HealUnitAction(Unit* actor, Unit** target) : Action(actor, TASK_U_HEAL_U), target(target)
 	{};
 	~HealUnitAction() {};
 
 public:
-	
+
 	bool Execute()
 	{
 		if ((*target) == nullptr) return true;
@@ -368,7 +368,7 @@ public:
 	RecollectVillagerAction(Villager* actor, Resource** target) : Action(actor, TASK_U_RECOLLECT), target(target)
 	{
 	}
-	
+
 	//Destructor ------------
 	~RecollectVillagerAction()
 	{
@@ -415,7 +415,7 @@ public:
 	{
 		return *target;
 	}
-	
+
 private:
 
 	Resource** target = nullptr;
@@ -430,7 +430,7 @@ class SaveResourcesVillagerAction : public Action
 public:
 
 	//Constructor -----------
-	SaveResourcesVillagerAction(Villager* actor, Building** target) : Action(actor,TASK_U_SAVE_RESOURCES), target(target)
+	SaveResourcesVillagerAction(Villager* actor, Building** target) : Action(actor, TASK_U_SAVE_RESOURCES), target(target)
 	{
 
 	}
@@ -515,25 +515,25 @@ public:
 
 		uint size = surrounding_units.size();
 
-			for (uint i = 0; i < size; i++)
+		for (uint i = 0; i < size; i++)
+		{
+			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 			{
-				if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
-				{
-					actor->AddPriorizedAction(App->action_manager->AttackToUnitAction((Unit*)actor, (Unit**)surrounding_units[i]->GetMe()));
-					return false;
-				}
-			};
+				actor->AddPriorizedAction(App->action_manager->AttackToUnitAction((Unit*)actor, (Unit**)surrounding_units[i]->GetMe()));
+				return false;
+			}
+		};
 
-			uint sizeb = surrounding_buildings.size();
+		uint sizeb = surrounding_buildings.size();
 
-			for (uint k = 0; k < sizeb; k++)
+		for (uint k = 0; k < sizeb; k++)
+		{
+			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy())
 			{
-				if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy())
-				{
-					actor->AddPriorizedAction(App->action_manager->AttackToBuildingAction((Unit*)actor, (Building**)surrounding_buildings[k]->GetMe()));
-					return false;
-				}
-			};
+				actor->AddPriorizedAction(App->action_manager->AttackToBuildingAction((Unit*)actor, (Building**)surrounding_buildings[k]->GetMe()));
+				return false;
+			}
+		};
 
 		return false;
 	};
@@ -558,7 +558,7 @@ public:
 	~AutoAttackPassiveAction() {};
 
 public:
-	
+
 	bool Execute()
 	{
 		//Check if the unit is dying
@@ -619,8 +619,8 @@ public:
 	{};
 	~AutoHealPassiveAction() {};
 
-public: 
-	
+public:
+
 	bool Execute()
 	{
 		surrounding_units.clear();
@@ -645,7 +645,7 @@ public:
 	};
 
 
-private: 
+private:
 	std::vector<Unit*> surrounding_units;
 
 };

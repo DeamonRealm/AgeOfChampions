@@ -6,7 +6,7 @@
 #include "BaseEntities.h"
 #include <queue>
 #define INVALID_WALK_CODE 255
-#define MAX_PATH_TIME 5
+#define MAX_PATH_TIME 255
 
 struct PathList;
 struct Node;
@@ -14,14 +14,13 @@ struct SDL_Texture;
 struct PathNode;
 struct ToPath
 {
-	ToPath( Unit* unit, const iPoint& destination, TASK_CHANNELS task, const iPoint& target = { -1,-1 }, bool priority = true);
+	ToPath(Unit* unit, const iPoint& destination, const iPoint& target = { -1,-1 }, bool priority = true);
 	~ToPath();
 	Unit* unit = nullptr;
 	iPoint destination = { -1,-1 };
 	iPoint target = { -1,-1 };
-	TASK_CHANNELS task;
 	bool priority = true;
-	bool operator ==(const ToPath& unit)const ;
+	bool operator ==(const ToPath& unit)const;
 
 };
 ///class Pathfinding ------------------
@@ -42,9 +41,9 @@ public:
 	uchar GetValueMap(int x, int y) const;
 	PathNode* GetPathNode(int x, int y);
 private:
-	PathNode* path_nodes=nullptr;
-	int width=0;
-	int height=0;
+	PathNode* path_nodes = nullptr;
+	int width = 0;
+	int height = 0;
 	int map_min_x = 0;
 	int map_min_y = 0;
 	int map_max_x = 0;
@@ -63,7 +62,7 @@ public:
 	//Methods used during the paths creation to work with map data
 	// Check if the cell coordinate is walkable
 
-//	void	InitClusterAbstraction();
+	void	InitClusterAbstraction();
 	bool	IsWalkable(const iPoint& destination)const;
 	// Check if the boundaries of x coordinate are walkable
 	bool	CheckBoundaries(const iPoint& pos) const;
@@ -75,7 +74,7 @@ public:
 	std::vector<iPoint>* SimpleAstar(const iPoint& origin, const iPoint& goal);
 	// Create a path with two coordinates
 	std::list<ToPath> to_path;
-	void PushPath(Unit* unit, iPoint destination, TASK_CHANNELS task = PRIMARY, iPoint target = { -1,-1 }, bool primary = true);
+	void PushPath(Unit* unit, iPoint destination);
 	j1Timer pathTime;
 };
 /// -----------------------------------
@@ -119,7 +118,7 @@ struct PathList
 
 	//Methods ---------------
 	// Looks for a node in this list and returns it's list node or NULL
-//	std::list<PathNode>::iterator Find(const iPoint& point);
+	//	std::list<PathNode>::iterator Find(const iPoint& point);
 	// Returns the path node with lowest score in this list or NULL if empty
 	//PathNode* GetNodeLowestScore() const;
 

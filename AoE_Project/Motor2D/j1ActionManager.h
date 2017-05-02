@@ -85,7 +85,7 @@ public:
 	//Returns false if Action was unable to initialize
 	virtual bool Activation() { return true; }
 	//Returns TRUE when execute is finished
-	virtual bool Execute()	{ return true; }
+	virtual bool Execute() { return true; }
 
 	virtual void CleanUp() {}
 	///Each different action inheriting from this class should have custom
@@ -194,7 +194,7 @@ public:
 	// Building Functions
 	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0);
 	ResearchTecAction*			ResearchAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy);
-	
+
 	//Passive actions------------------
 	//Scann for units
 	ScannAction*				ScanAction(Entity* actor);

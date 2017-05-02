@@ -123,7 +123,7 @@ void Entity::CheckFogAround()
 	this->ResetFogAround();
 	in_vision_cells = App->fog_of_war->ClearAlphaLayer(vision, 0);
 	in_vision_tiles = App->fog_of_war->ClearFogLayer(vision, NO_FOG);
-	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG,false);
+	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG, false);
 }
 
 //Add Action ------------
@@ -257,7 +257,7 @@ int Entity::GetLife() const
 	return life;
 }
 
-Animation* Entity::GetAnimation() 
+Animation* Entity::GetAnimation()
 {
 	return current_animation;
 }
@@ -304,10 +304,10 @@ Unit::Unit() :Entity()
 
 }
 
-Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type),unit_class(copy.unit_class), mark(copy.mark),soft_collider(copy.soft_collider),hard_collider(copy.hard_collider), view_area(copy.view_area),
+Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), soft_collider(copy.soft_collider), hard_collider(copy.hard_collider), view_area(copy.view_area),
 speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
-attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus), 
-food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time),unit_experience(copy.unit_experience)
+attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus), armor(copy.armor), armor_bonus(copy.armor_bonus),
+food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time), unit_experience(copy.unit_experience)
 {
 
 }
@@ -331,16 +331,16 @@ bool Unit::Draw(bool debug)
 
 	//Draw Entity Mark
 	if (selected)ret = mark.Draw();
-	
+
 	if (debug) {
 		if (selected)
 			attack_area.Draw();
-			soft_collider.Draw();
-			hard_collider.Draw();
-			vision.Draw();
-			render_area.Draw();
+		soft_collider.Draw();
+		hard_collider.Draw();
+		vision.Draw();
+		render_area.Draw();
 	}
-	
+
 	/*if (debug) {
 	//Draw Entity Selection Rect
 	App->render->DrawQuad({ (int)floor(position.x + selection_rect.x - selection_rect.w * 0.5f),(int)position.y + selection_rect.y, selection_rect.w,-selection_rect.h }, 50, 155, 255, 100, true);
@@ -390,7 +390,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	//Update goal node and animation direction
 	if (location.DistanceTo(goal) < 2)
 	{
-		
+
 		if (future_position != iPoint(-1, -1) && !App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
 		{
 			CorrectPath(path);
@@ -531,7 +531,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	if (action_type != WALK)
 	{
 		action_type = WALK;
-		Focus(goal,false);
+		Focus(goal, false);
 	}
 
 	//Calculate the X/Y values that the unit have to move 
@@ -544,7 +544,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	return false;
 }
 
-void Unit::Repath(std::vector<iPoint>*& path,const iPoint & destination)
+void Unit::Repath(std::vector<iPoint>*& path, const iPoint & destination)
 {
 	iPoint new_destination = FindWalkableCell(destination);
 	std::vector<iPoint>* new_path;
@@ -596,7 +596,7 @@ iPoint Unit::NextGoal(std::vector<iPoint>* path)
 	goal = path->back();
 
 	//Focus the unit at the next goal
-	Focus(goal,false);
+	Focus(goal, false);
 	return goal;
 }
 
@@ -607,10 +607,10 @@ void Unit::NewPosition(const iPoint& goal, float & position_x, float & position_
 	int norm = location.DistanceTo(goal);
 	float x_step = GetTotalSpeed() * (App->GetDT() * 100) * (goal.x - location.x) / norm;
 	float y_step = GetTotalSpeed() * (App->GetDT() * 100) * (goal.y - location.y) / norm;
-	
+
 	this->distance_walked.x += x_step;
 	this->distance_walked.y += y_step;
-	
+
 	//Add the calculated values at the unit & mark position
 	position_x = position.x + x_step;
 	position_y = position.y + y_step;
@@ -641,7 +641,7 @@ bool Unit::UnitHere(const iPoint & destination, int radius)
 				return true;
 			}
 		}
-		
+
 	}
 
 	return false;
@@ -655,7 +655,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 	iPoint goal;
 	iPoint cell_map;
 	int radius = GetSoftCollider().GetRad();
-	int doble_radius = radius*2;
+	int doble_radius = radius * 2;
 	iPoint unit_location = this->GetPositionRounded();
 	int i = 1;
 	switch (direction_type)
@@ -713,7 +713,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
 			{
 				return cell_2;
-			}	
+			}
 			i++;
 
 		}
@@ -758,7 +758,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 
 		}
 		break;
-	case SOUTH_WEST:	
+	case SOUTH_WEST:
 		while (i <= 5) {
 
 			cell_1.create(pos.x + radius*i, pos.y + radius*i);
@@ -827,75 +827,75 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 
 	/*
 	while (i <= 5) {
-		// south
-		cell.create(pos.x, pos.y + doble_radius*i);
-		cell_map = App->map->WorldToMap(cell.x, cell.y);
+	// south
+	cell.create(pos.x, pos.y + doble_radius*i);
+	cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-		{
-			return cell;
-		}
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+	{
+	return cell;
+	}
 
-		// north
-		cell.create(pos.x, pos.y - doble_radius*i);
-		cell_map = App->map->WorldToMap(cell.x, cell.y);
+	// north
+	cell.create(pos.x, pos.y - doble_radius*i);
+	cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-		{
-			return cell;
-		}
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+	{
+	return cell;
+	}
 
-		// east
-		cell.create(pos.x + doble_radius*i, pos.y);
-		cell_map = App->map->WorldToMap(cell.x, cell.y);
+	// east
+	cell.create(pos.x + doble_radius*i, pos.y);
+	cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-		{
-			return cell;
-		}
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+	{
+	return cell;
+	}
 
-		// west
-		cell.create(pos.x - doble_radius*i, pos.y);
-		cell_map = App->map->WorldToMap(cell.x, cell.y);
+	// west
+	cell.create(pos.x - doble_radius*i, pos.y);
+	cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-		{
-			return cell;
-		}
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+	{
+	return cell;
+	}
 
-		// south-east
-		cell.create(pos.x + doble_radius*i, pos.y + doble_radius*i);
-		cell_map = App->map->WorldToMap(cell.x, cell.y);
+	// south-east
+	cell.create(pos.x + doble_radius*i, pos.y + doble_radius*i);
+	cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-		{
-			return cell;
-		}
-		// south-west
-		cell.create(pos.x - doble_radius*i, pos.y + doble_radius*i);
-		cell_map = App->map->WorldToMap(cell.x, cell.y);
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+	{
+	return cell;
+	}
+	// south-west
+	cell.create(pos.x - doble_radius*i, pos.y + doble_radius*i);
+	cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-		{
-			return cell;
-		}
-		// north-east
-		cell.create(pos.x + doble_radius*i, pos.y - doble_radius*i);
-		cell_map = App->map->WorldToMap(cell.x, cell.y);
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+	{
+	return cell;
+	}
+	// north-east
+	cell.create(pos.x + doble_radius*i, pos.y - doble_radius*i);
+	cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-		{
-			return cell;
-		}
-		// north-west
-		cell.create(pos.x - doble_radius*i, pos.y - doble_radius*i);
-		cell_map = App->map->WorldToMap(cell.x, cell.y);
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+	{
+	return cell;
+	}
+	// north-west
+	cell.create(pos.x - doble_radius*i, pos.y - doble_radius*i);
+	cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-		{
-			return cell;
-		}
-		i++;
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+	{
+	return cell;
+	}
+	i++;
 	}
 	return iPoint(-1, -1);
 	*/
@@ -919,117 +919,117 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	checker.SetPosition(cell);
 	goal = checker.NearestPoint(&target);
 	cell_map = App->map->WorldToMap(cell.x, cell.y);
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal,radius))
-		{
-			return goal;
-		}
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	{
+		return goal;
+	}
 
-		// north
-		cell.create(pos.x, pos.y - doble_radius);
-		checker.SetPosition(cell);
-		goal = checker.NearestPoint(&target);
+	// north
+	cell.create(pos.x, pos.y - doble_radius);
+	checker.SetPosition(cell);
+	goal = checker.NearestPoint(&target);
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
-		{
-			return goal;
-		}
-
-
-		// east
-		cell.create(pos.x + doble_radius, pos.y);
-		checker.SetPosition(cell);
-		goal = checker.NearestPoint(&target);
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	{
+		return goal;
+	}
 
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
-		{
-			return goal;
-		}
+	// east
+	cell.create(pos.x + doble_radius, pos.y);
+	checker.SetPosition(cell);
+	goal = checker.NearestPoint(&target);
 
 
-		// west
-		cell.create(pos.x - doble_radius, pos.y);
-		checker.SetPosition(cell);
-		goal = checker.NearestPoint(&target);
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	{
+		return goal;
+	}
 
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
-		{
-			return goal;
-		}
-
-		
-		// south-east
-		cell.create(pos.x + doble_radius, pos.y + doble_radius);
-		checker.SetPosition(cell);
-		goal = checker.NearestPoint(&target);
+	// west
+	cell.create(pos.x - doble_radius, pos.y);
+	checker.SetPosition(cell);
+	goal = checker.NearestPoint(&target);
 
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
-		{
-			return goal;
-		}
-
-		// south-west
-		cell.create(pos.x - doble_radius, pos.y + doble_radius);
-		checker.SetPosition(cell);
-		goal = checker.NearestPoint(&target);
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	{
+		return goal;
+	}
 
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
-		{
-			return goal;
-		}
-
-		// north-east
-		cell.create(pos.x + doble_radius, pos.y - doble_radius);
-		checker.SetPosition(cell);
-		goal = checker.NearestPoint(&target);
-
-		
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
-		{
-			return goal;
-		}
-
-		// north-west
-		cell.create(pos.x - doble_radius, pos.y - doble_radius);
-		checker.SetPosition(cell);
-		goal = checker.NearestPoint(&target);
+	// south-east
+	cell.create(pos.x + doble_radius, pos.y + doble_radius);
+	checker.SetPosition(cell);
+	goal = checker.NearestPoint(&target);
 
 
-		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
-		{
-			return goal;
-		}
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	{
+		return goal;
+	}
 
-	
-		return iPoint(-1, -1);
+	// south-west
+	cell.create(pos.x - doble_radius, pos.y + doble_radius);
+	checker.SetPosition(cell);
+	goal = checker.NearestPoint(&target);
+
+
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	{
+		return goal;
+	}
+
+	// north-east
+	cell.create(pos.x + doble_radius, pos.y - doble_radius);
+	checker.SetPosition(cell);
+	goal = checker.NearestPoint(&target);
+
+
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	{
+		return goal;
+	}
+
+	// north-west
+	cell.create(pos.x - doble_radius, pos.y - doble_radius);
+	checker.SetPosition(cell);
+	goal = checker.NearestPoint(&target);
+
+
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	{
+		return goal;
+	}
+
+
+	return iPoint(-1, -1);
 }
 
 Unit** Unit::FindNewTarget()
 {
-std::vector<Unit*> other_units;
-App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
-App->entities_manager->OrganizeByNearest(other_units, this->GetVision());
+	std::vector<Unit*> other_units;
+	App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
+	App->entities_manager->OrganizeByNearest(other_units, this->GetVision());
 
-Unit* unit;
-iPoint goal;
-while (!other_units.empty())
-{
-	unit = other_units.back();
-	other_units.pop_back();
+	Unit* unit;
+	iPoint goal;
+	while (!other_units.empty())
+	{
+		unit = other_units.back();
+		other_units.pop_back();
 
-	if(unit->GetDiplomacy()==ALLY||unit->GetAction()==DIE ||unit->GetAction()==DISAPPEAR)
-	{
-		continue;
+		if (unit->GetDiplomacy() == ALLY || unit->GetAction() == DIE || unit->GetAction() == DISAPPEAR)
+		{
+			continue;
+		}
+		goal = FindWalkableAdjacent(unit->GetPositionRounded());
+		if (goal != iPoint(-1, -1))
+		{
+			return (Unit**)unit->GetMe();
+		}
 	}
-	goal = FindWalkableAdjacent(unit->GetPositionRounded());
-	if (goal != iPoint(-1, -1)) 
-	{
-		return (Unit**)unit->GetMe();
-	}
-}
 	return nullptr;
 }
 
@@ -1146,21 +1146,21 @@ bool Unit::AttackUnit(Unit** target)
 
 		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider());
 
-		//App->pathfinding->PushPath(this, goal);
-		
+		App->pathfinding->PushPath(this, goal);
+		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
-		
+		*/
 		return false;
-	
-	
+
+
 	}
 
 
 	//Control action rate
 	if (action_timer.Read() < attack_rate)return false;
-	
+
 	//App->sound->PlayFXAudio(SWORD_ATTACK_SOUND);
 
 	//Set unit attack animation
@@ -1170,11 +1170,11 @@ bool Unit::AttackUnit(Unit** target)
 		Focus((*target)->GetPositionRounded());
 		App->animator->UnitPlay(this);
 	}
-		
+
 	//Calculate the attack & apply the value at the target life points
 	//((Unit*)(*target))->life -= MIN(((Unit*)(*target))->life, attack_hitpoints);
-	ret=((Unit*)(*target))->DirectDamage(attack_hitpoints);
-	if (ret|| (*target)->GetLife() <= 0)
+	ret = ((Unit*)(*target))->DirectDamage(attack_hitpoints);
+	if (ret || (*target)->GetLife() <= 0)
 	{
 		ret = true;
 		if (this->action_type == ATTATCK)
@@ -1204,13 +1204,13 @@ bool Unit::HealUnit(Unit ** target)
 	{
 
 		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider() + attack_area.GetRad());
-		//App->pathfinding->PushPath(this, goal);
-		
+		App->pathfinding->PushPath(this, goal);
+		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
-	
+
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
-		
+		*/
 		return false;
 	}
 
@@ -1230,7 +1230,7 @@ bool Unit::HealUnit(Unit ** target)
 
 	//Calculate the attack & apply the value at the target life points
 	((Unit*)(*target))->Heal(attack_hitpoints);
-	
+
 	//Reset action timer
 	action_timer.Start();
 
@@ -1250,12 +1250,12 @@ bool Unit::AttackBuilding(Building ** target)
 	{
 
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
-	//	App->pathfinding->PushPath(this, goal);
-		
+		App->pathfinding->PushPath(this, goal);
+		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this), TASK_CHANNELS::SECONDARY);
-		
+		*/
 		return false;
 	}
 
@@ -1299,7 +1299,7 @@ bool Unit::Cover()
 bool Unit::DirectDamage(uint damage)
 {
 	bool ret = false;
-	if (unit_protected == true && tank!=nullptr)
+	if (unit_protected == true && tank != nullptr)
 	{
 		tank->DirectDamage(1);
 		return false;
@@ -1404,7 +1404,7 @@ COLLISION_TYPE Unit::CheckColision(const Unit * current, const Unit * other)
 	{
 		return NO_COLLISION;
 	}
-	if(other->action_type == IDLE||other->action_type == ATTATCK)
+	if (other->action_type == IDLE || other->action_type == ATTATCK)
 	{
 		if (sqrt((other->GetPosition().x - current->GetPosition().x) * (other->GetPosition().x - current->GetPosition().x) + (other->GetPosition().y - current->GetPosition().y) * (other->GetPosition().y - current->GetPosition().y)) < (current->hard_collider.GetRad() + other->hard_collider.GetRad()))
 		{
@@ -1465,7 +1465,7 @@ void Unit::QuitProtection()
 void Unit::SetPosition(float x, float y, bool insert)
 {
 	//Extract the units to push it with the new position later
-	if(insert)App->entities_manager->units_quadtree.Exteract(this,&position);
+	if (insert)App->entities_manager->units_quadtree.Exteract(this, &position);
 
 	//Set unit position
 	position.x = x;
@@ -1475,7 +1475,7 @@ void Unit::SetPosition(float x, float y, bool insert)
 	vision.SetPosition(pos);
 	//Set unit render area position
 	render_area.SetPosition(pos);
-	
+
 	//Check unit fog
 	SDL_Point point = { pos.x,pos.y };
 	int dist_mult = 10;
@@ -1511,11 +1511,6 @@ void Unit::SetAttackBuff(float atk_buff)
 void Unit::SetUnitType(UNIT_TYPE type)
 {
 	unit_type = type;
-}
-
-void Unit::SetUnitClass(UNIT_CLASS type)
-{
-	unit_class = type;
 }
 
 void Unit::SetMark(const Circle & new_mark)
@@ -1633,6 +1628,21 @@ void Unit::SetLifeBuff(float hp_buff)
 	life_buff += hp_buff;
 }
 
+void Unit::SetArmor(uint arm)
+{
+	armor = arm;
+}
+
+void Unit::SetArmorBonus(uint arm_bonus)
+{
+	armor_bonus = arm_bonus;
+}
+
+void Unit::SetArmorBuff(float arm_buff)
+{
+	armor_buff = arm_buff;
+}
+
 void Unit::SetFoodCost(uint food_cst)
 {
 	food_cost = food_cst;
@@ -1695,6 +1705,7 @@ void Unit::SetUpgrade(Unit * upgraded)
 	attack_type = upgraded->attack_type;
 
 	defense = upgraded->defense;
+	armor = upgraded->armor;
 
 	attack_area = upgraded->attack_area;
 }
@@ -1709,11 +1720,6 @@ void Unit::SetUnitExperience(uint value)
 UNIT_TYPE Unit::GetUnitType()const
 {
 	return unit_type;
-}
-
-UNIT_CLASS Unit::GetUnitClass() const
-{
-	return unit_class;
 }
 
 const Circle& Unit::GetMark() const
@@ -1831,13 +1837,28 @@ float Unit::GetDefenseBuff() const
 	return defense_buff;
 }
 
+uint Unit::GetArmor() const
+{
+	return armor;
+}
+
+uint Unit::GetArmorBonus() const
+{
+	return armor_bonus;
+}
+
+
 uint Unit::GetMaxLife() const
 {
-	return max_life+ life_buff;
+	return max_life + life_buff;
 }
 uint Unit::GetBaseMaxLife() const
 {
 	return max_life;
+}
+float Unit::GetArmorBuff() const
+{
+	return armor_buff;
 }
 
 uint Unit::GetFoodCost() const
@@ -1900,7 +1921,7 @@ Resource::Resource() :Entity()
 
 }
 
-Resource::Resource(const Resource& copy) : Entity(copy), resource_type(copy.resource_type), mark(copy.mark),interact_area(copy.interact_area)
+Resource::Resource(const Resource& copy) : Entity(copy), resource_type(copy.resource_type), mark(copy.mark), interact_area(copy.interact_area)
 {
 
 }
@@ -1959,7 +1980,7 @@ bool Resource::Draw(bool debug)
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
 	{
-		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity(), 0, 0 , &blit_color);
+		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity(), 0, 0, &blit_color);
 		if (!ret)break;
 	}
 
@@ -2124,7 +2145,7 @@ void Building::DiscoverFogAround()
 	//Calculate the zone that have to be discovered
 	Circle zone = vision;
 	zone.SetRad(width_in_tiles * App->map->data.tile_width);
-	
+
 	//Clear the discover zone around the building
 	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG, false);
 	App->fog_of_war->ClearAlphaLayer(zone, MID_ALPHA, false);
@@ -2229,7 +2250,7 @@ bool Building::Draw(bool debug)
 
 	uint size = sprites->size();
 	for (uint k = 0; k < size; k++)
-	{	
+	{
 		ret = App->render->CallBlit(((DiplomaticAnimation*)current_animation)->GetTexture(entity_diplomacy), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity(), 0, 0, &blit_color);
 		if (!ret)break;
 	}
@@ -2295,7 +2316,7 @@ void Building::SetPosition(float x, float y, bool insert)
 
 	//Update construction map
 	App->map->ChangeConstructionMap(upper_tile, width_in_tiles + 1, height_in_tiles + 1, 0);
-	
+
 	iPoint pos(position.x, position.y);
 
 	//Clear fog around building vision zone

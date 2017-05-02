@@ -90,15 +90,15 @@ enum RESEARCH_TECH
 class SpawnUnitAction : public Action
 {
 public:
-	
-	SpawnUnitAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0) : Action(actor,TASK_B_SPAWN_UNITS), type(type), diplomacy(diplomacy)
+
+	SpawnUnitAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0) : Action(actor, TASK_B_SPAWN_UNITS), type(type), diplomacy(diplomacy)
 	{
 		new_unit = App->entities_manager->GenerateUnit(type, diplomacy, false);
 		new_unit->SetDiplomacy(diplomacy);
 		if (runned_time > new_unit->GetTrainTime())time = 0;
 		else time = new_unit->GetTrainTime() - runned_time;
 	}
-	
+
 	~SpawnUnitAction()
 	{
 		if (new_unit != nullptr)
@@ -124,10 +124,10 @@ public:
 			App->entities_manager->AddUnit(new_unit);
 			new_unit->SetPosition((float)x, (float)y);
 			App->animator->UnitPlay(new_unit);
-			if(diplomacy == ALLY)App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
+			if (diplomacy == ALLY)App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
 
 			new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)), TASK_CHANNELS::PRIMARY);
-			//App->pathfinding->PushPath(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1), TASK_CHANNELS::PRIMARY,iPoint(-1,-1),false);
+
 			//Add an autoattack passive action
 			new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
 
@@ -172,7 +172,7 @@ private:
 class ResearchTecAction : public Action
 {
 public:
-	ResearchTecAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy = ALLY) : Action(nullptr, TASK_B_RESEARCH), type(type),diplomacy(diplomacy), research_time(r_time) {};
+	ResearchTecAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy = ALLY) : Action(nullptr, TASK_B_RESEARCH), type(type), diplomacy(diplomacy), research_time(r_time) {};
 	~ResearchTecAction() {};
 
 	bool Activation()

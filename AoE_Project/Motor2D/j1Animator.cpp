@@ -194,7 +194,7 @@ void Animation_Block::ClearAnimationBlocks()
 	{
 		animation->ReleaseTexture();
 		delete animation;
-		animation = nullptr;		
+		animation = nullptr;
 	}
 }
 
@@ -236,12 +236,12 @@ Animation_Block * Animation_Block::SearchId(uint id) const
 
 void Animation_Block::SetAnimation(const Animation * new_animation)
 {
-	if(new_animation != nullptr)animation = (Animation*)new_animation;
+	if (new_animation != nullptr)animation = (Animation*)new_animation;
 }
 
 void Animation_Block::AddAnimationBlock(Animation_Block* new_animation_block)
 {
-	if(new_animation_block != nullptr)childs.push_back(new_animation_block);
+	if (new_animation_block != nullptr)childs.push_back(new_animation_block);
 }
 /// ---------------------------------------------
 
@@ -271,7 +271,7 @@ void DiplomaticAnimation::SetRedTexture(const SDL_Texture * tex)
 
 SDL_Texture * DiplomaticAnimation::GetTexture(DIPLOMACY target_diplomacy) const
 {
-	
+
 	//Ally case
 	if (target_diplomacy == DIPLOMACY::ALLY)return texture;
 	//Enemy case
@@ -317,7 +317,7 @@ void DiplomaticAnimation_Block::ClearAnimationBlocks()
 		delete animation;
 		animation = nullptr;
 	}
-	
+
 }
 
 void DiplomaticAnimation_Block::SetId(uint id)
@@ -378,7 +378,7 @@ j1Animator::j1Animator()
 //Destructor ==========================
 j1Animator::~j1Animator()
 {
-	
+
 }
 
 //Game Loop ===========================
@@ -474,15 +474,6 @@ UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 	return NO_UNIT;
 }
 
-UNIT_CLASS j1Animator::StrToUnitClassEnum(const char * str) const
-{
-	if (strcmp(str, "civilian") == 0)	return CIVILIAN;
-	if (strcmp(str, "infantry") == 0)	return INFANTRY;
-	if (strcmp(str, "archery") == 0)	return ARCHERY;
-	if (strcmp(str, "cavalry") == 0)	return CAVALRY;
-	return NO_CLASS;
-}
-
 ACTION_TYPE j1Animator::StrToActionEnum(const char* str) const
 {
 	if (strcmp(str, "attack") == 0)		return ATTATCK;
@@ -562,9 +553,9 @@ bool j1Animator::AnimationLoopFromActionType(ACTION_TYPE type)
 {
 	switch (type)
 	{
-	case ATTATCK:		return true;	
-	case DIE:			return false;	
-	case DISAPPEAR:		return false;	
+	case ATTATCK:		return true;
+	case DIE:			return false;
+	case DISAPPEAR:		return false;
 	case IDLE:			return true;
 	case WALK:			return true;
 	default:			return false;
@@ -580,7 +571,7 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 	std::string load_folder = name + "/" + xml_folder;
 	pugi::xml_document animations_data;
 	if (!App->fs->LoadXML(load_folder.c_str(), &animations_data)) return false;
-	
+
 	//Check if the loaded XML have villager structure & if true villager is loaded
 	if (strcmp(animations_data.first_child().name(), "villager") == 0) return LoadVillagerBlock(&animations_data);
 
@@ -624,7 +615,7 @@ bool j1Animator::LoadUnitBlock(const char* xml_folder)
 		direction_node = action_node.first_child();
 
 		while (direction_node != NULL) {
-			
+
 			//Build new direction animation block
 			DiplomaticAnimation_Block* direction_anim_block = new DiplomaticAnimation_Block();
 			//Get direction block direction enum
@@ -819,7 +810,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder)
 	std::string load_folder = name + "/" + xml_folder;
 	pugi::xml_document build_anim_data;
 	if (!App->fs->LoadXML(load_folder.c_str(), &build_anim_data))return false;
-	
+
 	//Load the item animations textures
 	std::string folder = load_folder = name + "/" + build_anim_data.child("TextureAtlas").attribute("blue_texture").as_string();
 	SDL_Texture* blue_texture = App->tex->Load(folder.c_str());
@@ -828,7 +819,7 @@ bool j1Animator::LoadBuildingBlock(const char* xml_folder)
 
 	//Focus building id
 	pugi::xml_node build_node = build_anim_data.child("TextureAtlas").child("building");
-	
+
 
 
 	//Iterate all buildings
@@ -922,7 +913,7 @@ bool j1Animator::LoadResourceBlock(const char * xml_folder)
 		{
 			//Build an animation block for the current element
 			Animation_Block* element_block = new Animation_Block();
-			
+
 			//Build current element animation
 			Animation* anim = new Animation();
 			anim->SetLoop(false);
@@ -977,17 +968,17 @@ bool j1Animator::UnitPlay(Unit* target)
 	switch (direction)
 	{
 	case NORTH:	target->SetFlipSprite(false);	break;
-	
+
 	case NORTH_EAST:
 		direction = NORTH_WEST;
 		target->SetFlipSprite(true);
 		break;
-	
+
 	case EAST:
 		direction = WEST;
 		target->SetFlipSprite(true);
 		break;
-	
+
 	case SOUTH_EAST:
 		direction = SOUTH_WEST;
 		target->SetFlipSprite(true);
@@ -1036,7 +1027,7 @@ bool j1Animator::UnitPlay(Unit* target)
 			}
 		}
 	}
-	
+
 	return false;
 }
 

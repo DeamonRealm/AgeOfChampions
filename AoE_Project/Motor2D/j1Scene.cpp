@@ -112,12 +112,12 @@ bool j1Scene::Update(float dt)
 		App->render->CalculateCameraViewport();
 		App->map->CalculateTilesInView();
 	}
-	
+
 	// ------------------------------------------
 
 	App->map->Draw(App->map_debug_mode);
 	App->entities_manager->Draw();
-	
+
 	return true;
 }
 
@@ -174,84 +174,4 @@ bool j1Scene::Load_Current_Map()
 	ret = App->map->Load(map_folder.at(current_map).c_str());
 
 	return ret;
-}
-
-bool j1Scene::LoadScene()
-{
-	/*//Load Initial Scene ----------------------------------
-	bool ret = true;
-	std::string folder = name + "/" + "Scene_Data.xml";
-	pugi::xml_document scene_doc;
-	if (!App->fs->LoadXML(folder.c_str(), &scene_doc))
-	{
-		LOG("Error Loading Scene!");
-		return false;
-	}
-	pugi::xml_node game_node = scene_doc.child("game_state");
-
-	std::list<j1Module*>::const_iterator item = modules.begin();
-	ret = true;
-
-	while (item != modules.end() && ret == true)
-	{
-		ret = item._Ptr->_Myval->Load(root.child(item._Ptr->_Myval->name.c_str()));
-		item++;
-	}
-
-	data.reset();
-	if (ret == true)
-		LOG("...finished loading");
-	else
-		LOG("...loading process interrupted with error on module %s", (item._Ptr->_Myval != NULL) ? item._Ptr->_Myval->name.c_str() : "unknown");
-
-	App->LoadGame("default_scene.xml");
-
-	//Load the camera position
-	pugi::xml_node camera_node = scene_doc.first_child().child("camera");
-	iPoint camera_pos = App->map->MapToWorld(camera_node.attribute("pos_x").as_uint(), camera_node.attribute("pos_y").as_uint());
-	App->render->camera.x = camera_pos.x;
-	App->render->camera.y = -camera_pos.y;
-	App->render->CalculateCameraViewport();
-	App->map->CalculateTilesInView();
-
-
-	pugi::xml_node entity_node = scene_doc.first_child().child("entity");
-
-	while (entity_node != NULL)
-	{
-		Entity* new_entity = nullptr;
-
-		ENTITY_TYPE type = App->animator->StrToEntityEnum(entity_node.attribute("type").as_string());
-
-		if (type == UNIT)
-		{
-			UNIT_TYPE unit_type = App->animator->StrToUnitEnum(entity_node.attribute("unit_type").as_string());
-			DIPLOMACY diplomacy = App->animator->StrToDiplomacyEnum(entity_node.attribute("diplomacy").as_string());
-			Unit* new_unit = App->entities_manager->GenerateUnit(unit_type, diplomacy, true);
-			iPoint unit_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
-			new_unit->SetPosition((float)unit_pos.x, (float)unit_pos.y);
-			App->player->game_panel->IncressPopulation(1);
-		}
-		else if (type == RESOURCE)
-		{
-			RESOURCE_TYPE resource_type = App->animator->StrToResourceEnum(entity_node.attribute("resource_type").as_string());
-			Resource* new_resource = App->entities_manager->GenerateResource(resource_type);
-			iPoint resource_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
-			new_resource->SetPosition((float)resource_pos.x, (float)resource_pos.y);
-		}
-		else if (type == BUILDING)
-		{
-			BUILDING_TYPE building_type = App->animator->StrToBuildingEnum(entity_node.attribute("building_type").as_string());
-			DIPLOMACY diplomacy = App->animator->StrToDiplomacyEnum(entity_node.attribute("diplomacy").as_string());
-			Building* new_building = App->entities_manager->GenerateBuilding(building_type, diplomacy);
-			iPoint building_pos = App->map->MapToWorldCenter(entity_node.attribute("x_pos").as_uint(), entity_node.attribute("y_pos").as_uint());
-			new_building->SetPosition((float)building_pos.x, (float)building_pos.y);
-		}
-
-		entity_node = entity_node.next_sibling();
-	}
-	// ----------------------------------------------------
-	*/
-
-	return true;
 }

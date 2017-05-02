@@ -231,7 +231,7 @@ void Entity_Profile::UpdateStats()
 {
 	if (element->myself == NULL)
 	{
-		element = nullptr; 
+		element = nullptr;
 		return;
 	}
 	if (element->GetEntityType() != RESOURCE && element->GetLife() != life_update)
@@ -248,8 +248,8 @@ void Entity_Profile::UpdateStats()
 		profile_text = profile_text + "/" + App->gui->SetStringFromInt(element->GetMaxLife());
 		life->SetString((char*)profile_text.c_str());
 	}
-	if(e_type == UNIT)
-	{ 
+	if (e_type == UNIT)
+	{
 		int tmp = (int)ceil(((Unit*)element)->GetAttackBuff());
 		((Unit*)element)->GetAttackHitPoints();
 		if (attack_up != tmp)
@@ -340,11 +340,11 @@ Selection_Panel::~Selection_Panel()
 
 
 bool Selection_Panel::PreUpdate()
-{	
+{
 	App->input->GetMousePosition(mouse_x, mouse_y);
 
 
-	if(WindowsMove()) App->map->CalculateTilesInView();
+	if (WindowsMove()) App->map->CalculateTilesInView();
 
 
 	if (selected_elements.size() == 0 || inviewport == false) return false;
@@ -353,10 +353,10 @@ bool Selection_Panel::PreUpdate()
 	UpperEntity = GetUpperEntity(mouse_x, mouse_y);
 	if (UpperEntity != nullptr)
 	{
-		if(selected_diplomacy == ALLY && UpperEntity->GetDiplomacy() == ENEMY) App->gui->ChangeMouseTexture(ATTACK);
+		if (selected_diplomacy == ALLY && UpperEntity->GetDiplomacy() == ENEMY) App->gui->ChangeMouseTexture(ATTACK);
 		else App->gui->ChangeMouseTexture(DEFAULT);
 	}
-	else App->gui->ChangeMouseTexture(DEFAULT); 
+	else App->gui->ChangeMouseTexture(DEFAULT);
 
 	return true;
 }
@@ -413,7 +413,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		}
 
 	}
-		break;
+	break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
 		if (expand == true)
 		{
@@ -433,7 +433,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		}
 		selection_rect = { 0,0,0,0 };
 	}
-		break;
+	break;
 	case MOUSE_RIGHT_BUTTON:
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 		{
@@ -454,23 +454,21 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
 				}
 			}
-			else // App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y), TASK_CHANNELS::PRIMARY,iPoint(-1,-1),false);
-
-				Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(),iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
+			else Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
 
 		}
 		else if (selected_elements.size() > 1 && selected_entity_type == UNIT) {
 			{
 				if (UpperEntity != nullptr)
 				{
-				/*	if (UpperEntity->GetEntityType() == RESOURCE && selected_unit_type == VILLAGER)
+					/*	if (UpperEntity->GetEntityType() == RESOURCE && selected_unit_type == VILLAGER)
 					{
-						std::list<Entity*>::iterator villager = selected_elements.begin();
-						while (villager != selected_elements.end())
-						{
-							villager._Ptr->_Myval->AddAction(App->action_manager->RecollectAction((Villager*)villager._Ptr->_Myval, (Resource**)UpperEntity->GetMe()));
-							villager++;
-						}
+					std::list<Entity*>::iterator villager = selected_elements.begin();
+					while (villager != selected_elements.end())
+					{
+					villager._Ptr->_Myval->AddAction(App->action_manager->RecollectAction((Villager*)villager._Ptr->_Myval, (Resource**)UpperEntity->GetMe()));
+					villager++;
+					}
 					}*/
 				}
 				else App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y, true);
@@ -658,7 +656,7 @@ void Selection_Panel::DrawGroup()
 			item._Ptr->_Myval->Deselect();
 			selected_elements.remove(item._Ptr->_Myval);
 			item++;
-			if(item != selected_elements.end()) Selected->SetEntity(item._Ptr->_Myval);
+			if (item != selected_elements.end()) Selected->SetEntity(item._Ptr->_Myval);
 			else Selected->SetEntity(nullptr);
 			continue;
 		}
@@ -670,7 +668,7 @@ void Selection_Panel::DrawGroup()
 
 		//Draw life
 		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36, 3 }, 255, 0, 0);
-		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36 * life/max_life, 3 }, 0, 255, 0);
+		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36 * life / max_life, 3 }, 0, 255, 0);
 
 		//Draw icon
 		group_profile[i]->Draw(App->debug_mode);
@@ -679,7 +677,7 @@ void Selection_Panel::DrawGroup()
 	}
 }
 
-bool Selection_Panel::PointisInViewport(int x, int y) 
+bool Selection_Panel::PointisInViewport(int x, int y)
 {
 	SDL_Point p = { x,y };
 	if (SDL_PointInRect(&p, &map_viewport) == SDL_TRUE) return true;
@@ -703,10 +701,8 @@ void Selection_Panel::MoveSelectedToPoint(int x, int y)
 		else if (Selected->GetEntity() != nullptr)
 		{
 			Selected->GetEntity()->GetWorker()->ResetChannel(PRIMARY);
-			App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(x, y), TASK_CHANNELS::PRIMARY, iPoint(-1,-1),false);
-			//Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), iPoint(x, y)));
+			Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), iPoint(x, y)));
 		}
-		
 	}
 }
 
@@ -722,7 +718,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		{
 			if (Selected->GetEntity() == nullptr) return;
 			else if (selected_entity_type != UNIT || selected_diplomacy != ALLY) return;
-			
+
 			App->win->GetWindowSize(width, height);
 			selection_rect = { 0, 32 , (int)width, 560 };
 		}
@@ -744,12 +740,12 @@ void Selection_Panel::Select(SELECT_TYPE type)
 
 		selection_rect.x -= App->render->camera.x;
 		selection_rect.y -= App->render->camera.y;
-		
+
 
 		unit_quad_selection.clear();
 		App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, selection_rect);
-		
-		
+
+
 		int selected_amount = 0;
 		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT
 			&& selected_entity_type == UNIT && selected_diplomacy == ALLY)
@@ -760,7 +756,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		UNIT_TYPE u_type = NO_UNIT;
 		//Select Entity
 		int size = unit_quad_selection.size();
-		for(int count = 0; count < size; count++)
+		for (int count = 0; count < size; count++)
 		{
 			if (unit_quad_selection[count]->GetDiplomacy() != ALLY) continue;
 			else if (type == DOUBLECLICK && selected_unit_type != unit_quad_selection[count]->GetUnitType());
@@ -788,10 +784,10 @@ void Selection_Panel::Select(SELECT_TYPE type)
 	{
 		if (type == SINGLE) UnSelect_Entity();
 
-		UpperEntity = GetUpperEntity(mouse_x,mouse_y);
+		UpperEntity = GetUpperEntity(mouse_x, mouse_y);
 		if (UpperEntity == nullptr)
 		{
-			if(type != ADD) ResetSelectedType();
+			if (type != ADD) ResetSelectedType();
 			return;
 		}
 		UpperEntity->Select();
@@ -824,7 +820,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 	else if (selected_elements.size() == 1)
 	{
 		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
-		if(Selected->GetEntity()->GetEntityType() == UNIT) App->sound->PlayFXAudio(CLICK_SOUND);
+		if (Selected->GetEntity()->GetEntityType() == UNIT) App->sound->PlayFXAudio(CLICK_SOUND);
 	}
 	else
 	{
@@ -866,7 +862,7 @@ void Selection_Panel::Expand_SelectionRect()
 }
 
 // Change to quads
-Entity * Selection_Panel::GetUpperEntity(int x, int y) 
+Entity * Selection_Panel::GetUpperEntity(int x, int y)
 {
 	Entity* ret = nullptr;
 
@@ -895,22 +891,22 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	size = unit_quad_selection.size();
 	for (count = 0; count < size; count++)
 	{
-		current_sprite = (Sprite*) unit_quad_selection[count]->GetAnimation()->GetCurrentSprite();
+		current_sprite = (Sprite*)unit_quad_selection[count]->GetAnimation()->GetCurrentSprite();
 		rect = *current_sprite->GetFrame();
 		pos = unit_quad_selection[count]->GetPosition();
 		rect.x = (int)pos.x - current_sprite->GetXpivot();
 		rect.y = (int)pos.y - current_sprite->GetYpivot();
-	
+
 		if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h)
 		{
-			if (ret == nullptr) ret =unit_quad_selection[count];
+			if (ret == nullptr) ret = unit_quad_selection[count];
 			else if (ret->GetPosition().y < unit_quad_selection[count]->GetPosition().y)
 			{
 				ret = unit_quad_selection[count];
 			}
 		}
 	}
-	
+
 	// Search Buildings
 	size = building_quad_selection.size();
 	for (count = 0; count < size; count++)
@@ -1017,7 +1013,7 @@ void Selection_Panel::GetChampionsSelected(Unit *& warrior, Unit *& wizard, Unit
 		if (item._Ptr->_Myval->GetEntityType() == UNIT)
 		{
 			u_type = ((Unit*)item._Ptr->_Myval)->GetUnitType();
-			if		(u_type == WARRIOR_CHMP) warrior = (Unit*)item._Ptr->_Myval;
+			if (u_type == WARRIOR_CHMP) warrior = (Unit*)item._Ptr->_Myval;
 			else if (u_type == WIZARD_CHMP) wizard = (Unit*)item._Ptr->_Myval;
 			else if (u_type == ARCHER_CHMP) archer = (Unit*)item._Ptr->_Myval;
 		}
@@ -1026,7 +1022,7 @@ void Selection_Panel::GetChampionsSelected(Unit *& warrior, Unit *& wizard, Unit
 
 bool Selection_Panel::GetSelectedIsEntity()
 {
-	return (selected_entity_type==NO_ENTITY);
+	return (selected_entity_type == NO_ENTITY);
 }
 
 void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
@@ -1047,7 +1043,7 @@ void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
 			selected_unit_type = NO_UNIT;
 		}
 	}
-		break;
+				 break;
 	case GROUP: {
 		UNIT_TYPE u_type = ((Unit*)UpperEntity)->GetUnitType();
 		if (u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP)
@@ -1057,13 +1053,13 @@ void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
 		}
 		else if (selected_unit_type != u_type)
 			selected_unit_type = NO_UNIT;
-		}
-		break;
+	}
+				break;
 	case DOUBLECLICK: break;
 	case ADD: {
 		if (selected_unit_type != ((Unit*)UpperEntity)->GetUnitType()) selected_unit_type = NO_UNIT;
-		}
-		break;
+	}
+			  break;
 	default:
 		break;
 	}
@@ -1111,7 +1107,7 @@ bool Selection_Panel::WindowsMove()
 		}
 		else if (c_pos.y < 119 && c_pos.x >1) App->render->camera.x += (int)SDL_ceil(1000 * App->GetDT());
 		ret = true;
-	
+
 	}
 	else if (mouse_x >= App->render->camera.w - OFFSET_Y)
 	{
@@ -1131,17 +1127,17 @@ bool Selection_Panel::WindowsMove()
 	if (mouse_y < viewport->GetBox()->y + OFFSET_X && mouse_y > viewport->GetBox()->y)
 	{
 		if (c_pos.x == 1 && c_pos.y > 0)
-			{
-				App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
-				App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
-			}
+		{
+			App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
+			App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
+		}
 		else if (c_pos.y == 0 && c_pos.x > 1)
 		{
 			App->render->camera.x += (int)SDL_ceil(898.13 * App->GetDT());
 			App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
 		}
-		else if(c_pos.y >0 && c_pos.x >1) App->render->camera.y += (int)SDL_ceil(1000 * App->GetDT());
-		ret = true;	
+		else if (c_pos.y >0 && c_pos.x >1) App->render->camera.y += (int)SDL_ceil(1000 * App->GetDT());
+		ret = true;
 	}
 	else if (mouse_x < OFFSET_Y && mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X
 		|| mouse_x > 300 && mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X)
@@ -1160,7 +1156,7 @@ bool Selection_Panel::WindowsMove()
 		ret = true;
 	}
 
-	if(ret)App->render->CalculateCameraViewport();
+	if (ret)App->render->CalculateCameraViewport();
 
 	return ret;
 }

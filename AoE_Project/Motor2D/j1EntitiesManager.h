@@ -76,8 +76,7 @@ private:
 	//Vectors of predefined units
 	std::vector<Unit*>		ally_units_defs;
 	std::vector<Unit*>		enemy_units_defs;
-	std::vector<Building*>	ally_buildings_defs;
-	std::vector<Building*>	enemy_buildings_defs;
+	std::vector<Building*>	buildings_defs;
 	std::vector<Resource*>	resources_defs;
 
 	//Methods to add entities definitions
@@ -93,7 +92,7 @@ public:
 	void ExtractChampion(Champion* champion, DIPLOMACY diplomacy);
 
 	//Send Experience to champions
-	void GetExperienceFromUnit(int exp,DIPLOMACY diplomacy);
+	void GetExperienceFromUnit(int exp, DIPLOMACY diplomacy);
 	//Entities Quad Trees to help other modules work with entities
 	m_QuadTree<Unit*>			units_quadtree;
 	m_QuadTree<Resource*>		resources_quadtree;
@@ -138,8 +137,8 @@ public:
 	//Upgrade Entity
 	void UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy);
 	bool UpgradeUnit(UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
-	void UpgradeUnitResearch(RESEARCH_TECH research_type, DIPLOMACY diplomacy);
-	
+
+
 	//Get nearest Entity methods
 	Unit*		GetNearestUnit(iPoint point, UNIT_TYPE type);
 	Building*	GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy);

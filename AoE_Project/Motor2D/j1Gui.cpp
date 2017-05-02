@@ -46,7 +46,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	champions_file_name = conf.child("champion").attribute("file").as_string("");
 	menu_pause_file_name = conf.child("menu_pause").attribute("file").as_string("");
 	final_menu_file_name = conf.child("final_menu").attribute("file").as_string("");
-	
+
 	return ret;
 }
 
@@ -55,7 +55,7 @@ bool j1Gui::Start()
 {
 	//Load Atlas
 	atlas = App->tex->Load(atlas_file_name.c_str());
-	
+
 	//Add textures to Ui_textures
 	ui_textures.push_back(App->tex->Load(background_file_name.c_str()));
 	ui_textures.push_back(App->tex->Load(mainmenu_file_name.c_str()));
@@ -66,7 +66,7 @@ bool j1Gui::Start()
 	ui_textures.push_back(App->tex->Load(menu_pause_file_name.c_str()));
 	ui_textures.push_back(App->tex->Load(final_menu_file_name.c_str()));
 
-	
+
 	LoadCursorTypes();
 	ChangeMouseTexture(DEFAULT);
 
@@ -104,7 +104,7 @@ bool j1Gui::PostUpdate()
 		/*if (ItemSelected == NULL)ItemSelected = GetTabElement(screens.front(), 1);
 		else if (ItemSelected->GetInputTarget() != (j1Module*)App->console)
 		{
-			ItemSelected = GetTabElement(screens.front(), ItemSelected->GetTabNum() + 1);
+		ItemSelected = GetTabElement(screens.front(), ItemSelected->GetTabNum() + 1);
 		}*/
 
 	}
@@ -113,11 +113,11 @@ bool j1Gui::PostUpdate()
 	{
 		SDL_ShowCursor(0);
 	}
-	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{ 
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
 		SDL_ShowCursor(1);
 	}
-	
+
 
 	// Update & draw the UI screens
 	std::list<UI_Element*>::iterator item = screens.begin();
@@ -142,7 +142,7 @@ bool j1Gui::CleanUp()
 	bool ret = true;
 
 	// CleanUp (Clear Lists)
-	screens.clear();	
+	screens.clear();
 	cursors_rects.clear();
 	cursors_pivots.clear();
 
@@ -158,7 +158,7 @@ bool j1Gui::CleanUp()
 	std::list<SDL_Texture*>::iterator text_ui = ui_textures.begin();
 	while (text_ui != ui_textures.end())
 	{
-		if(!App->tex->UnLoad(text_ui._Ptr->_Myval))LOG("Tex unload error");
+		if (!App->tex->UnLoad(text_ui._Ptr->_Myval))LOG("Tex unload error");
 		text_ui++;
 	}
 	ui_textures.clear();
@@ -229,11 +229,11 @@ UI_Element* j1Gui::GenerateUI_Element(UI_TYPE element_type)
 	UI_Element* new_element = nullptr;
 	switch (element_type)
 	{
-	case UNDEFINED:		
-		new_element = new UI_Element();		
-	break;
+	case UNDEFINED:
+		new_element = new UI_Element();
+		break;
 
-	case BUTTON:	
+	case BUTTON:
 		new_element = new UI_Button();
 		break;
 
@@ -263,13 +263,13 @@ UI_Element* j1Gui::GenerateUI_Element(UI_TYPE element_type)
 
 	if (new_element != nullptr)
 	{
-  		gui_elements.push_back(new_element);
+		gui_elements.push_back(new_element);
 	}
 
 	return new_element;
 }
 
-UI_Element * j1Gui::GetActiveScreen() 
+UI_Element * j1Gui::GetActiveScreen()
 {
 	std::list<UI_Element*>::iterator item = screens.begin();
 	while (item._Ptr != NULL)
@@ -315,7 +315,7 @@ void j1Gui::LoadCursorTypes()
 	int vector_size = 8;
 	cursors_rects.reserve(vector_size);
 	cursors_pivots.reserve(vector_size);
-	
+
 	//Load Menu configuration data from loaded folder
 	char* buffer = nullptr;
 	int size = App->fs->Load("gui/ui_icons.xml", &buffer);
@@ -324,7 +324,7 @@ void j1Gui::LoadCursorTypes()
 	RELEASE_ARRAY(buffer);
 
 	pugi::xml_node unit_node = icons_data.first_child().child("Mouse").first_child();
-	
+
 	SDL_Rect rect = { 0,0,0,0 };
 	iPoint pivot = { 0,0 };
 

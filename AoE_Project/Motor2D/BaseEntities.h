@@ -57,11 +57,11 @@ enum UNIT_TYPE
 };
 enum UNIT_CLASS
 {
-	NO_CLASS = 0,
-	CIVILIAN,
+	CIVILIAN = 0,
 	INFANTRY,
 	ARCHERY,
-	CAVALRY
+	CAVALRY,
+	SIEGE
 };
 enum RESOURCE_TYPE
 {
@@ -316,7 +316,6 @@ protected:
 
 	//Stats ----------------------
 	UNIT_TYPE		unit_type = NO_UNIT;
-	UNIT_CLASS		unit_class = NO_CLASS;
 
 	Circle			mark;
 	Circle			soft_collider;
@@ -345,10 +344,13 @@ protected:
 	uint			attack_rate_buff = 0;
 
 	ATTACK_TYPE		attack_type = NO_ATTACK;
-	//Defense ----------
+	//Defense/Armor ----
 	uint			defense = 0; /*Used in melee damage*/
 	uint			defense_bonus = 0;
 	float			defense_buff = 0;
+	uint			armor = 0; /*Used in distance damage*/
+	uint			armor_bonus = 0;
+	float			armor_buff = 0;
 	//Resources --------
 	uint			food_cost = 0;
 	uint			wood_cost = 0;
@@ -383,10 +385,10 @@ public:
 
 	//Actions ---------------
 	bool					Move(std::vector<iPoint>*& path, const iPoint& target = { -1,-1 });
-	void					Repath(std::vector<iPoint>*& path,const iPoint & destination);
+	void					Repath(std::vector<iPoint>*& path, const iPoint & destination);
 	void					CorrectPath(std::vector<iPoint>*& path);
 	iPoint					NextGoal(std::vector<iPoint>* path);
-	void					NewPosition(const iPoint& goal,float& position_x, float& position_y);
+	void					NewPosition(const iPoint& goal, float& position_x, float& position_y);
 	iPoint					FindWalkableCell(const iPoint& center);
 	bool					UnitHere(const iPoint& destination, int radius);
 	iPoint					FindWalkableAdjacent(const iPoint& center);
@@ -415,7 +417,6 @@ public:
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetFutureAction(const iPoint& future_position);
 	void	SetUnitType(UNIT_TYPE type);
-	void	SetUnitClass(UNIT_CLASS type);
 
 	void	SetMark(const Circle& new_mark);
 	void	SetSoftCollider(const Circle& new_soft_collider);
@@ -455,8 +456,6 @@ public:
 	void	SetUnitExperience(uint value);
 	//Get Methods -----------
 	UNIT_TYPE		GetUnitType()const;
-	UNIT_CLASS		GetUnitClass()const;
-
 	const Circle&	GetMark()const;
 	const Circle&	GetSoftCollider()const;
 	const Circle&	GetHardCollider()const;
@@ -483,10 +482,13 @@ public:
 	const Circle*	GetAttackArea()const;
 
 	uint			GetAttackAreaBuff()const;
-	
+
 	uint			GetDefense()const;
 	uint			GetDefenseBonus()const;
 	float			GetDefenseBuff()const;
+	uint			GetArmor()const;
+	uint			GetArmorBonus()const;
+	float			GetArmorBuff()const;
 	uint			GetFoodCost()const;
 	uint			GetWoodCost()const;
 	uint			GetGoldCost()const;

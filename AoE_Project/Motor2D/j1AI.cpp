@@ -36,7 +36,7 @@ void j1AI::Enable()
 	ai_starting_tc = (ProductiveBuilding*)App->entities_manager->GenerateBuilding(TOWN_CENTER, ENEMY);
 	iPoint pos = App->map->MapToWorldCenter(110, 100);
 	ai_starting_tc->SetPosition((float)pos.x, (float)pos.y);
-	
+
 
 	//temporary enemy barracks
 	pos = App->map->MapToWorldCenter(115, 95);
@@ -59,7 +59,7 @@ void j1AI::Disable()
 
 bool j1AI::Awake(pugi::xml_node&)
 {
-	
+
 	bool ret = true;
 
 	ai_worker = new AIWorker;
@@ -75,7 +75,7 @@ bool j1AI::Start()
 
 bool j1AI::PreUpdate()
 {
-	
+
 
 
 	return true;
@@ -113,16 +113,16 @@ bool j1AI::Update(float dt)
 		unit_it++;
 	}
 
-/*
+	/*
 	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
 	while (building_it != enemy_buildings.end())
 	{
-		if (building_it._Ptr->_Myval->GetBuildingType() == BARRACK)
-		{
-			building_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)building_it._Ptr->_Myval, MILITIA, ENEMY));
+	if (building_it._Ptr->_Myval->GetBuildingType() == BARRACK)
+	{
+	building_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)building_it._Ptr->_Myval, MILITIA, ENEMY));
 
-		}
-		building_it++;
+	}
+	building_it++;
 	}
 	*/
 
@@ -155,12 +155,12 @@ bool j1AI::LoadEnemies(const char * folder)
 	pugi::xml_node unit_node = enemy_data.child("data").child("units").first_child();
 	while (unit_node != NULL)
 	{
-	/*	Unit* new_unit = App->entities_manager->GenerateUnit(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), ENEMY, false);
+		/*	Unit* new_unit = App->entities_manager->GenerateUnit(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), ENEMY, false);
 		new_unit->SetPosition(unit_node.attribute("pos_x").as_float(), unit_node.attribute("pos_y").as_float(), false);
 		units_to_spawn.push_back(new_unit);
 		unit_node = unit_node.next_sibling();*/
 
-	
+
 		//ai_worker->AddAICommand(new SpawnUnitCommand(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), fPoint(unit_node.attribute("pos_x").as_float(0), unit_node.attribute("pos_y").as_float(0))));
 
 		unit_node = unit_node.next_sibling();
@@ -278,9 +278,9 @@ bool SpawnUnitsFromListCommand::Execute()
 		current_spawn = to_spawn->back();
 		to_spawn->pop_back();
 		fPoint pos = current_spawn->GetPosition();
-	/*	App->entities_manager->AddUnit((Unit*)current_spawn);
+		/*	App->entities_manager->AddUnit((Unit*)current_spawn);
 		current_spawn->SetPosition(pos.x, pos.y);*/
-		
+
 		App->AI->enemy_units.push_back(current_spawn);
 	}
 
@@ -319,7 +319,7 @@ bool MoveUnitsCommand::Execute()
 	uint size = to_move_list.size();
 
 	App->group_move->GetGroupOfUnits(&to_move_list, new_pos.x, new_pos.y, false);
-	
+
 	std::list<Unit*>::iterator it = App->AI->enemy_units.begin();
 
 

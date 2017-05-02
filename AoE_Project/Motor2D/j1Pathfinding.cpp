@@ -41,19 +41,14 @@ bool j1Pathfinding::PreUpdate()
 
 	while (!to_path.empty())
 	{
-		LOG("PATH_TIME %i", pathTime.Read());
-		if (pathTime.Read() > MAX_PATH_TIME)
-			return true;
-		ToPath current_unit=unit_it._Ptr->_Myval;
-		if (current_unit.unit != nullptr) {
-			std::vector<iPoint>* path = SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
-			if (path != nullptr) {
-				if (current_unit.priority)
-					current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
-				else
-					current_unit.unit->AddAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
-			}
-		}
+		if (pathTime.Read() > MAX_PATH_TIME) return true;
+		ToPath current_unit = unit_it._Ptr->_Myval;
+		std::vector<iPoint>* path = SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
+		if (current_unit.priority)
+			current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
+		else
+			current_unit.unit->AddAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
+
 		unit_it++;
 		to_path.pop_front();
 	}
@@ -132,7 +127,7 @@ PathNode* j1Pathfinding::GetPathNode(int x, int y)
 
 std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoint& destination)
 {
-	
+
 	int size = width*height;
 	std::fill(path_nodes, path_nodes + size, PathNode(-1, -1, iPoint(-1, -1), nullptr));
 
@@ -150,7 +145,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 		path->push_back(mouse_position);
 		return path;
 	}
-	
+
 	/*LOG("ORIGIN WORLD: X=%i Y=%i		ORIGIN MAP: X=%i Y=%i", origin.x, origin.y, map_origin.x, map_origin.y);
 	LOG("GOAL WORLD: X=%i Y=%i			GOAL MAP: X=%i Y=%i", destination.x, destination.y, map_goal.x, map_goal.y);*/
 
@@ -161,7 +156,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 		PathNode* firstNode = GetPathNode(map_origin.x, map_origin.y);
 		firstNode->SetPosition(map_origin);
 		firstNode->g = 0;
-		firstNode->h= map_origin.DistanceOctile(map_goal);
+		firstNode->h = map_origin.DistanceOctile(map_goal);
 
 		open.queue.push(firstNode);
 		PathNode* current = nullptr;
@@ -176,9 +171,9 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 			open.queue.pop();
 			if (current->pos == map_goal)
 			{
-				
+
 				std::vector<iPoint>* path = new std::vector<iPoint>;
-				
+
 				path->push_back(mouse_position);
 				iPoint mouse_cell = App->map->WorldToMap(mouse_position.x, mouse_position.y);
 				if (mouse_cell == current->pos)
@@ -186,14 +181,14 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 				iPoint current_world;
 				for (; current->parent != nullptr; current = GetPathNode(current->parent->pos.x, current->parent->pos.y))
 				{
-				
+
 					current_world = App->map->MapToWorld(current->pos.x, current->pos.y);
 					current_world.x += diference.x;
 					current_world.y += diference.y;
 					path->push_back(current_world);
-					
+
 				}
-				
+
 				return path;
 			}
 			else
@@ -213,7 +208,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 						temp->CalculateF(map_goal);
 						if (last_g_value <temp->g)
 						{
-							temp->parent = GetPathNode(current->pos.x,current->pos.y);
+							temp->parent = GetPathNode(current->pos.x, current->pos.y);
 						}
 						else {
 							temp->g = last_g_value;
@@ -227,7 +222,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 
 					}
 				}
-				
+
 				neightbords.list.clear();
 			}
 		}
@@ -236,14 +231,12 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 	return nullptr;
 }
 
-void j1Pathfinding::PushPath(Unit * unit, iPoint destination, TASK_CHANNELS task, iPoint target, bool primary)
+void j1Pathfinding::PushPath(Unit * unit, iPoint destination)
 {
-	ToPath getUnit(unit, destination,task);
+	ToPath getUnit(unit, destination);
 	to_path.remove(getUnit);
 	to_path.push_back(getUnit);
 }
-
-
 
 /// -----------------------------------
 
@@ -255,7 +248,7 @@ PathNode::PathNode()
 
 }
 
-PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent) : g(g), h(h), pos(pos), parent(parent),on_close(false),on_open(false)
+PathNode::PathNode(int g, int h, const iPoint & pos, const PathNode * parent) : g(g), h(h), pos(pos), parent(parent), on_close(false), on_open(false)
 {
 
 }
@@ -303,7 +296,7 @@ uint PathNode::FindWalkableAdjacents(PathList* list_to_fill) const
 	}
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell)) 
+	if (App->pathfinding->IsWalkable(cell))
 	{
 		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
 		if (node->pos != cell) {
@@ -318,7 +311,7 @@ uint PathNode::FindWalkableAdjacents(PathList* list_to_fill) const
 	}
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell)) 
+	if (App->pathfinding->IsWalkable(cell))
 	{
 		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
 		if (node->pos != cell) {
@@ -333,7 +326,7 @@ uint PathNode::FindWalkableAdjacents(PathList* list_to_fill) const
 	}
 	// south-east
 	cell.create(pos.x + 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell) && southClose == false && eastClose == false) 
+	if (App->pathfinding->IsWalkable(cell) && southClose == false && eastClose == false)
 	{
 		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
 		if (node->pos != cell) {
@@ -344,7 +337,7 @@ uint PathNode::FindWalkableAdjacents(PathList* list_to_fill) const
 	}
 	// south-west
 	cell.create(pos.x - 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell) && southClose == false && westClose == false) 
+	if (App->pathfinding->IsWalkable(cell) && southClose == false && westClose == false)
 	{
 		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
 		if (node->pos != cell) {
@@ -366,7 +359,7 @@ uint PathNode::FindWalkableAdjacents(PathList* list_to_fill) const
 	}
 	// north-west
 	cell.create(pos.x - 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell) && northClose == false && westClose == false) 
+	if (App->pathfinding->IsWalkable(cell) && northClose == false && westClose == false)
 	{
 		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
 		if (node->pos != cell) {
@@ -412,7 +405,7 @@ bool PathNode::operator!=(const PathNode & node) const
 
 
 
-ToPath::ToPath( Unit * getUnit, const iPoint & destination, TASK_CHANNELS task, const iPoint& target,bool priority) :unit(getUnit), destination(destination),task(task), target(target), priority(priority)
+ToPath::ToPath(Unit * getUnit, const iPoint & destination, const iPoint& target, bool priority) :unit(getUnit), destination(destination), target(target), priority(priority)
 {
 }
 
