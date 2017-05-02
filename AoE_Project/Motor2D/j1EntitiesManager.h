@@ -68,7 +68,7 @@ private:
 	std::list<Building*>	death_buildings;
 	std::list<Champion*>	champions_blue;
 	std::list<Champion*>	champions_red;
-
+	j1Timer					unit_update_timer;
 
 	//Vector where all the killed/destroyed entities are placed
 	std::vector<Entity*>	wasted_units;

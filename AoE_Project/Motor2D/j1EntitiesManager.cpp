@@ -109,15 +109,20 @@ bool j1EntitiesManager::Start()
 
 bool j1EntitiesManager::Update(float dt)
 {
+	bool ret = true;
+
+
 	//Update all the units
 	std::list<Unit*>::const_iterator item = units.begin();
-	bool ret = true;
 
 	while (item != units.end())
 	{
+		if (unit_update_timer.Read() > 20) break;
 		ret = item._Ptr->_Myval->Update();
 		item++;
 	}
+	unit_update_timer.Start();
+	
 
 	//Update all death units
 	std::list<Unit*>::const_iterator death_unit = death_units.begin();
