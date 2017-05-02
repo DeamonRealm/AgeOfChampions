@@ -6,7 +6,7 @@
 #include "BaseEntities.h"
 #include <queue>
 #define INVALID_WALK_CODE 255
-#define MAX_PATH_TIME 255
+#define MAX_PATH_TIME 5
 
 struct PathList;
 struct Node;
@@ -74,7 +74,7 @@ public:
 	std::vector<iPoint>* SimpleAstar(const iPoint& origin, const iPoint& goal);
 	// Create a path with two coordinates
 	std::list<ToPath> to_path;
-	void PushPath( Unit* unit, iPoint destination);
+	void PushPath(Unit* unit, iPoint destination, iPoint target = { -1,-1 }, bool primary = true);
 	j1Timer pathTime;
 };
 /// -----------------------------------
