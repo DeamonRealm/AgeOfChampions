@@ -19,6 +19,9 @@ private:
 public:
 
 	//Functionality ---------
+	uint	GetCortex()const;
+	void	SetCortex(uint val);
+
 	bool	ExtractResources(uint* value);
 
 };

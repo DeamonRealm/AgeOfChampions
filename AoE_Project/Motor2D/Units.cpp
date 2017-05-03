@@ -181,6 +181,7 @@ void Villager::SetCurrentResources(uint value)
 //Actions --------------
 bool Villager::Recollect(Resource** target)
 {
+	if (*target == nullptr)return true;
 
 	//Check if the target resource is in the "attack" (in this case used for recollect) area
 	if (!attack_area.Intersects((*target)->GetInteractArea()))
@@ -193,7 +194,8 @@ bool Villager::Recollect(Resource** target)
 	}
 
 	//Check the action rate
-	if (action_timer.Read() < attack_rate) return false;
+	uint rate_value = GetRecollectRate((*target)->GetResourceType());
+	if (action_timer.Read() < rate_value) return false;
 
 	//Get resources from the target resource
 	uint recollect_value = MIN(recollect_capacity, resources_capacity - current_resources);

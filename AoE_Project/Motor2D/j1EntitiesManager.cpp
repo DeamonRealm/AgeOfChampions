@@ -12,6 +12,7 @@
 #include "p2Log.h"
 #include "j1SoundManager.h"
 #include "j1FogOfWar.h"
+#include "Resources.h"
 
 //Testing purposes only should be erased
 #include "j1Scene.h"
@@ -1145,13 +1146,18 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_no
 {
 	if (resource_node == nullptr)return false;
 
+	//Get resource type
+	RESOURCE_TYPE res_type = App->animator->StrToResourceEnum(resource_node->attribute("resource_type").as_string());
+
 	//Generate a new resource definition from the node
-	Resource* new_def = new Resource();
+	Resource* new_def = nullptr;
+	if(res_type != TREE)new_def = new Resource();
+	else  new_def = new Tree();
 
 	//Resource ID -----------
 	/*Name*/			new_def->SetName(resource_node->attribute("name").as_string());
 	/*Entity Type*/		new_def->SetEntityType(RESOURCE);
-	/*Resource Type*/	new_def->SetResourceType(App->animator->StrToResourceEnum(resource_node->attribute("resource_type").as_string()));
+	/*Resource Type*/	new_def->SetResourceType(res_type);
 
 	//Resource Primitives ---
 	/*Mark*/			Rectng mark;
@@ -1179,6 +1185,10 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_no
 	/*Max Resources*/	new_def->SetMaxLife(resource_node->attribute("max_resources").as_uint());
 	/*C.Resources*/		new_def->SetLife(new_def->GetMaxLife());
 
+	if(res_type == TREE)
+	{
+		/*Tree Cortex*/	((Tree*)new_def)->SetCortex(resource_node->attribute("cortex").as_uint());
+	}
 	resources_defs.push_back(new_def);
 
 	LOG("%s definition built!", new_def->GetName());
@@ -1574,7 +1584,8 @@ Resource* j1EntitiesManager::GenerateResource(RESOURCE_TYPE type)
 		if (resources_defs[k]->GetResourceType() == type)
 		{
 			//Build unit
-			new_resource = new Resource(*resources_defs[k]);
+			if(type != TREE)new_resource = new Resource(*resources_defs[k]);
+			else new_resource = new Tree(*(Tree*)resources_defs[k]);
 
 			new_resource->myself = new_resource;
 
@@ -1715,7 +1726,6 @@ void j1EntitiesManager::RemoveDeathBuilding(Building * build)
 {
 	death_buildings.remove(build);
 }
-
 
 std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > j1EntitiesManager::OrganizeByNearest(std::vector<Unit*>& vec, Circle& target)
 {

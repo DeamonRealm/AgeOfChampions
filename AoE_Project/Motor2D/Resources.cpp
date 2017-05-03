@@ -22,7 +22,17 @@ Tree::~Tree()
 
 }
 
-bool Tree::ExtractResources(uint * value)
+uint Tree::GetCortex() const
+{
+	return cortex;
+}
+
+void Tree::SetCortex(uint val)
+{
+	cortex = val;
+}
+
+bool Tree::ExtractResources(uint* value)
 {
 	if (life == 0)return false;
 	//Check the tree cortex

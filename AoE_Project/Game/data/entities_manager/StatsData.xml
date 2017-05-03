@@ -998,7 +998,9 @@
       mark_h="70"
       interaction_rad ="50"
       vision_rad ="100"
-      max_resources="250"
+      max_resources="100"
+      cortex ="30"
+      
       />
   </unit>
   <!--Berry Bush-->
