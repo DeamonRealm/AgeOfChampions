@@ -41,7 +41,12 @@ bool j1EntitiesManager::Awake(pugi::xml_node & config_node)
 void j1EntitiesManager::Disable()
 {
 	active = false;
-
+	//Clean all arrows
+	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
+	for (; arrows != all_arrows.end(); arrows++)
+	{
+		RELEASE(arrows._Ptr->_Myval);
+	}
 	//Clean Up Units List
 	std::list<Unit*>::iterator units_item = units.begin();
 	while (units_item != units.end())
@@ -111,7 +116,17 @@ bool j1EntitiesManager::Update(float dt)
 {
 	bool ret = true;
 
+	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
+	for (; arrows != all_arrows.end(); arrows++)
+	{
 
+		if (arrows._Ptr->_Myval->Draw())
+		{
+			RemoveArrow(arrows._Ptr->_Myval);
+			RELEASE(arrows._Ptr->_Myval);
+
+		}
+	}
 	//Update all the units
 	std::list<Unit*>::const_iterator item = units.begin();
 
@@ -193,7 +208,8 @@ bool j1EntitiesManager::PostUpdate()
 bool j1EntitiesManager::Draw() const
 {
 	bool ret = true;
-
+	//Draw all arrows
+	
 	//Draw all units
 	std::vector<Unit*> units_vec;
 	units_quadtree.CollectCandidates(units_vec, App->render->camera_viewport);
@@ -263,6 +279,12 @@ bool j1EntitiesManager::Draw() const
 
 bool j1EntitiesManager::CleanUp()
 {
+	//Clean all arrows
+	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
+	for (; arrows != all_arrows.end(); arrows++)
+	{
+		RELEASE(arrows._Ptr->_Myval);
+	}
 	//Clean Up Units List
 	units_quadtree.Clear();
 	std::list<Unit*>::iterator units_item = units.begin();
@@ -890,6 +912,16 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 
 	// ------------------------------------------
 	return true;
+}
+
+void j1EntitiesManager::AddArrow(Arrow * get)
+{
+	all_arrows.push_back(get);
+}
+
+void j1EntitiesManager::RemoveArrow(Arrow * this_arrow)
+{
+	all_arrows.remove(this_arrow);
 }
 
 //Methods to add entities definitions

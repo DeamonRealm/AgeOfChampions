@@ -277,6 +277,7 @@ public:
 	bool UnitPlay(Unit* target);
 	bool BuildingPlay(Building* target);
 	bool ResourcePlay(Resource* target);
-
+	//Arrow sprite
+	SDL_Texture* arrow = nullptr;
 };
 #endif // !_J1ANIMATOR_H_

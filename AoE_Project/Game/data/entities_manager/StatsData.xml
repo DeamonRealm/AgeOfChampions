@@ -930,7 +930,7 @@
       attack_bonus="2"
       siege_hitpoints="10"
       attack_rate="2000"
-      attack_range="25"
+      attack_range="500"
       defense="1"
       defense_bonus="2"
       food_cost="180"

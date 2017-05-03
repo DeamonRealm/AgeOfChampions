@@ -15,7 +15,8 @@ Blit_Call::Blit_Call()
 
 }
 
-Blit_Call::Blit_Call(const iPoint & position, const iPoint& pivot, SDL_Texture* texture, SDL_Rect* rect, bool flip, int priority, uint opacity, SDL_Color* color) :position(position), pivot(pivot), texture(texture), rect(rect), flip(flip), priority(priority), opacity(opacity), color(color)
+Blit_Call::Blit_Call(const iPoint & position, const iPoint& pivot, SDL_Texture* texture, SDL_Rect* rect, bool flip, int priority, uint opacity, SDL_Color* color, double angle)
+	:position(position), pivot(pivot), texture(texture), rect(rect), flip(flip), priority(priority), opacity(opacity), color(color), angle(angle)
 {
 
 }
@@ -69,6 +70,11 @@ bool Blit_Call::GetFlip() const
 uint Blit_Call::GetOpacity() const
 {
 	return opacity;
+}
+
+double Blit_Call::GetAngle() const
+{
+	return angle;
 }
 
 bool Blit_Call::operator<(const Blit_Call & target) const
@@ -155,8 +161,11 @@ bool j1Render::Update(float dt)
 		bool color_change = (color != nullptr && (color->r != 255 || color->g != 255 || color->b != 255));
 			
 		if(color_change)SDL_SetTextureColorMod(tex, color->r, color->g, color->b);
-
-		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect(), blit->GetFlip(),blit->GetOpacity(), blit->GetXPivot(), blit->GetYPivot());
+		if (blit->GetAngle() == 60.0)
+		{
+			LOG("wo");
+		}
+		Blit(blit->GetTex(), blit->GetX(), blit->GetY(), blit->GetRect(), blit->GetFlip(),blit->GetOpacity(), blit->GetXPivot(), blit->GetYPivot(),1.0f,blit->GetAngle());
 		blit_queue.pop();
 
 		if (color_change)
@@ -222,11 +231,12 @@ void j1Render::ChangeVSYNCstate(bool state)
 	renderer = SDL_CreateRenderer(App->win->window, -1, renderer_flag);
 }
 
-bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect * section, bool horizontal_flip, int priority, uint opacity, int pivot_x, int pivot_y, SDL_Color * color)
+bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect * section, bool horizontal_flip, int priority, uint opacity, int pivot_x, int pivot_y, SDL_Color * color, double angle)
 {
 	bool ret = false;
+
 	if (texture != nullptr)ret = true;
-	blit_queue.emplace(iPoint(x, y), iPoint(pivot_x, pivot_y), texture, (SDL_Rect*)section, horizontal_flip, priority, opacity, color);
+	blit_queue.emplace(iPoint(x, y), iPoint(pivot_x, pivot_y), texture, (SDL_Rect*)section, horizontal_flip, priority, opacity, color,angle);
 	return true;
 }
 

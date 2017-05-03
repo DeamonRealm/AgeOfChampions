@@ -11,7 +11,7 @@
 
 class Action;
 class ActionManager;
-
+struct Arrow;
 enum RESEARCH_TECH;
 
 struct LessDistance
@@ -63,7 +63,7 @@ public:
 	std::list<Building*>	buildings;
 
 private:
-
+	std::list<Arrow*>		all_arrows;
 	std::list<Unit*>		death_units;
 	std::list<Building*>	death_buildings;
 	std::list<Champion*>	champions_blue;
@@ -79,6 +79,7 @@ private:
 	std::vector<Building*>	enemy_buildings_defs;
 	std::vector<Resource*>	resources_defs;
 
+	//add arrows
 	//Methods to add entities definitions
 	bool		AddUnitDefinition(const pugi::xml_node* unit_node);
 	bool		AddResourceDefinition(const pugi::xml_node* resource_node);
@@ -88,6 +89,9 @@ private:
 	bool		CivilizationCheck(char* civs_str, const char* chosen_civ);
 
 public:
+	void		AddArrow(Arrow* get);
+	void		RemoveArrow(Arrow* this_arrow);
+
 	void GetChampion(Champion* champion, DIPLOMACY diplomacy);
 	void ExtractChampion(Champion* champion, DIPLOMACY diplomacy);
 

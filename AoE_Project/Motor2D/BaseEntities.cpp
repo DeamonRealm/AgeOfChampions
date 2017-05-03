@@ -1147,12 +1147,12 @@ bool Unit::AttackUnit(Unit** target)
 
 		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider());
 
-		App->pathfinding->PushPath(this, goal);
-		/*
+		//App->pathfinding->PushPath(this, goal);
+
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
-		*/
+
 		return false;
 
 
@@ -1163,8 +1163,14 @@ bool Unit::AttackUnit(Unit** target)
 	if (action_timer.Read() < attack_rate)return false;
 
 	//App->sound->PlayFXAudio(SWORD_ATTACK_SOUND);
-
-	//Set unit attack animation
+	if (attack_type == DISTANCE)
+	{
+		const Sprite* sprite = this->current_animation->GetCurrentSprite();
+		iPoint arrow_position(this->GetPositionRounded().x, this->GetPositionRounded().y-sprite->GetYpivot());
+		iPoint arrow_destination((*target)->GetPositionRounded().x, (*target)->GetPositionRounded().y);
+		ShotArrow(arrow_position, arrow_destination);
+	}
+		//Set unit attack animation
 	if (action_type != ATTATCK)
 	{
 		action_type = ATTATCK;
@@ -1890,6 +1896,20 @@ float Unit::GetLifeBuff() const
 {
 	return life_buff;
 }
+void Unit::ShotArrow(iPoint start, iPoint goal)
+{
+	Arrow* arrow = new Arrow();
+	arrow->position = start;
+	arrow->destination = goal;
+		SDL_QueryTexture(App->animator->arrow, NULL, NULL, &arrow->arrow_rect.w, &arrow->arrow_rect.h);
+
+		//SPEED
+		arrow->PrepareArrow(arrow->position, arrow->destination);
+
+		//PUSH ARROW TO ARROW LIST
+		App->entities_manager->AddArrow(arrow);
+	
+}
 // ----------------
 ///----------------------------------------------
 
@@ -2436,5 +2456,52 @@ bool Building::GetFogDiscovered() const
 {
 	return fog_discovered;
 }
+Arrow::Arrow()
+{
+}
+Arrow::~Arrow()
+{
+}
+///-----------------------------------------------
+bool Arrow::Draw()
+{
 
-///----------------------------------------------
+	NewPosition(destination);
+
+		App->render->CallBlit(App->animator->arrow, position.x, position.y, &arrow_rect, flip, 0, 255, pivot_x, pivot_y, nullptr,angle);
+	if (position == destination)return true;
+	return false;
+}
+
+
+
+void Arrow::NewPosition(iPoint goal)
+{
+	iPoint location = position;
+
+	int norm = location.DistanceTo(goal);
+	float x_step = speed * (App->GetDT() * 100) * (goal.x - location.x) / norm;
+	float y_step = speed * (App->GetDT() * 100) * (goal.y - location.y) / norm;
+
+
+	//Add the calculated values at the unit & mark position
+	position.x += x_step;
+	position.y += y_step;
+}
+
+void Arrow::PrepareArrow(iPoint start, iPoint goal)
+{
+	int deltaY = start.y - goal.y;
+	int deltaX = start.x - goal.x;
+	angle = atan2(deltaY, deltaX)*(180/3.14);
+	if (angle >= 0 && angle < 90 || angle < 270 && angle >= 360)
+		flip = true;
+}
+
+bool Arrow::operator==(const Arrow & other) const
+{
+	return this->destination == other.destination && this->angle == other.angle&&this->position == other.position;
+}
+
+
+///---------------------------------------------
