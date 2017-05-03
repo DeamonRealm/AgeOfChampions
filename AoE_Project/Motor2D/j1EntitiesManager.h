@@ -8,6 +8,7 @@
 #include "Units.h"
 #include "Buildings.h"
 #include "Champions.h"
+#include "Resources.h"
 
 class Action;
 class ActionManager;
@@ -46,7 +47,7 @@ public:
 	virtual bool PostUpdate();
 
 	//Draw entities
-	bool Draw()const;
+	bool Draw();
 
 	// Called before quitting
 	bool CleanUp();
@@ -66,6 +67,7 @@ private:
 	std::list<Arrow*>		all_arrows;
 	std::list<Unit*>		death_units;
 	std::list<Building*>	death_buildings;
+	std::list<Resource*>	death_resources;
 	std::list<Champion*>	champions_blue;
 	std::list<Champion*>	champions_red;
 
@@ -134,6 +136,8 @@ public:
 	void				AddDeadBuilding(Building* build);
 	void				RemoveDeathBuilding(Building* build);
 
+	void				AddDeadResource(Resource* res);
+	void				RemoveDeathResource(Resource* res);
 
 	//Organize unit vector
 	std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > OrganizeByNearest(std::vector<Unit*>& vec, Circle& target);

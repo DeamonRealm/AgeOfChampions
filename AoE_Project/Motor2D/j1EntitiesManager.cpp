@@ -206,7 +206,7 @@ bool j1EntitiesManager::PostUpdate()
 	return true;
 }
 
-bool j1EntitiesManager::Draw() const
+bool j1EntitiesManager::Draw()
 {
 	bool ret = true;
 	//Draw all arrows
@@ -244,8 +244,19 @@ bool j1EntitiesManager::Draw() const
 	std::list<Building*>::const_iterator death_building = death_buildings.begin();
 	for (; death_building != death_buildings.end(); death_building++)
 	{
-
 		death_building._Ptr->_Myval->Draw(App->debug_mode);
+
+	}
+
+	//Update all death resources
+	std::list<Resource*>::iterator death_resource = death_resources.begin();
+	for (; death_resource != death_resources.end(); death_resource++)
+	{
+		if (!death_resource._Ptr->_Myval->Draw(App->debug_mode))
+		{
+			death_resources.remove(death_resource._Ptr->_Myval);
+			App->entities_manager->DeleteEntity(death_resource._Ptr->_Myval);
+		}
 
 	}
 
@@ -1725,6 +1736,16 @@ void j1EntitiesManager::AddDeadBuilding(Building * build)
 void j1EntitiesManager::RemoveDeathBuilding(Building * build)
 {
 	death_buildings.remove(build);
+}
+
+void j1EntitiesManager::AddDeadResource(Resource * res)
+{
+	death_resources.push_back(res);
+}
+
+void j1EntitiesManager::RemoveDeathResource(Resource * res)
+{
+	death_resources.remove(res);
 }
 
 std::priority_queue<Unit*, std::vector<Unit*>, LessDistance > j1EntitiesManager::OrganizeByNearest(std::vector<Unit*>& vec, Circle& target)

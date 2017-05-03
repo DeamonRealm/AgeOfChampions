@@ -70,7 +70,7 @@ protected:
 	bool					loop = true;
 	int						loops = 0;
 	//Animation update rate
-	uint					speed = 300;
+	uint					speed = 2500;
 	j1Timer					timer;
 
 public:

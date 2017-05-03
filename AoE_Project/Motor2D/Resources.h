@@ -24,6 +24,10 @@ public:
 
 	bool	ExtractResources(uint* value);
 
+	//Draw ------------------
+	bool	Draw(bool debug);
+
+
 };
 /// -------------------------
 
