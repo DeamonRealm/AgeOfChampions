@@ -7,6 +7,7 @@ class UI_String;
 class UI_Image;
 class UI_Element;
 class UI_Fixed_Button;
+class UI_Button;
 class  Unit;
 class  Building;
 
@@ -46,26 +47,34 @@ public:
 private:
 
 	//UI Elements
-	UI_Image* main_menu_background;
-	UI_Image* standard_background;
+	UI_Image* main_menu_background = nullptr;
+	UI_Image* standard_background = nullptr;
 
 	//MainMenu Elements
-	UI_Fixed_Button*	exit;
-	UI_Fixed_Button*	singleplayer;
-	UI_Fixed_Button*	multiplayer;
-	UI_Fixed_Button*	turotial;
-	UI_Fixed_Button*	mapeditor;
-	UI_Fixed_Button*	history;
-	UI_Fixed_Button*	options;
+	UI_Fixed_Button*	exit = nullptr;
+	UI_Fixed_Button*	singleplayer = nullptr;
+	UI_Fixed_Button*	multiplayer = nullptr;
+	UI_Fixed_Button*	turotial = nullptr;
+	UI_Fixed_Button*	mapeditor = nullptr;
+	UI_Fixed_Button*	history = nullptr;
+	UI_Fixed_Button*	options = nullptr;
 
 	UI_Fixed_Button*	option_selected = nullptr;
 
-	//Menu UI screens
-	UI_Element* menu_screen;
-	UI_Element* standard_match_screen;
+	//Single Player Buttons
+	UI_Button*			standardgame = nullptr;
+	UI_Button*			loadgame = nullptr;
 
-	UI_String*			wiki;
-	UI_String*			singleplayer_text;
+	UI_String*			standardgame_text = nullptr;
+	UI_String*			loadgame_text = nullptr;
+
+
+	//Menu UI screens
+	UI_Element*			menu_screen = nullptr;
+	UI_Element*			standard_match_screen = nullptr;
+
+	UI_String*			wiki = nullptr;
+	UI_String*			singleplayer_text = nullptr;
 
 };
 

@@ -116,6 +116,37 @@ bool j1Menu::Start()
 	turotial->Activate();
 	menu_screen->AddChild(turotial);
 	
+	// Single Player Buttons
+	standardgame = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	standardgame->SetBox({ 163,670,193,43 });
+	standardgame->SetTexON({ 300,0,193,43 }, STANDARD);
+	standardgame->SetTexOFF({ 493,0,193,43 }, STANDARD);
+	standardgame->SetTexOVER({ 493,0,193,43 }, STANDARD);
+	singleplayer->AddChild(standardgame);
+
+	loadgame = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	loadgame->SetBox({ 406,670,193,43 });
+	loadgame->SetTexON({ 300,0,193,43 }, STANDARD);
+	loadgame->SetTexOFF({ 493,0,193,43 }, STANDARD);
+	loadgame->SetTexOVER({ 493,0,193,43 }, STANDARD);
+	singleplayer->AddChild(loadgame);
+
+	standardgame_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	standardgame_text->SetColor({ 255, 255, 255, 255 });
+	standardgame_text->SetString("Standard Game: Default");
+	standardgame_text->Activate();
+	standardgame_text->SetBox({ 30, 13,0,0 });
+	standardgame->AddChild(standardgame_text);
+
+	loadgame_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	loadgame_text->SetColor({ 255, 255, 255, 255 });
+	loadgame_text->SetString("Load Saved Game");
+	loadgame_text->Activate();
+	loadgame_text->SetBox({ 45, 13,0,0 });
+	loadgame->AddChild(loadgame_text);
+
+	singleplayer->DesactivateChids();
+
 	wiki = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	wiki->SetColor({ 255, 255, 255, 255 });
 	wiki->SetString("Wiki");
@@ -129,6 +160,8 @@ bool j1Menu::Start()
 	singleplayer_text->Activate();
 	singleplayer_text->SetBox({ 60, 13,0,0 });
 	singleplayer->AddChild(singleplayer_text);
+
+	
 
 	//Standard Match menu screen
 /*	standard_match_screen = App->gui->GenerateUI_Element(UNDEFINED);
@@ -217,6 +250,19 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		}
 		if (target == singleplayer)
 		{
+			singleplayer->ActivateChilds();
+		}
+		if (target == history)
+		{
+			ShellExecute(NULL, "open", "https://github.com/DeamonRealm/Age_of_Empires_II/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
+			history->button_state = UP;
+		}
+		if (target == exit)
+		{
+			App->SetQuit();
+		}
+		if (target == standardgame)
+		{
 			option_selected->button_state = UP;
 			App->gui->ChangeMouseTexture(DEFAULT);
 			App->scene->Enable();
@@ -227,14 +273,18 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			this->CleanUp();
 			this->Disable();
 		}
-		if (target == history)
+		if (target == loadgame)
 		{
-			ShellExecute(NULL, "open", "https://github.com/DeamonRealm/Age_of_Empires_II/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
-			history->button_state = UP;
-		}
-		if (target == exit)
-		{
-			App->SetQuit();
+			option_selected->button_state = UP;
+			singleplayer->DesactivateChids();
+			App->gui->ChangeMouseTexture(DEFAULT);
+			App->scene->Enable();
+			App->player->Enable();
+			App->entities_manager->Enable();
+			App->AI->Enable();
+			App->fog_of_war->Enable();
+			this->CleanUp();
+			this->Disable();
 		}
 		break;
 	case MOUSE_RIGHT_BUTTON:
