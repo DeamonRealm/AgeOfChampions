@@ -91,7 +91,7 @@ bool j1AI::Update(float dt)
 		return true;
 	}
 
-	Resource* to_recolect = App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), RESOURCE_TYPE::BERRY_BUSH, NEUTRAL);
+	Resource* to_recolect = GetNearestNeed();
 	//ai_worker->AddAICommand(new SendToRecollect(enemy_units, (Resource**)to_recolect->GetMe()));
 
 	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
@@ -167,6 +167,30 @@ bool j1AI::LoadEnemies(const char * folder)
 
 	}
 	return true;
+}
+
+Resource * j1AI::GetNearestNeed()
+{
+	RESOURCE_TYPE	type = BERRY_BUSH;
+	uint			current_min = meat;
+
+	if (wood < current_min)
+	{
+		current_min = wood;
+		type		= TREE;
+	}
+	if(gold < current_min)
+	{
+		current_min = gold;
+		type		= GOLD_ORE;
+	}
+	if (stone < current_min)
+	{
+		current_min = stone;
+		type		= STONE_ORE;
+	}
+
+	return App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), type, NEUTRAL);;
 }
 
 void j1AI::GenerateDebugVillager()

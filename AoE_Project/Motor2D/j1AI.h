@@ -73,11 +73,14 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void		GenerateDebugVillager();
+
+
 private:
 
 	bool LoadEnemies(const char* folder);
 
-
+	Resource* GetNearestNeed();
 
 private:
 	AIWorker* ai_worker = nullptr;
@@ -85,8 +88,9 @@ private:
 	j1Timer update_timer;
 
 	ProductiveBuilding* ai_starting_tc;
-
 	std::list<Building*> enemy_buildings;
+
+
 
 public:
 	std::list<Unit*> enemy_units;
@@ -97,10 +101,7 @@ public:
 	int			gold = 0;
 	int			stone = 0;
 	int			population = 0;
-
-	void		GenerateDebugVillager();
-
-
+	
 };
 
 

@@ -22,7 +22,11 @@ public:
 
 	MoveUnitAction(Unit* actor, std::vector<iPoint>* path, const iPoint& target) : Action(actor, TASK_U_MOVE), path(path), target(target)
 	{
-		destination = path->front();
+		if (path != nullptr )
+		{
+			if (!path->empty())
+				destination = path->front();
+		}
 	}
 
 	//Destructor ------------
@@ -37,18 +41,33 @@ public:
 
 		//Calculate the path
 		iPoint origin(actor->GetPosition().x, actor->GetPosition().y);
-		if (path != nullptr)
-		{
-			path->clear();
-			delete path;
-			path = nullptr;
-		}
-		path = App->pathfinding->SimpleAstar(origin, destination);
+
+		//Try to make on path if the action hasn't one
 		if (path == nullptr)
 		{
-			return false;
+			path = App->pathfinding->SimpleAstar(origin, destination);
 		}
+		else
+		{
+			//Check if the unit is too far awasy from the start of the stored path and
+			//repath if the total distance is higher than 500->~3 tiles
+			bool repath_needed = abs(origin.DistanceOctile(path->back())) > 500;
+			
+			if (repath_needed)
+			{
+				path->clear();
+				delete path;
+				path = nullptr;
+				
+				path = App->pathfinding->SimpleAstar(origin, destination);
+			}
+		}
+		
 
+		//Chacked here so check both in case of repath and in case of not repath
+		if (path == nullptr)	return false;
+		
+		//Animate the actor
 		((Unit*)actor)->SetAction(WALK);
 		((Unit*)actor)->Focus(path->back(), true);
 		if (path->size() > 2)	((Unit*)actor)->SetFutureAction(*(path->rbegin() + 1));
@@ -459,6 +478,7 @@ public:
 
 	bool Execute()
 	{
+		if (*target == nullptr)return true;
 		//Actor save resources
 		return ((Villager*)actor)->SaveResources(target);
 	}
