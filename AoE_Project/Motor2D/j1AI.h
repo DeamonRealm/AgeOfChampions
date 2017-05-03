@@ -9,6 +9,8 @@
 #include "BaseEntities.h"
 
 
+enum PLAYER_RESOURCES;
+
 ///AI is controlled thorugh childs from this command (like ActionManager)--------
 class AICommand
 {
@@ -74,13 +76,14 @@ public:
 	bool CleanUp();
 
 	void		GenerateDebugVillager();
+	void		AddResources(PLAYER_RESOURCES type, int value);
 
 
 private:
 
 	bool LoadEnemies(const char* folder);
 
-	Resource* GetNearestNeed();
+	Resource*	GetNearestNeed();
 
 private:
 	AIWorker* ai_worker = nullptr;

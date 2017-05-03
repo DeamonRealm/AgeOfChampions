@@ -5,6 +5,7 @@
 #include "p2Log.h"
 #include "Hud_GamePanel.h"
 #include "j1Player.h"
+#include "j1AI.h"
 #include "j1FogOfWar.h"
 #include "j1Pathfinding.h"
 #include "j1Map.h"
@@ -265,8 +266,11 @@ bool Villager::SaveResources(Building** save_point)
 		return false;
 	}
 
-	//Store all the resources collected in the player bag
-	App->player->game_panel->AddResource(current_resources, resource_collected_type);
+	//Store all the resources collected in the player or AI bag
+	if ((*save_point)->GetDiplomacy() == ALLY)
+		App->player->game_panel->AddResource(current_resources, resource_collected_type);
+	if ((*save_point)->GetDiplomacy() == ENEMY)
+		App->AI->AddResources(resource_collected_type, current_resources);
 
 	//Reset all the resources data so the next action will not be affected for it
 	this->ResetResourcesData();

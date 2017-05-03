@@ -2274,7 +2274,7 @@ Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE typ
 		}
 
 		//Calculate distance between resource pos & point
-		uint dist = abs(building_it._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
+		uint dist = abs(building_it._Ptr->_Myval->GetPositionRounded().DistanceOctile(point));
 		//Check if is the nearest resource from the point 
 		if (dist < distance)
 		{
@@ -2306,7 +2306,7 @@ Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE typ
 		}
 
 		//Calculate distance between resource pos & point
-		uint dist = abs(resource._Ptr->_Myval->GetPositionRounded().DistanceNoSqrt(point));
+		uint dist = abs(resource._Ptr->_Myval->GetPositionRounded().DistanceOctile(point));
 		//Check if is the nearest resource from the point 
 		if (dist < distance)
 		{

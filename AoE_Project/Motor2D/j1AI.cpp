@@ -106,9 +106,9 @@ bool j1AI::Update(float dt)
 			continue;
 		}
 
-		if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(TASK_CHANNELS::SECONDARY))
+		if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(TASK_CHANNELS::PRIMARY))
 		{
-			unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)unit_it._Ptr->_Myval, (Resource**)to_recolect->GetMe()), SECONDARY);
+			unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)unit_it._Ptr->_Myval, (Resource**)to_recolect->GetMe()), PRIMARY);
 		}
 		unit_it++;
 	}
@@ -199,6 +199,29 @@ void j1AI::GenerateDebugVillager()
 
 }
 
+void j1AI::AddResources(PLAYER_RESOURCES type, int value)
+{
+	switch (type)
+	{
+	case GP_WOOD:
+		wood += value;
+		break;
+	case GP_MEAT:
+		meat += value;
+		break;
+	case GP_GOLD:
+		gold += value;
+		break;
+	case GP_STONE:
+		stone += value;
+		break;
+	case GP_NO_RESOURCE:
+		break;
+	default:
+		break;
+	}
+
+}
 
 
 
