@@ -65,7 +65,7 @@ Animation::~Animation()
 //Functionality =======================
 void Animation::ReleaseTexture()
 {
-	if (!App->tex->UnLoad(texture))LOG("Tex unload error");
+	App->tex->UnLoad(texture);
 }
 
 void Animation::SetTexture(const SDL_Texture * tex)

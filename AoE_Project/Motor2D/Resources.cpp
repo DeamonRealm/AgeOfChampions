@@ -4,6 +4,7 @@
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
 #include "j1Render.h"
+#include "j1Map.h"
 
 ///Class Tree -----------------------------------
 //Constructors ========================
@@ -58,6 +59,13 @@ bool Tree::ExtractResources(uint* value)
 		App->animator->ResourcePlay(this);
 		App->entities_manager->resources_quadtree.Exteract(&this->position);
 		App->entities_manager->AddDeadResource(this);
+
+		//Change walk & construction logic maps
+		iPoint world_coords = App->map->WorldToMap(position.x, position.y);
+		App->map->ChangeConstructionMap(world_coords,1,1, 1);
+		App->map->ChangeLogicMap(world_coords, 1, 1, 1);
+
+		this->current_animation->Reset();
 		return true;
 	}
 	else

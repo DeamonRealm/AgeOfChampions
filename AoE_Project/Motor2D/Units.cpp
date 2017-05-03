@@ -197,6 +197,7 @@ bool Villager::Recollect(Resource** target)
 			LOG("GOAL %i %i ", woop.x, woop.y);
 
 			LOG("GOAL %i %i ", woop_tile.x, woop_tile.y);
+			return true;
 		}
 
 
