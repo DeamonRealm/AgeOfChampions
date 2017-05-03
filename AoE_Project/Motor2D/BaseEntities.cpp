@@ -2184,6 +2184,9 @@ bool Building::Die()
 			//Do lose condition
 			App->player->game_panel->DoLose();
 		}
+		//Remove from minimap
+		iPoint pos = GetPositionRounded();
+		App->player->minimap_panel->RemoveBuildingToPrint(pos.x, pos.y, entity_diplomacy);
 
 		action_type = DISAPPEAR;
 		if (building_type == TOWN_CENTER)building_type = RUBBLE_FOUR;
@@ -2201,10 +2204,6 @@ bool Building::Die()
 		current_animation->GetCurrentSprite();
 		if (current_animation->IsEnd())
 		{
-			//Remove from minimap
-			iPoint pos = GetPositionRounded();
-			App->player->minimap_panel->RemoveBuildingToPrint(pos.x, pos.y, entity_diplomacy);
-
 			App->entities_manager->RemoveDeathBuilding(this);
 			this->CleanMapLogic();
 			App->entities_manager->DeleteEntity(this);
@@ -2289,10 +2288,6 @@ void Building::SetPosition(float x, float y, bool insert)
 
 	if (!insert)return;
 
-	//Set Position in Minimap
-	iPoint map_pos = this->GetPositionRounded();
-	App->player->minimap_panel->SetBuildingToPrint(map_pos.x, map_pos.y, entity_diplomacy);
-
 	//Calculate the upper tile of the building zone
 	iPoint upper_tile(map_coords.x - 1, map_coords.y - 1);
 
@@ -2341,6 +2336,10 @@ void Building::SetPosition(float x, float y, bool insert)
 
 	//Add building at the correct quad tree
 	App->entities_manager->buildings_quadtree.Insert(this, &position);
+
+	//Set Position in Minimap
+	iPoint map_pos = this->GetPositionRounded();
+	App->player->minimap_panel->SetBuildingToPrint(map_pos.x, map_pos.y, entity_diplomacy);
 
 	if (entity_diplomacy != ALLY)return;
 

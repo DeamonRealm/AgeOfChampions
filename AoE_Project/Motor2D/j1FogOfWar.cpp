@@ -6,6 +6,9 @@
 #include "j1Input.h"
 #include "j1EntitiesManager.h"
 
+#include "j1Player.h"
+#include "Hud_MinimapPanel.h"
+
 //Constructors ========================
 j1FogOfWar::j1FogOfWar()
 {
@@ -261,9 +264,12 @@ std::vector<FogTile*> j1FogOfWar::ClearFogLayer(const Circle zone, FOG_TYPE type
 
 		if (!fog_layer[index].locked)
 		{
+			if (fog_layer[index].type == DARK_FOG) 
+				App->player->minimap_panel->PushTilestoClear(index);
+
 			fog_layer[index].locked = lock;
 			fog_layer[index].type = type;
-
+			
 			resulting_tiles.push_back(&fog_layer[index]);
 		}
 	}
