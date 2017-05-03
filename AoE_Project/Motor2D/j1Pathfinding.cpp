@@ -43,12 +43,17 @@ bool j1Pathfinding::PreUpdate()
 	{
 		if (pathTime.Read() > MAX_PATH_TIME) return true;
 		ToPath current_unit = unit_it._Ptr->_Myval;
-		std::vector<iPoint>* path = SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
-		if (current_unit.priority)
-			current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
-		else
-			current_unit.unit->AddAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
-
+		if (current_unit.unit != nullptr) 
+		{
+			if (current_unit.unit->GetAction() != DIE || current_unit.unit->GetAction() != DISAPPEAR)
+			{
+				std::vector<iPoint>* path = SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
+				if (current_unit.priority)
+					current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
+				else
+					current_unit.unit->AddAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
+			}
+		}
 		unit_it++;
 		to_path.pop_front();
 	}
@@ -231,9 +236,9 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 	return nullptr;
 }
 
-void j1Pathfinding::PushPath(Unit * unit, iPoint destination)
+void j1Pathfinding::PushPath(Unit * unit, iPoint destination, iPoint target, bool priority, TASK_CHANNELS task)
 {
-	ToPath getUnit(unit, destination);
+	ToPath getUnit(unit, destination,target, priority,task);
 	to_path.remove(getUnit);
 	to_path.push_back(getUnit);
 }
@@ -405,7 +410,7 @@ bool PathNode::operator!=(const PathNode & node) const
 
 
 
-ToPath::ToPath(Unit * getUnit, const iPoint & destination, const iPoint& target, bool priority) :unit(getUnit), destination(destination), target(target), priority(priority)
+ToPath::ToPath(Unit * getUnit, const iPoint & destination, const iPoint& target, bool priority, TASK_CHANNELS task) :unit(getUnit), destination(destination), target(target), priority(priority),task(task)
 {
 }
 

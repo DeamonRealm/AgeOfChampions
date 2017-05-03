@@ -7,6 +7,7 @@
 #include "j1Player.h"
 #include "j1FogOfWar.h"
 #include "j1Pathfinding.h"
+#include "j1Map.h"
 
 /// Class Villager --------------------
 //Constructors ========================
@@ -184,10 +185,21 @@ bool Villager::Recollect(Resource** target)
 	if (*target == nullptr)return true;
 
 	//Check if the target resource is in the "attack" (in this case used for recollect) area
-	if (!attack_area.Intersects((*target)->GetInteractArea()))
+	if (!attack_area.Overlap((*target)->GetInteractArea()))
 	{
 		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
-		App->pathfinding->PushPath(this, goal);
+		iPoint woop = App->map->WorldToMap(goal.x,goal.y);
+		iPoint woop_tile = App->map->WorldToMap((*target)->GetPositionRounded().x, (*target)->GetPositionRounded().y);
+
+		if (!App->pathfinding->IsWalkable(woop)) {
+			LOG("GOAL %i %i ", goal.x, goal.y);
+			LOG("GOAL %i %i ", woop.x, woop.y);
+
+			LOG("GOAL %i %i ", woop_tile.x, woop_tile.y);
+		}
+
+
+		App->pathfinding->PushPath(this, goal, (*target)->GetPositionRounded());
 
 		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
 		return false;

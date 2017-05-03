@@ -6,7 +6,7 @@
 #include "BaseEntities.h"
 #include <queue>
 #define INVALID_WALK_CODE 255
-#define MAX_PATH_TIME 255
+#define MAX_PATH_TIME 3
 
 struct PathList;
 struct Node;
@@ -14,13 +14,14 @@ struct SDL_Texture;
 struct PathNode;
 struct ToPath
 {
-	ToPath(Unit* unit, const iPoint& destination, const iPoint& target = { -1,-1 }, bool priority = true);
+	ToPath(Unit* unit, const iPoint& destination, const iPoint& target, bool priority = true, TASK_CHANNELS task = PRIMARY);
 	~ToPath();
 	Unit* unit = nullptr;
 	iPoint destination = { -1,-1 };
 	iPoint target = { -1,-1 };
 	bool priority = true;
 	bool operator ==(const ToPath& unit)const;
+	TASK_CHANNELS task;
 
 };
 ///class Pathfinding ------------------
@@ -74,7 +75,7 @@ public:
 	std::vector<iPoint>* SimpleAstar(const iPoint& origin, const iPoint& goal);
 	// Create a path with two coordinates
 	std::list<ToPath> to_path;
-	void PushPath(Unit* unit, iPoint destination);
+	void PushPath(Unit* unit, iPoint destination, iPoint target = { -1,-1 }, bool priority = true, TASK_CHANNELS task = PRIMARY);
 	j1Timer pathTime;
 };
 /// -----------------------------------
