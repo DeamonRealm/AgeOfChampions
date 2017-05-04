@@ -651,6 +651,49 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 
 bool j1EntitiesManager::Save(pugi::xml_node& data) const
 {
+	// Save current entities definitions --------
+	//Node where definitions are saved
+	pugi::xml_node definitions_node = data.append_child("definitions");
+
+	// Resources Definitions ----------
+	//Node where resources definitions are saved
+	pugi::xml_node resources_defs_node = definitions_node.append_child("resources");
+
+	//Iterate all resources definitions
+	uint size = resources_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		//Node where the current resource definition is saved
+		pugi::xml_node resource_node = resources_defs_node.append_child("res");
+
+		//Save characteristics of the current resource node
+		resources_defs[k]->SaveAsDef(resource_node);
+	}
+	// --------------------------------
+
+	//Buildings Definitions -----------
+	//Node where buildings definitions are saved
+	pugi::xml_node buildings_defs_node = definitions_node.append_child("buildings");
+
+	//Node where ally buildings definitions are saved
+	pugi::xml_node ally_buildings_node = buildings_defs_node.append_child("ally");
+	//Node where enemy buildings definitions are saved
+	pugi::xml_node enemy_buildings_node = buildings_defs_node.append_child("enemy");
+
+	//Iterate all buildings definitions
+	size = ally_buildings_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		//Node where current ally building def is saved
+		pugi::xml_node ally_build_node = ally_buildings_node.append_child("build");
+		ally_buildings_defs[k]->SaveAsDef(ally_build_node);
+		//Node where current ally building def is saved
+		pugi::xml_node enemy_build_node = enemy_buildings_node.append_child("build");
+		ally_buildings_defs[k]->SaveAsDef(enemy_build_node);
+	}
+	// --------------------------------
+	// ------------------------------------------
+
 	// Resources Save ---------------------------
 	//Resources node
 	pugi::xml_node resources_node = data.append_child("resources");

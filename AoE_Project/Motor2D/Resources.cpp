@@ -77,6 +77,40 @@ bool Tree::ExtractResources(uint* value)
 }
 
 
+void Tree::SaveAsDef(pugi::xml_node & node)
+{
+	//Add all this resource attributes at the xml node
+
+	//Name
+	node.append_attribute("name") = "Tree";
+
+	/*Type*/	node.append_attribute("resource_type") = resource_type;
+	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
+	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
+	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
+	/*Selec H*/ node.append_attribute("selection_h") = selection_rect.h;
+
+	/*Icon X*/	node.append_attribute("icon_x") = icon_rect.x;
+	/*Icon Y*/	node.append_attribute("icon_y") = icon_rect.y;
+	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
+	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
+
+	/*Mark X*/	node.append_attribute("mark_x") = mark.GetPosition().x;
+	/*Mark Y*/	node.append_attribute("mark_y") = mark.GetPosition().y;
+	/*Mark W*/	node.append_attribute("mark_w") = mark.GetWidth();
+	/*Mark H*/	node.append_attribute("mark_h") = mark.GetHeight();
+
+	/*Interact rad*/	node.append_attribute("interaction_rad") = interact_area.GetRad();
+	/*Vision rad*/		node.append_attribute("vision_rad") = vision.GetRad();
+
+	/*Max Resouces*/	node.append_attribute("max_resources") = life;
+	/*Cortex Value*/	node.append_attribute("cortex") = cortex;
+}
+
+void Tree::LoadAsDef(pugi::xml_node & node)
+{
+}
+
 bool Tree::Draw(bool debug)
 {
 

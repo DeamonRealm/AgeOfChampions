@@ -37,6 +37,7 @@ Entity::~Entity()
 	{
 		delete current_animation;
 	}
+
 	current_animation = nullptr;
 	myself = nullptr;
 }
@@ -315,6 +316,16 @@ food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost),
 
 //Destructors =========================
 Unit::~Unit()
+{
+
+}
+
+void Unit::SaveAsDef(pugi::xml_node & node)
+{
+
+}
+
+void Unit::LoadAsDef(pugi::xml_node & node)
 {
 
 }
@@ -1943,6 +1954,48 @@ void Resource::CleanMapLogic()
 	App->map->ChangeLogicMap(world_coords, 1, 1, 1);
 }
 
+void Resource::SaveAsDef(pugi::xml_node & node)
+{
+	//Add all this resource attributes at the xml node
+	
+	//Name
+	std::string name;
+	switch (resource_type)
+	{
+	case BERRY_BUSH:	name = "Berry Bush";	break;
+	case GOLD_ORE:		name = "Gold Ore";		break;
+	case STONE_ORE:		name = "Stone Ore";		break;
+	}
+	node.append_attribute("name") = name.c_str();
+
+	/*Type*/	node.append_attribute("resource_type") = resource_type;
+	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
+	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
+	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
+	/*Selec H*/ node.append_attribute("selection_h") = selection_rect.h;
+	
+	/*Icon X*/	node.append_attribute("icon_x") = icon_rect.x;
+	/*Icon Y*/	node.append_attribute("icon_y") = icon_rect.y;
+	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
+	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
+	
+	/*Mark X*/	node.append_attribute("mark_x") = mark.GetPosition().x;
+	/*Mark Y*/	node.append_attribute("mark_y") = mark.GetPosition().y;
+	/*Mark W*/	node.append_attribute("mark_w") = mark.GetWidth();
+	/*Mark H*/	node.append_attribute("mark_h") = mark.GetHeight();
+
+	/*Interact rad*/	node.append_attribute("interaction_rad") = interact_area.GetRad();
+	/*Vision rad*/		node.append_attribute("vision_rad") = vision.GetRad();
+
+	/*Max Resouces*/	node.append_attribute("max_resources") = life;
+
+}
+
+void Resource::LoadAsDef(pugi::xml_node & node)
+{
+
+}
+
 bool Resource::Draw(bool debug)
 {
 	bool ret = false;
@@ -2146,6 +2199,16 @@ void Building::DiscoverFogAround()
 	//Clear the discover zone around the building
 	App->fog_of_war->ClearFogLayer(render_area, GRAY_FOG, false);
 	App->fog_of_war->ClearAlphaLayer(zone, MID_ALPHA, false);
+}
+
+void Building::SaveAsDef(pugi::xml_node & node)
+{
+
+}
+
+void Building::LoadAsDef(pugi::xml_node & node)
+{
+
 }
 
 bool Building::CheckZone(int x, int y)

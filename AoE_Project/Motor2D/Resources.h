@@ -19,14 +19,21 @@ private:
 public:
 
 	//Functionality ---------
-	uint	GetCortex()const;
-	void	SetCortex(uint val);
-
-	bool	ExtractResources(uint* value);
+	//Save/Load methods ----
+	void	SaveAsDef(pugi::xml_node& node);
+	void	LoadAsDef(pugi::xml_node& node);
 
 	//Draw ------------------
 	bool	Draw(bool debug);
 
+	//Get Methods ----------
+	uint	GetCortex()const;
+
+	//Set Methods ----------
+	void	SetCortex(uint val);
+
+	//Extract ---------------
+	bool	ExtractResources(uint* value);
 
 };
 /// -------------------------

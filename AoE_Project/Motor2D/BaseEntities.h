@@ -261,6 +261,10 @@ public:
 public:
 
 	//Functionality -------------------
+	//Save/Load methods ----
+	virtual void	SaveAsDef(pugi::xml_node& node) = 0;
+	virtual void	LoadAsDef(pugi::xml_node& node) = 0;
+
 	//Select/Deselect ------
 	void			Select();
 	void			Deselect();
@@ -395,6 +399,10 @@ public:
 public:
 
 	//Functionality -------------------
+	//Save/Load methods ----
+	void	SaveAsDef(pugi::xml_node& node);
+	void	LoadAsDef(pugi::xml_node& node);
+
 	//Operator --------------
 	bool operator<(const Unit& target) const;
 
@@ -544,6 +552,10 @@ protected:
 public:
 
 	//Functionality -------------------
+	//Save/Load methods ----
+	void	SaveAsDef(pugi::xml_node& node);
+	void	LoadAsDef(pugi::xml_node& node);
+
 	//Draw ------------------
 	bool	Draw(bool debug);
 
@@ -592,6 +604,10 @@ public:
 	void DiscoverFogAround();
 
 	//Functionality -------------------
+	//Save/Load methods ----
+	void	SaveAsDef(pugi::xml_node& node);
+	void	LoadAsDef(pugi::xml_node& node);
+
 	//Check is can be built in the position
 	bool	CheckZone(int x, int y);
 	//Cover / Release units
