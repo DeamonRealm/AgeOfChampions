@@ -306,9 +306,9 @@ Unit::Unit() :Entity()
 
 }
 
-Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), soft_collider(copy.soft_collider), hard_collider(copy.hard_collider), view_area(copy.view_area),
-speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), attack_bonus(copy.attack_bonus), siege_hitpoints(copy.siege_hitpoints),
-attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), defense_bonus(copy.defense_bonus),
+Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), soft_collider(copy.soft_collider), hard_collider(copy.hard_collider),
+speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), siege_hitpoints(copy.siege_hitpoints),
+attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense),
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time), unit_experience(copy.unit_experience)
 {
 
@@ -322,7 +322,66 @@ Unit::~Unit()
 
 void Unit::SaveAsDef(pugi::xml_node & node)
 {
+	//Add all this unit attributes at the xml node
 
+	//Name
+	std::string name;
+	switch (unit_type)
+	{
+	case MILITIA:				name = "Milita";				break;
+	case ARBALEST:				name = "Arbalest";				break;
+	case ARCHER:				name = "Archer";				break;
+	case CAVALIER:				name = "Cavalier";				break;
+	case CAVALRY_ARCHER:		name = "Cavalry Archer";		break;
+	case ELITE_SKIRMISHER:		name = "Elite Skirmisher";		break;
+	case HEAVY_CAVALRY_ARCHER:	name = "Heavy Cavalry Archer";	break;
+	case KNIGHT:				name = "Knight";				break;
+	case MONK:					name = "Monk";					break;
+	case PALADIN:				name = "Paladin";				break;
+	case PIKEMAN:				name = "Pikeman";				break;
+	case SPEARMAN:				name = "Spearman";				break;
+	case TWO_HANDED_SWORDMAN:	name = "Two Handed Swordman";	break;
+	case MAN_AT_ARMS:			name = "Man At Arms";			break;
+	case LONG_SWORDMAN:			name = "Long Swordman";			break;
+	case CHAMPION:				name = "Champion";				break;
+	case CROSSBOWMAN:			name = "Crossbowman";			break;
+	case SKIRMISHER:			name = "Skirmisher";			break;
+	}
+	node.append_attribute("name") = name.c_str();
+
+	/*Type*/	node.append_attribute("unit_type") = unit_type;
+	/*Class*/	node.append_attribute("unit_class") = unit_class;
+	/*Atk Type*/node.append_attribute("attack_type") = attack_type;
+
+	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
+	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
+	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
+	/*Selec H*/ node.append_attribute("selection_h") = selection_rect.h;
+
+	/*Icon X*/	node.append_attribute("icon_x") = icon_rect.x;
+	/*Icon Y*/	node.append_attribute("icon_y") = icon_rect.y;
+	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
+	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
+
+	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
+	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
+
+	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Speed*/		node.append_attribute("speed") = speed;
+	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
+	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
+	/*Siege HitP*/	node.append_attribute("siege_hitpoints") = siege_hitpoints;
+	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
+	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
+	/*Defense*/		node.append_attribute("defense") = defense;
+	/*Food Cost*/	node.append_attribute("food_cost") = food_cost;
+	/*Wood Cost*/	node.append_attribute("wood_cost") = wood_cost;
+	/*Gold Cost*/	node.append_attribute("gold_cost") = gold_cost;
+	/*Popu Cost*/	node.append_attribute("population_cost") = population_cost;
+	/*Train Time*/	node.append_attribute("train_time") = train_time;
+	/*Experience*/	node.append_attribute("unit_experience") = unit_experience;
 }
 
 void Unit::LoadAsDef(pugi::xml_node & node)
@@ -1551,11 +1610,6 @@ void Unit::SetHardCollider(const Circle & new_hard_collider)
 	hard_collider = new_hard_collider;
 }
 
-void Unit::SetViewArea(uint area_val)
-{
-	view_area = area_val;
-}
-
 void Unit::SetSpeed(float speed_val)
 {
 	speed = speed_val;
@@ -1584,11 +1638,6 @@ void Unit::SetAttackDelay(uint atk_delay)
 void Unit::SetAttackHitPoints(uint atk_val)
 {
 	attack_hitpoints = atk_val;
-}
-
-void Unit::SetAttackBonus(uint atk_bonus)
-{
-	attack_bonus = atk_bonus;
 }
 
 void Unit::SetSiegeHitPoints(uint siege_val)
@@ -1624,11 +1673,6 @@ void Unit::SetAttackAreaBuff(uint atk_range)
 void Unit::SetDefense(uint def)
 {
 	defense = def;
-}
-
-void Unit::SetDefenseBonus(uint def_bonus)
-{
-	defense_bonus = def_bonus;
 }
 
 void Unit::SetDefenseBuff(float def_buff)
@@ -1698,7 +1742,6 @@ void Unit::SetUpgrade(Unit * upgraded)
 	unit_type = upgraded->GetUnitType();
 	soft_collider = upgraded->GetSoftCollider();
 	hard_collider = upgraded->GetHardCollider();
-	view_area = upgraded->GetViewArea();
 	speed = upgraded->GetSpeed();
 
 	int curr_frame = current_animation->GetCurrentFrame();
@@ -1749,11 +1792,6 @@ const Circle & Unit::GetHardCollider() const
 	return hard_collider;
 }
 
-uint Unit::GetViewArea()const
-{
-	return view_area;
-}
-
 float Unit::GetSpeed()const
 {
 	return speed;
@@ -1787,12 +1825,6 @@ uint Unit::GetAttackDelay() const
 uint Unit::GetAttackHitPoints()const
 {
 	return attack_hitpoints;
-}
-
-
-uint Unit::GetAttackBonus()const
-{
-	return attack_bonus;
 }
 
 float Unit::GetAttackBuff() const
@@ -1837,11 +1869,6 @@ uint Unit::GetAttackAreaBuff()const
 uint Unit::GetDefense()const
 {
 	return defense;
-}
-
-uint Unit::GetDefenseBonus() const
-{
-	return defense_bonus;
 }
 
 float Unit::GetDefenseBuff() const
@@ -1987,7 +2014,7 @@ void Resource::SaveAsDef(pugi::xml_node & node)
 	/*Interact rad*/	node.append_attribute("interaction_rad") = interact_area.GetRad();
 	/*Vision rad*/		node.append_attribute("vision_rad") = vision.GetRad();
 
-	/*Max Resouces*/	node.append_attribute("max_resources") = life;
+	/*Max Resouces*/	node.append_attribute("max_resources") = max_life;
 
 }
 
@@ -2203,6 +2230,54 @@ void Building::DiscoverFogAround()
 
 void Building::SaveAsDef(pugi::xml_node & node)
 {
+	//Add all this building attributes at the xml node
+
+	//Name
+	std::string name;
+	switch (building_type)
+	{
+	case TOWN_CENTER:	name = "Town Center";	break;
+	case BARRACK:		name = "Barrack";		break;
+	case ARCHERY_RANGE:	name = "Archery Range";	break;
+	case BLACKSMITH:	name = "BlackSmith";	break;
+	case STABLE:		name = "Stable";		break;
+	case HOUSE_A:		name = "House";			break;
+	case HOUSE_B:		name = "House";			break;
+	case HOUSE_C:		name = "House";			break;
+	}
+	node.append_attribute("name") = name.c_str();
+
+	/*Type*/	node.append_attribute("building_type") = building_type;
+	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
+	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
+	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
+	/*Selec H*/ node.append_attribute("selection_h") = selection_rect.h;
+
+	/*Icon X*/	node.append_attribute("icon_x") = icon_rect.x;
+	/*Icon Y*/	node.append_attribute("icon_y") = icon_rect.y;
+	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
+	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
+
+	/*Mark X*/	node.append_attribute("mark_x") = mark.GetPosition().x;
+	/*Mark Y*/	node.append_attribute("mark_y") = mark.GetPosition().y;
+	/*Mark W*/	node.append_attribute("mark_w") = mark.GetWidth();
+	/*Mark H*/	node.append_attribute("mark_h") = mark.GetHeight();
+
+	/*Interact X*/	node.append_attribute("interaction_area_x") = interact_area.GetPosition().x;
+	/*Interact Y*/	node.append_attribute("interaction_area_y") = interact_area.GetPosition().y;
+	/*Interact W*/	node.append_attribute("interaction_area_w") = interact_area.GetWidth();
+	/*Interact H*/	node.append_attribute("interaction_area_h") = interact_area.GetHeight();
+
+	/*Tiles W*/		node.append_attribute("width_in_tiles") = width_in_tiles;
+	/*Tiles H*/		node.append_attribute("height_in_tiles") = height_in_tiles;
+
+	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+
+	/*Max Life*/		node.append_attribute("max_life") = max_life;
+	/*Units Capacity*/	node.append_attribute("units_capacity") = ((ProductiveBuilding*)this)->GetUnitsCapacity();
+	/*Units Spawn X*/	node.append_attribute("units_spawn_x") = ((ProductiveBuilding*)this)->GetSpawnPoint().x;
+	/*Units Spawn Y*/	node.append_attribute("units_spawn_y") = ((ProductiveBuilding*)this)->GetSpawnPoint().y;
+	/*Prod Capacity*/	node.append_attribute("production_capacity") = ((ProductiveBuilding*)this)->GetProductionCapacity();
 
 }
 

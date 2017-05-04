@@ -670,7 +670,7 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		resources_defs[k]->SaveAsDef(resource_node);
 	}
 	// --------------------------------
-
+	
 	//Buildings Definitions -----------
 	//Node where buildings definitions are saved
 	pugi::xml_node buildings_defs_node = definitions_node.append_child("buildings");
@@ -690,6 +690,28 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		//Node where current ally building def is saved
 		pugi::xml_node enemy_build_node = enemy_buildings_node.append_child("build");
 		ally_buildings_defs[k]->SaveAsDef(enemy_build_node);
+	}
+	// --------------------------------
+	
+	//Units Definitions ---------------
+	//Node where units definitions are saved
+	pugi::xml_node units_defs_node = definitions_node.append_child("units");
+
+	//Node where ally units definitions are saved
+	pugi::xml_node ally_units_node = units_defs_node.append_child("ally");
+	//Node where enemy units definitions are saved
+	pugi::xml_node enemy_units_node = units_defs_node.append_child("enemy");
+
+	//Iterate all units definitions
+	size = ally_units_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		//Node where current ally unit def is saved
+		pugi::xml_node ally_unit_node = ally_units_node.append_child("unit");
+		ally_units_defs[k]->SaveAsDef(ally_unit_node);
+		//Node where current ally unit def is saved
+		pugi::xml_node enemy_unit_node = enemy_units_node.append_child("unit");
+		enemy_units_defs[k]->SaveAsDef(enemy_unit_node);
 	}
 	// --------------------------------
 	// ------------------------------------------
@@ -1054,18 +1076,15 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	//Unit Metrics ----------
 	/*Max Life*/		new_def->SetMaxLife(unit_node->attribute("max_life").as_uint());
 	/*Life*/			new_def->SetLife(new_def->GetMaxLife());
-	/*View Area*/		new_def->SetViewArea(unit_node->attribute("view_area").as_uint());
 	/*Speed*/			new_def->SetSpeed(unit_node->attribute("speed").as_float());
 	/*Attack Delay*/	new_def->SetAttackDelay(unit_node->attribute("attack_delay").as_uint());
 	/*Attack Points*/	new_def->SetAttackHitPoints(unit_node->attribute("attack_hitpoints").as_uint());
-	/*Attack Bonus*/	new_def->SetAttackBonus(unit_node->attribute("attack_bonus").as_uint());
 	/*Siege Points*/	new_def->SetSiegeHitPoints(unit_node->attribute("siege_hitpoints").as_uint());
 	/*Attack Rate*/		new_def->SetAttackRate(unit_node->attribute("attack_rate").as_uint());
 	/*Attack Area*/		Circle area({ 0,0 }, unit_node->attribute("attack_range").as_uint(), { 0,0 });
 						area.SetColor({ 0, 0, 255, 255 });
 						new_def->SetAttackArea(area);
 	/*Defense*/			new_def->SetDefense(unit_node->attribute("defense").as_uint());
-	/*Defense Bonus*/	new_def->SetDefenseBonus(unit_node->attribute("defense_bonus").as_uint());
 	/*Food Cost*/		new_def->SetFoodCost(unit_node->attribute("food_cost").as_uint());
 	/*Wood Cost*/		new_def->SetWoodCost(unit_node->attribute("wood_cost").as_uint());
 	/*Gold Cost*/		new_def->SetGoldCost(unit_node->attribute("gold_cost").as_uint());

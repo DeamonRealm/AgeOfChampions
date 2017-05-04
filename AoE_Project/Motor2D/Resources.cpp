@@ -103,7 +103,7 @@ void Tree::SaveAsDef(pugi::xml_node & node)
 	/*Interact rad*/	node.append_attribute("interaction_rad") = interact_area.GetRad();
 	/*Vision rad*/		node.append_attribute("vision_rad") = vision.GetRad();
 
-	/*Max Resouces*/	node.append_attribute("max_resources") = life;
+	/*Max Resouces*/	node.append_attribute("max_resources") = max_life;
 	/*Cortex Value*/	node.append_attribute("cortex") = cortex;
 }
 

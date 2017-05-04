@@ -29,8 +29,62 @@ Villager::~Villager()
 }
 
 
-
 //Functionality =======================
+//Save/Load methods ----
+void Villager::SaveAsDef(pugi::xml_node & node)
+{
+	//Add all this unit attributes at the xml node
+
+	//Name
+	node.append_attribute("name") = "Villager";
+
+	/*Type*/	node.append_attribute("unit_type") = unit_type;
+	/*Class*/	node.append_attribute("unit_class") = unit_class;
+	/*Atk Type*/node.append_attribute("attack_type") = attack_type;
+
+	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
+	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
+	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
+	/*Selec H*/ node.append_attribute("selection_h") = selection_rect.h;
+
+	/*Icon X*/	node.append_attribute("icon_x") = icon_rect.x;
+	/*Icon Y*/	node.append_attribute("icon_y") = icon_rect.y;
+	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
+	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
+
+	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
+	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
+
+	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Speed*/		node.append_attribute("speed") = speed;
+	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
+	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
+	/*Siege HitP*/	node.append_attribute("siege_hitpoints") = siege_hitpoints;
+	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
+	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
+	/*Defense*/		node.append_attribute("defense") = defense;
+	/*Food Cost*/	node.append_attribute("food_cost") = food_cost;
+	/*Wood Cost*/	node.append_attribute("wood_cost") = wood_cost;
+	/*Gold Cost*/	node.append_attribute("gold_cost") = gold_cost;
+	/*Popu Cost*/	node.append_attribute("population_cost") = population_cost;
+	/*Train Time*/	node.append_attribute("train_time") = train_time;
+	/*Experience*/	node.append_attribute("unit_experience") = unit_experience;
+
+	/*Resource Capacity*/	node.append_attribute("resources_capacity") = resources_capacity;
+	/*Recollect Capacity*/	node.append_attribute("recollect_capacity") = recollect_capacity;
+	/*Stone Rec Rate*/		node.append_attribute("stone_recollect_rate") = stone_recollect_rate;
+	/*Gold Rec Rate*/		node.append_attribute("gold_recollect_rate") = gold_recollect_rate;
+	/*Tree Rec Rate*/		node.append_attribute("tree_recollect_rate") = tree_recollect_rate;
+	/*Bush Rec Rate*/		node.append_attribute("bush_recollect_rate") = bush_recollect_rate;
+}
+
+void Villager::LoadAsDef(pugi::xml_node& node)
+{
+
+}
+
 //Actions -----
 bool Villager::Die()
 {

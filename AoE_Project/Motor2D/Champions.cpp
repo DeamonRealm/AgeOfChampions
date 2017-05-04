@@ -355,6 +355,71 @@ void Warrior::ClearProtectedUnits()
 	}
 }
 
+void Warrior::SaveAsDef(pugi::xml_node & node)
+{
+	//Add all warrior attributes at the xml node
+
+	//Name
+	node.append_attribute("name") = "Warrior";
+
+	/*Type*/	node.append_attribute("unit_type") = unit_type;
+	/*Class*/	node.append_attribute("unit_class") = unit_class;
+	/*Atk Type*/node.append_attribute("attack_type") = attack_type;
+
+	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
+	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
+	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
+	/*Selec H*/ node.append_attribute("selection_h") = selection_rect.h;
+
+	/*Icon X*/	node.append_attribute("icon_x") = icon_rect.x;
+	/*Icon Y*/	node.append_attribute("icon_y") = icon_rect.y;
+	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
+	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
+
+	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
+	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
+
+	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Speed*/		node.append_attribute("speed") = speed;
+	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
+	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
+	/*Siege HitP*/	node.append_attribute("siege_hitpoints") = siege_hitpoints;
+	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
+	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
+	/*Defense*/		node.append_attribute("defense") = defense;
+	/*Food Cost*/	node.append_attribute("food_cost") = food_cost;
+	/*Wood Cost*/	node.append_attribute("wood_cost") = wood_cost;
+	/*Gold Cost*/	node.append_attribute("gold_cost") = gold_cost;
+	/*Popu Cost*/	node.append_attribute("population_cost") = population_cost;
+	/*Train Time*/	node.append_attribute("train_time") = train_time;
+	/*Experience*/	node.append_attribute("unit_experience") = unit_experience;
+
+	/*Exp lvl 2*/			node.append_attribute("experience_lvl_2") = experience_lvl_2;
+	/*Exp lvl 3*/			node.append_attribute("experience_lvl_3") = experience_lvl_3;
+	/*Ab lvl 2 coold*/		node.append_attribute("ability_lvl_2_cooldown") = ability_lvl_2_cooldown;
+	/*Ab lvl 2 atk val*/	node.append_attribute("ability_lvl_2_attack_value") = ability_lvl_2_attack_value;
+	/*Ab lvl 2 stun val*/	node.append_attribute("ability_lvl_2_stun_value") = ability_lvl_2_stun_value;
+	/*Ab lvl 3 coold*/		node.append_attribute("ability_lvl_3_cooldown") = ability_lvl_3_cooldown;
+	/*Area ab lvl 3*/		node.append_attribute("area_ability_lvl_3") = area_ability_lvl_3.GetRad();
+
+	/*Atk for lvl*/			node.append_attribute("attack_for_level") = attack_for_level;
+	/*Range for lvl*/		node.append_attribute("range_for_level") = range_for_level;
+	/*Life for lvl*/		node.append_attribute("life_for_level") = life_for_level;
+	/*Def for lvl*/			node.append_attribute("defense_for_level") = defense_for_level;
+	/*Speed for lvl*/		node.append_attribute("speed_for_level") = speed_for_level;
+	/*View for lvl*/		node.append_attribute("view_area_for_level") = view_area_for_level;
+	/*Atk Tri Lenght*/		node.append_attribute("atk_triangle_length") = this->special_attack_area.GetLength();
+	/*Atk Tri Width*/		node.append_attribute("atk_triangle_width_angle") = this->special_attack_area.GetWidthAngle();
+
+}
+
+void Warrior::LoadAsDef(pugi::xml_node & node)
+{
+
+}
+
 bool Warrior::Update()
 {
 	//Check if champion lvl up;
@@ -870,6 +935,73 @@ Wizard::~Wizard()
 {
 
 }
+void Wizard::SaveAsDef(pugi::xml_node & node)
+{
+	//Add all wizard attributes at the xml node
+
+	//Name
+	node.append_attribute("name") = "Wizard";
+
+	/*Type*/	node.append_attribute("unit_type") = unit_type;
+	/*Class*/	node.append_attribute("unit_class") = unit_class;
+	/*Atk Type*/node.append_attribute("attack_type") = attack_type;
+
+	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
+	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
+	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
+	/*Selec H*/ node.append_attribute("selection_h") = selection_rect.h;
+
+	/*Icon X*/	node.append_attribute("icon_x") = icon_rect.x;
+	/*Icon Y*/	node.append_attribute("icon_y") = icon_rect.y;
+	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
+	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
+
+	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
+	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
+
+	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Speed*/		node.append_attribute("speed") = speed;
+	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
+	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
+	/*Siege HitP*/	node.append_attribute("siege_hitpoints") = siege_hitpoints;
+	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
+	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
+	/*Defense*/		node.append_attribute("defense") = defense;
+	/*Food Cost*/	node.append_attribute("food_cost") = food_cost;
+	/*Wood Cost*/	node.append_attribute("wood_cost") = wood_cost;
+	/*Gold Cost*/	node.append_attribute("gold_cost") = gold_cost;
+	/*Popu Cost*/	node.append_attribute("population_cost") = population_cost;
+	/*Train Time*/	node.append_attribute("train_time") = train_time;
+	/*Experience*/	node.append_attribute("unit_experience") = unit_experience;
+
+	/*Exp lvl 2*/			node.append_attribute("experience_lvl_2") = experience_lvl_2;
+	/*Exp lvl 3*/			node.append_attribute("experience_lvl_3") = experience_lvl_3;
+	/*Ab lvl 2 coold*/		node.append_attribute("ability_lvl_2_cooldown") = ability_lvl_2_cooldown;
+	/*Ab lvl 2 atk val*/	node.append_attribute("ability_lvl_2_heal_value") = ability_lvl_2_heal_value;
+	/*Ab lvl 2 stun val*/	node.append_attribute("ability_lvl_3_attack_value") = ability_lvl_3_attack_value;
+	/*Ab lvl 3 coold*/		node.append_attribute("ability_lvl_3_cooldown") = ability_lvl_3_cooldown;
+
+	/*Atk for lvl*/			node.append_attribute("attack_for_level") = attack_for_level;
+	/*Range for lvl*/		node.append_attribute("range_for_level") = range_for_level;
+	/*Life for lvl*/		node.append_attribute("life_for_level") = life_for_level;
+	/*Def for lvl*/			node.append_attribute("defense_for_level") = defense_for_level;
+	/*Speed for lvl*/		node.append_attribute("speed_for_level") = speed_for_level;
+	/*View for lvl*/		node.append_attribute("view_area_for_level") = view_area_for_level;
+
+	/*Area Atk spell 2*/	node.append_attribute("area_attack_spell_2") = area_attack_spell_2.GetRad();
+	/*Area Limit spell 2*/	node.append_attribute("area_limit_spell_2") = area_limit_spell_2;
+	/*Area Atk spell 3*/	node.append_attribute("area_attack_spell_3") = area_attack_spell_3.GetRad();
+	/*Area Limit spell 3*/	node.append_attribute("area_limit_spell_3") = area_limit_spell_3;
+
+}
+
+void Wizard::LoadAsDef(pugi::xml_node & node)
+{
+
+}
+
 bool Wizard::Update()
 {
 	//Check if champion lvl up;
@@ -1553,6 +1685,61 @@ Hunter::~Hunter()
 {
 
 }
+
+void Hunter::SaveAsDef(pugi::xml_node & node)
+{
+	//Add all wizard attributes at the xml node
+
+	//Name
+	node.append_attribute("name") = "Hunter";
+
+	/*Type*/	node.append_attribute("unit_type") = unit_type;
+	/*Class*/	node.append_attribute("unit_class") = unit_class;
+	/*Atk Type*/node.append_attribute("attack_type") = attack_type;
+
+	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
+	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
+	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
+	/*Selec H*/ node.append_attribute("selection_h") = selection_rect.h;
+
+	/*Icon X*/	node.append_attribute("icon_x") = icon_rect.x;
+	/*Icon Y*/	node.append_attribute("icon_y") = icon_rect.y;
+	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
+	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
+
+	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
+	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
+
+	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Speed*/		node.append_attribute("speed") = speed;
+	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
+	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
+	/*Siege HitP*/	node.append_attribute("siege_hitpoints") = siege_hitpoints;
+	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
+	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
+	/*Defense*/		node.append_attribute("defense") = defense;
+	/*Food Cost*/	node.append_attribute("food_cost") = food_cost;
+	/*Wood Cost*/	node.append_attribute("wood_cost") = wood_cost;
+	/*Gold Cost*/	node.append_attribute("gold_cost") = gold_cost;
+	/*Popu Cost*/	node.append_attribute("population_cost") = population_cost;
+	/*Train Time*/	node.append_attribute("train_time") = train_time;
+	/*Experience*/	node.append_attribute("unit_experience") = unit_experience;
+
+	/*Atk for lvl*/			node.append_attribute("attack_for_level") = attack_for_level;
+	/*Range for lvl*/		node.append_attribute("range_for_level") = range_for_level;
+	/*Life for lvl*/		node.append_attribute("life_for_level") = life_for_level;
+	/*Def for lvl*/			node.append_attribute("defense_for_level") = defense_for_level;
+	/*Speed for lvl*/		node.append_attribute("speed_for_level") = speed_for_level;
+	/*View for lvl*/		node.append_attribute("view_area_for_level") = view_area_for_level;
+}
+
+void Hunter::LoadAsDef(pugi::xml_node & node)
+{
+
+}
+
 bool Hunter::Update()
 {
 	//Check if champion lvl up;
