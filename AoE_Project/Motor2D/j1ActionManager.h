@@ -27,6 +27,7 @@ class StunUnitAction;
 class ScannAction;
 class AutoAttackPassiveAction;
 class AutoHealPassiveAction;
+class HealUnitAction;
 
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
@@ -52,7 +53,8 @@ enum TASK_TYPE
 	TASK_U_AA,  //Auto attack
 	TASK_U_AH,	//Auto heal
 	TASK_B_SPAWN_UNITS,
-	TASK_B_RESEARCH
+	TASK_B_RESEARCH,
+	TASK_U_HU //Heal Unit
 };
 
 
@@ -186,6 +188,7 @@ public:
 	DieUnitAction*				DieAction(Unit* actor);
 	DieBuildingAction*			DieBuildngAction(Building* actor);
 	StunUnitAction*				StunAction(Unit* actor, uint time);
+	HealUnitAction*				HealAction(Unit* actor, Unit** target);
 
 	//Recollect Functions
 	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource** target);

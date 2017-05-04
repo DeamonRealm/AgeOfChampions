@@ -414,9 +414,9 @@ bool VillagerPanel::ActivateCell(int i)
 	if (panel_icons[i].b_type != NO_BUILDING)
 	{
 		if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost, 
-			panel_icons[i].stone_cost, 0))
+			panel_icons[i].stone_cost, 0, false))
 		{
-			buliding_population = panel_icons[i].population_cost;
+			building_type = i;
 			App->sound->PlayGUIAudio(CLICK_INGAME);
 			buildingthis = App->entities_manager->GenerateBuilding(panel_icons[i].b_type, ALLY, true);
 			isbuilding = true;
@@ -497,16 +497,21 @@ bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 			App->input->GetMousePosition(x, y);
 			if (((Building*)buildingthis)->CheckZone(x - App->render->camera.x, y - App->render->camera.y))
 			{
-				player_game_panel_resources->IncressPopulation(-buliding_population, true);
+				player_game_panel_resources->UseResource(panel_icons[building_type].wood_cost, panel_icons[building_type].food_cost, panel_icons[building_type].gold_cost,
+					panel_icons[building_type].stone_cost, panel_icons[building_type].population_cost);
 				buildingthis->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y, true);
 			}
 			else {
 				App->entities_manager->DeleteEntity(buildingthis);
-				player_game_panel_resources->AddResource(175, GP_STONE);
 			}
 			isbuilding = false;
 			buildingthis = nullptr;
-			return false;
+			if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+			{
+				ActivateCell(building_type);
+				return true;
+			}
+			else return false;
 		}
 		break;
 	case MOUSE_LEFT_BUTTON_REPEAT:
@@ -691,19 +696,22 @@ void HeroPanel::HeroisDead(UNIT_TYPE u_type)
 {
 
 	if (u_type == WARRIOR_CHMP) {
-		memset(mele_learned, 0, 5);
+		for (int i = 0; i < 5; i++)
+			mele_learned[i] = 0;
 		if(champion_mele != nullptr)
 			champion_mele = nullptr;
 		else return;
 	}
 	else if (u_type == WIZARD_CHMP) {
-		memset(wizard_learned, 0, 5);
+		for (int i = 0; i < 5; i++)
+			wizard_learned[i] = 0;
 		if (champion_wizard != nullptr)
 			champion_wizard = nullptr;
 		else return;
 	}
 	else {
-		memset(archer_learned, 0, 5);
+		for (int i = 0; i < 5; i++)
+			archer_learned[i] = 0;
 		if (champion_archer != nullptr)
 			champion_archer = nullptr;
 		else return;

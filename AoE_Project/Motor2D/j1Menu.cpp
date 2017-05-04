@@ -36,6 +36,25 @@ void j1Menu::Enable()
 {
 	active = true;
 	//App->sound->PlayMusicAudio(MAIN_MENU_SONG);
+
+	menu_screen->Activate();
+	menu_screen->ActivateChilds();
+
+	standardgame->Desactivate();
+	standardgame->DesactivateChids();
+
+	loadgame->Desactivate();
+	loadgame->DesactivateChids();
+
+}
+
+void j1Menu::Disable()
+{
+	active = false;
+
+	menu_screen->Desactivate();
+	menu_screen->DesactivateChids();
+	
 }
 
 bool j1Menu::Awake(pugi::xml_node & config)
@@ -270,6 +289,7 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			App->entities_manager->Enable();
 			App->AI->Enable();
 			App->fog_of_war->Enable();
+			App->LoadDefaultGame();
 			this->CleanUp();
 			this->Disable();
 		}
@@ -283,6 +303,7 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			App->entities_manager->Enable();
 			App->AI->Enable();
 			App->fog_of_war->Enable();
+			App->LoadGame("party_file.xml");
 			this->CleanUp();
 			this->Disable();
 		}

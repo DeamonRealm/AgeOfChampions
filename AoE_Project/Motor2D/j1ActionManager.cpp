@@ -129,8 +129,19 @@ DieBuildingAction * j1ActionManager::DieBuildngAction(Building* actor)
 
 StunUnitAction * j1ActionManager::StunAction(Unit * actor, uint time)
 {
-	//Generate a new move action definition
+	//Generate a new stun action definition
 	StunUnitAction* action = new StunUnitAction(actor, time);
+
+	//Add the new action at the action manager
+	all_actions.push_back(action);
+
+	return action;
+}
+
+HealUnitAction * j1ActionManager::HealAction(Unit * actor, Unit ** target)
+{
+	//Generate a new heal action definition
+	HealUnitAction* action = new HealUnitAction(actor, target);
 
 	//Add the new action at the action manager
 	all_actions.push_back(action);

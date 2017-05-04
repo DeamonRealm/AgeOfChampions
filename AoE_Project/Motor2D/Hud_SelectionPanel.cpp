@@ -86,6 +86,12 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 		life->SetString((char*)profile_text.c_str());
 	}
 
+	u_range = 0;
+	u_deffence = 0;
+	deffence_up = 0;
+	u_attack = 0;
+	attack_up = 0;
+
 	if (element->GetDiplomacy() == ENEMY)
 	{
 		isenemy = true;
@@ -127,6 +133,7 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 		profile_text = App->gui->SetStringFromInt(u_capacity);
 		profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_capacity);
 		capacity->SetString((char*)profile_text.c_str());
+	
 	}
 	else if (e_type = RESOURCE)
 	{
@@ -165,12 +172,12 @@ void Entity_Profile::DrawProfile() const
 	//Draw profile icon
 	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 634 - App->render->camera.y, &background);
 
-	name->DrawAt(337, 610);
+	name->DrawAt(337, 615);
 	//civilization->DrawAt(472, 640)
 	if (isenemy) diplomacy->DrawAt(472, 660);
 
 	//Draw life
-	if (life_update >= 0 && e_type == UNIT)
+	if (life_update >= 0)
 	{
 		App->render->DrawQuad({ 342 - App->render->camera.x, 670 - App->render->camera.y, 36, 2 }, 255, 0, 0);
 		App->render->DrawQuad({ 342 - App->render->camera.x, 670 - App->render->camera.y, 36 * life_update / m_life, 2 }, 0, 255, 0);
@@ -347,7 +354,8 @@ bool Selection_Panel::PreUpdate()
 	if (WindowsMove()) App->map->CalculateTilesInView();
 
 
-	if (selected_elements.size() == 0 || inviewport == false) return false;
+	if (selected_elements.size() == 0 || inviewport == false || refresh_upperentity.Read() < REFRESH_RATE) return false;
+	refresh_upperentity.Start();
 
 	// Calculate upper entity
 	UpperEntity = GetUpperEntity(mouse_x, mouse_y);
@@ -453,6 +461,10 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				{
 					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
 				}
+				else if ((selected_unit_type == WIZARD_CHMP || selected_unit_type == MONK) && UpperEntity->GetEntityType() == UNIT)
+				{
+					Selected->GetEntity()->AddAction(App->action_manager->HealAction((Unit*)Selected->GetEntity(), (Unit**)UpperEntity->GetMe()));
+				}
 			}
 			else App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 				//Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
@@ -511,6 +523,8 @@ void Selection_Panel::Enable()
 	UpperEntity = nullptr;
 	action_command = nullptr;
 	champions_selected = false;
+
+	refresh_upperentity.Start();
 }
 
 void Selection_Panel::Disable()
@@ -1094,67 +1108,71 @@ bool Selection_Panel::WindowsMove()
 	if (expand) return false;
 	iPoint c_pos = { 0,0 };
 	c_pos = App->map->WorldToMap(-App->render->camera.x + App->render->camera.w / 2, -App->render->camera.y + App->render->camera.h / 2);
+
+	float speed_x = 898.13 / 2;
+	float speed_y = 439.71 / 2;
+	float speed = 500;
+
 	bool ret = false;
-	if (mouse_x < OFFSET_Y)
+	if (mouse_x < OFFSET_X)
 	{
 		if (c_pos.x == 1 && c_pos.y < 119)
 		{
-			App->render->camera.x += (int)SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y -= (int)SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x += (int)SDL_ceil(speed_x * App->GetDT()/2);
+			App->render->camera.y -= (int)SDL_ceil(speed_y * App->GetDT()/2);
 		}
 		else if (c_pos.y == 119 && c_pos.x > 1)
 		{
-			App->render->camera.x += (int)SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x += (int)SDL_ceil(speed_x * App->GetDT()/2);
+			App->render->camera.y += (int)SDL_ceil(speed_y * App->GetDT()/2);
 		}
-		else if (c_pos.y < 119 && c_pos.x >1) App->render->camera.x += (int)SDL_ceil(1000 * App->GetDT());
+		else if (c_pos.y < 119 && c_pos.x >1) App->render->camera.x += (int)SDL_ceil(speed * App->GetDT());
 		ret = true;
 
 	}
-	else if (mouse_x >= App->render->camera.w - OFFSET_Y)
+	else if (mouse_x >= App->render->camera.w - OFFSET_X)
 	{
 		if (c_pos.x == 119 && c_pos.y > 0)
 		{
-			App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x -= (int)SDL_ceil(speed_x * App->GetDT());
+			App->render->camera.y += (int)SDL_ceil(speed_y * App->GetDT());
 		}
 		else if (c_pos.y == 0 && c_pos.x < 119)
 		{
-			App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y -= (int)SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x -= (int)SDL_ceil(speed_x * App->GetDT());
+			App->render->camera.y -= (int)SDL_ceil(speed_y * App->GetDT());
 		}
-		else if (c_pos.y > 0 && c_pos.x < 119) App->render->camera.x -= (int)SDL_ceil(1000 * App->GetDT());
+		else if (c_pos.y > 0 && c_pos.x < 119) App->render->camera.x -= (int)SDL_ceil(speed * App->GetDT());
 		ret = true;
 	}
-	if (mouse_y < viewport->GetBox()->y + OFFSET_X && mouse_y > viewport->GetBox()->y)
+	if (mouse_y < OFFSET_Y)
 	{
 		if (c_pos.x == 1 && c_pos.y > 0)
 		{
-			App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x -= (int)SDL_ceil(speed_x * App->GetDT()/2);
+			App->render->camera.y += (int)SDL_ceil(speed_y * App->GetDT()/2);
 		}
 		else if (c_pos.y == 0 && c_pos.x > 1)
 		{
-			App->render->camera.x += (int)SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y += (int)SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x += (int)SDL_ceil(speed_x * App->GetDT()/2);
+			App->render->camera.y += (int)SDL_ceil(speed_y * App->GetDT()/2);
 		}
-		else if (c_pos.y >0 && c_pos.x >1) App->render->camera.y += (int)SDL_ceil(1000 * App->GetDT());
+		else if (c_pos.y >0 && c_pos.x >1) App->render->camera.y += (int)SDL_ceil(speed * App->GetDT());
 		ret = true;
 	}
-	else if (mouse_x < OFFSET_Y && mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X
-		|| mouse_x > 300 && mouse_y >= viewport->GetBox()->y + viewport->GetBox()->h - OFFSET_X && mouse_y <viewport->GetBox()->y + viewport->GetBox()->h + OFFSET_X)
+	else if (mouse_y > App->render->camera.h - OFFSET_Y)
 	{
 		if (c_pos.x == 119 && c_pos.y < 119)
 		{
-			App->render->camera.x += (int)SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y -= (int)SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x += (int)SDL_ceil(speed_x * App->GetDT()/2);
+			App->render->camera.y -= (int)SDL_ceil(speed_y * App->GetDT()/2);
 		}
 		else if (c_pos.y == 118 && c_pos.x > 1)
 		{
-			App->render->camera.x -= (int)SDL_ceil(898.13 * App->GetDT());
-			App->render->camera.y -= (int)SDL_ceil(439.71 * App->GetDT());
+			App->render->camera.x -= (int)SDL_ceil(speed_x * App->GetDT()/2);
+			App->render->camera.y -= (int)SDL_ceil(speed_y * App->GetDT()/2);
 		}
-		else if (c_pos.y <119 && c_pos.x <119) App->render->camera.y -= (int)SDL_ceil(1000 * App->GetDT());
+		else if (c_pos.y <119 && c_pos.x <119) App->render->camera.y -= (int)SDL_ceil(speed * App->GetDT());
 		ret = true;
 	}
 

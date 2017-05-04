@@ -56,7 +56,7 @@ public:
 
 	// Add Resource
 	bool AddResource(int amount, PLAYER_RESOURCES resource_type);
-	bool UseResource(int amount_wood = 0, int amount_food = 0, int amount_gold = 0, int amount_stone = 0, int used_population = 0);
+	bool UseResource(int amount_wood = 0, int amount_food = 0, int amount_gold = 0, int amount_stone = 0, int used_population = 0, bool use = true);
 
 	// Incress and Check Population
 	bool IncressPopulation(int amount, bool increase_max = false);
@@ -108,8 +108,8 @@ private:
 	UI_Button*	exit_to_main_menu	= nullptr;
 	UI_Button*	cancel_game_menu	= nullptr;
 	UI_Image*	exit_menu_image		= nullptr;
-
-
+	UI_Button*	save_game_menu_b	= nullptr;
+	UI_Button*	load_game_menu_b	= nullptr;
 	//Final menu
 	UI_Element* final_menu_screen	= nullptr;
 	UI_Image*	final_menu_image	= nullptr;

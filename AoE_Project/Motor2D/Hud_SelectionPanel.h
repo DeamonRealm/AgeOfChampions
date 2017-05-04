@@ -15,7 +15,9 @@
 #include "j1ActionManager.h"
 
 #define OFFSET_Y 10
-#define OFFSET_X 20
+#define OFFSET_X 10
+
+#define REFRESH_RATE 200
 
 class UI_String;
 class UI_Image;
@@ -191,6 +193,7 @@ private:
 	
 	// Used for mouse detection
 	Entity*			UpperEntity = nullptr;
+	j1Timer			refresh_upperentity;
 
 	// Selected Types;
 	DIPLOMACY		selected_diplomacy;

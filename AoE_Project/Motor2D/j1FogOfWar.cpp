@@ -123,7 +123,7 @@ bool j1FogOfWar::Load(pugi::xml_node& data)
 	while (fog_tile_node != NULL)
 	{
 		fog_layer[k].type = (FOG_TYPE)fog_tile_node.attribute("id").as_int();
-
+		if (fog_layer[k].type != DARK_FOG) App->player->minimap_panel->PushTilestoClear(k);
 
 		k++;
 		fog_tile_node = fog_tile_node.next_sibling();

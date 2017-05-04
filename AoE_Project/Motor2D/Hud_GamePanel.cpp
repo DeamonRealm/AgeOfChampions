@@ -74,6 +74,22 @@ Game_Panel::Game_Panel() : wood(0), meat(0), gold(0), stone(0), population(0), m
 	exit_menu_image->AddChild(cancel_game_menu);
 
 
+	save_game_menu_b = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	save_game_menu_b->SetBox({ 38, 70,220, 30 });
+	save_game_menu_b->SetTexOFF({ 295, 0,220,30 }, MENU_PAUSE);
+	save_game_menu_b->SetTexOVER({ 295, 0,220,30 }, MENU_PAUSE);
+	save_game_menu_b->SetTexON({ 295, 31,220,30 }, MENU_PAUSE);
+	save_game_menu_b->Desactivate();
+	exit_menu_image->AddChild(save_game_menu_b);
+
+	load_game_menu_b = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	load_game_menu_b->SetBox({ 38, 102,220, 30 });
+	load_game_menu_b->SetTexOFF({ 295, 0,220,30 }, MENU_PAUSE);
+	load_game_menu_b->SetTexOVER({ 295, 0,220,30 }, MENU_PAUSE);
+	load_game_menu_b->SetTexON({ 295, 31,220,30 }, MENU_PAUSE);
+	load_game_menu_b->Desactivate();
+	exit_menu_image->AddChild(load_game_menu_b);
+
 	//Final Menu
 
 	final_menu_image = (UI_Image*)App->gui->GenerateUI_Element(UI_TYPE::IMG);
@@ -97,6 +113,20 @@ Game_Panel::Game_Panel() : wood(0), meat(0), gold(0), stone(0), population(0), m
 	resource_text->Desactivate();
 	resource_text->SetBox({ 90, 6,0,0 });
 	cancel_game_menu->AddChild(resource_text);
+
+	resource_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	resource_text->SetColor({ 255, 255, 255, 255 });
+	resource_text->SetString("Save Game");
+	resource_text->Desactivate();
+	resource_text->SetBox({ 82, 6,0,0 });
+	save_game_menu_b->AddChild(resource_text);
+
+	resource_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	resource_text->SetColor({ 255, 255, 255, 255 });
+	resource_text->SetString("Load Game");
+	resource_text->Desactivate();
+	resource_text->SetBox({ 82, 6,0,0 });
+	load_game_menu_b->AddChild(resource_text);
 
 	final_str = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	final_str->SetColor({ 0, 0, 0, 255 });
@@ -220,10 +250,22 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			App->menu->Enable();
 			App->fog_of_war->Disable();
 		}
-		if (ui_element == cancel_game_menu)
+		else if (ui_element == cancel_game_menu)
 		{
 			exit_menu_image->Desactivate();
 			exit_menu_image->DesactivateChids();
+		}
+		else if(ui_element == save_game_menu_b)
+		{
+			App->SaveGame("party_file.xml");
+		}
+		else if (ui_element == load_game_menu_b)
+		{
+			App->player->Disable();
+			App->entities_manager->Disable();
+			App->player->Enable();
+			App->entities_manager->Enable();
+			App->LoadGame("party_file.xml");
 		}
 	}
 		break;
@@ -398,15 +440,19 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 	return ret;
 }
 
-bool Game_Panel::UseResource(int amount_wood, int amount_food, int amount_gold, int amount_stone, int used_population)
+bool Game_Panel::UseResource(int amount_wood, int amount_food, int amount_gold, int amount_stone, int used_population, bool use)
 {
 	if(wood-amount_wood >= 0 && meat-amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 &&  population + used_population <= (int)max_population)
 	{
-		if (amount_wood != 0) AddResource(-amount_wood, GP_WOOD);
-		if (amount_food != 0) AddResource(-amount_food, GP_MEAT);
-		if (amount_gold != 0) AddResource(-amount_gold, GP_GOLD);
-		if (amount_stone != 0) AddResource(-amount_stone, GP_STONE);
-		if (used_population >= 0) IncressPopulation(used_population);
+		if (use)
+		{
+			if (amount_wood != 0) AddResource(-amount_wood, GP_WOOD);
+			if (amount_food != 0) AddResource(-amount_food, GP_MEAT);
+			if (amount_gold != 0) AddResource(-amount_gold, GP_GOLD);
+			if (amount_stone != 0) AddResource(-amount_stone, GP_STONE);
+			if (used_population >= 0) IncressPopulation(used_population);
+			else if (used_population < 0) IncressPopulation(-used_population, true);
+		}
 		return true;
 	}
 	else return false;
