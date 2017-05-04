@@ -193,11 +193,12 @@ bool Villager::Recollect(Resource** target)
 		iPoint woop_tile = App->map->WorldToMap((*target)->GetPositionRounded().x, (*target)->GetPositionRounded().y);
 
 		if (!App->pathfinding->IsWalkable(woop)) {
+			goal = this->FindWalkableAdjacent((*target)->GetPositionRounded());
+			if (goal == iPoint(-1, -1))
+				return true;
 			LOG("GOAL %i %i ", goal.x, goal.y);
 			LOG("GOAL %i %i ", woop.x, woop.y);
-
 			LOG("GOAL %i %i ", woop_tile.x, woop_tile.y);
-			return true;
 		}
 
 
