@@ -627,6 +627,7 @@ void Warrior::SetAbility_lvl_3(bool choosed)
 
 	if (choosed)
 	{
+		ability_lvl_3_particle = App->buff_manager->GetParticle(ONE_HIT_PARTICLE, NO_DIRECTION);
 		ability_lvl_3_current_time = ability_lvl_3_cooldown;
 		ability_lvl_3_ready = true;
 
@@ -657,6 +658,7 @@ void Warrior::Hability_lvl_3(int x, int y)
 
 	if (ability[2])
 	{
+
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);//lvl_3_defense
 		App->buff_manager->CallBuff(this, TIMED_BUFF, SUPER_ATTACK_BUFF, true);
 	}
@@ -677,10 +679,11 @@ void Warrior::Hability_lvl_3(int x, int y)
 				protected_units.push_back(units_in[k]);
 			}
 		}
-		//Particle Reset
-		ability_lvl_3_particle.animation.Reset();
-		ability_lvl_3_particle.position = GetPositionRounded();
+		
 	}
+	//Particle Reset
+	ability_lvl_3_particle.animation.Reset();
+	ability_lvl_3_particle.position = GetPositionRounded();
 	actived[2] = true;
 	ability_lvl_3_timer.Start();
 	ability_lvl_3_current_time = 0;
@@ -690,7 +693,6 @@ void Warrior::Hability_lvl_3(int x, int y)
 
 void Warrior::CheckHability_lvl_3()
 {
-	if (ability[2]) return;
 
 	if (!ability_lvl_3_particle.animation.IsEnd())
 	{

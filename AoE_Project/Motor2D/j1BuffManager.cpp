@@ -462,8 +462,7 @@ bool j1BuffManager::Start()
 		//Focus the first load document particle
 		
 		pugi::xml_node particle_node = particle_data.first_child().first_child();
-		bool simple_particle = (strcmp(particle_node.name(), "simple_particle") == 0);
-
+		bool simple_particle = false;
 
 		//Load particle texture
 		load_folder = name + "/" + particle_data.first_child().attribute("imagePath").as_string();
@@ -472,6 +471,8 @@ bool j1BuffManager::Start()
 		//Iterate all the particles in the loaded document
 		while (particle_node != NULL)
 		{
+			simple_particle = (strcmp(particle_node.name(), "simple_particle") == 0);
+
 			Particle* particle_def = nullptr;
 			if (!simple_particle)
 			{
@@ -701,7 +702,9 @@ PARTICLE_TYPE j1BuffManager::StrToParticleType(const char * str) const
 	if (strcmp("dragon_shot_particle", str) == 0)		return PARTICLE_TYPE::DRAGON_SHOT_PARTICLE;
 	if (strcmp("resurrection_particle", str) == 0)		return PARTICLE_TYPE::RESURRECTION_PARTICLE;
 	if (strcmp("lvlup_particle", str) == 0)				return PARTICLE_TYPE::LEVEL_UP_PARTICLE;
+	if (strcmp("one_hit_particle", str) == 0)			return PARTICLE_TYPE::ONE_HIT_PARTICLE;
 
+	
 	return UNKNOWN_PARTICLE;
 }
 
