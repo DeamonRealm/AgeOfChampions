@@ -560,6 +560,48 @@ RESOURCE_TYPE j1Animator::StrToResourceEnum(const char * str) const
 	return NO_RESOURCE;
 }
 
+const char * j1Animator::EnumToResourceStr(RESOURCE_TYPE type) const
+{
+	switch (type)
+	{
+	case TREE:			return "tree";
+	case BERRY_BUSH:	return "berry_bush";
+	case GOLD_ORE:		return "gold_ore";
+	case STONE_ORE:		return "stone_ore";
+	}
+	return nullptr;
+}
+
+const char * j1Animator::EnumToUnitStr(UNIT_TYPE type) const
+{
+	switch (type)
+	{
+	case MILITIA:				return "militia";
+	case ARBALEST:				return "arbalest";
+	case ARCHER:				return "archer";
+	case CAVALIER:				return "cavalier";
+	case CAVALRY_ARCHER:		return "cavalry_archer";
+	case ELITE_SKIRMISHER:		return "elite_skirmisher";
+	case HEAVY_CAVALRY_ARCHER:	return "heavy_cavalry_archer";
+	case KNIGHT:				return "knight";
+	case MONK:					return "monk";
+	case PALADIN:				return "paladin";
+	case PIKEMAN:				return "pikeman";
+	case SPEARMAN:				return "spearman";
+	case VILLAGER:				return "villager";
+	case TWO_HANDED_SWORDMAN:	return "two_handed_swordman";
+	case MAN_AT_ARMS:			return "man_at_arms";
+	case LONG_SWORDMAN:			return "long_swordman";
+	case CHAMPION:				return "champion";
+	case WARRIOR_CHMP:			return "warrior_chmp";
+	case ARCHER_CHMP:			return "hunter_chmp";
+	case WIZARD_CHMP:			return "wizard_chmp";
+	case CROSSBOWMAN:			return "crossbowman";
+	case SKIRMISHER:			return "skirmisher";
+	}
+	return nullptr;
+}
+
 bool j1Animator::AnimationLoopFromActionType(ACTION_TYPE type)
 {
 	switch (type)

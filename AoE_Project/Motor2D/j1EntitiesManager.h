@@ -83,9 +83,9 @@ private:
 
 	//add arrows
 	//Methods to add entities definitions
-	bool		AddUnitDefinition(const pugi::xml_node* unit_node);
+	bool		AddUnitDefinition(const pugi::xml_node* unit_node, DIPLOMACY diplomacy_def = NEUTRAL);
 	bool		AddResourceDefinition(const pugi::xml_node* resource_node);
-	bool		AddBuildingDefinition(const pugi::xml_node* building_node);
+	bool		AddBuildingDefinition(const pugi::xml_node* building_node, DIPLOMACY diplomacy_def = NEUTRAL);
 
 	//Check if the entity civilizations string contains the chosen one
 	bool		CivilizationCheck(char* civs_str, const char* chosen_civ);

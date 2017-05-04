@@ -370,6 +370,79 @@ bool j1EntitiesManager::CleanUp()
 
 bool j1EntitiesManager::Load(pugi::xml_node& data)
 {
+	/*
+	// Save current entities definitions --------
+	//Node where definitions are loaded
+	pugi::xml_node definitions_node = data.child("definitions");
+
+	// Resources Definitions ----------
+	//Node where resources definitions are loaded
+	pugi::xml_node resources_defs_node = definitions_node.child("resources");
+
+	//Node where the current resource definition is loaded
+	pugi::xml_node resource_node = resources_defs_node.child("res");
+
+	while (resource_node != NULL)
+	{
+
+		App->entities_manager->AddResourceDefinition(&resource_node);
+
+		resource_node = resource_node.next_sibling();
+	}
+	// --------------------------------
+
+	//Buildings Definitions -----------
+	//Node where buildings definitions are loaded
+	pugi::xml_node buildings_defs_node = definitions_node.child("buildings");
+
+	//Node where ally buildings definitions are loaded
+	pugi::xml_node ally_buildings_node = buildings_defs_node.child("ally");
+	//Node where enemy buildings definitions are loaded
+	pugi::xml_node enemy_buildings_node = buildings_defs_node.child("enemy");
+
+	//Node where current ally building def is loaded
+	pugi::xml_node ally_build_node = ally_buildings_node.child("build");
+
+	//Node where current ally building def is loaded
+	pugi::xml_node enemy_build_node = enemy_buildings_node.child("build");
+
+
+	//Iterate all buildings definitions
+	while (ally_build_node != NULL)
+	{
+		AddBuildingDefinition(&ally_build_node, ALLY);
+		AddBuildingDefinition(&enemy_build_node, ENEMY);
+
+		ally_build_node = ally_build_node.next_sibling();
+		enemy_build_node = enemy_build_node.next_sibling();
+	}
+	// --------------------------------
+
+	//Units Definitions ---------------
+	//Node where units definitions are loaded
+	pugi::xml_node units_defs_node = definitions_node.child("units");
+
+	//Node where ally units definitions are loaded
+	pugi::xml_node ally_units_node = units_defs_node.child("ally");
+	//Node where enemy units definitions are loaded
+	pugi::xml_node enemy_units_node = units_defs_node.child("enemy");
+
+	//Node where current ally unit def is loaded
+	pugi::xml_node ally_unit_node = ally_units_node.child("unit");
+	//Node where current ally unit def is loaded
+	pugi::xml_node enemy_unit_node = enemy_units_node.child("unit");
+
+	while (ally_unit_node != NULL)
+	{
+		AddUnitDefinition(&ally_unit_node, ALLY);
+		AddUnitDefinition(&enemy_unit_node, ENEMY);
+
+		ally_unit_node = ally_unit_node.next_sibling();
+		enemy_unit_node = enemy_unit_node.next_sibling();
+	}
+	// --------------------------------
+	// ------------------------------------------
+	*/
 	// Resources Load ---------------------------
 	//Resources node
 	pugi::xml_node resources_node = data.child("resources");
@@ -689,7 +762,7 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		ally_buildings_defs[k]->SaveAsDef(ally_build_node);
 		//Node where current ally building def is saved
 		pugi::xml_node enemy_build_node = enemy_buildings_node.append_child("build");
-		ally_buildings_defs[k]->SaveAsDef(enemy_build_node);
+		enemy_buildings_defs[k]->SaveAsDef(enemy_build_node);
 	}
 	// --------------------------------
 	
@@ -1002,7 +1075,7 @@ void j1EntitiesManager::RemoveArrow(Arrow * this_arrow)
 }
 
 //Methods to add entities definitions
-bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
+bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLOMACY diplomacy_def)
 {
 	if (unit_node == nullptr)return false;
 
@@ -1189,26 +1262,31 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node)
 	}
 
 	//Add the generated unit in the units definitions entities manager array
-	ally_units_defs.push_back(new_def);
-	switch (new_def->GetUnitType())
+	if(diplomacy_def == ALLY)ally_units_defs.push_back(new_def);
+	if(diplomacy_def == ENEMY)enemy_units_defs.push_back(new_def);
+	else
 	{
-	case WARRIOR_CHMP:
-		new_def_enemy = new Warrior(*(Warrior*)new_def);
-		break;
-	case ARCHER_CHMP:
-		new_def_enemy = new Hunter(*(Hunter*)new_def);
-		break;
-	case WIZARD_CHMP:
-		new_def_enemy = new Wizard(*(Wizard*)new_def);
-		break;
-	case VILLAGER:
-		new_def_enemy = new Villager(*(Villager*)new_def);
-		break;
-	default:
-		new_def_enemy = new Unit(*(Unit*)new_def);
-		break;
+		switch (new_def->GetUnitType())
+		{
+		case WARRIOR_CHMP:
+			new_def_enemy = new Warrior(*(Warrior*)new_def);
+			break;
+		case ARCHER_CHMP:
+			new_def_enemy = new Hunter(*(Hunter*)new_def);
+			break;
+		case WIZARD_CHMP:
+			new_def_enemy = new Wizard(*(Wizard*)new_def);
+			break;
+		case VILLAGER:
+			new_def_enemy = new Villager(*(Villager*)new_def);
+			break;
+		default:
+			new_def_enemy = new Unit(*(Unit*)new_def);
+			break;
+		}
+		enemy_units_defs.push_back(new_def_enemy);
+		ally_units_defs.push_back(new_def);
 	}
-	enemy_units_defs.push_back(new_def_enemy);
 
 	LOG("%s definition built!", new_def->GetName());
 
@@ -1269,7 +1347,7 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_no
 	return true;
 }
 
-bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_node)
+bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_node, DIPLOMACY diplomacy_def)
 {
 	if (building_node == nullptr)return false;
 
@@ -1330,9 +1408,14 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 		/*Production Cap*/	((ProductiveBuilding*)new_def)->SetProductionCapacity(building_node->attribute("production_capacity").as_uint());
 	}
 
-	ally_buildings_defs.push_back(new_def);
-	ProductiveBuilding* enemy_new_def = new ProductiveBuilding(*new_def);
-	enemy_buildings_defs.push_back(enemy_new_def);
+	if(diplomacy_def == ALLY)ally_buildings_defs.push_back(new_def);
+	if(diplomacy_def == ENEMY)enemy_buildings_defs.push_back(new_def);
+	else
+	{
+		ProductiveBuilding* enemy_new_def = new ProductiveBuilding(*new_def);
+		enemy_buildings_defs.push_back(enemy_new_def);
+		ally_buildings_defs.push_back(new_def);
+	}
 
 	LOG("%s definition built!", new_def->GetName());
 
@@ -1469,6 +1552,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	else LOG("Error loading civilization Resources");
 	// ------------------------------------------
 
+	
 	//Load Civilization Stats -------------------
 	//Load stats document
 	civilization_data.reset();
@@ -1509,8 +1593,8 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 		entity_node = entity_node.next_sibling();
 	}
 	// ------------------------------------------
-
-	//Load xml sounds
+	
+	//Load xml sounds ---------------------------
 	load_folder.clear();
 
 	load_folder = name + "/" + "SoundsData.xml";

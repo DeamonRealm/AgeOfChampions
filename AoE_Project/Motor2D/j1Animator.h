@@ -264,6 +264,13 @@ public:
 	ATTACK_TYPE		StrToAttackEnum(const char* str)const;
 	RESOURCE_TYPE	StrToResourceEnum(const char* str)const;
 
+	const char*		EnumToResourceStr(RESOURCE_TYPE type)const;
+	const char*		EnumToUnitStr(UNIT_TYPE type)const;
+	const char*		EnumToUnitClassStr(UNIT_CLASS type)const;
+	const char*		EnumToAttackStr(ATTACK_TYPE type)const;
+	const char*		EnumToBuildingStr(BUILDING_TYPE type)const;
+	const char*		EnumToDiplomacyStr(DIPLOMACY diplomacy)const;
+
 	//Get the loop boolean from the action animation type
 	bool			AnimationLoopFromActionType(ACTION_TYPE type);
 
