@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:94935372185bc5410754f3e97638c04a:d52807a9cdc2b666368d43a73b3e1908:d59e4189731084d698a6c08c1ebbfb35$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+
+<TextureAtlas blue_texture="Castle.png" red_texture="Castle_red.png" width="921" height="921">
+  <!-- Define the building type-->
+  <building id ="university_c">
+    <action enum ="idle" speed="0">
+    <sprite opacity ="255" x="1" y="637" w="410" h="241" pX="0.504878" pY="0.66805"/>
+    </action>
+  </building>
+   <building id ="castle">
+    <action enum ="idle" speed="0">
+      <sprite n="castle"        opacity ="255" x="1" y="1" w="379" h="442" pX="0.493404" pY="0.80543"/>
+      <sprite n="castle_shadow" opacity ="255" x="382" y="1" w="198" h="182" pX="1.30808" pY="0.67033"/>
+    </action>
+  </building>
+</TextureAtlas>
