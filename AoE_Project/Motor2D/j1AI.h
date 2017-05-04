@@ -93,7 +93,7 @@ private:
 	ProductiveBuilding* ai_starting_tc;
 	std::list<Building*> enemy_buildings;
 
-
+	void ManageAttack();
 
 public:
 	std::list<Unit*> enemy_units;
@@ -105,6 +105,7 @@ public:
 	int			stone = 0;
 	int			population = 0;
 	
+
 };
 
 

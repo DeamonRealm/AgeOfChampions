@@ -2327,11 +2327,12 @@ bool Building::Die()
 		iPoint pos = GetPositionRounded();
 		App->player->minimap_panel->RemoveBuildingToPrint(pos.x, pos.y, entity_diplomacy);
 
+		myself = nullptr;
+
 		action_type = DISAPPEAR;
 		if (building_type == TOWN_CENTER)building_type = RUBBLE_FOUR;
 		else if (building_type == BARRACK || building_type == ARCHERY_RANGE || building_type == BLACKSMITH)building_type = RUBBLE_THREE;
 		else if (building_type == HOUSE_A || building_type == HOUSE_B || building_type == HOUSE_C)building_type = RUBBLE_TWO;
-		App->entities_manager->buildings_quadtree.Exteract(this, &this->position);
 		App->entities_manager->AddDeadBuilding(this);
 		App->animator->BuildingPlay(this);
 		current_animation->Reset();
@@ -2343,7 +2344,7 @@ bool Building::Die()
 		current_animation->GetCurrentSprite();
 		if (current_animation->IsEnd())
 		{
-			App->entities_manager->RemoveDeathBuilding(this);
+			//App->entities_manager->RemoveDeathBuilding(this);
 			this->CleanMapLogic();
 			App->entities_manager->DeleteEntity(this);
 			return true;

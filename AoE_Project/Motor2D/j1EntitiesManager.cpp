@@ -188,6 +188,8 @@ bool j1EntitiesManager::PostUpdate()
 		}
 		else if (type == BUILDING)
 		{
+
+			death_buildings.remove((Building*)wasted_units[k]);
 			buildings.remove((Building*)wasted_units[k]);
 			buildings_quadtree.Exteract((Building*)wasted_units[k], &wasted_units[k]->GetPosition());
 		}
@@ -1877,6 +1879,8 @@ Unit * j1EntitiesManager::PopUnit(const Unit * unit)
 void j1EntitiesManager::AddDeadBuilding(Building * build)
 {
 	death_buildings.push_back(build);
+	buildings.remove(build);
+	buildings_quadtree.Exteract(build, &build->GetPosition());
 }
 
 void j1EntitiesManager::RemoveDeathBuilding(Building * build)

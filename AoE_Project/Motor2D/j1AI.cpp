@@ -113,17 +113,20 @@ bool j1AI::Update(float dt)
 		unit_it++;
 	}
 
+	
+	//Enemies attack NOT WORKING
 	/*
 	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
 	while (building_it != enemy_buildings.end())
 	{
-	if (building_it._Ptr->_Myval->GetBuildingType() == BARRACK)
-	{
-	building_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)building_it._Ptr->_Myval, MILITIA, ENEMY));
+		if (building_it._Ptr->_Myval->GetBuildingType() == BARRACK)
+		{
+			building_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)building_it._Ptr->_Myval, MILITIA, ENEMY));
 
+		}
+		building_it++;
 	}
-	building_it++;
-	}
+	ManageAttack();
 	*/
 
 	update_timer.Start();
@@ -191,6 +194,26 @@ Resource * j1AI::GetNearestNeed()
 	}
 
 	return App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), type, NEUTRAL);;
+}
+
+void j1AI::ManageAttack()
+{
+	if (enemy_units.size() < 1) return;
+
+	else 
+	{
+		std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
+		while (unit_it != enemy_units.end())
+		{
+			Building* to_kill = App->entities_manager->GetNearestBuilding(ai_starting_tc->GetPositionRounded(), TOWN_CENTER, ALLY);
+			if (to_kill == nullptr) return;
+
+			if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY))
+				unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->AttackToBuildingAction(unit_it._Ptr->_Myval, (Building**)to_kill->GetMe()), SECONDARY);
+
+			unit_it++;
+		}
+	}
 }
 
 void j1AI::GenerateDebugVillager()
