@@ -872,14 +872,14 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 	case NORTH_WEST:
 		while (i <= 5) {
 
-			cell_1.create(pos.x + radius*i, pos.y + radius*i);
+			cell_1.create(pos.x + radius*i, pos.y - radius*i);
 			cell_map = App->map->WorldToMap(cell_1.x, cell_1.y);
 			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_1, doble_radius))
 			{
 				return cell_1;
 			}
 
-			cell_2.create(pos.x - radius*i, pos.y - radius*i);
+			cell_2.create(pos.x - radius*i, pos.y + radius*i);
 			cell_map = App->map->WorldToMap(cell_2.x, cell_2.y);
 			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell_2, doble_radius))
 			{
