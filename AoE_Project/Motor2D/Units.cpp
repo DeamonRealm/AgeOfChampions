@@ -53,7 +53,7 @@ void Villager::SaveAsDef(pugi::xml_node & node)
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
 	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
-	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
@@ -78,11 +78,6 @@ void Villager::SaveAsDef(pugi::xml_node & node)
 	/*Gold Rec Rate*/		node.append_attribute("gold_recollect_rate") = gold_recollect_rate;
 	/*Tree Rec Rate*/		node.append_attribute("tree_recollect_rate") = tree_recollect_rate;
 	/*Bush Rec Rate*/		node.append_attribute("bush_recollect_rate") = bush_recollect_rate;
-}
-
-void Villager::LoadAsDef(pugi::xml_node& node)
-{
-
 }
 
 //Actions -----

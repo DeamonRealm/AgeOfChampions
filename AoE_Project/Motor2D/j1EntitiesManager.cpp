@@ -117,6 +117,7 @@ bool j1EntitiesManager::Update(float dt)
 {
 	bool ret = true;
 
+	//Update alive arrows
 	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
 	for (; arrows != all_arrows.end(); arrows++)
 	{
@@ -125,20 +126,20 @@ bool j1EntitiesManager::Update(float dt)
 		{
 			RemoveArrow(arrows._Ptr->_Myval);
 			RELEASE(arrows._Ptr->_Myval);
-
 		}
 	}
+
 	//Update all the units
 	std::list<Unit*>::const_iterator item = units.begin();
 	while (item != units.end())
 	{
 		ret = item._Ptr->_Myval->Update();
-		if (item == units.end())break;
+		if (item == units.end() || units.empty())break;
 		item++;
 
 	}
 
-	//Update all the units
+	//Update all the death units
 	std::list<Unit*>::const_iterator death_unit = death_units.begin();
 	while (death_unit != death_units.end())
 	{
@@ -161,7 +162,7 @@ bool j1EntitiesManager::Update(float dt)
 	{
 
 		ret = item_build._Ptr->_Myval->Update();
-
+		if (item_build == buildings.end() || buildings.empty())break;
 		item_build++;
 	}
 

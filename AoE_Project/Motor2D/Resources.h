@@ -21,7 +21,6 @@ public:
 	//Functionality ---------
 	//Save/Load methods ----
 	void	SaveAsDef(pugi::xml_node& node);
-	void	LoadAsDef(pugi::xml_node& node);
 
 	//Draw ------------------
 	bool	Draw(bool debug);

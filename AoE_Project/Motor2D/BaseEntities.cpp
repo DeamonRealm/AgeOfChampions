@@ -376,11 +376,6 @@ void Unit::SaveAsDef(pugi::xml_node & node)
 	/*Experience*/	node.append_attribute("unit_experience") = unit_experience;
 }
 
-void Unit::LoadAsDef(pugi::xml_node & node)
-{
-
-}
-
 bool Unit::operator<(const Unit & target) const
 {
 	return distance_to_target < target.distance_to_target;
@@ -393,7 +388,10 @@ bool Unit::Draw(bool debug)
 	bool ret = false;
 
 	//Draw Entity Mark
-	if (selected)ret = mark.Draw();
+	if (selected)
+	{
+		ret = mark.Draw();
+	}
 
 	if (debug) {
 		if (selected)
@@ -2012,11 +2010,6 @@ void Resource::SaveAsDef(pugi::xml_node & node)
 
 }
 
-void Resource::LoadAsDef(pugi::xml_node & node)
-{
-
-}
-
 bool Resource::Draw(bool debug)
 {
 	bool ret = false;
@@ -2230,14 +2223,28 @@ void Building::SaveAsDef(pugi::xml_node & node)
 	std::string name;
 	switch (building_type)
 	{
+	case TOWN_CENTER_C:
 	case TOWN_CENTER:	name = "Town Center";	break;
+	case BARRACK_C:
 	case BARRACK:		name = "Barrack";		break;
+	case ARCHERY_RANGE_C:
 	case ARCHERY_RANGE:	name = "Archery Range";	break;
+	case BLACKSMITH_C:
 	case BLACKSMITH:	name = "BlackSmith";	break;
+	case STABLE_C:
 	case STABLE:		name = "Stable";		break;
-	case HOUSE_A:		name = "House";			break;
-	case HOUSE_B:		name = "House";			break;
+	case HOUSE_AI:
+	case HOUSE_BI:
+	case HOUSE_CI:
+	case HOUSE_A:		
+	case HOUSE_B:		
 	case HOUSE_C:		name = "House";			break;
+	case LUMBER_CAMP:	name = "Lumber Camp";	break;
+	case MINING_CAMP:	name = "Mining Camp";	break;
+	case MONASTERY:		name = "Monastery";		break;
+	case UNIVERSITY_C:
+	case UNIVERSITY_I:	name = "University";	break;
+	case CASTLE:		name = "Castle";		break;
 	}
 	node.append_attribute("name") = name.c_str();
 
@@ -2272,11 +2279,6 @@ void Building::SaveAsDef(pugi::xml_node & node)
 	/*Units Spawn X*/	node.append_attribute("units_spawn_x") = ((ProductiveBuilding*)this)->GetSpawnPoint().x;
 	/*Units Spawn Y*/	node.append_attribute("units_spawn_y") = ((ProductiveBuilding*)this)->GetSpawnPoint().y;
 	/*Prod Capacity*/	node.append_attribute("production_capacity") = ((ProductiveBuilding*)this)->GetProductionCapacity();
-
-}
-
-void Building::LoadAsDef(pugi::xml_node & node)
-{
 
 }
 

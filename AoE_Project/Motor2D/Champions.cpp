@@ -414,7 +414,7 @@ void Warrior::SaveAsDef(pugi::xml_node & node)
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
 	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
-	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
@@ -449,11 +449,6 @@ void Warrior::SaveAsDef(pugi::xml_node & node)
 	/*View for lvl*/		node.append_attribute("view_area_for_level") = view_area_for_level;
 	/*Atk Tri Lenght*/		node.append_attribute("atk_triangle_length") = this->special_attack_area.GetLength();
 	/*Atk Tri Width*/		node.append_attribute("atk_triangle_width_angle") = this->special_attack_area.GetWidthAngle();
-
-}
-
-void Warrior::LoadAsDef(pugi::xml_node & node)
-{
 
 }
 
@@ -960,7 +955,7 @@ void Wizard::SaveAsDef(pugi::xml_node & node)
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
 	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
-	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
@@ -997,11 +992,6 @@ void Wizard::SaveAsDef(pugi::xml_node & node)
 	/*Area Limit spell 2*/	node.append_attribute("area_limit_spell_2") = area_limit_spell_2;
 	/*Area Atk spell 3*/	node.append_attribute("area_attack_spell_3") = area_attack_spell_3.GetRad();
 	/*Area Limit spell 3*/	node.append_attribute("area_limit_spell_3") = area_limit_spell_3;
-
-}
-
-void Wizard::LoadAsDef(pugi::xml_node & node)
-{
 
 }
 
@@ -1677,7 +1667,7 @@ void Hunter::SaveAsDef(pugi::xml_node & node)
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
 	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
-	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
@@ -1702,11 +1692,6 @@ void Hunter::SaveAsDef(pugi::xml_node & node)
 	/*Def for lvl*/			node.append_attribute("defense_for_level") = defense_for_level;
 	/*Speed for lvl*/		node.append_attribute("speed_for_level") = speed_for_level;
 	/*View for lvl*/		node.append_attribute("view_area_for_level") = view_area_for_level;
-}
-
-void Hunter::LoadAsDef(pugi::xml_node & node)
-{
-
 }
 
 bool Hunter::Update()

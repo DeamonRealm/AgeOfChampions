@@ -84,7 +84,7 @@ void Tree::SaveAsDef(pugi::xml_node & node)
 	//Name
 	node.append_attribute("name") = "Tree";
 
-	/*Type*/	node.append_attribute("resource_type") = resource_type;
+	/*Type*/	node.append_attribute("resource_type") = App->animator->EnumToResourceStr(resource_type);
 	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
 	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
 	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
@@ -105,10 +105,6 @@ void Tree::SaveAsDef(pugi::xml_node & node)
 
 	/*Max Resouces*/	node.append_attribute("max_resources") = max_life;
 	/*Cortex Value*/	node.append_attribute("cortex") = cortex;
-}
-
-void Tree::LoadAsDef(pugi::xml_node & node)
-{
 }
 
 bool Tree::Draw(bool debug)
