@@ -88,6 +88,7 @@ enum BUILDING_TYPE
 	HOUSE_C,
 	LUMBER_CAMP,
 	MINING_CAMP,
+
 	TOWN_CENTER_C,
 	BARRACK_C,
 	ARCHERY_RANGE_C,
@@ -490,7 +491,6 @@ public:
 	const Circle&	GetSoftCollider()const;
 	const Circle&	GetHardCollider()const;
 
-	uint			GetViewArea()const;
 	float			GetSpeed()const;
 	float			GetSpeedBuff()const;
 	float			GetTotalSpeed()const;
@@ -610,10 +610,8 @@ public:
 
 	//Check is can be built in the position
 	bool	CheckZone(int x, int y);
-	//Cover / Release units
-	bool	CoverUnit(const Unit* target);
-	void	ReleaseUnit(const Unit* target);
-	void	ReleaseAllUnits();
+
+	//Actions ---------------
 	bool	Die();
 
 	//Game Loop -------------

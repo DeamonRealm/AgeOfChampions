@@ -133,7 +133,9 @@ bool j1EntitiesManager::Update(float dt)
 	while (item != units.end())
 	{
 		ret = item._Ptr->_Myval->Update();
+		if (item == units.end())break;
 		item++;
+
 	}
 
 	//Update all the units
@@ -141,6 +143,7 @@ bool j1EntitiesManager::Update(float dt)
 	while (death_unit != death_units.end())
 	{
 		ret = death_unit._Ptr->_Myval->Update();
+		if (death_unit == death_units.end())break;
 		death_unit++;
 	}
 
@@ -149,11 +152,11 @@ bool j1EntitiesManager::Update(float dt)
 	while (death_building != death_buildings.end())
 	{
 		ret = death_building._Ptr->_Myval->Update();
+		if (death_building == death_buildings.end())break;
 		death_building++;
 	}
 
 	std::list<Building*>::const_iterator item_build = buildings.begin();
-
 	while (item_build != buildings.end())
 	{
 
@@ -283,6 +286,15 @@ bool j1EntitiesManager::CleanUp()
 	}
 	death_units.clear();
 
+	//Clean Up death Units
+	std::list<Building*>::iterator death_building = death_buildings.begin();
+	while (death_building != death_buildings.end())
+	{
+		RELEASE(death_building._Ptr->_Myval);
+		death_building++;
+	}
+	death_buildings.clear();
+
 	//Clean Up resources list
 	resources_quadtree.Clear();
 	std::list<Resource*>::iterator resources_item = resources.begin();
@@ -347,8 +359,8 @@ bool j1EntitiesManager::CleanUp()
 
 bool j1EntitiesManager::Load(pugi::xml_node& data)
 {
-	/*
-	// Save current entities definitions --------
+	
+	// Load current entities definitions --------
 	//Node where definitions are loaded
 	pugi::xml_node definitions_node = data.child("definitions");
 
@@ -419,7 +431,7 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 	}
 	// --------------------------------
 	// ------------------------------------------
-	*/
+	
 	// Resources Load ---------------------------
 	//Resources node
 	pugi::xml_node resources_node = data.child("resources");
@@ -1240,7 +1252,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 
 	//Add the generated unit in the units definitions entities manager array
 	if(diplomacy_def == ALLY)ally_units_defs.push_back(new_def);
-	if(diplomacy_def == ENEMY)enemy_units_defs.push_back(new_def);
+	else if(diplomacy_def == ENEMY)enemy_units_defs.push_back(new_def);
 	else
 	{
 		switch (new_def->GetUnitType())
@@ -1270,7 +1282,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 	return true;
 }
 
-bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node * resource_node)
+bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node* resource_node)
 {
 	if (resource_node == nullptr)return false;
 
@@ -1377,16 +1389,15 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	/*Max Life*/		new_def->SetMaxLife(building_node->attribute("max_life").as_uint());
 						new_def->SetLife(new_def->GetMaxLife());
 
-	if (building_type == TOWN_CENTER || building_type == BARRACK || building_type == STABLE || building_type == ARCHERY_RANGE)
-	{
-		/*Units Capacity*/	((ProductiveBuilding*)new_def)->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
-		/*Units Spawn pnt*/	iPoint spawn(building_node->attribute("units_spawn_x").as_int(), building_node->attribute("units_spawn_y").as_int());
-							((ProductiveBuilding*)new_def)->SetUnitsSpawnPoint(spawn);
-		/*Production Cap*/	((ProductiveBuilding*)new_def)->SetProductionCapacity(building_node->attribute("production_capacity").as_uint());
-	}
+
+	/*Units Capacity*/	((ProductiveBuilding*)new_def)->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
+	/*Units Spawn pnt*/	iPoint spawn(building_node->attribute("units_spawn_x").as_int(), building_node->attribute("units_spawn_y").as_int());
+						((ProductiveBuilding*)new_def)->SetUnitsSpawnPoint(spawn);
+	/*Production Cap*/	((ProductiveBuilding*)new_def)->SetProductionCapacity(building_node->attribute("production_capacity").as_uint());
+
 
 	if(diplomacy_def == ALLY)ally_buildings_defs.push_back(new_def);
-	if(diplomacy_def == ENEMY)enemy_buildings_defs.push_back(new_def);
+	else if(diplomacy_def == ENEMY)enemy_buildings_defs.push_back(new_def);
 	else
 	{
 		ProductiveBuilding* enemy_new_def = new ProductiveBuilding(*new_def);
@@ -1529,7 +1540,7 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	else LOG("Error loading civilization Resources");
 	// ------------------------------------------
 
-	
+	/*
 	//Load Civilization Stats -------------------
 	//Load stats document
 	civilization_data.reset();
@@ -1570,7 +1581,8 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 		entity_node = entity_node.next_sibling();
 	}
 	// ------------------------------------------
-	
+	*/
+
 	//Load xml sounds ---------------------------
 	load_folder.clear();
 

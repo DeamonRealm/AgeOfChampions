@@ -287,9 +287,10 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			App->scene->Enable();
 			App->player->Enable();
 			App->entities_manager->Enable();
+			App->LoadDefaultGame();
 			App->AI->Enable();
 			App->fog_of_war->Enable();
-			App->LoadDefaultGame();
+
 			this->CleanUp();
 			this->Disable();
 		}

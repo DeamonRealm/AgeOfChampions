@@ -341,9 +341,9 @@ void Unit::SaveAsDef(pugi::xml_node & node)
 	}
 	node.append_attribute("name") = name.c_str();
 
-	/*Type*/	node.append_attribute("unit_type") = unit_type;
-	/*Class*/	node.append_attribute("unit_class") = unit_class;
-	/*Atk Type*/node.append_attribute("attack_type") = attack_type;
+	/*Type*/	node.append_attribute("unit_type") = App->animator->EnumToUnitStr(unit_type);
+	/*Class*/	node.append_attribute("unit_class") = App->animator->EnumToUnitClassStr(unit_class);
+	/*Atk Type*/node.append_attribute("attack_type") = App->animator->EnumToAttackStr(attack_type);
 
 	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
 	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
@@ -356,7 +356,7 @@ void Unit::SaveAsDef(pugi::xml_node & node)
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
 	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
-	/*Mark Rad*/	node.append_attribute("mark_x") = mark.GetRad();
+	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
@@ -1989,7 +1989,7 @@ void Resource::SaveAsDef(pugi::xml_node & node)
 	}
 	node.append_attribute("name") = name.c_str();
 
-	/*Type*/	node.append_attribute("resource_type") = resource_type;
+	/*Type*/	node.append_attribute("resource_type") = App->animator->EnumToResourceStr(resource_type);
 	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
 	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
 	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
@@ -2178,7 +2178,7 @@ void Building::CleanMapLogic()
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
-	if (building_type == RUBBLE_THREE || building_type == BARRACK || building_type == ARCHERY_RANGE)
+	if (building_type == RUBBLE_THREE || building_type == BARRACK || building_type == BARRACK_C || building_type == ARCHERY_RANGE || building_type == ARCHERY_RANGE_C)
 	{
 		world_coords.x -= 1;
 		world_coords.y -= 1;
@@ -2241,7 +2241,7 @@ void Building::SaveAsDef(pugi::xml_node & node)
 	}
 	node.append_attribute("name") = name.c_str();
 
-	/*Type*/	node.append_attribute("building_type") = building_type;
+	/*Type*/	node.append_attribute("building_type") = App->animator->EnumToBuildingStr(building_type);
 	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
 	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;
 	/*Selec W*/ node.append_attribute("selection_w") = selection_rect.w;
@@ -2322,9 +2322,56 @@ bool Building::Die()
 		App->player->minimap_panel->RemoveBuildingToPrint(pos.x, pos.y, entity_diplomacy);
 
 		action_type = DISAPPEAR;
-		if (building_type == TOWN_CENTER)building_type = RUBBLE_FOUR;
-		else if (building_type == BARRACK || building_type == ARCHERY_RANGE || building_type == BLACKSMITH)building_type = RUBBLE_THREE;
-		else if (building_type == HOUSE_A || building_type == HOUSE_B || building_type == HOUSE_C)building_type = RUBBLE_TWO;
+		switch (building_type)
+		{
+		case TOWN_CENTER:
+			building_type = RUBBLE_FOUR;
+			break;
+		case BARRACK:
+			building_type = RUBBLE_THREE;
+			break;
+		case ARCHERY_RANGE:
+			building_type = RUBBLE_FOUR;
+			break;
+		case BLACKSMITH:
+		case STABLE:
+			building_type = RUBBLE_THREE;
+			break;
+		case HOUSE_A:
+		case HOUSE_B:
+		case HOUSE_C:
+		case LUMBER_CAMP:
+		case MINING_CAMP:
+			building_type = RUBBLE_TWO;
+			break;
+		case TOWN_CENTER_C:
+			building_type = RUBBLE_FOUR;
+			break;
+		case BARRACK_C:
+			building_type = RUBBLE_THREE;
+			break;
+		case ARCHERY_RANGE_C:
+			building_type = RUBBLE_FOUR;
+			break;
+		case BLACKSMITH_C:
+		case STABLE_C:
+			building_type = RUBBLE_THREE;
+			break;
+		case HOUSE_AI:
+		case HOUSE_BI:
+		case HOUSE_CI:
+			building_type = RUBBLE_TWO;
+			break;
+		case MONASTERY:
+			building_type = RUBBLE_THREE;
+			break;
+		case UNIVERSITY_C:
+		case UNIVERSITY_I:
+		case CASTLE:
+			building_type = RUBBLE_FOUR;
+			break;
+		}
+
 		App->entities_manager->AddDeadBuilding(this);
 		App->animator->BuildingPlay(this);
 		current_animation->Reset();
@@ -2431,21 +2478,37 @@ void Building::SetPosition(float x, float y, bool insert)
 		position.y -= App->map->data.tile_height * 0.5f;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2, 0);
 		break;
+	case TOWN_CENTER_C:
+		position.y += App->map->data.tile_height * 0.5f;
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2, 0);
+		break;
 	case BARRACK:
+	case BARRACK_C:
 	case ARCHERY_RANGE:
+	case ARCHERY_RANGE_C:
 	case BLACKSMITH:
+	case BLACKSMITH_C:
 	case STABLE:
+	case STABLE_C:
+	case MONASTERY:
+		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
+		break;
+	case UNIVERSITY_C:
+	case UNIVERSITY_I:
+	case CASTLE:
+		position.y += (App->map->data.tile_height + 1) * 0.5f;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
 		break;
 	case HOUSE_A:
+	case HOUSE_AI:
 	case HOUSE_B:
+	case HOUSE_BI:
 	case HOUSE_C:
+	case HOUSE_CI:
+	case LUMBER_CAMP:
+	case MINING_CAMP:
 		position.y -= (App->map->data.tile_height + 1) * 0.5f;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles, height_in_tiles, 0);
-		break;
-	case RUBBLE_THREE:
-		break;
-	case RUBBLE_FOUR:
 		break;
 	}
 

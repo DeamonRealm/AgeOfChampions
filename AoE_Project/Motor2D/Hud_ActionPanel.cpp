@@ -1412,31 +1412,31 @@ void Action_Panel::SetPanelType()
 		break;
 	case BUILDING:
 		{
-			if (b_type == TOWN_CENTER)
+			if (b_type == TOWN_CENTER || b_type == TOWN_CENTER_C)
 			{
 				if(towncenterpanel->GetActualEntity() != actual_entity || actualpanel != towncenterpanel) App->sound->PlayFXAudio(TOWN_CENTER_SELECTED_SOUND);
 				towncenterpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = towncenterpanel;
 			}
-			else if (b_type == BARRACK)
+			else if (b_type == BARRACK || b_type == BARRACK_C)
 			{
 				if (barrackpanel->GetActualEntity() != actual_entity || actualpanel != barrackpanel)App->sound->PlayFXAudio(BARRACK_SOUND);
 				barrackpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = barrackpanel;
 			}
-			else if (b_type == ARCHERY_RANGE)
+			else if (b_type == ARCHERY_RANGE || b_type == ARCHERY_RANGE_C)
 			{
 				if (archerypanel->GetActualEntity() != actual_entity || actualpanel != archerypanel)App->sound->PlayFXAudio(ARCHERY_SOUND);
 				archerypanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = archerypanel;
 			}
-			else if (b_type == STABLE)
+			else if (b_type == STABLE || b_type == STABLE_C)
 			{
 				if (stablepanel->GetActualEntity() != actual_entity || actualpanel != stablepanel)App->sound->PlayFXAudio(STABLE_SOUND);
 				stablepanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = stablepanel;
 			}
-			else if (b_type == BLACKSMITH)
+			else if (b_type == BLACKSMITH ||BLACKSMITH_C)
 			{
 				if (blacksmithpanel->GetActualEntity() != actual_entity || actualpanel != blacksmithpanel)App->sound->PlayFXAudio(STABLE_SOUND);
 				blacksmithpanel->ChangePlayerGamePanel(player_game_panel);

@@ -61,7 +61,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       <sprite opacity ="255" x="632" y="259" w="212" h="160" pX="0.551887" pY="0.75625"/>
     </action>
   </building>
-  <building id ="mine_camp">
+  <building id ="mining_camp">
     <action enum ="idle" speed="0">
       <sprite opacity ="255" x="1" y="1" w="176" h="110" pX="0.488636" pY="0.654545"/>
     </action>

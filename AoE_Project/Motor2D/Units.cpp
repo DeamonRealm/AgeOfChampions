@@ -38,9 +38,9 @@ void Villager::SaveAsDef(pugi::xml_node & node)
 	//Name
 	node.append_attribute("name") = "Villager";
 
-	/*Type*/	node.append_attribute("unit_type") = unit_type;
-	/*Class*/	node.append_attribute("unit_class") = unit_class;
-	/*Atk Type*/node.append_attribute("attack_type") = attack_type;
+	/*Type*/	node.append_attribute("unit_type") = App->animator->EnumToUnitStr(unit_type);
+	/*Class*/	node.append_attribute("unit_class") = App->animator->EnumToUnitClassStr(unit_class);
+	/*Atk Type*/node.append_attribute("attack_type") = App->animator->EnumToAttackStr(attack_type);
 
 	/*Selec X*/ node.append_attribute("selection_x") = selection_rect.x;
 	/*Selec Y*/ node.append_attribute("selection_y") = selection_rect.y;

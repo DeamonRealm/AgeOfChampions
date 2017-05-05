@@ -616,6 +616,73 @@ const char * j1Animator::EnumToUnitStr(UNIT_TYPE type) const
 	return nullptr;
 }
 
+const char * j1Animator::EnumToUnitClassStr(UNIT_CLASS type) const
+{
+	switch (type)
+	{
+	case NO_CLASS:		return "no_class";	break;
+	case CIVILIAN:		return "civilian";	break;
+	case INFANTRY:		return "infantry";	break;
+	case ARCHERY:		return "archery";	break;
+	case CAVALRY:		return "cavalry";	break;
+	}
+	return nullptr;
+}
+
+const char * j1Animator::EnumToAttackStr(ATTACK_TYPE type) const
+{
+	switch (type)
+	{
+	case MELEE:		return "melee";		break;
+	case DISTANCE:	return "distance";	break;
+	}
+	return nullptr;
+}
+
+const char * j1Animator::EnumToBuildingStr(BUILDING_TYPE type) const
+{
+	switch (type)
+	{
+	case TOWN_CENTER:			return "town_center";
+	case BARRACK:				return "barrack";
+	case ARCHERY_RANGE:			return "archery_range";
+	case BLACKSMITH:			return "blacksmith";
+	case STABLE:				return "stable";
+	case HOUSE_A:				return "houseA";
+	case HOUSE_B:				return "houseB";
+	case HOUSE_C:				return "houseC";
+	case LUMBER_CAMP:			return "lumber_camp";
+	case MINING_CAMP:			return "mining_camp";
+	case TOWN_CENTER_C:			return "town_center_c";
+	case BARRACK_C:				return "barrack_c";
+	case ARCHERY_RANGE_C:		return "archery_range_c";
+	case BLACKSMITH_C:			return "blacksmith_c";
+	case STABLE_C:				return "stable_c";
+	case HOUSE_AI:				return "houseAI";
+	case HOUSE_BI:				return "houseBI";
+	case HOUSE_CI:				return "houseCI";
+	case MONASTERY:				return "monastery";
+	case UNIVERSITY_C:			return "university_c";
+	case UNIVERSITY_I:			return "university_i";
+	case CASTLE:				return "castle";
+	case RUBBLE_TWO:			return "rubble_two";
+	case RUBBLE_THREE:			return "rubble_three";
+	case RUBBLE_FOUR:			return "rubble_four";
+	}
+	return nullptr;
+}
+
+const char * j1Animator::EnumToDiplomacyStr(DIPLOMACY diplomacy) const
+{
+	switch (diplomacy)
+	{
+	case NEUTRAL:	return "neutral";		break;
+	case ALLY:		return "ally";			break;
+	case ENEMY:		return "enemy";			break;
+	}
+	return nullptr;
+}
+
 bool j1Animator::AnimationLoopFromActionType(ACTION_TYPE type)
 {
 	switch (type)

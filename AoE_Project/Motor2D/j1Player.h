@@ -87,7 +87,6 @@ public: /*This is temporal*/
 	Game_Panel*				game_panel = nullptr;
 	Action_Panel*			action_panel = nullptr;
 	Minimap_Panel*			minimap_panel = nullptr;
-	uint unit_k = 0;
 
 public:
 
