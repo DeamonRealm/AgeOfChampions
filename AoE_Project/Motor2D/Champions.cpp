@@ -34,6 +34,43 @@ Champion::~Champion()
 
 }
 
+bool Champion::Die()
+{
+	
+	if (action_type != DIE && action_type != DISAPPEAR)
+	{
+		if (GetDiplomacy() == DIPLOMACY::ALLY)
+			App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
+		else
+			App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
+
+		App->entities_manager->ExtractChampion(this, this->GetDiplomacy());
+		App->player->action_panel->HeroIsDead(this->unit_type);
+		App->buff_manager->RemoveTargetBuffs(this);
+		action_type = DIE;
+		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
+		App->entities_manager->AddDeathUnit(this);
+		App->animator->UnitPlay(this);
+		App->fog_of_war->ReleaseEntityFog(this);
+
+	}
+	else if (current_animation->IsEnd())
+	{
+		if (action_type == DIE)
+		{
+			action_type = DISAPPEAR;
+			App->animator->UnitPlay(this);
+		}
+		else
+		{
+			//	App->entities_manager->RemoveDeathUnit(this);
+			App->entities_manager->DeleteEntity(this);
+			return true;
+		}
+	}
+	return false;
+}
+
 //Functionality =======================
 //Actions -------------------
 void Champion::CleanBuffedUnits()
@@ -761,6 +798,7 @@ void Warrior::CheckHability_lvl_3()
 
 	if (!ability_lvl_3_particle.animation.IsEnd())
 	{
+		ability_lvl_3_particle.position = GetPositionRounded();
 		ability_lvl_3_particle.Draw();
 	}
 	else
@@ -811,41 +849,6 @@ void Warrior::CalculateSpecialAttackArea(const iPoint& base)
 	special_attack_area.CalculateVertex();
 }
 
-bool Warrior::Die()
-{
-	if (GetDiplomacy() == DIPLOMACY::ALLY)
-		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
-	else
-		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
-	App->entities_manager->ExtractChampion(this, this->GetDiplomacy());
-	if (action_type != DIE && action_type != DISAPPEAR)
-	{
-
-		App->player->action_panel->HeroIsDead(this->unit_type);
-		App->buff_manager->RemoveTargetBuffs(this);
-		action_type = DIE;
-		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
-		App->entities_manager->AddDeathUnit(this);
-		App->animator->UnitPlay(this);
-		App->fog_of_war->ReleaseEntityFog(this);
-
-	}
-	else if (current_animation->IsEnd())
-	{
-		if (action_type == DIE)
-		{
-			action_type = DISAPPEAR;
-			App->animator->UnitPlay(this);
-		}
-		else
-		{
-			//App->entities_manager->RemoveDeathUnit(this);
-			App->entities_manager->DeleteEntity(this);
-			return true;
-		}
-	}
-	return false;
-}
 
 //Set Methods ---------------
 void Warrior::SetPosition(float x, float y, bool insert)
@@ -1555,40 +1558,6 @@ bool Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 	}
 }
 
-bool Wizard::Die()
-{
-	if (GetDiplomacy() == DIPLOMACY::ALLY)
-		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
-	else
-		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
-	App->entities_manager->ExtractChampion(this, this->GetDiplomacy());
-	if (action_type != DIE && action_type != DISAPPEAR)
-	{
-		App->player->action_panel->HeroIsDead(this->unit_type);
-		App->buff_manager->RemoveTargetBuffs(this);
-		action_type = DIE;
-		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
-		App->entities_manager->AddDeathUnit(this);
-		App->animator->UnitPlay(this);
-		App->fog_of_war->ReleaseEntityFog(this);
-
-	}
-	else if (current_animation->IsEnd())
-	{
-		if (action_type == DIE)
-		{
-			action_type = DISAPPEAR;
-			App->animator->UnitPlay(this);
-		}
-		else
-		{
-			//	App->entities_manager->RemoveDeathUnit(this);
-			App->entities_manager->DeleteEntity(this);
-			return true;
-		}
-	}
-	return false;
-}
 
 void Wizard::SetPosition(float x, float y, bool insert)
 {
@@ -2196,40 +2165,6 @@ bool Hunter::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 	}
 }
 
-bool Hunter::Die()
-{
-	if (GetDiplomacy() == DIPLOMACY::ALLY)
-		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
-	else
-		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
-	App->entities_manager->ExtractChampion(this, this->GetDiplomacy());
-	if (action_type != DIE && action_type != DISAPPEAR)
-	{
-		App->player->action_panel->HeroIsDead(this->unit_type);
-		App->buff_manager->RemoveTargetBuffs(this);
-		action_type = DIE;
-		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
-		App->entities_manager->AddDeathUnit(this);
-		App->animator->UnitPlay(this);
-		App->fog_of_war->ReleaseEntityFog(this);
-
-	}
-	else if (current_animation->IsEnd())
-	{
-		if (action_type == DIE)
-		{
-			action_type = DISAPPEAR;
-			App->animator->UnitPlay(this);
-		}
-		else
-		{
-			//	App->entities_manager->RemoveDeathUnit(this);
-			App->entities_manager->DeleteEntity(this);
-			return true;
-		}
-	}
-	return false;
-}
 
 void Hunter::SetPosition(float x, float y, bool insert)
 {

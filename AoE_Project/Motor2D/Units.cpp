@@ -88,30 +88,32 @@ void Villager::LoadAsDef(pugi::xml_node& node)
 //Actions -----
 bool Villager::Die()
 {
-	if (GetDiplomacy() == DIPLOMACY::ALLY)
-	{
-		App->player->game_panel->IncreaseDeathAllies();
-		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
-	}
-	if (GetDiplomacy() == DIPLOMACY::ENEMY)
-	{
-		//App->player->game_panel->IncreaseDeathEnemies();
-		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
-
-		std::list<Unit*>::const_iterator it = App->entities_manager->UnitsList()->begin();
-		bool lastenemy = true;
-		while (it != App->entities_manager->UnitsList()->end())
-		{
-			if (it._Ptr->_Myval->GetDiplomacy() == ENEMY && it._Ptr->_Myval->GetEntityType() == UNIT && it._Ptr->_Myval != this)
-				lastenemy = false;
-			it++;
-		}
-		if (lastenemy && !App->debug_mode) App->player->game_panel->DoWin();
-	}
-
 
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
+		if (GetDiplomacy() == DIPLOMACY::ALLY)
+		{
+			App->player->game_panel->IncreaseDeathAllies();
+			App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
+		}
+		if (GetDiplomacy() == DIPLOMACY::ENEMY)
+		{
+			//App->player->game_panel->IncreaseDeathEnemies();
+			App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
+
+			std::list<Unit*>::const_iterator it = App->entities_manager->UnitsList()->begin();
+			bool lastenemy = true;
+			while (it != App->entities_manager->UnitsList()->end())
+			{
+				if (it._Ptr->_Myval->GetDiplomacy() == ENEMY && it._Ptr->_Myval->GetEntityType() == UNIT && it._Ptr->_Myval != this)
+					lastenemy = false;
+				it++;
+			}
+			if (lastenemy && !App->debug_mode) App->player->game_panel->DoWin();
+		}
+
+
+
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);

@@ -20,7 +20,7 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Area_Attack.png" width="1298" height="1298">
-  <particle particle_type="buff_particle" actor="1" buff_type="passive" attribute_type="attack" draw_rate="2500" z="200">
+  <particle particle_type="buff_particle" actor="1" buff_type="passive" attribute_type="attack" draw_rate="2500" z="-200">
     <anim_data speed="80" loop="0"/>
     <sprite n="BuffFire_0001s_0012_1.png" opacity ="255" x="497" y="1" w="528" h="376" pX="0.492424" pY="0.515957"/>
     <sprite n="BuffFire_0001s_0011_2.png" opacity ="255" x="1027" y="1" w="528" h="376" pX="0.492424" pY="0.515957"/>

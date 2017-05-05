@@ -1403,6 +1403,8 @@ void Unit::Heal(uint heal)
 
 bool Unit::Die()
 {
+	if (action_type != DIE && action_type != DISAPPEAR)
+	{
 	if (GetDiplomacy() == DIPLOMACY::ALLY)
 	{
 		App->player->game_panel->IncreaseDeathAllies();
@@ -1425,8 +1427,8 @@ bool Unit::Die()
 	}
 
 
-	if (action_type != DIE && action_type != DISAPPEAR)
-	{
+	
+
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);

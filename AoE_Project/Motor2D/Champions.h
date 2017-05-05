@@ -62,6 +62,7 @@ protected:
 public:
 
 	//Functionality ---------
+	virtual bool Die();
 	//Actions -----
 	void		CleanBuffedUnits();
 	void		CheckCooldown();
@@ -169,7 +170,7 @@ public:
 	void	CheckHability_lvl_3();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
 	void	CalculateSpecialAttackArea(const iPoint& base);
-	bool	Die();
+
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Triangle& tri);
@@ -233,7 +234,7 @@ public:
 	void	CheckHability_lvl_3();
 	iPoint	GetiPointFromDirection(DIRECTION_TYPE direction)const;
 	bool	CalculateSpecialAttackArea(const iPoint& base, bool attack_lvl_2);
-	bool	Die();
+
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Circle& circle, const char* name);
@@ -311,7 +312,7 @@ public:
 	void	CalculateArrorwAttackArea(const iPoint& base);
 
 	bool	CalculateSpecialAttackArea(const iPoint& base, bool attack_lvl_2);
-	bool	Die();
+
 	//Set Methods -
 	void	SetPosition(float x, float y, bool insert = true);
 	void	SetSpecialAttackArea(const Circle& circle, const char* name);
