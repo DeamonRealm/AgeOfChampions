@@ -185,7 +185,7 @@ class AttackUnitAction : public Action
 public:
 
 	//Constructor -----------
-	AttackUnitAction(Unit* actor, Unit** target) : Action(actor, TASK_U_ATTACK_U), target(target)
+	AttackUnitAction(Unit* actor, Unit* target) : Action(actor, TASK_U_ATTACK_U), target(target)
 	{
 		//Set actor interaction target
 		//	((Unit*)actor)->SetInteractionTarget(target);
@@ -201,7 +201,7 @@ public:
 	//Functionality ---------
 	bool Execute()
 	{
-		if (target == nullptr || (*target) == nullptr) return true;
+		if (target == nullptr) return true;
 
 		//Actor attack the target
 		return ((Unit*)actor)->AttackUnit(target);
@@ -210,12 +210,12 @@ public:
 	//Get Methods -----------
 	Unit*	GetTarget()const
 	{
-		return *target;
+		return target;
 	}
 
 private:
 
-	Unit** target = nullptr;
+	Unit* target = nullptr;
 };
 /// ---------------------------------------------
 
@@ -226,7 +226,7 @@ class AttackBuildingAction : public Action
 public:
 
 	//Constructor -----------
-	AttackBuildingAction(Unit* actor, Building** target) : Action(actor, TASK_U_ATTACK_B), target(target)
+	AttackBuildingAction(Unit* actor, Building* target) : Action(actor, TASK_U_ATTACK_B), target(target)
 	{
 
 	}
@@ -241,7 +241,7 @@ public:
 	//Functionality ---------
 	bool Execute()
 	{
-		if (target == nullptr || (*target) == nullptr) return true;
+		if (target == nullptr || (target) == nullptr) return true;
 
 		//Actor attack the target
 		return ((Unit*)actor)->AttackBuilding(target);
@@ -250,12 +250,12 @@ public:
 	//Get Methods -----------
 	Building*	GetTarget()const
 	{
-		return *target;
+		return target;
 	}
 
 private:
 
-	Building** target = nullptr;
+	Building* target = nullptr;
 };
 /// ---------------------------------------------
 
@@ -357,7 +357,7 @@ private:
 class HealUnitAction : public Action
 {
 public:
-	HealUnitAction(Unit* actor, Unit** target) : Action(actor, TASK_U_HEAL_U), target(target)
+	HealUnitAction(Unit* actor, Unit* target) : Action(actor, TASK_U_HEAL_U), target(target)
 	{};
 	~HealUnitAction() {};
 
@@ -365,14 +365,14 @@ public:
 
 	bool Execute()
 	{
-		if ((*target) == nullptr) return true;
+		if (target == nullptr) return true;
 
 		return ((Unit*)actor)->HealUnit(target);
 	}
 
 
 private:
-	Unit** target = nullptr;
+	Unit* target = nullptr;
 
 };
 /// ---------------------------------------------
@@ -384,7 +384,7 @@ class RecollectVillagerAction : public Action
 public:
 
 	//Constructor -----------
-	RecollectVillagerAction(Villager* actor, Resource** target) : Action(actor, TASK_U_RECOLLECT), target(target)
+	RecollectVillagerAction(Villager* actor, Resource* target) : Action(actor, TASK_U_RECOLLECT), target(target)
 	{
 	}
 
@@ -399,25 +399,25 @@ public:
 	bool Activation()
 	{
 		//Check it the resource hasn't been yet depleted
-		if (target == nullptr || *target == nullptr)return false;
-		if ((*target)->GetEntityType() != RESOURCE) return false;
+		if (target == nullptr)return false;
+		if (target->GetEntityType() != RESOURCE) return false;
 
 		//Set actor animation
-		((Villager*)actor)->Focus((*target)->GetPositionRounded(), true);
-		((Villager*)actor)->CheckRecollectResource(((Resource*)(*target))->GetResourceType());
+		((Villager*)actor)->Focus(target->GetPositionRounded(), true);
+		((Villager*)actor)->CheckRecollectResource(target->GetResourceType());
 
 		return true;
 	}
 
 	bool Execute()
 	{
-		if (*target == nullptr)
+		if (target == nullptr)
 		{
 			//If resource is deplated execute a SaveResourceAction
 			Building* save_point = App->entities_manager->GetNearestBuilding(actor->GetPositionRounded(), TOWN_CENTER, actor->GetDiplomacy());
 			if (save_point != nullptr)
 			{
-				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, (Building**)save_point->GetMe()), TASK_CHANNELS::PRIMARY);
+				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, save_point), TASK_CHANNELS::PRIMARY);
 			}
 
 			//Reset the animation
@@ -432,12 +432,12 @@ public:
 	//Get Methods -----------
 	Resource*	GetTarget()const
 	{
-		return *target;
+		return target;
 	}
 
 private:
 
-	Resource** target = nullptr;
+	Resource* target = nullptr;
 
 };
 /// ---------------------------------------------
@@ -449,7 +449,7 @@ class SaveResourcesVillagerAction : public Action
 public:
 
 	//Constructor -----------
-	SaveResourcesVillagerAction(Villager* actor, Building** target) : Action(actor, TASK_U_SAVE_RESOURCES), target(target)
+	SaveResourcesVillagerAction(Villager* actor, Building* target) : Action(actor, TASK_U_SAVE_RESOURCES), target(target)
 	{
 
 	}
@@ -465,7 +465,7 @@ public:
 	bool Activation()
 	{
 		//Set actor interaction target
-		if ((*target) == nullptr)
+		if (target == nullptr)
 		{
 			((Villager*)actor)->ResetResourcesData();
 			App->animator->UnitPlay((Villager*)actor);
@@ -478,7 +478,7 @@ public:
 
 	bool Execute()
 	{
-		if (*target == nullptr)return true;
+		if (target == nullptr)return true;
 		//Actor save resources
 		return ((Villager*)actor)->SaveResources(target);
 	}
@@ -486,12 +486,12 @@ public:
 	//Get Methods -----------
 	Building*	GetTarget()const
 	{
-		return *target;
+		return target;
 	}
 
 private:
 
-	Building** target = nullptr;
+	Building* target = nullptr;
 
 };
 /// ---------------------------------------------
@@ -539,7 +539,7 @@ public:
 		{
 			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 			{
-				actor->AddPriorizedAction(App->action_manager->AttackToUnitAction((Unit*)actor, (Unit**)surrounding_units[i]->GetMe()));
+				actor->AddPriorizedAction(App->action_manager->AttackToUnitAction((Unit*)actor, surrounding_units[i]));
 				return false;
 			}
 		};
@@ -550,7 +550,7 @@ public:
 		{
 			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy())
 			{
-				actor->AddPriorizedAction(App->action_manager->AttackToBuildingAction((Unit*)actor, (Building**)surrounding_buildings[k]->GetMe()));
+				actor->AddPriorizedAction(App->action_manager->AttackToBuildingAction((Unit*)actor, surrounding_buildings[k]));
 				return false;
 			}
 		};
@@ -596,7 +596,7 @@ public:
 		{
 			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 			{
-				actor->AddAction(App->action_manager->AttackToUnitAction((Unit*)actor, (Unit**)surrounding_units[i]->GetMe()), PRIMARY);
+				actor->AddAction(App->action_manager->AttackToUnitAction((Unit*)actor, surrounding_units[i]), PRIMARY);
 				return false;
 			}
 		};
@@ -608,7 +608,7 @@ public:
 		{
 			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy())
 			{
-				actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, (Building**)surrounding_buildings[k]->GetMe()), PRIMARY);
+				actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, surrounding_buildings[k]), PRIMARY);
 				return false;
 			}
 		};
@@ -651,7 +651,7 @@ public:
 		{
 			if (actor->GetDiplomacy() == surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 			{
-				actor->AddAction(new HealUnitAction((Unit*)actor, &surrounding_units[i]));
+				actor->AddAction(new HealUnitAction((Unit*)actor, surrounding_units[i]));
 				return false;
 			}
 		};
@@ -666,6 +666,7 @@ public:
 
 
 private:
+
 	std::vector<Unit*> surrounding_units;
 
 };

@@ -237,19 +237,19 @@ void Villager::SetCurrentResources(uint value)
 	current_resources = value;
 }
 //Actions --------------
-bool Villager::Recollect(Resource** target)
+bool Villager::Recollect(Resource* target)
 {
-	if (*target == nullptr)return true;
+	if (target == nullptr)return true;
 
 	//Check if the target resource is in the "attack" (in this case used for recollect) area
-	if (!attack_area.Overlap((*target)->GetInteractArea()))
+	if (!attack_area.Overlap(target->GetInteractArea()))
 	{
-		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
+		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
 		iPoint woop = App->map->WorldToMap(goal.x,goal.y);
-		iPoint woop_tile = App->map->WorldToMap((*target)->GetPositionRounded().x, (*target)->GetPositionRounded().y);
+		iPoint woop_tile = App->map->WorldToMap(target->GetPositionRounded().x, target->GetPositionRounded().y);
 
 		if (!App->pathfinding->IsWalkable(woop)) {
-			goal = this->FindWalkableAdjacent((*target)->GetPositionRounded());
+			goal = this->FindWalkableAdjacent(target->GetPositionRounded());
 			if (goal == iPoint(-1, -1))
 				return true;
 			LOG("GOAL %i %i ", goal.x, goal.y);
@@ -258,30 +258,30 @@ bool Villager::Recollect(Resource** target)
 		}
 
 
-		App->pathfinding->PushPath(this, goal, (*target)->GetPositionRounded());
+		App->pathfinding->PushPath(this, goal, target->GetPositionRounded());
 
 		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
 		return false;
 	}
 
 	//Check the action rate
-	uint rate_value = GetRecollectRate((*target)->GetResourceType());
+	uint rate_value = GetRecollectRate(target->GetResourceType());
 	if (action_timer.Read() < rate_value) return false;
 
 	//Get resources from the target resource
 	uint recollect_value = MIN(recollect_capacity, resources_capacity - current_resources);
 
 	//Extract resource material, if it fails return true to end the recollect action
-	if (!(*target)->ExtractResources(&recollect_value))
+	if (!target->ExtractResources(&recollect_value))
 	{
-		*target = nullptr;
+		target = nullptr;
 		if (current_resources > 0)
 		{
 			//Go to the nearest download point
 			Building* save_point = App->entities_manager->GetNearestBuilding(GetPositionRounded(), TOWN_CENTER, this->GetDiplomacy());
 			if (save_point == nullptr)return true;
 			//Set the carry action animation type
-			AddAction((Action*)App->action_manager->SaveResourcesAction(this, (Building**)save_point->GetMe()), TASK_CHANNELS::PRIMARY);
+			AddAction((Action*)App->action_manager->SaveResourcesAction(this, save_point), TASK_CHANNELS::PRIMARY);
 			return true;
 		}
 		else
@@ -302,7 +302,7 @@ bool Villager::Recollect(Resource** target)
 		Building* save_point = App->entities_manager->GetNearestBuilding(GetPositionRounded(), TOWN_CENTER, this->GetDiplomacy());
 		if (save_point == nullptr)return true;
 		//Set the carry action animation type
-		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, (Building**)save_point->GetMe()));
+		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, save_point));
 		return false;
 	}
 
@@ -312,12 +312,12 @@ bool Villager::Recollect(Resource** target)
 	return false;
 }
 
-bool Villager::SaveResources(Building** save_point)
+bool Villager::SaveResources(Building* save_point)
 {
 	//Check if the target building is in the "attack" (in this case used for save resources) area
-	if (!attack_area.Intersects((*save_point)->GetInteractArea()))
+	if (!attack_area.Intersects(save_point->GetInteractArea()))
 	{
-		iPoint intersect_point = attack_area.NearestPoint((*save_point)->GetInteractArea());
+		iPoint intersect_point = attack_area.NearestPoint(save_point->GetInteractArea());
 		App->pathfinding->PushPath(this, intersect_point);
 
 		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, iPoint(intersect_point.x, intersect_point.y)));
@@ -325,9 +325,9 @@ bool Villager::SaveResources(Building** save_point)
 	}
 
 	//Store all the resources collected in the player or AI bag
-	if ((*save_point)->GetDiplomacy() == ALLY)
+	if (save_point->GetDiplomacy() == ALLY)
 		App->player->game_panel->AddResource(current_resources, resource_collected_type);
-	if ((*save_point)->GetDiplomacy() == ENEMY)
+	if (save_point->GetDiplomacy() == ENEMY)
 		App->AI->AddResources(resource_collected_type, current_resources);
 
 	//Reset all the resources data so the next action will not be affected for it

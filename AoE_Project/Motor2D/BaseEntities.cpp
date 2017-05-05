@@ -39,7 +39,6 @@ Entity::~Entity()
 	}
 
 	current_animation = nullptr;
-	myself = nullptr;
 }
 
 
@@ -58,7 +57,7 @@ void Entity::Deselect()
 //Operators -------------
 bool Entity::operator == (const Entity& tar)
 {
-	return (myself == tar.myself && position == tar.position && entity_type == tar.entity_type && tar.life == life);
+	return (position == tar.position && entity_type == tar.entity_type && tar.life == life);
 }
 
 //Update ----------
@@ -288,13 +287,6 @@ ActionWorker * Entity::GetWorker()
 {
 	return &action_worker;
 }
-
-Entity ** Entity::GetMe()
-{
-	return &myself;
-}
-
-
 // ----------------
 ///----------------------------------------------
 
@@ -1078,13 +1070,13 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	return iPoint(-1, -1);
 }
 
-Unit** Unit::FindNewTarget()
+Unit* Unit::FindNewTarget()
 {
 	std::vector<Unit*> other_units;
 	App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
 	App->entities_manager->OrganizeByNearest(other_units, this->GetVision());
 
-	Unit* unit;
+	Unit* unit = nullptr;
 	iPoint goal;
 	while (!other_units.empty())
 	{
@@ -1098,7 +1090,7 @@ Unit** Unit::FindNewTarget()
 		goal = FindWalkableAdjacent(unit->GetPositionRounded());
 		if (goal != iPoint(-1, -1))
 		{
-			return (Unit**)unit->GetMe();
+			return unit;
 		}
 	}
 	return nullptr;
@@ -1204,20 +1196,20 @@ DIRECTION_TYPE Unit::LookDirection(const iPoint & from, const iPoint & to)
 		return NO_DIRECTION;
 	}
 }
-bool Unit::AttackUnit(Unit** target)
+bool Unit::AttackUnit(Unit* target)
 {
 	bool ret = false;
 	//Check if the target is in the attack area
-	if (target == nullptr || (*target) == nullptr || (*target)->GetAction() == DIE || (*target)->GetAction() == DISAPPEAR)
+	if (target == nullptr || target->GetAction() == DIE || target->GetAction() == DISAPPEAR)
 	{
 		return true;
 	}
-	if (!attack_area.Overlap(&((Unit*)(*target))->GetSoftCollider()))
+	if (!attack_area.Overlap(&target->GetSoftCollider()))
 	{
 
-		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider());
+		iPoint goal = attack_area.NearestPoint(&target->GetSoftCollider());
 
-		App->pathfinding->PushPath(this, goal, (*target)->GetPositionRounded());
+		App->pathfinding->PushPath(this, goal, target->GetPositionRounded());
 /*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
@@ -1237,21 +1229,21 @@ bool Unit::AttackUnit(Unit** target)
 	{
 		const Sprite* sprite = this->current_animation->GetCurrentSprite();
 		iPoint arrow_position(this->GetPositionRounded().x, this->GetPositionRounded().y-sprite->GetYpivot());
-		iPoint arrow_destination((*target)->GetPositionRounded().x, (*target)->GetPositionRounded().y);
+		iPoint arrow_destination(target->GetPositionRounded().x, target->GetPositionRounded().y);
 		ShotArrow(arrow_position, arrow_destination);
 	}
 		//Set unit attack animation
 	if (action_type != ATTATCK)
 	{
 		action_type = ATTATCK;
-		Focus((*target)->GetPositionRounded());
+		Focus(target->GetPositionRounded());
 		App->animator->UnitPlay(this);
 	}
 
 	//Calculate the attack & apply the value at the target life points
 	//((Unit*)(*target))->life -= MIN(((Unit*)(*target))->life, attack_hitpoints);
-	ret = ((Unit*)(*target))->DirectDamage(attack_hitpoints);
-	if (ret || (*target)->GetLife() <= 0)
+	ret = target->DirectDamage(attack_hitpoints);
+	if (ret || target->GetLife() <= 0)
 	{
 		ret = true;
 		if (this->action_type == ATTATCK)
@@ -1266,22 +1258,22 @@ bool Unit::AttackUnit(Unit** target)
 	return ret;
 }
 
-bool Unit::HealUnit(Unit ** target)
+bool Unit::HealUnit(Unit* target)
 {
 	bool ret = false;
 
 	//Check if the target is in the attack area
-	if (target == nullptr || (*target) == nullptr)
+	if (target == nullptr)
 	{
 		return true;
 	}
 
 
-	if (!attack_area.Overlap(&((Unit*)(*target))->GetSoftCollider()))
+	if (!attack_area.Overlap(&target->GetSoftCollider()))
 	{
 
-		iPoint goal = attack_area.NearestPoint(&((Unit*)(*target))->GetSoftCollider() + attack_area.GetRad());
-		App->pathfinding->PushPath(this, goal,(*target)->GetPositionRounded());
+		iPoint goal = attack_area.NearestPoint(&target->GetSoftCollider() + attack_area.GetRad());
+		App->pathfinding->PushPath(this, goal,target->GetPositionRounded());
 		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
@@ -1303,31 +1295,31 @@ bool Unit::HealUnit(Unit ** target)
 		action_type = ATTATCK;
 		App->animator->UnitPlay(this);
 	}
-	Focus((*target)->GetPositionRounded());
+	Focus(target->GetPositionRounded());
 
 	//Calculate the attack & apply the value at the target life points
-	((Unit*)(*target))->Heal(attack_hitpoints);
+	target->Heal(attack_hitpoints);
 
 	//Reset action timer
 	action_timer.Start();
 
-	if ((*target)->GetLife() >= (*target)->GetMaxLife()) ret = true;
+	if (target->GetLife() >= target->GetMaxLife()) ret = true;
 	return ret;
 }
 
-bool Unit::AttackBuilding(Building ** target)
+bool Unit::AttackBuilding(Building * target)
 {
-	if (target == nullptr || (*target) == nullptr)
+	if (target == nullptr)
 	{
 		return true;
 	}
 
 	//Check if the target is in the attack area
-	if (!attack_area.Intersects((*target)->GetInteractArea()))
+	if (!attack_area.Intersects((target)->GetInteractArea()))
 	{
 
-		iPoint goal = attack_area.NearestPoint((*target)->GetInteractArea());
-		App->pathfinding->PushPath(this, goal, (*target)->GetPositionRounded());
+		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
+		App->pathfinding->PushPath(this, goal, target->GetPositionRounded());
 		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
@@ -1343,24 +1335,24 @@ bool Unit::AttackBuilding(Building ** target)
 	if (action_type != ATTATCK)
 	{
 		action_type = ATTATCK;
-		Focus((*target)->GetPositionRounded());
+		Focus(target->GetPositionRounded());
 		App->animator->UnitPlay(this);
 	}
 
-	if ((*target)->GetLife() <= 0)
+	if (target->GetLife() <= 0)
 	{
-		ACTION_TYPE act = (*target)->GetActionType();
+		ACTION_TYPE act = target->GetActionType();
 		if (this->action_type == ATTATCK)
 		{
 			action_type = IDLE;
 			App->animator->UnitPlay(this);
 		}
-		if (act != DIE && act != DISAPPEAR)(*target)->AddPriorizedAction((Action*)App->action_manager->DieBuildngAction((*target)));
+		if (act != DIE && act != DISAPPEAR)target->AddPriorizedAction((Action*)App->action_manager->DieBuildngAction(target));
 		return true;
 	}
 
 	//Calculate the attack & apply the value at the target life points
-	((Unit*)(*target))->life -= MIN(((Unit*)(*target))->life, attack_hitpoints);
+	target->SetLife(target->GetLife() - MIN(target->GetLife(), attack_hitpoints));
 
 	//Reset action timer
 	action_timer.Start();
@@ -2328,8 +2320,6 @@ bool Building::Die()
 		//Remove from minimap
 		iPoint pos = GetPositionRounded();
 		App->player->minimap_panel->RemoveBuildingToPrint(pos.x, pos.y, entity_diplomacy);
-
-		myself = nullptr;
 
 		action_type = DISAPPEAR;
 		if (building_type == TOWN_CENTER)building_type = RUBBLE_FOUR;

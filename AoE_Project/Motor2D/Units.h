@@ -56,8 +56,8 @@ public:
 	void SetCurrentResources(uint value);
 
 	//Actions -----
-	bool Recollect(Resource** target);
-	bool SaveResources(Building** save_point);
+	bool Recollect(Resource* target);
+	bool SaveResources(Building* save_point);
 	void CheckRecollectResource(RESOURCE_TYPE type);
 	void CheckCarryResource();
 	void ResetResourcesData();

@@ -236,11 +236,8 @@ void Entity_Profile::DrawProfile() const
 
 void Entity_Profile::UpdateStats()
 {
-	if (element->myself == NULL)
-	{
-		element = nullptr;
-		return;
-	}
+	if (element == nullptr) return;
+
 	if (element->GetEntityType() != RESOURCE && element->GetLife() != life_update)
 	{
 		life_update = element->GetLife();
@@ -453,17 +450,17 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			{
 				if (UpperEntity->GetDiplomacy() == ENEMY)
 				{
-					if (UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit**)UpperEntity->GetMe()));
-					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building**)UpperEntity->GetMe()));
+					if (UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
+					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
 					App->sound->PlayFXAudio(ATTACK_SOUND);
 				}
 				else if (UpperEntity->GetEntityType() == RESOURCE && selected_unit_type == VILLAGER)
 				{
-					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource**)UpperEntity->GetMe()));
+					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource*)UpperEntity));
 				}
 				else if ((selected_unit_type == WIZARD_CHMP || selected_unit_type == MONK) && UpperEntity->GetEntityType() == UNIT)
 				{
-					Selected->GetEntity()->AddAction(App->action_manager->HealAction((Unit*)Selected->GetEntity(), (Unit**)UpperEntity->GetMe()));
+					Selected->GetEntity()->AddAction(App->action_manager->HealAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
 				}
 			}
 			else App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));

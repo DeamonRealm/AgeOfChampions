@@ -183,16 +183,16 @@ public:
 	TeleportUnitAction*			TeleportAction(Unit* actor, const iPoint& displacement);
 
 	//Attack Functions
-	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit** target);
-	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building** target);
+	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit* target);
+	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target);
 	DieUnitAction*				DieAction(Unit* actor);
 	DieBuildingAction*			DieBuildngAction(Building* actor);
 	StunUnitAction*				StunAction(Unit* actor, uint time);
-	HealUnitAction*				HealAction(Unit* actor, Unit** target);
+	HealUnitAction*				HealAction(Unit* actor, Unit* target);
 
 	//Recollect Functions
-	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource** target);
-	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building** target);
+	RecollectVillagerAction*	RecollectAction(Villager* actor, Resource* target);
+	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building* target);
 
 	// Building Functions
 	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0);

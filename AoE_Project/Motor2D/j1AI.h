@@ -188,17 +188,17 @@ private:
 class SendToRecollect : public AICommand
 {
 public:
-	SendToRecollect(std::list<Unit*> units, Resource** target);
+	SendToRecollect(std::list<Unit*> units, Resource* target);
 	~SendToRecollect();
 
 public:
+
 	bool Execute();
-
-
+	
 private:
 
 	std::list<Unit*> units;
-	Resource** target;
+	Resource* target = nullptr;
 };
 //---------------------
 
@@ -215,7 +215,7 @@ public:
 
 private:
 	std::list<Entity*>& to_move_list;
-	iPoint new_pos;
+	iPoint new_pos = { 0,0 };
 
 };
 

@@ -79,7 +79,7 @@ void Champion::CleanBuffedUnits()
 
 	while (unit != buffed_units.end())
 	{
-		if (unit._Ptr->_Myval != myself)App->buff_manager->RemoveTargetBuff(unit._Ptr->_Myval, buff_to_apply);
+		if (unit._Ptr->_Myval != this)App->buff_manager->RemoveTargetBuff(unit._Ptr->_Myval, buff_to_apply);
 
 		unit++;
 	}

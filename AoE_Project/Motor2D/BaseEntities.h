@@ -270,10 +270,6 @@ protected:
 
 public:
 
-	Entity*			myself = nullptr;
-
-public:
-
 	//Functionality -------------------
 	//Save/Load methods ----
 	virtual void	SaveAsDef(pugi::xml_node& node) = 0;
@@ -336,7 +332,6 @@ public:
 	const SDL_Rect*	GetSelectionRect()const;
 	const SDL_Rect&	GetIcon()const;
 	ActionWorker*	GetWorker();
-	Entity**		GetMe();
 };
 /// ---------------------------------------------
 
@@ -432,12 +427,12 @@ public:
 	bool					UnitHere(const iPoint& destination, int radius);
 	iPoint					FindWalkableAdjacent(const iPoint& center);
 
-	Unit**					FindNewTarget();
+	Unit*					FindNewTarget();
 	void					Focus(const iPoint& target, bool play = true);
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
-	bool					AttackUnit(Unit** target);
-	bool					HealUnit(Unit** target);
-	bool					AttackBuilding(Building** target);
+	bool					AttackUnit(Unit* target);
+	bool					HealUnit(Unit* target);
+	bool					AttackBuilding(Building* target);
 	bool					Cover();
 	bool					DirectDamage(uint damage);
 	void					Heal(uint heal);

@@ -108,14 +108,14 @@ bool j1AI::Update(float dt)
 
 		if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(TASK_CHANNELS::PRIMARY))
 		{
-			unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)unit_it._Ptr->_Myval, (Resource**)to_recolect->GetMe()), PRIMARY);
+			unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)unit_it._Ptr->_Myval, (Resource*)to_recolect), PRIMARY);
 		}
 		unit_it++;
 	}
 
 	
 	//Enemies attack NOT WORKING
-	/*
+	
 	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
 	while (building_it != enemy_buildings.end())
 	{
@@ -127,7 +127,7 @@ bool j1AI::Update(float dt)
 		building_it++;
 	}
 	ManageAttack();
-	*/
+	
 
 	update_timer.Start();
 
@@ -209,7 +209,7 @@ void j1AI::ManageAttack()
 			if (to_kill == nullptr) return;
 
 			if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY))
-				unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->AttackToBuildingAction(unit_it._Ptr->_Myval, (Building**)to_kill->GetMe()), SECONDARY);
+				unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->AttackToBuildingAction(unit_it._Ptr->_Myval, (Building*)to_kill), SECONDARY);
 
 			unit_it++;
 		}
@@ -431,7 +431,7 @@ bool SpawnUnitCommand::Execute()
 
 
 //-----------------------------
-SendToRecollect::SendToRecollect(std::list<Unit*> units, Resource** target) : units(units), target(target)
+SendToRecollect::SendToRecollect(std::list<Unit*> units, Resource* target) : units(units), target(target)
 {
 }
 

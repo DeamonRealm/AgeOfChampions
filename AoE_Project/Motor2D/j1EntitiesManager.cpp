@@ -130,29 +130,26 @@ bool j1EntitiesManager::Update(float dt)
 	}
 	//Update all the units
 	std::list<Unit*>::const_iterator item = units.begin();
-
 	while (item != units.end())
 	{
 		ret = item._Ptr->_Myval->Update();
 		item++;
 	}
 
-	//Update all death units
+	//Update all the units
 	std::list<Unit*>::const_iterator death_unit = death_units.begin();
-	for (; death_unit != death_units.end(); death_unit++)
+	while (death_unit != death_units.end())
 	{
-
-		death_unit._Ptr->_Myval->Update();
-
+		ret = death_unit._Ptr->_Myval->Update();
+		death_unit++;
 	}
 
-	//Update all death buildings
+	//Update all the units
 	std::list<Building*>::const_iterator death_building = death_buildings.begin();
-	for (; death_building != death_buildings.end(); death_building++)
+	while (death_building != death_buildings.end())
 	{
-
-		death_building._Ptr->_Myval->Update();
-
+		ret = death_building._Ptr->_Myval->Update();
+		death_building++;
 	}
 
 	std::list<Building*>::const_iterator item_build = buildings.begin();
@@ -170,40 +167,7 @@ bool j1EntitiesManager::Update(float dt)
 
 bool j1EntitiesManager::PostUpdate()
 {
-	//If there's no entities to delete returns
-	if (wasted_units.empty())return true;
 
-	//Clean all the wasted entities
-	uint size = wasted_units.size();
-	for (uint k = 0; k < size; k++)
-	{
-		//Get the entity type
-		ENTITY_TYPE type = wasted_units[k]->GetEntityType();
-
-		//Remove the entity from the correct list
-		if (type == RESOURCE)
-		{
-			resources.remove((Resource*)wasted_units[k]);
-			resources_quadtree.Exteract((Resource*)wasted_units[k], &wasted_units[k]->GetPosition());
-		}
-		else if (type == BUILDING)
-		{
-
-			death_buildings.remove((Building*)wasted_units[k]);
-			buildings.remove((Building*)wasted_units[k]);
-			buildings_quadtree.Exteract((Building*)wasted_units[k], &wasted_units[k]->GetPosition());
-		}
-		else if (type == UNIT)
-		{
-			wasted_units[k]->GetWorker()->HardReset();
-			death_units.remove((Unit*)wasted_units[k]);
-			units_quadtree.Exteract((Unit*)wasted_units[k], &wasted_units[k]->GetPosition());
-
-		}
-
-		RELEASE(wasted_units[k]);
-	}
-	wasted_units.clear();
 
 	return true;
 }
@@ -366,6 +330,17 @@ bool j1EntitiesManager::CleanUp()
 	}
 	ally_buildings_defs.clear();
 	enemy_buildings_defs.clear();
+
+	//If there's no entities to delete returns
+	if (wasted_units.empty())return true;
+
+	//Clean all the wasted entities
+	size = wasted_units.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(wasted_units[k]);
+	}
+	wasted_units.clear();
 
 	return true;
 }
@@ -1673,9 +1648,6 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 			rend.SetRad(rend.GetRad() + RENDER_MARGIN);
 			new_unit->SetRenderArea(rend);
 
-			//Set new unit myself pointer
-			new_unit->myself = new_unit;
-
 			//Set unit animation
 			App->animator->UnitPlay(new_unit);
 
@@ -1717,9 +1689,6 @@ Building* j1EntitiesManager::GenerateBuilding(BUILDING_TYPE type, DIPLOMACY dipl
 			//If the building is an ally fog is already discovered
 			if (diplomacy == ALLY)new_building->SetFogDiscovered(true);
 
-			//Set building myself pointer
-			new_building->myself = new_building;
-
 			if (push_in_list)
 			{
 				//Add the new building at the buildings manage list
@@ -1745,8 +1714,6 @@ Resource* j1EntitiesManager::GenerateResource(RESOURCE_TYPE type)
 			//Build unit
 			if(type != TREE)new_resource = new Resource(*resources_defs[k]);
 			else new_resource = new Tree(*(Tree*)resources_defs[k]);
-
-			new_resource->myself = new_resource;
 
 			//Set unit animation
 			App->animator->ResourcePlay(new_resource);
@@ -1784,6 +1751,19 @@ bool j1EntitiesManager::DeleteEntity(Entity * entity)
 	}
 
 	//Add the entity at the wasted entities list 
+	if (entity->GetEntityType() == UNIT)
+	{
+		death_units.remove((Unit*)entity);
+	}
+	else if (entity->GetEntityType() == BUILDING)
+	{
+		death_buildings.remove((Building*)entity);
+	}
+	else
+	{
+		death_resources.remove((Resource*)entity);
+	}
+
 	wasted_units.push_back(entity);
 
 	return true;

@@ -83,7 +83,7 @@ TeleportUnitAction * j1ActionManager::TeleportAction(Unit * actor, const iPoint 
 	return action;
 }
 
-AttackUnitAction* j1ActionManager::AttackToUnitAction(Unit * actor, Unit ** target)
+AttackUnitAction* j1ActionManager::AttackToUnitAction(Unit * actor, Unit * target)
 {
 	//Generate a new attack action definition
 	AttackUnitAction* action = new AttackUnitAction(actor, target);
@@ -94,7 +94,7 @@ AttackUnitAction* j1ActionManager::AttackToUnitAction(Unit * actor, Unit ** targ
 	return action;
 }
 
-AttackBuildingAction * j1ActionManager::AttackToBuildingAction(Unit * actor, Building** target)
+AttackBuildingAction * j1ActionManager::AttackToBuildingAction(Unit * actor, Building* target)
 {
 	//Generate a new move action definition
 	AttackBuildingAction* action = new AttackBuildingAction(actor, target);
@@ -138,7 +138,7 @@ StunUnitAction * j1ActionManager::StunAction(Unit * actor, uint time)
 	return action;
 }
 
-HealUnitAction * j1ActionManager::HealAction(Unit * actor, Unit ** target)
+HealUnitAction * j1ActionManager::HealAction(Unit * actor, Unit * target)
 {
 	//Generate a new heal action definition
 	HealUnitAction* action = new HealUnitAction(actor, target);
@@ -149,7 +149,7 @@ HealUnitAction * j1ActionManager::HealAction(Unit * actor, Unit ** target)
 	return action;
 }
 
-RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resource** target)
+RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resource* target)
 {
 	//Generate a new move action definition
 	RecollectVillagerAction* action = new RecollectVillagerAction(actor, target);
@@ -160,7 +160,7 @@ RecollectVillagerAction* j1ActionManager::RecollectAction(Villager* actor, Resou
 	return action;
 }
 
-SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * actor, Building** target)
+SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * actor, Building* target)
 {
 	//Generate a new move action definition
 	SaveResourcesVillagerAction* action = new SaveResourcesVillagerAction(actor, target);
@@ -379,7 +379,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		fPoint position = { node.attribute("tar_pos_x").as_float(),node.attribute("tar_pos_y").as_float() };
 		UNIT_TYPE unit_type = (UNIT_TYPE)node.attribute("tar_type").as_int();
 		//Search attack action target in units list
-		Unit** target = nullptr;
+		Unit* target = nullptr;
 		const std::list<Unit*>* units = App->entities_manager->UnitsList();
 		std::list<Unit*>::const_iterator unit = units->begin();
 		while (unit != units->end())
@@ -387,7 +387,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 
 			if (unit._Ptr->_Myval->GetPosition() == position && unit._Ptr->_Myval->GetUnitType() == unit_type)
 			{
-				target = &unit._Ptr->_Myval;
+				target = unit._Ptr->_Myval;
 			}
 			unit++;
 		}
@@ -406,7 +406,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		fPoint position = { node.attribute("tar_pos_x").as_float(),node.attribute("tar_pos_y").as_float() };
 		BUILDING_TYPE unit_type = (BUILDING_TYPE)node.attribute("tar_type").as_int();
 		//Search attack action target in units list
-		Building** target = nullptr;
+		Building* target = nullptr;
 		const std::list<Building*>* buildings = App->entities_manager->BuildingList();
 		std::list<Building*>::const_iterator building = buildings->begin();
 		while (building != buildings->end())
@@ -414,7 +414,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 
 			if (building._Ptr->_Myval->GetPosition() == position && building._Ptr->_Myval->GetBuildingType() == unit_type)
 			{
-				target = &building._Ptr->_Myval;
+				target = building._Ptr->_Myval;
 			}
 			building++;
 		}
@@ -438,14 +438,14 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		fPoint position = { node.attribute("tar_pos_x").as_float(),node.attribute("tar_pos_y").as_float() };
 		RESOURCE_TYPE resource_type = (RESOURCE_TYPE)node.attribute("tar_type").as_int();
 		//Iterate resources to find the target
-		Resource** target = nullptr;
+		Resource* target = nullptr;
 		const std::list<Resource*>* resources = App->entities_manager->ResourceList();
 		std::list<Resource*>::const_iterator resource = resources->begin();
 		while (resource != resources->end())
 		{
 			if (resource._Ptr->_Myval->GetPosition() == position && resource._Ptr->_Myval->GetResourceType() == resource_type)
 			{
-				target = &resource._Ptr->_Myval;
+				target = resource._Ptr->_Myval;
 			}
 			resource++;
 		}
@@ -465,14 +465,14 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		fPoint position = { node.attribute("tar_pos_x").as_float(),node.attribute("tar_pos_y").as_float() };
 		BUILDING_TYPE building_type = (BUILDING_TYPE)node.attribute("tar_type").as_int();
 		//Iterate buildings to find the target
-		Building** target = nullptr;
+		Building* target = nullptr;
 		const std::list<Building*>* buildings = App->entities_manager->BuildingList();
 		std::list<Building*>::const_iterator building = buildings->begin();
 		while (building != buildings->end())
 		{
 			if (building._Ptr->_Myval->GetPosition() == position && building._Ptr->_Myval->GetBuildingType() == building_type)
 			{
-				target = &building._Ptr->_Myval;
+				target = building._Ptr->_Myval;
 			}
 			building++;
 		}
