@@ -65,7 +65,7 @@ bool j1Pathfinding::CleanUp()
 {
 	to_path.clear();
 	App->tex->UnLoad(path_texture);
-	RELEASE_ARRAY(path_nodes);
+	if(path_nodes != nullptr)	RELEASE_ARRAY(path_nodes);
 	return true;
 }
 

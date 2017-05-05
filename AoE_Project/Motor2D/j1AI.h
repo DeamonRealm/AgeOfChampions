@@ -89,11 +89,17 @@ private:
 	AIWorker* ai_worker = nullptr;
 	std::list<Entity*> units_to_spawn;
 	j1Timer update_timer;
+	j1Timer building_timer;
+
 
 	ProductiveBuilding* ai_starting_tc;
 	std::list<Building*> enemy_buildings;
 
+
 	void ManageAttack();
+
+	void ManageConstrucion();
+	
 
 public:
 	std::list<Unit*> enemy_units;

@@ -11,8 +11,9 @@
 #include "j1GroupMovement.h"
 #include "Hud_GamePanel.h"
 
-
 #include "j1Input.h"
+
+#include <time.h>
 
 j1AI::j1AI()
 {
@@ -85,6 +86,16 @@ bool j1AI::Update(float dt)
 {
 	ai_worker->Update();
 
+
+	/*	WIP, infinite loop possible
+	if (building_timer.Read() > 1000)
+	{
+		ManageConstrucion();
+
+		building_timer.Start();
+	}
+	*/
+
 	//only update every 2 seconds
 	if (update_timer.Read() < 10000)
 	{
@@ -113,6 +124,7 @@ bool j1AI::Update(float dt)
 		unit_it++;
 	}
 
+	GenerateDebugVillager();
 	
 	//Enemies attack NOT WORKING
 	
@@ -128,6 +140,8 @@ bool j1AI::Update(float dt)
 	}
 	ManageAttack();
 	
+
+
 
 	update_timer.Start();
 
@@ -214,6 +228,52 @@ void j1AI::ManageAttack()
 			unit_it++;
 		}
 	}
+}
+
+void j1AI::ManageConstrucion()
+{
+	fPoint new_pos(0,0);
+	float displacement = 100.0;
+	
+	Building* test = App->entities_manager->GenerateBuilding(BUILDING_TYPE::BARRACK, ENEMY);
+
+	
+	//
+	srand(time(NULL));
+
+
+	new_pos = ai_starting_tc->GetPosition();
+
+	test->OnlySetPosition(new_pos.x, new_pos.y);
+
+
+	while (!test->CheckZone(new_pos.x,new_pos.y))
+	{
+		int direction = rand() % 4;
+		switch (direction)
+		{
+		case 0:				//Decrease y
+			new_pos.y -= (displacement);
+			break;
+		case 1:				//Increase x
+			new_pos.x += (displacement);
+			break;
+		case 2:				//Increase y
+			new_pos.y += (displacement);
+			break;
+		case 3:				//Decrease x
+			new_pos.x -= (displacement);
+			break;
+		default:
+			break;
+		}
+
+		test->OnlySetPosition(new_pos.x, new_pos.y);
+
+	}
+
+
+	test->SetPosition(new_pos.x, new_pos.y);
 }
 
 void j1AI::GenerateDebugVillager()
