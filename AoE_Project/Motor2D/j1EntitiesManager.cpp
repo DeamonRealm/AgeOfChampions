@@ -42,6 +42,7 @@ bool j1EntitiesManager::Awake(pugi::xml_node & config_node)
 void j1EntitiesManager::Disable()
 {
 	active = false;
+
 	//Clean all arrows
 	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
 	for (; arrows != all_arrows.end(); arrows++)
@@ -58,16 +59,6 @@ void j1EntitiesManager::Disable()
 	}
 	units.clear();
 	units_quadtree.Reset();
-
-	//Clean Up death units list (already deleted with Units CleanUp)
-	std::list<Unit*>::iterator death_unit = death_units.begin();
-	while (death_unit != death_units.end())
-	{
-		App->buff_manager->RemoveTargetBuffs(death_unit._Ptr->_Myval);
-		RELEASE(death_unit._Ptr->_Myval);
-		death_unit++;
-	}
-	death_units.clear();
 
 	//Clean Up resources list
 	std::list<Resource*>::iterator resources_item = resources.begin();
@@ -90,10 +81,15 @@ void j1EntitiesManager::Disable()
 	buildings.clear();
 	buildings_quadtree.Reset();
 
+	//Clear all death entities lists
+	death_units.clear();
+	death_buildings.clear();
+	death_resources.clear();
+
 	//Clear champions list
 	champions_blue.clear();
 	champions_red.clear();
-
+	
 }
 
 bool j1EntitiesManager::Start()
@@ -157,6 +153,7 @@ bool j1EntitiesManager::Update(float dt)
 		death_building++;
 	}
 
+	//Update all the buildings
 	std::list<Building*>::const_iterator item_build = buildings.begin();
 	while (item_build != buildings.end())
 	{
@@ -165,6 +162,32 @@ bool j1EntitiesManager::Update(float dt)
 		if (item_build == buildings.end() || buildings.empty())break;
 		item_build++;
 	}
+
+	//Remove all the defeated entities of the correct lists
+	//Add the entity at the wasted entities list
+	//Update all the death units
+	std::list<Entity*>::const_iterator wasted_enty = ready_to_waste.begin();
+	while (wasted_enty != ready_to_waste.end())
+	{
+		if (wasted_enty._Ptr->_Myval->GetEntityType() == UNIT)
+		{
+			death_units.remove((Unit*)wasted_enty._Ptr->_Myval);
+			units.remove((Unit*)wasted_enty._Ptr->_Myval);
+		}
+		else if (wasted_enty._Ptr->_Myval->GetEntityType() == BUILDING)
+		{
+			death_buildings.remove((Building*)wasted_enty._Ptr->_Myval);
+			buildings.remove((Building*)wasted_enty._Ptr->_Myval);
+		}
+		else
+		{
+			death_resources.remove((Resource*)wasted_enty._Ptr->_Myval);
+			resources.remove((Resource*)wasted_enty._Ptr->_Myval);
+		}
+		wasted_entities.push_back(wasted_enty._Ptr->_Myval);
+		wasted_enty++;
+	}
+	ready_to_waste.clear();
 
 	return ret;
 }
@@ -298,25 +321,6 @@ bool j1EntitiesManager::CleanUp()
 	}
 	buildings.clear();
 
-	//Clean Up death Units
-	std::list<Unit*>::iterator death_unit = death_units.begin();
-	while (death_unit != death_units.end())
-	{
-		App->buff_manager->RemoveTargetBuffs(death_unit._Ptr->_Myval);
-		RELEASE(death_unit._Ptr->_Myval);
-		death_unit++;
-	}
-	death_units.clear();
-
-	//Clean Up death Buildings
-	std::list<Building*>::iterator death_building = death_buildings.begin();
-	while (death_building != death_buildings.end())
-	{
-		RELEASE(death_building._Ptr->_Myval);
-		death_building++;
-	}
-	death_buildings.clear();
-
 	//Clean Up resoureces_defs vector
 	uint size = resources_defs.size();
 	for (uint k = 0; k < size; k++)
@@ -350,15 +354,15 @@ bool j1EntitiesManager::CleanUp()
 	champions_red.clear();
 
 	//If there's no entities to delete returns
-	if (wasted_units.empty())return true;
+	if (wasted_entities.empty())return true;
 
 	//Clean all the wasted entities
-	size = wasted_units.size();
+	size = wasted_entities.size();
 	for (uint k = 0; k < size; k++)
 	{
-		RELEASE(wasted_units[k]);
+		RELEASE(wasted_entities[k]);
 	}
-	wasted_units.clear();
+	wasted_entities.clear();
 	
 	return true;
 }
@@ -1768,21 +1772,8 @@ bool j1EntitiesManager::DeleteEntity(Entity * entity)
 		return false;
 	}
 
-	//Add the entity at the wasted entities list 
-	if (entity->GetEntityType() == UNIT)
-	{
-		death_units.remove((Unit*)entity);
-	}
-	else if (entity->GetEntityType() == BUILDING)
-	{
-		death_buildings.remove((Building*)entity);
-	}
-	else
-	{
-		death_resources.remove((Resource*)entity);
-	}
-
-	wasted_units.push_back(entity);
+	ready_to_waste.remove(entity);
+	ready_to_waste.push_back(entity);
 
 	return true;
 }
@@ -1850,7 +1841,6 @@ void j1EntitiesManager::AddDeathUnit(Unit * unit)
 {
 
 	death_units.push_back((Unit*)unit);
-	units.remove((Unit*)unit);
 	units_quadtree.Exteract(unit, &unit->GetPosition());
 
 }
@@ -1877,7 +1867,6 @@ Unit * j1EntitiesManager::PopUnit(const Unit * unit)
 void j1EntitiesManager::AddDeadBuilding(Building * build)
 {
 	death_buildings.push_back(build);
-	buildings.remove(build);
 	buildings_quadtree.Exteract(build, &build->GetPosition());
 }
 

@@ -33,6 +33,7 @@ public:
 	{
 	
 	}
+
 	~FogTile()
 	{
 	
@@ -51,6 +52,10 @@ public:
 	~j1FogOfWar();
 
 public:
+
+	//Enable and disable modules
+	void Enable();
+	void Disable();
 
 	void Init();
 

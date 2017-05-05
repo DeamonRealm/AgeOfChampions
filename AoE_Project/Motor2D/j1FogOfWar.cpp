@@ -21,7 +21,23 @@ j1FogOfWar::~j1FogOfWar()
 
 }
 
+
 //Game Loop ===========================
+void j1FogOfWar::Enable()
+{
+	active = true;
+}
+
+void j1FogOfWar::Disable()
+{
+	active = false;
+	entities_dinamic_update.clear();
+	entities_static_update.clear();
+	entities_release.clear();
+	buildings_to_spawn.clear();
+	cells_in_screen.clear();
+}
+
 void j1FogOfWar::Init()
 {
 	active = false;

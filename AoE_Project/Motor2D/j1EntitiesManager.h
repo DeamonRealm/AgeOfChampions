@@ -71,8 +71,10 @@ private:
 	std::list<Champion*>	champions_blue;
 	std::list<Champion*>	champions_red;
 
+	//Vector where all the entities ready to be send to the wasted entities are placed for safety
+	std::list<Entity*>	ready_to_waste;
 	//Vector where all the killed/destroyed entities are placed
-	std::vector<Entity*>	wasted_units;
+	std::vector<Entity*>	wasted_entities;
 
 	//Vectors of predefined units
 	std::vector<Unit*>		ally_units_defs;
