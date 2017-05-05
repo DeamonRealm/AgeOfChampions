@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Recipe that Stores Data for HUD Action Panels-->
+<!--Format:
+base_type => entity type to react
+cl => cell available at level cl
+al => cell available at age "al"
+ci => cell information (string shown as help in game)
+ut => unit type (int from enum BaseEntities.h)
+bt => building type (int from enum BaseEntities.h)
+rt => research type (int from enum at Actions_Building.h)
+// Buildings Only .....................
+wc => wood cost to activate cell
+fc => food cost to activate cell
+gc => gold cost to activate cell
+sc => stone cost to activate cell
+pc => population cost to activate cell
+// ....................................
+
+-->
+<HudActionPanelData>
+  <Buildings>
+     <Villager>
+       <cell base_type ="town_center" cl ="0" al ="1" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-15" bt="1" ci ="Bulid Town Center"/>
+       <cell base_type ="town_center" cl ="1" al ="3" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-15" bt="11" ci ="Bulid Town Center"/>
+        
+       <cell base_type ="house" cl ="0" al ="1" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-5" bt="6"  ci ="Bulid House"/>
+       <cell base_type ="house" cl ="1" al ="3" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-5" bt="16" ci ="Bulid House"/>
+    
+       <cell base_type ="mining_camp" cl ="0" al ="1" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="9"  ci ="Bulid Mining Camp"/>
+       <cell base_type ="lumber_camp" cl ="0" al ="1" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="10" ci ="Bulid Lumber Camp"/>
+     
+       <cell base_type ="blacksmith" cl ="0" al ="2" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="4"  ci ="Bulid Blacksmith"/>
+       <cell base_type ="blacksmith" cl ="1" al ="3" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="14" ci ="Bulid Blacksmith"/>
+     
+       <cell base_type ="monastery" cl ="0" al ="3" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="19" ci ="Bulid Monastery"/>
+       
+       <cell base_type ="university" cl ="0" al ="3" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="20" ci ="Bulid University"/>    
+       <cell base_type ="university" cl ="1" al ="4" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="21" ci ="Bulid University"/>    
+       
+       <cell base_type ="barrack" cl ="0" al ="1" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="2"  ci ="Bulid Barrack"/>
+       <cell base_type ="barrack" cl ="1" al ="3" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="12" ci ="Bulid Barrack"/>
+      
+       <cell base_type ="archery_range" cl ="0" al ="1" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3"  ci ="Bulid Archery Range"/>
+       <cell base_type ="archery_range" cl ="1" al ="3" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="13" ci ="Bulid Archery Range"/>
+     
+       <cell base_type ="stable" cl ="0" al ="1" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="5"  ci ="Bulid Stable"/>
+       <cell base_type ="stable" cl ="1" al ="3" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="15" ci ="Bulid Stable"/>
+     </Villager>
+  </Buildings>
+  <Units>
+    <TownCenter>
+      <cell base_type ="villager" cl ="0" al ="1" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="villager" ci ="Create Villager"/>
+    </TownCenter>
+    <Barrack>
+      <cell base_type ="militia" cl ="0" al ="1" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="militia"  rt="6" ci ="Create Militia"/>
+      <cell base_type ="militia" cl ="1" al ="2" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="man_at_arms" rt="7" ci ="Create Man-at-Arms"/>
+      <cell base_type ="militia" cl ="2" al ="3" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="long_swordsman" rt="8" ci ="Create Long Swordsman"/>
+      <cell base_type ="militia" cl ="3" al ="4" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="two_handed_swordsman" rt="9" ci ="Create Two-Handed Swordsman"/>
+      <cell base_type ="militia" cl ="4" al ="4" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="champion" ci ="Create Champion"/>
+      <cell base_type ="spearman" cl ="0" al ="2" wc ="25" fc ="35" gc ="0" sc ="0" pc ="1" ut ="spearman" rt="10" ci ="Create Spearman"/>
+      <cell base_type ="spearman" cl ="1" al ="3" wc ="25" fc ="35" gc ="0" sc ="0" pc ="1" ut ="pikeman" ci ="Create Pikeman"/>
+    </Barrack>
+    <Archery_Range>
+      <cell base_type ="archer" cp ="0" cl ="0" al ="2" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="archer" rt ="1" ci ="Create Archer"/>
+      <cell base_type ="archer" cl ="1" al ="3" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="crossbowman" rt ="2" ci ="Create Crossbowman"/>
+      <cell base_type ="archer" cl ="2" al ="4" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="arbalest" ci ="Create Arbalest"/>
+      <cell base_type ="skirmisher" cl ="0" al ="2" wc ="35" fc ="25" gc ="0"  sc ="0" pc ="1" ut ="skirmisher" rt ="3" ci ="Create Skirmisher"/>
+      <cell base_type ="skirmisher" cl ="1" al ="3" wc ="35" fc ="25" gc ="0"  sc ="0" pc ="1" ut ="elite_skirmisher" ci ="Create Elite Skirmisher"/>
+      <cell base_type ="cavalry_archer" cl ="0" al ="3" wc ="40" fc ="0"  gc ="60" sc ="0" pc ="1" ut ="cavalry_archer" rt ="4" ci ="Create Cavalry Archer"/>
+      <cell base_type ="cavalry_archer" cl ="1" al ="4" wc ="40" fc ="0"  gc ="60" sc ="0" pc ="1" ut ="heavy_cavalry_archer" ci ="Create Elite Cavalry Archer"/>
+    </Archery_Range>
+    <Stable>
+      <cell base_type ="knight" cl ="0" al ="3" wc ="0" fc ="60"  gc ="75" sc ="0" pc ="1" ut ="knight" rt ="27" ci ="Create Knight"/>
+      <cell base_type ="knight" cl ="1" al ="4" wc ="0" fc ="60"  gc ="75"  sc ="0" pc ="1" ut ="cavalier" rt ="28" ci ="Create Cavalier"/>
+      <cell base_type ="knight" cl ="2" al ="4" wc ="0" fc ="60"  gc ="75"  sc ="0" pc ="1" ut ="paladin" ci ="Create Paladin"/>
+    </Stable>
+     <!-- <Monastery>
+    
+    </Monastery>
+    <University>
+      
+    </University>
+    <Castle>
+      
+    </Castle>-->
+  </Units>
+  <Research>
+      <!-- Feudal Age -->
+      <cell al ="1" wc ="20" fc ="20"  gc ="20"  sc ="0" pc ="0" rt ="34" ci ="Research Loom"/>
+      <cell al ="2" wc ="20" fc ="20"  gc ="20"  sc ="0" pc ="0" rt ="37" ci ="Research Wheelbarrow"/>
+      <cell al ="2" wc ="0"  fc ="75"  gc ="75"  sc ="0" pc ="0" rt="6"   ci ="Upgrade To Man-at-Arms"/>
+      <cell al ="2" wc ="0"  fc ="15"  gc ="0"   sc ="0" pc ="0" rt ="26" ci ="Research Scale Barding Armor"/>
+      <cell al ="2" wc ="0"  fc ="10"  gc ="0"   sc ="0" pc ="0" rt ="17" ci ="Research Padded Archer Armor"/>
+      <cell al ="2" wc ="0"  fc ="15"  gc ="0"   sc ="0" pc ="0" rt ="23" ci ="Research Forging"/>
+      <cell al ="2" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="29" ci ="Research Scale Mail Armor"/>
+    
+      <cell al ="2" wc ="0"  fc ="8" gc ="2" sc ="0" pc ="0" rt ="32" ci ="Advance to Castle Age"/>
+    
+      <!-- Castle Age -->
+    
+      <cell al ="3" wc ="20" fc ="20" gc ="20" sc ="0" pc ="0" rt ="38" ci ="Research Hand Cart"/>
+      <cell al ="3" wc ="0"  fc ="20" gc ="65" sc ="0" pc ="0" rt="7"   ci ="Upgrade To Long Swordsman"/>
+      <cell al ="3" wc ="0"  fc ="25" gc ="15" sc ="0" pc ="0" rt ="27" ci ="Research Chain Barding Armor"/>
+      <cell al ="3" wc ="0"  fc ="12"  gc ="7" sc ="0" pc ="0" rt ="1"  ci ="Upgrade To Crossbowman"/>
+    
+      <cell al ="3" wc ="0"  fc ="21" gc ="9"  sc ="0"  pc ="0"  rt="10" ci ="Upgrade To Pikeman"/>
+      <cell al ="3" wc ="20" fc ="0"  gc ="10" sc ="0"  pc ="0"  rt ="3" ci ="Upgrade To Elite Skirmisher"/>
+    
+      <cell al ="3" wc ="250" fc ="300" gc ="0" sc ="0" pc ="0" rt ="26" ci ="Research Bloodlines"/>
+      <cell al ="3" wc ="0" fc ="150" gc ="0" sc ="0" pc ="0" rt ="29"   ci ="Research Husbandry"/>
+      <cell al ="2" wc ="0" fc ="100" gc ="50"  sc ="0" pc ="0" rt ="20" ci ="Research Fletching"/>
+      <cell al ="3" wc ="0" fc ="150" gc ="150" sc ="0" pc ="0" rt ="18" ci ="Research Leather Archer Armor"/>
+    
+      <cell al ="3" wc ="0" fc ="10" gc ="8" sc ="0" pc ="0" rt="33" ci ="Advance to Imperial Age"/>
+    
+      <!-- Imperial Age -->
+    
+      <cell al ="4" wc ="0" fc ="300" gc ="200" sc ="0" pc ="0" rt ="22" ci ="Research Bracer"/>
+      <cell al ="4" wc ="0" fc ="30"  gc ="10"  sc ="0" pc ="0" rt="8"   ci ="Upgrade To Two-Handed Swordsman"/>
+      <cell al ="4" wc ="0" fc ="350" gc ="300" sc ="0" pc ="0" rt ="27" ci ="Upgrade To Cavalier"/>
+      <cell al ="3" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="30" ci ="Research Chain Mail Armor"/>
+      <cell al ="4" wc ="0" fc ="275" gc ="225" sc ="0" pc ="0" rt ="25" ci ="Research Blast Furnace"/>
+      <cell al ="4" wc ="0" fc ="350" gc ="200" sc ="0" pc ="0" rt ="28" ci ="Research Plate Barding Armor"/>
+      <cell al ="4" wc ="2" fc ="0"   gc ="100" sc ="0" pc ="0" rt ="28" ci ="Upgrade To Paladin"/>
+      <cell al ="4" wc ="0" fc ="75"  gc ="35"  sc ="0" pc ="0" rt="9"   ci ="Upgrade To Champion"/>
+      <cell al ="4" wc ="0" fc ="350" gc ="300" sc ="0" pc ="0" rt ="2"  ci ="Upgrade To Arbalest"/>
+      <cell al ="4" wc ="0" fc ="900" gc ="500" sc ="0" pc ="0" rt ="4"  ci ="Upgrade To Elite Cavalry Archer"/>
+      <cell al ="4" wc ="0" fc ="250" gc ="250" sc ="0" pc ="0" rt ="19" ci ="Research Ring Archer Armor"/>
+      <cell al ="3" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="21" ci ="Research Bodkin Arrow"/>
+      <cell al ="3" wc ="0" fc ="220" gc ="120" sc ="0" pc ="0" rt ="24" ci ="Research Iron Casting"/>
+      <cell al ="4" wc ="0" fc ="300" gc ="150" sc ="0" pc ="0" rt ="31" ci ="Research Plate Mail Armor"/>
+      <cell al ="3" wc ="20" fc ="30" gc ="0"   sc ="0" pc ="0" rt ="5"  ci ="Research Thumb Ring"/>
+  </Research>
+</HudActionPanelData>

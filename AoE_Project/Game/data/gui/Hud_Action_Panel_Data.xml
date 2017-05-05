@@ -107,15 +107,15 @@ pc => population cost to activate cell
       <cell cp ="6" cl ="2" al ="3" x="0"   y="477" w="36" h="36" wc ="250" fc ="300" gc ="0" sc ="0" pc ="0" rt ="26" ci ="Research Bloodlines (Cavalry +20 Healthpoints)"/>
       <cell cp ="10" cl ="0" al ="3" x="72" y="477" w="36" h="36" wc ="0" fc ="150" gc ="0" sc ="0" pc ="0" rt ="29" ci ="Research Husbandry (Cavalry +10% Speed)"/>
     </Stable>
-    <!-- <Monastery>
-    
+    <Monastery>
+      <cell cp ="0" cl ="0" al ="3" x="540" y="585" w="36" h="36" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="9" ci ="Create Monk"/>
     </Monastery>
     <University>
       
     </University>
     <Castle>
       
-    </Castle>-->
+    </Castle>
   </Buildings>
   <Units>
     <Villager>
@@ -124,17 +124,28 @@ pc => population cost to activate cell
       <cell cp ="2" cl ="0" al ="1" x="405" y="36" w="36" h="36"   ci ="Repair Building"/>
       <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Unit"/>
       <cell cp ="0" cl ="1" al ="1" x="348" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-5" bt="6" ci ="Bulid House"/>
-      <cell cp ="2" cl ="1" al ="1" x="492" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3" ci ="Bulid Mining Camp"/>
-      <cell cp ="3" cl ="1" al ="1" x="384" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3" ci ="Bulid Lumber Camp"/>
-      <cell cp ="6" cl ="1" al ="1" x="168" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="4" ci ="Bulid Blacksmith"/>
-      <cell cp ="8" cl ="1" al ="2" x="528" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3" ci ="Bulid Monastery"/>
-      <cell cp ="9" cl ="1" al ="2" x="144" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3" ci ="Bulid University"/>    
+      <cell cp ="2" cl ="1" al ="1" x="492" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="9" ci ="Bulid Mining Camp"/>
+      <cell cp ="3" cl ="1" al ="1" x="384" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="10" ci ="Bulid Lumber Camp"/>
+      <cell cp ="6" cl ="1" al ="1" x="168" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="4" ci ="Bulid Blacksmith"/>  
       <cell cp ="10" cl ="1" al ="2" x="108" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-15" bt="1" ci ="Bulid Town Center"/>
+      <cell cp ="0" cl ="1" al ="3" x="348" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-5" bt="16" ci ="Bulid House"/>
+      <cell cp ="6" cl ="1" al ="3" x="168" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="14" ci ="Bulid Blacksmith"/>
+      <cell cp ="8" cl ="1" al ="3" x="528" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="19" ci ="Bulid Monastery"/>
+      <cell cp ="9" cl ="1" al ="3" x="144" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="20" ci ="Bulid University"/>
+      <cell cp ="10" cl ="1" al ="3" x="108" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-15" bt="11" ci ="Bulid Town Center"/>
+      <cell cp ="9" cl ="1" al ="4" x="144" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="21" ci ="Bulid University"/>
+
       <cell cp ="13" cl ="1" al ="1" x="332" y="36" w="36" h="36"  ci ="Build Military"/>
       <cell cp ="14" cl ="1" al ="1" x="477" y="36" w="36" h="36"  ci ="Menu"/>
       <cell cp ="0" cl ="2" al ="1" x="132" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="2" ci ="Bulid Barrack"/>
       <cell cp ="1" cl ="2" al ="2" x="96"  y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="3" ci ="Bulid Archery Range"/>
       <cell cp ="2" cl ="2" al ="2" x="36" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="5" ci ="Bulid Stable"/>
+
+      <cell cp ="0" cl ="2" al ="3" x="132" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="12" ci ="Bulid Barrack"/>
+      <cell cp ="1" cl ="2" al ="3" x="96"  y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="13" ci ="Bulid Archery Range"/>
+      <cell cp ="2" cl ="2" al ="3" x="36" y="36" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="15" ci ="Bulid Stable"/>
+
+      <cell cp ="3" cl ="2" al ="3" x="240" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="1" pc ="0" bt="22" ci ="Bulid Castle"/>
 
       <cell cp ="13" cl ="2" al ="1" x="332" y="36" w="36" h="36"  ci ="Buildings"/>
       <cell cp ="14" cl ="2" al ="1" x="477" y="36" w="36" h="36"  ci ="Menu"/>

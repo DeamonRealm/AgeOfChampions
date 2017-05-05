@@ -34,6 +34,9 @@ void j1AI::Enable()
 
 	update_timer.Start();
 
+	research_timer.Start();
+
+
 	ai_starting_tc = (ProductiveBuilding*)App->entities_manager->GenerateBuilding(TOWN_CENTER, ENEMY);
 	iPoint pos = App->map->MapToWorldCenter(110, 100);
 	ai_starting_tc->SetPosition((float)pos.x, (float)pos.y);
@@ -63,7 +66,19 @@ bool j1AI::Awake(pugi::xml_node&)
 
 	bool ret = true;
 
-	ai_worker = new AIWorker;
+	ai_worker = new AIWorker();
+	ai_research_worker = new ActionWorker();
+
+	//Load Research;
+	//Load Panels Data from loaded folder
+	char* buffer = nullptr;
+	int size = App->fs->Load("AI/ia_data.xml", &buffer);
+	pugi::xml_document ai_data;
+	pugi::xml_parse_result result = ai_data.load_buffer(buffer, size);
+	RELEASE_ARRAY(buffer);
+
+	LoadAIEntitiesData(ai_data.first_child());
+
 
 	return ret;
 }
@@ -85,7 +100,10 @@ bool j1AI::PreUpdate()
 bool j1AI::Update(float dt)
 {
 	ai_worker->Update();
-
+	ai_research_worker->Update();
+	
+	UpdateResearch();
+	
 
 	/*	WIP, infinite loop possible
 	if (building_timer.Read() > 1000)
@@ -152,6 +170,9 @@ bool j1AI::CleanUp()
 {
 	ai_worker->Reset();
 	delete ai_worker;
+
+	ai_research_worker->HardReset();
+	delete ai_research_worker;
 
 	return true;
 }
@@ -276,6 +297,57 @@ void j1AI::ManageConstrucion()
 	test->SetPosition(new_pos.x, new_pos.y);
 }
 
+
+// AI Entity Data Methods
+void j1AI::LoadAIEntitiesData(pugi::xml_node& conf)
+{
+	next_research = 0;
+
+	AI_Entities_Data new_data;
+	pugi::xml_node item = conf.child("Research").first_child();
+	while (item != NULL)
+	{
+		new_data.base_type = (UNIT_TYPE)item.attribute("base_type").as_int(0);
+		new_data.cell_at_level = item.attribute("cl").as_int(0);
+		new_data.cell_at_age = item.attribute("al").as_int(0);
+		new_data.wood_cost = item.attribute("wc").as_int(0);
+		new_data.food_cost = item.attribute("fc").as_int(0);
+		new_data.gold_cost = item.attribute("gc").as_int(0);
+		new_data.stone_cost = item.attribute("sc").as_int(0);
+		new_data.population_cost = item.attribute("pc").as_int(0);
+
+		new_data.u_type = (UNIT_TYPE)item.attribute("ut").as_int(0);
+		new_data.b_type = (BUILDING_TYPE)item.attribute("bt").as_int(0);
+		new_data.r_type = (RESEARCH_TECH)item.attribute("rt").as_int(0);
+
+		research_queue.push_back(new_data);
+
+		item = item.next_sibling();
+	}
+}
+
+void j1AI::UpgradeCivilization(RESEARCH_TECH type)
+{
+	
+}
+
+void j1AI::UpdateResearch()
+{
+	if (research_timer.Read() > RESEARCH_RATE)
+	{
+		if (next_research < research_queue.size())
+		{
+			if (CheckResources(research_queue[next_research].wood_cost, research_queue[next_research].food_cost, research_queue[next_research].gold_cost,
+				research_queue[next_research].stone_cost, 0))
+			{
+				ai_research_worker->AddAction(App->action_manager->ResearchAction(research_queue[next_research].r_type, AI_RESEARCH_DURATION, ENEMY));
+				next_research++;
+			}
+		}
+		research_timer.Start();
+	}
+}
+
 void j1AI::GenerateDebugVillager()
 {
 	ai_worker->AddAICommand(new SpawnUnitCommand(VILLAGER, ai_starting_tc));
@@ -306,7 +378,27 @@ void j1AI::AddResources(PLAYER_RESOURCES type, int value)
 
 }
 
-
+bool j1AI::CheckResources(int amount_wood, int amount_food, int amount_gold, int amount_stone, int used_population, bool use)
+{
+	if (wood - amount_wood >= 0 && meat - amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 && (population + used_population <= max_population || used_population < 0))
+	{
+		if (use)
+		{
+			if (amount_wood != 0) wood -= amount_wood;
+			if (amount_food != 0) meat -=amount_food;
+			if (amount_gold != 0) gold -= amount_gold;
+			if (amount_stone != 0) stone -= amount_stone;
+			if (used_population >= 0) population += used_population;
+			else if (used_population < 0)
+			{
+				if(max_population - used_population < 200) max_population -=used_population;
+				else max_population = 200;
+			}
+		}
+		return true;
+	}
+	else return false;
+}
 
 ///AICommands managment---------------------------------------------------------------------------------------------
 //AiWokerk definition--------------------

@@ -405,6 +405,8 @@ void VillagerPanel::SetDefault()
 {
 	villagerisbuilding = VP_NOT_BUILDING;
 	ChangePanelLvl(villagerisbuilding);
+	isbuilding = false;
+	buildingthis = nullptr;
 }
 
 bool VillagerPanel::ActivateCell(int i)
@@ -1035,6 +1037,11 @@ Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({ 3
 	archerypanel = new Action_Panel_Elements();
 	stablepanel = new Action_Panel_Elements();
 	blacksmithpanel = new Action_Panel_Elements();
+	lumbercamppanel = new Action_Panel_Elements();
+	miningcamppanel = new Action_Panel_Elements();
+	monasterypanel = new Action_Panel_Elements();
+	universitypanel = new Action_Panel_Elements();
+	castlepanel = new Action_Panel_Elements();
 	unitpanel = new UnitPanel();
 	heropanel = new HeroPanel();
 	villagerpanel = new VillagerPanel();
@@ -1053,6 +1060,12 @@ Action_Panel::Action_Panel() : action_rect({ 37, 624, 200, 123 }), panel_pos({ 3
 	archerypanel->LoadPanelFromXML(panel_node.child("Buildings").child("Archery_Range"));
 	stablepanel->LoadPanelFromXML(panel_node.child("Buildings").child("Stable"));
 	blacksmithpanel->LoadPanelFromXML(panel_node.child("Buildings").child("BlackSmith"));
+	lumbercamppanel->LoadPanelFromXML(panel_node.child("Buildings").child("Lumber_Camp"));
+	miningcamppanel->LoadPanelFromXML(panel_node.child("Buildings").child("Mining_Camp"));
+	monasterypanel->LoadPanelFromXML(panel_node.child("Buildings").child("Monastery"));
+	universitypanel->LoadPanelFromXML(panel_node.child("Buildings").child("University"));
+	castlepanel->LoadPanelFromXML(panel_node.child("Buildings").child("Castle"));
+
 	villagerpanel->LoadPanelFromXML(panel_node.child("Units").child("Villager"));
 	unitpanel->LoadPanelFromXML(panel_node.child("Units").child("Unit"));
 	heropanel->LoadPanelFromXML(panel_node.child("Units").child("Champion"));
@@ -1111,6 +1124,11 @@ bool Action_Panel::CleanUp()
 	delete archerypanel;
 	delete stablepanel;
 	delete blacksmithpanel;
+	delete lumbercamppanel;
+	delete miningcamppanel;
+	delete monasterypanel;
+	delete universitypanel;
+	delete castlepanel;
 	delete villagerpanel;
 	delete unitpanel;
 	delete heropanel;
@@ -1130,6 +1148,11 @@ void Action_Panel::Enable()
 	archerypanel->ResetPanel();
 	stablepanel->ResetPanel();
 	blacksmithpanel->ResetPanel();
+	lumbercamppanel->ResetPanel();
+	miningcamppanel->ResetPanel();
+	monasterypanel->ResetPanel();
+	universitypanel->ResetPanel();
+	castlepanel->ResetPanel();
 	villagerpanel->ResetPanel();
 	unitpanel->ResetPanel();
 	heropanel->ResetPanel();
@@ -1315,7 +1338,12 @@ bool Action_Panel::Load(pugi::xml_node & data)
 	archerypanel->Load(game_panel_data.child("archery"));
 	stablepanel->Load(game_panel_data.child("stable"));
 	blacksmithpanel->Load(game_panel_data.child("blacksmmith"));
+	lumbercamppanel->Load(game_panel_data.child("lumber_camp"));
+	miningcamppanel->Load(game_panel_data.child("mining_camp"));
+	universitypanel->Load(game_panel_data.child("university"));
 	heropanel->Load(game_panel_data.child("heroes"));
+
+	villagerpanel->UpgradeCurrentAge(current_age);
 
 	SetPanelType();
 
@@ -1338,6 +1366,9 @@ bool Action_Panel::Save(pugi::xml_node & data) const
 	archerypanel->Save(game_panel_data.append_child("archery"));
 	stablepanel->Save(game_panel_data.append_child("stable"));
 	blacksmithpanel->Save(game_panel_data.append_child("blacksmmith"));
+	lumbercamppanel->Load(game_panel_data.append_child("lumber_camp"));
+	miningcamppanel->Load(game_panel_data.append_child("mining_camp"));
+	universitypanel->Load(game_panel_data.append_child("university"));
 	heropanel->Save(game_panel_data.append_child("heroes"));
 
 	return true;
@@ -1390,7 +1421,7 @@ void Action_Panel::SetPanelType()
 	case UNIT:
 		{
 			if (u_type == VILLAGER) {	
-				if (villagerpanel->GetActualEntity() != actual_entity) villagerpanel->ResetPanel();
+				if (villagerpanel->GetActualEntity() != actual_entity) villagerpanel->SetDefault();
 				villagerpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = villagerpanel;
 			}
@@ -1436,11 +1467,41 @@ void Action_Panel::SetPanelType()
 				stablepanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = stablepanel;
 			}
-			else if (b_type == BLACKSMITH ||BLACKSMITH_C)
+			else if (b_type == BLACKSMITH || b_type == BLACKSMITH_C)
 			{
 				if (blacksmithpanel->GetActualEntity() != actual_entity || actualpanel != blacksmithpanel)App->sound->PlayFXAudio(STABLE_SOUND);
 				blacksmithpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = blacksmithpanel;
+			}
+			else if (b_type == LUMBER_CAMP)
+			{
+				if (lumbercamppanel->GetActualEntity() != actual_entity || actualpanel != lumbercamppanel)App->sound->PlayFXAudio(LUMBER_CAMP_SOUND);
+				lumbercamppanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = lumbercamppanel;
+			}
+			else if (b_type == MINING_CAMP)
+			{
+				if (miningcamppanel->GetActualEntity() != actual_entity || actualpanel != miningcamppanel)App->sound->PlayFXAudio(MINING_CAMP_SOUND);
+				miningcamppanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = miningcamppanel;
+			}
+			else if (b_type == MONASTERY)
+			{
+				if (monasterypanel->GetActualEntity() != actual_entity || actualpanel != monasterypanel)App->sound->PlayFXAudio(MONASTERY_SOUND);
+				monasterypanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = monasterypanel;
+			}
+			else if (b_type == UNIVERSITY_C || b_type == UNIVERSITY_I)
+			{
+				if (universitypanel->GetActualEntity() != actual_entity || actualpanel != universitypanel)App->sound->PlayFXAudio(UNIVERSITY_SOUND);
+				universitypanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = universitypanel;
+			}
+			else if (b_type == CASTLE)
+			{
+				if (castlepanel->GetActualEntity() != actual_entity || actualpanel != castlepanel)App->sound->PlayFXAudio(UNIVERSITY_SOUND);
+				castlepanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel = castlepanel;
 			}
 			else actualpanel = nullptr;		
 		}
@@ -1553,6 +1614,12 @@ void Action_Panel::UpgradeCivilizationAge(uint curr_age)
 	archerypanel->UpgradeCurrentAge(curr_age);
 	stablepanel->UpgradeCurrentAge(curr_age);
 	blacksmithpanel->UpgradeCurrentAge(curr_age);
+	lumbercamppanel->UpgradeCurrentAge(curr_age);
+	miningcamppanel->UpgradeCurrentAge(curr_age);
+	monasterypanel->UpgradeCurrentAge(curr_age);
+	universitypanel->UpgradeCurrentAge(curr_age);
+	castlepanel->UpgradeCurrentAge(curr_age);
+
 	villagerpanel->UpgradeCurrentAge(curr_age);
 }
 
@@ -1564,6 +1631,11 @@ void Action_Panel::UpgradeTecnology(RESEARCH_TECH type)
 	archerypanel->UpgradeResearch(type);
 	stablepanel->UpgradeResearch(type);
 	blacksmithpanel->UpgradeResearch(type);
+	lumbercamppanel->UpgradeResearch(type);
+	miningcamppanel->UpgradeResearch(type);
+	monasterypanel->UpgradeResearch(type);
+	universitypanel->UpgradeResearch(type);
+	castlepanel->UpgradeResearch(type);
 
 	// updata actual panel;
 	if (actualpanel != nullptr)

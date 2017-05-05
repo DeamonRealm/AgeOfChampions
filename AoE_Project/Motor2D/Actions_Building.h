@@ -185,12 +185,14 @@ public:
 	{
 		if (research_time <= timer.Read())
 		{
+			App->entities_manager->UpgradeEntity(type, diplomacy);
 			if (diplomacy == ALLY)
 			{
-				App->entities_manager->UpgradeEntity(type, diplomacy);
 				App->player->UpgradeCivilization(type);
+				App->sound->PlayFXAudio(BLACKSMITH_SOUND);
 			}
-			App->sound->PlayFXAudio(BLACKSMITH_SOUND);
+			else App->AI->UpgradeCivilization(type);
+			
 			return true;
 		}
 

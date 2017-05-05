@@ -334,6 +334,12 @@ private:
 	Action_Panel_Elements*		archerypanel = nullptr;
 	Action_Panel_Elements*		stablepanel = nullptr;
 	Action_Panel_Elements*		blacksmithpanel = nullptr;
+
+	Action_Panel_Elements*		lumbercamppanel = nullptr;
+	Action_Panel_Elements*		miningcamppanel = nullptr;
+	Action_Panel_Elements*		monasterypanel = nullptr;
+	Action_Panel_Elements*		universitypanel = nullptr;
+	Action_Panel_Elements*		castlepanel = nullptr;
 	
 	// Units Panels
 	VillagerPanel*				villagerpanel = nullptr;
