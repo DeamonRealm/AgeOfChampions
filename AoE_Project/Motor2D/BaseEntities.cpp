@@ -1723,7 +1723,7 @@ void Unit::SetUpgrade(Unit * upgraded)
 	// From Base Entity
 	name.clear();
 	name = upgraded->GetName();
-	vision = upgraded->GetVision();
+	vision.SetRad(upgraded->GetVision().GetRad());
 	selection_rect = *upgraded->GetSelectionRect();
 	icon_rect = upgraded->GetIcon();
 	if (life == max_life)
@@ -1734,8 +1734,8 @@ void Unit::SetUpgrade(Unit * upgraded)
 
 	// Unit
 	unit_type = upgraded->GetUnitType();
-	soft_collider = upgraded->GetSoftCollider();
-	hard_collider = upgraded->GetHardCollider();
+	soft_collider.SetRad(upgraded->GetSoftCollider().GetRad());
+	hard_collider.SetRad(upgraded->GetHardCollider().GetRad());
 	speed = upgraded->GetSpeed();
 
 	int curr_frame = current_animation->GetCurrentFrame();
@@ -1751,7 +1751,7 @@ void Unit::SetUpgrade(Unit * upgraded)
 
 	defense = upgraded->defense;
 
-	attack_area = upgraded->attack_area;
+	attack_area.SetRad(upgraded->attack_area.GetRad());
 }
 
 void Unit::SetUnitExperience(uint value)
@@ -2620,6 +2620,34 @@ void Building::SetFogDiscovered(bool val)
 	fog_discovered = val;
 }
 
+void Building::SetUpgrade(Building * new_building)
+{
+	// From Base Entity
+	name.clear();
+	name = new_building->GetName();
+	vision.SetRad(new_building->GetVision().GetRad());
+	selection_rect = *new_building->GetSelectionRect();
+	icon_rect = new_building->GetIcon();
+	if (life == max_life)
+	{
+		life = new_building->GetLife();
+	}
+	max_life = new_building->GetMaxLife();
+
+	building_type = new_building->GetBuildingType();
+
+	CleanAnimation();
+	App->animator->BuildingPlay(this);
+
+	mark = new_building->GetMark();
+	iPoint pos(position.x, position.y);
+	mark.SetPosition(pos);
+	interact_area = *new_building->GetInteractArea();
+	interact_area.SetPosition(pos);
+
+}
+
+//Get Methods ---------------
 const Rectng & Building::GetMark() const
 {
 	return mark;
@@ -2630,7 +2658,6 @@ const Rectng* Building::GetInteractArea() const
 	return &interact_area;
 }
 
-//Get Methods ---------------
 BUILDING_TYPE Building::GetBuildingType() const
 {
 	return building_type;

@@ -143,7 +143,7 @@ bool j1EntitiesManager::Update(float dt)
 	while (death_unit != death_units.end())
 	{
 		ret = death_unit._Ptr->_Myval->Update();
-		if (death_unit == death_units.end())break;
+		if (death_unit == death_units.end() || death_units.empty())break;
 		death_unit++;
 	}
 
@@ -152,7 +152,7 @@ bool j1EntitiesManager::Update(float dt)
 	while (death_building != death_buildings.end())
 	{
 		ret = death_building._Ptr->_Myval->Update();
-		if (death_building == death_buildings.end())break;
+		if (death_building == death_buildings.end() || death_buildings.empty())break;
 		death_building++;
 	}
 
@@ -266,6 +266,7 @@ bool j1EntitiesManager::CleanUp()
 	{
 		RELEASE(arrows._Ptr->_Myval);
 	}
+
 	//Clean Up Units List
 	units_quadtree.Clear();
 	std::list<Unit*>::iterator units_item = units.begin();
@@ -276,32 +277,13 @@ bool j1EntitiesManager::CleanUp()
 	}
 	units.clear();
 
-	//Clean Up death Units
-	std::list<Unit*>::iterator death_unit = death_units.begin();
-	while (death_unit != death_units.end())
-	{
-		App->buff_manager->RemoveTargetBuffs(death_unit._Ptr->_Myval);
-		RELEASE(death_unit._Ptr->_Myval);
-		death_unit++;
-	}
-	death_units.clear();
-
-	//Clean Up death Units
-	std::list<Building*>::iterator death_building = death_buildings.begin();
-	while (death_building != death_buildings.end())
-	{
-		RELEASE(death_building._Ptr->_Myval);
-		death_building++;
-	}
-	death_buildings.clear();
-
-	//Clean Up resources list
+	//Clean Up Resources List
 	resources_quadtree.Clear();
-	std::list<Resource*>::iterator resources_item = resources.begin();
-	while (resources_item != resources.end())
+	std::list<Resource*>::iterator resource_item = resources.begin();
+	while (resource_item != resources.end())
 	{
-		RELEASE(resources_item._Ptr->_Myval);
-		resources_item++;
+		RELEASE(resource_item._Ptr->_Myval);
+		resource_item++;
 	}
 	resources.clear();
 
@@ -315,8 +297,35 @@ bool j1EntitiesManager::CleanUp()
 	}
 	buildings.clear();
 
+	//Clean Up death Units
+	std::list<Unit*>::iterator death_unit = death_units.begin();
+	while (death_unit != death_units.end())
+	{
+		App->buff_manager->RemoveTargetBuffs(death_unit._Ptr->_Myval);
+		RELEASE(death_unit._Ptr->_Myval);
+		death_unit++;
+	}
+	death_units.clear();
+
+	//Clean Up death Buildings
+	std::list<Building*>::iterator death_building = death_buildings.begin();
+	while (death_building != death_buildings.end())
+	{
+		RELEASE(death_building._Ptr->_Myval);
+		death_building++;
+	}
+	death_buildings.clear();
+
+	//Clean Up resoureces_defs vector
+	uint size = resources_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(resources_defs[k]);
+	}
+	resources_defs.clear();
+
 	//Clean Up units_defs vector
-	uint size = ally_units_defs.size();
+	size = ally_units_defs.size();
 	for (uint k = 0; k < size; k++)
 	{
 		RELEASE(ally_units_defs[k]);
@@ -324,14 +333,6 @@ bool j1EntitiesManager::CleanUp()
 	}
 	ally_units_defs.clear();
 	enemy_units_defs.clear();
-
-	//Clean Up resoureces_defs vector
-	size = resources_defs.size();
-	for (uint k = 0; k < size; k++)
-	{
-		RELEASE(resources_defs[k]);
-	}
-	resources_defs.clear();
 
 	//Clean Up buildings_defs vector
 	size = ally_buildings_defs.size();
@@ -343,6 +344,10 @@ bool j1EntitiesManager::CleanUp()
 	ally_buildings_defs.clear();
 	enemy_buildings_defs.clear();
 
+	//Clean Champions lists
+	champions_blue.clear();
+	champions_red.clear();
+
 	//If there's no entities to delete returns
 	if (wasted_units.empty())return true;
 
@@ -353,7 +358,7 @@ bool j1EntitiesManager::CleanUp()
 		RELEASE(wasted_units[k]);
 	}
 	wasted_units.clear();
-
+	
 	return true;
 }
 
@@ -1962,34 +1967,58 @@ void j1EntitiesManager::UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy)
 	}
 }
 
-bool j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOMACY e_diplomacy)
+void j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOMACY e_diplomacy)
 {
-	bool ret = false;
+	if (u_type == NO_UNIT || new_type == NO_UNIT || e_diplomacy == NEUTRAL)return;
 
-	if (u_type != NO_UNIT && new_type != NO_UNIT)
+	Unit* new_unit = nullptr;
+	int size = ally_units_defs.size();
+	for (int count = 0; count < size; count++)
 	{
-		Unit* new_unit = nullptr;
-		int size = ally_units_defs.size();
-		for (int count = 0; count < size; count++)
+		if (ally_units_defs[count]->GetUnitType() == new_type)
 		{
-			if (ally_units_defs[count]->GetUnitType() == new_type)
-			{
-				new_unit = ally_units_defs[count];
-				break;
-			}
-		}
-		std::list<Unit*>::iterator unit = units.begin();
-		while (unit != units.end())
-		{
-			if (unit._Ptr->_Myval->GetDiplomacy() == e_diplomacy && unit._Ptr->_Myval->GetUnitType() == u_type)
-			{
-				unit._Ptr->_Myval->SetUpgrade(new_unit);
-			}
-			unit++;
+			if(e_diplomacy == ALLY) new_unit = ally_units_defs[count];
+			else new_unit = enemy_units_defs[count];
+			break;
 		}
 	}
+	std::list<Unit*>::iterator unit = units.begin();
+	while (unit != units.end())
+	{
+		if (unit._Ptr->_Myval->GetDiplomacy() == e_diplomacy && unit._Ptr->_Myval->GetUnitType() == u_type)
+		{
+			unit._Ptr->_Myval->SetUpgrade(new_unit);
+		}
+		unit++;
+	}
+	
+}
 
-	return ret;
+void j1EntitiesManager::UpgradeBuilding(BUILDING_TYPE b_type, BUILDING_TYPE new_type, DIPLOMACY diplomacy)
+{
+	if (b_type == NO_BUILDING || new_type == NO_BUILDING || diplomacy == NEUTRAL)return;
+
+	
+	Building* new_building = nullptr;
+	int size = ally_buildings_defs.size();
+	for (int count = 0; count < size; count++)
+	{
+		if (ally_buildings_defs[count]->GetBuildingType() == new_type)
+		{
+			if(diplomacy == ALLY)new_building = ally_buildings_defs[count];
+			else new_building = enemy_buildings_defs[count];
+			break;
+		}
+	}
+	std::list<Building*>::iterator build = buildings.begin();
+	while (build != buildings.end())
+	{
+		if (build._Ptr->_Myval->GetDiplomacy() == diplomacy && build._Ptr->_Myval->GetBuildingType() == b_type)
+		{
+			build._Ptr->_Myval->SetUpgrade(new_building);
+		}
+		build++;
+	}
 }
 
 bool j1EntitiesManager::UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY diplomacy)
@@ -2192,11 +2221,18 @@ bool j1EntitiesManager::UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY d
 		}
 		break;
 	}
-	case TC_FEUDAL:
-		break;
 	case TC_CASTLE:
+		UpgradeBuilding(TOWN_CENTER, TOWN_CENTER_C, diplomacy);
+		UpgradeBuilding(BARRACK, BARRACK_C, diplomacy);
+		UpgradeBuilding(ARCHERY_RANGE, ARCHERY_RANGE_C, diplomacy);
+		UpgradeBuilding(BLACKSMITH, BLACKSMITH_C, diplomacy);
+		UpgradeBuilding(STABLE, STABLE_C, diplomacy);
+		UpgradeBuilding(HOUSE_A, HOUSE_AI, diplomacy);
+		UpgradeBuilding(HOUSE_B, HOUSE_BI, diplomacy);
+		UpgradeBuilding(HOUSE_C, HOUSE_CI, diplomacy);
 		break;
 	case TC_IMPERIAL:
+		UpgradeBuilding(UNIVERSITY_C, UNIVERSITY_I, diplomacy);
 		break;
 	case TC_LOOM:
 	{

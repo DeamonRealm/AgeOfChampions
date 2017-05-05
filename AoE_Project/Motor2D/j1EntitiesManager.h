@@ -144,7 +144,8 @@ public:
 
 	//Upgrade Entity
 	void UpgradeEntity(RESEARCH_TECH type, DIPLOMACY diplomacy);
-	bool UpgradeUnit(UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
+	void UpgradeUnit(UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
+	void UpgradeBuilding(BUILDING_TYPE b_type, BUILDING_TYPE new_type, DIPLOMACY diplomacy);
 	bool UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY diplomacy);
 
 	//Get nearest Entity methods

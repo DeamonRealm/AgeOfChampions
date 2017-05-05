@@ -629,6 +629,7 @@ public:
 	void	SetActionType(ACTION_TYPE type);
 	void	SetDirectionType(DIRECTION_TYPE type);
 	void	SetFogDiscovered(bool val);
+	void	SetUpgrade(Building* new_building);
 
 	//Get Methods -----------
 	const Rectng&	GetMark()const;
