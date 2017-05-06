@@ -40,6 +40,7 @@ void j1AI::Enable()
 	ai_starting_tc = (ProductiveBuilding*)App->entities_manager->GenerateBuilding(TOWN_CENTER, ENEMY);
 	iPoint pos = App->map->MapToWorldCenter(110, 100);
 	ai_starting_tc->SetPosition((float)pos.x, (float)pos.y);
+	enemy_buildings.push_back(ai_starting_tc);
 
 
 	//temporary enemy barracks
@@ -56,7 +57,6 @@ void j1AI::Disable()
 {
 	active = false;
 	ai_worker->Reset();
-	units_to_spawn.clear();
 	enemy_units.clear();
 }
 
@@ -105,8 +105,9 @@ bool j1AI::Update(float dt)
 	UpdateResearch();
 	
 
-	/*	WIP, infinite loop possible
-	if (building_timer.Read() > 1000)
+	//	WIP
+	/*
+	if (building_timer.Read() > 100000)
 	{
 		ManageConstrucion();
 
@@ -115,16 +116,15 @@ bool j1AI::Update(float dt)
 	*/
 
 	//only update every 2 seconds
-	if (update_timer.Read() < 10000)
+	if (update_timer.Read() < 1000)
 	{
 		return true;
 	}
 
 	Resource* to_recolect = GetNearestNeed();
 	//ai_worker->AddAICommand(new SendToRecollect(enemy_units, (Resource**)to_recolect->GetMe()));
-
+	
 	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
-
 	while (unit_it != enemy_units.end())
 	{
 		if (to_recolect == nullptr) break;
@@ -142,21 +142,11 @@ bool j1AI::Update(float dt)
 		unit_it++;
 	}
 
-	GenerateDebugVillager();
-	
-	//Enemies attack NOT WORKING
-	
-	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
-	while (building_it != enemy_buildings.end())
-	{
-		if (building_it._Ptr->_Myval->GetBuildingType() == BARRACK)
-		{
-			building_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)building_it._Ptr->_Myval, MILITIA, ENEMY));
 
-		}
-		building_it++;
-	}
-	ManageAttack();
+	ManageTroopsCreation();
+	
+
+	//ManageAttack();
 	
 
 
@@ -258,6 +248,7 @@ void j1AI::ManageConstrucion()
 	
 	Building* test = App->entities_manager->GenerateBuilding(BUILDING_TYPE::BARRACK, ENEMY);
 
+	j1Timer save_alpha_timer;
 	
 	//
 	srand(time(NULL));
@@ -290,11 +281,40 @@ void j1AI::ManageConstrucion()
 		}
 
 		test->OnlySetPosition(new_pos.x, new_pos.y);
-
+	
+		if (save_alpha_timer.Read() > 10)
+		{
+			App->entities_manager->DeleteEntity(test);
+			
+			return;
+		}
+		
 	}
 
 
 	test->SetPosition(new_pos.x, new_pos.y);
+}
+
+void j1AI::ManageTroopsCreation()
+{
+	if (population >= max_population) return;
+
+	UNIT_TYPE		unit_type		= UNIT_TYPE::NO_UNIT;
+	BUILDING_TYPE	building_type	= BUILDING_TYPE::NO_BUILDING;
+
+	GetSpawnUnitTypes(unit_type, building_type);
+
+	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
+	while (building_it != enemy_buildings.end())
+	{
+		if (building_it._Ptr->_Myval->GetBuildingType() == building_type)
+		{
+			if(!CheckResources(0, 60, 20, 0, 1)) return;
+			building_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)building_it._Ptr->_Myval, unit_type, ENEMY));
+		}
+		building_it++;
+	}
+
 }
 
 
@@ -348,10 +368,98 @@ void j1AI::UpdateResearch()
 	}
 }
 
+void j1AI::GetSpawnUnitTypes(UNIT_TYPE& u_type, BUILDING_TYPE& b_type)
+{
+	uint troop_count = 0;
+	UNIT_TYPE spawn_type = VILLAGER;
+
+	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
+	while (unit_it != enemy_units.end())
+	{
+		if (unit_it._Ptr->_Myval->GetUnitType() == spawn_type)
+		{
+			++troop_count;
+			if (troop_count > MIN_VILLAGERS)
+			{
+				spawn_type = GetNextSpawnType(spawn_type);
+			}
+		}
+		
+		unit_it++;
+	}
+	
+	u_type = spawn_type;
+
+	if (u_type == VILLAGER) b_type = TOWN_CENTER;
+	if (u_type == MILITIA) b_type = BARRACK;
+
+
+}
+
+UNIT_TYPE j1AI::GetNextSpawnType(UNIT_TYPE u_type)
+{
+	UNIT_TYPE ret = UNIT_TYPE::NO_UNIT;
+
+	switch (u_type)
+	{
+	case NO_UNIT:
+		break;
+	case MILITIA:
+		ret = MILITIA;
+		break;
+	case ARBALEST:
+		break;
+	case ARCHER:
+		break;
+	case CAVALIER:
+		break;
+	case CAVALRY_ARCHER:
+		break;
+	case ELITE_SKIRMISHER:
+		break;
+	case HEAVY_CAVALRY_ARCHER:
+		break;
+	case KNIGHT:
+		break;
+	case MONK:
+		break;
+	case PALADIN:
+		break;
+	case PIKEMAN:
+		break;
+	case SPEARMAN:
+		break;
+	case VILLAGER:
+		ret = MILITIA;
+		break;
+	case TWO_HANDED_SWORDMAN:
+		break;
+	case MAN_AT_ARMS:
+		break;
+	case LONG_SWORDMAN:
+		break;
+	case CHAMPION:
+		break;
+	case WARRIOR_CHMP:
+		break;
+	case ARCHER_CHMP:
+		break;
+	case WIZARD_CHMP:
+		break;
+	case CROSSBOWMAN:
+		break;
+	case SKIRMISHER:
+		break;
+	default:
+		break;
+	}
+
+	return ret;
+}
+
 void j1AI::GenerateDebugVillager()
 {
 	ai_worker->AddAICommand(new SpawnUnitCommand(VILLAGER, ai_starting_tc));
-
 }
 
 void j1AI::AddResources(PLAYER_RESOURCES type, int value)

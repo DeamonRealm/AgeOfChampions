@@ -15,6 +15,8 @@ enum RESEARCH_TECH;
 
 #define	RESEARCH_RATE 15000
 #define AI_RESEARCH_DURATION 3000
+#define MIN_VILLAGERS 10
+
 
 ///AI is controlled thorugh childs from this command (like ActionManager)--------
 class AICommand
@@ -120,14 +122,18 @@ private:
 	void ManageAttack();
 	void ManageConstrucion();
 
+	void ManageTroopsCreation();
+
 	// AI Entity Data Methods
 	void LoadAIEntitiesData(pugi::xml_node&);
 
 	void UpdateResearch();
 
+	void GetSpawnUnitTypes(UNIT_TYPE& u_type, BUILDING_TYPE& b_type);
+	UNIT_TYPE  GetNextSpawnType(UNIT_TYPE u_type);
+
 private:
 	AIWorker* ai_worker = nullptr;
-	std::list<Entity*> units_to_spawn;
 	j1Timer update_timer;
 	j1Timer building_timer;
 
