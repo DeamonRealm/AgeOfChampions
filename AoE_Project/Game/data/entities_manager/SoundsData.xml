@@ -32,6 +32,10 @@
   <type enum="monastery_create_selected" song_type ="fx">
     <sound soundPath="monastery_create_selected.wav" name="monastery"/>
   </type>
+  
+  <type enum="castle_create_selected" song_type ="fx">
+    <sound soundPath="castle_create_selected.wav" name="castle"/>
+  </type>
   <type enum="farm_create_selected" song_type ="fx">
     <sound soundPath="farm_create_selected.wav" name="farm"/>
   </type>

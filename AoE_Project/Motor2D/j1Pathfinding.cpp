@@ -140,7 +140,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 
 	iPoint mouse_position = App->map->FixPointMap(destination.x, destination.y);
 	iPoint map_origin = App->map->WorldToMap(origin.x, origin.y);
-	iPoint map_goal = App->map->WorldToMap(mouse_position.x, mouse_position.y);
+	iPoint map_goal = App->map->WorldToMap(destination.x, destination.y);
 
 	iPoint diference = origin - App->map->MapToWorld(map_origin.x, map_origin.y);
 

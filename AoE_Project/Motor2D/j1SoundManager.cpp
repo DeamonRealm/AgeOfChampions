@@ -128,6 +128,7 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "archery_create_selected") == 0)			return ARCHERY_SOUND;
 	else if (strcmp(str, "blacksmith_created_selected") == 0)		return BLACKSMITH_SOUND;
 	else if (strcmp(str, "monastery_create_selected") == 0)			return MONASTERY_SOUND;
+	else if (strcmp(str, "castle_create_selected") == 0)			return CASTLE_SOUND;
 	else if (strcmp(str, "farm_create_selected") == 0)				return FARM_SOUND;
 	else if (strcmp(str, "tower_create_selected") == 0)				return TOWER_SOUND;
 	else if (strcmp(str, "mill_create_selected") == 0)				return MILL_SOUND;
