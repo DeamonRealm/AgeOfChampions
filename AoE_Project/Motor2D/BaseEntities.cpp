@@ -1483,12 +1483,9 @@ bool Unit::AttackBuilding(Building * target)
 	{
 
 		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
-		App->pathfinding->PushPath(this, goal, target->GetPositionRounded());
-		/*
-		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
-		if (path == nullptr)return true;
-		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this), TASK_CHANNELS::SECONDARY);
-		*/
+		LOG("X: %i || Y: %i", goal.x, goal.y);
+		App->pathfinding->PushPath(this, goal);
+
 		return false;
 	}
 
@@ -2167,7 +2164,6 @@ void Resource::SaveAsDef(pugi::xml_node & node)
 	/*Mark X*/	node.append_attribute("mark_x") = mark.GetPosition().x;
 	/*Mark Y*/	node.append_attribute("mark_y") = mark.GetPosition().y;
 	/*Mark W*/	node.append_attribute("mark_w") = mark.GetWidth();
-	/*Mark H*/	node.append_attribute("mark_h") = mark.GetHeight();
 
 	/*Interact rad*/	node.append_attribute("interaction_rad") = interact_area.GetRad();
 	/*Vision rad*/		node.append_attribute("vision_rad") = vision.GetRad();
@@ -2428,12 +2424,10 @@ void Building::SaveAsDef(pugi::xml_node & node)
 	/*Mark X*/	node.append_attribute("mark_x") = mark.GetPosition().x;
 	/*Mark Y*/	node.append_attribute("mark_y") = mark.GetPosition().y;
 	/*Mark W*/	node.append_attribute("mark_w") = mark.GetWidth();
-	/*Mark H*/	node.append_attribute("mark_h") = mark.GetHeight();
 
 	/*Interact X*/	node.append_attribute("interaction_area_x") = interact_area.GetPosition().x;
 	/*Interact Y*/	node.append_attribute("interaction_area_y") = interact_area.GetPosition().y;
 	/*Interact W*/	node.append_attribute("interaction_area_w") = interact_area.GetWidth();
-	/*Interact H*/	node.append_attribute("interaction_area_h") = interact_area.GetHeight();
 
 	/*Tiles W*/		node.append_attribute("width_in_tiles") = width_in_tiles;
 	/*Tiles H*/		node.append_attribute("height_in_tiles") = height_in_tiles;

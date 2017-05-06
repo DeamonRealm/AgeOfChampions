@@ -98,7 +98,6 @@ void Tree::SaveAsDef(pugi::xml_node & node)
 	/*Mark X*/	node.append_attribute("mark_x") = mark.GetPosition().x;
 	/*Mark Y*/	node.append_attribute("mark_y") = mark.GetPosition().y;
 	/*Mark W*/	node.append_attribute("mark_w") = mark.GetWidth();
-	/*Mark H*/	node.append_attribute("mark_h") = mark.GetHeight();
 
 	/*Interact rad*/	node.append_attribute("interaction_rad") = interact_area.GetRad();
 	/*Vision rad*/		node.append_attribute("vision_rad") = vision.GetRad();

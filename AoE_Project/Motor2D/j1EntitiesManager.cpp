@@ -1345,7 +1345,7 @@ bool j1EntitiesManager::AddResourceDefinition(const pugi::xml_node* resource_nod
 	//Resource Primitives ---
 	/*Mark*/			Rectng mark;
 	/*Mark Width*/		mark.SetWidth(resource_node->attribute("mark_w").as_uint());
-	/*Mark Height*/		mark.SetHeight(resource_node->attribute("mark_h").as_uint());
+	/*Mark Height*/		mark.SetHeight(mark.GetWidth() * sin(mark.GetXAngle()));
 	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
 						new_def->SetMark(mark);
 	/*Interaction Area*/Circle area({ 0,0 }, resource_node->attribute("interaction_rad").as_uint(), { 0,0 });
@@ -1401,15 +1401,15 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 						new_def->SetVision(vision);
 	/*Mark*/			Rectng mark;
 	/*Mark Width*/		mark.SetWidth(building_node->attribute("mark_w").as_uint());
-	/*Mark Height*/		mark.SetHeight(building_node->attribute("mark_h").as_uint());
+	/*Mark Height*/		mark.SetHeight(mark.GetWidth() * sin(mark.GetXAngle()));
 	/*Mark Displace*/	iPoint displacement(building_node->attribute("mark_x").as_int(), building_node->attribute("mark_y").as_int());
 						mark.SetDisplacement(displacement);
 	/*Mark Color*/		mark.SetColor({ 55,255,255,255 });
 						new_def->SetMark(mark);
 	/*Interaction Area*/Rectng area;
 	/*I.Area Width*/	area.SetWidth(building_node->attribute("interaction_area_w").as_uint());
-	/*I.Area Height*/	area.SetHeight(building_node->attribute("intaraction_area_h").as_uint());
-	/*I.Area Displace*/	displacement.create(building_node->attribute("interaction_area_x").as_int(), building_node->attribute("intaraction_area_y").as_int());
+	/*I.Area Height*/	area.SetHeight(area.GetWidth() * sin(area.GetXAngle()));
+	/*I.Area Displace*/	displacement.create(building_node->attribute("interaction_area_x").as_int(), building_node->attribute("interaction_area_y").as_int());
 						area.SetDisplacement(displacement);
 	/*I.Area Color*/	area.SetColor({ 0,0,255,255 });
 						new_def->SetInteractArea(area);

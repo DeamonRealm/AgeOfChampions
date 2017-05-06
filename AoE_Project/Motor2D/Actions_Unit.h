@@ -413,7 +413,7 @@ public:
 
 	bool Execute()
 	{
-		if (target == nullptr)
+		if (target->GetLife() == 0)
 		{
 			//If resource is deplated execute a SaveResourceAction
 			Building* save_point = App->entities_manager->GetNearestBuilding(actor->GetPositionRounded(), TOWN_CENTER, actor->GetDiplomacy());
