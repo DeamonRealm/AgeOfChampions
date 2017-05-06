@@ -43,6 +43,7 @@ bool j1Pathfinding::PreUpdate()
 			if (current_unit.unit->GetAction() != DIE || current_unit.unit->GetAction() != DISAPPEAR)
 			{
 				std::vector<iPoint>* path = SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
+				if (path == nullptr) continue;
 				if (current_unit.priority)
 					current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
 				else

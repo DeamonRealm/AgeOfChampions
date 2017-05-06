@@ -98,7 +98,8 @@ public:
 	void	SetViewPort(const SDL_Rect& rect);
 	void	ResetViewPort();
 	void	CalculateCameraViewport();
-
+	//Check if point is on camera view
+	bool	IsOnCamera(const iPoint& point);
 	//View frame change -----
 	iPoint	ScreenToWorld(int x, int y) const;
 

@@ -19,7 +19,7 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas blue_texture="two_handed_swordman.png" red_texture="two_handed_swordman.png" width="689" height="689">
+<TextureAtlas blue_texture="two_handed_swordman.png" red_texture="two_handed_swordman_red.png" width="689" height="689">
  <unit id ="two_handed_swordman">
    
   <action enum ="attack" speed="200">

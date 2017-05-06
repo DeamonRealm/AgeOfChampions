@@ -257,6 +257,12 @@ void j1Render::CalculateCameraViewport()
 	App->map->CalculateTilesInView();
 }
 
+bool j1Render::IsOnCamera(const iPoint & point)
+{
+	return(-camera.x < point.x && -camera.x + camera.w > point.x 
+		&& -camera.y < point.y && -camera.y + camera.h > point.y);
+}
+
 iPoint j1Render::ScreenToWorld(int x, int y) const
 {
 	iPoint ret;

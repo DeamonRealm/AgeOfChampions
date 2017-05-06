@@ -6,6 +6,7 @@
 #include "j1App.h"
 #include "j1EntitiesManager.h"
 #include "j1SoundManager.h"
+#include "j1Render.h"
 
 //Needed to have the MoveUnitAction with the path
 #include "j1Pathfinding.h"
@@ -273,7 +274,8 @@ public:
 	//Functionality ---------
 	bool Activation()
 	{
-		App->sound->PlayFXAudio(DEATH_SOUND);
+		if(App->render->IsOnCamera(actor->GetPositionRounded()))
+			App->sound->PlayFXAudio(DEATH_SOUND);
 		return true;
 	}
 

@@ -19,7 +19,7 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas blue_texture="champion.png" red_texture="champion.png" width="691" height="691">
+<TextureAtlas blue_texture="champion.png" red_texture="champion_red.png" width="691" height="691">
   <!-- Define the unit type-->
   <unit id ="champion">  
   <!-- Attack Action-->
