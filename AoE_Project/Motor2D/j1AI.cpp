@@ -106,14 +106,14 @@ bool j1AI::Update(float dt)
 	
 
 	//	WIP
-	/*
-	if (building_timer.Read() > 100000)
+	
+	if (building_timer.Read() > 10000)
 	{
 		ManageConstrucion();
 
 		building_timer.Start();
 	}
-	*/
+	
 
 	//only update every 2 seconds
 	if (update_timer.Read() < 1000)
@@ -143,14 +143,11 @@ bool j1AI::Update(float dt)
 	}
 
 
-//	ManageTroopsCreation();
+	ManageTroopsCreation();
 	
 
 	//ManageAttack();
 	
-
-
-
 	update_timer.Start();
 
 	return true;
@@ -246,58 +243,13 @@ void j1AI::ManageAttack()
 	}
 }
 
-void j1AI::ManageConstrucion(Building* new_building)
+void j1AI::ManageConstrucion()
 {
-	fPoint new_pos(0,0);
-	float displacement = 100.0;
 
-	Building* test = App->entities_manager->GenerateBuilding(BUILDING_TYPE::BARRACK, ENEMY);
+	BUILDING_TYPE new_building_type = GetNextBuildingSpawnType();
 
-	j1Timer save_alpha_timer;
-	
-	//
-	srand(time(NULL));
+	GenerateBuilding(new_building_type);
 
-
-	new_pos = ai_starting_tc->GetPosition();
-
-	test->OnlySetPosition(new_pos.x, new_pos.y);
-
-
-	while (!test->CheckZone(new_pos.x,new_pos.y))
-	{
-		int direction = rand() % 4;
-		switch (direction)
-		{
-		case 0:				//Decrease y
-			new_pos.y -= (displacement);
-			break;
-		case 1:				//Increase x
-			new_pos.x += (displacement);
-			break;
-		case 2:				//Increase y
-			new_pos.y += (displacement);
-			break;
-		case 3:				//Decrease x
-			new_pos.x -= (displacement);
-			break;
-		default:
-			break;
-		}
-
-		test->OnlySetPosition(new_pos.x, new_pos.y);
-	
-		if (save_alpha_timer.Read() > 10)
-		{
-			App->entities_manager->DeleteEntity(test);
-			
-			return;
-		}
-		
-	}
-
-
-	test->SetPosition(new_pos.x, new_pos.y);
 }
 
 void j1AI::ManageTroopsCreation()
@@ -305,21 +257,10 @@ void j1AI::ManageTroopsCreation()
 	if (population >= max_population) return;
 
 	UNIT_TYPE		unit_type		= UNIT_TYPE::NO_UNIT;
-	BUILDING_TYPE	building_type	= BUILDING_TYPE::NO_BUILDING;
 
-	GetSpawnUnitTypes(unit_type, building_type);
+	GetSpawnUnitTypes(unit_type);
 
-	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
-	while (building_it != enemy_buildings.end())
-	{
-		if (building_it._Ptr->_Myval->GetBuildingType() == building_type)
-		{
-			if(!CheckResources(0, 60, 20, 0, 1)) return;
-			building_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)building_it._Ptr->_Myval, unit_type, ENEMY));
-		}
-		building_it++;
-	}
-
+	GenerateUnit(unit_type);
 }
 
 
@@ -369,7 +310,7 @@ void j1AI::LoadAIEntitiesData(pugi::xml_node& conf)
 		new_data.gold_cost = item.attribute("gc").as_int(0);
 		new_data.stone_cost = item.attribute("sc").as_int(0);
 		new_data.population_cost = item.attribute("pc").as_int(0);
-		new_data.u_type = (UNIT_TYPE)item.attribute("ut").as_int(0);
+		new_data.u_type = App->animator->StrToUnitEnum(item.attribute("ut").as_string(""));
 		new_data.r_type = (RESEARCH_TECH)item.attribute("rt").as_int(0);
 
 		units_queue.push_back(new_data);
@@ -485,7 +426,7 @@ void j1AI::UpdateAIBuildings()
 	}
 }
 
-void j1AI::GetSpawnUnitTypes(UNIT_TYPE& u_type, BUILDING_TYPE& b_type)
+void j1AI::GetSpawnUnitTypes(UNIT_TYPE& u_type)
 {
 	uint troop_count = 0;
 	UNIT_TYPE spawn_type = VILLAGER;
@@ -506,9 +447,6 @@ void j1AI::GetSpawnUnitTypes(UNIT_TYPE& u_type, BUILDING_TYPE& b_type)
 	}
 	
 	u_type = spawn_type;
-
-	if (u_type == VILLAGER) b_type = TOWN_CENTER;
-	if (u_type == MILITIA) b_type = BARRACK;
 
 
 }
@@ -590,6 +528,86 @@ Building * j1AI::FindBuilding(BUILDING_TYPE type, BUILDING_TYPE type2)
 	return nullptr;
 }
 
+BUILDING_TYPE j1AI::GetNextBuildingSpawnType()
+{
+	BUILDING_TYPE ret = HOUSE_A;
+
+	uint town_center = 0;
+	uint barrack = 0;
+	uint archery = 0;
+	uint stable = 0;
+	uint house = 0;
+	uint lumber_camp = 0;
+	uint mining_camp = 0;
+	uint monastery = 0;
+	uint castle = 0;
+
+	if (population >= max_population)
+	{
+		ret = HOUSE_A;
+		return ret;
+	}
+
+	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
+
+	while (building_it != enemy_buildings.end())
+	{
+		BUILDING_TYPE b_type = building_it._Ptr->_Myval->GetBuildingType();
+
+		if (b_type == TOWN_CENTER || b_type == TOWN_CENTER_C)				town_center++;
+		else if (b_type == BARRACK || b_type == BARRACK_C)					barrack++;
+		else if (b_type == ARCHERY_RANGE || b_type == ARCHERY_RANGE_C)		archery++;
+		else if (b_type == STABLE || b_type == STABLE_C)					stable++;
+		else if (b_type == LUMBER_CAMP)										lumber_camp++;
+		else if (b_type == MINING_CAMP)										mining_camp++;
+		else if (b_type == MONASTERY)										monastery++;
+		else if (b_type == CASTLE)											castle++;
+		else if (b_type == HOUSE_A || b_type == HOUSE_AI || b_type == HOUSE_B ||
+			b_type == HOUSE_BI || b_type == HOUSE_C || b_type == HOUSE_CI)	house++;
+
+		building_it++;
+	}
+
+	uint min = house;
+	if (min > barrack)
+	{
+		ret = BARRACK;
+		min = barrack;
+	}
+	if (min > archery)
+	{
+		ret = ARCHERY_RANGE;
+		min = archery;
+	}
+	if (min > stable)
+	{
+		ret = STABLE;
+		min = stable;
+	}
+	if (min > lumber_camp)
+	{
+		ret = LUMBER_CAMP;
+		min = lumber_camp;
+	}
+	if (min > mining_camp)
+	{
+		ret = MINING_CAMP;
+		min = mining_camp;
+	}
+	if (min > monastery)
+	{
+		ret = MONASTERY;
+		min = monastery;
+	}
+	if (min > castle)
+	{
+		ret = CASTLE;
+		min = castle;
+	}
+
+	return ret;
+}
+
 void j1AI::GenerateDebugVillager()
 {
 	ai_worker->AddAICommand(new SpawnUnitCommand(VILLAGER, ai_starting_tc));
@@ -598,7 +616,7 @@ void j1AI::GenerateDebugVillager()
 bool j1AI::GenerateUnit(UNIT_TYPE type)
 {
 	if (type == NO_UNIT) return false;
-	if (CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost, false))
+	if (CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost,UNIT , false))
 	{
 		Building* productive_building = nullptr;
 		BUILDING_TYPE b_type;
@@ -621,7 +639,7 @@ bool j1AI::GenerateUnit(UNIT_TYPE type)
 		}
 		if (productive_building != nullptr)
 		{
-			CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost);
+			CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost, UNIT);
 			productive_building->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)productive_building, units_production[type].u_type, ENEMY));
 		}
 	}
@@ -631,7 +649,7 @@ Building* j1AI::GenerateBuilding(BUILDING_TYPE type)
 {
 	iPoint position = { 0,0 };
 	if (type == NO_BUILDING) return nullptr;
-	if (CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, false))
+	if (CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING, false))
 	{
 		Unit* villager = nullptr;
 		UNIT_TYPE u_type;
@@ -654,7 +672,7 @@ Building* j1AI::GenerateBuilding(BUILDING_TYPE type)
 		}
 		if (villager != nullptr)
 		{
-			CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost);
+			CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING);
 			position = villager->GetPositionRounded();
 			Building* new_building = App->entities_manager->GenerateBuilding(buildings_production[type].b_type, ENEMY, true);
 			if (new_building == nullptr) return nullptr;
@@ -686,7 +704,7 @@ Building* j1AI::GenerateBuilding(BUILDING_TYPE type)
 
 				new_building->OnlySetPosition(position.x, position.y);
 
-				if (save_alpha_timer.Read() > 10)
+				if (save_alpha_timer.Read() > 4)
 				{
 					App->entities_manager->DeleteEntity(new_building);
 					return nullptr;
@@ -702,19 +720,26 @@ Building* j1AI::GenerateBuilding(BUILDING_TYPE type)
 
 void j1AI::AddResources(PLAYER_RESOURCES type, int value)
 {
+	int research_value = value / 2;
+	int progresion_value = value / 2;
+
 	switch (type)
 	{
 	case GP_WOOD:
-		wood += value;
+		wood += progresion_value;
+		research_wood += research_value;
 		break;
 	case GP_MEAT:
-		meat += value;
+		meat += progresion_value;
+		research_meat += research_value;
 		break;
 	case GP_GOLD:
-		gold += value;
+		gold += progresion_value;
+		research_gold += research_value;
 		break;
 	case GP_STONE:
-		stone += value;
+		stone += progresion_value;
+		research_stone += research_value;
 		break;
 	case GP_NO_RESOURCE:
 		break;
@@ -724,26 +749,45 @@ void j1AI::AddResources(PLAYER_RESOURCES type, int value)
 
 }
 
-bool j1AI::CheckResources(int amount_wood, int amount_food, int amount_gold, int amount_stone, int used_population, bool use)
+bool j1AI::CheckResources(int amount_wood, int amount_food, int amount_gold, int amount_stone, int used_population, ENTITY_TYPE type, bool use)
 {
-	if (wood - amount_wood >= 0 && meat - amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 && (population + used_population <= max_population || used_population < 0))
+	if (type == ENTITY_TYPE::UNIT || type == ENTITY_TYPE::BUILDING)
 	{
-		if (use)
+		if (wood - amount_wood >= 0 && meat - amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 && (population + used_population <= max_population || used_population < 0))
 		{
-			if (amount_wood != 0) wood -= amount_wood;
-			if (amount_food != 0) meat -=amount_food;
-			if (amount_gold != 0) gold -= amount_gold;
-			if (amount_stone != 0) stone -= amount_stone;
-			if (used_population >= 0) population += used_population;
-			else if (used_population < 0)
+			if (use)
 			{
-				if(max_population - used_population < 200) max_population -=used_population;
-				else max_population = 200;
+				if (amount_wood != 0) wood -= amount_wood;
+				if (amount_food != 0) meat -= amount_food;
+				if (amount_gold != 0) gold -= amount_gold;
+				if (amount_stone != 0) stone -= amount_stone;
+				if (used_population >= 0) population += used_population;
+				else if (used_population < 0)
+				{
+					if (max_population - used_population < 200) max_population -= used_population;
+					else max_population = 200;
+				}
 			}
+			return true;
 		}
-		return true;
 	}
-	else return false;
+
+	else 
+	{
+		if (research_wood - amount_wood >= 0 && research_meat - amount_food >= 0 && research_gold - amount_gold >= 0 && research_stone - amount_stone >= 0)
+		{
+			if (use)
+			{
+				if (amount_wood != 0)  research_wood  -= amount_wood;
+				if (amount_food != 0)  research_meat  -= amount_food;
+				if (amount_gold != 0)  research_gold  -= amount_gold;
+				if (amount_stone != 0) research_stone -= amount_stone;
+			}
+			return true;
+		}
+	}
+
+	return false;
 }
 
 ///AICommands managment---------------------------------------------------------------------------------------------

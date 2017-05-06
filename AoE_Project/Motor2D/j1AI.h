@@ -130,7 +130,7 @@ public:
 	Building* GenerateBuilding(BUILDING_TYPE type);
 
 	void AddResources(PLAYER_RESOURCES type, int value);
-	bool CheckResources(int amount_wood = 0, int amount_food = 0, int amount_gold = 0, int amount_stone = 0, int used_population = 0, bool use = true);
+	bool CheckResources(int amount_wood = 0, int amount_food = 0, int amount_gold = 0, int amount_stone = 0, int used_population = 0, ENTITY_TYPE type = NO_ENTITY, bool use = true);
 	
 	// Upgrade Research
 	void UpgradeCivilization(RESEARCH_TECH type);
@@ -143,7 +143,7 @@ private:
 	Resource*	GetNearestNeed();
 
 	void ManageAttack();
-	void ManageConstrucion(Building* new_building);
+	void ManageConstrucion();
 
 	void ManageTroopsCreation();
 
@@ -154,10 +154,12 @@ private:
 	void UpdateAIUnits();
 	void UpdateAIBuildings();
 
-	void GetSpawnUnitTypes(UNIT_TYPE& u_type, BUILDING_TYPE& b_type);
+	void GetSpawnUnitTypes(UNIT_TYPE& u_type);
 	UNIT_TYPE  GetNextSpawnType(UNIT_TYPE u_type);
 
 	Building* FindBuilding(BUILDING_TYPE type, BUILDING_TYPE type2);
+
+	BUILDING_TYPE GetNextBuildingSpawnType();
 
 private:
 	uint current_age = 2;
@@ -190,10 +192,14 @@ public:
 	std::list<Unit*> enemy_units;
 
 	//AI resource information
-	int			wood = 1000;
-	int			meat = 1000;
-	int			gold = 1000;
-	int			stone = 1000;
+	int			wood = 50000;
+	int			research_wood = 50000;
+	int			meat = 50000;
+	int			research_meat = 50000;
+	int			gold = 50000;
+	int			research_gold = 50000;
+	int			stone = 50000;
+	int			research_stone = 50000;
 	int			population = 0;
 	int			max_population = 200;
 	
@@ -258,22 +264,6 @@ private:
 
 
 
-//---------------------
-class BuildStructureCommand : public AICommand
-{
-public:
-	BuildStructureCommand();
-	~BuildStructureCommand();
-
-public:
-	bool Execute();
-
-
-private:
-
-
-};
-//---------------------
 
 
 //---------------------
