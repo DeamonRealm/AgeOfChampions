@@ -140,11 +140,10 @@ bool j1SoundManager::CleanUp()
 //Methods that transform strings to enums (used when loading data from xml)
 SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 {
+	//Attack sounds
 	if		(strcmp(str, "sword_solo") == 0)						return SWORD_ATTACK_SOUND;
 	else if (strcmp(str, "arrow_attack") == 0)						return ARROW_ATTACK_SOUND;
-	else if (strcmp(str, "monk_converting") == 0)					return MONK_CONVERTING_SOUND;
-	else if (strcmp(str, "monk_healing") == 0)						return MONK_HEALING_SOUND;
-	else if (strcmp(str, "monk_created") == 0)						return MONK_CREATED_SOUND;
+	//Buildings sounds
 	else if (strcmp(str, "building_on_fire") == 0)					return BUILDING_ON_FIRE;
 	else if (strcmp(str, "barracks_create_select") == 0)			return BARRACK_SOUND;
 	else if (strcmp(str, "archery_create_selected") == 0)			return ARCHERY_SOUND;
@@ -162,6 +161,10 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "villager_create") == 0)					return VILLAGER_CREATED_SOUND;
 	else if (strcmp(str, "villager_finish_building") == 0)			return VILLAGER_FINISH_BUILDING;
 	else if (strcmp(str, "infantry_archer_horseman_created") == 0)	return INFANTRY_ARCHER_HORSEMAN_CREATED_SOUND;
+	//Units Sounds
+	else if (strcmp(str, "monk_converting") == 0)					return MONK_CONVERTING_SOUND;
+	else if (strcmp(str, "monk_healing") == 0)						return MONK_HEALING_SOUND;
+	else if (strcmp(str, "monk_created") == 0)						return MONK_CREATED_SOUND;
 	else if (strcmp(str, "horse_death") == 0)						return HORSE_DEATH_SOUND;
 	else if (strcmp(str, "horse_selected") == 0)					return HORSE_SELECTED_SOUND;
 	else if (strcmp(str, "horse_tasked") == 0)						return HORSE_TASKED_SOUND;
@@ -169,10 +172,19 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "unit_attack") == 0)						return ATTACK_SOUND;
 	else if (strcmp(str, "unit_click") == 0)						return CLICK_SOUND;
 	else if (strcmp(str, "unit_move") == 0)							return MOVE_SOUND;
+	//Warrior skills
 	else if (strcmp(str, "warrior_skill_lvl1_a") == 0)				return WARRIOR_SKILL_LVL1_A;
 	else if (strcmp(str, "warrior_skill_lvl1_b") == 0)				return WARRIOR_SKILL_LVL1_B;
 	else if (strcmp(str, "warrior_skill_lvl2_a") == 0)				return WARRIOR_SKILL_LVL2_A;
 	else if (strcmp(str, "warrior_skill_lvl2_b") == 0)				return WARRIOR_SKILL_LVL2_B;
+	//Wizard Skills
+	else if (strcmp(str, "wizard_skill_lvl2_a") == 0)				return WIZARD_SKILL_LVL2_A;
+	else if (strcmp(str, "wizard_skill_lvl2_b") == 0)				return WIZARD_SKILL_LVL2_B;
+	else if (strcmp(str, "wizard_skill_lvl3_a") == 0)				return WIZARD_SKILL_LVL3_A;
+	else if (strcmp(str, "wizard_skill_lvl3_b") == 0)				return WIZARD_SKILL_LVL3_B;
+	//Hunter skills
+
+	//GUI SOUNDS
 	else if (strcmp(str, "main_menu") == 0)							return MAIN_MENU_SONG;
 	else if (strcmp(str, "ingame") == 0)							return INGAME_SONG;
 	else if (strcmp(str, "win") == 0)								return WIN_SONG;

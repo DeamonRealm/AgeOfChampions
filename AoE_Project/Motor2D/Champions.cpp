@@ -1237,7 +1237,7 @@ void Wizard::Hability_lvl_2(int x, int y)
 	if (ability[1])
 	{
 		iPoint wizard_position = this->GetPositionRounded();
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
+		App->sound->PlayFXAudio(SOUND_TYPE::WIZARD_SKILL_LVL2_B);
 		teleport_movement = destination - wizard_position;
 		Circle temp_circle = area_attack_spell_2;
 		temp_circle.SetPosition(wizard_position);
@@ -1252,7 +1252,7 @@ void Wizard::Hability_lvl_2(int x, int y)
 	else
 	{
 
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+		App->sound->PlayFXAudio(SOUND_TYPE::WIZARD_SKILL_LVL2_A);
 		//Get Candidates
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_2);
 		//Reset Particles
@@ -1406,7 +1406,7 @@ void Wizard::Hability_lvl_3(int x, int y)
 	if (ability[2])
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(THUNDER_PARTICLE, NO_DIRECTION);
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+		App->sound->PlayFXAudio(SOUND_TYPE::WIZARD_SKILL_LVL3_B);
 
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_spell_3);
@@ -1449,7 +1449,7 @@ void Wizard::Hability_lvl_3(int x, int y)
 		}
 		*/
 		ability_lvl_3_particle = App->buff_manager->GetParticle(RESURRECTION_PARTICLE, NO_DIRECTION);
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
+		App->sound->PlayFXAudio(SOUND_TYPE::WIZARD_SKILL_LVL3_A);
 
 	}
 
