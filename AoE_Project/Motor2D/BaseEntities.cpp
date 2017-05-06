@@ -499,10 +499,17 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 			{
 				if (path->size() < 2) {
 					if (target != iPoint(-1, -1))
-						Repath(path, target);
-					else
-						Repath(path, *(path->begin()));
+					{
+						if (!Repath(path, target))
+							return true;
 
+						
+					}
+					else
+					{
+						if (!Repath(path, *(path->begin())))
+							return true;
+					}
 					return false;
 				}
 
@@ -513,9 +520,16 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 
 				if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
 					if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-						other_unit->Repath(other_path, *(other_path->begin()));
+					{
+						if(!other_unit->Repath(other_path, *(other_path->begin())))
+							return true;
+
+					}
 					else
-						Repath(path, *(path->begin()));
+					{
+						if (!Repath(path, *(path->begin())))
+							return true;
+					}
 
 				}
 				else
@@ -605,7 +619,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	return false;
 }
 
-void Unit::Repath(std::vector<iPoint>*& path, const iPoint & destination)
+bool Unit::Repath(std::vector<iPoint>*& path, const iPoint & destination)
 {
 	iPoint new_destination = FindWalkableCell(destination);
 	std::vector<iPoint>* new_path;
@@ -617,7 +631,10 @@ void Unit::Repath(std::vector<iPoint>*& path, const iPoint & destination)
 		delete path;
 
 		path = new_path;
+		return true;
 	}
+	return false;
+
 }
 
 void Unit::CorrectPath(std::vector<iPoint>*& path)
