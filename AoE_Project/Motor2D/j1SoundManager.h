@@ -57,6 +57,13 @@ public:
 	~j1SoundManager();
 
 public:
+
+	
+	void Enable();
+	void Disable();
+
+	bool Start();
+
 	// Called before quitting
 	bool CleanUp();
 

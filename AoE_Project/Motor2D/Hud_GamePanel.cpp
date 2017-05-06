@@ -247,8 +247,9 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			App->player->Disable();
 			App->AI->Disable();
 			App->entities_manager->Disable();
-			App->menu->Enable();
 			App->fog_of_war->Disable();
+			App->animator->Disable();
+			App->menu->Enable();
 		}
 		else if (ui_element == cancel_game_menu)
 		{

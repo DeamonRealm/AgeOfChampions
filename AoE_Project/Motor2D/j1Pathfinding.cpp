@@ -21,11 +21,6 @@ j1Pathfinding::~j1Pathfinding()
 //Game Loop ===========================
 bool j1Pathfinding::Start()
 {
-	//Generate map cluster abstraction
-	j1Timer timer;
-	//cluster_abstraction = new ClusterAbstraction(App->map, 10);
-	LOG("Cluster abstraction generated in %.3f", timer.ReadSec());
-
 	//Load debug tiles trexture
 	path_texture = App->tex->Load("maps/path_tex.png");
 

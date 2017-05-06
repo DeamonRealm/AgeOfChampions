@@ -435,7 +435,7 @@ j1BuffManager::~j1BuffManager()
 
 }
 
-bool j1BuffManager::Start()
+void j1BuffManager::Enable()
 {
 	//Load all buffs definitions
 	pugi::xml_document buffs_data;
@@ -460,7 +460,7 @@ bool j1BuffManager::Start()
 		}
 
 		//Focus the first load document particle
-		
+
 		pugi::xml_node particle_node = particle_data.first_child().first_child();
 		bool simple_particle = false;
 
@@ -532,14 +532,14 @@ bool j1BuffManager::Start()
 			//Add the definition in the buff manager
 			if (!simple_particle)buff_particle_definitions.push_back((BuffParticle*)particle_def);
 			else particle_definitions.push_back(particle_def);
-			
+
 			//Focus the next particle node
 			particle_node = particle_node.next_sibling();
 		}
-		
+
 		//Focus the next document node to load a new definition
 		particle_document_node = particle_document_node.next_sibling();
-		
+
 		//Check if the next node is a particle node or a buff node
 		if (strcmp(particle_document_node.name(), "particle") != 0)break;
 	}
@@ -572,7 +572,7 @@ bool j1BuffManager::Start()
 		/*Actor*/		buff_def->SetActor(buff_node.attribute("actor").as_bool());
 		/*Animation*/	buff_def->SetParticle(GetBuffParticle(buff_def->GetBuffType(), buff_def->GetAttributeType(), buff_def->GetActor()));
 
-		if(buff_type == TIMED_BUFF)
+		if (buff_type == TIMED_BUFF)
 		{
 			/*Buff Duration*/	((Buff*)buff_def)->SetBuffDuration(buff_node.attribute("buff_duration").as_uint());
 		}
@@ -584,6 +584,16 @@ bool j1BuffManager::Start()
 		//Get the next xml node 
 		buff_node = buff_node.next_sibling();
 	}
+
+}
+
+void j1BuffManager::Disable()
+{
+	CleanUp();
+}
+
+bool j1BuffManager::Start()
+{
 
 	return true;
 }

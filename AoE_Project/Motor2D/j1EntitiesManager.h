@@ -35,6 +35,7 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node& config_node);
 
+	void Enable();
 	void Disable();
 
 	// Called before the first frame

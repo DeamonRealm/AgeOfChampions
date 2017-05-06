@@ -53,6 +53,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
+	j1Timer time;
 	//Load Atlas
 	atlas = App->tex->Load(atlas_file_name.c_str());
 
@@ -71,6 +72,8 @@ bool j1Gui::Start()
 	ChangeMouseTexture(DEFAULT);
 
 	SDL_ShowCursor(0);
+
+	LOG("GUI TIME: %.3f", time.ReadSec());
 
 	return true;
 }

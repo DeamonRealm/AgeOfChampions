@@ -132,6 +132,7 @@ bool j1Scene::PostUpdate()
 		App->AI->Disable();
 		App->entities_manager->Disable();
 		App->fog_of_war->Disable();
+		App->animator->Disable();
 		App->menu->Enable();
 	}
 

@@ -39,6 +39,14 @@ bool j1EntitiesManager::Awake(pugi::xml_node & config_node)
 	return true;
 }
 
+void j1EntitiesManager::Enable()
+{
+	active = true;
+
+	//Load Civilization Test
+	LoadCivilization("Teutons.xml");
+}
+
 void j1EntitiesManager::Disable()
 {
 	active = false;
@@ -122,8 +130,6 @@ void j1EntitiesManager::Disable()
 
 bool j1EntitiesManager::Start()
 {
-	//Load Civilization Test
-	bool ret = LoadCivilization("Teutons.xml");
 
 	//Built entities quad trees
 	units_quadtree.SetMaxObjects(12);
@@ -134,7 +140,7 @@ bool j1EntitiesManager::Start()
 	buildings_quadtree.SetDebugColor({ 255,255,0,255 });
 
 
-	return ret;
+	return true;
 }
 
 bool j1EntitiesManager::Update(float dt)
@@ -275,7 +281,6 @@ bool j1EntitiesManager::Draw()
 	{
 		if (!death_resource._Ptr->_Myval->Draw(App->debug_mode))
 		{
-			death_resources.remove(death_resource._Ptr->_Myval);
 			App->entities_manager->DeleteEntity(death_resource._Ptr->_Myval);
 		}
 
@@ -1576,57 +1581,6 @@ bool j1EntitiesManager::LoadCivilization(const char * folder)
 	pugi::xml_node resource_node = civilization_data.first_child().child("resources").first_child();
 	if (resource_node != NULL)ret = App->animator->LoadResourceBlock(resource_node.attribute("xml").as_string());
 	else LOG("Error loading civilization Resources");
-	// ------------------------------------------
-
-	/*
-	//Load Civilization Stats -------------------
-	//Load stats document
-	civilization_data.reset();
-	load_folder.clear();
-	load_folder = name + "/" + "StatsData.xml";
-	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
-	{
-		LOG("Civilization stats load error!");
-		return false;
-	}
-
-	//Focus first entity node
-	pugi::xml_node entity_node = civilization_data.child("data").first_child();
-
-	while (entity_node != NULL)
-	{
-		//Check if the entity is in the chosen civilization
-		if (!CivilizationCheck((char*)entity_node.attribute("civ").as_string(), civ_name.c_str()))
-		{
-			entity_node = entity_node.next_sibling();
-			continue;
-		}
-
-		//If the entity is in the civilization the entity definition is loaded
-		switch (App->animator->StrToEntityEnum(entity_node.attribute("id").as_string()))
-		{
-		case UNIT:		AddUnitDefinition(&entity_node.first_child());		break;
-		case RESOURCE:	AddResourceDefinition(&entity_node.first_child());	break;
-		case BUILDING:	AddBuildingDefinition(&entity_node.first_child());	break;
-
-		default:
-			//Entity ID error case
-			LOG("Error loading entity %s", entity_node.first_child().attribute("name").as_string());
-			break;
-		}
-
-		//Focus the next entity node
-		entity_node = entity_node.next_sibling();
-	}
-	// ------------------------------------------
-	*/
-
-	//Load xml sounds ---------------------------
-	load_folder.clear();
-
-	load_folder = name + "/" + "SoundsData.xml";
-	App->sound->LoadSoundBlock(load_folder.c_str());
-
 	// ------------------------------------------
 
 	//Clean loaded xml

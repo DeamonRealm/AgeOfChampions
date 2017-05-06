@@ -283,30 +283,20 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		if (target == standardgame)
 		{
 			option_selected->button_state = UP;
-			App->gui->ChangeMouseTexture(DEFAULT);
-			App->scene->Enable();
-			App->player->Enable();
-			App->entities_manager->Enable();
 			App->LoadDefaultGame();
-			App->AI->Enable();
-			App->fog_of_war->Enable();
-
 			this->CleanUp();
 			this->Disable();
+			App->scene->Enable();
 		}
 		if (target == loadgame)
 		{
 			option_selected->button_state = UP;
 			singleplayer->DesactivateChids();
-			App->gui->ChangeMouseTexture(DEFAULT);
-			App->scene->Enable();
-			App->player->Enable();
-			App->entities_manager->Enable();
-			App->AI->Enable();
-			App->fog_of_war->Enable();
+			
 			App->LoadGame("party_file.xml");
 			this->CleanUp();
 			this->Disable();
+			App->scene->Enable();
 		}
 		break;
 	case MOUSE_RIGHT_BUTTON:

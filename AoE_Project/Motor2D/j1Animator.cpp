@@ -62,6 +62,7 @@ Animation::~Animation()
 	texture = nullptr; /*This texture can't be unloaded*/
 }
 
+
 //Functionality =======================
 void Animation::ReleaseTexture()
 {
@@ -382,6 +383,11 @@ j1Animator::~j1Animator()
 }
 
 //Game Loop ===========================
+void j1Animator::Disable()
+{
+	CleanUp();
+}
+
 bool j1Animator::Awake(pugi::xml_node& config)
 {
 	return true;
