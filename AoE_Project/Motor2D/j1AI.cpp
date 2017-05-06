@@ -143,7 +143,7 @@ bool j1AI::Update(float dt)
 	}
 
 
-	ManageTroopsCreation();
+//	ManageTroopsCreation();
 	
 
 	//ManageAttack();
@@ -161,8 +161,13 @@ bool j1AI::CleanUp()
 	ai_worker->Reset();
 	delete ai_worker;
 
+	// Entities Data CleanUp
 	ai_research_worker->HardReset();
 	delete ai_research_worker;
+	units_queue.clear();
+	buildings_queue.clear();
+	units_production.clear();
+	buildings_production.clear();
 
 	return true;
 }
@@ -241,11 +246,11 @@ void j1AI::ManageAttack()
 	}
 }
 
-void j1AI::ManageConstrucion()
+void j1AI::ManageConstrucion(Building* new_building)
 {
 	fPoint new_pos(0,0);
 	float displacement = 100.0;
-	
+
 	Building* test = App->entities_manager->GenerateBuilding(BUILDING_TYPE::BARRACK, ENEMY);
 
 	j1Timer save_alpha_timer;
@@ -323,11 +328,40 @@ void j1AI::LoadAIEntitiesData(pugi::xml_node& conf)
 {
 	next_research = 0;
 
+	AI_Entities_Data_Buildings building_data;
 	AI_Entities_Data new_data;
-	pugi::xml_node item = conf.child("Research").first_child();
+	for (int i = 0; i < 22; i++)
+	{
+		units_production.push_back(new_data);
+		buildings_production.push_back(building_data);
+	}
+
+	pugi::xml_node item = conf.child("Buildings").first_child().first_child();
+	building_data.spawn_from = VILLAGER;
 	while (item != NULL)
 	{
-		new_data.base_type = (UNIT_TYPE)item.attribute("base_type").as_int(0);
+		building_data.base_type_building = App->animator->StrToBuildingEnum(item.attribute("base_type").as_string(""));
+		building_data.cell_at_level = item.attribute("cl").as_int(0);
+		building_data.cell_at_age = item.attribute("al").as_int(0);
+		building_data.wood_cost = item.attribute("wc").as_int(0);
+		building_data.food_cost = item.attribute("fc").as_int(0);
+		building_data.gold_cost = item.attribute("gc").as_int(0);
+		building_data.stone_cost = item.attribute("sc").as_int(0);
+		building_data.population_cost = item.attribute("pc").as_int(0);
+		building_data.b_type = (BUILDING_TYPE)item.attribute("bt").as_int(0);
+		building_data.r_type = (RESEARCH_TECH)item.attribute("rt").as_int(0);
+		buildings_queue.push_back(building_data);
+
+		item = item.next_sibling();
+	}
+	UpdateAIBuildings();
+
+	item = conf.child("Units").first_child();
+	while (item != NULL)
+	{
+		new_data.base_type_unit = App->animator->StrToUnitEnum(item.attribute("base_type").as_string(""));
+		new_data.spawn_from = App->animator->StrToBuildingEnum(item.attribute("spawn_from").as_string(""));
+		new_data.spawn_from2 = App->animator->StrToBuildingEnum(item.attribute("spawn_from2").as_string(""));
 		new_data.cell_at_level = item.attribute("cl").as_int(0);
 		new_data.cell_at_age = item.attribute("al").as_int(0);
 		new_data.wood_cost = item.attribute("wc").as_int(0);
@@ -335,20 +369,69 @@ void j1AI::LoadAIEntitiesData(pugi::xml_node& conf)
 		new_data.gold_cost = item.attribute("gc").as_int(0);
 		new_data.stone_cost = item.attribute("sc").as_int(0);
 		new_data.population_cost = item.attribute("pc").as_int(0);
-
 		new_data.u_type = (UNIT_TYPE)item.attribute("ut").as_int(0);
-		new_data.b_type = (BUILDING_TYPE)item.attribute("bt").as_int(0);
+		new_data.r_type = (RESEARCH_TECH)item.attribute("rt").as_int(0);
+
+		units_queue.push_back(new_data);
+
+		item = item.next_sibling();
+	}
+	UpdateAIUnits();
+
+	item = conf.child("Research").first_child();
+	while (item != NULL)
+	{
+		new_data.spawn_from = App->animator->StrToBuildingEnum(item.attribute("spawn_from").as_string(""));
+		new_data.spawn_from2 = App->animator->StrToBuildingEnum(item.attribute("spawn_from2").as_string(""));
+		new_data.cell_at_level = item.attribute("cl").as_int(0);
+		new_data.cell_at_age = item.attribute("al").as_int(0);
+		new_data.wood_cost = item.attribute("wc").as_int(0);
+		new_data.food_cost = item.attribute("fc").as_int(0);
+		new_data.gold_cost = item.attribute("gc").as_int(0);
+		new_data.stone_cost = item.attribute("sc").as_int(0);
+		new_data.population_cost = item.attribute("pc").as_int(0);
 		new_data.r_type = (RESEARCH_TECH)item.attribute("rt").as_int(0);
 
 		research_queue.push_back(new_data);
 
 		item = item.next_sibling();
 	}
+	int x = 0;
 }
 
 void j1AI::UpgradeCivilization(RESEARCH_TECH type)
 {
-	
+	next_research++;
+	int size = 0;
+	if (type == TC_CASTLE || type == TC_IMPERIAL)
+	{
+		current_age++;
+		//update Available buildings
+		bool update = false;
+		size = buildings_production.size();
+		for (int i = 0; i < size; i++)
+		{
+			if (buildings_production[i].r_type == type)
+			{
+				buildings_lvl[i]++;
+				update = true;
+			}
+		}
+		if (update) UpdateAIBuildings();
+	}
+	else
+	{
+		//Update Available Units;
+		size = units_production.size();
+		for (int i = 0; i < size; i++)
+		{
+			if (units_production[i].r_type == type)
+			{
+				units_lvl[i]++;
+				UpdateAIUnits();
+			}
+		}
+	}
 }
 
 void j1AI::UpdateResearch()
@@ -357,14 +440,48 @@ void j1AI::UpdateResearch()
 	{
 		if (next_research < research_queue.size())
 		{
-			if (CheckResources(research_queue[next_research].wood_cost, research_queue[next_research].food_cost, research_queue[next_research].gold_cost,
-				research_queue[next_research].stone_cost, 0))
+			if (FindBuilding(research_queue[next_research].spawn_from, research_queue[next_research].spawn_from2) != nullptr)
 			{
-				ai_research_worker->AddAction(App->action_manager->ResearchAction(research_queue[next_research].r_type, AI_RESEARCH_DURATION, ENEMY));
-				next_research++;
+				if (CheckResources(research_queue[next_research].wood_cost, research_queue[next_research].food_cost, research_queue[next_research].gold_cost,
+					research_queue[next_research].stone_cost, 0))
+				{
+					ai_research_worker->AddAction(App->action_manager->ResearchAction(research_queue[next_research].r_type, AI_RESEARCH_DURATION, ENEMY));
+				}
+			}
+			else
+			{
+				if (GenerateBuilding(research_queue[next_research].spawn_from) != nullptr)
+				{
+					UpdateResearch();
+					return;
+				}
 			}
 		}
 		research_timer.Start();
+	}
+}
+
+void j1AI::UpdateAIUnits()
+{
+	// Set Current Cells
+	int size = units_queue.size();
+	for (int i = 0; i < size; i++)
+	{
+		if (units_queue[i].cell_at_level == units_lvl[units_queue[i].base_type_unit] && units_queue[i].cell_at_age <= current_age)
+		{
+			units_production[units_queue[i].base_type_unit] = units_queue[i];
+		}
+	}
+}
+void j1AI::UpdateAIBuildings()
+{
+	int size = buildings_queue.size();
+	for (int i = 0; i < size; i++)
+	{
+		if (buildings_queue[i].cell_at_level == buildings_lvl[buildings_queue[i].base_type_building] && buildings_queue[i].cell_at_age <= current_age)
+		{
+			buildings_production[buildings_queue[i].base_type_building] = buildings_queue[i];
+		}
 	}
 }
 
@@ -457,9 +574,130 @@ UNIT_TYPE j1AI::GetNextSpawnType(UNIT_TYPE u_type)
 	return ret;
 }
 
+Building * j1AI::FindBuilding(BUILDING_TYPE type, BUILDING_TYPE type2)
+{
+	BUILDING_TYPE b_type;
+	std::list<Building*>::const_iterator building = enemy_buildings.end();
+	while (building != enemy_buildings.begin())
+	{
+		building--;
+		b_type = building._Ptr->_Myval->GetBuildingType();
+		if (b_type == type || b_type == type2)
+		{
+			return building._Ptr->_Myval;
+		}
+	}
+	return nullptr;
+}
+
 void j1AI::GenerateDebugVillager()
 {
 	ai_worker->AddAICommand(new SpawnUnitCommand(VILLAGER, ai_starting_tc));
+}
+
+bool j1AI::GenerateUnit(UNIT_TYPE type)
+{
+	if (type == NO_UNIT) return false;
+	if (CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost, false))
+	{
+		Building* productive_building = nullptr;
+		BUILDING_TYPE b_type;
+		std::list<Building*>::const_iterator building = enemy_buildings.end();
+		while (building != enemy_buildings.begin())
+		{
+			building--;
+			b_type = building._Ptr->_Myval->GetBuildingType();
+			if (b_type == units_production[type].spawn_from || b_type == units_production[type].spawn_from2)
+			{
+				if (productive_building != nullptr)
+				{
+					if (productive_building->GetWorker()->IsBusy(PRIMARY))
+					{
+						productive_building = building._Ptr->_Myval;
+					}
+				}
+				else productive_building = building._Ptr->_Myval;
+			}
+		}
+		if (productive_building != nullptr)
+		{
+			CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost);
+			productive_building->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)productive_building, units_production[type].u_type, ENEMY));
+		}
+	}
+}
+
+Building* j1AI::GenerateBuilding(BUILDING_TYPE type)
+{
+	iPoint position = { 0,0 };
+	if (type == NO_BUILDING) return nullptr;
+	if (CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, false))
+	{
+		Unit* villager = nullptr;
+		UNIT_TYPE u_type;
+		std::list<Unit*>::const_iterator unit = enemy_units.end();
+		while (unit != enemy_units.begin())
+		{
+			unit--;
+			u_type = unit._Ptr->_Myval->GetUnitType();
+			if (u_type == VILLAGER)
+			{
+				if (villager != nullptr)
+				{
+					if (villager->GetWorker()->IsBusy(PRIMARY))
+					{
+						villager = unit._Ptr->_Myval;
+					}
+				}
+				else villager = unit._Ptr->_Myval;
+			}
+		}
+		if (villager != nullptr)
+		{
+			CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost);
+			position = villager->GetPositionRounded();
+			Building* new_building = App->entities_manager->GenerateBuilding(buildings_production[type].b_type, ENEMY, true);
+			if (new_building == nullptr) return nullptr;
+
+			j1Timer save_alpha_timer;
+			srand(time(NULL));
+			float displacement = 100.0;
+			new_building->OnlySetPosition(position.x, position.y);
+			while (!new_building->CheckZone(position.x, position.y))
+			{
+				int direction = rand() % 4;
+				switch (direction)
+				{
+				case 0:				//Decrease y
+					position.y -= (displacement);
+					break;
+				case 1:				//Increase x
+					position.x += (displacement);
+					break;
+				case 2:				//Increase y
+					position.y += (displacement);
+					break;
+				case 3:				//Decrease x
+					position.x -= (displacement);
+					break;
+				default:
+					break;
+				}
+
+				new_building->OnlySetPosition(position.x, position.y);
+
+				if (save_alpha_timer.Read() > 10)
+				{
+					App->entities_manager->DeleteEntity(new_building);
+					return nullptr;
+				}
+			}
+			new_building->SetPosition(position.x, position.y);
+			enemy_buildings.push_back(new_building);
+			return new_building;
+		}
+	}
+	return nullptr;
 }
 
 void j1AI::AddResources(PLAYER_RESOURCES type, int value)

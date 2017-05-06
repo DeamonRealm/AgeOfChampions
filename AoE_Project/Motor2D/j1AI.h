@@ -13,7 +13,7 @@ class ActionWorker;
 enum PLAYER_RESOURCES;
 enum RESEARCH_TECH;
 
-#define	RESEARCH_RATE 15000
+#define	RESEARCH_RATE 3500
 #define AI_RESEARCH_DURATION 3000
 #define MIN_VILLAGERS 10
 
@@ -59,20 +59,40 @@ public:
 struct AI_Entities_Data
 {
 	// Data
-	UNIT_TYPE	base_type = ((UNIT_TYPE)0);
-	uint		cell_at_level = 0;
-	uint		cell_at_age = 0;
+	UNIT_TYPE		base_type_unit = ((UNIT_TYPE)0);
+	BUILDING_TYPE	spawn_from = ((BUILDING_TYPE)0);
+	BUILDING_TYPE	spawn_from2 = ((BUILDING_TYPE)0);
+	uint			cell_at_level = 0;
+	uint			cell_at_age = 0;
 
 	// Data
-	int			wood_cost = 0;
-	int			food_cost = 0;
-	int			gold_cost = 0;
-	int			stone_cost = 0;
-	int			population_cost = 0;
+	int				wood_cost = 0;
+	int				food_cost = 0;
+	int				gold_cost = 0;
+	int				stone_cost = 0;
+	int				population_cost = 0;
 
-	UNIT_TYPE	u_type = ((UNIT_TYPE)0);
-	BUILDING_TYPE b_type = ((BUILDING_TYPE)0);
-	RESEARCH_TECH r_type = ((RESEARCH_TECH)0);
+	UNIT_TYPE		u_type = ((UNIT_TYPE)0);
+	RESEARCH_TECH	r_type = ((RESEARCH_TECH)0);
+};
+
+struct AI_Entities_Data_Buildings
+{
+	// Data
+	BUILDING_TYPE	base_type_building = (BUILDING_TYPE)0;
+	UNIT_TYPE		spawn_from = ((UNIT_TYPE)0);
+	uint			cell_at_level = 0;
+	uint			cell_at_age = 0;
+
+	// Data
+	int				wood_cost = 0;
+	int				food_cost = 0;
+	int				gold_cost = 0;
+	int				stone_cost = 0;
+	int				population_cost = 0;
+
+	BUILDING_TYPE	b_type = ((BUILDING_TYPE)0);
+	RESEARCH_TECH	r_type = ((RESEARCH_TECH)0);
 };
 ///------------------------------------
 
@@ -106,6 +126,9 @@ public:
 	bool CleanUp();
 
 	void GenerateDebugVillager();
+	bool GenerateUnit(UNIT_TYPE type);
+	Building* GenerateBuilding(BUILDING_TYPE type);
+
 	void AddResources(PLAYER_RESOURCES type, int value);
 	bool CheckResources(int amount_wood = 0, int amount_food = 0, int amount_gold = 0, int amount_stone = 0, int used_population = 0, bool use = true);
 	
@@ -120,7 +143,7 @@ private:
 	Resource*	GetNearestNeed();
 
 	void ManageAttack();
-	void ManageConstrucion();
+	void ManageConstrucion(Building* new_building);
 
 	void ManageTroopsCreation();
 
@@ -128,11 +151,17 @@ private:
 	void LoadAIEntitiesData(pugi::xml_node&);
 
 	void UpdateResearch();
+	void UpdateAIUnits();
+	void UpdateAIBuildings();
 
 	void GetSpawnUnitTypes(UNIT_TYPE& u_type, BUILDING_TYPE& b_type);
 	UNIT_TYPE  GetNextSpawnType(UNIT_TYPE u_type);
 
+	Building* FindBuilding(BUILDING_TYPE type, BUILDING_TYPE type2);
+
 private:
+	uint current_age = 2;
+
 	AIWorker* ai_worker = nullptr;
 	j1Timer update_timer;
 	j1Timer building_timer;
@@ -146,7 +175,16 @@ private:
 	std::vector<AI_Entities_Data> research_queue;
 	uint		next_research = 0;
 	j1Timer		research_timer;
-	
+
+	// Units and Buildings Data
+	std::vector<AI_Entities_Data> units_queue;
+	std::vector<AI_Entities_Data_Buildings> buildings_queue;
+
+	// Aviable Units/Buildings to create
+	std::vector<AI_Entities_Data> units_production;
+	int							  units_lvl[22];
+	std::vector<AI_Entities_Data_Buildings> buildings_production;
+	int							  buildings_lvl[22];
 
 public:
 	std::list<Unit*> enemy_units;

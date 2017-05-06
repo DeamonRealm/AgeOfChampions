@@ -448,7 +448,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			Selected->GetEntity()->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (UpperEntity != nullptr)
 			{
-				if (UpperEntity->GetDiplomacy() == ENEMY)
+				if (UpperEntity->GetDiplomacy() == ENEMY && selected_unit_type != MONK)
 				{
 					if (UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
 					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
