@@ -624,7 +624,10 @@ bool Unit::Repath(std::vector<iPoint>*& path, const iPoint & destination)
 	iPoint new_destination = FindWalkableCell(destination);
 	std::vector<iPoint>* new_path;
 	new_path = App->pathfinding->SimpleAstar(GetPositionRounded(), new_destination);
-
+	if (new_destination == iPoint(-1, -1)|| !App->pathfinding->IsWalkable(App->map->WorldToMap(new_destination.x, new_destination.y)))
+	{
+		LOG("NOOOOOO");
+	}
 	if (new_path != nullptr) {
 
 		path->clear();
@@ -738,198 +741,292 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 	int doble_radius = radius * 2;
 	iPoint unit_location = this->GetPositionRounded();
 	int i = 1;
+	bool look_1 = false;
+	bool look_2 = false;
+	int look = rand() % 2;
+	//LOG("%i", look);
 	switch (direction_type)
 	{
 	case NORTH:
-		//LOG("NORTH");
-			cell_1.create(pos.x + radius, pos.y);
-			cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-			if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+	//	LOG("NORTH");
+		while (look_1 != true || look_2 != true) {
+			switch (look)
 			{
-				direction_type = EAST;
-				App->animator->UnitPlay(this);
+			case 0:
+				cell_1.create(pos.x + radius, pos.y);
+				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
+				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				{
+					direction_type = EAST;
+					App->animator->UnitPlay(this);
 
-				return cell_1;
+					return cell_1;
+				}
+				look_1 = true;
+				look = 1;
+				break;
+			case 1:
+				cell_2.create(pos.x - radius, pos.y);
+				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
+				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				{
+					direction_type = WEST;
+					App->animator->UnitPlay(this);
+					return cell_2;
+				}
+				look_2 = true;
+				look = 0;
+				break;
+			default:
+				break;
 			}
+		}
+		
 
-			cell_2.create(pos.x - radius, pos.y);
-			cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-			if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
-			{
-				direction_type = WEST;
-				App->animator->UnitPlay(this);
-				return cell_2;
-			}
-			i++;
+			
 		
 		break;
 	case NORTH_EAST:
-		//LOG("NORTH_EAST");
-
-			cell_1.create(pos.x + radius, pos.y + radius);
-			cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-			if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+	//	LOG("NORTH_EAST");
+		while (look_1 != true || look_2 != true) {
+			switch (look)
 			{
-				direction_type = SOUTH_EAST;
-				App->animator->UnitPlay(this);
-				return cell_1;
-			}
+			case 0:
+				cell_1.create(pos.x + radius, pos.y + radius);
+				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
+				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				{
+					direction_type = SOUTH_EAST;
+					App->animator->UnitPlay(this);
+					return cell_1;
+				}
+				look_1 = true;
+				look = 1;
+				break;
+			case 1:
 
-			cell_2.create(pos.x - radius, pos.y - radius);
-			cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-			if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
-			{
-				direction_type = NORTH_WEST;
-				App->animator->UnitPlay(this);
-				return cell_2;
+				cell_2.create(pos.x - radius, pos.y - radius);
+				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
+				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				{
+					direction_type = NORTH_WEST;
+					App->animator->UnitPlay(this);
+					return cell_2;
+				}
+				look_2 = true;
+				look = 0;
+				break;
+			default:
+				break;
 			}
-			i++;
-
-		
+		}
 		break;
 	case EAST:
-		//LOG("EAST");
-
-			cell_1.create(pos.x, pos.y + radius);
-			cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-			if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+	//	LOG("EAST");
+		while (look_1 != true || look_2 != true) {
+			switch (look)
 			{
-				direction_type = SOUTH;
-				App->animator->UnitPlay(this);
-				return cell_1;
-			}
+			case 0:
+				cell_1.create(pos.x, pos.y + radius);
+				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
+				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				{
+					direction_type = SOUTH;
+					App->animator->UnitPlay(this);
+					return cell_1;
+				}
 
-			cell_2.create(pos.x, pos.y - radius);
-			cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-			if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
-			{
-				direction_type = NORTH;
-				App->animator->UnitPlay(this);
-				return cell_2;
+				look_1 = true;
+				look = 1;
+				break;
+			case 1:
+				cell_2.create(pos.x, pos.y - radius);
+				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
+				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				{
+					direction_type = NORTH;
+					App->animator->UnitPlay(this);
+					return cell_2;
+				}
+				look_2 = true;
+				look = 0;
+				break;
+			default:
+				break;
 			}
-			i++;
-
-		
+		}		
 		break;
 	case SOUTH_EAST:
 		//LOG("SOUTH_EAST");
-
-			cell_1.create(pos.x + radius, pos.y - radius);
-			cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-			if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+		while (look_1 != true || look_2 != true) {
+			switch (look)
 			{
-				direction_type = NORTH_EAST;
-				App->animator->UnitPlay(this);
-				return cell_1;
-			}
+			case 0:
+				cell_1.create(pos.x + radius, pos.y - radius);
+				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
+				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				{
+					direction_type = NORTH_EAST;
+					App->animator->UnitPlay(this);
+					return cell_1;
+				}
 
-			cell_2.create(pos.x - radius, pos.y + radius);
-			cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-			if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
-			{
-				direction_type = SOUTH_WEST;
-				App->animator->UnitPlay(this);
-				return cell_2;
+				look_1 = true;
+				look = 1;
+				break;
+			case 1:
+				cell_2.create(pos.x - radius, pos.y + radius);
+				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
+				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				{
+					direction_type = SOUTH_WEST;
+					App->animator->UnitPlay(this);
+					return cell_2;
+				}
+				look_2 = true;
+				look = 0;
+				break;
+			default:
+				break;
 			}
-			i++;
-
-		
+		}	
 		break;
 	case SOUTH:
 		//LOG("SOUTH");
-
-			cell_1.create(pos.x + radius, pos.y);
-			cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-			if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+		while ((look_1 != true || look_2 != true)) {
+			switch (look)
 			{
-				direction_type = EAST;
-				App->animator->UnitPlay(this);
-				return cell_1;
+			case 0:
+				cell_1.create(pos.x + radius, pos.y);
+				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
+				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				{
+					direction_type = EAST;
+					App->animator->UnitPlay(this);
+					return cell_1;
+				}
+				look_1 = true;
+				look = 1;
+				break;
+			case 1:
+				cell_2.create(pos.x - radius, pos.y);
+				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
+				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				{
+					direction_type = WEST;
+					App->animator->UnitPlay(this);
+					return cell_2;
+				}
+				look_2 = true;
+				look = 0;
+				break;
+			default:
+				break;
 			}
 
-			cell_2.create(pos.x - radius, pos.y);
-			cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-			if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
-			{
-				direction_type = WEST;
-				App->animator->UnitPlay(this);
-				return cell_2;
-			}
-			i++;
-
-		
+		}	
 		break;
 	case SOUTH_WEST:
 		//LOG("SOUTH_WEST");
-
-			cell_1.create(pos.x + radius, pos.y + radius);
-			cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-			if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+		while (look_1 != true || look_2 != true) {
+			switch (look)
 			{
-				direction_type = SOUTH_EAST;
-				App->animator->UnitPlay(this);
-				return cell_1;
+			case 0:
+				cell_1.create(pos.x + radius, pos.y + radius);
+				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
+				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				{
+					direction_type = SOUTH_EAST;
+					App->animator->UnitPlay(this);
+					return cell_1;
+				}
+				look_1 = true;
+				look = 1;
+				break;
+			case 1:
+				cell_2.create(pos.x - radius, pos.y - radius);
+				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
+				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				{
+					direction_type = NORTH_WEST;
+					App->animator->UnitPlay(this);
+					return cell_2;
+				}
+				look_2 = true;
+				look = 0;
+				break;
+			default:
+				break;
 			}
-
-			cell_2.create(pos.x - radius, pos.y - radius);
-			cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-			if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
-			{
-				direction_type = NORTH_WEST;
-				App->animator->UnitPlay(this);
-				return cell_2;
-			}
-			i++;
-
-		
+		}
 		break;
 	case WEST:
 		//LOG("WEST");
-
-			cell_1.create(pos.x, pos.y + radius);
-			cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-			if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+		while (look_1 != true || look_2 != true) {
+			switch (look)
 			{
-				direction_type = SOUTH;
-				App->animator->UnitPlay(this);
-				return cell_1;
+			case 0:
+				cell_1.create(pos.x, pos.y + radius);
+				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
+				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				{
+					direction_type = SOUTH;
+					App->animator->UnitPlay(this);
+					return cell_1;
+				}
+				look_1 = true;
+				look = 1;
+				break;
+			case 1:
+				cell_2.create(pos.x, pos.y - radius);
+				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
+				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				{
+					direction_type = NORTH;
+					App->animator->UnitPlay(this);
+					return cell_2;
+				}
+				look_2 = true;
+				look = 0;
+				break;
+			default:
+				break;
 			}
-
-			cell_2.create(pos.x, pos.y - radius);
-			cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-			if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
-			{
-				direction_type = NORTH;
-				App->animator->UnitPlay(this);
-				return cell_2;
-			}
-			i++;
-
-		
+		}
 		break;
 	case NORTH_WEST:
 		//LOG("NORTH_WEST");
-
-			cell_1.create(pos.x + radius, pos.y - radius);
-			cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-			if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+		while (look_1 != true || look_2 != true) {
+			switch (look)
 			{
-				direction_type = NORTH_EAST;
-				App->animator->UnitPlay(this);
-				return cell_1;
+			case 0:
+				cell_1.create(pos.x + radius, pos.y - radius);
+				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
+				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				{
+					direction_type = NORTH_EAST;
+					App->animator->UnitPlay(this);
+					return cell_1;
+				}
+				look_1 = true;
+				look = 1;
+				break;
+			case 1:
+				cell_2.create(pos.x - radius, pos.y + radius);
+				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
+				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				{
+					direction_type = SOUTH_WEST;
+					App->animator->UnitPlay(this);
+					return cell_2;
+				}
+				look_2 = true;
+				look = 0;
+				break;
+			default:
+				break;
 			}
-
-			cell_2.create(pos.x - radius, pos.y + radius);
-			cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-			if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
-			{
-				direction_type = SOUTH_WEST;
-				App->animator->UnitPlay(this);
-				return cell_2;
-			}
-			i++;
-
-		
+		}
 		break;
 	default:
 		break;
