@@ -133,6 +133,8 @@ bool j1Scene::PostUpdate()
 		App->entities_manager->Disable();
 		App->fog_of_war->Disable();
 		App->animator->Disable();
+		App->buff_manager->Disable();
+		App->map->Disable();
 		App->menu->Enable();
 	}
 

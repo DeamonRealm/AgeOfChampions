@@ -124,6 +124,8 @@ public:
 	// Destructor
 	virtual ~j1Map();
 
+	void Disable();
+
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 

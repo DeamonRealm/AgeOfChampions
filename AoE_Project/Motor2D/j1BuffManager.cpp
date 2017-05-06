@@ -637,6 +637,7 @@ bool j1BuffManager::CleanUp()
 	uint size = buff_definitions.size();
 	for (int i = 0; i < size; i++)
 	{
+		buff_definitions[i]->particle.animation.ReleaseTexture();
 		RELEASE(buff_definitions[i]);
 	}
 	buff_definitions.clear();
@@ -645,6 +646,7 @@ bool j1BuffManager::CleanUp()
 	size = particle_definitions.size();
 	for (int i = 0; i < size; i++)
 	{
+		particle_definitions[i]->animation.ReleaseTexture();
 		RELEASE(particle_definitions[i]);
 	}
 	particle_definitions.clear();
@@ -653,6 +655,7 @@ bool j1BuffManager::CleanUp()
 	size = buff_particle_definitions.size();
 	for (int i = 0; i < size; i++)
 	{
+		buff_particle_definitions[i]->animation.ReleaseTexture();
 		RELEASE(buff_particle_definitions[i]);
 	}
 	buff_particle_definitions.clear();

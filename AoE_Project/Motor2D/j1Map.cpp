@@ -22,6 +22,20 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 j1Map::~j1Map()
 {}
 
+void j1Map::Disable()
+{
+	for (int y = 0; y < data.height; ++y)
+	{
+		for (int x = 0; x < data.width; ++x)
+		{
+			int i = (y*navigation_layer->width) + x;
+			logic_map[i] = 1;
+			navigation_layer->data[i] = 37;
+			construction_layer->data[i] = 0;
+		}
+	}
+}
+
 // Called before render is available
 bool j1Map::Awake(pugi::xml_node& config)
 {

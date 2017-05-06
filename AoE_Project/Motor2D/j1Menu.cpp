@@ -290,13 +290,18 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		}
 		if (target == loadgame)
 		{
-			option_selected->button_state = UP;
-			singleplayer->DesactivateChids();
-			
-			App->LoadGame("party_file.xml");
-			this->CleanUp();
-			this->Disable();
-			App->scene->Enable();
+			if (App->fs->Exists("save/party_file.xml"))
+			{
+				option_selected->button_state = UP;
+				singleplayer->DesactivateChids();
+
+
+				App->LoadGame("party_file.xml");
+				this->CleanUp();
+				this->Disable();
+				App->scene->Enable();
+			}
+			else LOG("No party Saved");
 		}
 		break;
 	case MOUSE_RIGHT_BUTTON:

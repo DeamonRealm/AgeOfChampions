@@ -477,7 +477,9 @@ bool j1App::LoadGameNow()
 	bool ret = false;
 
 	//Clean all the previous data
-	App->gui->ChangeMouseTexture(DEFAULT);
+	map->Disable();
+	map->Enable();
+	gui->ChangeMouseTexture(DEFAULT);
 	player->Disable();
 	player->Enable();
 	animator->Disable();
@@ -486,7 +488,9 @@ bool j1App::LoadGameNow()
 	entities_manager->Enable();
 	fog_of_war->Disable();
 	fog_of_war->Enable();
-	App->action_manager->Enable();
+	action_manager->Enable();
+	buff_manager->Disable();
+	buff_manager->Enable();
 
 	char* buffer;
 	uint size = fs->Load(load_game.c_str(), &buffer);
@@ -574,7 +578,10 @@ bool j1App::SavegameNow()
 
 bool j1App::LoadDefaultGame()
 {
-	App->gui->ChangeMouseTexture(DEFAULT);
+	//Clean all the previous data
+	map->Disable();
+	map->Enable();
+	gui->ChangeMouseTexture(DEFAULT);
 	player->Disable();
 	player->Enable();
 	animator->Disable();
@@ -583,8 +590,9 @@ bool j1App::LoadDefaultGame()
 	entities_manager->Enable();
 	fog_of_war->Disable();
 	fog_of_war->Enable();
-	App->action_manager->Enable();
-	
+	action_manager->Enable();
+	buff_manager->Disable();
+	buff_manager->Enable();
 
 	bool ret = true;
 	std::string folder = "scene/default_scene.xml";

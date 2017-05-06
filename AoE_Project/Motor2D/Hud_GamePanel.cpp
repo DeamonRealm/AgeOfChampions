@@ -10,6 +10,8 @@
 #include "j1AI.h"
 #include "j1EntitiesManager.h"
 #include "j1FogOfWar.h"
+#include "j1Map.h"
+#include "j1FileSystem.h"
 
 #include "BaseEntities.h"
 
@@ -249,6 +251,8 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			App->entities_manager->Disable();
 			App->fog_of_war->Disable();
 			App->animator->Disable();
+			App->buff_manager->Disable();
+			App->map->Disable();
 			App->menu->Enable();
 		}
 		else if (ui_element == cancel_game_menu)
@@ -262,11 +266,15 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		}
 		else if (ui_element == load_game_menu_b)
 		{
-			App->player->Disable();
-			App->entities_manager->Disable();
-			App->player->Enable();
-			App->entities_manager->Enable();
-			App->LoadGame("party_file.xml");
+			if (App->fs->Exists("save/party_file.xml"))
+			{
+				App->player->Disable();
+				App->entities_manager->Disable();
+				App->player->Enable();
+				App->entities_manager->Enable();
+				App->LoadGame("party_file.xml");
+			}
+			else LOG("No party Saved");
 		}
 	}
 		break;

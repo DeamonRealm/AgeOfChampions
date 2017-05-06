@@ -106,7 +106,7 @@ public:
 	PassiveBuff(const PassiveBuff& copy);
 	~PassiveBuff();
 
-protected:
+public:
 
 	BUFF_TYPE			buff_type = NO_BUFF;
 	BUFF_ATTRIBUTE_TYPE	attribute_type = NO_ATTRIBUTE;
