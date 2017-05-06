@@ -2768,9 +2768,10 @@ void Arrow::PrepareArrow(iPoint start, iPoint goal)
 {
 	int deltaY = start.y - goal.y;
 	int deltaX = start.x - goal.x;
-	angle = atan2(deltaY, deltaX)*(180/3.14);
-	if (angle >= 0 && angle < 90 || angle < 270 && angle >= 360)
-		flip = true;
+	angle = atan2(deltaY, deltaX)*(180 / 3.14)+180;
+	//angle = 
+//	if (angle >= 0 && angle < 90 || angle < 270 && angle >= 360)
+	//	flip = true;
 }
 
 bool Arrow::operator==(const Arrow & other) const

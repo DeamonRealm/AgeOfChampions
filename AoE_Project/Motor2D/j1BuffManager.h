@@ -19,11 +19,13 @@ enum PARTICLE_TYPE
 	TAUNT_PARTICLE,
 	THUNDER_PARTICLE,
 	MULTI_SHOT_PARTICLE,
-	AREA_FIRE_PARTICLE,
 	DRAGON_SHOT_PARTICLE,
 	RESURRECTION_PARTICLE,
 	LEVEL_UP_PARTICLE,
-	ONE_HIT_PARTICLE
+	ONE_HIT_PARTICLE,
+	LASER_PARTICLE,
+	LONG_SHOT_PARTICLE
+
 };
 
 enum BUFF_TYPE
@@ -68,7 +70,7 @@ public:
 
 public:
 
-	virtual void Draw();
+	virtual void Draw(double angle =0.0);
 
 };
 /// -----------------------------------
@@ -92,7 +94,7 @@ public:
 
 public:
 
-	void Draw();
+	void Draw(double angle = 0.0);
 
 };
 /// -----------------------------------
@@ -117,7 +119,7 @@ public:
 
 public:
 
-	void Draw();
+	void Draw(double angle = 0.0);
 
 	//setter
 	void SetBuffType(BUFF_TYPE type);

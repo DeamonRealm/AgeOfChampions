@@ -976,6 +976,7 @@ void Wizard::SaveAsDef(pugi::xml_node & node)
 
 	/*Exp lvl 2*/			node.append_attribute("experience_lvl_2") = experience_lvl_2;
 	/*Exp lvl 3*/			node.append_attribute("experience_lvl_3") = experience_lvl_3;
+	
 	/*Ab lvl 2 coold*/		node.append_attribute("ability_lvl_2_cooldown") = ability_lvl_2_cooldown;
 	/*Ab lvl 2 atk val*/	node.append_attribute("ability_lvl_2_heal_value") = ability_lvl_2_heal_value;
 	/*Ab lvl 2 stun val*/	node.append_attribute("ability_lvl_3_attack_value") = ability_lvl_3_attack_value;
@@ -1692,6 +1693,31 @@ void Hunter::SaveAsDef(pugi::xml_node & node)
 	/*Def for lvl*/			node.append_attribute("defense_for_level") = defense_for_level;
 	/*Speed for lvl*/		node.append_attribute("speed_for_level") = speed_for_level;
 	/*View for lvl*/		node.append_attribute("view_area_for_level") = view_area_for_level;
+
+	/*Exp lvl 2*/			node.append_attribute("experience_lvl_2") = experience_lvl_2;
+	/*Exp lvl 3*/			node.append_attribute("experience_lvl_3") = experience_lvl_3;
+	
+	/*Atk Tri Lenght Skill lvl 2 A*/node.append_attribute("area_triangle_length") = this->area_triangle_attack_skill_A_lvl_2.GetLength();
+	/*Atk Tri Width Skill lvl 2 A*/	node.append_attribute("area_triangle_width_angle") = this->area_triangle_attack_skill_A_lvl_2.GetWidthAngle();
+	/*Atk Tri Width Skill lvl 2 A*/	node.append_attribute("area_triangle_X_angle") = this->area_triangle_attack_skill_A_lvl_2.GetXAngle();
+	/*Atk Skill lvl 2 A*/			node.append_attribute("ability_lvl_2_skill_A_attack_value") = ability_lvl_2_skill_A_attack_value;
+
+	/*Area Atk Skill lvl 2 B*/		node.append_attribute("area_attack_skill_B_lvl_2") = area_attack_skill_B_lvl_2.GetRad();
+	/*Area Limit Skill lvl 2 B*/	node.append_attribute("area_limit_skill_B_lvl_2") = area_limit_skill_B_lvl_2;
+	/*Area Atk  Skilllvl 2 B*/		node.append_attribute("ability_lvl_2_skill_B_attack_value") = ability_lvl_2_skill_B_attack_value;
+	
+	/*Ab lvl 2 coold*/				node.append_attribute("ability_lvl_2_cooldown") = ability_lvl_2_cooldown;
+
+	/*Area Atk Skill lvl 3 A*/		node.append_attribute("area_attack_skill_A_lvl_3") = area_attack_skill_A_lvl_3.GetRad();
+	/*Area Limit Skill lvl 3 A*/	node.append_attribute("area_limit_skill_A_lvl_3") = area_limit_skill_A_lvl_3;
+	/*Area Atk  Skill lvl 3 A*/		node.append_attribute("ability_lvl_3_skill_A_attack_value") = ability_lvl_3_skill_A_attack_value;
+	
+	/*Area Atk  Skill lvl 3 A*/		node.append_attribute("rect_attack_w") = area_attack_skill_B_lvl_3.GetWidth();
+	/*Area Atk  Skill lvl 3 A*/		node.append_attribute("rect_attack_h") = area_attack_skill_B_lvl_3.GetHeight();
+	/*Area Atk  Skill lvl 3 A*/		node.append_attribute("rect_pivot_distance") = area_attack_skill_B_lvl_3.GetPivotDistance();
+
+	/*Ab lvl 2 coold*/				node.append_attribute("ability_lvl_3_cooldown") = ability_lvl_3_cooldown;
+
 }
 
 bool Hunter::Update()
@@ -1818,16 +1844,18 @@ void Hunter::SetAbility_lvl_2(bool choosed)
 
 	if (choosed)
 	{
-		ability_lvl_2_particle = App->buff_manager->GetParticle(DRAGON_SHOT_PARTICLE, NO_DIRECTION);
-		ability_lvl_2_attack_value = ability_lvl_2_skill_A_attack_value;
+		ability_lvl_2_particle = App->buff_manager->GetParticle(LONG_SHOT_PARTICLE, NO_DIRECTION);
+		ability_lvl_2_attack_value = ability_lvl_2_skill_B_attack_value;
 		ability_lvl_2_ready = true;
-
+		
+		
 	}
 	else
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(MULTI_SHOT_PARTICLE, SOUTH);
-		ability_lvl_2_attack_value = ability_lvl_2_skill_B_attack_value;
+		ability_lvl_2_attack_value = ability_lvl_2_skill_A_attack_value;
 		ability_lvl_2_ready = true;
+
 
 	}
 	skill_choosed[1] = true;
@@ -1940,17 +1968,18 @@ void Hunter::SetAbility_lvl_3(bool choosed)
 
 	if (choosed)
 	{
-		ability_lvl_3_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
+		ability_lvl_3_particle = App->buff_manager->GetParticle(LASER_PARTICLE, NO_DIRECTION);
 		ability_lvl_3_attack_value = ability_lvl_3_skill_A_attack_value;
 		ability_lvl_3_ready = true;
+		
 	}
 	else
 	{
-
-		ability_lvl_3_particle = App->buff_manager->GetParticle(AREA_FIRE_PARTICLE, NO_DIRECTION);
+		
+		
+		ability_lvl_3_particle = App->buff_manager->GetParticle(DRAGON_SHOT_PARTICLE, NO_DIRECTION);
 		ability_lvl_3_attack_value = ability_lvl_3_skill_B_attack_value;
 		ability_lvl_3_ready = true;
-
 
 	}
 	skill_choosed[2] = true;
@@ -2015,7 +2044,12 @@ void Hunter::Hability_lvl_3(int x, int y)
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_3);
 		ability_lvl_3_particle.animation.Reset();
-		ability_lvl_3_particle.position = area_attack_skill_A_lvl_3.GetPosition();
+		ability_lvl_3_particle.position = this->GetPositionRounded();
+
+		int deltaY = GetPositionRounded().y - y;
+		int deltaX = GetPositionRounded().x - x;
+		angle = atan2(deltaY, deltaX)*(180 / 3.14) + 180;
+
 	}
 	else
 	{
@@ -2034,11 +2068,12 @@ void Hunter::Hability_lvl_3(int x, int y)
 		if (units_in[k]->GetDiplomacy() == entity_diplomacy)continue;
 
 		if (ability[2])
-			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
-
-
+		{
+		
+		units_in[k]->DirectDamage(ability_lvl_3_attack_value);
+		}
 		else {
-			App->buff_manager->CallBuff(units_in[k], TIMED_BUFF, BURN_BUFF);
+		
 			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 		}
 	}
@@ -2054,13 +2089,17 @@ void Hunter::CheckHability_lvl_3()
 {
 	if (!ability_lvl_3_particle.animation.IsEnd())
 	{
-		ability_lvl_3_particle.Draw();
+			
+
+	
+		ability_lvl_3_particle.Draw(angle);
 	}
 	else
 	{
 		actived[2] = false;
 		action_type = IDLE;
 		App->animator->UnitPlay(this);
+		angle = 0.0;
 	}
 }
 

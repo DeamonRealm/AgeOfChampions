@@ -28,10 +28,10 @@ Particle::~Particle()
 }
 
 //Functionality =============
-void Particle::Draw()
+void Particle::Draw(double angle)
 {
 	Sprite* sprite = (Sprite*)animation.GetCurrentSprite();
-	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - z_depth, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot());
+	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - z_depth, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(),NULL,angle);
 }
 
 /// -----------------------------------
@@ -56,7 +56,7 @@ BuffParticle::~BuffParticle()
 }
 
 //Functionality =============
-void BuffParticle::Draw()
+void BuffParticle::Draw(double angle)
 {
 	if (animation.IsEnd() && draw_timer.Read() < draw_rate)return;
 	else if(animation.IsEnd())
@@ -97,7 +97,7 @@ PassiveBuff::~PassiveBuff()
 	target = nullptr;
 }
 
-void PassiveBuff::Draw()
+void PassiveBuff::Draw(double angle)
 {
 	if (particle.position != target->GetPositionRounded())particle.position = target->GetPositionRounded();
 	particle.Draw();
@@ -711,11 +711,12 @@ PARTICLE_TYPE j1BuffManager::StrToParticleType(const char * str) const
 	if (strcmp("heal_particle", str) == 0)				return PARTICLE_TYPE::HEAL_PARTICLE;
 	if (strcmp("thunder_particle", str) == 0)			return PARTICLE_TYPE::THUNDER_PARTICLE;
 	if (strcmp("multi_shot_particle", str) == 0)		return PARTICLE_TYPE::MULTI_SHOT_PARTICLE;
-	if (strcmp("area_fire_shot_particle", str) == 0)	return PARTICLE_TYPE::AREA_FIRE_PARTICLE;
 	if (strcmp("dragon_shot_particle", str) == 0)		return PARTICLE_TYPE::DRAGON_SHOT_PARTICLE;
 	if (strcmp("resurrection_particle", str) == 0)		return PARTICLE_TYPE::RESURRECTION_PARTICLE;
 	if (strcmp("lvlup_particle", str) == 0)				return PARTICLE_TYPE::LEVEL_UP_PARTICLE;
 	if (strcmp("one_hit_particle", str) == 0)			return PARTICLE_TYPE::ONE_HIT_PARTICLE;
+	if (strcmp("laser_particle", str) == 0)				return PARTICLE_TYPE::LASER_PARTICLE;
+	if (strcmp("long_shoot_particle", str) == 0)		return PARTICLE_TYPE::LONG_SHOT_PARTICLE;
 
 	
 	return UNKNOWN_PARTICLE;

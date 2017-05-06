@@ -156,6 +156,10 @@ public:
 	bool	IsIn(const fPoint* loc) const;
 	bool	Intersects(const SDL_Rect* rect)const;
 
+	uint	GetWidth() const;
+	uint	GetHeight() const;
+	uint	GetPivotDistance() const;
+
 };
 /// ---------------------------------------------
 

@@ -140,10 +140,15 @@ bool Circle::Intersects(const Circle * target) const
 bool Circle::Overlap(const Circle* target) const
 {
 	if (target == nullptr)return false;
-	int radius = GetRad() + target->GetRad()+2;
-	int deltaX = GetPosition().x - target->GetPosition().x;
-	int deltaY = GetPosition().y - target->GetPosition().y;
-	return deltaX*deltaX + deltaY*deltaY <= radius*radius;
+
+	int radius = rad + target->GetRad()+1;
+	int deltaX = position.x - target->GetPosition().x;
+	int deltaY = position.y - target->GetPosition().y;
+
+
+	bool ret = abs(deltaX) < radius && abs(deltaY) < radius*sin(x_angle);
+
+	return ret;
 }
 bool Circle::Intersects(const Rectng * target) const
 {
@@ -389,6 +394,18 @@ bool PivotedRect::Intersects(const SDL_Rect* rect) const
 	if (SDL_IntersectRectAndLine(rect, &n_vertex[2].x, &n_vertex[2].y, &n_vertex[3].x, &n_vertex[3].y))return true;
 	if (SDL_IntersectRectAndLine(rect, &n_vertex[3].x, &n_vertex[3].y, &n_vertex[1].x, &n_vertex[1].y))return true;
 	return false;
+}
+uint PivotedRect::GetWidth()const
+{
+	return width;
+}
+uint PivotedRect::GetHeight()const 
+{
+	return height;
+}
+uint PivotedRect::GetPivotDistance() const
+{
+	return pivot_distance;
 }
 /// ---------------------------------------------
 ///Class Line -----------------------------------

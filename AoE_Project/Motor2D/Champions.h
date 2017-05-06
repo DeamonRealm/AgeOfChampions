@@ -271,6 +271,7 @@ private:
 	//Skill lvl 3 B
 	PivotedRect			area_attack_skill_B_lvl_3;
 	uint				ability_lvl_3_skill_B_attack_value = 0;
+	double				angle = 0.0;
 
 
 	//skill selected
