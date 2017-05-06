@@ -344,14 +344,7 @@ bool j1App::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) SaveGame("party_file.xml");
 	
 	//Call load game method 
-	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		player->Disable();
-		entities_manager->Disable();
-		player->Enable();
-		entities_manager->Enable();
-		LoadGame("party_file.xml");
-	}
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)LoadGame("party_file.xml");
 
 	return ret;
 }
@@ -483,6 +476,14 @@ bool j1App::LoadGameNow()
 {
 	bool ret = false;
 
+	//Clean all the previous data
+	player->Disable();
+	player->Enable();
+	entities_manager->Disable();
+	entities_manager->Enable();
+	fog_of_war->Disable();
+	fog_of_war->Enable();
+
 	char* buffer;
 	uint size = fs->Load(load_game.c_str(), &buffer);
 
@@ -522,6 +523,11 @@ bool j1App::LoadGameNow()
 		LOG("Could not load game state xml file %s", load_game.c_str());
 
 	want_to_load = false;
+
+	//Temporal
+	App->AI->Disable();
+	App->AI->Enable();
+
 	return ret;
 }
 

@@ -81,6 +81,34 @@ void j1EntitiesManager::Disable()
 	buildings.clear();
 	buildings_quadtree.Reset();
 
+	//Clean Up resoureces_defs vector
+	uint size = resources_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(resources_defs[k]);
+	}
+	resources_defs.clear();
+
+	//Clean Up units_defs vector
+	size = ally_units_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(ally_units_defs[k]);
+		RELEASE(enemy_units_defs[k]);
+	}
+	ally_units_defs.clear();
+	enemy_units_defs.clear();
+
+	//Clean Up buildings_defs vector
+	size = ally_buildings_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(ally_buildings_defs[k]);
+		RELEASE(enemy_buildings_defs[k]);
+	}
+	ally_buildings_defs.clear();
+	enemy_buildings_defs.clear();
+
 	//Clear all death entities lists
 	death_units.clear();
 	death_buildings.clear();

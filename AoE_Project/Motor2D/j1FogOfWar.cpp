@@ -103,8 +103,6 @@ bool j1FogOfWar::CleanUp()
 bool j1FogOfWar::Load(pugi::xml_node& data)
 {
 
-	return true;
-
 	if (fog_layer == nullptr || alpha_layer == nullptr)
 	{
 		LOG("Can't load fog of war!");
