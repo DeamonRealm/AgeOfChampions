@@ -30,7 +30,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
    <building id ="castle">
     <action enum ="idle" speed="0">
       <sprite n="castle"        opacity ="255" x="1" y="1" w="379" h="442" pX="0.493404" pY="0.80543"/>
-      <sprite n="castle_shadow" opacity ="255" x="382" y="1" w="198" h="182" pX="1.30808" pY="0.67033"/>
+      <sprite n="castle_shadow" opacity ="255" x="382" y="1" w="198" z="-200" h="182" pX="1.30808" pY="0.67033"/>
     </action>
   </building>
 </TextureAtlas>

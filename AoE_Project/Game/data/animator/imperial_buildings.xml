@@ -23,37 +23,37 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <!-- Define the building type-->
   <building id ="barrack_c">
     <action enum ="idle" speed="0">
-      <sprite opacity ="255" x="321" y="1" z ="-20" w="307" h="255" pX="0.478827" pY="0.72549"/>
+      <sprite opacity ="255" x="321" y="1" z ="-20" w="307" h="255" pX="0.471519" pY="0.722656"/>
     </action>
   </building>
   <building id ="archery_range_c">
     <action enum ="idle" speed="0">
-      <sprite opacity ="255" x="1" y="1" w="318" h="266" pX="0.490566" pY="0.733083"/>
+      <sprite opacity ="255" x="1" y="1" w="318" h="266" pX="0.498371" pY="0.70751"/>
     </action>
   </building>
   <building id ="blacksmith_c">
     <action enum ="idle" speed="0">
-      <sprite opacity ="255" x="630" y="1" w="316" h="197" pX="0.518987" pY="0.852792"/>
+      <sprite opacity ="255" x="630" y="1" w="316" h="197" pX="0.489362" pY="0.827381"/>
     </action>
   </building>
   <building id ="stable_c">
     <action enum ="idle" speed="0">
-      <sprite opacity ="255" x="875" y="578" w="288" h="232" pX="0.590278" pY="0.715517"/>
+      <sprite opacity ="255" x="875" y="578" w="288" h="232" pX="0.5" pY="0.66"/>
     </action>
   </building>
   <building id ="houseAI">
     <action enum ="idle" speed="0">
-      <sprite opacity ="255" x="93" y="269" w="226" h="182" pX="0.495575" pY="0.763736"/>
+      <sprite opacity ="255" x="93" y="269" w="226" h="182" pX="0.493213" pY="0.747126"/>
     </action>
   </building>
   <building id ="houseBI">
     <action enum ="idle" speed="0">
-      <sprite opacity ="255" x="321" y="269" w="195" h="156" pX="0.564103" pY="0.75"/>
+      <sprite opacity ="255" x="321" y="269" w="195" h="156" pX="0.573864" pY="0.79359"/>
     </action>
   </building>
   <building id ="houseCI">
     <action enum ="idle" speed="0">
-      <sprite opacity ="255" x="518" y="269" w="218" h="162" pX="0.536697" pY="0.759259"/>
+      <sprite opacity ="255" x="518" y="269" w="218" h="162" pX="0.551887" pY="0.75625"/>
     </action>
   </building>
   <building id ="monastery">
@@ -74,14 +74,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </building>
   <building id ="town_center_c">
     <action enum ="idle" speed="0">
-      <sprite n="LPilons" opacity ="255" x="389" y="912" w="101" h="42" pX="1.40594" pY="1.09524"/>
-      <sprite n="LPilons2" opacity ="255" x="492" y="912" w="132" h="60" pX="1.38636" pY="1.03333"/>
-      <sprite n="LSide" opacity ="255" x="626" y="912" w="160" h="140" pX="1.2" pY="1.05"/>
-      <sprite n="RPilons" opacity ="255" x="788" y="912" w="102" h="42" pX="-0.431373" pY="1.09524"/>
-      <sprite n="RPilons2" opacity ="255" x="892" y="912" w="132" h="60" pX="-0.409091" pY="1.03333"/>
-      <sprite n="RSide" opacity ="255" x="1026" y="912" w="161" h="139" pX="-0.223602" pY="1.05036"/>
-      <sprite n="top" opacity ="100" x="1" y="912" w="386" h="102" pX="0.492228" pY="0.519608"/>
-      <sprite n="shadow" opacity ="255" x="1" y="1054" w="190" h="246" pX="0.505263" pY="0.699187"/>
+      <sprite n="LPilons" opacity ="255" x="389" y="912" z ="50" w="101" h="42" pX="1.41607" pY="-0.56"/>
+      <sprite n="LPilons2" opacity ="255" x="492" y="912" z ="50" w="132" h="60" pX="1.39593" pY="0.26"/>
+      <sprite n="LSide" opacity ="255" x="626" y="912" z ="200" w="160" h="140" pX="1.20586" pY="0.38"/>
+      <sprite n="RPilons" opacity ="255" x="788" y="912" z ="50" w="102" h="42" pX="-0.416714" pY="-0.56"/>
+      <sprite n="RPilons2" opacity ="255" x="892" y="912" z ="50" w="132" h="60" pX="-0.4" pY="0.26"/>
+      <sprite n="RSide" opacity ="255" x="1026" y="912" z ="200" w="161" h="139"  pX="-0.21886" pY="0.375"/>
+      <sprite n="shadow" opacity ="255" x="1" y="912" w="386" h="102" pX="0.49396" pY="0.065"/>
+      <sprite n="top" opacity ="255" x="1" y="1054" w="190" h="246" pX="0.511865" pY="0.708844"/>
     </action>
   </building>
 </TextureAtlas>

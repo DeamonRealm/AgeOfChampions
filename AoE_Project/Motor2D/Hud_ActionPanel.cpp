@@ -1469,7 +1469,7 @@ void Action_Panel::SetPanelType()
 			}
 			else if (b_type == BLACKSMITH || b_type == BLACKSMITH_C)
 			{
-				if (blacksmithpanel->GetActualEntity() != actual_entity || actualpanel != blacksmithpanel)App->sound->PlayFXAudio(STABLE_SOUND);
+				if (blacksmithpanel->GetActualEntity() != actual_entity || actualpanel != blacksmithpanel)App->sound->PlayFXAudio(BLACKSMITH_SOUND);
 				blacksmithpanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = blacksmithpanel;
 			}
@@ -1499,7 +1499,7 @@ void Action_Panel::SetPanelType()
 			}
 			else if (b_type == CASTLE)
 			{
-				if (castlepanel->GetActualEntity() != actual_entity || actualpanel != castlepanel)App->sound->PlayFXAudio(UNIVERSITY_SOUND);
+				if (castlepanel->GetActualEntity() != actual_entity || actualpanel != castlepanel)App->sound->PlayFXAudio(CASTLE_SOUND);
 				castlepanel->ChangePlayerGamePanel(player_game_panel);
 				actualpanel = castlepanel;
 			}
