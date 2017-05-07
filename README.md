@@ -1,21 +1,16 @@
 
+# Age of Champions
+Tribute game to Age of Empires II developed by DemonRealm.   
+Age of Champions aims to preserve the core gameplay of the Age of Empires franchise while introducing new features such as champions similar to the ones from Warcraft III.
 
 
+## How to play (v0.7)
 
-# Age of Champions (Vertical Slice)
-Tribute game to Age of Empires II developed by DemonRealm.
-
-
-## How to play (v0.5)
-
-In these release you are given an initial town center and a few resources, with this you should create a few more villagers to 
-recollect more resources until you are able to create your army. But care your town center can only support up to ten units being villagers, militia or the mighty warrior who can only spawn one time during the game.   
-
-After 80 seconds a group of enemies will spawn at the top of the map and will aim to destroy your town center, be fast at creating your army and defeat them to prevent the perish of your small town.
+The AI revamp started at 0.6 it's almost done but still need a lot of polish and tweaking, so give it a chance and play, play, play!! :·3
 
 
 ### Main Menu
-* Click on the single player icon to start the game
+* Click on the single player to open the load menu at the right, click on Default to load a default game or in load game to open a previously saved game
 * Click on the book to open the game wiki in your browser
 * Click on the arrow to quit the game
 
@@ -24,15 +19,10 @@ After 80 seconds a group of enemies will spawn at the top of the map and will ai
 * Mouse Right Click to Make the unit do actions (Move/Attack/Recolect)
 * Mouse Double Click to select all units of the same type
 * Mouse Drag to select unit groups (doesn't work on enemies groups)
-* Click on the skull with the selected/s unit to kill them
+* When selecting both units or buildings a panel will appear on the left bottom corner, passing the mouse over the diferent images will show what they do and the resources needed, clicking on them will do those actions.
 * Click on the book icon when the warrior is selected to open his skill tree
 * Click on the [+] buttons on the skill tree to gain that skills (only one per tier)
-* Click on the skill icons to activate them (only works for the first and second tier)
-* Click on the warrior icon in the town center panel to spawn a warrior (only one per game)
-* Click on the villager icon in the town center panel to spawn a villager
-* Click on the second building icon in the villager panel open the barracks construction panel
-* Drag and drop the barracks icon (double sword) to construct one
-* Click on the militia icon in the barracks panel to spawn one
+* Click on the skill icons to activate them
 * Arrows or drag the mouse to the corners to move the camera 
 * [F] Toggle Fullscreen/Windowed mode
 * Click on the scroll at the upper-right part of the screen to open the in-game menu
@@ -41,41 +31,18 @@ Note: All spawns require the player to wait some time before the actual unit spa
 
 #### Debug controls
 (only available after activating debug mode (F1))
-* GRAVE to activate/deactivate console (enter "help" in the console to see all the commands)
 * [F1]:Activate/Deactivate debug mode     
 * [F2]: Activate map logic Debug
 * [F3]: Generate Villager 
-* [F4]: Spawn Barracks
-* [N]: Generate Arbalest
-* [M]: Generate Enemy Static Milita
 * [Z]: Generete Tree
 * [X]: Generete Berry Bush
 * [C]: Generate Stone quarry
 * [V]: Generate Gold ore
 * [W]: Generate Warrior
-
-
-#### Units/Building Costs
-**Militia:** 
-  * Food: 60
-  * Wood: 0
-  * Gold: 20
-  * Train time: 3sec
-  
-  **Villager:**
-  * Food: 60
-  * Wood: 0
-  * Gold: 20
-  * Train time: 2.5sec
-  
-  **Warrior:**
-  * Food: 180
-  * Wood: 0
-  * Gold: 60
-  * Train time: 4sec
-  
-  **Barracks:**
-  * Stone: 175 
+* [E]: Generate Wizard
+* [R]: Generate Hunter
+* 2: Save
+* 3: Load
 
 ## Media 
 **Facebook:** https://www.facebook.com/DemonRealm.P2    
@@ -99,6 +66,35 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ## Changelog
+### v0.7
+* Added: Art for the right branch hunter skills
+* Added: Art for enemy buildings 
+* Added: Input redefinition through config.xml file
+* Updated: Wizard active skills sound
+* Updated: Building-Unit collision
+* AI: Now recollects diferent resources
+* AI: Manages his own resources to build, create units and upgrade
+* AI: Always sends 10 troops to attack when it has enough units
+* Fixed: #35 
+
+
+### v0.6
+* Added: Save/Load functionality
+* Added: New champions Wizard and Hunter
+* Added: Fog of war
+* Added: Troops upgrades
+* Added: Some more buildings (Stable, blacksmith, house, archery)
+* Added: Ctrl+click when building let's you build more buildings without going to the villager panel
+* Added: Enemy structures (For now they use the same sprite as the player ones)
+* Improved: Building constructions now works with two mouse click, like the original AoE
+* Improved: Recollecting trees now first chops the tree and then starts recollecting
+* Improved: Camera movement
+* Revamped: Enemy AI behaviour
+* Fixed #30 
+* Fixed #32 
+* Fixed #33 
+* Fixed #34 
+
 ### v0.5
 
 * Added: Warrior skills (defense/attack buff + stun + slash)
@@ -119,7 +115,6 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 * Fixed issue #28 
 * Fixed issue #29 
 
-## Changelog
 ### v0.4
 * Removed: Arbalest Spawn with space
 * Added: Basic Enemy AI (Spawn 10 units at the top of the map and they move to the bottom)
