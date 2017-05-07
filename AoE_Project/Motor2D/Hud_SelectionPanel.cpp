@@ -10,6 +10,7 @@
 #include "j1EntitiesManager.h"
 #include "j1Animator.h"
 #include "j1GroupMovement.h"
+#include "j1FogOfWar.h"
 #include "SDL\include\SDL_rect.h"
 #include "j1Map.h"
 //GUI Elements
@@ -487,13 +488,6 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				else App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y, true);
 			}
 		}
-
-
-		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == BUILDING)
-		{
-			Selected->GetEntity()->AddAction(new SpawnUnitAction((ProductiveBuilding*)Selected->GetEntity(), ARBALEST, ALLY));
-		}
-
 		break;
 	case MOUSE_IN:
 		break;
@@ -900,6 +894,10 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 	building_quad_selection.clear();
 	resource_quad_selection.clear();
 
+	iPoint tile = App->map->WorldToMap(x, y);
+	FOG_TYPE tile_fog_type = App->fog_of_war->GetFogID(tile.x, tile.y);
+	if (tile_fog_type == DARK_FOG) return nullptr;
+
 	App->entities_manager->units_quadtree.CollectCandidates(unit_quad_selection, rect);
 	App->entities_manager->buildings_quadtree.CollectCandidates(building_quad_selection, rect);
 	App->entities_manager->resources_quadtree.CollectCandidates(resource_quad_selection, rect);
@@ -960,6 +958,11 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 				ret = resource_quad_selection[count];
 			}
 		}
+	}
+
+	if (ret != nullptr)
+	{
+		if (ret->GetEntityType() == UNIT && tile_fog_type != NO_FOG) return nullptr;
 	}
 	return ret;
 }

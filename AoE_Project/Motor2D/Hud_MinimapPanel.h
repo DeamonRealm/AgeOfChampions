@@ -88,6 +88,8 @@ private:
 	bool		in_minimap = false;
 	SDL_Rect    map_rect = { 0,0,0,0 };
 	SDL_Rect	minimap_size = { 0,0,0,0 };
+	SDL_Rect	minimap_camera_size = { 0,0,0,0 };
+	fPoint		map_to_minimap = { 0.0f,0.0f };
 	fPoint		half_tile_size = { 0.0f,0.0f };
 	iPoint		map_size;
 

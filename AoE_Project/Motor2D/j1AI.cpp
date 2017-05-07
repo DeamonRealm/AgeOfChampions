@@ -730,7 +730,7 @@ void j1AI::GenerateDebugVillager()
 
 bool j1AI::GenerateUnit(UNIT_TYPE type)
 {
-	if (type == NO_UNIT) return false;
+	if (units_production[type].base_type_unit == NO_UNIT) return false;
 	if (CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost,UNIT , false))
 	{
 		Building* productive_building = nullptr;
@@ -740,7 +740,7 @@ bool j1AI::GenerateUnit(UNIT_TYPE type)
 		{
 			building--;
 			b_type = building._Ptr->_Myval->GetBuildingType();
-			if (b_type == units_production[type].spawn_from || b_type == units_production[type].spawn_from2)
+			if ((b_type == units_production[type].spawn_from || b_type == units_production[type].spawn_from2) && building._Ptr->_Myval->GetDiplomacy() == ENEMY)
 			{
 				if (productive_building != nullptr)
 				{
@@ -763,16 +763,8 @@ bool j1AI::GenerateUnit(UNIT_TYPE type)
 Building* j1AI::GenerateBuilding(BUILDING_TYPE type)
 {
 	iPoint position = { 0,0 };
-	if (type == NO_BUILDING) return nullptr;
-	if (type == TOWN_CENTER)
-	{
-		position = App->map->MapToWorldCenter(110, 100);
-		CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING);
-		Building* new_building = App->entities_manager->GenerateBuilding(buildings_production[type].b_type, ENEMY, true);
-		new_building->SetPosition(position.x, position.y);
-		enemy_buildings.push_back(new_building);
-		return new_building;
-	}
+	if (buildings_production[type].base_type_building == NO_BUILDING) return nullptr;
+		
 	if (CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING, false))
 	{
 		Unit* villager = nullptr;
@@ -782,7 +774,7 @@ Building* j1AI::GenerateBuilding(BUILDING_TYPE type)
 		{
 			unit--;
 			u_type = unit._Ptr->_Myval->GetUnitType();
-			if (u_type == VILLAGER)
+			if (u_type == VILLAGER && unit._Ptr->_Myval->GetDiplomacy() == ENEMY)
 			{
 				if (villager != nullptr)
 				{

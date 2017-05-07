@@ -52,6 +52,9 @@ Minimap_Panel::Minimap_Panel() : map_rect({ 1030,600,325,161 }), minimap_size({0
 	update_timer.Start();
 	fow_timer.Start();
 
+	// minimap_camera move
+	map_to_minimap = { (float)325 / (120*96),(float)161 / (120*47)};
+	minimap_camera_size = { 0, 0, (int)((float)App->render->camera.w*map_to_minimap.x),(int)((float)App->render->camera.h*map_to_minimap.y)};
 }
 
 Minimap_Panel::~Minimap_Panel()
@@ -147,6 +150,11 @@ bool Minimap_Panel::Draw()
 	App->render->Blit(minimap_fow_texture, map_rect.x - App->render->camera.x, map_rect.y - App->render->camera.y, &minimap_size);
 
 	minimap_background->Draw(false);
+	
+	// Draw Camera Viewport
+	iPoint camera_pos = { (int)((float)(-App->render->camera.x + (map_size.x*96/2))*map_to_minimap.x), (int)((float)-App->render->camera.y*map_to_minimap.y)};
+	App->render->DrawQuad({ map_rect.x + camera_pos.x, map_rect.y + camera_pos.y, minimap_camera_size.w, minimap_camera_size.h }, 255, 255, 255, 255, false, false);
+
 
 	return false;
 }

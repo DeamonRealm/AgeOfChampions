@@ -154,23 +154,21 @@ bool j1Player::PreUpdate()
 		//Generate Villager in the mouse coordinates
 		if (App->input_manager->GetEvent(GENERATE_VILLAGER) == INPUT_DOWN)
 		{
-			Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER, ALLY);
+			Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER, ENEMY);
 			new_unit->SetPosition((float)x - App->render->camera.x,(float) y - App->render->camera.y);
 
 			game_panel->IncressPopulation(1, false);
 		}
 
-		
-
 		//Generate a Militia unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		{
-			/*Building* test_building = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER, ENEMY);
+			Building* test_building = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER, ENEMY);
 			test_building->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
-			*/
 			
-			Unit* new_unit = App->entities_manager->GenerateUnit(PALADIN, ALLY);
-			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
+			
+			/*Unit* new_unit = App->entities_manager->GenerateUnit(PALADIN, ALLY);
+			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);*/
 		}
 		//Generate a Arbalest unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
@@ -270,15 +268,15 @@ bool j1Player::PostUpdate()
 		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_UP);
 		action_panel->SetPanelType();
 	}
-
-	// Draw Game Panel (HUD)
-	game_panel->Draw();
-
+	
 	// Draw Selected Units
 	selection_panel->Draw();
 
 	// Draw Action Panel
 	action_panel->Draw();
+
+	// Draw Game Panel (HUD)
+	game_panel->Draw();
 
 	// Draw Minimap
 	minimap_panel->Draw();

@@ -141,7 +141,7 @@ bool j1FogOfWar::Load(pugi::xml_node& data)
 	while (alpha_cell_node != NULL)
 	{
 		//Get saved cell alpha
-		alpha_layer[k].alpha = alpha_cell_node.attribute("alpha").as_uint();
+		alpha_layer[k].alpha = alpha_cell_node.attribute("alpha").as_uint(255);
 		
 		//Focus next saved cell
 		k++;
@@ -157,7 +157,7 @@ bool j1FogOfWar::Load(pugi::xml_node& data)
 	k = 0;
 	while (fog_tile_node != NULL)
 	{
-		fog_layer[k].type = (FOG_TYPE)fog_tile_node.attribute("id").as_int();
+		fog_layer[k].type = (FOG_TYPE)fog_tile_node.attribute("id").as_int(2);
 		if (fog_layer[k].type != DARK_FOG) App->player->minimap_panel->PushTilestoClear(k);
 
 		k++;

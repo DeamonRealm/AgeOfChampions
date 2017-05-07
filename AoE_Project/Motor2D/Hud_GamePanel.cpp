@@ -200,6 +200,11 @@ bool Game_Panel::Draw()
 		player_resources[i]->Draw(false);
 	}
 
+	if (exit_menu_image->GetActiveState())
+	{
+		exit_menu_image->Draw(false);
+	}
+
 	return true;
 }
 

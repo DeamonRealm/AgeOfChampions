@@ -598,7 +598,7 @@ bool j1App::LoadDefaultGame()
 	LOG("%.4f", time_to_start.ReadSec());
 	time_to_start.Start();
 	bool ret = true;
-	std::string folder = "scene/default_scene.xml";
+	std::string folder = "scene/standard_match.xml";
 	pugi::xml_document scene_doc;
 	if (!App->fs->LoadXML(folder.c_str(), &scene_doc))
 	{
