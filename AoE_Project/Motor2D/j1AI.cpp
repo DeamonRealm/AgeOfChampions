@@ -36,19 +36,16 @@ void j1AI::Enable()
 
 	research_timer.Start();
 
+	App->entities_manager->BuildingList();
 
-	ai_starting_tc = (ProductiveBuilding*)App->entities_manager->GenerateBuilding(TOWN_CENTER, ENEMY);
-	iPoint pos = App->map->MapToWorldCenter(110, 100);
-	ai_starting_tc->SetPosition((float)pos.x, (float)pos.y);
-	enemy_buildings.push_back(ai_starting_tc);
+	std::list<Building*>::const_iterator building = App->entities_manager->buildings.begin();
+	while (building != App->entities_manager->buildings.end())
+	{
+		enemy_buildings.push_back(building._Ptr->_Myval);
+		building++;
+	}
+	
 
-
-	//temporary enemy barracks
-	pos = App->map->MapToWorldCenter(115, 95);
-	Building* new_building;
-	new_building = App->entities_manager->GenerateBuilding(BARRACK, ENEMY);
-	new_building->SetPosition((float)pos.x, (float)pos.y);
-	enemy_buildings.push_back(new_building);
 
 	//ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
 }
@@ -121,13 +118,11 @@ bool j1AI::Update(float dt)
 		return true;
 	}
 
-	Resource* to_recolect = GetNearestNeed();
 	//ai_worker->AddAICommand(new SendToRecollect(enemy_units, (Resource**)to_recolect->GetMe()));
 	
 	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
 	while (unit_it != enemy_units.end())
 	{
-		if (to_recolect == nullptr) break;
 		//Check resource type
 		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER)
 		{
@@ -137,6 +132,8 @@ bool j1AI::Update(float dt)
 
 		if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(TASK_CHANNELS::PRIMARY))
 		{
+			Resource* to_recolect = GetNearestNeed(unit_it._Ptr->_Myval->GetPositionRounded());
+			if (to_recolect == nullptr) break;
 			unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)unit_it._Ptr->_Myval, (Resource*)to_recolect), PRIMARY);
 		}
 		unit_it++;
@@ -199,7 +196,7 @@ bool j1AI::LoadEnemies(const char * folder)
 	return true;
 }
 
-Resource * j1AI::GetNearestNeed()
+Resource * j1AI::GetNearestNeed(iPoint pos)
 {
 	RESOURCE_TYPE	type = BERRY_BUSH;
 	uint			current_min = meat;
@@ -220,7 +217,7 @@ Resource * j1AI::GetNearestNeed()
 		type		= STONE_ORE;
 	}
 
-	return App->entities_manager->GetNearestResource(ai_starting_tc->GetPositionRounded(), type, NEUTRAL);;
+	return App->entities_manager->GetNearestResource(pos, type, NEUTRAL);
 }
 
 void j1AI::ManageAttack()
@@ -232,7 +229,7 @@ void j1AI::ManageAttack()
 		std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
 		while (unit_it != enemy_units.end())
 		{
-			Building* to_kill = App->entities_manager->GetNearestBuilding(ai_starting_tc->GetPositionRounded(), TOWN_CENTER, ALLY);
+			Building* to_kill = App->entities_manager->GetNearestBuilding(iPoint(110, 100), TOWN_CENTER, ALLY);
 			if (to_kill == nullptr) return;
 
 			if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY))
@@ -604,13 +601,25 @@ BUILDING_TYPE j1AI::GetNextBuildingSpawnType()
 		ret = CASTLE;
 		min = castle;
 	}
+	if (town_center == 0)
+	{
+		ret = TOWN_CENTER;
+	}
 
 	return ret;
 }
 
 void j1AI::GenerateDebugVillager()
 {
-	ai_worker->AddAICommand(new SpawnUnitCommand(VILLAGER, ai_starting_tc));
+	std::list<Building*>::const_iterator building = App->entities_manager->buildings.begin();
+	while (building != App->entities_manager->buildings.end())
+	{
+		if (building._Ptr->_Myval->GetBuildingType() == TOWN_CENTER || building._Ptr->_Myval->GetBuildingType() == TOWN_CENTER_C)
+		{
+			ai_worker->AddAICommand(new SpawnUnitCommand(VILLAGER, (ProductiveBuilding*)building._Ptr->_Myval));
+		}
+		building++;
+	}
 }
 
 bool j1AI::GenerateUnit(UNIT_TYPE type)
@@ -649,6 +658,15 @@ Building* j1AI::GenerateBuilding(BUILDING_TYPE type)
 {
 	iPoint position = { 0,0 };
 	if (type == NO_BUILDING) return nullptr;
+	if (type == TOWN_CENTER)
+	{
+		position = App->map->MapToWorldCenter(110, 100);
+		CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING);
+		Building* new_building = App->entities_manager->GenerateBuilding(buildings_production[type].b_type, ENEMY, true);
+		new_building->SetPosition(position.x, position.y);
+		enemy_buildings.push_back(new_building);
+		return new_building;
+	}
 	if (CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING, false))
 	{
 		Unit* villager = nullptr;

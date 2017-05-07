@@ -140,7 +140,7 @@ private:
 
 	bool LoadEnemies(const char* folder);
 
-	Resource*	GetNearestNeed();
+	Resource*	GetNearestNeed(iPoint pos);
 
 	void ManageAttack();
 	void ManageConstrucion();
@@ -169,7 +169,7 @@ private:
 	j1Timer building_timer;
 
 
-	ProductiveBuilding* ai_starting_tc;
+	//ProductiveBuilding* ai_starting_tc;
 	std::list<Building*> enemy_buildings;
 
 	// Reserach
