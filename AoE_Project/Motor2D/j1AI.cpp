@@ -166,6 +166,99 @@ bool j1AI::CleanUp()
 	return true;
 }
 
+bool j1AI::Load(pugi::xml_node & data)
+{
+	// AI Load ---------------------------
+	// AI node
+	pugi::xml_node ai_node = data.child("ai_data");
+
+	pugi::xml_node curr_node = ai_node.child("Resources");
+	curr_node = curr_node.child("normal_resources");
+	wood = curr_node.attribute("wood").as_int(500);
+	meat = curr_node.attribute("meat").as_int(500);
+	gold = curr_node.attribute("gold").as_int(500); 
+	stone = curr_node.attribute("stone").as_int(300); 
+	population = curr_node.attribute("population").as_int(0); 
+	max_population = curr_node.attribute("max_population").as_int(5);
+
+	curr_node = ai_node.child("Research_Resources");
+	research_wood = curr_node.attribute("wood").as_int(500);
+	research_meat = curr_node.attribute("meat").as_int(500);
+	research_gold = curr_node.attribute("gold").as_int(500);
+	research_stone = curr_node.attribute("stone").as_int(300);
+	next_research = curr_node.attribute("next_research").as_int(0);
+
+	curr_node = ai_node.child("Updates");
+	current_age = curr_node.attribute("current_age").as_int(2);
+	curr_node = curr_node.child("units_level").child("upgraded");
+	while (curr_node != NULL)
+	{
+		units_lvl[curr_node.attribute("base_type").as_int(0)] = curr_node.attribute("level").as_int(0);
+		curr_node = curr_node.next_sibling();
+	}
+	UpdateAIUnits();
+
+	curr_node = ai_node.child("Updates").append_child("buildings_level");
+	while (curr_node != NULL)
+	{
+		units_lvl[curr_node.attribute("base_type").as_int(0)] = curr_node.attribute("level").as_int(0);
+		curr_node = curr_node.next_sibling();
+	}
+	UpdateAIBuildings();
+	return true;
+}
+
+bool j1AI::Save(pugi::xml_node & data) const
+{
+	// AI Save ---------------------------
+	// AI node
+	pugi::xml_node ai_node = data.append_child("ai_data");
+
+	pugi::xml_node curr_node = ai_node.append_child("Resources");
+	curr_node = curr_node.append_child("normal_resources");
+	curr_node.append_attribute("wood") = wood;
+	curr_node.append_attribute("meat") = meat;
+	curr_node.append_attribute("gold") = gold;
+	curr_node.append_attribute("stone") = stone;
+	curr_node.append_attribute("population") = population;
+	curr_node.append_attribute("max_population") = max_population;
+
+	curr_node = ai_node.append_child("Research_Resources");
+	curr_node.append_attribute("wood") = research_wood;
+	curr_node.append_attribute("meat") = research_meat;
+	curr_node.append_attribute("gold") = research_gold;
+	curr_node.append_attribute("stone") = research_stone;
+	curr_node.append_attribute("next_research") = next_research;
+
+	curr_node = ai_node.append_child("Updates");
+	curr_node.append_attribute("current_age") = current_age;
+	curr_node = curr_node.append_child("units_level");
+	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
+	{
+		if (units_lvl[i] != 0)
+		{
+			curr_node = curr_node.append_child("upgraded");
+			curr_node.append_attribute("base_type") = (int)units_production[i].base_type_unit;
+			curr_node.append_attribute("level") = units_lvl[i];
+			curr_node = ai_node.child("Updates").first_child();
+		}
+	}
+
+	curr_node = ai_node.child("Updates").append_child("buildings_level");
+	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
+	{
+		if (buildings_lvl[i] != 0)
+		{
+			curr_node = curr_node.append_child("upgraded");
+			curr_node.append_attribute("base_type") = (int)buildings_production[i].base_type_building;
+			curr_node.append_attribute("level") = units_lvl[i];
+			curr_node = ai_node.child("Updates").child("building_level");
+		}
+	}
+
+	return true;
+}
+
 bool j1AI::LoadEnemies(const char * folder)
 {
 	//Load
@@ -268,7 +361,7 @@ void j1AI::LoadAIEntitiesData(pugi::xml_node& conf)
 
 	AI_Entities_Data_Buildings building_data;
 	AI_Entities_Data new_data;
-	for (int i = 0; i < 22; i++)
+	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
 	{
 		units_production.push_back(new_data);
 		buildings_production.push_back(building_data);

@@ -16,6 +16,7 @@ enum RESEARCH_TECH;
 #define	RESEARCH_RATE 3500
 #define AI_RESEARCH_DURATION 3000
 #define MIN_VILLAGERS 10
+#define PRODUCTIVE_SIZE 22
 
 
 ///AI is controlled thorugh childs from this command (like ActionManager)--------
@@ -121,9 +122,12 @@ public:
 	//Called each loop iteration
 	bool Update(float dt);
 
-
 	// Called before quitting
 	bool CleanUp();
+
+	// Save and Load
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 	void GenerateDebugVillager();
 	bool GenerateUnit(UNIT_TYPE type);
@@ -184,9 +188,9 @@ private:
 
 	// Aviable Units/Buildings to create
 	std::vector<AI_Entities_Data> units_production;
-	int							  units_lvl[22];
+	int							  units_lvl[PRODUCTIVE_SIZE];
 	std::vector<AI_Entities_Data_Buildings> buildings_production;
-	int							  buildings_lvl[22];
+	int							  buildings_lvl[PRODUCTIVE_SIZE];
 
 public:
 	std::list<Unit*> enemy_units;

@@ -528,8 +528,16 @@ UI_Element * Game_Panel::GetExitMenu()
 
 void Game_Panel::ActivatePauseMenu()
 {
-	exit_menu_image->Activate();
-	exit_menu_image->ActivateChilds();
+	if (exit_menu_image->GetActiveState())
+	{
+		exit_menu_image->Desactivate();
+		exit_menu_image->DesactivateChids();
+	}
+	else
+	{
+		exit_menu_image->Activate();
+		exit_menu_image->ActivateChilds();
+	}
 }
 
 
