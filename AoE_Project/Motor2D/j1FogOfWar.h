@@ -96,6 +96,7 @@ public:
 
 	void				GenerateFogOfWar();
 	void				CollectFogCells();
+	void				ResetFogTilesInCamera();
 
 	FOG_TYPE			GetFogID(int x, int y)const;
 

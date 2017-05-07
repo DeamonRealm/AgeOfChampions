@@ -75,6 +75,7 @@ bool j1FogOfWar::PostUpdate()
 		}
 		update_timer.Start();
 		CollectFogCells();
+		ResetFogTilesInCamera();
 	}
 
 	while (!entities_release.empty())
@@ -258,6 +259,21 @@ void j1FogOfWar::CollectFogCells()
 	for (uint k = 0; k < size; k++)
 	{
 		if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA)cells_in_screen[k]->alpha = MID_ALPHA;
+	}
+}
+
+void j1FogOfWar::ResetFogTilesInCamera()
+{
+	std::vector<iPoint> collected_points;
+	uint size = App->map->map_quadtree.CollectCandidates(collected_points, App->render->camera_viewport);
+
+	for (uint k = 0; k < size; k++)
+	{
+		FogTile* target = &fog_layer[collected_points[k].x + collected_points[k].y * App->map->data.width];
+		if (!target->locked)
+		{
+			if (target->type == NO_FOG) target->type = GRAY_FOG;
+		}
 	}
 }
 
