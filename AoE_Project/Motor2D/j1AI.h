@@ -175,6 +175,7 @@ private:
 
 	//ProductiveBuilding* ai_starting_tc;
 	std::list<Building*> enemy_buildings;
+	std::list<Unit*> enemy_raid;
 
 	// Reserach
 	ActionWorker*	ai_research_worker = nullptr;

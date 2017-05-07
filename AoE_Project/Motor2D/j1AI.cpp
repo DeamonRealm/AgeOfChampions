@@ -143,7 +143,7 @@ bool j1AI::Update(float dt)
 	ManageTroopsCreation();
 	
 
-	//ManageAttack();
+	ManageAttack();
 	
 	update_timer.Start();
 
@@ -174,10 +174,10 @@ bool j1AI::Load(pugi::xml_node & data)
 
 	pugi::xml_node curr_node = ai_node.child("Resources");
 	curr_node = curr_node.child("normal_resources");
-	wood = curr_node.attribute("wood").as_int(500);
-	meat = curr_node.attribute("meat").as_int(500);
-	gold = curr_node.attribute("gold").as_int(500); 
-	stone = curr_node.attribute("stone").as_int(300); 
+	wood = curr_node.attribute("wood").as_int(50000);
+	meat = curr_node.attribute("meat").as_int(50000);
+	gold = curr_node.attribute("gold").as_int(50000); 
+	stone = curr_node.attribute("stone").as_int(50000); 
 	population = curr_node.attribute("population").as_int(0); 
 	max_population = curr_node.attribute("max_population").as_int(5);
 
@@ -315,21 +315,34 @@ Resource * j1AI::GetNearestNeed(iPoint pos)
 
 void j1AI::ManageAttack()
 {
-	if (enemy_units.size() < 1) return;
+	if (enemy_units.size() < 30) return;
 
-	else 
+	if (enemy_raid.size() >= 10)
 	{
-		std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
-		while (unit_it != enemy_units.end())
+		std::list<Unit*>::const_iterator raid_it = enemy_raid.begin();
+		while (raid_it != enemy_raid.end())
 		{
 			Building* to_kill = App->entities_manager->GetNearestBuilding(iPoint(110, 100), TOWN_CENTER, ALLY);
 			if (to_kill == nullptr) return;
 
-			if (!unit_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY))
-				unit_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->AttackToBuildingAction(unit_it._Ptr->_Myval, (Building*)to_kill), SECONDARY);
+			if (!raid_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY))
+				raid_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->AttackToBuildingAction(raid_it._Ptr->_Myval, (Building*)to_kill), SECONDARY);
 
-			unit_it++;
+			raid_it++;
 		}
+		return;
+	}
+
+
+	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
+	while (unit_it != enemy_units.end())
+	{
+		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER)
+		{
+			enemy_raid.remove(unit_it._Ptr->_Myval);
+			enemy_raid.push_back(unit_it._Ptr->_Myval);
+		}
+		unit_it++;
 	}
 }
 
