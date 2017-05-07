@@ -66,6 +66,9 @@ void BuffParticle::Draw(double angle)
 		{
 			if (attribute_type == BUFF_ATTRIBUTE_TYPE::ATTACK_BUFF)App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL1_B);
 			if (attribute_type == BUFF_ATTRIBUTE_TYPE::DEFENSE_BUFF)App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL1_A);
+			if (attribute_type == BUFF_ATTRIBUTE_TYPE::LIFE_BUFF)App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL1_B);
+			if (attribute_type == BUFF_ATTRIBUTE_TYPE::VISION_BUFF)App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL1_A);
+
 		}
 	}
 	else

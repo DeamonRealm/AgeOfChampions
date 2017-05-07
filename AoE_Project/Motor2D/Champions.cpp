@@ -919,7 +919,7 @@ Wizard::Wizard() :Champion()
 
 Wizard::Wizard(const Wizard & copy) : Champion(copy), area_attack_spell_2(copy.area_attack_spell_2), area_limit_spell_2(copy.area_limit_spell_2), area_attack_spell_3(copy.area_attack_spell_3), area_limit_spell_3(copy.area_limit_spell_3), ability_lvl_2_heal_value(copy.ability_lvl_2_heal_value), ability_lvl_3_attack_value(copy.ability_lvl_3_attack_value)
 {
-	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
+	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, VISION_BUFF, false);
 	ability_lvl_2_A_particle = App->buff_manager->GetParticle(HEAL_PARTICLE, NO_DIRECTION);
 	ability_lvl_2_B_particle = App->buff_manager->GetParticle(TELEPORT_PARTICLE, NO_DIRECTION);
 
@@ -1118,6 +1118,7 @@ void Wizard::Hability_lvl_1()
 
 void Wizard::CheckHability_lvl_1()
 {
+
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_around;
 	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);

@@ -5,6 +5,9 @@
   <particle document = "Aura_Range_Attack.xml"/>
   <particle document = "Aura_Speed_Attack.xml"/>
   <particle document = "Area_Attack.xml"/>
+  <particle document = "Area_Life.xml"/>
+  <particle document = "Area_Vision.xml"/>
+
   <particle document = "One_Hit.xml"/>
   <particle document = "Teleport.xml"/>
   <particle document = "Thunder.xml"/>

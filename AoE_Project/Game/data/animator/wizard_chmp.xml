@@ -42,8 +42,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
       <direction enum="south-west">
         <sprite n="monk_attack/010_monk_attack.bmp" x="495" y="3" w="34" h="52" pX="0.65625" pY="0.755556"/>
-        <sprite n="monk_attack/011_monk_attack.bmp" x="529" y="3
-" w="29" h="47" pX="0.689655" pY="0.744681"/>
+        <sprite n="monk_attack/011_monk_attack.bmp" x="529" y="3" w="29" h="47" pX="0.689655" pY="0.744681"/>
         <sprite n="monk_attack/012_monk_attack.bmp" x="560" y="1" w="30" h="55" pX="0.666667" pY="0.818182"/>
         <sprite n="monk_attack/013_monk_attack.bmp" x="592" y="1" w="29" h="61" pX="0.655172" pY="0.852459"/>
         <sprite n="monk_attack/014_monk_attack.bmp" x="623" y="1" w="30" h="62" pX="0.633333" pY="0.870968"/>
