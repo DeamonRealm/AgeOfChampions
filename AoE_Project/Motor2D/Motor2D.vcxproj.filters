@@ -132,6 +132,9 @@
     <ClCompile Include="Hud_MinimapPanel.cpp">
       <Filter>UserInteraface\Hud</Filter>
     </ClCompile>
+    <ClCompile Include="j1InputManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -282,6 +285,9 @@
     </ClInclude>
     <ClInclude Include="Hud_MinimapPanel.h">
       <Filter>UserInteraface\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="j1InputManager.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

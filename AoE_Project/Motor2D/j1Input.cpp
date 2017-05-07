@@ -6,6 +6,8 @@
 #include "j1Gui.h"
 #include "UI_Text_Box.h"
 #include "j1Window.h"
+#include "j1InputManager.h"
+
 #include "SDL/include/SDL.h"
 
 #define MAX_KEYS 300
@@ -63,16 +65,28 @@ bool j1Input::PreUpdate()
 		if (keys[i] == 1)
 		{
 			if (keyboard[i] == KEY_IDLE)
+			{
 				keyboard[i] = KEY_DOWN;
+				App->input_manager->SendInputEvent(i, INPUT_STATE::INPUT_DOWN);
+			}
 			else
+			{
 				keyboard[i] = KEY_REPEAT;
+				App->input_manager->SendInputEvent(i, INPUT_STATE::INPUT_REPEAT);
+			}
 		}
 		else
 		{
 			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			{
 				keyboard[i] = KEY_UP;
+				App->input_manager->SendInputEvent(i, INPUT_STATE::INPUT_UP);
+			}
 			else
+			{
 				keyboard[i] = KEY_IDLE;
+				App->input_manager->SendInputEvent(i, INPUT_STATE::INPUT_NONE);
+			}
 		}
 	}
 

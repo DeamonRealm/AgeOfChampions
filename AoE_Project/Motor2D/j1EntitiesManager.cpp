@@ -43,8 +43,50 @@ void j1EntitiesManager::Enable()
 {
 	active = true;
 
-	//Load Civilization Test
-	LoadCivilization("Teutons.xml");
+	j1Timer time;
+	time.Start();
+
+	//Load Civilization Animations --------------
+	//Load civilization data from loaded folder
+	LOG("---- Loading %s...", "Teutons.xml");
+	std::string load_folder = name + "/" + "Teutons.xml";
+	pugi::xml_document civilization_data;
+	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
+	{
+		LOG("Civilization animations load error!");
+		return;
+	}
+
+	//Get Civilization name
+	std::string civ_name = civilization_data.first_child().first_attribute().as_string();
+	//Boolean to check the correct file loads
+	bool ret = true;
+	//Load civilization units list
+	pugi::xml_node unit_node = civilization_data.first_child().child("units").first_child();
+	while (unit_node != NULL)
+	{
+		if (!ret)break;
+		ret = App->animator->LoadUnitBlock(unit_node.attribute("xml").as_string());
+		unit_node = unit_node.next_sibling();
+	}
+	//Load civilization buildings list
+	pugi::xml_node building_node = civilization_data.child("data").child("buildings").first_child();
+	while (building_node != NULL)
+	{
+		if (!ret)break;
+		ret = App->animator->LoadBuildingBlock(building_node.attribute("xml").as_string());
+		building_node = building_node.next_sibling();
+	}
+	//Load civilization resources
+	pugi::xml_node resource_node = civilization_data.first_child().child("resources").first_child();
+	if (resource_node != NULL)ret = App->animator->LoadResourceBlock(resource_node.attribute("xml").as_string());
+	else LOG("Error loading civilization Resources");
+	// ------------------------------------------
+
+	//Clean loaded xml
+	civilization_data.reset();
+
+	LOG("---- %s loaded in %.3f", "Teutons.xml", time.ReadSec());
 }
 
 void j1EntitiesManager::Disable()
@@ -1543,56 +1585,6 @@ void j1EntitiesManager::GetExperienceFromUnit(int exp, DIPLOMACY diplomacy)
 }
 
 //Functionality =======================
-bool j1EntitiesManager::LoadCivilization(const char * folder)
-{
-	j1Timer time;
-	time.Start();
-
-	//Load Civilization Animations --------------
-	//Load civilization data from loaded folder
-	LOG("---- Loading %s...", folder);
-	std::string load_folder = name + "/" + folder;
-	pugi::xml_document civilization_data;
-	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
-	{
-		LOG("Civilization animations load error!");
-		return false;
-	}
-
-	//Get Civilization name
-	std::string civ_name = civilization_data.first_child().first_attribute().as_string();
-	//Boolean to check the correct file loads
-	bool ret = true;
-	//Load civilization units list
-	pugi::xml_node unit_node = civilization_data.first_child().child("units").first_child();
-	while (unit_node != NULL)
-	{
-		if (!ret)break;
-		ret = App->animator->LoadUnitBlock(unit_node.attribute("xml").as_string());
-		unit_node = unit_node.next_sibling();
-	}
-	//Load civilization buildings list
-	pugi::xml_node building_node = civilization_data.child("data").child("buildings").first_child();
-	while (building_node != NULL)
-	{
-		if (!ret)break;
-		ret = App->animator->LoadBuildingBlock(building_node.attribute("xml").as_string());
-		building_node = building_node.next_sibling();
-	}
-	//Load civilization resources
-	pugi::xml_node resource_node = civilization_data.first_child().child("resources").first_child();
-	if (resource_node != NULL)ret = App->animator->LoadResourceBlock(resource_node.attribute("xml").as_string());
-	else LOG("Error loading civilization Resources");
-	// ------------------------------------------
-
-	//Clean loaded xml
-	civilization_data.reset();
-
-	LOG("---- %s loaded in %.3f", folder, time.ReadSec());
-
-	return ret;
-}
-
 Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool push_in_list)
 {
 	Unit* new_unit = nullptr;

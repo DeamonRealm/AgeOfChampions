@@ -34,6 +34,7 @@ class j1Player;
 class j1AI;
 class j1Pathfinding;
 class j1FogOfWar;
+class j1InputManager;
 
 class j1App
 {
@@ -103,6 +104,7 @@ public:
 	// Modules
 	j1Window*			win = NULL;
 	j1Input*			input = NULL;
+	j1InputManager*		input_manager = NULL;
 	j1Render*			render = NULL;
 	j1Textures*			tex = NULL;
 	j1Audio*			audio = NULL;
@@ -122,6 +124,7 @@ public:
 	j1AI*				AI = NULL;
 	j1Pathfinding*		pathfinding = NULL;
 	j1FogOfWar*			fog_of_war = NULL;
+
 
 	// Add a new module to handle
 	void		AddModule(j1Module* module);

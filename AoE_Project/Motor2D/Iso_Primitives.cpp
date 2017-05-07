@@ -515,7 +515,7 @@ void Triangle::CalculateVertex()
 	A_vector.y = mid_vector.x * sin((width_angle * 0.5)) + mid_vector.y * cos((width_angle * 0.5));
 	A_vector.Norm();
 	A_vector *= length;
-	//A_vector.y *= -sin(x_angle);
+	A_vector.y *= -sin(x_angle);
 
 	//Calculate 0 -> B vector
 	fPoint B_vector;
@@ -523,7 +523,7 @@ void Triangle::CalculateVertex()
 	B_vector.y = mid_vector.x * sin((-width_angle * 0.5)) + mid_vector.y * cos((-width_angle * 0.5));
 	B_vector.Norm();
 	B_vector *= length;
-	//B_vector.y *= -sin(x_angle);
+	B_vector.y *= -sin(x_angle);
 
 	//Calculate v_A vertex with vector 0 -> A
 	v_A.x = position.x + A_vector.x;

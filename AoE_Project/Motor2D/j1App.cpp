@@ -6,6 +6,7 @@
 
 #include "j1Window.h"
 #include "j1Input.h"
+#include "j1InputManager.h"
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
@@ -34,6 +35,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	PERF_START(ptimer);
 
 	input = new j1Input();
+	input_manager = new j1InputManager();
 	win = new j1Window();
 	render = new j1Render();
 	tex = new j1Textures();
@@ -59,6 +61,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(fs);
 	AddModule(input);
+	AddModule(input_manager);
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
@@ -84,10 +87,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// render last to swap buffer
 	AddModule(render);
 
-	
 
 	PERF_PEEK(ptimer);
-
 }
 
 // Destructor
@@ -578,6 +579,7 @@ bool j1App::SavegameNow()
 
 bool j1App::LoadDefaultGame()
 {
+	j1Timer time_to_start;
 	//Clean all the previous data
 	map->Disable();
 	map->Enable();
@@ -593,7 +595,8 @@ bool j1App::LoadDefaultGame()
 	action_manager->Enable();
 	buff_manager->Disable();
 	buff_manager->Enable();
-
+	LOG("%.4f", time_to_start.ReadSec());
+	time_to_start.Start();
 	bool ret = true;
 	std::string folder = "scene/default_scene.xml";
 	pugi::xml_document scene_doc;
@@ -632,6 +635,8 @@ bool j1App::LoadDefaultGame()
 	//Temporal
 	App->AI->Disable();
 	App->AI->Enable();
+
+	LOG("%.4f", time_to_start.ReadSec());
 
 	return ret;
 }

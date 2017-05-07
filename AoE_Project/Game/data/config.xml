@@ -36,6 +36,13 @@
     <fullscreen_window value="false"/>
   </window>
 
+  <input_manager>
+    <key id ="F1" event ="enti_debug"/>
+    <key id ="F2" event ="map_debug"/>
+    <key id ="F3" event ="generate_villager"/>
+    <key id ="T"  event ="generate_tree"/>
+  </input_manager>
+  
   <file_system>
     <path>data</path>
   </file_system>
