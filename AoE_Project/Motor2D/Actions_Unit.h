@@ -202,7 +202,11 @@ public:
 	//Functionality ---------
 	bool Execute()
 	{
-		if (target == nullptr) return true;
+		if (target->GetLife() == 0)
+		{
+			((Unit*)actor)->SetAction(IDLE);
+			App->animator->UnitPlay((Unit*)actor);
+		}
 
 		//Actor attack the target
 		return ((Unit*)actor)->AttackUnit(target);
@@ -242,7 +246,12 @@ public:
 	//Functionality ---------
 	bool Execute()
 	{
-		if (target == nullptr || (target) == nullptr) return true;
+		if (target == nullptr || actor == nullptr) return true;
+		if (target->GetLife() == 0)
+		{
+			((Unit*)actor)->SetAction(IDLE);
+			App->animator->UnitPlay((Unit*)actor);
+		}
 
 		//Actor attack the target
 		return ((Unit*)actor)->AttackBuilding(target);
@@ -274,8 +283,11 @@ public:
 	//Functionality ---------
 	bool Activation()
 	{
-		if(App->render->IsOnCamera(actor->GetPositionRounded()))
+		if (App->render->IsOnCamera(actor->GetPositionRounded()))
+		{
 			App->sound->PlayFXAudio(DEATH_SOUND);
+		}
+
 		return true;
 	}
 

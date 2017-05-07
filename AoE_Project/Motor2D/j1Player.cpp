@@ -154,7 +154,7 @@ bool j1Player::PreUpdate()
 		//Generate Villager in the mouse coordinates
 		if (App->input_manager->GetEvent(GENERATE_VILLAGER) == INPUT_DOWN)
 		{
-			Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER, ENEMY);
+			Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER, ALLY);
 			new_unit->SetPosition((float)x - App->render->camera.x,(float) y - App->render->camera.y);
 
 			game_panel->IncressPopulation(1, false);

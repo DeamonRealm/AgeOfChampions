@@ -336,7 +336,7 @@ bool j1EntitiesManager::Draw()
 	{
 		pos = resources_vec[k]->GetPositionRounded();
 		pos = App->map->WorldToMap(pos.x, pos.y);
-		if (App->fog_of_war->GetFogID(pos.x, pos.y) != DARK_FOG)resources_vec[k]->Draw(App->debug_mode);
+		if (App->fog_of_war->GetFogID(pos.x, pos.y) != DARK_FOG || App->map_debug_mode)resources_vec[k]->Draw(App->debug_mode);
 	}
 
 	//Draw all buildings

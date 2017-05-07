@@ -622,7 +622,7 @@ bool Unit::Repath(std::vector<iPoint>*& path, const iPoint & destination)
 	new_path = App->pathfinding->SimpleAstar(GetPositionRounded(), new_destination);
 	if (new_destination == iPoint(-1, -1)|| !App->pathfinding->IsWalkable(App->map->WorldToMap(new_destination.x, new_destination.y)))
 	{
-		LOG("NOOOOOO");
+		//LOG("NOOOOOO");
 	}
 	if (new_path != nullptr) {
 
@@ -1718,7 +1718,7 @@ void Unit::SetPosition(float x, float y, bool insert)
 
 	//Check unit fog
 	SDL_Point point = { pos.x,pos.y };
-	int dist_mult = 10;
+	int dist_mult = 5;
 	if (SDL_PointInRect(&point, &App->render->camera_viewport))dist_mult = 2;
 	if (entity_diplomacy == ALLY && (this->distance_walked.x == 0.00f || abs(distance_walked.x) + abs(distance_walked.y) > App->fog_of_war->alpha_cell_size * dist_mult))App->fog_of_war->CheckEntityFog(this);
 
@@ -2458,7 +2458,7 @@ bool Building::CheckZone(int x, int y)
 {
 	//Check the construction tiles
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
-	if (App->fog_of_war->GetFogID(world_coords.x, world_coords.y) == DARK_FOG)return false;
+	if (App->fog_of_war->GetFogID(world_coords.x, world_coords.y) == DARK_FOG && entity_diplomacy == ALLY)return false;
 
 	switch (building_type)
 	{
