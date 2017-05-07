@@ -515,9 +515,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 					if (target != iPoint(-1, -1))
 					{
 						if (!Repath(path, target))
-							return true;
-
-						
+							return true;						
 					}
 					else
 					{

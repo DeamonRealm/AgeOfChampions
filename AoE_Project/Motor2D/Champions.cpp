@@ -413,6 +413,8 @@ void Warrior::SaveAsDef(pugi::xml_node & node)
 	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
+	
+	/*buff rad*/	node.append_attribute("buff_area_rad") = buff_area.GetRad();
 	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
 	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
@@ -956,6 +958,7 @@ void Wizard::SaveAsDef(pugi::xml_node & node)
 	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
+	/*buff rad*/	node.append_attribute("buff_area_rad") = buff_area.GetRad();
 	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
 	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();

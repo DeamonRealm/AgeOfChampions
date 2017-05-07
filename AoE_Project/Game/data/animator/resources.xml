@@ -25,27 +25,27 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <!--Tree 1-->
     <element>
       <sprite n="Arboles/000_ShadowTree1.bmp" x="32" y="1" z="0" w="119" h="143" pX="0.436975" pY="0.993007"/>
-      <sprite n="Arboles/000_ShadowTree1Shadow.bmp" x="153" y="1" z="30" w="101" h="20" opacity="50" pX="0.623762" pY="0.95"/>
+      <sprite n="Arboles/000_ShadowTree1Shadow.bmp" x="153" y="1" z="30" w="101" h="20" opacity="100" pX="0.623762" pY="0.95"/>
     </element>
     <!--Tree 2-->
     <element>
       <sprite n="Arboles/000_ShadowTree2.bmp" x="256" y="1" z="0" w="110" h="165" pX="0.481818" pY="1"/>
-      <sprite n="Arboles/000_ShadowTree2Shadow.bmp" x="368" y="1" z="30" w="89" h="20" opacity="50" pX="0.685393" pY="0.8"/>
+      <sprite n="Arboles/000_ShadowTree2Shadow.bmp" x="368" y="1" z="30" w="89" h="20" opacity="100" pX="0.685393" pY="0.8"/>
     </element>
     <!--Tree 3-->
     <element>
       <sprite n="Arboles/000_ShadowTree3.bmp" x="459" y="1" z="0" w="107" h="162" pX="0.392523" pY="1"/>
-      <sprite n="Arboles/000_ShadowTree3Shadow.bmp" x="568" y="1" z="30" w="101" h="23" opacity="50" pX="0.673267" pY="0.73913"/>
+      <sprite n="Arboles/000_ShadowTree3Shadow.bmp" x="568" y="1" z="30" w="101" h="23" opacity="100" pX="0.673267" pY="0.73913"/>
     </element>
     <!--Tree 5-->
     <element>
       <sprite n="Arboles/000_ShadowTree5.bmp" x="228" y="168" z="0" w="106" h="172" pX="0.45283" pY="0.994186"/>
-      <sprite n="Arboles/000_ShadowTree5Shadow.bmp" x="336" y="168" z="30" w="101" h="37" opacity="50" pX="0.712871" pY="0.72973"/>
+      <sprite n="Arboles/000_ShadowTree5Shadow.bmp" x="336" y="168" z="30" w="101" h="37" opacity="100" pX="0.712871" pY="0.72973"/>
     </element>
     <!--Tree 10-->
     <element>
       <sprite n="Arboles/000_ShadowTree10.bmp" x="652" y="348" z="0" w="110" h="129" pX="0.472727" pY="0.984496"/>
-      <sprite n="Arboles/000_ShadowTree10Shadow.bmp" x="1" y="532" z="30" w="98" h="23" opacity="50" pX="0.663265" pY="0.826087"/>
+      <sprite n="Arboles/000_ShadowTree10Shadow.bmp" x="1" y="532" z="30" w="98" h="23" opacity="100" pX="0.663265" pY="0.826087"/>
     </element>
   </resource>
   
