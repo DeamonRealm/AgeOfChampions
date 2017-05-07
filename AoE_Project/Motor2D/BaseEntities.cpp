@@ -546,36 +546,8 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 				collisions++;
 				break;
 			case FUTURE_COLLISION_MOVE:
-				/*
-				if (other_path_size != 0) {
-				if (future_position == other_unit->future_position && future_position != iPoint(-1, -1)) {
-				if (other_path_size <= 2 && path_size <= 2) {
-				if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-				other_unit->Repath(*(other_path->begin()));
-				else
-				Repath(*(path->begin()));
-
-				}
-				else
-				{
-				if (mutable_speed == 0 && other_unit->mutable_speed == 0)
-				{
-				if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-				other_unit->mutable_speed -= 0.2;
-				else
-				mutable_speed -= 0.2;
-				}
-				}
-
-				}
-				}
-				collisions++;
-				*/
+				
 				break;
-
-
-
-
 			}
 		}
 		if (collisions == 0 && mutable_speed != 0.0f) {
@@ -619,6 +591,18 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	return false;
 }
 
+iPoint Unit::Spawn(const iPoint& position)
+{
+	int radius = GetSoftCollider().GetRad();
+	int doble_radius = radius * 2;
+	iPoint unit_position = position;
+	iPoint unit_map_position = App->map->WorldToMap(unit_position.x, unit_position.y);
+	if (UnitHere(unit_position, doble_radius) || !App->pathfinding->IsWalkable(unit_map_position) )
+		unit_position=FindSpawnCell(unit_position);
+
+	return unit_position;
+}
+
 bool Unit::Repath(std::vector<iPoint>*& path, const iPoint & destination)
 {
 	iPoint new_destination = FindWalkableCell(destination);
@@ -639,6 +623,8 @@ bool Unit::Repath(std::vector<iPoint>*& path, const iPoint & destination)
 	return false;
 
 }
+
+
 
 void Unit::CorrectPath(std::vector<iPoint>*& path)
 {
@@ -755,7 +741,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 0:
 				cell_1.create(pos.x + radius, pos.y);
 				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map1) || !UnitHere(cell_1, doble_radius))
 				{
 					direction_type = EAST;
 					App->animator->UnitPlay(this);
@@ -768,7 +754,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 1:
 				cell_2.create(pos.x - radius, pos.y);
 				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map2) || !UnitHere(cell_2, doble_radius))
 				{
 					direction_type = WEST;
 					App->animator->UnitPlay(this);
@@ -794,7 +780,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 0:
 				cell_1.create(pos.x + radius, pos.y + radius);
 				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map1) || !UnitHere(cell_1, doble_radius))
 				{
 					direction_type = SOUTH_EAST;
 					App->animator->UnitPlay(this);
@@ -807,7 +793,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 
 				cell_2.create(pos.x - radius, pos.y - radius);
 				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map2) || !UnitHere(cell_2, doble_radius))
 				{
 					direction_type = NORTH_WEST;
 					App->animator->UnitPlay(this);
@@ -829,7 +815,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 0:
 				cell_1.create(pos.x, pos.y + radius);
 				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map1) || !UnitHere(cell_1, doble_radius))
 				{
 					direction_type = SOUTH;
 					App->animator->UnitPlay(this);
@@ -842,7 +828,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 1:
 				cell_2.create(pos.x, pos.y - radius);
 				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map2) || !UnitHere(cell_2, doble_radius))
 				{
 					direction_type = NORTH;
 					App->animator->UnitPlay(this);
@@ -864,7 +850,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 0:
 				cell_1.create(pos.x + radius, pos.y - radius);
 				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map1) || !UnitHere(cell_1, doble_radius))
 				{
 					direction_type = NORTH_EAST;
 					App->animator->UnitPlay(this);
@@ -877,7 +863,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 1:
 				cell_2.create(pos.x - radius, pos.y + radius);
 				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map2) || !UnitHere(cell_2, doble_radius))
 				{
 					direction_type = SOUTH_WEST;
 					App->animator->UnitPlay(this);
@@ -899,7 +885,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 0:
 				cell_1.create(pos.x + radius, pos.y);
 				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map1) || !UnitHere(cell_1, doble_radius))
 				{
 					direction_type = EAST;
 					App->animator->UnitPlay(this);
@@ -911,7 +897,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 1:
 				cell_2.create(pos.x - radius, pos.y);
 				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map2) || !UnitHere(cell_2, doble_radius))
 				{
 					direction_type = WEST;
 					App->animator->UnitPlay(this);
@@ -934,7 +920,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 0:
 				cell_1.create(pos.x + radius, pos.y + radius);
 				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map1) || !UnitHere(cell_1, doble_radius))
 				{
 					direction_type = SOUTH_EAST;
 					App->animator->UnitPlay(this);
@@ -946,7 +932,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 1:
 				cell_2.create(pos.x - radius, pos.y - radius);
 				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map2) || !UnitHere(cell_2, doble_radius))
 				{
 					direction_type = NORTH_WEST;
 					App->animator->UnitPlay(this);
@@ -968,7 +954,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 0:
 				cell_1.create(pos.x, pos.y + radius);
 				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map1) || !UnitHere(cell_1, doble_radius))
 				{
 					direction_type = SOUTH;
 					App->animator->UnitPlay(this);
@@ -980,7 +966,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 1:
 				cell_2.create(pos.x, pos.y - radius);
 				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map2) || !UnitHere(cell_2, doble_radius))
 				{
 					direction_type = NORTH;
 					App->animator->UnitPlay(this);
@@ -1002,7 +988,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 0:
 				cell_1.create(pos.x + radius, pos.y - radius);
 				cell_map1 = App->map->WorldToMap(cell_1.x, cell_1.y);
-				if (App->pathfinding->IsWalkable(cell_map1) && !UnitHere(cell_1, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map1) || !UnitHere(cell_1, doble_radius))
 				{
 					direction_type = NORTH_EAST;
 					App->animator->UnitPlay(this);
@@ -1014,7 +1000,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			case 1:
 				cell_2.create(pos.x - radius, pos.y + radius);
 				cell_map2 = App->map->WorldToMap(cell_2.x, cell_2.y);
-				if (App->pathfinding->IsWalkable(cell_map2) && !UnitHere(cell_2, doble_radius))
+				if (App->pathfinding->IsWalkable(cell_map2) || !UnitHere(cell_2, doble_radius))
 				{
 					direction_type = SOUTH_WEST;
 					App->animator->UnitPlay(this);
@@ -1049,80 +1035,90 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 			return cell_2;
 		}
 	}
-	/*
+}
+
+iPoint Unit::FindSpawnCell(const iPoint & center)
+{
+	iPoint cell;
+	iPoint pos = center;
+	iPoint cell_map;
+
+	int radius = GetSoftCollider().GetRad();
+	int doble_radius = radius * 2;
+	iPoint unit_location = this->GetPositionRounded();
+	int i = 1;
 	while (i <= 5) {
-	// south
-	cell.create(pos.x, pos.y + doble_radius*i);
-	cell_map = App->map->WorldToMap(cell.x, cell.y);
+		// south
+		cell.create(pos.x, pos.y + radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-	{
-	return cell;
-	}
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
 
-	// north
-	cell.create(pos.x, pos.y - doble_radius*i);
-	cell_map = App->map->WorldToMap(cell.x, cell.y);
+		// north
+		cell.create(pos.x, pos.y - radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-	{
-	return cell;
-	}
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
 
-	// east
-	cell.create(pos.x + doble_radius*i, pos.y);
-	cell_map = App->map->WorldToMap(cell.x, cell.y);
+		// east
+		cell.create(pos.x + radius*i, pos.y);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-	{
-	return cell;
-	}
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
 
-	// west
-	cell.create(pos.x - doble_radius*i, pos.y);
-	cell_map = App->map->WorldToMap(cell.x, cell.y);
+		// west
+		cell.create(pos.x - radius*i, pos.y);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-	{
-	return cell;
-	}
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
 
-	// south-east
-	cell.create(pos.x + doble_radius*i, pos.y + doble_radius*i);
-	cell_map = App->map->WorldToMap(cell.x, cell.y);
+		// south-east
+		cell.create(pos.x + radius*i, pos.y + radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-	{
-	return cell;
-	}
-	// south-west
-	cell.create(pos.x - doble_radius*i, pos.y + doble_radius*i);
-	cell_map = App->map->WorldToMap(cell.x, cell.y);
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+		// south-west
+		cell.create(pos.x - radius*i, pos.y + radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-	{
-	return cell;
-	}
-	// north-east
-	cell.create(pos.x + doble_radius*i, pos.y - doble_radius*i);
-	cell_map = App->map->WorldToMap(cell.x, cell.y);
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+		// north-east
+		cell.create(pos.x + radius*i, pos.y - radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-	{
-	return cell;
-	}
-	// north-west
-	cell.create(pos.x - doble_radius*i, pos.y - doble_radius*i);
-	cell_map = App->map->WorldToMap(cell.x, cell.y);
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+		// north-west
+		cell.create(pos.x - radius*i, pos.y - radius*i);
+		cell_map = App->map->WorldToMap(cell.x, cell.y);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
-	{
-	return cell;
-	}
-	i++;
+		if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+		{
+			return cell;
+		}
+		i++;
 	}
 	return iPoint(-1, -1);
-	*/
 }
 
 iPoint Unit::FindWalkableAdjacent(const iPoint & center)

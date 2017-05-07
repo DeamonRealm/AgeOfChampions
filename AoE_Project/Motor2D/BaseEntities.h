@@ -423,11 +423,16 @@ public:
 
 	//Actions ---------------
 	bool					Move(std::vector<iPoint>*& path, const iPoint& target = { -1,-1 });
+	iPoint					Spawn( const iPoint& target = { -1,-1 });
+
 	bool					Repath(std::vector<iPoint>*& path, const iPoint & destination);
+
 	void					CorrectPath(std::vector<iPoint>*& path);
 	iPoint					NextGoal(std::vector<iPoint>* path);
 	void					NewPosition(const iPoint& goal, float& position_x, float& position_y);
 	iPoint					FindWalkableCell(const iPoint& center);
+	iPoint					FindSpawnCell(const iPoint& center);
+
 	bool					UnitHere(const iPoint& destination, int radius);
 	iPoint					FindWalkableAdjacent(const iPoint& center);
 

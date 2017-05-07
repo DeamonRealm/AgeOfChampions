@@ -119,17 +119,20 @@ public:
 		if (timer.Read() >= time)
 		{
 			iPoint spawn_point = ((ProductiveBuilding*)actor)->GetSpawnPoint();
+
+		
+
 			int x = ((ProductiveBuilding*)actor)->GetSpawnPoint().x + actor->GetPosition().x;
 			int y = ((ProductiveBuilding*)actor)->GetSpawnPoint().y + actor->GetPosition().y;
+			iPoint position = new_unit->Spawn(iPoint(x,y));
 			App->entities_manager->AddUnit(new_unit);
-			new_unit->SetPosition((float)x, (float)y);
+			new_unit->SetPosition((float)position.x, (float)position.y);
 			App->animator->UnitPlay(new_unit);
 			if (diplomacy == ALLY)App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
 
-			new_unit->AddAction(App->action_manager->MoveAction(new_unit, iPoint(spawn_point.x + actor->GetPosition().x + 1, spawn_point.y + actor->GetPosition().y + 1)), TASK_CHANNELS::PRIMARY);
 
 			//Add an autoattack passive action
-			new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
+			new_unit->AddAction(App->action_manager->AutoAttackAction(new_unit), TASK_CHANNELS::PASSIVE);
 
 
 			//Add it to the AI units list if it is an enemy
