@@ -1181,6 +1181,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 	//Unit Metrics ----------
 	/*Max Life*/		new_def->SetMaxLife(unit_node->attribute("max_life").as_uint());
 	/*Life*/			new_def->SetLife(new_def->GetMaxLife());
+	/*Life Pos*/		new_def->SetLifeBarPosition(unit_node->attribute("life_pos_x").as_int(0), unit_node->attribute("life_pos_y").as_int(0));
 	/*Speed*/			new_def->SetSpeed(unit_node->attribute("speed").as_float());
 	/*Attack Delay*/	new_def->SetAttackDelay(unit_node->attribute("attack_delay").as_uint());
 	/*Attack Points*/	new_def->SetAttackHitPoints(unit_node->attribute("attack_hitpoints").as_uint());
@@ -1431,6 +1432,7 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	//Building Stats --------
 	/*Max Life*/		new_def->SetMaxLife(building_node->attribute("max_life").as_uint());
 						new_def->SetLife(new_def->GetMaxLife());
+	/*Life Pos*/		new_def->SetLifeBarPosition(building_node->attribute("life_pos_x").as_int(0), building_node->attribute("life_pos_y").as_int(0));
 
 
 	/*Units Capacity*/	((ProductiveBuilding*)new_def)->SetUnitsCapacity(building_node->attribute("units_capacity").as_uint());
@@ -2218,6 +2220,7 @@ bool j1EntitiesManager::UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY d
 				else target = (Villager*)App->entities_manager->enemy_units_defs[k];
 
 				target->SetMaxLife(target->GetMaxLife() + 15);
+				target->SetLife(target->GetLife() + 15);
 				target->SetDefense(target->GetDefense() + 2);
 				break;
 			}
@@ -2228,6 +2231,7 @@ bool j1EntitiesManager::UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY d
 			if (unit._Ptr->_Myval->GetUnitType() == VILLAGER && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
 			{
 				unit._Ptr->_Myval->SetMaxLife(unit._Ptr->_Myval->GetMaxLife() + 15);
+				unit._Ptr->_Myval->SetLife(unit._Ptr->_Myval->GetLife() + 15);
 				unit._Ptr->_Myval->SetDefense(unit._Ptr->_Myval->GetDefense() + 2);
 			}
 			unit++;

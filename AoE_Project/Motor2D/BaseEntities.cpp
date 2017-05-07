@@ -25,7 +25,7 @@ Entity::Entity() :name(""), action_worker()
 }
 
 Entity::Entity(const Entity& copy) : name(copy.name), position(copy.position), entity_type(copy.entity_type), entity_diplomacy(copy.entity_diplomacy), vision(copy.vision), selection_rect(copy.selection_rect),
-icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), current_animation(copy.current_animation), action_worker(), blit_color(copy.blit_color)
+icon_rect(copy.icon_rect), max_life(copy.max_life), life(copy.life), life_position(copy.life_position), current_animation(copy.current_animation), action_worker(), blit_color(copy.blit_color)
 {
 
 }
@@ -189,6 +189,11 @@ void Entity::SetMaxLife(uint full_life_val)
 void Entity::SetLife(uint life_val)
 {
 	life = life_val;
+}
+
+void Entity::SetLifeBarPosition(int x, int y)
+{
+	life_position = { x,y };
 }
 
 void Entity::SetAnimation(Animation * anim)
@@ -361,6 +366,8 @@ void Unit::SaveAsDef(pugi::xml_node & node)
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
 	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
+	/*Life Pos Y*/	node.append_attribute("life_pos_y") = life_position.y;
 	/*Speed*/		node.append_attribute("speed") = speed;
 	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
@@ -391,6 +398,8 @@ bool Unit::Draw(bool debug)
 	if (selected)
 	{
 		ret = mark.Draw();
+		App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36, 2 }, 255, 0, 0);
+		App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36 * life / (int)max_life, 2 }, 0, 255, 0);
 	}
 
 	if (debug) {
@@ -1888,6 +1897,7 @@ void Unit::SetUpgrade(Unit * upgraded)
 		life = upgraded->GetLife();
 	}
 	max_life = upgraded->GetMaxLife();
+	life_position = upgraded->life_position;
 
 	// Unit
 	unit_type = upgraded->GetUnitType();
@@ -2364,6 +2374,7 @@ void Building::ResetFogAround()
 
 void Building::DiscoverFogAround()
 {
+	if (entity_diplomacy != ALLY) return;
 	//Calculate the zone that have to be discovered
 	Circle zone = vision;
 	zone.SetRad(width_in_tiles * App->map->data.tile_width);
@@ -2431,6 +2442,8 @@ void Building::SaveAsDef(pugi::xml_node & node)
 	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
 
 	/*Max Life*/		node.append_attribute("max_life") = max_life;
+	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
+	/*Life Pos Y*/	node.append_attribute("life_pos_y") = life_position.y;
 	/*Units Capacity*/	node.append_attribute("units_capacity") = ((ProductiveBuilding*)this)->GetUnitsCapacity();
 	/*Units Spawn X*/	node.append_attribute("units_spawn_x") = ((ProductiveBuilding*)this)->GetSpawnPoint().x;
 	/*Units Spawn Y*/	node.append_attribute("units_spawn_y") = ((ProductiveBuilding*)this)->GetSpawnPoint().y;
@@ -2560,6 +2573,8 @@ bool Building::Draw(bool debug)
 	if (selected)
 	{
 		ret = mark.Draw();
+		App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 72, 2 }, 255, 0, 0);
+		App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 72 * life / (int)max_life, 2 }, 0, 255, 0);
 	}
 	if (debug)
 	{
@@ -2601,15 +2616,10 @@ bool Building::Draw(bool debug)
 bool Building::Update()
 {
 	action_worker.Update();
-	if (!fog_discovered)
+	if (!fog_discovered && building_type == ALLY)
 	{
-		iPoint map_loc = App->map->WorldToMap(position.x, position.y);
-		if (App->fog_of_war->GetFogID(map_loc.x, map_loc.y) != DARK_FOG)
-		{
-			DiscoverFogAround();
-			fog_discovered = true;
-		}
-
+		DiscoverFogAround();
+		fog_discovered = true;
 	}
 	return true;
 }
@@ -2791,6 +2801,7 @@ void Building::SetUpgrade(Building * new_building)
 		life = new_building->GetLife();
 	}
 	max_life = new_building->GetMaxLife();
+	life_position = new_building->life_position;
 
 	building_type = new_building->GetBuildingType();
 

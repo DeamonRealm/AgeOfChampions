@@ -58,6 +58,8 @@ void Villager::SaveAsDef(pugi::xml_node & node)
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
 	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
+	/*Life Pos Y*/	node.append_attribute("life_pos_y") = life_position.y;
 	/*Speed*/		node.append_attribute("speed") = speed;
 	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;

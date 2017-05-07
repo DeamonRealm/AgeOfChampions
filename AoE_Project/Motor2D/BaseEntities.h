@@ -261,6 +261,7 @@ protected:
 	//Life -------------
 	uint			max_life = 0;
 	int				life = 0;
+	iPoint			life_position = { 0,0 };
 	//Visual -----------
 	Animation*		current_animation = nullptr;
 	SDL_Color		blit_color = { 255,255,255,255 };
@@ -316,6 +317,7 @@ public:
 	void			SetRenderArea(const Circle& new_render_area);
 	void			SetMaxLife(uint full_life_val);
 	void			SetLife(uint life_val);
+	void			SetLifeBarPosition(int x, int y);
 	void			SetAnimation(Animation* anim);
 	void			SetFlipSprite(bool flip);
 	void			SetSelectionRect(const SDL_Rect& rect);

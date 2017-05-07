@@ -419,6 +419,8 @@ void Warrior::SaveAsDef(pugi::xml_node & node)
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
 	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
+	/*Life Pos Y*/	node.append_attribute("life_pos_y") = life_position.y;
 	/*Speed*/		node.append_attribute("speed") = speed;
 	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
@@ -491,6 +493,8 @@ bool Warrior::Draw(bool debug)
 			hard_collider.Draw();
 			vision.Draw();
 			buff_area.Draw();
+			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36, 2 }, 255, 0, 0);
+			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36 * life / (int)max_life, 2 }, 0, 255, 0);
 		}
 	}
 
@@ -960,6 +964,8 @@ void Wizard::SaveAsDef(pugi::xml_node & node)
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
 	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
+	/*Life Pos Y*/	node.append_attribute("life_pos_y") = life_position.y;
 	/*Speed*/		node.append_attribute("speed") = speed;
 	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
@@ -1044,6 +1050,8 @@ bool Wizard::Draw(bool debug)
 			hard_collider.Draw();
 			vision.Draw();
 			buff_area.Draw();
+			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36, 2 }, 255, 0, 0);
+			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36 * life / (int)max_life, 2 }, 0, 255, 0);
 		}
 	}
 
@@ -1673,6 +1681,8 @@ void Hunter::SaveAsDef(pugi::xml_node & node)
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
 
 	/*Max Life*/	node.append_attribute("max_life") = max_life;
+	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
+	/*Life Pos Y*/	node.append_attribute("life_pos_y") = life_position.y;
 	/*Speed*/		node.append_attribute("speed") = speed;
 	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
@@ -1783,6 +1793,8 @@ bool Hunter::Draw(bool debug)
 			vision.Draw();
 			buff_area.Draw();
 			area_attack_skill_B_lvl_3.Draw();
+			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36, 2 }, 255, 0, 0);
+			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36 * life / (int)max_life, 2 }, 0, 255, 0);
 		}
 	}
 

@@ -173,13 +173,12 @@ bool j1Player::PreUpdate()
 		//Generate a Militia unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		{
-			Building* test_building = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER, ENEMY);
+			/*Building* test_building = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER, ENEMY);
 			test_building->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
-
-			/*
-			Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ALLY);
-			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 			*/
+			
+			Unit* new_unit = App->entities_manager->GenerateUnit(PALADIN, ALLY);
+			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 		//Generate a Arbalest unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
