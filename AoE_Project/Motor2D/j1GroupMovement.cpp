@@ -56,9 +56,11 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get, int x, int y, boo
 	std::vector<iPoint>* second_destination = nullptr;
 	//	first_destination = CreateFirstDestination();
 	second_destination = LeaderPath();
+	if (second_destination == nullptr) return;
 	//second_destination->insert(second_destination->end(), first_destination->begin(), first_destination->end());
 	//push action
 	lead->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
+	
 	if (active)App->pathfinding->PushPath((Unit*)lead, destination, iPoint(-1, -1), false, PRIMARY);
 	//	lead->AddAction((Action*)App->action_manager->MoveAction(second_destination, (Unit*)lead), TASK_CHANNELS::PRIMARY);
 	else App->pathfinding->PushPath((Unit*)lead, destination, iPoint(-1, -1), false, SECONDARY);

@@ -43,7 +43,12 @@ bool j1Pathfinding::PreUpdate()
 			if (current_unit.unit->GetAction() != DIE || current_unit.unit->GetAction() != DISAPPEAR)
 			{
 				std::vector<iPoint>* path = SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
-				if (path == nullptr) continue;
+				if (path == nullptr)
+				{
+					unit_it++;
+					to_path.pop_front();
+					continue;
+				}
 				if (current_unit.priority)
 					current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target));
 				else
@@ -104,9 +109,14 @@ bool j1Pathfinding::CheckBoundaries(const iPoint & pos) const
 }
 
 uchar j1Pathfinding::GetTileAt(const iPoint & pos) const
-{
+{	
+	if (pos.y > 121 || pos.y<0 || pos.x>=121 || pos.x < 0) 
+		return INVALID_WALK_CODE;
+	LOG("%i %i", pos.x, pos.y);
+
 	if (CheckBoundaries(pos))
 		return GetValueMap(pos.x, pos.y);
+	LOG("no %i %i", pos.x, pos.y);
 
 	return INVALID_WALK_CODE;
 }
