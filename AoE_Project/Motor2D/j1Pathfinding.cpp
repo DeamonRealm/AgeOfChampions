@@ -112,11 +112,11 @@ uchar j1Pathfinding::GetTileAt(const iPoint & pos) const
 {	
 	if (pos.y > 121 || pos.y<0 || pos.x>=121 || pos.x < 0) 
 		return INVALID_WALK_CODE;
-	LOG("%i %i", pos.x, pos.y);
+	//LOG("%i %i", pos.x, pos.y);
 
 	if (CheckBoundaries(pos))
 		return GetValueMap(pos.x, pos.y);
-	LOG("no %i %i", pos.x, pos.y);
+	//LOG("no %i %i", pos.x, pos.y);
 
 	return INVALID_WALK_CODE;
 }

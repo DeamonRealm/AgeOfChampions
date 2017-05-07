@@ -415,14 +415,18 @@ public:
 	{
 		if (target->GetLife() == 0)
 		{
-			//If resource is deplated execute a SaveResourceAction
-			Building* save_point = App->entities_manager->GetNearestBuilding(actor->GetPositionRounded(), TOWN_CENTER, actor->GetDiplomacy());
-			if (save_point != nullptr)
+			if (((Villager*)actor)->GetCurrentResources() > 0)
 			{
-				((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, save_point), TASK_CHANNELS::PRIMARY);
+				//If resource is deplated execute a SaveResourceAction
+				Building* save_point = App->entities_manager->GetNearestBuilding(actor->GetPositionRounded(), TOWN_CENTER, actor->GetDiplomacy());
+				if (save_point != nullptr)
+				{
+					((Villager*)actor)->AddAction((Action*)App->action_manager->SaveResourcesAction((Villager*)actor, save_point), TASK_CHANNELS::PRIMARY);
+				}
 			}
 
 			//Reset the animation
+			((Unit*)actor)->SetAction(IDLE);
 			App->animator->UnitPlay((Villager*)actor);
 			return true;
 		}

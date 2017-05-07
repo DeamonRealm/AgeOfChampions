@@ -2433,8 +2433,8 @@ void Building::SaveAsDef(pugi::xml_node & node)
 	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
-	/*Mark X*/	node.append_attribute("mark_x") = mark.GetPosition().x;
-	/*Mark Y*/	node.append_attribute("mark_y") = mark.GetPosition().y;
+	/*Mark X*/	node.append_attribute("mark_x") = mark.GetDisplacement().x;
+	/*Mark Y*/	node.append_attribute("mark_y") = mark.GetDisplacement().y;
 	/*Mark W*/	node.append_attribute("mark_w") = mark.GetWidth();
 
 	/*Interact X*/	node.append_attribute("interaction_area_x") = interact_area.GetPosition().x;
@@ -2462,11 +2462,31 @@ bool Building::CheckZone(int x, int y)
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
 	if (App->fog_of_war->GetFogID(world_coords.x, world_coords.y) == DARK_FOG)return false;
 
-	if (building_type != HOUSE_A && building_type != HOUSE_B && building_type != HOUSE_C && building_type != TOWN_CENTER)
+	switch (building_type)
+	{
+	case TOWN_CENTER:
+	case HOUSE_A:
+	case HOUSE_B:
+	case HOUSE_C:
+	case LUMBER_CAMP:
+	case MINING_CAMP:
+	case TOWN_CENTER_C:
+	case HOUSE_AI:
+	case HOUSE_BI:
+	case HOUSE_CI:
+		break;
+
+	default:
+		world_coords.x -= 1;
+		world_coords.y -= 1;
+		break;
+	}
+	
+	/*if (building_type != HOUSE_A && building_type != HOUSE_B && building_type != HOUSE_C && building_type != TOWN_CENTER)
 	{
 		world_coords.x -= 1;
 		world_coords.y -= 1;
-	}
+	}*/
 
 	if (App->map->CheckConstructionMap(world_coords, width_in_tiles + 1, height_in_tiles + 1))
 	{
@@ -2734,6 +2754,8 @@ void Building::OnlySetPosition(float x, float y)
 	{
 
 	case TOWN_CENTER:
+	case LUMBER_CAMP:
+	case MINING_CAMP:
 		pos.y -= App->map->data.tile_height * 0.5f;
 		break;
 	case HOUSE_A:
