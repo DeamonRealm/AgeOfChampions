@@ -526,6 +526,13 @@ UI_Element * Game_Panel::GetExitMenu()
 	return exit_menu_screen;
 }
 
+void Game_Panel::ActivatePauseMenu()
+{
+	exit_menu_image->Activate();
+	exit_menu_image->ActivateChilds();
+}
+
+
 void Game_Panel::IncreaseDeathEnemies()
 {
 	player_death_enemies++;

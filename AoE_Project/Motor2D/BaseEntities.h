@@ -294,6 +294,7 @@ public:
 
 	//Draw ------------------
 	virtual bool	Draw(bool debug);
+	void			DrawLife();
 	void			CleanAnimation();
 	virtual void	CleanMapLogic();
 	void			SetBlitColor(const SDL_Color new_color);

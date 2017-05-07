@@ -69,6 +69,7 @@ public:
 
 	//Get exit Menu
 	UI_Element* GetExitMenu();
+	void ActivatePauseMenu();
 
 
 	//Scores control

@@ -258,6 +258,11 @@ bool j1Player::PreUpdate()
 
 bool j1Player::PostUpdate()
 {
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		game_panel->ActivatePauseMenu();
+	}
+
 	game_hud->Draw(false);
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)

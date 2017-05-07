@@ -84,6 +84,13 @@ bool Entity::Draw(bool debug)
 	return ret;
 }
 
+void Entity::DrawLife()
+{
+	if (entity_type == RESOURCE) return;
+	App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, life_position.x*2, 2 }, 255, 0, 0);
+	App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, (life_position.x) * 2 * life / (int)max_life, 2 }, 0, 255, 0);
+}
+
 void Entity::CleanAnimation()
 {
 	if (current_animation != nullptr)
@@ -398,8 +405,6 @@ bool Unit::Draw(bool debug)
 	if (selected)
 	{
 		ret = mark.Draw();
-		App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36, 2 }, 255, 0, 0);
-		App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36 * life / (int)max_life, 2 }, 0, 255, 0);
 	}
 
 	if (debug) {
@@ -2573,8 +2578,6 @@ bool Building::Draw(bool debug)
 	if (selected)
 	{
 		ret = mark.Draw();
-		App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 72, 2 }, 255, 0, 0);
-		App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 72 * life / (int)max_life, 2 }, 0, 255, 0);
 	}
 	if (debug)
 	{

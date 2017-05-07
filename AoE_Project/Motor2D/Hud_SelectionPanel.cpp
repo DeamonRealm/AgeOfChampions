@@ -232,6 +232,9 @@ void Entity_Profile::DrawProfile() const
 	{
 		resources->DrawAt(390, 680);
 	}
+	
+	//Draw Life
+	element->DrawLife();
 }
 
 void Entity_Profile::UpdateStats()
@@ -681,6 +684,7 @@ void Selection_Panel::DrawGroup()
 		//Draw life
 		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36, 3 }, 255, 0, 0);
 		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36 * life / max_life, 3 }, 0, 255, 0);
+		item._Ptr->_Myval->DrawLife();
 
 		//Draw icon
 		group_profile[i]->Draw(App->debug_mode);

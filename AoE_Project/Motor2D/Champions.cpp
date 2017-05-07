@@ -493,8 +493,6 @@ bool Warrior::Draw(bool debug)
 			hard_collider.Draw();
 			vision.Draw();
 			buff_area.Draw();
-			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36, 2 }, 255, 0, 0);
-			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36 * life / (int)max_life, 2 }, 0, 255, 0);
 		}
 	}
 
@@ -1050,8 +1048,6 @@ bool Wizard::Draw(bool debug)
 			hard_collider.Draw();
 			vision.Draw();
 			buff_area.Draw();
-			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36, 2 }, 255, 0, 0);
-			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36 * life / (int)max_life, 2 }, 0, 255, 0);
 		}
 	}
 
@@ -1793,8 +1789,6 @@ bool Hunter::Draw(bool debug)
 			vision.Draw();
 			buff_area.Draw();
 			area_attack_skill_B_lvl_3.Draw();
-			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36, 2 }, 255, 0, 0);
-			App->render->DrawQuad({ (int)position.x - life_position.x, (int)position.y - life_position.y, 36 * life / (int)max_life, 2 }, 0, 255, 0);
 		}
 	}
 
