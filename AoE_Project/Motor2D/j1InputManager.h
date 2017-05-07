@@ -7,10 +7,32 @@
 enum INPUT_EVENT
 {
 	UNKNOWN_INPUT = 0,
+	
+	//Escape
+	ESCAPE,
+
+	//Debug
 	ENTITY_DEBUG_MODE,
 	MAP_DEBUG_MODE,
+	
+	//Entities generation
 	GENERATE_VILLAGER,
-	GENERATE_TREE
+	GENERATE_TREE,
+	GENERATE_BUSH,
+	GENERATE_STONE,
+	GENERATE_GOLD,
+	
+	//Champion keys
+	GENERATE_WARRIOR,
+	GENERATE_WIZARD,
+	GENERATE_HUNTER,
+	SET_HABILITY_A,
+	SET_HABILITY_B,
+	SET_HABILITY_C,
+	
+	//Save / Load
+	SAVE,
+	LOAD
 };
 
 enum INPUT_STATE
@@ -33,14 +55,6 @@ public:
 	// Called when before render is available
 	bool Awake(pugi::xml_node& );
 
-	/*// Call before first frame
-	bool Start();*/
-
-	/*// Called before all Updates
-	bool PreUpdate();*/
-
-	/*bool Update(float dt);*/
-
 	// Called after all Updates
 	bool PostUpdate();
 
@@ -52,82 +66,8 @@ public:
 	//Functionality -------------------
 	//Used when loading input keys
 	INPUT_EVENT StrToInputEvent(const char* str)const;
-
 	void SendInputEvent(int id, INPUT_STATE state);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/*void SendMouseEvent(int button, e_eventState state);
-
-	void EraseEvent(e_events);
-	*/
-
-
 	INPUT_STATE GetEvent(INPUT_EVENT _event);
-
-	/*const char* GetEventKeyName(e_events _event);
-
-	SDL_Scancode GetEventKey(e_events _event);
-
-
-
-	void SetEventToNextKeyPress(e_events _event);
-
-	bool SetEventKey(e_events _event, SDL_Scancode key);
-
-
-
-	void UnfreezeInput();
-
-	void FreezeInput();
-
-	bool IsInputFrozen();
-
-
-
-	iPoint GetMouseOnScreen() { return mouseScreen; }
-
-	iPoint GetMouseOnWorld() { return mouseWorld; }
-
-	iPoint GetMouseMotion();
-
-
-
-	iPoint GetMapSize();
-
-	iPoint GetMapSizeScaled();
-
-	iPoint GetScreenSize() { return{ screenSize.x, screenSize.y }; }
-
-	iPoint GetScreenSizeScale() { return{ screenSize.x / GetScale(), screenSize.y / GetScale() }; }
-
-	int GetScale();
-
-	int GetRealScale();
-
-	void SetScale(uint scale = 2);
-
-
-
-	void EnableCursorImage(bool enabled);
-
-
-
-	bool clickedUI = false;
-
-	bool hoveringUI = false;*/
 
 private:
 
@@ -136,20 +76,6 @@ private:
 
 	//Events that are happening during this frame
 	std::multimap<INPUT_EVENT, INPUT_STATE> current_events;
-	
-	/*iPoint mouseScreen;
-
-	iPoint mouseWorld;
-
-
-
-	iPoint screenSize;
-
-
-
-	bool savingNextKey = false;
-
-	e_events savingEventToChange;*/
 
 };
 #endif // _J1_INPUT_MANAGER_H_

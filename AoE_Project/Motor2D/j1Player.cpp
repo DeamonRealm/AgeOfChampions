@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Input.h"
+#include "j1InputManager.h"
 #include "j1Animator.h"
 
 #include "j1App.h"
@@ -134,15 +135,6 @@ bool j1Player::PreUpdate()
 		action_panel->Handle_Input(MOUSE_RIGHT_BUTTON);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-	{
-		selection_panel->Handle_Input(UP_ARROW);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-	{
-		selection_panel->Handle_Input(DOWN_ARROW);
-	}
-
 	if (App->debug_mode)
 	{
 		//Generate a town center in the mouse coordinates
@@ -160,7 +152,7 @@ bool j1Player::PreUpdate()
 			App->AI->GenerateDebugVillager();
 		}
 		//Generate Villager in the mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && game_panel->CheckPopulation())
+		if (App->input_manager->GetEvent(GENERATE_VILLAGER) == INPUT_DOWN)
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(VILLAGER, ALLY);
 			new_unit->SetPosition((float)x - App->render->camera.x,(float) y - App->render->camera.y);
@@ -189,45 +181,45 @@ bool j1Player::PreUpdate()
 			game_panel->IncressPopulation(1, false);
 		}
 		//Generate Tree resource in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN && game_panel->CheckPopulation())
+		if (App->input_manager->GetEvent(GENERATE_TREE) == INPUT_DOWN)
 		{
 			Entity* new_unit = App->entities_manager->GenerateResource(TREE);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 		//Generate BerryBush resource in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && game_panel->CheckPopulation())
+		if (App->input_manager->GetEvent(GENERATE_BUSH) == INPUT_DOWN)
 		{
 			Entity* new_unit = App->entities_manager->GenerateResource(BERRY_BUSH);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 		//Generate Stone Ore resource in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && game_panel->CheckPopulation())
+		if (App->input_manager->GetEvent(GENERATE_STONE) == INPUT_DOWN)
 		{
 			Entity* new_unit = App->entities_manager->GenerateResource(STONE_ORE);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 		//Generate Gold Ore resource in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN && game_panel->CheckPopulation())
+		if (App->input_manager->GetEvent(GENERATE_GOLD) == INPUT_DOWN)
 		{
 			Entity* new_unit = App->entities_manager->GenerateResource(GOLD_ORE);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 
 		//Generate Warrior unit in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && game_panel->CheckPopulation())
+		if (App->input_manager->GetEvent(GENERATE_WARRIOR) == INPUT_DOWN)
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP, ALLY);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 		//Generate Wizard unit in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && game_panel->CheckPopulation())
+		if (App->input_manager->GetEvent(GENERATE_WIZARD) == INPUT_DOWN)
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(WIZARD_CHMP, ALLY);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 
 		//Generate Archer unit in mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && game_panel->CheckPopulation())
+		if (App->input_manager->GetEvent(GENERATE_HUNTER) == INPUT_DOWN)
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(ARCHER_CHMP, ALLY);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
@@ -240,15 +232,15 @@ bool j1Player::PreUpdate()
 	}
 
 	// Skills
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	if (App->input_manager->GetEvent(SET_HABILITY_A) == INPUT_DOWN)
 	{
 		action_panel->ActivateCell(0);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if (App->input_manager->GetEvent(SET_HABILITY_B) == INPUT_DOWN)
 	{
 		action_panel->ActivateCell(1);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	if (App->input_manager->GetEvent(SET_HABILITY_C) == INPUT_DOWN)
 	{
 		action_panel->ActivateCell(2);
 	}
