@@ -166,15 +166,12 @@ void Entity_Profile::Reset()
 void Entity_Profile::DrawProfile() const
 {
 	if (element == nullptr) return;
-	//Draw profile background
-	//App->render->DrawQuad({ 338 - App->render->camera.x, 632 - App->render->camera.y, 39, 38 }, 148, 148, 148);
 	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 342 - App->render->camera.x, 634 - App->render->camera.y, &element->GetIcon());
 
 	//Draw profile icon
 	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 634 - App->render->camera.y, &background);
 
 	name->DrawAt(337, 615);
-	//civilization->DrawAt(472, 640)
 	if (isenemy) diplomacy->DrawAt(472, 660);
 
 	//Draw life
@@ -468,22 +465,26 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				}
 			}
 			else App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
-				//Selected->GetEntity()->AddAction(App->action_manager->MoveAction((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
-
 		}
 		else if (selected_elements.size() > 1 && selected_entity_type == UNIT) {
 			{
 				if (UpperEntity != nullptr)
 				{
-					/*	if (UpperEntity->GetEntityType() == RESOURCE && selected_unit_type == VILLAGER)
+					if (UpperEntity->GetDiplomacy() == ENEMY)
 					{
-					std::list<Entity*>::iterator villager = selected_elements.begin();
-					while (villager != selected_elements.end())
-					{
-					villager._Ptr->_Myval->AddAction(App->action_manager->RecollectAction((Villager*)villager._Ptr->_Myval, (Resource**)UpperEntity->GetMe()));
-					villager++;
+						if (UpperEntity->GetEntityType() == BUILDING)
+						{
+							App->group_move->AttackOnGroup(&(selected_elements), UpperEntity, true);
+						}
+						else
+						{
+							App->group_move->AttackOnGroup(&(selected_elements), UpperEntity, false);
+						}
 					}
-					}*/
+					else if (UpperEntity->GetEntityType() == RESOURCE)
+					{
+						App->group_move->RecolectOnGroup(&(selected_elements), (Resource*)UpperEntity);
+					}
 				}
 				else App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y, true);
 			}

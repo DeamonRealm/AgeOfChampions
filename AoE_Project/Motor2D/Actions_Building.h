@@ -162,6 +162,11 @@ public:
 		return timer.Read();
 	}
 
+	void SetUnitType(UNIT_TYPE new_type)
+	{
+		type = new_type;
+	}
+
 private:
 
 	Unit*		new_unit = nullptr;
