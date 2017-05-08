@@ -535,8 +535,32 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 		- life
 		*/
 
-		Resource* new_res = App->entities_manager->GenerateResource((RESOURCE_TYPE)cur_res_node.attribute("res_type").as_int());
+		RESOURCE_TYPE correct_type = (RESOURCE_TYPE)cur_res_node.attribute("res_type").as_int();
 
+		switch (correct_type)
+		{
+		case TREE_CUT:
+		case CHOP:
+			correct_type = TREE;
+			break;
+		case TINY_GOLD_ORE:
+			correct_type = GOLD_ORE;
+			break;
+		case TINY_STONE_ORE:
+			correct_type = STONE_ORE;
+			break;
+		}
+
+
+		Resource* new_res = App->entities_manager->GenerateResource(correct_type);
+
+		if (new_res == nullptr)
+		{
+			LOG("Resource Load Error!");
+			//Focus the next resource
+			cur_res_node = cur_res_node.next_sibling();
+			continue;
+		}
 		//Load position
 		new_res->SetPosition(cur_res_node.attribute("pos_x").as_float(), cur_res_node.attribute("pos_y").as_float());
 
@@ -572,6 +596,13 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 		//Generate building from type and diplomacy
 		Building* new_building = GenerateBuilding(building_type, (DIPLOMACY)cur_build_node.attribute("diplomacy").as_int());
 
+		if (new_building == nullptr)
+		{
+			LOG("Error loading building!");
+			//Focus the next building node
+			cur_build_node = cur_build_node.next_sibling();
+			continue;
+		}
 		//Load building position
 		new_building->SetPosition(cur_build_node.attribute("pos_x").as_float(), cur_build_node.attribute("pos_y").as_float());
 
@@ -580,54 +611,6 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 
 		//Load current building selected
 		if (cur_build_node.attribute("selected").as_bool() == true) new_building->Select();
-
-		switch (building_type)
-		{
-		case TOWN_CENTER:
-		case BARRACK:
-		case STABLE:
-		case ARCHERY_RANGE:
-			/*Load productive building data*/
-			/*
-			current_units
-			units_in <list>
-
-			production_queue <priority_queue>
-			*/
-
-			//Load building current units count
-			((ProductiveBuilding*)new_building)->SetCurrentUnits(cur_build_node.attribute("cur_units_in").as_uint());
-
-			if (((ProductiveBuilding*)new_building)->GetCurrentUnits() > 0)
-			{
-				//Node where covered units are loaded
-				pugi::xml_node units_in_node = cur_build_node.child("units_in");
-
-				//Node focusing the current unit in
-				pugi::xml_node unit_in_node = units_in_node.first_child();
-
-				while (unit_in_node != NULL)
-				{
-					//Generate a unit in with type
-					Unit* new_unit_in = GenerateUnit((UNIT_TYPE)unit_in_node.attribute("unit_type").as_int(), ALLY, false);
-
-					//Load current unit in life
-					new_unit_in->SetLife(unit_in_node.attribute("life").as_uint());
-
-					//Focus next unit in node
-					unit_in_node = unit_in_node.next_sibling();
-
-				}
-			}
-
-			//Load building production queue (or not)
-
-			break;
-
-		default:
-			/**/
-			break;
-		}
 
 		//Add new building loaded to the loaded vector to load actions later
 		loaded_buildings.push_back(new_building);
@@ -937,58 +920,6 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 
 		//Save current building selected
 		cur_build_node.append_attribute("selected") = current_building._Ptr->_Myval->GetIfSelected();
-
-
-		switch (type)
-		{
-		case TOWN_CENTER:
-		case BARRACK:
-		case STABLE:
-		case ARCHERY_RANGE:
-			/*Save productive building data*/
-			/*
-			current_units
-			units_in <list>
-
-			production_queue <priority_queue>
-			*/
-
-			//Save building current units count
-			cur_build_node.append_attribute("cur_units_in") = ((ProductiveBuilding*)current_building._Ptr->_Myval)->GetCurrentUnits();
-
-			if (((ProductiveBuilding*)current_building._Ptr->_Myval)->GetCurrentUnits() > 0)
-			{
-				//Node where covered units are saved
-				pugi::xml_node units_in_node = cur_build_node.append_child("units_in");
-
-				//Iterate units in list to save units data
-				std::list<Unit*> units_in = ((ProductiveBuilding*)current_building._Ptr->_Myval)->GetUnitsIn();
-				std::list<Unit*>::const_iterator unit_in = units_in.begin();
-				while (unit_in != units_in.begin())
-				{
-					//Node where the current unit in is saved
-					pugi::xml_node cur_unit_in_node = units_in_node.append_child("unit_in");
-
-					//Save unit in unit type
-					cur_unit_in_node.append_attribute("unit_type") = unit_in._Ptr->_Myval->GetUnitType();
-
-					//Save unit in life
-					cur_unit_in_node.append_attribute("life") = unit_in._Ptr->_Myval->GetLife();
-
-					//Focus the next unit in
-					unit_in++;
-				}
-
-			}
-
-			//Save building production queue (or not)
-
-			break;
-
-		default:
-			/**/
-			break;
-		}
 
 		//Save current building tasks -----
 
@@ -2495,17 +2426,19 @@ Building * j1EntitiesManager::GetNearestSavePoint(iPoint position, PLAYER_RESOUR
 
 	while (building_it != buildings.end())
 	{
-		bool correct_type = (building_it._Ptr->_Myval->GetBuildingType() == TOWN_CENTER || building_it._Ptr->_Myval->GetBuildingType() == TOWN_CENTER_C);
+		bool correct_type = false;
 		switch (resource_to_save)
 		{
 		case GP_WOOD:
-			
+			correct_type = (building_it._Ptr->_Myval->GetBuildingType() == BUILDING_TYPE::LUMBER_CAMP);
 			break;
 		case GP_GOLD:
 		case GP_STONE:
-			correct_type = building_it._Ptr->_Myval->GetBuildingType() == BUILDING_TYPE::MINING_CAMP;
+			correct_type = (building_it._Ptr->_Myval->GetBuildingType() == BUILDING_TYPE::MINING_CAMP);
 			break;
 		}
+		if(!correct_type)correct_type = (building_it._Ptr->_Myval->GetBuildingType() == TOWN_CENTER || building_it._Ptr->_Myval->GetBuildingType() == TOWN_CENTER_C);
+		
 		//Check resource type
 		if (!correct_type || building_it._Ptr->_Myval->GetDiplomacy() != diplomacy)
 		{

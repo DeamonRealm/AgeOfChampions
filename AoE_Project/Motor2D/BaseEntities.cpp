@@ -2241,17 +2241,6 @@ bool Resource::ExtractResources(uint* value)
 	else
 	{
 		life -= *value;
-		if (resource_type == GOLD_ORE && life < 500)
-		{
-			resource_type = TINY_GOLD_ORE;
-			App->animator->ResourcePlay(this);
-		}
-		else if (resource_type == STONE_ORE && life < 500)
-		{
-			resource_type = TINY_STONE_ORE;
-			App->animator->ResourcePlay(this);
-		}
-
 		return true;
 	}
 }
