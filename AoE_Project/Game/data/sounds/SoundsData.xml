@@ -132,6 +132,18 @@
   <type enum="wizard_skill_lvl3_b"  song_type ="fx">
     <sound soundPath="wizard_skill_lvl3_b.wav" name="wizard_skill_lvl3_b"/>
   </type>
+  <type enum="hunter_skill_lvl2_a" song_type ="fx">
+    <sound soundPath="hunter_skill_lvl2_a.wav" name="hunter_skill_lvl2_a"/>
+  </type>
+  <type enum="hunter_skill_lvl2_b" song_type ="fx">
+    <sound soundPath="hunter_skill_lvl2_b.wav" name="hunter_skill_lvl2_b"/>
+  </type>
+  <type enum="hunter_skill_lvl3_a" song_type ="fx">
+    <sound soundPath="hunter_skill_lvl3_a.wav" name="hunter_skill_lvl3_a"/>
+  </type>
+  <type enum="hunter_skill_lvl3_b" song_type ="fx">
+    <sound soundPath="hunter_skill_lvl3_b.wav" name="hunter_skill_lvl3_b"/>
+  </type>
   <type enum="main_menu"  song_type ="music">
     <sound soundPath="main_menu.ogg" name="main_menu_music"/>
   </type>

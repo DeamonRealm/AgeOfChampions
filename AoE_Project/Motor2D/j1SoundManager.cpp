@@ -183,7 +183,10 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "wizard_skill_lvl3_a") == 0)				return WIZARD_SKILL_LVL3_A;
 	else if (strcmp(str, "wizard_skill_lvl3_b") == 0)				return WIZARD_SKILL_LVL3_B;
 	//Hunter skills
-
+	else if (strcmp(str, "hunter_skill_lvl2_a") == 0)				return HUNTER_SKILL_LVL2_A;
+	else if (strcmp(str, "hunter_skill_lvl2_b") == 0)				return HUNTER_SKILL_LVL2_B;
+	else if (strcmp(str, "hunter_skill_lvl3_a") == 0)				return HUNTER_SKILL_LVL3_A;
+	else if (strcmp(str, "hunter_skill_lvl3_b") == 0)				return HUNTER_SKILL_LVL3_B;
 	//GUI SOUNDS
 	else if (strcmp(str, "main_menu") == 0)							return MAIN_MENU_SONG;
 	else if (strcmp(str, "ingame") == 0)							return INGAME_SONG;

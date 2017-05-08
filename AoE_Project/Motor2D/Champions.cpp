@@ -1932,7 +1932,7 @@ void Hunter::Hability_lvl_2(int x, int y)
 	{
 		if (!CalculateSpecialAttackArea(destination, true))
 			return;
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
+		App->sound->PlayFXAudio(SOUND_TYPE::HUNTER_SKILL_LVL2_B);
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_2);
 		ability_lvl_2_particle.animation.Reset();
@@ -1941,7 +1941,7 @@ void Hunter::Hability_lvl_2(int x, int y)
 	else
 	{
 		CalculateTriangleAttackArea(GetiPointFromDirection(direction_type));
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+		App->sound->PlayFXAudio(SOUND_TYPE::HUNTER_SKILL_LVL2_A);
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_triangle_attack_skill_A_lvl_2);
 		ability_lvl_2_particle = App->buff_manager->GetParticle(MULTI_SHOT_PARTICLE, direction_type);
@@ -2055,7 +2055,7 @@ void Hunter::Hability_lvl_3(int x, int y)
 	{
 		CalculateArrorwAttackArea(destination);
 		//long range skill
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
+		App->sound->PlayFXAudio(SOUND_TYPE::HUNTER_SKILL_LVL3_B);
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_B_lvl_3);
 		ability_lvl_3_particle.animation.Reset();
@@ -2071,7 +2071,7 @@ void Hunter::Hability_lvl_3(int x, int y)
 
 		if (!CalculateSpecialAttackArea(destination, false))
 			return;
-		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_A);
+		App->sound->PlayFXAudio(SOUND_TYPE::HUNTER_SKILL_LVL3_A);
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_attack_skill_A_lvl_3);
 		ability_lvl_3_particle.animation.Reset();
