@@ -492,6 +492,8 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 			CorrectPath(path);
 			if (path->empty())
 			{
+				path = nullptr;
+				delete path;
 				return true;
 			}
 			goal = NextGoal(path);
@@ -651,6 +653,7 @@ void Unit::CorrectPath(std::vector<iPoint>*& path)
 	}
 	if (path->empty())
 	{
+	
 		return;
 	}
 	new_path = App->pathfinding->SimpleAstar(GetPositionRounded(), next_goal);
