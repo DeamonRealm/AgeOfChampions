@@ -2403,7 +2403,49 @@ bool j1EntitiesManager::UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY d
 	return false;
 }
 
-Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy)
+Unit * j1EntitiesManager::GetNearestUnit(iPoint point, DIPLOMACY diplomacy, uint max_dist, UNIT_TYPE type)
+{
+	Unit* ret = nullptr;
+
+	std::list<Unit*>::const_iterator unit_it = units.begin();
+	uint distance = 120 * 120 * 50;
+
+
+	while (unit_it != units.end())
+	{
+	
+		//Check unit type and diplomacy 
+		//If unit type == NO_UNIT only check diplomacy
+		if ((unit_it._Ptr->_Myval->GetUnitType() != type && type != UNIT_TYPE::NO_UNIT ) || unit_it._Ptr->_Myval->GetDiplomacy() != diplomacy)
+		{
+			unit_it++;
+			continue;
+		}
+
+
+		//Calculate distance between resource pos & point
+		uint dist = abs(unit_it._Ptr->_Myval->GetPositionRounded().DistanceOctile(point));
+		//Check if you have a distance limier
+		if (max_dist > 0)
+		{
+			if (dist > max_dist) continue;
+		}
+
+		//Check if is the nearest resource from the point 
+		if (dist < distance)
+		{
+			distance = dist;
+			ret = unit_it._Ptr->_Myval;
+		}
+
+		unit_it++;
+	}
+
+	return ret;
+
+}
+
+Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy, uint max_dist)
 {
 	Building* ret = nullptr;
 
@@ -2422,6 +2464,13 @@ Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE typ
 
 		//Calculate distance between resource pos & point
 		uint dist = abs(building_it._Ptr->_Myval->GetPositionRounded().DistanceOctile(point));
+
+		//Check if you have a distance limier
+		if (max_dist > 0)
+		{
+			if (dist > max_dist) continue;
+		}
+
 		//Check if is the nearest resource from the point 
 		if (dist < distance)
 		{
@@ -2479,7 +2528,7 @@ Building * j1EntitiesManager::GetNearestSavePoint(iPoint position, PLAYER_RESOUR
 	return ret;
 }
 
-Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE type, DIPLOMACY diplomacy)
+Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE type, DIPLOMACY diplomacy, uint max_dist)
 {
 	Resource* ret = nullptr;
 
@@ -2498,6 +2547,13 @@ Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE typ
 
 		//Calculate distance between resource pos & point
 		uint dist = abs(resource._Ptr->_Myval->GetPositionRounded().DistanceOctile(point));
+		
+		//Check if you have a distance limier
+		if (max_dist > 0)
+		{
+			if (dist > max_dist) continue;
+		}
+
 		//Check if is the nearest resource from the point 
 		if (dist < distance)
 		{
