@@ -13,6 +13,7 @@
 #include "j1SoundManager.h"
 #include "j1FogOfWar.h"
 #include "Resources.h"
+#include "Hud_GamePanel.h"
 
 //Testing purposes only should be erased
 #include "j1Scene.h"
@@ -2421,6 +2422,50 @@ Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE typ
 
 		//Calculate distance between resource pos & point
 		uint dist = abs(building_it._Ptr->_Myval->GetPositionRounded().DistanceOctile(point));
+		//Check if is the nearest resource from the point 
+		if (dist < distance)
+		{
+			distance = dist;
+			ret = building_it._Ptr->_Myval;
+		}
+
+		building_it++;
+	}
+
+	return ret;
+}
+
+Building * j1EntitiesManager::GetNearestSavePoint(iPoint position, PLAYER_RESOURCES resource_to_save, DIPLOMACY diplomacy)
+{
+	if (resource_to_save == GP_NO_RESOURCE)return nullptr;
+	Building* ret = nullptr;
+
+	std::list<Building*>::const_iterator building_it = buildings.begin();
+	uint distance = 120 * 120 * 50;
+
+
+	while (building_it != buildings.end())
+	{
+		bool correct_type = (building_it._Ptr->_Myval->GetBuildingType() == TOWN_CENTER || building_it._Ptr->_Myval->GetBuildingType() == TOWN_CENTER_C);
+		switch (resource_to_save)
+		{
+		case GP_WOOD:
+			
+			break;
+		case GP_GOLD:
+		case GP_STONE:
+			correct_type = building_it._Ptr->_Myval->GetBuildingType() == BUILDING_TYPE::MINING_CAMP;
+			break;
+		}
+		//Check resource type
+		if (!correct_type || building_it._Ptr->_Myval->GetDiplomacy() != diplomacy)
+		{
+			building_it++;
+			continue;
+		}
+
+		//Calculate distance between resource pos & point
+		uint dist = abs(building_it._Ptr->_Myval->GetPositionRounded().DistanceOctile(position));
 		//Check if is the nearest resource from the point 
 		if (dist < distance)
 		{

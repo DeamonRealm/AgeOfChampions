@@ -275,7 +275,7 @@ bool Villager::Recollect(Resource* target)
 		if (current_resources > 0)
 		{
 			//Go to the nearest download point
-			Building* save_point = App->entities_manager->GetNearestBuilding(GetPositionRounded(), TOWN_CENTER, this->GetDiplomacy());
+			Building* save_point = App->entities_manager->GetNearestSavePoint(GetPositionRounded(),this->resource_collected_type, this->GetDiplomacy());
 			if (save_point == nullptr)return true;
 			//Set the carry action animation type
 			AddAction((Action*)App->action_manager->SaveResourcesAction(this, save_point), TASK_CHANNELS::PRIMARY);
@@ -296,7 +296,7 @@ bool Villager::Recollect(Resource* target)
 	if (current_resources == resources_capacity)
 	{
 		//Go to the nearest download point
-		Building* save_point = App->entities_manager->GetNearestBuilding(GetPositionRounded(), TOWN_CENTER, this->GetDiplomacy());
+		Building* save_point = App->entities_manager->GetNearestSavePoint(GetPositionRounded(), this->resource_collected_type, this->GetDiplomacy());
 		if (save_point == nullptr)return true;
 		//Set the carry action animation type
 		AddPriorizedAction((Action*)App->action_manager->SaveResourcesAction(this, save_point));

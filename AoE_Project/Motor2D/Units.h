@@ -2,8 +2,7 @@
 #define __UNITS_H__
 
 #include "BaseEntities.h"
-
-enum PLAYER_RESOURCES;
+#include "Hud_GamePanel.h"
 
 ///Class Villager -----------
 class Villager : public Unit
@@ -20,7 +19,7 @@ private:
 	ITEM_TYPE item_type = NO_ITEM;
 
 	//Resource related data
-	PLAYER_RESOURCES resource_collected_type;
+	PLAYER_RESOURCES resource_collected_type = GP_NO_RESOURCE;
 	uint resources_capacity = 0;
 	uint current_resources = 0;
 	uint recollect_capacity = 0;

@@ -154,6 +154,7 @@ public:
 	//Get nearest Entity methods
 	Unit*		GetNearestUnit(iPoint point, UNIT_TYPE type);
 	Building*	GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy);
+	Building*	GetNearestSavePoint(iPoint position, PLAYER_RESOURCES resource_to_save, DIPLOMACY diplomacy);
 	Resource*	GetNearestResource(iPoint point, RESOURCE_TYPE type, DIPLOMACY diplomacy);
 
 };
