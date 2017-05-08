@@ -655,6 +655,7 @@ void Warrior::Hability_lvl_2(int x, int y)
 	if (ability_lvl_2_current_time < ability_lvl_2_cooldown)return;
 
 	//Focus the warrior in the attack direction
+
 	direction_type = LookDirection(iPoint(x, y), GetPositionRounded());
 	CalculateSpecialAttackArea(GetiPointFromDirection(direction_type));
 	action_type = ATTATCK;
@@ -810,6 +811,7 @@ void Warrior::CheckHability_lvl_3()
 
 iPoint Warrior::GetiPointFromDirection(DIRECTION_TYPE direction) const
 {
+
 	switch (direction)
 	{
 	case NORTH:
@@ -1709,7 +1711,6 @@ void Hunter::SaveAsDef(pugi::xml_node & node)
 	
 	/*Atk Tri Lenght Skill lvl 2 A*/node.append_attribute("area_triangle_length") = this->area_triangle_attack_skill_A_lvl_2.GetLength();
 	/*Atk Tri Width Skill lvl 2 A*/	node.append_attribute("area_triangle_width_angle") = this->area_triangle_attack_skill_A_lvl_2.GetWidthAngle();
-	/*Atk Tri Width Skill lvl 2 A*/	node.append_attribute("area_triangle_X_angle") = this->area_triangle_attack_skill_A_lvl_2.GetXAngle();
 	/*Atk Skill lvl 2 A*/			node.append_attribute("ability_lvl_2_skill_A_attack_value") = ability_lvl_2_skill_A_attack_value;
 
 	/*Area Atk Skill lvl 2 B*/		node.append_attribute("area_attack_skill_B_lvl_2") = area_attack_skill_B_lvl_2.GetRad();
@@ -1793,6 +1794,8 @@ bool Hunter::Draw(bool debug)
 			vision.Draw();
 			buff_area.Draw();
 			area_attack_skill_B_lvl_3.Draw();
+			area_triangle_attack_skill_A_lvl_2.Draw();
+
 		}
 	}
 
@@ -1800,6 +1803,8 @@ bool Hunter::Draw(bool debug)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true);
+	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
+	CalculateTriangleAttackArea(GetiPointFromDirection(direction_type));
 	if (debug && selected) {
 		//area_limit_spell_2.Draw();
 		//area_limit_spell_3.Draw();
@@ -1881,10 +1886,9 @@ bool Hunter::PrepareAbility_lvl_2()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint destination = iPoint(x - App->render->camera.x, y - App->render->camera.y);
-	direction_type = LookDirection(destination, GetPositionRounded());
 	CalculateSpecialAttackArea(destination, true);
+	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
 	CalculateTriangleAttackArea(GetiPointFromDirection(direction_type));
-
 
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_in;
@@ -1936,10 +1940,11 @@ void Hunter::Hability_lvl_2(int x, int y)
 	}
 	else
 	{
-		CalculateTriangleAttackArea(destination);
+		CalculateTriangleAttackArea(GetiPointFromDirection(direction_type));
 		App->sound->PlayFXAudio(SOUND_TYPE::WARRIOR_SKILL_LVL2_B);
 		//Collect all the units in the buff area
 		App->entities_manager->units_quadtree.CollectCandidates(units_in, area_triangle_attack_skill_A_lvl_2);
+		ability_lvl_2_particle = App->buff_manager->GetParticle(MULTI_SHOT_PARTICLE, direction_type);
 		ability_lvl_2_particle.animation.Reset();
 		ability_lvl_2_particle.position = GetPositionRounded();
 	}

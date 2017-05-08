@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:e38ad0ee9ff26bc829e148060f2507b9:62a763d45e4acde6fb2c5103ab8ebd56:4837f42d164cafd5be7a3c6fa789d186$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Hunter_Multi_Shot.png" width="2430" height="2146">
+  <simple_particle particle_type="multi_shot_particle" direction="south-west">
+    <anim_data speed="100" loop="0"/>
+    <sprite n="Multishoot/45back/Sin-título7_0000_0001-shot.png.png" opacity="255" x="1" y="1" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0001_0002-shot.png.png" opacity="255" x="1" y="1" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0002_0003-shot.png.png" opacity="255" x="441" y="1" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0003_0004-shot.png.png" opacity="255" x="881" y="1" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0004_0005-shot.png.png" opacity="255" x="1321" y="1" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0005_0006-shot.png.png" opacity="255" x="1761" y="1" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0006_0007-shot.png.png" opacity="255" x="1" y="241" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0007_0008-shot.png.png" opacity="255" x="441" y="241" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0008_0009-shot.png.png" opacity="255" x="881" y="241" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0009_0010-shot.png.png" opacity="255" x="1321" y="241" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+    <sprite n="Multishoot/45back/Sin-título7_0011_0011-shot.png.png" opacity="255" x="1761" y="241" w="438" h="238" pX="0.0319635" pY="0.962185"/>
+</simple_particle>
+<simple_particle particle_type="multi_shot_particle" direction="north-west">
+  <anim_data speed="100" loop="0"/>
+  <sprite n="Multishoot/45Front/45Front_0000_0001-shot.png.png" opacity="255" x="1" y="481" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0001_0002-shot.png.png" opacity="255" x="1" y="481" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0002_0003-shot.png.png" opacity="255" x="450" y="481" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0003_0004-shot.png.png" opacity="255" x="899" y="481" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0004_0005-shot.png.png" opacity="255" x="1348" y="481" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0005_0006-shot.png.png" opacity="255" x="1797" y="481" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0006_0007-shot.png.png" opacity="255" x="1" y="721" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0007_0008-shot.png.png" opacity="255" x="450" y="721" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0008_0009-shot.png.png" opacity="255" x="899" y="721" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0009_0010-shot.png.png" opacity="255" x="1348" y="721" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+    <sprite n="Multishoot/45Front/45Front_0010_0011-shot.png.png" opacity="255" x="1797" y="721" w="447" h="238" pX="0.0357942" pY="0.0462185"/>
+</simple_particle>
+<simple_particle particle_type="multi_shot_particle" direction="south">
+  <anim_data speed="100" loop="0"/>
+  <sprite n="Multishoot/Back/Back_0001_0001-shot.png.png" opacity="255" x="1" y="961" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0002_0002-shot.png.png" opacity="255" x="1" y="961" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0003_0003-shot.png.png" opacity="255" x="305" y="961" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0004_0004-shot.png.png" opacity="255" x="609" y="961" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0005_0005-shot.png.png" opacity="255" x="913" y="961" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0006_0006-shot.png.png" opacity="255" x="1217" y="961" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0007_0007-shot.png.png" opacity="255" x="1521" y="961" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0008_0008-shot.png.png" opacity="255" x="1825" y="961" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0009_0009-shot.png.png" opacity="255" x="1" y="1250" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0010_0010-shot.png.png" opacity="255" x="305" y="1250" w="302" h="287" pX="0.496689" pY="0.898955"/>
+    <sprite n="Multishoot/Back/Back_0011_0011-shot.png.png" opacity="255" x="609" y="1250" w="302" h="287" pX="0.496689" pY="0.898955"/>
+</simple_particle>
+<simple_particle particle_type="multi_shot_particle" direction="north">
+  <anim_data speed="100" loop="0"/>
+  <sprite n="Multishoot/Frontal/FrontalMs_0000_0001-shot.png.png" opacity="255" x="913" y="1250" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0001_0002-shot.png.png" opacity="255" x="913" y="1250" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0002_0003-shot.png.png" opacity="255" x="1217" y="1250" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0003_0004-shot.png.png" opacity="255" x="1521" y="1250" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0004_0005-shot.png.png" opacity="255" x="1825" y="1250" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0005_0006-shot.png.png" opacity="255" x="1" y="1539" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0006_0007-shot.png.png" opacity="255" x="305" y="1539" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0007_0008-shot.png.png" opacity="255" x="609" y="1539" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0008_0009-shot.png.png" opacity="255" x="913" y="1539" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0009_0010-shot.png.png" opacity="255" x="1217" y="1539" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+    <sprite n="Multishoot/Frontal/FrontalMs_0010_0011-shot.png.png" opacity="255" x="1521" y="1539" w="302" h="258" pX="0.506623" pY="0.0271318"/>
+</simple_particle>
+  <simple_particle particle_type="multi_shot_particle" direction="west">
+    <anim_data speed="100" loop="0"/>
+    <sprite n="Multishoot/Lat/lat_0000_0001-shot.png.png" opacity="255" x="1825" y="1539" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0001_0002-shot.png.png" opacity="255" x="1825" y="1539" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0002_0003-shot.png.png" opacity="255" x="1" y="1799" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0003_0004-shot.png.png" opacity="255" x="487" y="1799" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0004_0005-shot.png.png" opacity="255" x="973" y="1799" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0005_0006-shot.png.png" opacity="255" x="1459" y="1799" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0006_0007-shot.png.png" opacity="255" x="1945" y="1799" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0007_0008-shot.png.png" opacity="255" x="1" y="1973" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0008_0009-shot.png.png" opacity="255" x="487" y="1973" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0009_0010-shot.png.png" opacity="255" x="973" y="1973" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+    <sprite n="Multishoot/Lat/lat_0010_0011-shot.png.png" opacity="255" x="1459" y="1973" w="484" h="172" pX="0.0123967" pY="0.488372"/>
+</simple_particle>
+</TextureAtlas>

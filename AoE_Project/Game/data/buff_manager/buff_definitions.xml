@@ -18,7 +18,7 @@
   <particle document = "Stun_Effect.xml"/>
   <particle document = "Stun_Effect_Particle.xml"/>
   <particle document = "Dragon_Shot.xml"/>
-  <particle document = "Multi_Shot.xml"/>
+  <particle document = "Hunter_Multi_Shot.xml"/>
   <particle document = "Hunter_Laser.xml"/>
   <particle document = "Hunter_Shoot.xml"/>
 
