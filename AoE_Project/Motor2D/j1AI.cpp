@@ -289,24 +289,28 @@ Resource * j1AI::GetNearestNeed(iPoint pos)
 {
 	RESOURCE_TYPE	type = BERRY_BUSH;
 	uint			current_min = meat;
+	Resource*		ret = App->entities_manager->GetNearestResource(pos, type, NEUTRAL, 2000);
 
-	if (wood < current_min)
+	if (wood < current_min || ret == nullptr)
 	{
 		current_min = wood;
 		type		= TREE;
+		ret = App->entities_manager->GetNearestResource(pos, type, NEUTRAL, 2000);
 	}
-	if(gold < current_min)
+	if(gold < current_min || ret == nullptr)
 	{
 		current_min = gold;
 		type		= GOLD_ORE;
+		ret = App->entities_manager->GetNearestResource(pos, type, NEUTRAL, 2000);
 	}
-	if (stone < current_min)
+	if (stone < current_min || ret == nullptr)
 	{
 		current_min = stone;
 		type		= STONE_ORE;
+		ret = App->entities_manager->GetNearestResource(pos, type, NEUTRAL, 2000);
 	}
 
-	return App->entities_manager->GetNearestResource(pos, type, NEUTRAL);
+	return ret;
 }
 
 void j1AI::ManageAttack()
