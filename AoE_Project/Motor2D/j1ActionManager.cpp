@@ -799,15 +799,12 @@ std::list<Action*>* ActionWorker::GetActionListPointer(TASK_CHANNELS channel)
 	{
 	case PRIMARY:
 		ret = &primary_action_queue;
-		if (current_primary_action != NULL)ret->push_front(current_primary_action);
 		break;
 	case SECONDARY:
 		ret = &secondary_action_queue;
-		if (current_secondary_action != NULL)ret->push_front(current_secondary_action);
 		break;
 	case PASSIVE:
 		ret = &passive_action_queue;
-		if (current_passive_action != NULL)ret->push_front(current_passive_action);
 		break;
 	default:
 		break;

@@ -1890,6 +1890,34 @@ void j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 		unit++;
 	}
 	
+	std::list<Action*>::iterator curr_action;
+	std::list<Action*>*	action_list;
+	std::list<Building*>::iterator building = buildings.begin();
+	while (building != buildings.end())
+	{
+		if (building._Ptr->_Myval->GetDiplomacy() == e_diplomacy)
+		{
+			action_list = building._Ptr->_Myval->GetWorker()->GetActionListPointer(PRIMARY);
+			curr_action = action_list->begin();
+			while (curr_action != action_list->end())
+			{
+				if (curr_action._Ptr->_Myval->GetType() == TASK_B_SPAWN_UNITS)
+				{
+					if (((SpawnUnitAction*)curr_action._Ptr->_Myval)->GetUnitType() == u_type)
+						((SpawnUnitAction*)curr_action._Ptr->_Myval)->SetUnitType(new_type);
+				}
+				curr_action++;
+			}
+			if (building._Ptr->_Myval->GetWorker()->GetCurrentActionType() == TASK_B_SPAWN_UNITS)
+			{
+				SpawnUnitAction* spawn_action = (SpawnUnitAction*)building._Ptr->_Myval->GetWorker()->GetCurrentPrimaryAction();
+				spawn_action->SetUnitType(new_type);
+			}
+
+		}
+		building++;
+	}
+	
 }
 
 void j1EntitiesManager::UpgradeBuilding(BUILDING_TYPE b_type, BUILDING_TYPE new_type, DIPLOMACY diplomacy)

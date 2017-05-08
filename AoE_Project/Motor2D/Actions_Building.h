@@ -91,10 +91,9 @@ class SpawnUnitAction : public Action
 {
 public:
 
-	SpawnUnitAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0) : Action(actor, TASK_B_SPAWN_UNITS), type(type), diplomacy(diplomacy)
+	SpawnUnitAction(ProductiveBuilding* actor, UNIT_TYPE new_type, DIPLOMACY diplomacy, uint runned_time = 0) : Action(actor, TASK_B_SPAWN_UNITS), u_type(new_type), diplomacy(diplomacy)
 	{
-		new_unit = App->entities_manager->GenerateUnit(type, diplomacy, false);
-		new_unit->SetDiplomacy(diplomacy);
+		new_unit = App->entities_manager->GenerateUnit(u_type, diplomacy, false);
 		if (runned_time > new_unit->GetTrainTime())time = 0;
 		else time = new_unit->GetTrainTime() - runned_time;
 	}
@@ -119,8 +118,6 @@ public:
 		if (timer.Read() >= time)
 		{
 			iPoint spawn_point = ((ProductiveBuilding*)actor)->GetSpawnPoint();
-
-		
 
 			int x = ((ProductiveBuilding*)actor)->GetSpawnPoint().x + actor->GetPosition().x;
 			int y = ((ProductiveBuilding*)actor)->GetSpawnPoint().y + actor->GetPosition().y;
@@ -154,7 +151,7 @@ public:
 
 	UNIT_TYPE GetUnitType()const
 	{
-		return type;
+		return u_type;
 	}
 
 	uint GetTime()const
@@ -164,7 +161,13 @@ public:
 
 	void SetUnitType(UNIT_TYPE new_type)
 	{
-		type = new_type;
+		u_type = new_type;
+		delete new_unit;
+		new_unit = App->entities_manager->GenerateUnit(u_type, diplomacy, false);
+		if (new_unit == nullptr)
+		{
+			LOG("ups SetUnitType() doesnt work");
+		}
 	}
 
 private:
@@ -172,7 +175,7 @@ private:
 	Unit*		new_unit = nullptr;
 	uint		time = 0;
 	j1Timer		timer;
-	UNIT_TYPE	type = UNIT_TYPE::NO_UNIT;
+	UNIT_TYPE	u_type = UNIT_TYPE::NO_UNIT;
 	DIPLOMACY	diplomacy = DIPLOMACY::NEUTRAL;
 
 };
@@ -180,7 +183,7 @@ private:
 class ResearchTecAction : public Action
 {
 public:
-	ResearchTecAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy = ALLY) : Action(nullptr, TASK_B_RESEARCH), type(type), diplomacy(diplomacy), research_time(r_time) {};
+	ResearchTecAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy = ALLY) : Action(nullptr, TASK_B_RESEARCH), r_type(type), diplomacy(diplomacy), research_time(r_time) {};
 	~ResearchTecAction() {};
 
 	bool Activation()
@@ -193,13 +196,13 @@ public:
 	{
 		if (research_time <= timer.Read())
 		{
-			App->entities_manager->UpgradeEntity(type, diplomacy);
+			App->entities_manager->UpgradeEntity(r_type, diplomacy);
 			if (diplomacy == ALLY)
 			{
-				App->player->UpgradeCivilization(type);
+				App->player->UpgradeCivilization(r_type);
 				App->sound->PlayFXAudio(BLACKSMITH_SOUND);
 			}
-			else App->AI->UpgradeCivilization(type);
+			else App->AI->UpgradeCivilization(r_type);
 			
 			return true;
 		}
@@ -210,7 +213,7 @@ public:
 	//Get Methods -----------
 	RESEARCH_TECH GetResearchType()const
 	{
-		return type;
+		return r_type;
 	}
 
 	DIPLOMACY GetDiplomacy()const
@@ -232,7 +235,7 @@ private:
 
 	uint			research_time = 0;
 	j1Timer			timer;
-	RESEARCH_TECH	type = RESEARCH_TECH::NO_TECH;
+	RESEARCH_TECH	r_type = RESEARCH_TECH::NO_TECH;
 	DIPLOMACY		diplomacy = DIPLOMACY::NEUTRAL;
 };
 
