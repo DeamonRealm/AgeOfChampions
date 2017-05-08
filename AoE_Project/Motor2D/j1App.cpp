@@ -170,53 +170,82 @@ bool j1App::Start()
 
 	PERF_PEEK(ptimer);
 
+	//Load load screen
+	load_screen = App->tex->Load("gui/savage.jpg");
+
 	return ret;
 }
 
 // Called each loop iteration
 bool j1App::Update()
 {
-	//Activate/Deactivate debug mode
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		debug_mode = !debug_mode;
-	}
-
-	//Activate/Deactivate draw debug mode
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		map_debug_mode = !map_debug_mode;
-	}
-
 	bool ret = true;
-	PrepareUpdate();
 
-	if(input->GetWindowEvent(WE_QUIT) == true)
-		ret = false;
-
-	if (ret == true)
+	if (want_to_enable)
 	{
-		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
-		BROFILER_FRAME("PreUpdate");
-		ret = PreUpdate();
+		EnableActiveModulesNow();
 	}
-
-	if (ret == true)
+	else
 	{
-		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
-		BROFILER_FRAME("DoUpdate");
-		ret = DoUpdate();
-	}
+		//Activate/Deactivate debug mode
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			debug_mode = !debug_mode;
+		}
 
-	if (ret == true)
-	{
-		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
-		BROFILER_FRAME("PostUpdate");
-		ret = PostUpdate();
+		//Activate/Deactivate draw debug mode
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			map_debug_mode = !map_debug_mode;
+		}
+
+		
+		PrepareUpdate();
+
+		if (input->GetWindowEvent(WE_QUIT) == true)
+			ret = false;
+
+		if (ret == true)
+		{
+			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
+			BROFILER_FRAME("PreUpdate");
+			ret = PreUpdate();
+		}
+
+		if (ret == true)
+		{
+			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
+			BROFILER_FRAME("DoUpdate");
+			ret = DoUpdate();
+		}
+
+		if (ret == true)
+		{
+			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
+			BROFILER_FRAME("PostUpdate");
+			ret = PostUpdate();
+		}
 	}
 
 	FinishUpdate();
 	return ret;
+}
+
+void j1App::EnableActiveModulesNow()
+{
+	SDL_RenderClear(App->render->renderer);
+	App->render->Blit(load_screen, 0, 0);
+	App->render->PostUpdate();
+
+	std::list<j1Module*>::const_iterator item = modules.begin();
+
+	while (item != modules.end())
+	{
+		if (item._Ptr->_Myval->active) item._Ptr->_Myval->Enable();
+
+		item++;
+	}
+	want_to_enable = false;
 }
 
 // ---------------------------------------------
@@ -255,9 +284,14 @@ void j1App::FinishUpdate()
 		SavegameNow();
 	}
 
-	if (want_to_load == true)
+	if (want_to_load == true && !want_to_enable)
 	{
 		LoadGameNow();
+	}
+
+	if (want_to_load_default && !want_to_enable)
+	{
+		LoadDefaultGameNow();
 	}
 
 	// Framerate calculations --
@@ -353,6 +387,9 @@ bool j1App::PostUpdate()
 // Called before quitting
 bool j1App::CleanUp()
 {
+	tex->UnLoad(load_screen);
+	
+
 	bool ret = true;
 	std::list<j1Module*>::const_iterator item = modules.end();
 	item--;
@@ -402,25 +439,29 @@ const char* j1App::GetOrganization() const
 // Load / Save
 void j1App::LoadGame(const char* file)
 {
-	/*
-	bool ret = false;
-	std::list<std::string*>::const_iterator item = saved_games.begin();
+	//Clean all the previous data
+	App->map->Disable();
+	App->gui->ChangeMouseTexture(DEFAULT);
+	App->player->Disable();
+	App->animator->Disable();
+	App->entities_manager->Disable();
+	App->fog_of_war->Disable();
+	App->buff_manager->Disable();
+	App->AI->Disable();
+	App->gui->Disable();
 
-	while (item != saved_games.end())
-	{
-		if (*item._Ptr->_Myval == file)
-		{
-			ret = true;
-			break;
-		}
-		item++;
-	}
-	if (ret)
-	{
+	//Reactivate all the modules (only say active but data is not loaded in the same loop)
+	App->map->Active();
+	App->player->Active();
+	App->animator->Active();
+	App->entities_manager->Active(); /*This load the entities animations textures*/
+	App->fog_of_war->Active();
+	App->buff_manager->Active(); /*This load the particles textures*/
+	App->AI->Active();
+	App->gui->Active();
 
-	}
-	else LOG("Load Directory is no available!");
-	*/
+	want_to_enable = true;
+
 	want_to_load = true;
 	load_game = std::string(fs->GetSaveDirectory()) + std::string(file);
 }
@@ -428,20 +469,6 @@ void j1App::LoadGame(const char* file)
 // ---------------------------------------
 void j1App::SaveGame(const char* file)
 {
-	/*std::list<std::string*>::const_iterator item = saved_games.begin();
-	bool exist = false;
-	while (item != saved_games.end())
-	{
-		if (*item._Ptr->_Myval == file)exist = true;
-		item++;
-	}
-	if (!exist)
-	{
-		std::string* new_file_str = new std::string(file);
-		saved_games.push_back(new_file_str);
-
-	}*/
-
 	want_to_save = true;
 	save_game = file;
 }
@@ -575,36 +602,54 @@ bool j1App::SavegameNow()
 	return ret;
 }
 
-bool j1App::LoadDefaultGame()
+bool j1App::LoadDefaultGame(const char* folder_str)
 {
-	j1Timer time_to_start;
+	//j1Timer time_to_start;
 	//Clean all the previous data
-	map->Disable();
-	map->Enable();
+	/*map->Disable();
 	gui->ChangeMouseTexture(DEFAULT);
 	player->Disable();
-	player->Enable();
 	animator->Disable();
-	animator->Enable();
 	entities_manager->Disable();
-	entities_manager->Enable();
 	fog_of_war->Disable();
-	fog_of_war->Enable();
 	buff_manager->Disable();
-	buff_manager->Enable();
-	//Temporal
 	AI->Disable();
+
+	//LOG("%.4f", time_to_start.ReadSec());
+	//time_to_start.Start();
+
+	//Reactivate all the modules
+	map->Enable();
+	
+	player->Enable();
+	//LOG("%.4f", time_to_start.ReadSec());
+	//time_to_start.Start();
+	animator->Enable();
+	entities_manager->Enable(); /*This load the entities animations textures*/
+	/*fog_of_war->Enable();
+	buff_manager->Enable(); /*This load the particles textures*/
+	
+	/*j1Timer time_to_start;
 	AI->Enable();
 
 	LOG("%.4f", time_to_start.ReadSec());
 	time_to_start.Start();
+	*/
+
+	load_game = folder_str;
+	want_to_load_default = true;
+
+	return true;
+}
+
+void j1App::LoadDefaultGameNow()
+{
 	bool ret = true;
-	std::string folder = "scene/standard_match.xml";
 	pugi::xml_document scene_doc;
-	if (!App->fs->LoadXML(folder.c_str(), &scene_doc))
+	if (!App->fs->LoadXML(load_game.c_str(), &scene_doc))
 	{
 		LOG("Error Loading Scene!");
-		return false;
+		return;
 	}
 
 	if (scene_doc != NULL)
@@ -633,9 +678,12 @@ bool j1App::LoadDefaultGame()
 	else
 		LOG("Could not load game state xml file %s", load_game.c_str());
 
-	LOG("%.4f", time_to_start.ReadSec());
+	want_to_load_default = false;
+}
 
-	return ret;
+void j1App::EnableActiveModules()
+{
+	want_to_enable = true;
 }
 
 j1Module * j1App::GetModule(const std::string* module_name)

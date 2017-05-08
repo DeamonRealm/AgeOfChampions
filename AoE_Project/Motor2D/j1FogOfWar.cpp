@@ -23,11 +23,6 @@ j1FogOfWar::~j1FogOfWar()
 
 
 //Game Loop ===========================
-void j1FogOfWar::Enable()
-{
-	active = true;
-}
-
 void j1FogOfWar::Disable()
 {
 	active = false;

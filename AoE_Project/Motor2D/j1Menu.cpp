@@ -15,6 +15,7 @@
 #include "j1AI.h"
 #include "j1SoundManager.h"
 #include "j1FogOfWar.h"
+#include "j1Map.h"
 
 //UI Elements
 #include "UI_Button.h"
@@ -283,7 +284,31 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		if (target == standardgame)
 		{
 			option_selected->button_state = UP;
-			App->LoadDefaultGame();
+
+			//Clean all the previous data
+			App->map->Disable();
+			App->gui->ChangeMouseTexture(DEFAULT);
+			App->player->Disable();
+			App->animator->Disable();
+			App->entities_manager->Disable();
+			App->fog_of_war->Disable();
+			App->buff_manager->Disable();
+			App->AI->Disable();
+			App->gui->Disable();
+
+			//Reactivate all the modules (only say active but data is not loaded in the same loop)
+			App->map->Active();
+			App->player->Active();
+			App->animator->Active();
+			App->entities_manager->Active(); /*This load the entities animations textures*/
+			App->fog_of_war->Active();
+			App->buff_manager->Active(); /*This load the particles textures*/
+			App->AI->Active();
+			App->gui->Active();
+
+			App->LoadDefaultGame("scene/standard_match.xml");
+			App->EnableActiveModules();
+
 			this->CleanUp();
 			this->Disable();
 			App->scene->Enable();
@@ -295,8 +320,9 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 				option_selected->button_state = UP;
 				singleplayer->DesactivateChids();
 
-
 				App->LoadGame("party_file.xml");
+				App->EnableActiveModules();
+
 				this->CleanUp();
 				this->Disable();
 				App->scene->Enable();

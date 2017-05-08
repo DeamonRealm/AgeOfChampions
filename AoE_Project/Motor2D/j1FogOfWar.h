@@ -53,8 +53,7 @@ public:
 
 public:
 
-	//Enable and disable modules
-	void Enable();
+
 	void Disable();
 
 	void Init();

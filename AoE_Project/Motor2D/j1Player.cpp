@@ -54,6 +54,8 @@ void j1Player::Enable()
 	game_panel->Enable();
 	action_panel->Enable();
 	minimap_panel->Enable();
+
+	enabled = true;
 }
 
 void j1Player::Disable()

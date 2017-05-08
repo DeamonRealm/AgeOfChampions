@@ -11,6 +11,10 @@
 #include "Brofiler/Brofiler.h"
 #pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
 
+#define TIME_TO_ENABLE 10
+
+struct SDL_Texture;
+
 // Modules
 class j1Window;
 class j1Input;
@@ -72,6 +76,9 @@ public:
 
 private:
 
+	// Enable the current active modules
+	void EnableActiveModulesNow();
+
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
@@ -97,7 +104,9 @@ private:
 public:
 
 	// Load the default game
-	bool LoadDefaultGame();
+	bool LoadDefaultGame(const char* folder_str);
+	void LoadDefaultGameNow();
+	void EnableActiveModules();
 
 public:
 
@@ -151,10 +160,15 @@ private:
 	std::string				title;
 	std::string				organization;
 
+public:
+
 	mutable bool			want_to_save = false;	/*True when save function called*/
 	bool					want_to_load = false;	/*True when load function called*/
+	bool					want_to_load_default = false;
 	std::string				load_game;	/*Folder where the game is loaded*/
 	std::string				save_game;	/*Folder where the game is saved*/
+
+private:
 
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
@@ -167,6 +181,8 @@ private:
 	int					capped_ms = -1;
 
 	bool				want_to_quit = false;
+	bool				want_to_enable = false;
+	SDL_Texture*		load_screen = nullptr;
 
 public:
 

@@ -26,14 +26,20 @@ public:
 	}
 
 	//Enable and disable modules
+	void Active()
+	{
+		active = true;
+	}
 	virtual void Enable()
 	{
 		active = true;
+		enabled = true;
 	}
 
 	virtual void Disable()
 	{
 		active = false;
+		enabled = false;
 	}
 
 	// Called before render is available
@@ -91,7 +97,8 @@ public:
 public:
 
 	std::string	name;
-	bool		active;
+	bool		active = false;
+	bool		enabled = false;
 
 };
 
