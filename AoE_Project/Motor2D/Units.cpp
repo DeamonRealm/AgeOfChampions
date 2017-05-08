@@ -115,7 +115,7 @@ bool Villager::Die()
 		action_type = DIE;
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
 		App->entities_manager->AddDeathUnit(this);
-		if (item_type == GOLD || item_type == STONE || item_type == MEAT)
+		if (item_type == GOLD || item_type == STONE || item_type == MEAT || item_type == WOOD)
 		{
 			item_type = NO_ITEM;
 		}

@@ -342,7 +342,12 @@ bool j1EntitiesManager::Draw()
 
 	//Draw all buildings
 	std::vector<Building*> buildings_vec;
-	buildings_quadtree.CollectCandidates(buildings_vec, App->render->camera_viewport);
+	SDL_Rect buildings_rect = App->render->camera_viewport;
+	buildings_rect.x -= 50;
+	buildings_rect.y -= 50;
+	buildings_rect.w += 100;
+	buildings_rect.h += 250;
+	buildings_quadtree.CollectCandidates(buildings_vec, buildings_rect);
 	size = buildings_vec.size();
 	for (uint k = 0; k < size; k++)
 	{

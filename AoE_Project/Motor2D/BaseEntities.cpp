@@ -1583,10 +1583,6 @@ bool Unit::Die()
 		}
 		if (lastenemy && !App->debug_mode) App->player->game_panel->DoWin();
 	}
-
-
-	
-
 		App->buff_manager->RemoveTargetBuffs(this);
 		action_type = DIE;
 		if (this->GetDiplomacy() == ALLY) App->player->game_panel->IncressPopulation(-1, false);
@@ -2328,7 +2324,7 @@ void Building::CleanMapLogic()
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
-	if (building_type == RUBBLE_THREE || building_type == BARRACK || building_type == BARRACK_C || building_type == ARCHERY_RANGE || building_type == ARCHERY_RANGE_C)
+	if (building_type == RUBBLE_FOUR || building_type == RUBBLE_THREE || building_type == BARRACK || building_type == BARRACK_C || building_type == ARCHERY_RANGE || building_type == ARCHERY_RANGE_C)
 	{
 		world_coords.x -= 1;
 		world_coords.y -= 1;
