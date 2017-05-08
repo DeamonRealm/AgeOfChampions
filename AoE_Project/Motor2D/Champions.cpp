@@ -96,7 +96,6 @@ void Champion::CheckCooldown()
 	else
 		ability_lvl_3_ready = true;
 }
-
 //Ability A methods
 void Champion::SetAbility_lvl_1(bool choosed)
 {
@@ -577,7 +576,8 @@ void Warrior::CheckHability_lvl_1()
 		{
 			if (unit._Ptr->_Myval == units_around[k])
 			{
-				units_around[k] = nullptr;
+				if (App->buff_manager->CheckBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType()))
+					units_around[k] = nullptr;
 				found = true;
 				break;
 			}
@@ -597,6 +597,7 @@ void Warrior::CheckHability_lvl_1()
 		if (units_around[k] == nullptr)continue;
 		if (units_around[k]->GetDiplomacy() == entity_diplomacy && units_around[k]->GetPosition() != position)
 		{
+
 			App->buff_manager->CallBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), false);
 			buffed_units.push_back(units_around[k]);
 		}
@@ -1135,7 +1136,8 @@ void Wizard::CheckHability_lvl_1()
 		{
 			if (unit._Ptr->_Myval == units_around[k])
 			{
-				units_around[k] = nullptr;
+				if (App->buff_manager->CheckBuff(units_around[k], buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType()))
+					units_around[k] = nullptr;					
 				found = true;
 				break;
 			}

@@ -135,7 +135,6 @@ public:
 	float				GetValue()const;
 	Unit*				GetTarget()const;
 	bool				GetActor()const;
-
 	//Utils
 	virtual bool ApplyBuff();
 	virtual bool RemoveBuff(); //remove buff from target when time it's over.
@@ -217,7 +216,7 @@ private:
 	BuffParticle	GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TYPE atr_type, bool act);
 
 public:
-
+	bool			CheckBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type);
 	bool			CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor = false);
 	PassiveBuff*	GetPassiveBuff(BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor);
 	void			RemoveTargetBuff(Unit* target, PassiveBuff* buff);

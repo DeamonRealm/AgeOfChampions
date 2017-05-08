@@ -1890,6 +1890,7 @@ void j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 	{
 		if (unit._Ptr->_Myval->GetDiplomacy() == e_diplomacy && unit._Ptr->_Myval->GetUnitType() == u_type)
 		{
+			App->buff_manager->RemoveTargetBuffs(unit._Ptr->_Myval);
 			unit._Ptr->_Myval->SetUpgrade(new_unit);
 		}
 		unit++;

@@ -738,6 +738,22 @@ BuffParticle j1BuffManager::GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TY
 	return BuffParticle(*buff_particle_definitions[0]);
 }
 
+bool j1BuffManager::CheckBuff(Unit * target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type)
+{
+	if (target == nullptr)
+	{
+		return false;
+	}
+	std::list<PassiveBuff*>::iterator item = static_buffs.begin();
+	while (item != static_buffs.end())
+	{
+		if (item._Ptr->_Myval->GetTarget() == target && item._Ptr->_Myval->buff_type == buff_type&&item._Ptr->_Myval->attribute_type == buff_atr_type)
+			return true;
+		item++;
+	}
+	return false;
+}
+
 bool j1BuffManager::CallBuff(Unit * target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor)
 {
 	if (target == nullptr)
