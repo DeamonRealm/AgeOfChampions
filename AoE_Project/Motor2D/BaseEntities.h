@@ -20,6 +20,7 @@ class AlphaCell;
 class FogTile;
 
 #define FOCUS_MARGIN 12
+#define MAX_DISTANCE 75
 
 // ENTITIES ENUMS -----------
 enum ENTITY_TYPE
@@ -429,8 +430,8 @@ public:
 	bool	Draw(bool debug);
 
 	//Actions ---------------
-	bool					Move(std::vector<iPoint>*& path, const iPoint& target = { -1,-1 });
-	bool					AttackMove(std::vector<iPoint>*& path, Unit* target);
+	bool					Move(std::vector<iPoint>*& path, const iPoint& target = { -1,-1 },Unit* unit_target=nullptr);
+	void					ResetDistance();
 
 	iPoint					Spawn( const iPoint& target = { -1,-1 });
 

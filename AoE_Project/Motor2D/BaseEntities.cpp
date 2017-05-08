@@ -446,7 +446,7 @@ bool Unit::Draw(bool debug)
 
 
 //Actions ---------
-bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns true when it ends
+bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_target) ///Returns true when it ends
 {
 	//Check if the unit have an assigned path
 	if (path == nullptr)
@@ -455,6 +455,29 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 		return true;
 	}
 	last_position = GetPositionRounded();
+	/*
+	if (unit_target != nullptr)
+	{
+		if (current_distance == 0)
+			current_distance = last_position.DistanceTo(*(path->begin()));
+		int target_ditance = last_position.DistanceTo(unit_target->GetPositionRounded());
+
+		if (current_distance + MAX_DISTANCE  > target_ditance|| current_distance - MAX_DISTANCE<target_ditance)
+		{
+			current_distance = target_ditance;
+			iPoint goal = this->attack_area.NearestPoint(&unit_target->soft_collider);
+			std::vector<iPoint>* new_path;
+			new_path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
+			if (new_path == nullptr)return true;
+			if (new_path != nullptr) {
+				path->clear();
+				delete path;
+				path = new_path;
+				current_distance = last_position.DistanceTo(*(path->begin()));
+			}
+		}
+	}
+	*/
 	//Build goal path point
 	iPoint goal = path->back();
 	iPoint location = iPoint(position.x, position.y);
@@ -499,6 +522,9 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 				break;
 			case COLLISION_IDLE:
 			{
+				if (unit_target != nullptr)
+					if (unit_target == other_unit)
+						return true;
 				if (path->size() < 2) {
 					if (target != iPoint(-1, -1))
 						if (!Repath(path, target)) return true;						
@@ -509,6 +535,9 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 			}
 			break;
 			case COLLISION_MOVE:
+				if (unit_target != nullptr)
+					if (unit_target == other_unit)
+						return true;
 				//if we have a collision with other unit and we have lower priority reduction of speed
 				if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
 					if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
@@ -529,6 +558,13 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 			case FUTURE_COLLISION_MOVE:			
 				break;
 			}
+		}
+		if (unit_target != nullptr&&collisions == 0)
+		{
+			int target_ditance = last_position.DistanceTo(unit_target->GetPositionRounded());
+			LOG("target_ditance %i", target_ditance);
+			if (MAX_DISTANCE > target_ditance)
+				return true;
 		}
 		if (collisions == 0 && mutable_speed != 0.0f) 
 			mutable_speed = 0.0f;		
@@ -558,133 +594,11 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target) ///Returns tru
 	return false;
 }
 
-bool Unit::AttackMove(std::vector<iPoint>*& path, Unit * target)
+void Unit::ResetDistance()
 {
-	//Check if the unit have an assigned path
-	if (path == nullptr||target==nullptr)
-	{
-		LOG("Error path not found!");
-		return true;
-	}
-	last_position = GetPositionRounded();
-	int target_ditance = last_position.DistanceTo(target->GetPositionRounded());
-	if (current_distance == 0 || current_distance > target_ditance)
-	{
-		iPoint goal = target->attack_area.NearestPoint(&target->soft_collider);
-		std::vector<iPoint>* new_path;
-		new_path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
-		if (new_path != nullptr) {
-
-			path->clear();
-			delete path;
-			path = new_path;
-			return false;
-		}
-		return true;
-	}
-	//Build goal path point
-	iPoint goal = path->back();
-	iPoint location = iPoint(position.x, position.y);
-	float x_step = 0.0f;
-	float y_step = 0.0f;
-	int path_size = path->size();
-	//Update goal node and animation direction
-	if (location.DistanceTo(goal) < 2)
-	{
-		if (future_position != iPoint(-1, -1) && !App->pathfinding->IsWalkable(App->map->WorldToMap(future_position.x, future_position.y)))
-		{
-			CorrectPath(path);
-			if (path->empty())
-				return true;		
-			goal = NextGoal(path);
-			NewPosition(goal, x_step, y_step);
-			//Add the calculated values at the unit & mark position
-			SetPosition(x_step, y_step);
-			return false;
-		}
-		//Look in the next update if there is an error
-		std::vector<Unit*> other_units;
-		App->entities_manager->units_quadtree.CollectCandidates(other_units, vision);
-		other_units.size();
-		int collisions = 0;
-		while (!other_units.empty()) {
-			Unit* other_unit = other_units.back();
-			other_units.pop_back();
-			if (other_unit == this)	continue;
-			int other_path_size = 0;
-			std::vector<iPoint>* other_path = nullptr;
-			if (other_unit->GetPath() != nullptr)
-			{
-				other_path = other_unit->GetPath();
-				other_path_size = other_path->size();
-			}
-			switch (CheckColision(this, other_unit))
-			{
-			case NO_COLLISION:
-				break;
-			case COLLISION_IDLE:
-			{
-				if (other_unit == target) return true;
-				if (other_unit->GetDiplomacy() == this->GetDiplomacy()) {
-					if (path->size() < 2)
-					{
-						if (!Repath(path, *(path->begin()))) return true;
-						return false;
-					}
-				}
-				
-			}
-			break;
-			case COLLISION_MOVE:
-				if (other_unit == target) return true;
-				//if we have a collision with other unit and we have lower priority reduction of speed
-				if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
-					if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-						if (!other_unit->Repath(other_path, *(other_path->begin())))	return true;
-						else
-							if (!Repath(path, *(path->begin()))) return true;
-				}
-				else
-				{
-					if (mutable_speed == 0 && other_unit->mutable_speed == 0)
-						if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-							other_unit->mutable_speed -= 0.1;
-						else
-							mutable_speed -= 0.1;
-				}
-				collisions++;
-				break;
-			case FUTURE_COLLISION_MOVE:
-				break;
-			}
-		}
-		if (collisions == 0 && mutable_speed != 0.0f)
-			mutable_speed = 0.0f;
-		if (path->size() == 1)
-		{
-			//Set unit at the goal pixel position
-			SetPosition((float)goal.x, (float)goal.y);
-			//Delete unit path
-			delete path;
-			path = nullptr;
-			return true;
-		}
-		//Set the unit next tile goal
-		goal = NextGoal(path);
-	}
-	//Check actor animation
-	if (action_type != WALK)
-	{
-		action_type = WALK;
-		Focus(goal, false);
-	}
-	//Calculate the X/Y values that the unit have to move 
-	//checking the goal location and the unit movement speed
-	NewPosition(goal, x_step, y_step);
-	//Add the calculated values at the unit & mark position
-	SetPosition(x_step, y_step);
-	return false;
+	current_distance = 0;
 }
+
 
 iPoint Unit::Spawn(const iPoint& position)
 {

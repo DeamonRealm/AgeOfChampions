@@ -21,7 +21,7 @@ public:
 	{
 	}
 
-	MoveUnitAction(Unit* actor, std::vector<iPoint>* path, const iPoint& target) : Action(actor, TASK_U_MOVE), path(path), target(target)
+	MoveUnitAction(Unit* actor, std::vector<iPoint>* path, const iPoint& target,Unit* unit_target=nullptr) : Action(actor, TASK_U_MOVE), path(path), target(target),unit_target(unit_target)
 	{
 		if (path != nullptr )
 		{
@@ -79,7 +79,7 @@ public:
 
 	bool Execute()
 	{
-		if (((Unit*)actor)->Move(path, target))
+		if (((Unit*)actor)->Move(path, target, unit_target))
 		{
 			//Stop idle walk animation
 			bool exception = false;
@@ -106,6 +106,7 @@ public:
 
 	void CleanUp()
 	{
+		((Unit*)actor)->ResetDistance();
 		this->actor = nullptr;
 		if (path != nullptr)
 		{
@@ -129,7 +130,7 @@ public:
 private:
 
 	std::vector<iPoint>* path = nullptr;
-
+	Unit* unit_target = nullptr;
 	iPoint destination;
 	iPoint target;
 };

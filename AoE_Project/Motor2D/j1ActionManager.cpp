@@ -67,8 +67,7 @@ MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * ac
 	//Generate a new move action definition
 	MoveUnitAction* action = nullptr;
 	//if unit_target is nullptr move normal
-	if (unit_target == nullptr)
-		 action = new MoveUnitAction(actor, path, target);
+		 action = new MoveUnitAction(actor, path, target, unit_target);
 	//else do attack move
 	//else
 		//MoveUnitAction* action = new MoveUnitAction(actor, path, target);
