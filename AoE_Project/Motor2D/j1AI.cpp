@@ -33,20 +33,20 @@ void j1AI::Enable()
 
 
 	update_timer.Start();
-
 	research_timer.Start();
 
-	App->entities_manager->BuildingList();
+	current_age = 2;
+	next_research = 0;
 
-	std::list<Building*>::const_iterator building = App->entities_manager->buildings.begin();
-	while (building != App->entities_manager->buildings.end())
+	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
 	{
-		enemy_buildings.push_back(building._Ptr->_Myval);
-		building++;
+		units_lvl[i] = 0;
+		buildings_lvl[i] = 0;
 	}
-	
+	UpdateAIUnits();
+	UpdateAIBuildings();
 
-
+	research_timer.Start();
 	//ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
 }
 
@@ -54,7 +54,10 @@ void j1AI::Disable()
 {
 	active = false;
 	ai_worker->Reset();
+
+	ai_research_worker->HardReset();
 	enemy_units.clear();
+	enemy_buildings.clear();
 }
 
 
@@ -99,19 +102,6 @@ bool j1AI::Update(float dt)
 	ai_worker->Update();
 	ai_research_worker->Update();
 	
-	UpdateResearch();
-	
-
-	//	WIP
-	
-	if (building_timer.Read() > 10000)
-	{
-		ManageConstrucion();
-
-		building_timer.Start();
-	}
-	
-
 	//only update every 2 seconds
 	if (update_timer.Read() < 1000)
 	{
@@ -139,6 +129,17 @@ bool j1AI::Update(float dt)
 		unit_it++;
 	}
 
+	UpdateResearch();
+
+
+	//	WIP
+	if (building_timer.Read() > 10000)
+	{
+		ManageConstrucion();
+
+		building_timer.Start();
+	}
+
 
 	ManageTroopsCreation();
 	
@@ -155,9 +156,13 @@ bool j1AI::CleanUp()
 	ai_worker->Reset();
 	delete ai_worker;
 
+	enemy_buildings.clear();
+	enemy_units.clear();
+
 	// Entities Data CleanUp
 	ai_research_worker->HardReset();
 	delete ai_research_worker;
+
 	units_queue.clear();
 	buildings_queue.clear();
 	units_production.clear();
@@ -205,6 +210,27 @@ bool j1AI::Load(pugi::xml_node & data)
 		curr_node = curr_node.next_sibling();
 	}
 	UpdateAIBuildings();
+
+	// Check AI Units and Buildings
+	std::list<Building*>::const_iterator building = App->entities_manager->buildings.begin();
+	while (building != App->entities_manager->buildings.end())
+	{
+		if (building._Ptr->_Myval->GetDiplomacy() == ENEMY)
+		{
+			enemy_buildings.push_back(building._Ptr->_Myval);
+		}
+		building++;
+	}
+
+	std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
+	while (unit != App->entities_manager->units.end())
+	{
+		if (unit._Ptr->_Myval->GetDiplomacy() == ENEMY)
+		{
+			enemy_units.push_back(unit._Ptr->_Myval);
+		}
+		unit++;
+	}
 	return true;
 }
 
@@ -256,36 +282,6 @@ bool j1AI::Save(pugi::xml_node & data) const
 		}
 	}
 
-	return true;
-}
-
-bool j1AI::LoadEnemies(const char * folder)
-{
-	//Load
-	LOG("--- Loading %s...", folder);
-	std::string load_folder = name + "/" + folder;
-	pugi::xml_document enemy_data;
-
-	if (!App->fs->LoadXML(load_folder.c_str(), &enemy_data))
-	{
-		LOG("Enemy AI load error!");
-		return false;
-	}
-
-	pugi::xml_node unit_node = enemy_data.child("data").child("units").first_child();
-	while (unit_node != NULL)
-	{
-		/*	Unit* new_unit = App->entities_manager->GenerateUnit(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), ENEMY, false);
-		new_unit->SetPosition(unit_node.attribute("pos_x").as_float(), unit_node.attribute("pos_y").as_float(), false);
-		units_to_spawn.push_back(new_unit);
-		unit_node = unit_node.next_sibling();*/
-
-
-		//ai_worker->AddAICommand(new SpawnUnitCommand(App->animator->StrToUnitEnum(unit_node.attribute("type").as_string()), fPoint(unit_node.attribute("pos_x").as_float(0), unit_node.attribute("pos_y").as_float(0))));
-
-		unit_node = unit_node.next_sibling();
-
-	}
 	return true;
 }
 
@@ -517,6 +513,7 @@ void j1AI::UpdateAIUnits()
 		}
 	}
 }
+
 void j1AI::UpdateAIBuildings()
 {
 	int size = buildings_queue.size();
@@ -623,7 +620,8 @@ Building * j1AI::FindBuilding(BUILDING_TYPE type, BUILDING_TYPE type2)
 	{
 		building--;
 		b_type = building._Ptr->_Myval->GetBuildingType();
-		if (b_type == type || b_type == type2)
+		if (building._Ptr->_Myval->GetDiplomacy() == ALLY);
+		else if (b_type == type || b_type == type2)
 		{
 			return building._Ptr->_Myval;
 		}
@@ -717,8 +715,8 @@ BUILDING_TYPE j1AI::GetNextBuildingSpawnType()
 
 void j1AI::GenerateDebugVillager()
 {
-	std::list<Building*>::const_iterator building = App->entities_manager->buildings.begin();
-	while (building != App->entities_manager->buildings.end())
+	std::list<Building*>::const_iterator building = enemy_buildings.begin();
+	while (building != enemy_buildings.end())
 	{
 		if (building._Ptr->_Myval->GetBuildingType() == TOWN_CENTER || building._Ptr->_Myval->GetBuildingType() == TOWN_CENTER_C)
 		{
@@ -731,6 +729,7 @@ void j1AI::GenerateDebugVillager()
 bool j1AI::GenerateUnit(UNIT_TYPE type)
 {
 	if (units_production[type].base_type_unit == NO_UNIT) return false;
+	
 	if (CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost,UNIT , false))
 	{
 		Building* productive_building = nullptr;

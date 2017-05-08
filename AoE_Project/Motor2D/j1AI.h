@@ -142,8 +142,6 @@ public:
 
 private:
 
-	bool LoadEnemies(const char* folder);
-
 	Resource*	GetNearestNeed(iPoint pos);
 
 	void ManageAttack();

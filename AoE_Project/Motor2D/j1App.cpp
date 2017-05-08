@@ -492,6 +492,8 @@ bool j1App::LoadGameNow()
 	action_manager->Enable();
 	buff_manager->Disable();
 	buff_manager->Enable();
+	AI->Disable();
+	AI->Enable();
 
 	char* buffer;
 	uint size = fs->Load(load_game.c_str(), &buffer);
@@ -532,10 +534,6 @@ bool j1App::LoadGameNow()
 		LOG("Could not load game state xml file %s", load_game.c_str());
 
 	want_to_load = false;
-
-	//Temporal
-	App->AI->Disable();
-	App->AI->Enable();
 
 	return ret;
 }
@@ -592,9 +590,12 @@ bool j1App::LoadDefaultGame()
 	entities_manager->Enable();
 	fog_of_war->Disable();
 	fog_of_war->Enable();
-	action_manager->Enable();
 	buff_manager->Disable();
 	buff_manager->Enable();
+	//Temporal
+	AI->Disable();
+	AI->Enable();
+
 	LOG("%.4f", time_to_start.ReadSec());
 	time_to_start.Start();
 	bool ret = true;
@@ -631,10 +632,6 @@ bool j1App::LoadDefaultGame()
 	}
 	else
 		LOG("Could not load game state xml file %s", load_game.c_str());
-
-	//Temporal
-	App->AI->Disable();
-	App->AI->Enable();
 
 	LOG("%.4f", time_to_start.ReadSec());
 
