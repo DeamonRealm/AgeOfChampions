@@ -35,6 +35,35 @@ iPoint j1GroupMovement::GetMiddlePoint()
 	return ret;
 }
 
+void j1GroupMovement::AttackOnGroup(std::list<Entity*>* units, Entity* target, bool building)
+{
+	if (units->empty()) 
+		return;
+	for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
+	{
+		Unit* current_unit = (Unit*)item._Ptr->_Myval;
+		if(building)
+			current_unit->AddAction((Action*)App->action_manager->AttackToBuildingAction(current_unit, (Building*)target));
+
+		else
+			current_unit->AddAction((Action*)App->action_manager->AttackToUnitAction(current_unit, (Unit*)target));
+	}
+}
+
+void j1GroupMovement::RecolectOnGroup(std::list<Entity*>* units, Resource* resource)
+{
+
+	if (units->empty())
+		return;
+	for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
+	{
+		Unit* current_unit = (Unit*)item._Ptr->_Myval;
+		if (current_unit->GetUnitType() != VILLAGER) continue;
+		current_unit->AddAction((Action*)App->action_manager->RecollectAction((Villager*)item._Ptr->_Myval, resource));
+
+	}
+}
+
 void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get, int x, int y, bool active)
 {
 	map_destination = App->map->WorldToMap(x, y);

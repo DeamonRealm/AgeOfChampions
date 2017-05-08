@@ -36,6 +36,8 @@ public:
 	//return the path to units
 	iPoint destination;
 	iPoint map_destination;
+	void AttackOnGroup(std::list<Entity*>* units, Entity* target, bool active);
+	void RecolectOnGroup(std::list<Entity*>* units, Resource* resource);
 
 	void GetGroupOfUnits(std::list<Entity*>* units, int x, int y, bool active);
 

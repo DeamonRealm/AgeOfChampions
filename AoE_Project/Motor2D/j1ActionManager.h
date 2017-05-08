@@ -179,7 +179,7 @@ public:
 	//Action Calls --------------------
 	//Move Functions
 	MoveUnitAction*				MoveAction(Unit* actor, const iPoint& destination, const iPoint& target = { -1,-1 });
-	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor, const iPoint& target = { -1,-1 });
+	MoveUnitAction*				MoveAction(std::vector<iPoint>* path, Unit* actor, const iPoint& target = { -1,-1 },Unit* unit_target =nullptr);
 	TeleportUnitAction*			TeleportAction(Unit* actor, const iPoint& displacement);
 
 	//Attack Functions

@@ -62,10 +62,16 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destinat
 	return action;
 }
 
-MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor, const iPoint& target)
+MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor, const iPoint& target, Unit* unit_target)
 {
 	//Generate a new move action definition
-	MoveUnitAction* action = new MoveUnitAction(actor, path, target);
+	MoveUnitAction* action = nullptr;
+	//if unit_target is nullptr move normal
+	if (unit_target == nullptr)
+		 action = new MoveUnitAction(actor, path, target);
+	//else do attack move
+	//else
+		//MoveUnitAction* action = new MoveUnitAction(actor, path, target);
 
 	//Add the new action at the action manager
 	all_actions.push_back(action);

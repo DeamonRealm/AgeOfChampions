@@ -367,7 +367,7 @@ protected:
 	float			speed = 0.0f;
 	float			mutable_speed = 0.0f;
 	float			speed_buff = 0.0f;
-
+	int				current_distance = 0;
 	ACTION_TYPE		action_type = IDLE;
 	DIRECTION_TYPE	direction_type = SOUTH;
 	iPoint			future_position = { 0,0 };
@@ -426,6 +426,8 @@ public:
 
 	//Actions ---------------
 	bool					Move(std::vector<iPoint>*& path, const iPoint& target = { -1,-1 });
+	bool					AttackMove(std::vector<iPoint>*& path, Unit* target);
+
 	iPoint					Spawn( const iPoint& target = { -1,-1 });
 
 	bool					Repath(std::vector<iPoint>*& path, const iPoint & destination);
