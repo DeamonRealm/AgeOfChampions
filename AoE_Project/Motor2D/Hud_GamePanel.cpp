@@ -274,10 +274,6 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		{
 			if (App->fs->Exists("save/party_file.xml"))
 			{
-			//	App->player->Disable();
-			//	App->entities_manager->Disable();
-			//	App->player->Enable();
-			//	App->entities_manager->Enable();
 				App->LoadGame("party_file.xml");
 			}
 			else LOG("No party Saved");

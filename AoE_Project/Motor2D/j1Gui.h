@@ -52,7 +52,8 @@ enum TEXTURE_ID
 	HUD,
 	CHAMPION_SKILL,
 	MENU_PAUSE,
-	FINAL_MENU
+	FINAL_MENU,
+	LOAD_SCREEN
 };
 
 // ---------------------------------------------------
@@ -104,6 +105,7 @@ private:
 	std::string				champions_file_name;
 	std::string				menu_pause_file_name;	
 	std::string				final_menu_file_name;
+	std::string				load_screen_file_name;
 
 	//Target Module of gui input
 	j1Module*				default_input_target;

@@ -48,6 +48,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	champions_file_name = conf.child("champion").attribute("file").as_string("");
 	menu_pause_file_name = conf.child("menu_pause").attribute("file").as_string("");
 	final_menu_file_name = conf.child("final_menu").attribute("file").as_string("");
+	load_screen_file_name = conf.child("load_screen").attribute("file").as_string("");
 
 	return ret;
 }
@@ -68,7 +69,7 @@ bool j1Gui::Start()
 	ui_textures.push_back(App->tex->Load(champions_file_name.c_str()));
 	ui_textures.push_back(App->tex->Load(menu_pause_file_name.c_str()));
 	ui_textures.push_back(App->tex->Load(final_menu_file_name.c_str()));
-
+	ui_textures.push_back(App->tex->Load(load_screen_file_name.c_str()));
 
 	LoadCursorTypes();
 	ChangeMouseTexture(DEFAULT);

@@ -52,6 +52,7 @@ private:
 	//UI Elements
 	UI_Image* main_menu_background = nullptr;
 	UI_Image* standard_background = nullptr;
+	UI_Image* load_screen = nullptr;
 
 	//MainMenu Elements
 	UI_Fixed_Button*	exit = nullptr;

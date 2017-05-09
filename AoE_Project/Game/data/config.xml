@@ -25,7 +25,8 @@
     <hud file="gui/HUD.png"/>
     <champion file="gui/IU_Champions.png"/>
     <menu_pause file="gui/Menu_Pause.png"/>
-	<final_menu file="gui/Menu_Final.png"/>
+	  <final_menu file="gui/Menu_Final.png"/>
+    <load_screen file ="gui/LoadScreen.png"/>
   </gui>
     
   <window>

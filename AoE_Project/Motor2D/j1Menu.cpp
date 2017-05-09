@@ -53,6 +53,8 @@ bool j1Menu::Enable()
 	loadgame->Desactivate();
 	loadgame->DesactivateChids();
 
+	load_screen->Desactivate();
+
 	return true;
 }
 
@@ -100,6 +102,15 @@ bool j1Menu::Start()
 	main_menu_background->ChangeTextureRect({ 0,0,1366,768 });
 	main_menu_background->ChangeTextureId(BACKGROUND);
 	menu_screen->AddChild(main_menu_background);
+
+	//Load screen 
+	load_screen = (UI_Image*)App->gui->GenerateUI_Element(IMG);
+	load_screen->ChangeTextureRect({ 0,0,1366,768 });
+	load_screen->ChangeTextureId(LOAD_SCREEN);
+	main_menu_background->AddChild(load_screen);
+	load_screen->SetLayer(30);
+	load_screen->Desactivate();
+
 
 	exit = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
 	exit->SetTexFromXML(unit_node.child("exit"), 1);
@@ -291,12 +302,9 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		if (target == standardgame)
 		{
 			option_selected->button_state = UP;
-
+			menu_screen->DesactivateChids();
+			load_screen->Activate();
 			App->LoadDefaultGame("scene/standard_match.xml");
-
-
-			/*this->CleanUp();
-			this->Disable();*/
 
 		}
 		if (target == loadgame)
@@ -305,12 +313,9 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			{
 				option_selected->button_state = UP;
 				singleplayer->DesactivateChids();
-
+				menu_screen->DesactivateChids();
+				load_screen->Activate();
 				App->LoadGame("party_file.xml");
-
-				/*this->CleanUp();
-				this->Disable();
-				App->scene->Enable();*/
 			}
 			else LOG("No party Saved");
 		}

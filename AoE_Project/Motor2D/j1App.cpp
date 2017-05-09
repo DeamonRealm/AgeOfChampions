@@ -235,9 +235,6 @@ bool j1App::Update()
 
 void j1App::EnableActiveModulesNow()
 {
-	App->render->Blit(load_screen, 0, 0);
-	LOG("Frame!");
-
 	if (modules_to_enable[enable_index]->Enable())enable_index++;
 
 	uint size = modules_to_enable.size();
@@ -250,7 +247,9 @@ void j1App::EnableActiveModulesNow()
 		}
 		want_to_enable = false;
 		modules_to_enable.clear();
+		if(enable_index > 2)App->menu->Disable();
 		enable_index = 0;
+		
 	}
 }
 
@@ -450,8 +449,7 @@ void j1App::LoadGame(const char* file,bool activate_modules)
 		App->fog_of_war->Disable();
 		App->buff_manager->Disable();
 		App->AI->Disable();
-		App->gui->Disable();
-		App->menu->Disable();
+		//App->gui->Disable();
 
 		//Reactivate all the modules (only say active but data is not loaded in the same loop)
 		App->map->Active();
@@ -461,7 +459,7 @@ void j1App::LoadGame(const char* file,bool activate_modules)
 		App->fog_of_war->Active();
 		App->buff_manager->Active(); /*This load the particles textures*/
 		App->AI->Active();
-		App->gui->Active();
+		//App->gui->Active();
 		App->scene->Enable();
 
 		want_to_enable = true;
@@ -602,8 +600,7 @@ bool j1App::LoadDefaultGame(const char* folder_str)
 	App->fog_of_war->Disable();
 	App->buff_manager->Disable();
 	App->AI->Disable();
-	App->gui->Disable();
-	App->menu->Disable();
+	//App->gui->Disable();
 
 	//Reactivate all the modules (only say active but data is not loaded in the same loop)
 	App->map->Active();
@@ -613,7 +610,7 @@ bool j1App::LoadDefaultGame(const char* folder_str)
 	App->fog_of_war->Active();
 	App->buff_manager->Active(); /*This load the particles textures*/
 	App->AI->Active();
-	App->gui->Active();
+	//App->gui->Active();
 	App->scene->Enable();
 
 	App->EnableActiveModules();
