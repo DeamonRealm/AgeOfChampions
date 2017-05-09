@@ -550,6 +550,7 @@ public:
 		{
 			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 			{
+				if (surrounding_units[i]->SurroundedUnit() && ((Unit*)actor)->GetAttackType() == MELEE) continue;
 				actor->AddAction(App->action_manager->AttackToUnitAction((Unit*)actor, surrounding_units[i]), PRIMARY);
 				return false;
 			}
@@ -602,6 +603,9 @@ public:
 		surrounding_units.clear();
 
 		//Units scann and attack
+		App->entities_manager->units_quadtree.CollectCandidates(surrounding_units, actor->GetVision());
+		App->entities_manager->OrganizeByNearest(surrounding_units, actor->GetVision());
+
 		uint size = surrounding_units.size();
 		for (uint i = 0; i < size; i++)
 		{
