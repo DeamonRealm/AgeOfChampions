@@ -194,15 +194,6 @@ ResearchTecAction * j1ActionManager::ResearchAction(RESEARCH_TECH type, uint r_t
 	return action;
 }
 
-ScannAction * j1ActionManager::ScanAction(Entity * actor)
-{
-	ScannAction* action = new ScannAction((Unit*)actor);
-
-	all_actions.push_back(action);
-
-	return action;
-}
-
 AutoAttackPassiveAction * j1ActionManager::AutoAttackAction(Entity * actor)
 {
 	AutoAttackPassiveAction* action = new AutoAttackPassiveAction((Unit*)actor);

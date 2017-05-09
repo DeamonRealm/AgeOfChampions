@@ -201,7 +201,6 @@ public:
 
 	//Passive actions------------------
 	//Scann for units
-	ScannAction*				ScanAction(Entity* actor);
 	AutoAttackPassiveAction*	AutoAttackAction(Entity* actor);
 	AutoHealPassiveAction*		AutoHealAction(Entity* actor);
 

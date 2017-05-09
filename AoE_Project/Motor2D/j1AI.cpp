@@ -1022,7 +1022,7 @@ bool SpawnUnitsFromListCommand::Execute()
 	std::list<Unit*>::iterator it = App->AI->enemy_units.begin();
 	while (it != App->AI->enemy_units.end())
 	{
-		it._Ptr->_Myval->AddAction(App->action_manager->ScanAction(it._Ptr->_Myval), TASK_CHANNELS::PASSIVE);
+		it._Ptr->_Myval->AddAction(App->action_manager->AutoAttackAction(it._Ptr->_Myval), TASK_CHANNELS::PASSIVE);
 
 		it++;
 	}
