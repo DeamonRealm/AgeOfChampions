@@ -136,6 +136,7 @@ public:
 	// Select Methods
 	void Select(SELECT_TYPE type);
 	void UpdateSelected();
+	bool UpdateGroup();
 
 	// Clear Selected Elements List
 	void UnSelect_Entity();

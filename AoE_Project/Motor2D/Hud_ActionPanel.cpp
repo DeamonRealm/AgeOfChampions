@@ -758,7 +758,11 @@ void HeroPanel::HeroisDead(UNIT_TYPE u_type)
 		}
 		UpdateCells();
 	}
-	else SetDefault();
+	else
+	{
+		entitis_panel = nullptr;
+		SetDefault();
+	}
 }
 
 
@@ -851,6 +855,7 @@ bool HeroPanel::ActivateCell(int i)
 		UNIT_TYPE u_type = ((Unit*)entitis_panel)->GetUnitType();
 		entitis_panel->SetLife(0);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
+		App->player->selection_panel->RemoveDeadSelectedUnits((Unit*)entitis_panel);
 		HeroisDead(u_type);
 		champion_selected = NO_UNIT;
 		activate_skill = -1;
@@ -1421,9 +1426,9 @@ void Action_Panel::SetGamePanelPointer(Game_Panel * game_panel)
 	player_game_panel = game_panel;
 }
 
-void Action_Panel::SetPanelType()
+void Action_Panel::SetPanelType(bool force_setup)
 {
-	if (isin) return;
+	if (isin && !force_setup) return;
 	SetEntitySelected();
 
 	if (actual_entity == nullptr) return;
@@ -1621,7 +1626,8 @@ void Action_Panel::CheckSelected(int selected)
 	{
 		if (actualpanel->GetActualEntity() == nullptr || actualpanel->GetActualEntity()->GetLife() == 0)
 		{
-			actualpanel->ChangePanelTarget(player_selection_panel->GetSelected());
+			if (actualpanel == heropanel) SetPanelType(true);
+			else actualpanel->ChangePanelTarget(player_selection_panel->GetSelected());
 		}
 	}
 }

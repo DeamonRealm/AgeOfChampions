@@ -654,6 +654,8 @@ void Selection_Panel::DrawGroup()
 	SDL_Rect* box = nullptr;
 	int	  life = 0, max_life = 0;
 
+	UpdateGroup();
+
 	int i = selected_elements.size() - 1;
 	std::list<Entity*>::const_iterator item = selected_elements.end();
 	while (item != selected_elements.begin())
@@ -661,15 +663,6 @@ void Selection_Panel::DrawGroup()
 		item--;
 
 		life = item._Ptr->_Myval->GetLife();
-		if (life <= 0)
-		{
-			item._Ptr->_Myval->Deselect();
-			selected_elements.remove(item._Ptr->_Myval);
-			item++;
-			if (item != selected_elements.end()) Selected->SetEntity(item._Ptr->_Myval);
-			else Selected->SetEntity(nullptr);
-			continue;
-		}
 		max_life = item._Ptr->_Myval->GetMaxLife();
 
 		box = group_profile[i]->GetBox();
@@ -847,6 +840,29 @@ void Selection_Panel::UpdateSelected()
 		Selected->SetEntity(Selected->GetEntity());
 	}
 	if (selected_elements.size() > 1) SetGroupProfile();
+}
+
+bool Selection_Panel::UpdateGroup()
+{
+	bool ret = false;
+	std::list<Entity*>::const_iterator item = selected_elements.end();
+	while (item != selected_elements.begin())
+	{
+		item--;
+		if (item._Ptr->_Myval->GetLife() <= 0)
+		{
+			item._Ptr->_Myval->Deselect();
+			selected_elements.remove(item._Ptr->_Myval);
+			item++;
+			if (item != selected_elements.end()) Selected->SetEntity(item._Ptr->_Myval);
+			else Selected->SetEntity(nullptr);
+			ret = true;
+			continue;
+		}
+	}
+	if (ret) 
+		SetGroupProfile();
+	return ret;
 }
 
 void Selection_Panel::UnSelect_Entity()

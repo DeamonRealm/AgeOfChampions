@@ -281,7 +281,7 @@ public:
 	void SetGamePanelPointer(Game_Panel* game_panel);
 
 	// Panel Settings
-	void SetPanelType();
+	void SetPanelType(bool force_setup = false);
 	void SetEntitySelected();
 	void SetButtons();
 
