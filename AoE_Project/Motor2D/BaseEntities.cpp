@@ -522,10 +522,6 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 				break;
 			case COLLISION_IDLE:
 			{
-				if (GetDiplomacy() == ALLY)
-				{
-					LOG("WOOOOP");
-				}
 				if (unit_target != nullptr)
 					if (unit_target == other_unit)
 						return true;
