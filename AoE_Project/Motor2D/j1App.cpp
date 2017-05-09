@@ -449,7 +449,7 @@ void j1App::LoadGame(const char* file,bool activate_modules)
 		App->fog_of_war->Disable();
 		App->buff_manager->Disable();
 		App->AI->Disable();
-		//App->gui->Disable();
+		App->pathfinding->Disable();
 
 		//Reactivate all the modules (only say active but data is not loaded in the same loop)
 		App->map->Active();
@@ -459,13 +459,18 @@ void j1App::LoadGame(const char* file,bool activate_modules)
 		App->fog_of_war->Active();
 		App->buff_manager->Active(); /*This load the particles textures*/
 		App->AI->Active();
-		//App->gui->Active();
+		App->action_manager->Active();
+		App->pathfinding->Active();
 		App->scene->Enable();
 
 		want_to_enable = true;
+
+		EnableActiveModules();
 	}
-	
-	EnableActiveModules();
+	else
+	{
+		App->entities_manager->Reset();
+	}
 
 	want_to_load = true;
 	load_game = std::string(fs->GetSaveDirectory()) + std::string(file);
@@ -600,7 +605,7 @@ bool j1App::LoadDefaultGame(const char* folder_str)
 	App->fog_of_war->Disable();
 	App->buff_manager->Disable();
 	App->AI->Disable();
-	//App->gui->Disable();
+	App->pathfinding->Disable();
 
 	//Reactivate all the modules (only say active but data is not loaded in the same loop)
 	App->map->Active();
@@ -610,7 +615,7 @@ bool j1App::LoadDefaultGame(const char* folder_str)
 	App->fog_of_war->Active();
 	App->buff_manager->Active(); /*This load the particles textures*/
 	App->AI->Active();
-	//App->gui->Active();
+	App->pathfinding->Active();
 	App->scene->Enable();
 
 	App->EnableActiveModules();

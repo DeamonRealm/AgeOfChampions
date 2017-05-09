@@ -43,6 +43,11 @@ public:
 		enabled = false;
 	}
 
+	virtual void Reset()
+	{
+
+	}
+
 	// Called before render is available
 	virtual bool Awake(pugi::xml_node&)
 	{

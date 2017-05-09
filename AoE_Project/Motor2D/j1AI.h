@@ -113,6 +113,7 @@ public:
 
 	bool Enable();
 	void Disable();
+	void Reset();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);

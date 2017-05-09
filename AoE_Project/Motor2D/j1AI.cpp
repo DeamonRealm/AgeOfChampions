@@ -62,6 +62,31 @@ void j1AI::Disable()
 	enemy_buildings.clear();
 }
 
+void j1AI::Reset()
+{
+	ai_worker->Reset();
+
+	ai_research_worker->HardReset();
+	enemy_units.clear();
+	enemy_buildings.clear();
+
+	update_timer.Start();
+	research_timer.Start();
+
+	/*current_age = 2;
+	next_research = 0;
+
+	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
+	{
+		units_lvl[i] = 0;
+		buildings_lvl[i] = 0;
+	}
+	UpdateAIUnits();
+	UpdateAIBuildings();*/
+
+	research_timer.Start();
+}
+
 
 bool j1AI::Awake(pugi::xml_node&)
 {

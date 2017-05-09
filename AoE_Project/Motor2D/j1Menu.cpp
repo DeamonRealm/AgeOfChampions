@@ -244,7 +244,7 @@ bool j1Menu::Update(float dt)
 
 bool j1Menu::PostUpdate()
 {
-	if (SDL_ShowCursor(-1) == 0) App->gui->DrawMouseTexture();
+	if (SDL_ShowCursor(-1) == 0 && !load_screen->GetActiveState()) App->gui->DrawMouseTexture();
 	return true;
 }
 

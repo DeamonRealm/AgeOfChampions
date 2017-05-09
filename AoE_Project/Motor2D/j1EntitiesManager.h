@@ -39,6 +39,7 @@ public:
 
 	bool Enable();
 	void Disable();
+	void Reset();
 
 	// Called before the first frame
 	bool Start();

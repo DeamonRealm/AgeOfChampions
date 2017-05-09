@@ -59,7 +59,7 @@ bool j1EntitiesManager::Enable()
 	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
 	{
 		LOG("Civilization animations load error!");
-		return false;
+		return true;
 	}
 
 	//Get Civilization name
@@ -176,6 +176,85 @@ void j1EntitiesManager::Disable()
 	champions_blue.clear();
 	champions_red.clear();
 	
+}
+
+void j1EntitiesManager::Reset()
+{
+	//Clean all arrows
+	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
+	for (; arrows != all_arrows.end(); arrows++)
+	{
+		RELEASE(arrows._Ptr->_Myval);
+	}
+	//Clean Up Units List
+	std::list<Unit*>::iterator units_item = units.begin();
+	while (units_item != units.end())
+	{
+		App->buff_manager->RemoveTargetBuffs(units_item._Ptr->_Myval);
+		RELEASE(units_item._Ptr->_Myval);
+		units_item++;
+	}
+	units.clear();
+	units_quadtree.Reset();
+
+	//Clean Up resources list
+	std::list<Resource*>::iterator resources_item = resources.begin();
+	while (resources_item != resources.end())
+	{
+		RELEASE(resources_item._Ptr->_Myval);
+		resources_item++;
+	}
+	resources.clear();
+	resources_quadtree.Reset();
+
+	//Clean Up buildings list
+	std::list<Building*>::iterator buildings_item = buildings.begin();
+	while (buildings_item != buildings.end())
+	{
+		buildings_item._Ptr->_Myval->CleanMapLogic();
+		RELEASE(buildings_item._Ptr->_Myval);
+		buildings_item++;
+	}
+	buildings.clear();
+	buildings_quadtree.Reset();
+
+	//Clean Up resoureces_defs vector
+	uint size = resources_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(resources_defs[k]);
+	}
+	resources_defs.clear();
+
+	//Clean Up units_defs vector
+	size = ally_units_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(ally_units_defs[k]);
+		RELEASE(enemy_units_defs[k]);
+	}
+	ally_units_defs.clear();
+	enemy_units_defs.clear();
+
+	//Clean Up buildings_defs vector
+	size = ally_buildings_defs.size();
+	for (uint k = 0; k < size; k++)
+	{
+		RELEASE(ally_buildings_defs[k]);
+		RELEASE(enemy_buildings_defs[k]);
+	}
+	ally_buildings_defs.clear();
+	enemy_buildings_defs.clear();
+
+	//Clear all death entities lists
+	death_units.clear();
+	death_buildings.clear();
+	death_resources.clear();
+
+	//Clear champions list
+	champions_blue.clear();
+	champions_red.clear();
+
 }
 
 bool j1EntitiesManager::Start()
