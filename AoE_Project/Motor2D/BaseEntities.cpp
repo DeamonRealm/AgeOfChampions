@@ -490,8 +490,8 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 			CorrectPath(path);
 			if (path->empty())
 			{
-				path = nullptr;
 				delete path;
+				path = nullptr;
 				return true;
 			}
 			goal = NextGoal(path);
@@ -522,14 +522,22 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 				break;
 			case COLLISION_IDLE:
 			{
+				if (GetDiplomacy() == ALLY)
+				{
+					LOG("WOOOOP");
+				}
 				if (unit_target != nullptr)
 					if (unit_target == other_unit)
 						return true;
 				if (path->size() < 2) {
 					if (target != iPoint(-1, -1))
-						if (!Repath(path, target)) return true;						
+					{
+						if (!Repath(path, target)) return true;
+					}
 					else
+					{
 						if (!Repath(path, *(path->begin()))) return true;
+					}
 					return false;
 				}
 			}
@@ -539,19 +547,26 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 					if (unit_target == other_unit)
 						return true;
 				//if we have a collision with other unit and we have lower priority reduction of speed
-				if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded()) {
+				if (other_path_size < 2 && path_size < 2 && future_position == other_unit->GetPositionRounded())
+				{
 					if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
-						if(!other_unit->Repath(other_path, *(other_path->begin())))	return true;					
-					else					
+					{
+						if (!other_unit->Repath(other_path, *(other_path->begin())))	return true;
+					}
+					else
+					{
 						if (!Repath(path, *(path->begin()))) return true;
 					}
+				}
 				else
 				{
 					if (mutable_speed == 0 && other_unit->mutable_speed == 0)
+					{
 						if (location.DistanceTo(goal) < other_unit->GetPositionRounded().DistanceTo(goal))
 							other_unit->mutable_speed -= 0.1;
 						else
 							mutable_speed -= 0.1;
+					}
 				}
 				collisions++;
 				break;
@@ -658,6 +673,7 @@ void Unit::CorrectPath(std::vector<iPoint>*& path)
 	if (new_path != nullptr) {
 		LOG("PATH SIZE %i", new_path->size());
 		path->insert(path->end(), new_path->begin(), new_path->end());
+		delete new_path;
 	}
 }
 
@@ -1485,7 +1501,7 @@ bool Unit::AttackBuilding(Building * target)
 	}
 
 	//Check if the target is in the attack area
-	if (!attack_area.Intersects((target)->GetInteractArea()))
+	if (!attack_area.Intersects((target)->GetInteractArea())&& target->GetLife() > 0)
 	{
 
 		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
@@ -1506,7 +1522,7 @@ bool Unit::AttackBuilding(Building * target)
 		App->animator->UnitPlay(this);
 	}
 
-	if (target->GetLife() <= 0)
+	if (target->GetLife() == 0)
 	{
 		ACTION_TYPE act = target->GetActionType();
 		if (this->action_type == ATTATCK)
