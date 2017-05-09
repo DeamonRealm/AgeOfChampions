@@ -83,6 +83,7 @@ public:
 	virtual void SetDefault();
 
 	virtual bool ActivateCell(int i);
+	virtual bool CancelAction();
 
 	virtual void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 
@@ -168,6 +169,7 @@ public:
 	void SetDefault();
 
 	bool ActivateCell(int i);
+	bool CancelAction();
 
 	bool Villager_Handle_input(GUI_INPUT input);
 
@@ -201,6 +203,7 @@ public:
 	void SetDefault();
 
 	bool ActivateCell(int i);
+	bool CancelAction();
 	bool Hero_Handle_input(UI_Element* ui_element, GUI_INPUT ui_input);
 	bool Handle_input(GUI_INPUT input);
 

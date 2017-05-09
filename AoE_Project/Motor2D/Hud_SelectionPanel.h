@@ -154,6 +154,8 @@ public:
 	bool    GetSelectedIsEntity();
 	void	ResetSelectedType(SELECT_TYPE select_type);
 	void	ResetSelectedType();
+	void	CheckSelectedType();
+	void	RemoveDeadSelectedUnits(Unit*);
 
 	UI_Element*	GetViewport();
 	bool	GetInViewport()const;

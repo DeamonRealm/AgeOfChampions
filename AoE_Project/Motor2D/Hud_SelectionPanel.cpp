@@ -1098,6 +1098,49 @@ void Selection_Panel::ResetSelectedType()
 	champions_selected = false;
 }
 
+void Selection_Panel::CheckSelectedType()
+{
+	
+	UNIT_TYPE curr_type = NO_UNIT;
+	champions_selected = false;
+	std::list<Entity*>::iterator it = selected_elements.begin();
+	selected_unit_type = ((Unit*)it._Ptr->_Myval)->GetUnitType();
+	while(it != selected_elements.end())
+	{
+		curr_type = ((Unit*)it._Ptr->_Myval)->GetUnitType();
+		if (curr_type == WARRIOR_CHMP || curr_type == WIZARD_CHMP || curr_type == ARCHER_CHMP)
+		{
+			selected_unit_type = curr_type;
+			champions_selected = true;
+		}
+		else if (selected_unit_type != curr_type)
+		{
+			selected_unit_type = NO_UNIT;
+		}
+		it++;
+	}
+}
+
+void Selection_Panel::RemoveDeadSelectedUnits(Unit* removed_unit)
+{
+	UNIT_TYPE removed_type = removed_unit->GetUnitType();
+	removed_unit->Deselect();
+	if (Selected->GetEntity() == removed_unit)
+	{
+		selected_elements.remove(removed_unit);
+		if (selected_elements.size() > 0)
+		{
+			Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+		}
+		else Selected->SetEntity(nullptr);
+	}
+	else selected_elements.remove(removed_unit);
+
+	UpdateSelected();
+	CheckSelectedType();
+
+}
+
 UI_Element * Selection_Panel::GetViewport()
 {
 	return viewport;

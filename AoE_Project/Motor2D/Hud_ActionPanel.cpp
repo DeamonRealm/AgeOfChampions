@@ -161,6 +161,11 @@ bool Action_Panel_Elements::ActivateCell(int i)
 	return false;
 }
 
+bool Action_Panel_Elements::CancelAction()
+{
+	return false;
+}
+
 void Action_Panel_Elements::ChangePanelIcons(std::vector<UI_Image*> & actual_panel) 
 {
 	for (uint i = 0; i < MAX_PANEL_CELLS; i++)
@@ -420,7 +425,7 @@ bool VillagerPanel::ActivateCell(int i)
 		{
 			building_type = i;
 			App->sound->PlayGUIAudio(CLICK_INGAME);
-			buildingthis = App->entities_manager->GenerateBuilding(panel_icons[i].b_type, ALLY, true);
+			buildingthis = App->entities_manager->GenerateBuilding(panel_icons[i].b_type, ALLY, false);
 			isbuilding = true;
 			return true;
 		}
@@ -488,6 +493,17 @@ bool VillagerPanel::ActivateCell(int i)
 	return false;
 }
 
+bool VillagerPanel::CancelAction()
+{
+	if (isbuilding)
+	{
+		if (buildingthis != nullptr) delete buildingthis;
+		buildingthis = nullptr;
+		isbuilding = false;
+	}
+	return true;
+}
+
 bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 {
 	switch (input)
@@ -501,6 +517,7 @@ bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 			{
 				player_game_panel_resources->UseResource(panel_icons[building_type].wood_cost, panel_icons[building_type].food_cost, panel_icons[building_type].gold_cost,
 					panel_icons[building_type].stone_cost, panel_icons[building_type].population_cost);
+				App->entities_manager->buildings.push_back((Building*)buildingthis);
 				buildingthis->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y, true);
 			}
 			else {
@@ -521,7 +538,7 @@ bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
 	case MOUSE_LEFT_BUTTON_UP:
 		if (isbuilding)
 		{
-		return true;
+			return true;
 		}
 		break;
 	default:
@@ -590,6 +607,8 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills_buttons[i]->SetLayer(8);
 		skills[i]->SetLayer(8);
 	}
+	skill_tree->Desactivate();
+	skill_tree->DesactivateChids();
 
 	champion_mele = nullptr;
 	champion_wizard = nullptr;
@@ -840,6 +859,19 @@ bool HeroPanel::ActivateCell(int i)
 	default:
 		break;
 	}
+	return false;
+}
+
+bool HeroPanel::CancelAction()
+{
+	if (skill_tree->GetActiveState())
+	{
+		skill_tree->Desactivate();
+		skill_tree->DesactivateChids();
+	}
+	// Cancel Skill;
+	activate_skill = -1;
+
 	return false;
 }
 
@@ -1209,6 +1241,11 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 		{
 			on_action = villagerpanel->Villager_Handle_input(newevent);
 		}
+		}
+		break;
+	case MOUSE_RIGHT_BUTTON:
+		{
+		if (on_action) actualpanel->CancelAction();
 		}
 		break;
 	default:
