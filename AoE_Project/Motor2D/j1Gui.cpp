@@ -28,7 +28,9 @@ j1Gui::j1Gui() : j1Module()
 
 // Destructor
 j1Gui::~j1Gui()
-{}
+{
+
+}
 
 // Called before render is available
 bool j1Gui::Awake(pugi::xml_node& conf)

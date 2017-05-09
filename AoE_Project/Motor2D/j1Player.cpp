@@ -39,10 +39,14 @@ j1Player::~j1Player()
 {
 }
 
+void j1Player::Init()
+{
+	active = false;
+	enabled = false;
+}
+
 bool j1Player::Enable()
 {
-	active = true;
-
 	// Setting Game Panel Resources
 	game_panel->AddResource(500, GP_WOOD);
 	game_panel->AddResource(500, GP_MEAT);
@@ -55,7 +59,6 @@ bool j1Player::Enable()
 	action_panel->Enable();
 	minimap_panel->Enable();
 
-	enabled = true;
 	return true;
 }
 

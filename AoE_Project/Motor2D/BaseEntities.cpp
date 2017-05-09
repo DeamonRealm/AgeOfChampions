@@ -2316,6 +2316,8 @@ Building::~Building()
 //Functionality =======================
 void Building::CleanMapLogic()
 {
+	uint extra_size = 1;
+
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(position.x, position.y);
 	if (building_type == RUBBLE_FOUR || building_type == RUBBLE_THREE || building_type == BARRACK || building_type == BARRACK_C || building_type == ARCHERY_RANGE || building_type == ARCHERY_RANGE_C)
@@ -2324,8 +2326,10 @@ void Building::CleanMapLogic()
 		world_coords.y -= 1;
 	}
 
+	if (building_type == TOWN_CENTER || building_type == TOWN_CENTER_C)extra_size++;
+
 	//Change walk & construction logic maps
-	App->map->ChangeConstructionMap(world_coords, width_in_tiles + 1, height_in_tiles + 1, 1);
+	App->map->ChangeConstructionMap(world_coords, width_in_tiles + extra_size, height_in_tiles + extra_size, 1);
 	App->map->ChangeLogicMap(world_coords, width_in_tiles, height_in_tiles, 1);
 }
 
@@ -2480,6 +2484,8 @@ bool Building::CheckZone(int x, int y)
 
 bool Building::Die()
 {
+	BUILDING_TYPE prev_building_type = building_type;
+
 	if (action_type != DISAPPEAR)
 	{
 		if (building_type == TOWN_CENTER)
@@ -2545,6 +2551,7 @@ bool Building::Die()
 		App->entities_manager->AddDeadBuilding(this);
 		App->animator->BuildingPlay(this);
 		current_animation->Reset();
+		building_type = prev_building_type;
 	}
 
 

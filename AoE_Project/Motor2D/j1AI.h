@@ -105,7 +105,11 @@ public:
 	~j1AI();
 
 public:
-	void Init() { active = false; };
+	void Init()
+	{
+		active = false; 
+		enabled = false;
+	};
 
 	bool Enable();
 	void Disable();

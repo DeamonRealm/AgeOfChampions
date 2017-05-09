@@ -20,7 +20,7 @@ public:
 	// Destructor
 	virtual ~j1Menu();
 
-	void Init() { active = true; }
+	void Init();
 
 	// Enable/Disable
 	bool Enable();

@@ -259,6 +259,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			App->buff_manager->Disable();
 			App->map->Disable();
 			App->menu->Enable();
+			App->EnableActiveModules();
 		}
 		else if (ui_element == cancel_game_menu)
 		{

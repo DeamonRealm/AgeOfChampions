@@ -40,6 +40,12 @@ j1ActionManager::~j1ActionManager()
 }
 
 //Game Loop ===========================
+void j1ActionManager::Init()
+{
+	active = false;
+	enabled = false;
+}
+
 bool j1ActionManager::CleanUp()
 {
 

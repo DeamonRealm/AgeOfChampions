@@ -438,6 +438,12 @@ j1BuffManager::~j1BuffManager()
 
 }
 
+void j1BuffManager::Init()
+{
+	active = false;
+	enabled = false;
+}
+
 bool j1BuffManager::Enable()
 {
 	//Load all buffs definitions

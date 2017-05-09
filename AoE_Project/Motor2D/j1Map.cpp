@@ -22,6 +22,12 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 j1Map::~j1Map()
 {}
 
+void j1Map::Init()
+{
+	active = false;
+	enabled = false;
+}
+
 void j1Map::Disable()
 {
 	active = false;

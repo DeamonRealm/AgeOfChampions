@@ -12,6 +12,12 @@ j1GroupMovement::~j1GroupMovement()
 {
 }
 
+void j1GroupMovement::Init()
+{
+	active = false;
+	enabled = false;
+}
+
 iPoint j1GroupMovement::GetMiddlePoint()
 {
 	iPoint ret = { 0,0 };

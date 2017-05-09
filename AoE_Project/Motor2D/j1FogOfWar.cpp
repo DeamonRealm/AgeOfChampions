@@ -58,6 +58,7 @@ void j1FogOfWar::Disable()
 void j1FogOfWar::Init()
 {
 	active = false;
+	enabled = false;
 }
 
 bool j1FogOfWar::PostUpdate()

@@ -124,6 +124,9 @@ public:
 	// Destructor
 	virtual ~j1Map();
 
+public:
+
+	void Init();
 	void Disable();
 
 	// Called before render is available

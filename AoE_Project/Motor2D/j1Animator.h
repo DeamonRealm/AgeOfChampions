@@ -230,6 +230,7 @@ public:
 
 public:
 
+	void Init();
 	void Disable();
 
 	// Called before render is available

@@ -171,7 +171,7 @@ bool j1App::Start()
 	PERF_PEEK(ptimer);
 
 	//Load load screen
-	load_screen = App->tex->Load("gui/savage.jpg");
+	load_screen = App->tex->Load("gui/LoadingScreenWIP.png");
 
 	return ret;
 }
@@ -185,47 +185,49 @@ bool j1App::Update()
 	{
 		EnableActiveModulesNow();
 	}
-
-
-	//Activate/Deactivate debug mode
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	else
 	{
-		debug_mode = !debug_mode;
+		//Activate/Deactivate debug mode
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			debug_mode = !debug_mode;
+		}
+
+		//Activate/Deactivate draw debug mode
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			map_debug_mode = !map_debug_mode;
+		}
+
 	}
 
-	//Activate/Deactivate draw debug mode
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		map_debug_mode = !map_debug_mode;
-	}
+		PrepareUpdate();
 
+		if (input->GetWindowEvent(WE_QUIT) == true)
+			ret = false;
 
-	PrepareUpdate();
+		if (ret == true)
+		{
+			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
+			BROFILER_FRAME("PreUpdate");
+			ret = PreUpdate();
+		}
 
-	if (input->GetWindowEvent(WE_QUIT) == true)
-		ret = false;
+		if (ret == true)
+		{
+			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
+			BROFILER_FRAME("DoUpdate");
+			ret = DoUpdate();
+		}
 
-	if (ret == true)
-	{
-		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
-		BROFILER_FRAME("PreUpdate");
-		ret = PreUpdate();
-	}
+		if (ret == true)
+		{
+			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
+			BROFILER_FRAME("PostUpdate");
+			ret = PostUpdate();
+		}
 
-	if (ret == true)
-	{
-		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
-		BROFILER_FRAME("DoUpdate");
-		ret = DoUpdate();
-	}
-
-	if (ret == true)
-	{
-		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
-		BROFILER_FRAME("PostUpdate");
-		ret = PostUpdate();
-	}
-
+	
 
 	FinishUpdate();
 	return ret;
@@ -234,13 +236,18 @@ bool j1App::Update()
 void j1App::EnableActiveModulesNow()
 {
 	App->render->Blit(load_screen, 0, 0);
+	LOG("Frame!");
 
 	if (modules_to_enable[enable_index]->Enable())enable_index++;
 
 	uint size = modules_to_enable.size();
 
-	if (enable_index + 1 == size)
+	if (enable_index == size)
 	{
+		for (uint k = 0; k < size; k++)
+		{
+			modules_to_enable[k]->enabled = true;
+		}
 		want_to_enable = false;
 		modules_to_enable.clear();
 		enable_index = 0;
@@ -278,7 +285,7 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
-	if (want_to_save == true)
+	if (want_to_save == true && !want_to_enable)
 	{
 		SavegameNow();
 	}
@@ -335,7 +342,7 @@ bool j1App::PreUpdate()
 
 	while (item != modules.end())
 	{
-		if (item._Ptr->_Myval->active) ret = item._Ptr->_Myval->PreUpdate();
+		if (item._Ptr->_Myval->active && item._Ptr->_Myval->enabled) ret = item._Ptr->_Myval->PreUpdate();
 
 		item++;
 	}
@@ -351,7 +358,7 @@ bool j1App::DoUpdate()
 
 	while (item != modules.end())
 	{
-		if (item._Ptr->_Myval->active)ret = item._Ptr->_Myval->Update(dt);
+		if (item._Ptr->_Myval->active && item._Ptr->_Myval->enabled)ret = item._Ptr->_Myval->Update(dt);
 
 		item++;
 	}
@@ -367,7 +374,7 @@ bool j1App::PostUpdate()
 
 	while (item != modules.end() && ret)
 	{
-		if (item._Ptr->_Myval->active)ret = item._Ptr->_Myval->PostUpdate();
+		if (item._Ptr->_Myval->active && item._Ptr->_Myval->enabled)ret = item._Ptr->_Myval->PostUpdate();
 
 		item++;
 	}
@@ -504,24 +511,6 @@ bool j1App::LoadGameNow()
 {
 	bool ret = false;
 
-	//Clean all the previous data
-	map->Disable();
-	map->Enable();
-	gui->ChangeMouseTexture(DEFAULT);
-	player->Disable();
-	player->Enable();
-	animator->Disable();
-	animator->Enable();
-	entities_manager->Disable();
-	entities_manager->Enable();
-	fog_of_war->Disable();
-	fog_of_war->Enable();
-	action_manager->Enable();
-	buff_manager->Disable();
-	buff_manager->Enable();
-	AI->Disable();
-	AI->Enable();
-
 	char* buffer;
 	uint size = fs->Load(load_game.c_str(), &buffer);
 
@@ -604,38 +593,6 @@ bool j1App::SavegameNow()
 
 bool j1App::LoadDefaultGame(const char* folder_str)
 {
-	//j1Timer time_to_start;
-	//Clean all the previous data
-	/*map->Disable();
-	gui->ChangeMouseTexture(DEFAULT);
-	player->Disable();
-	animator->Disable();
-	entities_manager->Disable();
-	fog_of_war->Disable();
-	buff_manager->Disable();
-	AI->Disable();
-
-	//LOG("%.4f", time_to_start.ReadSec());
-	//time_to_start.Start();
-
-	//Reactivate all the modules
-	map->Enable();
-
-	player->Enable();
-	//LOG("%.4f", time_to_start.ReadSec());
-	//time_to_start.Start();
-	animator->Enable();
-	entities_manager->Enable(); /*This load the entities animations textures*/
-	/*fog_of_war->Enable();
-	buff_manager->Enable(); /*This load the particles textures*/
-
-	/*j1Timer time_to_start;
-	AI->Enable();
-
-	LOG("%.4f", time_to_start.ReadSec());
-	time_to_start.Start();
-	*/
-
 	//Clean all the previous data
 	App->map->Disable();
 	App->gui->ChangeMouseTexture(DEFAULT);

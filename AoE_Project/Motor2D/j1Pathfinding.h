@@ -34,6 +34,7 @@ public:
 	j1Pathfinding();
 	~j1Pathfinding();
 
+	void Init();
 	void Disable();
 
 	// Called before the first frame

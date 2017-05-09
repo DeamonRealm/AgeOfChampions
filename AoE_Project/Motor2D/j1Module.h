@@ -34,7 +34,6 @@ public:
 	virtual bool Enable()
 	{
 		active = true;
-		enabled = true;
 		return true;
 	}
 

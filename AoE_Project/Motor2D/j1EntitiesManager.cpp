@@ -40,10 +40,14 @@ bool j1EntitiesManager::Awake(pugi::xml_node & config_node)
 	return true;
 }
 
+void j1EntitiesManager::Init()
+{
+	active = false;
+	enabled = false;
+}
+
 bool j1EntitiesManager::Enable()
 {
-	active = true;
-
 	j1Timer time;
 	time.Start();
 

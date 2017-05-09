@@ -41,8 +41,7 @@ public:
 
 public:
 
-	void Init() { active = false; }
-
+	void Init();
 
 	//Enable and disable modules
 	bool Enable();

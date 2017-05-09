@@ -382,7 +382,14 @@ j1Animator::~j1Animator()
 
 }
 
+
 //Game Loop ===========================
+void j1Animator::Init()
+{
+	active = false;
+	enabled = false;
+}
+
 void j1Animator::Disable()
 {
 	active = false;

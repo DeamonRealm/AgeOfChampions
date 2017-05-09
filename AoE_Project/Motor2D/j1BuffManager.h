@@ -184,6 +184,7 @@ public:
 
 	~j1BuffManager();
 
+	void Init();
 	bool Enable();
 	void Disable();
 

@@ -35,6 +35,8 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node& config_node);
 
+	void Init();
+
 	bool Enable();
 	void Disable();
 

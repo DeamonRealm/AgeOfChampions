@@ -20,7 +20,15 @@ j1Pathfinding::~j1Pathfinding()
 
 
 
+
+
 //Game Loop ===========================
+void j1Pathfinding::Init()
+{
+	active = false;
+	enabled = false;
+}
+
 void j1Pathfinding::Disable()
 {
 	to_path.clear();

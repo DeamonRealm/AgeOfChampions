@@ -172,6 +172,8 @@ public:
 	j1ActionManager();
 	~j1ActionManager();
 
+
+	void Init();
 	// Called before quitting
 	bool CleanUp();
 

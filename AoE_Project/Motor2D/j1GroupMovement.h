@@ -25,8 +25,11 @@ struct Formation
 class j1GroupMovement :public j1Module
 {
 public:
+
 	j1GroupMovement();
 	~j1GroupMovement();
+
+	void Init();
 
 	//Functions
 	//CreatePath
@@ -42,6 +45,7 @@ public:
 	void GetGroupOfUnits(std::list<Entity*>* units, int x, int y, bool active);
 
 private:
+
 	iPoint GetMiddlePoint();
 	void OtherUnitsPath(bool active);
 	bool GroupCanWalk(const iPoint& position);
@@ -49,6 +53,7 @@ private:
 	std::vector<iPoint>* CreatePath();
 	std::vector<iPoint>* CreateFirstDestination();
 	std::vector<iPoint>* LeaderPath();
+
 private:
 	// list of units selected
 	// Pointer first unit "leader"

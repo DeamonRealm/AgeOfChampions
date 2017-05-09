@@ -33,6 +33,12 @@ j1Menu::~j1Menu()
 {
 }
 
+void j1Menu::Init()
+{
+	active = true;
+	enabled = true;
+}
+
 bool j1Menu::Enable()
 {
 	active = true;
