@@ -380,19 +380,15 @@ protected:
 	fPoint			distance_walked = { 0.0f , 0.0f };
 	//Attack -----------
 	j1Timer			action_timer;
-	uint			attack_delay = 0;
 	uint			attack_hitpoints = 0;
-	//uint			attack_bonus = 0;
 	float			attack_buff = 0;
 	uint			attack_area_buff = 0;
-	uint			siege_hitpoints = 0;
 	uint			attack_rate = 0;
 	uint			attack_rate_buff = 0;
 
 	ATTACK_TYPE		attack_type = NO_ATTACK;
 	//Defense  ---------
 	uint			defense = 0; /*Used in melee damage*/
-	//uint			defense_bonus = 0;
 	float			defense_buff = 0;
 	//Resources --------
 	uint			food_cost = 0;
@@ -480,10 +476,8 @@ public:
 
 	void	SetAction(ACTION_TYPE action_val);
 	void	SetDirection(DIRECTION_TYPE direction_val);
-	void	SetAttackDelay(uint atk_delay);
 	void	SetAttackHitPoints(uint atk_val);
 	void	SetAttackBuff(float atk_buff);
-	void	SetSiegeHitPoints(uint siege_val);
 	void	SetAttackRate(uint atk_rate);
 	void	SetAttackRateBuff(uint atk_rate);
 
@@ -514,10 +508,8 @@ public:
 	float			GetTotalSpeed()const;
 	ACTION_TYPE		GetAction()const;
 	DIRECTION_TYPE	GetDirection()const;
-	uint			GetAttackDelay()const;
 	uint			GetAttackHitPoints()const;
 	float			GetAttackBuff()const;
-	uint			GetSiegeHitPoints()const;
 	uint			GetAttackRate()const;
 	uint			GetAttackRateBuff()const;
 

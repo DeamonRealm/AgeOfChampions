@@ -61,9 +61,7 @@ void Villager::SaveAsDef(pugi::xml_node & node)
 	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
 	/*Life Pos Y*/	node.append_attribute("life_pos_y") = life_position.y;
 	/*Speed*/		node.append_attribute("speed") = speed;
-	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
-	/*Siege HitP*/	node.append_attribute("siege_hitpoints") = siege_hitpoints;
 	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
 	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
 	/*Defense*/		node.append_attribute("defense") = defense;

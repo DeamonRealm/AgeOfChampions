@@ -311,7 +311,7 @@ Unit::Unit() :Entity()
 }
 
 Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), soft_collider(copy.soft_collider), hard_collider(copy.hard_collider),
-speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints), siege_hitpoints(copy.siege_hitpoints),
+speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints),
 attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), unit_class(copy.unit_class),
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time), unit_experience(copy.unit_experience)
 {
@@ -376,9 +376,7 @@ void Unit::SaveAsDef(pugi::xml_node & node)
 	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
 	/*Life Pos Y*/	node.append_attribute("life_pos_y") = life_position.y;
 	/*Speed*/		node.append_attribute("speed") = speed;
-	/*Atk delay*/	node.append_attribute("attack_delay") = attack_delay;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
-	/*Siege HitP*/	node.append_attribute("siege_hitpoints") = siege_hitpoints;
 	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
 	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
 	/*Defense*/		node.append_attribute("defense") = defense;
@@ -1789,19 +1787,9 @@ void Unit::SetDirection(DIRECTION_TYPE direction_val)
 	direction_type = direction_val;
 }
 
-void Unit::SetAttackDelay(uint atk_delay)
-{
-	attack_delay = atk_delay;
-}
-
 void Unit::SetAttackHitPoints(uint atk_val)
 {
 	attack_hitpoints = atk_val;
-}
-
-void Unit::SetSiegeHitPoints(uint siege_val)
-{
-	siege_hitpoints = siege_val;
 }
 
 void Unit::SetAttackRate(uint atk_rate)
@@ -1908,10 +1896,7 @@ void Unit::SetUpgrade(Unit * upgraded)
 	CleanAnimation();
 	App->animator->UnitPlay(this);
 	current_animation->SetCurrentFrame(curr_frame);
-
-	attack_delay = upgraded->attack_delay;
 	attack_hitpoints = upgraded->attack_hitpoints;
-	siege_hitpoints = upgraded->siege_hitpoints;
 	attack_rate = upgraded->attack_rate;
 	attack_type = upgraded->attack_type;
 
@@ -1977,11 +1962,6 @@ DIRECTION_TYPE Unit::GetDirection()const
 	return direction_type;
 }
 
-uint Unit::GetAttackDelay() const
-{
-	return attack_delay;
-}
-
 uint Unit::GetAttackHitPoints()const
 {
 	return attack_hitpoints;
@@ -1990,11 +1970,6 @@ uint Unit::GetAttackHitPoints()const
 float Unit::GetAttackBuff() const
 {
 	return attack_buff;
-}
-
-uint Unit::GetSiegeHitPoints()const
-{
-	return siege_hitpoints;
 }
 
 uint Unit::GetAttackRate()const

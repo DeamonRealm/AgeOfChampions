@@ -1162,9 +1162,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 	/*Life*/			new_def->SetLife(new_def->GetMaxLife());
 	/*Life Pos*/		new_def->SetLifeBarPosition(unit_node->attribute("life_pos_x").as_int(0), unit_node->attribute("life_pos_y").as_int(0));
 	/*Speed*/			new_def->SetSpeed(unit_node->attribute("speed").as_float());
-	/*Attack Delay*/	new_def->SetAttackDelay(unit_node->attribute("attack_delay").as_uint());
 	/*Attack Points*/	new_def->SetAttackHitPoints(unit_node->attribute("attack_hitpoints").as_uint());
-	/*Siege Points*/	new_def->SetSiegeHitPoints(unit_node->attribute("siege_hitpoints").as_uint());
 	/*Attack Rate*/		new_def->SetAttackRate(unit_node->attribute("attack_rate").as_uint());
 	/*Attack Area*/		Circle area({ 0,0 }, unit_node->attribute("attack_range").as_uint(), { 0,0 });
 						area.SetColor({ 0, 0, 255, 255 });
