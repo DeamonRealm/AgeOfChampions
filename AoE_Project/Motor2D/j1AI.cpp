@@ -544,11 +544,7 @@ void j1AI::GetSpawnUnitTypes(UNIT_TYPE& u_type)
 	{
 		if (unit_it._Ptr->_Myval->GetUnitType() == spawn_type)
 		{
-			++troop_count;
-			if (troop_count > MIN_VILLAGERS)
-			{
 				spawn_type = GetNextSpawnType(spawn_type);
-			}
 		}
 		
 		unit_it++;
@@ -563,6 +559,36 @@ UNIT_TYPE j1AI::GetNextSpawnType(UNIT_TYPE u_type)
 {
 	UNIT_TYPE ret = UNIT_TYPE::NO_UNIT;
 
+	uint villager		= 0;
+	uint militia		= 0;
+	uint archer			= 0;
+	uint cavalry_archer = 0;
+	uint knight			= 0;
+	uint monk			= 0;
+	uint spearman		= 0;
+	uint skirmisher		= 0;
+
+
+	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
+	while (unit_it != enemy_units.end())
+	{
+		UNIT_TYPE u_type = unit_it._Ptr->_Myval->GetUnitType();
+
+		if (u_type == VILLAGER) villager++;
+		else if (u_type == MILITIA || u_type == MAN_AT_ARMS ||
+				u_type == LONG_SWORDMAN || u_type == TWO_HANDED_SWORDMAN)			militia++;
+		else if (u_type == ARCHER || u_type == CROSSBOWMAN || u_type == ARBALEST)	archer++;
+		else if (u_type == CAVALRY_ARCHER || u_type == HEAVY_CAVALRY_ARCHER)		 cavalry_archer++;
+		else if (u_type == KNIGHT || u_type == CAVALIER || u_type == PALADIN)		knight++;
+		else if (u_type == MONK) monk++;
+		else if (u_type == SPEARMAN || u_type == PIKEMAN)							spearman++;
+		else if (u_type == SKIRMISHER || u_type == ELITE_SKIRMISHER)				skirmisher++;
+
+		unit_it++;
+	}
+
+
+
 	switch (u_type)
 	{
 	case NO_UNIT:
@@ -570,46 +596,18 @@ UNIT_TYPE j1AI::GetNextSpawnType(UNIT_TYPE u_type)
 	case MILITIA:
 		ret = MILITIA;
 		break;
-	case ARBALEST:
-		break;
 	case ARCHER:
 		break;
-	case CAVALIER:
-		break;
 	case CAVALRY_ARCHER:
-		break;
-	case ELITE_SKIRMISHER:
-		break;
-	case HEAVY_CAVALRY_ARCHER:
 		break;
 	case KNIGHT:
 		break;
 	case MONK:
 		break;
-	case PALADIN:
-		break;
-	case PIKEMAN:
-		break;
 	case SPEARMAN:
 		break;
 	case VILLAGER:
 		ret = MILITIA;
-		break;
-	case TWO_HANDED_SWORDMAN:
-		break;
-	case MAN_AT_ARMS:
-		break;
-	case LONG_SWORDMAN:
-		break;
-	case CHAMPION:
-		break;
-	case WARRIOR_CHMP:
-		break;
-	case ARCHER_CHMP:
-		break;
-	case WIZARD_CHMP:
-		break;
-	case CROSSBOWMAN:
 		break;
 	case SKIRMISHER:
 		break;
