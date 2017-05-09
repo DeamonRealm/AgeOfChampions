@@ -59,7 +59,7 @@ public:
 public:
 
 	
-	void Enable();
+	bool Enable();
 	void Disable();
 
 	bool Start();

@@ -18,7 +18,16 @@ j1Pathfinding::~j1Pathfinding()
 
 }
 
+
+
 //Game Loop ===========================
+void j1Pathfinding::Disable()
+{
+	to_path.clear();
+	active = false;
+	enabled = false;
+}
+
 bool j1Pathfinding::Start()
 {
 	//Load debug tiles trexture

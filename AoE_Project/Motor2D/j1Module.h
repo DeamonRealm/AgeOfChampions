@@ -23,6 +23,7 @@ public:
 	virtual void Init()
 	{
 		active = true;
+		enabled = true;
 	}
 
 	//Enable and disable modules
@@ -30,10 +31,11 @@ public:
 	{
 		active = true;
 	}
-	virtual void Enable()
+	virtual bool Enable()
 	{
 		active = true;
 		enabled = true;
+		return true;
 	}
 
 	virtual void Disable()

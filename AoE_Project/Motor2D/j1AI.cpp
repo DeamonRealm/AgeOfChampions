@@ -24,7 +24,7 @@ j1AI::~j1AI()
 {
 }
 
-void j1AI::Enable()
+bool j1AI::Enable()
 {
 	//ai_worker->AddAICommand(new WaitAICommand(80000));
 
@@ -48,11 +48,15 @@ void j1AI::Enable()
 
 	research_timer.Start();
 	//ai_worker->AddAICommand(new MoveUnitsCommand(enemy_units, App->map->MapToWorld(99,99)));
+
+	return true;
 }
 
 void j1AI::Disable()
 {
 	active = false;
+	enabled = false;
+
 	ai_worker->Reset();
 
 	ai_research_worker->HardReset();

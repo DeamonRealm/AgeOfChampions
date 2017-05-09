@@ -95,7 +95,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end(); item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end(); item++)
 	{
 		RELEASE(item._Ptr->_Myval);
 	}
@@ -119,11 +119,11 @@ bool j1App::Awake()
 	pugi::xml_node		app_config;
 
 	bool ret = false;
-		
+
 	config = LoadConfig(config_file);
 
 	//Load App config data
-	if(config.empty() == false)
+	if (config.empty() == false)
 	{
 		// self-config
 		ret = true;
@@ -133,16 +133,16 @@ bool j1App::Awake()
 
 		int cap = app_config.attribute("framerate_cap").as_int(-1);
 
-		if(cap > 0)
+		if (cap > 0)
 		{
 			capped_ms = 1000 / cap;
 		}
 	}
 
 	//Call modules Awake method
-	if(ret == true)
+	if (ret == true)
 	{
-		for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+		for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 		{
 			ret = item._Ptr->_Myval->Awake(config.child(item._Ptr->_Myval->name.c_str()));
 			modules.end();
@@ -161,7 +161,7 @@ bool j1App::Start()
 	bool ret = true;
 	std::list<j1Module*>::iterator item = modules.begin();
 
-	while(item != modules.end() != NULL && ret == true)
+	while (item != modules.end() != NULL && ret == true)
 	{
 		ret = item._Ptr->_Myval->Start();
 		item++;
@@ -185,47 +185,47 @@ bool j1App::Update()
 	{
 		EnableActiveModulesNow();
 	}
-	else
+
+
+	//Activate/Deactivate debug mode
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		//Activate/Deactivate debug mode
-		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		{
-			debug_mode = !debug_mode;
-		}
-
-		//Activate/Deactivate draw debug mode
-		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		{
-			map_debug_mode = !map_debug_mode;
-		}
-
-		
-		PrepareUpdate();
-
-		if (input->GetWindowEvent(WE_QUIT) == true)
-			ret = false;
-
-		if (ret == true)
-		{
-			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
-			BROFILER_FRAME("PreUpdate");
-			ret = PreUpdate();
-		}
-
-		if (ret == true)
-		{
-			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
-			BROFILER_FRAME("DoUpdate");
-			ret = DoUpdate();
-		}
-
-		if (ret == true)
-		{
-			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
-			BROFILER_FRAME("PostUpdate");
-			ret = PostUpdate();
-		}
+		debug_mode = !debug_mode;
 	}
+
+	//Activate/Deactivate draw debug mode
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		map_debug_mode = !map_debug_mode;
+	}
+
+
+	PrepareUpdate();
+
+	if (input->GetWindowEvent(WE_QUIT) == true)
+		ret = false;
+
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
+		BROFILER_FRAME("PreUpdate");
+		ret = PreUpdate();
+	}
+
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
+		BROFILER_FRAME("DoUpdate");
+		ret = DoUpdate();
+	}
+
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
+		BROFILER_FRAME("PostUpdate");
+		ret = PostUpdate();
+	}
+
 
 	FinishUpdate();
 	return ret;
@@ -233,19 +233,18 @@ bool j1App::Update()
 
 void j1App::EnableActiveModulesNow()
 {
-	SDL_RenderClear(App->render->renderer);
 	App->render->Blit(load_screen, 0, 0);
-	App->render->PostUpdate();
 
-	std::list<j1Module*>::const_iterator item = modules.begin();
+	if (modules_to_enable[enable_index]->Enable())enable_index++;
 
-	while (item != modules.end())
+	uint size = modules_to_enable.size();
+
+	if (enable_index + 1 == size)
 	{
-		if (item._Ptr->_Myval->active) item._Ptr->_Myval->Enable();
-
-		item++;
+		want_to_enable = false;
+		modules_to_enable.clear();
+		enable_index = 0;
 	}
-	want_to_enable = false;
 }
 
 // ---------------------------------------------
@@ -258,7 +257,7 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 	pugi::xml_parse_result result = config_file.load_buffer(buf, size);
 	RELEASE_ARRAY(buf);
 
-	if(result == NULL)
+	if (result == NULL)
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
 	else
 		ret = config_file.child("config");
@@ -296,7 +295,7 @@ void j1App::FinishUpdate()
 
 	// Framerate calculations --
 
-	if(last_sec_frame_time.Read() > 1000)
+	if (last_sec_frame_time.Read() > 1000)
 	{
 		last_sec_frame_time.Start();
 		prev_last_sec_frame_count = last_sec_frame_count;
@@ -321,7 +320,7 @@ void j1App::FinishUpdate()
 
 	App->win->SetTitle(title);
 
-	if(capped_ms > 0 && last_frame_ms < capped_ms)
+	if (capped_ms > 0 && last_frame_ms < capped_ms)
 	{
 		j1PerfTimer t;
 		SDL_Delay(capped_ms - last_frame_ms);
@@ -334,9 +333,9 @@ bool j1App::PreUpdate()
 	bool ret = true;
 	std::list<j1Module*>::const_iterator item = modules.begin();
 
-	while(item != modules.end())
+	while (item != modules.end())
 	{
-		if(item._Ptr->_Myval->active) ret = item._Ptr->_Myval->PreUpdate();
+		if (item._Ptr->_Myval->active) ret = item._Ptr->_Myval->PreUpdate();
 
 		item++;
 	}
@@ -350,9 +349,9 @@ bool j1App::DoUpdate()
 	bool ret = true;
 	std::list<j1Module*>::const_iterator item = modules.begin();
 
-	while(item != modules.end())
+	while (item != modules.end())
 	{
-		if(item._Ptr->_Myval->active)ret = item._Ptr->_Myval->Update(dt);
+		if (item._Ptr->_Myval->active)ret = item._Ptr->_Myval->Update(dt);
 
 		item++;
 	}
@@ -366,20 +365,14 @@ bool j1App::PostUpdate()
 	bool ret = true;
 	std::list<j1Module*>::const_iterator item = modules.begin();
 
-	while(item != modules.end() && ret)
+	while (item != modules.end() && ret)
 	{
-		if(item._Ptr->_Myval->active)ret = item._Ptr->_Myval->PostUpdate();
+		if (item._Ptr->_Myval->active)ret = item._Ptr->_Myval->PostUpdate();
 
 		item++;
 	}
 
-	if(ret)ret = !want_to_quit;
-
-	//Call save game method
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) SaveGame("party_file.xml");
-	
-	//Call load game method 
-	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)LoadGame("party_file.xml");
+	if (ret)ret = !want_to_quit;
 
 	return ret;
 }
@@ -388,13 +381,13 @@ bool j1App::PostUpdate()
 bool j1App::CleanUp()
 {
 	tex->UnLoad(load_screen);
-	
+
 
 	bool ret = true;
 	std::list<j1Module*>::const_iterator item = modules.end();
 	item--;
 
-	while(item != modules.begin() && ret == true)
+	while (item != modules.begin() && ret == true)
 	{
 		ret = item._Ptr->_Myval->CleanUp();
 		item--;
@@ -412,7 +405,7 @@ int j1App::GetArgc() const
 // ---------------------------------------
 const char* j1App::GetArgv(int index) const
 {
-	if(index < argc)
+	if (index < argc)
 		return args[index];
 	else
 		return NULL;
@@ -437,30 +430,37 @@ const char* j1App::GetOrganization() const
 }
 
 // Load / Save
-void j1App::LoadGame(const char* file)
+void j1App::LoadGame(const char* file,bool activate_modules)
 {
-	//Clean all the previous data
-	App->map->Disable();
-	App->gui->ChangeMouseTexture(DEFAULT);
-	App->player->Disable();
-	App->animator->Disable();
-	App->entities_manager->Disable();
-	App->fog_of_war->Disable();
-	App->buff_manager->Disable();
-	App->AI->Disable();
-	App->gui->Disable();
+	if (activate_modules)
+	{
+		//Clean all the previous data
+		App->map->Disable();
+		App->gui->ChangeMouseTexture(DEFAULT);
+		App->player->Disable();
+		App->animator->Disable();
+		App->entities_manager->Disable();
+		App->fog_of_war->Disable();
+		App->buff_manager->Disable();
+		App->AI->Disable();
+		App->gui->Disable();
+		App->menu->Disable();
 
-	//Reactivate all the modules (only say active but data is not loaded in the same loop)
-	App->map->Active();
-	App->player->Active();
-	App->animator->Active();
-	App->entities_manager->Active(); /*This load the entities animations textures*/
-	App->fog_of_war->Active();
-	App->buff_manager->Active(); /*This load the particles textures*/
-	App->AI->Active();
-	App->gui->Active();
+		//Reactivate all the modules (only say active but data is not loaded in the same loop)
+		App->map->Active();
+		App->player->Active();
+		App->animator->Active();
+		App->entities_manager->Active(); /*This load the entities animations textures*/
+		App->fog_of_war->Active();
+		App->buff_manager->Active(); /*This load the particles textures*/
+		App->AI->Active();
+		App->gui->Active();
+		App->scene->Enable();
 
-	want_to_enable = true;
+		want_to_enable = true;
+	}
+	
+	EnableActiveModules();
 
 	want_to_load = true;
 	load_game = std::string(fs->GetSaveDirectory()) + std::string(file);
@@ -565,7 +565,7 @@ bool j1App::LoadGameNow()
 	return ret;
 }
 
-bool j1App::SavegameNow() 
+bool j1App::SavegameNow()
 {
 	bool ret = true;
 
@@ -574,18 +574,18 @@ bool j1App::SavegameNow()
 	// xml object were we will store all data
 	pugi::xml_document data;
 	pugi::xml_node root;
-	
+
 	root = data.append_child("game_state");
 
 	std::list<j1Module*>::const_iterator item = modules.begin();
 
-	while(item != modules.end() && ret == true)
+	while (item != modules.end() && ret == true)
 	{
 		ret = item._Ptr->_Myval->Save(root.append_child(item._Ptr->_Myval->name.c_str()));
 		item++;
 	}
 
-	if(ret == true)
+	if (ret == true)
 	{
 		std::stringstream stream;
 		data.save(stream);
@@ -620,7 +620,7 @@ bool j1App::LoadDefaultGame(const char* folder_str)
 
 	//Reactivate all the modules
 	map->Enable();
-	
+
 	player->Enable();
 	//LOG("%.4f", time_to_start.ReadSec());
 	//time_to_start.Start();
@@ -628,13 +628,38 @@ bool j1App::LoadDefaultGame(const char* folder_str)
 	entities_manager->Enable(); /*This load the entities animations textures*/
 	/*fog_of_war->Enable();
 	buff_manager->Enable(); /*This load the particles textures*/
-	
+
 	/*j1Timer time_to_start;
 	AI->Enable();
 
 	LOG("%.4f", time_to_start.ReadSec());
 	time_to_start.Start();
 	*/
+
+	//Clean all the previous data
+	App->map->Disable();
+	App->gui->ChangeMouseTexture(DEFAULT);
+	App->player->Disable();
+	App->animator->Disable();
+	App->entities_manager->Disable();
+	App->fog_of_war->Disable();
+	App->buff_manager->Disable();
+	App->AI->Disable();
+	App->gui->Disable();
+	App->menu->Disable();
+
+	//Reactivate all the modules (only say active but data is not loaded in the same loop)
+	App->map->Active();
+	App->player->Active();
+	App->animator->Active();
+	App->entities_manager->Active(); /*This load the entities animations textures*/
+	App->fog_of_war->Active();
+	App->buff_manager->Active(); /*This load the particles textures*/
+	App->AI->Active();
+	App->gui->Active();
+	App->scene->Enable();
+
+	App->EnableActiveModules();
 
 	load_game = folder_str;
 	want_to_load_default = true;
@@ -683,13 +708,21 @@ void j1App::LoadDefaultGameNow()
 
 void j1App::EnableActiveModules()
 {
+	std::list<j1Module*>::const_iterator item = modules.begin();
+	while (item != modules.end())
+	{
+		if (item._Ptr->_Myval->active && !item._Ptr->_Myval->enabled) modules_to_enable.push_back(item._Ptr->_Myval);
+
+		item++;
+	}
+
 	want_to_enable = true;
 }
 
 j1Module * j1App::GetModule(const std::string* module_name)
 {
 	std::list<j1Module*>::const_iterator item = modules.begin();
-	
+
 	while (item != modules.end())
 	{
 		if (*module_name == item._Ptr->_Myval->name.c_str())
@@ -710,9 +743,9 @@ uint j1App::GetModulesNum() const
 j1Module * j1App::GetModuleAt(uint index)const
 {
 	std::list<j1Module*>::const_iterator item = modules.begin();
-	
+
 	for (uint k = 0; k < index; k++)
-			item++;
+		item++;
 
 	return item._Ptr->_Myval;
 }

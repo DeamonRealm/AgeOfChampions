@@ -107,7 +107,7 @@ public:
 public:
 	void Init() { active = false; };
 
-	void Enable();
+	bool Enable();
 	void Disable();
 
 	// Called before render is available

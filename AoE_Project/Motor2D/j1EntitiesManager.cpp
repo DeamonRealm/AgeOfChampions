@@ -40,7 +40,7 @@ bool j1EntitiesManager::Awake(pugi::xml_node & config_node)
 	return true;
 }
 
-void j1EntitiesManager::Enable()
+bool j1EntitiesManager::Enable()
 {
 	active = true;
 
@@ -55,7 +55,7 @@ void j1EntitiesManager::Enable()
 	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
 	{
 		LOG("Civilization animations load error!");
-		return;
+		return false;
 	}
 
 	//Get Civilization name
@@ -88,11 +88,14 @@ void j1EntitiesManager::Enable()
 	civilization_data.reset();
 
 	LOG("---- %s loaded in %.3f", "Teutons.xml", time.ReadSec());
+
+	return true;
 }
 
 void j1EntitiesManager::Disable()
 {
 	active = false;
+	enabled = false;
 
 	//Clean all arrows
 	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
@@ -1915,7 +1918,7 @@ void j1EntitiesManager::UpgradeUnit(UNIT_TYPE u_type, UNIT_TYPE new_type, DIPLOM
 			if (building._Ptr->_Myval->GetWorker()->GetCurrentActionType() == TASK_B_SPAWN_UNITS)
 			{
 				SpawnUnitAction* spawn_action = (SpawnUnitAction*)building._Ptr->_Myval->GetWorker()->GetCurrentPrimaryAction();
-				spawn_action->SetUnitType(new_type);
+				if(spawn_action->GetUnitType() == u_type)spawn_action->SetUnitType(new_type);
 			}
 
 		}

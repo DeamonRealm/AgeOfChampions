@@ -34,6 +34,8 @@ public:
 	j1Pathfinding();
 	~j1Pathfinding();
 
+	void Disable();
+
 	// Called before the first frame
 	bool Start();
 	bool PreUpdate();
@@ -58,27 +60,24 @@ public:
 
 	//Path tile debug texture
 	SDL_Texture* path_texture = nullptr;
+	std::list<ToPath> to_path;
+	j1Timer pathTime;
 
 public:
 
 	//Functionality ---------
 	//Methods used during the paths creation to work with map data
 	// Check if the cell coordinate is walkable
-
-	void	InitClusterAbstraction();
 	bool	IsWalkable(const iPoint& destination)const;
 	// Check if the boundaries of x coordinate are walkable
 	bool	CheckBoundaries(const iPoint& pos) const;
 	// Get tile from x coordinate
 	uchar	GetTileAt(const iPoint& pos) const;
-
 	// Create a path with two nodes
-
 	std::vector<iPoint>* SimpleAstar(const iPoint& origin, const iPoint& goal);
 	// Create a path with two coordinates
-	std::list<ToPath> to_path;
 	void PushPath(Unit* unit, iPoint destination, iPoint target = { -1,-1 }, bool priority = true, TASK_CHANNELS task = PRIMARY,Unit* unit_target = nullptr);
-	j1Timer pathTime;
+	
 };
 /// -----------------------------------
 

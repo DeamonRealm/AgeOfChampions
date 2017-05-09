@@ -184,7 +184,7 @@ public:
 
 	~j1BuffManager();
 
-	void Enable();
+	bool Enable();
 	void Disable();
 
 	// Called before the first frame

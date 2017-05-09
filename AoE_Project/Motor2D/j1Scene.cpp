@@ -30,10 +30,12 @@ j1Scene::~j1Scene()
 
 }
 
-void j1Scene::Enable()
+bool j1Scene::Enable()
 {
 	active = true;
+	enabled = true;
 	//App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
+	return true;
 }
 
 // Called before render is available
@@ -137,6 +139,12 @@ bool j1Scene::PostUpdate()
 		App->map->Disable();
 		App->menu->Enable();
 	}*/
+
+	//Call save game method
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) App->SaveGame("party_file.xml");
+
+	//Call load game method 
+	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)App->LoadGame("party_file.xml");
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{

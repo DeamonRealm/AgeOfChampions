@@ -23,7 +23,7 @@ public:
 	void Init() { active = true; }
 
 	// Enable/Disable
-	void Enable();
+	bool Enable();
 	void Disable();
 
 	// Called before render is available

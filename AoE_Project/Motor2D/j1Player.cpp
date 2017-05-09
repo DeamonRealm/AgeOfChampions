@@ -39,7 +39,7 @@ j1Player::~j1Player()
 {
 }
 
-void j1Player::Enable()
+bool j1Player::Enable()
 {
 	active = true;
 
@@ -56,11 +56,13 @@ void j1Player::Enable()
 	minimap_panel->Enable();
 
 	enabled = true;
+	return true;
 }
 
 void j1Player::Disable()
 {
 	active = false;
+	enabled = false;
 	selection_panel->Disable();
 	game_panel->Disable();
 	action_panel->Disable();

@@ -24,6 +24,9 @@ j1Map::~j1Map()
 
 void j1Map::Disable()
 {
+	active = false;
+	enabled = false;
+
 	for (int y = 0; y < data.height; ++y)
 	{
 		for (int x = 0; x < data.width; ++x)

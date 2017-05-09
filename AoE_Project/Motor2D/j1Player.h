@@ -45,8 +45,7 @@ public:
 
 
 	//Enable and disable modules
-	void Enable();
-
+	bool Enable();
 	void Disable();
 
 	// Called before render is available

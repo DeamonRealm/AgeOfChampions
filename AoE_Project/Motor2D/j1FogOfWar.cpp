@@ -26,6 +26,8 @@ j1FogOfWar::~j1FogOfWar()
 void j1FogOfWar::Disable()
 {
 	active = false;
+	enabled = false;
+
 	entities_dinamic_update.clear();
 	entities_static_update.clear();
 	entities_release.clear();

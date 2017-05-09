@@ -385,6 +385,8 @@ j1Animator::~j1Animator()
 //Game Loop ===========================
 void j1Animator::Disable()
 {
+	active = false;
+	enabled = false;
 	CleanUp();
 }
 

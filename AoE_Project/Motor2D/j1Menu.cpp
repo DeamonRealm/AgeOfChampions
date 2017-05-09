@@ -33,7 +33,7 @@ j1Menu::~j1Menu()
 {
 }
 
-void j1Menu::Enable()
+bool j1Menu::Enable()
 {
 	active = true;
 	//App->sound->PlayMusicAudio(MAIN_MENU_SONG);
@@ -47,12 +47,13 @@ void j1Menu::Enable()
 	loadgame->Desactivate();
 	loadgame->DesactivateChids();
 
+	return true;
 }
 
 void j1Menu::Disable()
 {
 	active = false;
-
+	enabled = false;
 	menu_screen->Desactivate();
 	menu_screen->DesactivateChids();
 	
@@ -285,33 +286,12 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		{
 			option_selected->button_state = UP;
 
-			//Clean all the previous data
-			App->map->Disable();
-			App->gui->ChangeMouseTexture(DEFAULT);
-			App->player->Disable();
-			App->animator->Disable();
-			App->entities_manager->Disable();
-			App->fog_of_war->Disable();
-			App->buff_manager->Disable();
-			App->AI->Disable();
-			App->gui->Disable();
-
-			//Reactivate all the modules (only say active but data is not loaded in the same loop)
-			App->map->Active();
-			App->player->Active();
-			App->animator->Active();
-			App->entities_manager->Active(); /*This load the entities animations textures*/
-			App->fog_of_war->Active();
-			App->buff_manager->Active(); /*This load the particles textures*/
-			App->AI->Active();
-			App->gui->Active();
-
 			App->LoadDefaultGame("scene/standard_match.xml");
-			App->EnableActiveModules();
 
-			this->CleanUp();
-			this->Disable();
-			App->scene->Enable();
+
+			/*this->CleanUp();
+			this->Disable();*/
+
 		}
 		if (target == loadgame)
 		{
@@ -321,11 +301,10 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 				singleplayer->DesactivateChids();
 
 				App->LoadGame("party_file.xml");
-				App->EnableActiveModules();
 
-				this->CleanUp();
+				/*this->CleanUp();
 				this->Disable();
-				App->scene->Enable();
+				App->scene->Enable();*/
 			}
 			else LOG("No party Saved");
 		}

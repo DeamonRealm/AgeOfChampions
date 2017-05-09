@@ -438,7 +438,7 @@ j1BuffManager::~j1BuffManager()
 
 }
 
-void j1BuffManager::Enable()
+bool j1BuffManager::Enable()
 {
 	//Load all buffs definitions
 	pugi::xml_document buffs_data;
@@ -588,10 +588,13 @@ void j1BuffManager::Enable()
 		buff_node = buff_node.next_sibling();
 	}
 
+	return true;
 }
 
 void j1BuffManager::Disable()
 {
+	active = false;
+	enabled = false;
 	CleanUp();
 }
 

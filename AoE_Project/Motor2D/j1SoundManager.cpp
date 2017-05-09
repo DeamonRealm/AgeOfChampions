@@ -84,16 +84,19 @@ j1SoundManager::~j1SoundManager()
 
 
 //Game Loop ===========================
-void j1SoundManager::Enable()
+bool j1SoundManager::Enable()
 {
 	//Load xml sounds ---------------------------
 	std::string load_folder = name + "/" + "SoundsData.xml";
 	App->sound->LoadSoundBlock(load_folder.c_str());
 	// ------------------------------------------
+	return true;
 }
 
 void j1SoundManager::Disable()
 {
+	active = false;
+	enabled = false;
 	CleanUp();
 }
 

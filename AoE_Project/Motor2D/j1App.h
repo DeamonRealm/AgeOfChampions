@@ -5,6 +5,7 @@
 #include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 #include <list>
+#include <vector>
 
 //Brofiler Tool
 #define BROFILER_FRAME
@@ -69,7 +70,7 @@ public:
 	const char* GetOrganization() const;
 	float GetDT() const;
 
-	void LoadGame(const char* file);
+	void LoadGame(const char* file, bool activate_modules = true);
 	void SaveGame(const char* file);
 
 	bool IsXMLdir(const char* dir)const;
@@ -154,6 +155,9 @@ private:
 	pugi::xml_node config_node;
 
 	std::list<j1Module*>	modules;
+	std::vector<j1Module*>	modules_to_enable;
+	uint enable_index = 0;
+
 	int						argc = 0;
 	char**					args = nullptr;
 
