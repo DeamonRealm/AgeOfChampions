@@ -536,10 +536,13 @@ public:
 		if (actor->GetWorker()->GetCurrentActionType() == TASK_U_DIE) return true;
 
 		//Chek if it is a unit that can attack
-		if (((Unit*)actor)->GetUnitType() != WIZARD_CHMP && ((Unit*)actor)->GetUnitType() != MONK) return true;
+		if (((Unit*)actor)->GetUnitType() == WIZARD_CHMP && ((Unit*)actor)->GetUnitType() == MONK) return true;
 
 		surrounding_units.clear();
 		surrounding_buildings.clear();
+
+		App->entities_manager->units_quadtree.CollectCandidates(surrounding_units, actor->GetVision());
+		App->entities_manager->OrganizeByNearest(surrounding_units, actor->GetVision());
 
 		//Units scann and attack
 		uint size = surrounding_units.size();
@@ -554,6 +557,8 @@ public:
 
 
 		//Buildings scann and attack
+		App->entities_manager->buildings_quadtree.CollectCandidates(surrounding_buildings, actor->GetVision());
+
 		uint sizeb = surrounding_buildings.size();
 		for (uint k = 0; k < sizeb; k++)
 		{
