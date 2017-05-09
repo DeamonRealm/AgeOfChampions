@@ -48,52 +48,84 @@ void j1EntitiesManager::Init()
 
 bool j1EntitiesManager::Enable()
 {
+	LOG("FRAME");
 	j1Timer time;
-	time.Start();
 
 	//Load Civilization Animations --------------
-	//Load civilization data from loaded folder
-	LOG("---- Loading %s...", "Teutons.xml");
-	std::string load_folder = name + "/" + "Teutons.xml";
-	pugi::xml_document civilization_data;
-	if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
+	
+	if (civ_data_loaded == false) /*XML doc is loaded only one time at start process*/
 	{
-		LOG("Civilization animations load error!");
-		return true;
+		//Load civilization data from loaded folder
+		LOG("---- Loading %s...", "Teutons.xml");
+		std::string load_folder = name + "/" + "Teutons.xml";
+		if (!App->fs->LoadXML(load_folder.c_str(), &civilization_data))
+		{
+			LOG("Civilization animations load error!");
+			return true;
+		}
+		civ_data_loaded = true;
 	}
 
-	//Get Civilization name
-	std::string civ_name = civilization_data.first_child().first_attribute().as_string();
 	//Boolean to check the correct file loads
 	bool ret = true;
 	//Load civilization units list
-	pugi::xml_node unit_node = civilization_data.first_child().child("units").first_child();
-	while (unit_node != NULL)
+	if (current_type == NO_ENTITY || current_type == UNIT)
 	{
-		if (!ret)break;
-		ret = App->animator->LoadUnitBlock(unit_node.attribute("xml").as_string());
-		unit_node = unit_node.next_sibling();
+		if (current_node == NULL)current_node = civilization_data.first_child().child("units").first_child();
+		while (current_node != NULL)
+		{
+			if (!ret)break;
+			ret = App->animator->LoadUnitBlock(current_node.attribute("xml").as_string());
+			current_node = current_node.next_sibling();
+			if (time.Read() > TIME_TO_ENABLE && current_node != NULL) /*Break the process that will continue in the next loop*/
+			{
+				current_type = UNIT;
+				return false;
+			}
+		}
+		current_type = BUILDING;
+		return false;
 	}
 	//Load civilization buildings list
-	pugi::xml_node building_node = civilization_data.child("data").child("buildings").first_child();
-	while (building_node != NULL)
+	if (current_type == BUILDING)
 	{
-		if (!ret)break;
-		ret = App->animator->LoadBuildingBlock(building_node.attribute("xml").as_string());
-		building_node = building_node.next_sibling();
+		if (current_node == NULL)current_node = civilization_data.child("data").child("buildings").first_child();
+		while (current_node != NULL)
+		{
+			if (!ret)break;
+			ret = App->animator->LoadBuildingBlock(current_node.attribute("xml").as_string());
+			current_node = current_node.next_sibling();
+			if (time.Read() > TIME_TO_ENABLE && current_node != NULL) /*Break the process that will continue in the next loop*/
+			{
+				current_type = BUILDING;
+				return false;
+			}
+			current_type = RESOURCE;
+			return false;
+		}
 	}
 	//Load civilization resources
-	pugi::xml_node resource_node = civilization_data.first_child().child("resources").first_child();
-	if (resource_node != NULL)ret = App->animator->LoadResourceBlock(resource_node.attribute("xml").as_string());
-	else LOG("Error loading civilization Resources");
+	if (current_type == RESOURCE)
+	{
+		pugi::xml_node resource_node = civilization_data.first_child().child("resources").first_child();
+		if (resource_node != NULL)ret = App->animator->LoadResourceBlock(resource_node.attribute("xml").as_string());
+		else LOG("Error loading civilization Resources");
+
+		current_type = NO_ENTITY;
+	}
 	// ------------------------------------------
 
 	//Clean loaded xml
-	civilization_data.reset();
+	if (civilization_data != NULL && current_type == NO_ENTITY)
+	{
+		civ_data_loaded = false;
+		civilization_data.reset();
+		if(current_node != NULL)current_node(NULL);
+		//LOG("---- %s loaded in %.3f", "Teutons.xml", time.ReadSec());
+		return true;
+	}
 
-	LOG("---- %s loaded in %.3f", "Teutons.xml", time.ReadSec());
-
-	return true;
+	return false;
 }
 
 void j1EntitiesManager::Disable()

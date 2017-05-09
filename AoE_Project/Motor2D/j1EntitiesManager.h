@@ -68,6 +68,7 @@ public:
 	std::list<Building*>	buildings;
 
 private:
+	
 	std::list<Arrow*>		all_arrows;
 	std::list<Unit*>		death_units;
 	std::list<Building*>	death_buildings;
@@ -96,7 +97,14 @@ private:
 	//Check if the entity civilizations string contains the chosen one
 	bool		CivilizationCheck(char* civs_str, const char* chosen_civ);
 
+	//Data used to segment the enable process
+	pugi::xml_document civilization_data;
+	bool civ_data_loaded = false;
+	pugi::xml_node current_node;
+	ENTITY_TYPE current_type = NO_ENTITY;
+
 public:
+
 	void		AddArrow(Arrow* get);
 	void		RemoveArrow(Arrow* this_arrow);
 
@@ -111,8 +119,6 @@ public:
 	m_QuadTree<Building*>		buildings_quadtree;
 
 	//Functionality -------------------
-	//Load all chosen civilization data
-	bool		LoadCivilization(const char* folder);
 	//Factory Methods -------
 	Unit*		GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool push_in_list = true);
 	Building*	GenerateBuilding(BUILDING_TYPE type, DIPLOMACY diplomacy, bool push_in_list = true);
