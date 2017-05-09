@@ -440,6 +440,7 @@ public:
 	iPoint					FindSpawnCell(const iPoint& center);
 
 	bool					UnitHere(const iPoint& destination, int radius);
+	bool					SurroundedUnit();
 	iPoint					FindWalkableAdjacent(const iPoint& center);
 
 	Unit*					FindNewTarget();

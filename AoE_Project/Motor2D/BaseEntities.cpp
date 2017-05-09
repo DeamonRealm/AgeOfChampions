@@ -739,6 +739,10 @@ bool Unit::UnitHere(const iPoint & destination, int radius)
 
 	return false;
 }
+bool Unit::SurroundedUnit()
+{
+	return iPoint(-1, -1) == FindWalkableAdjacent(this->GetPositionRounded());
+}
 iPoint Unit::FindWalkableCell(const iPoint & center)
 {
 	iPoint cell;
