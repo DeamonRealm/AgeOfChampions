@@ -107,7 +107,7 @@ bool j1Menu::Start()
 	load_screen = (UI_Image*)App->gui->GenerateUI_Element(IMG);
 	load_screen->ChangeTextureRect({ 0,0,1366,768 });
 	load_screen->ChangeTextureId(LOAD_SCREEN);
-	main_menu_background->AddChild(load_screen);
+	menu_screen->AddChild(load_screen);
 	load_screen->SetLayer(30);
 	load_screen->Desactivate();
 
@@ -312,7 +312,6 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			if (App->fs->Exists("save/party_file.xml"))
 			{
 				option_selected->button_state = UP;
-				singleplayer->DesactivateChids();
 				menu_screen->DesactivateChids();
 				load_screen->Activate();
 				App->LoadGame("party_file.xml");
