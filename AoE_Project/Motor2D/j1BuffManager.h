@@ -216,7 +216,15 @@ private:
 	//Get a buff particle looking the types and the actor
 	BuffParticle	GetBuffParticle(BUFF_TYPE bf_type, BUFF_ATTRIBUTE_TYPE atr_type, bool act);
 
+	//Data use to segment the buffs load process
+	pugi::xml_document buffs_data;
+	bool buffs_data_loaded = false;
+	pugi::xml_node particle_document_node;
+	pugi::xml_node buff_node;
+	bool load_step = false;
+
 public:
+
 	bool			CheckBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type);
 	bool			CallBuff(Unit* target, BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor = false);
 	PassiveBuff*	GetPassiveBuff(BUFF_TYPE buff_type, BUFF_ATTRIBUTE_TYPE buff_atr_type, bool actor);

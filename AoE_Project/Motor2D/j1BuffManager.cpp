@@ -446,23 +446,27 @@ void j1BuffManager::Init()
 
 bool j1BuffManager::Enable()
 {
-	//Load all buffs definitions
-	pugi::xml_document buffs_data;
-	std::string load_folder = name + "/" + "buff_definitions.xml";
-	if (!App->fs->LoadXML(load_folder.c_str(), &buffs_data))
+	LOG("FRAME");
+	if (!buffs_data_loaded)
 	{
-		LOG("Buffs definitions load failed!");
-	}
+		//Load all buffs definitions
+		std::string load_folder = name + "/" + "buff_definitions.xml";
+		if (!App->fs->LoadXML(load_folder.c_str(), &buffs_data))
+		{
+			LOG("Buffs definitions load failed!");
+		}
 
-	//Load all the buff particles to use it in buffs
-	pugi::xml_node particle_document_node = buffs_data.first_child().first_child();
+		//Load all the buff particles to use it in buffs
+		particle_document_node = buffs_data.first_child().first_child();
+		buffs_data_loaded = true;
+	}
 
 	//Iterate all the buff particles definitions
 	while (particle_document_node != NULL)
 	{
 		//Load particle animation document
 		pugi::xml_document particle_data;
-		load_folder = name + "/" + particle_document_node.attribute("document").as_string();
+		std::string load_folder = name + "/" + particle_document_node.attribute("document").as_string();
 		if (!App->fs->LoadXML(load_folder.c_str(), &particle_data))
 		{
 			LOG("Buff animation load failed!");
@@ -550,11 +554,20 @@ bool j1BuffManager::Enable()
 		particle_document_node = particle_document_node.next_sibling();
 
 		//Check if the next node is a particle node or a buff node
-		if (strcmp(particle_document_node.name(), "particle") != 0)break;
+		if (strcmp(particle_document_node.name(), "particle") != 0)
+		{
+			break;
+		}
+
+		return false;
 	}
 
 	//Point to the first buff definition
-	pugi::xml_node buff_node = buffs_data.first_child().child("buff");
+	if (!load_step)
+	{
+		buff_node = buffs_data.first_child().child("buff");
+		load_step = true;
+	}
 
 	PassiveBuff* buff_def = nullptr;
 
@@ -592,6 +605,16 @@ bool j1BuffManager::Enable()
 
 		//Get the next xml node 
 		buff_node = buff_node.next_sibling();
+
+		return false;
+	}
+
+	if (buffs_data_loaded)
+	{
+		buffs_data.reset();
+		if (buff_node != NULL)buff_node(NULL);
+		if (particle_document_node != NULL)particle_document_node(NULL);
+		buffs_data_loaded = load_step = false;
 	}
 
 	return true;
