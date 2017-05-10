@@ -2653,3 +2653,27 @@ Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE typ
 
 	return ret;
 }
+
+bool j1EntitiesManager::CheckAreaToSpawn(const Circle & area) const
+{
+	std::vector<iPoint> tiles;
+	uint size = App->map->map_quadtree.CollectCandidates(tiles, area);
+
+	for (uint k = 0; k < size; k++)
+	{
+		if (!App->pathfinding->IsWalkable(tiles[k]) || !App->map->CheckConstructionMap(tiles[k], 1, 1))
+		{
+			return false;
+		}
+	}
+
+	//Check unit quadtree for units in zone
+	std::vector<Unit*> in_zone;
+	App->entities_manager->units_quadtree.CollectCandidates(in_zone, area);
+	if (!in_zone.empty())
+	{
+		return false;
+	}
+
+	return true;
+}

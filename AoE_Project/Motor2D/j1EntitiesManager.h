@@ -105,8 +105,8 @@ private:
 
 public:
 
-	void		AddArrow(Arrow* get);
-	void		RemoveArrow(Arrow* this_arrow);
+	void AddArrow(Arrow* get);
+	void RemoveArrow(Arrow* this_arrow);
 
 	void GetChampion(Champion* champion, DIPLOMACY diplomacy);
 	void ExtractChampion(Champion* champion, DIPLOMACY diplomacy);
@@ -159,13 +159,15 @@ public:
 	void UpgradeUnit(UNIT_TYPE u_type = NO_UNIT, UNIT_TYPE new_type = NO_UNIT, DIPLOMACY e_diplomacy = ALLY);
 	void UpgradeBuilding(BUILDING_TYPE b_type, BUILDING_TYPE new_type, DIPLOMACY diplomacy);
 	bool UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY diplomacy);
-	//Clean Buff Champion List
 
 	//Get nearest Entity methods
 	Unit*		GetNearestUnit(iPoint point, DIPLOMACY diplomacy, int max_dist = -1, UNIT_TYPE type = NO_UNIT);
 	Building*	GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy, int max_dist = -1);
 	Building*	GetNearestSavePoint(iPoint position, PLAYER_RESOURCES resource_to_save, DIPLOMACY diplomacy);
 	Resource*	GetNearestResource(iPoint point, RESOURCE_TYPE type, DIPLOMACY diplomacy, int max_dist = -1);
+	
+	//Check if an area is apropiate to spawn an entity
+	bool CheckAreaToSpawn(const Circle& area)const;
 
 };
 #endif // _ENTITIES_MANAGER_

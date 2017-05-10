@@ -43,6 +43,18 @@ void j1Map::Disable()
 			construction_layer->data[i] = 0;
 		}
 	}
+
+	//Place a construction mark around the map for security
+	for (int y = 0; y < data.height; ++y)
+	{
+		for (int x = 0; x < data.width; ++x)
+		{
+			if (y < MAP_MARGIN || y >= data.height - MAP_MARGIN || x < MAP_MARGIN || x >= data.width - MAP_MARGIN)
+			{
+				construction_layer->data[y*data.width + x] = 39;
+			}
+		}
+	}
 }
 
 // Called before render is available
@@ -80,6 +92,7 @@ bool j1Map::CreateWalkabilityMap(uint& width, uint & height)
 		}
 	}
 	memcpy(construction_map, logic_map, size);
+
 	width = data.width;
 	height = data.height;
 

@@ -2460,12 +2460,6 @@ bool Building::CheckZone(int x, int y)
 		break;
 	}
 	
-	/*if (building_type != HOUSE_A && building_type != HOUSE_B && building_type != HOUSE_C && building_type != TOWN_CENTER)
-	{
-		world_coords.x -= 1;
-		world_coords.y -= 1;
-	}*/
-
 	if (App->map->CheckConstructionMap(world_coords, width_in_tiles + 1, height_in_tiles + 1))
 	{
 		//Check unit quadtree for units in build zone

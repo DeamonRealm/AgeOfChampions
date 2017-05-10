@@ -2,6 +2,7 @@
 #define __j1MAP_H__
 
 #define MARGIN 1
+#define MAP_MARGIN 2
 
 #include "PugiXml/src/pugixml.hpp"
 #include "p2Point.h"
