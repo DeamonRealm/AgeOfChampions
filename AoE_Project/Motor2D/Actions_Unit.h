@@ -550,7 +550,8 @@ public:
 		{
 			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 			{
-				if (surrounding_units[i]->SurroundedUnit() && ((Unit*)actor)->GetAttackType() == MELEE) continue;
+				if (surrounding_units[i]->SurroundedUnit() && ((Unit*)actor)->GetAttackType() == MELEE) 
+					continue;
 				actor->AddAction(App->action_manager->AttackToUnitAction((Unit*)actor, surrounding_units[i]), PRIMARY);
 				return false;
 			}

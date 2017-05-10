@@ -718,7 +718,7 @@ bool Unit::UnitHere(const iPoint & destination, int radius)
 
 	area.SetRad(radius);
 	App->entities_manager->units_quadtree.CollectCandidates(other_units, area);
-	area.SetRad(this->GetHardCollider().GetRad());
+	area.SetRad(this->GetHardCollider().GetRad()*2);
 	if (!other_units.empty()) {
 		for (int i = 0; i < other_units.size(); i++)
 		{
@@ -727,6 +727,7 @@ bool Unit::UnitHere(const iPoint & destination, int radius)
 			}
 			if (other_units[i]->GetHardCollider().Overlap(&area))
 			{
+
 				return true;
 			}
 		}
@@ -1165,8 +1166,9 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	checker.SetPosition(cell);
 	goal = checker.NearestPoint(&target);
 	cell_map = App->map->WorldToMap(cell.x, cell.y);
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
 	{
+		//LOG("south");
 		return goal;
 	}
 
@@ -1175,8 +1177,9 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	checker.SetPosition(cell);
 	goal = checker.NearestPoint(&target);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
 	{
+	//	LOG("north");
 		return goal;
 	}
 
@@ -1187,8 +1190,9 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	goal = checker.NearestPoint(&target);
 
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
 	{
+		//LOG("east");
 		return goal;
 	}
 
@@ -1199,8 +1203,9 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	goal = checker.NearestPoint(&target);
 
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
 	{
+	//	LOG("west");
 		return goal;
 	}
 
@@ -1211,8 +1216,9 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	goal = checker.NearestPoint(&target);
 
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
 	{
+	//	LOG("south-east");
 		return goal;
 	}
 
@@ -1222,8 +1228,9 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	goal = checker.NearestPoint(&target);
 
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
 	{
+	//	LOG("south-west");
 		return goal;
 	}
 
@@ -1233,8 +1240,9 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	goal = checker.NearestPoint(&target);
 
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
 	{
+	//	LOG("north-east");
 		return goal;
 	}
 
@@ -1244,8 +1252,9 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	goal = checker.NearestPoint(&target);
 
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
 	{
+	//	LOG("north-west");
 		return goal;
 	}
 
@@ -1392,10 +1401,7 @@ bool Unit::AttackUnit(Unit* target)
 
 		iPoint goal = attack_area.NearestPoint(&target->GetSoftCollider());
 		iPoint target_pos(-1,-1);
-		if (GetAttackType() == MELEE)
-		{
-			target_pos = target->GetPositionRounded();
-		}
+	
 		App->pathfinding->PushPath(this, goal, target_pos,true,PRIMARY,target);
 /*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
