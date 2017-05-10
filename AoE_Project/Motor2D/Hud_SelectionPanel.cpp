@@ -678,12 +678,22 @@ void Selection_Panel::DrawGroup()
 		//Draw life
 		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36, 3 }, 255, 0, 0);
 		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36 * life / max_life, 3 }, 0, 255, 0);
-		item._Ptr->_Myval->DrawLife();
-
+		
 		//Draw icon
 		group_profile[i]->Draw(App->debug_mode);
 
 		i--;
+	}
+}
+
+void Selection_Panel::DrawLife()
+{
+	std::list<Entity*>::const_iterator item = selected_elements.begin();
+	while (item != selected_elements.end())
+	{
+		//Draw life
+		item._Ptr->_Myval->DrawLife();
+		item++;
 	}
 }
 

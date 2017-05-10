@@ -16,6 +16,7 @@ enum RESEARCH_TECH;
 #define	RESEARCH_RATE 15000
 #define AI_RESEARCH_DURATION 10000
 #define MIN_VILLAGERS 6
+#define UNITS_PRODUCTIVE_SIZE 23
 #define PRODUCTIVE_SIZE 22
 
 
@@ -192,7 +193,7 @@ private:
 
 	// Aviable Units/Buildings to create
 	std::vector<AI_Entities_Data> units_production;
-	int							  units_lvl[PRODUCTIVE_SIZE];
+	int							  units_lvl[UNITS_PRODUCTIVE_SIZE];
 	std::vector<AI_Entities_Data_Buildings> buildings_production;
 	int							  buildings_lvl[PRODUCTIVE_SIZE];
 

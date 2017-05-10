@@ -268,6 +268,9 @@ bool j1Player::PostUpdate()
 		game_panel->ActivatePauseMenu();
 	}
 
+	// Draw Selected Entities Life
+	selection_panel->DrawLife();
+
 	game_hud->Draw(false);
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)

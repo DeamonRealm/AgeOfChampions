@@ -38,8 +38,11 @@ bool j1AI::Enable()
 
 	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
 	{
-		units_lvl[i] = 0;
 		buildings_lvl[i] = 0;
+	}
+	for (int i = 0; i < UNITS_PRODUCTIVE_SIZE; i++)
+	{
+		units_lvl[i] = 0;
 	}
 	UpdateAIUnits();
 	UpdateAIBuildings();
@@ -78,8 +81,11 @@ void j1AI::Reset()
 
 	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
 	{
-		units_lvl[i] = 0;
 		buildings_lvl[i] = 0;
+	}
+	for (int i = 0; i < UNITS_PRODUCTIVE_SIZE; i++)
+	{
+		units_lvl[i] = 0;
 	}
 	UpdateAIUnits();
 	UpdateAIBuildings();
@@ -284,7 +290,7 @@ bool j1AI::Save(pugi::xml_node & data) const
 	curr_node = ai_node.append_child("Updates");
 	curr_node.append_attribute("current_age") = current_age;
 	curr_node = curr_node.append_child("units_level");
-	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
+	for (int i = 0; i < UNITS_PRODUCTIVE_SIZE; i++)
 	{
 		if (units_lvl[i] != 0)
 		{
@@ -401,8 +407,13 @@ void j1AI::LoadAIEntitiesData(pugi::xml_node& conf)
 	AI_Entities_Data new_data;
 	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
 	{
-		units_production.push_back(new_data);
 		buildings_production.push_back(building_data);
+		buildings_lvl[i] = 0;
+	}
+	for (int i = 0; i < UNITS_PRODUCTIVE_SIZE; i++)
+	{
+		units_production.push_back(new_data);
+		units_lvl[i] = 0;
 	}
 
 	pugi::xml_node item = conf.child("Buildings").first_child().first_child();

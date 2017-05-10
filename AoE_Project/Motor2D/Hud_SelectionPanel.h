@@ -127,6 +127,7 @@ public:
 	// Draw Selection Panel
 	bool Draw();
 	void DrawGroup();
+	void DrawLife();
 
 	// Coordinates Methods
 	bool PointisInViewport(int x = 0, int y = 0) ;
@@ -161,10 +162,10 @@ public:
 
 	UI_Element*	GetViewport();
 	bool	GetInViewport()const;
+	bool WindowsMove();
 
 private:
 
-	bool WindowsMove();
 	// SelectionPanel Viewport
 	UI_Element*		viewport = nullptr;
 	bool			inviewport = false;
