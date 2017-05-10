@@ -26,7 +26,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!-- Attack Action-->
-    <action enum="attack" speed="200">
+    <action enum="attack" speed="105">
       <direction enum="south">
         <sprite n="ElitSkirmisher_attack/000_ElitSkirmisher_attack.bmp" x="1" y="1" w="25" h="66" pX="0.6" pY="0.893939"/>
         <sprite n="ElitSkirmisher_attack/001_ElitSkirmisher_attack.bmp" x="28" y="1" w="26" h="51" pX="0.615385" pY="0.803922"/>
@@ -176,7 +176,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!-- Disappear Action-->
-    <action enum="disappear" speed="200">
+    <action enum="disappear" speed="1500">
       <direction enum="south">
         <sprite n="ElitSkirmisher_dissapear/000_ElitSkirmisher_dissapear.bmp" x="375" y="339" w="87" h="27" pX="0.229885" pY="0.148148"/>
         <sprite n="ElitSkirmisher_dissapear/001_ElitSkirmisher_dissapear.bmp" x="464" y="339" w="86" h="27" pX="0.232558" pY="0.148148"/>
@@ -220,7 +220,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!-- Idle Action-->
-    <action enum="idle" speed="200">
+    <action enum="idle" speed="150">
       <direction enum="south">
         <sprite n="ElitSkirmisher_idle/000_ElitSkirmisher_idle.bmp" x="720" y="414" w="26" h="51" pX="0.461538" pY="0.862745"/>
         <sprite n="ElitSkirmisher_idle/001_ElitSkirmisher_idle.bmp" x="1" y="467" w="26" h="49" pX="0.461538" pY="0.877551"/>
@@ -284,7 +284,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!-- Walk Action-->
-    <action enum="walk" speed="200">
+    <action enum="walk" speed="100">
       <direction enum="south">
         <sprite n="ElitSkirmisher_walk/000_ElitSkirmisher_walk.bmp" x="694" y="522" w="37" h="54" pX="0.648649" pY="0.62963"/>
         <sprite n="ElitSkirmisher_walk/001_ElitSkirmisher_walk.bmp" x="1" y="584" w="37" h="56" pX="0.648649" pY="0.625"/>

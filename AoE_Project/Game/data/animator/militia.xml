@@ -24,7 +24,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <unit id ="militia">
 
     <!-- Attack Action-->
-    <action enum= "attack" speed="300">
+    <action enum= "attack" speed="203">
       <direction enum="south">
         <sprite n="milicia ataque/000_Militia_attack.bmp" x="1" y="1" w="21" h="46" pX="0.52381" pY="0.804348"/>
         <sprite n="milicia ataque/001_Militia_attack.bmp" x="24" y="1" w="22" h="47" pX="0.590909" pY="0.851064"/>
@@ -91,7 +91,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
     </action>
     <!--Die Action-->
-    <action enum ="die" speed="300">
+    <action enum ="die" speed="200">
       <direction enum="south">
          <sprite n="Militia_die/000_Militia_die.bmp" x="376" y="122" w="26" h="50" pX="0.423077" pY="0.72"/>
     <sprite n="Militia_die/001_Militia_die.bmp" x="404" y="122" w="29" h="42" pX="0.413793" pY="0.785714"/>
@@ -158,7 +158,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
     </action>
     <!--Disappear Action-->
-    <action enum ="disappear" speed="300">
+    <action enum ="disappear" speed="1500">
       <direction enum="south">
         <sprite n="milicia disapear/000_Militia_dissapear.bmp" x="542" y="275" w="23" h="46" pX="0.304348" pY="0.717391"/>
         <sprite n="milicia disapear/001_Militia_dissapear.bmp" x="567" y="275" w="23" h="43" pX="0.304348" pY="0.697674"/>
@@ -200,7 +200,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
     </action>
     <!--Idle Action-->
-    <action enum ="idle" speed="300">
+    <action enum ="idle" speed="150">
       <direction enum="south">
         <sprite n="milicia idle/000_Militia_idle.bmp" x="316" y="369" w="28" h="46" pX="0.357143" pY="0.804348"/>
         <sprite n="milicia idle/001_Militia_idle.bmp" x="346" y="369" w="26" h="46" pX="0.423077" pY="0.804348"/>
@@ -247,7 +247,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
     </action>
     <!--Walk Action-->
-    <action enum ="walk" speed="300">
+    <action enum ="walk" speed="100">
       <direction enum="south">
         <sprite n="milicia walk/000_Militia_walk.bmp" x="568" y="418" w="22" h="46" pX="0.545455" pY="0.804348"/>
         <sprite n="milicia walk/001_Militia_walk.bmp" x="592" y="418" w="22" h="46" pX="0.545455" pY="0.804348"/>

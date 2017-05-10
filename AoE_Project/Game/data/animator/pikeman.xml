@@ -26,7 +26,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Attack Action-->
-    <action enum ="attack" speed="200">
+    <action enum ="attack" speed="105">
       <direction enum="south">
         <sprite n="pikeman_attack/000_pikeman_attack.bmp" x="33" y="1" w="38" h="62" pX="0.789474" pY="0.612903"/>
         <sprite n="pikeman_attack/001_pikeman_attack.bmp" x="73" y="1" w="34" h="62" pX="0.735294" pY="0.596774"/>
@@ -164,7 +164,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Disappear Action-->
-    <action enum ="disappear" speed="200">
+    <action enum ="disappear" speed="1500">
       <direction enum="south">
         <sprite n="pikeman_dissapear/000_pikeman_dissapear.bmp" x="444" y="384" w="72" h="45" pX="0.0972222" pY="0.0222222"/>
         <sprite n="pikeman_dissapear/001_pikeman_dissapear.bmp" x="518" y="384" w="72" h="44" pX="0.0972222" pY="0.0227273"/>
@@ -208,7 +208,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Idle Action-->
-    <action enum ="idle" speed="200">
+    <action enum ="idle" speed="150">
       <direction enum="south">
         <sprite n="pikeman_idle/000_pikeman_idle.bmp" x="644" y="505" w="28" h="47" pX="0.607143" pY="0.808511"/>
         <sprite n="pikeman_idle/001_pikeman_idle.bmp" x="674" y="505" w="27" h="47" pX="0.592593" pY="0.808511"/>
@@ -267,7 +267,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Walk Action-->
-    <action enum ="walk" speed="200">
+    <action enum ="walk" speed="100">
       <direction enum="south">
         <sprite n="pikeman_walk/000_pikeman_walk.bmp" x="414" y="619" w="50" h="46" pX="0.66" pY="0.826087"/>
         <sprite n="pikeman_walk/001_pikeman_walk.bmp" x="466" y="619" w="51" h="44" pX="0.627451" pY="0.886364"/>

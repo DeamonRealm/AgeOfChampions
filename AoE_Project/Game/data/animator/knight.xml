@@ -25,7 +25,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <unit id ="knight">
 
     <!-- Attack Action-->
-    <action enum="attack" speed="200">
+    <action enum="attack" speed="203">
       <direction enum="south">
         <sprite n="knight_attack/000_knight_attack.bmp" x="1" y="1" w="41" h="90" pX="0.487805" pY="0.788889"/>
     <sprite n="knight_attack/001_knight_attack.bmp" x="44" y="1" w="33" h="94" pX="0.454545" pY="0.787234"/>
@@ -175,7 +175,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!-- Disappear Action-->
-    <action enum="disappear" speed="200">
+    <action enum="disappear" speed="1500">
       <direction enum="south">
         <sprite n="knight_dissapear/000_knight_dissapear.bmp" x="962" y="435" w="85" h="43" pX="0.694118" pY="0.534884"/>
     <sprite n="knight_dissapear/001_knight_dissapear.bmp" x="1" y="518" w="84" h="41" pX="0.702381" pY="0.536585"/>
@@ -222,7 +222,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!-- Idle Action-->
-    <action enum="idle" speed="200">
+    <action enum="idle" speed="175">
       <direction enum="south">
         <sprite n="knight_idle/000_knight_idle.bmp" x="877" y="565" w="36" h="78" pX="0.5" pY="0.5"/>
     <sprite n="knight_idle/001_knight_idle.bmp" x="915" y="565" w="36" h="76" pX="0.5" pY="0.5"/>

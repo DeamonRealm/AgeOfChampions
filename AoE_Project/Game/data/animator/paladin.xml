@@ -26,7 +26,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!-- Attack Action-->
-    <action enum="attack" speed="200">
+    <action enum="attack" speed="203">
       <direction enum="south">
         <sprite n="paladin_attack/000_paladin_attack.bmp" x="1" y="1" w="44" h="90" pX="0.363636" pY="0.788889"/>
         <sprite n="paladin_attack/001_paladin_attack.bmp" x="47" y="1" w="32" h="94" pX="0.25" pY="0.797872"/>
@@ -164,7 +164,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!-- Disappear Action-->
-    <action enum="disappear" speed="200">
+    <action enum="disappear" speed="1500">
       <direction enum="south">
         <sprite n="paladin_dissapear/000_paladin_dissapear.bmp" x="967" y="446" w="83" h="43" pX="0.662651" pY="0.534884"/>
         <sprite n="paladin_dissapear/001_paladin_dissapear.bmp" x="1" y="530" w="82" h="42" pX="0.658537" pY="0.547619"/>
@@ -207,7 +207,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!-- Idle Action-->
-    <action enum="idle" speed="300">
+    <action enum="idle" speed="150">
       <direction enum="south">
         <sprite n="paladin_idle/000_paladin_idle.bmp" x="878" y="578" w="37" h="84" pX="0.243243" pY="0.761905"/>
         <sprite n="paladin_idle/001_paladin_idle.bmp" x="917" y="578" w="37" h="82" pX="0.27027" pY="0.780488"/>
@@ -276,7 +276,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!-- Walk Action-->
-    <action enum="walk" speed="200">
+    <action enum="walk" speed="100">
       <direction enum="south">
         <sprite n="paladin_walk/000_paladin_walk.bmp" x="351" y="839" w="42" h="86" pX="0.571429" pY="0.802326"/>
         <sprite n="paladin_walk/001_paladin_walk.bmp" x="395" y="839" w="42" h="85" pX="0.571429" pY="0.8"/>

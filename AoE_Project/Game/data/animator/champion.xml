@@ -23,7 +23,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <!-- Define the unit type-->
   <unit id ="champion">  
   <!-- Attack Action-->
-  <action enum= "attack" speed="300">
+  <action enum= "attack" speed="203">
       <direction enum="south">
         <sprite n="champion/champion_attack/000_champion_attack.bmp" x="1" y="1" w="25" h="46" pX="0.36" pY="0.826087"/>
         <sprite n="champion/champion_attack/001_champion_attack.bmp" x="28" y="1" w="21" h="46" pX="0.47619" pY="0.804348"/>
@@ -91,7 +91,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Die Action-->
-  <action enum ="die" speed="300">
+  <action enum ="die" speed="200">
     <direction enum="south">
       <sprite n="champion/champion_die/000_champion_die.bmp" x="391" y="124" w="43" h="47" pX="0.232558" pY="0.744681"/>
       <sprite n="champion/champion_die/001_champion_die.bmp" x="436" y="124" w="50" h="46" pX="0.16" pY="0.76087"/>
@@ -159,7 +159,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
  </action>
   
   <!--Disapear Action-->
-  <action enum ="disappear" speed="300">
+  <action enum ="disappear" speed="1500">
     <direction enum="south">
       <sprite n="champion/champion_dissapear/000_champion_dissapear.bmp" x="1" y="349" w="47" h="23" pX="-0.12766" pY="0.434783"/>
       <sprite n="champion/champion_dissapear/001_champion_dissapear.bmp" x="50" y="349" w="46" h="21" pX="-0.152174" pY="0.428571"/>
@@ -202,7 +202,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
   
   <!--Idle Action-->
-  <action enum ="idle" speed="300">
+  <action enum ="idle" speed="150">
     <direction enum="south"> 
       <sprite n="champion/champion_idle/000_champion_idle.bmp" x="432" y="382" w="32" h="42" pX="0.65625" pY="0.833333"/>
       <sprite n="champion/champion_idle/001_champion_idle.bmp" x="466" y="382" w="35" h="43" pX="0.657143" pY="0.813953"/>
@@ -270,7 +270,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
   
   <!--Walk Action-->
-  <action enum ="walk" speed="300">
+  <action enum ="walk" speed="100">
     <direction enum="south">      
       <sprite n="champion/champion_walk/000_champion_walk.bmp" x="36" y="542" w="23" h="52" pX="0.565217" pY="0.826923"/>
       <sprite n="champion/champion_walk/001_champion_walk.bmp" x="61" y="542" w="24" h="47" pX="0.625" pY="0.829787"/>

@@ -24,7 +24,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <unit id ="crossbowman">
 
     <!-- Attack Action-->
-    <action enum="attack" speed="200">
+    <action enum="attack" speed="203">
       <direction enum="south">
         <sprite n="Crossbowman/Crossbowman_attack/000_Crossbowman_attack.bmp" x="1" y="1" w="27" h="50" pX="0.555556" pY="0.8"/>
         <sprite n="Crossbowman/Crossbowman_attack/001_Crossbowman_attack.bmp" x="30" y="1" w="25" h="51" pX="0.6" pY="0.764706"/>
@@ -92,7 +92,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Disappear Action-->
-    <action enum ="die" speed="500">
+    <action enum ="die" speed="200">
       <direction enum="south">
         <sprite n="Crossbowman/Crossbowman_die/000_Crossbowman_die.bmp" x="199" y="103" w="34" h="48" pX="0.705882" pY="0.708333"/>
         <sprite n="Crossbowman/Crossbowman_die/001_Crossbowman_die.bmp" x="235" y="103" w="42" h="42" pX="0.785714" pY="0.690476"/>
@@ -160,7 +160,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Disappear Action-->
-    <action enum ="disappear" speed="500">
+    <action enum ="disappear" speed="1500">
       <direction enum="south">
         <sprite n="Crossbowman/Crossbowman_dissapear/000_Crossbowman_dissapear.bmp" x="70" y="325" w="67" h="33" pX="0.477612" pY="0.575758"/>
         <sprite n="Crossbowman/Crossbowman_dissapear/001_Crossbowman_dissapear.bmp" x="139" y="325" w="65" h="32" pX="0.492308" pY="0.5625"/>
@@ -203,7 +203,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Idle Action-->
-    <action enum ="idle" speed="200">
+    <action enum ="idle" speed="150">
       <direction enum="south">
         <sprite n="Crossbowman/Crossbowman_idle/000_Crossbowman_idle.bmp" x="336" y="412" w="26" h="48" pX="0.461538" pY="0.8125"/>
         <sprite n="Crossbowman/Crossbowman_idle/001_Crossbowman_idle.bmp" x="364" y="412" w="26" h="47" pX="0.461538" pY="0.808511"/>
@@ -271,7 +271,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Walk Action-->
-    <action enum ="walk" speed="200">
+    <action enum ="walk" speed="100">
       <direction enum="south">
         <sprite n="Crossbowman/Crossbowman_walk/000_Crossbowman_walk.bmp" x="322" y="514" w="28" h="51" pX="0.678571" pY="0.745098"/>
         <sprite n="Crossbowman/Crossbowman_walk/001_Crossbowman_walk.bmp" x="352" y="514" w="29" h="51" pX="0.655172" pY="0.745098"/>

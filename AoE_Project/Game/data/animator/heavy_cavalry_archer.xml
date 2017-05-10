@@ -26,7 +26,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Attack Action-->
-    <action enum ="attack" speed="200">
+    <action enum ="attack" speed="203">
       <direction enum="south">
         <sprite n="HeavyCavalryArcher_attack/000_Heavy CavalryArcher_attack.bmp" x="1" y="1" w="36" h="83" pX="0.611111" pY="0.759036"/>
         <sprite n="HeavyCavalryArcher_attack/001_Heavy CavalryArcher_attack.bmp" x="39" y="1" w="39" h="83" pX="0.589744" pY="0.759036"/>
@@ -180,7 +180,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Disappear Action-->
-    <action enum ="disappear" speed="200">
+    <action enum ="disappear" speed="1500">
       <direction enum="south">
         <sprite n="HeavyCavalryArcher_dissapear/000_Heavy CavalryArcher_dissapear.bmp" x="362" y="525" w="81" h="45" pX="0.37037" pY="0.533333"/>
         <sprite n="HeavyCavalryArcher_dissapear/001_Heavy CavalryArcher_dissapear.bmp" x="445" y="525" w="78" h="43" pX="0.371795" pY="0.534884"/>
@@ -224,7 +224,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Idle Action-->
-    <action enum ="idle" speed="200">
+    <action enum ="idle" speed="150">
       <direction enum="south">
         <sprite n="HeavyCavalryArcher_idle/000_Heavy CavalryArcher_idle.bmp" x="73" y="647" w="33" h="82" pX="0.666667" pY="0.756098"/>
         <sprite n="HeavyCavalryArcher_idle/001_Heavy CavalryArcher_idle.bmp" x="108" y="647" w="35" h="80" pX="0.657143" pY="0.775"/>
@@ -293,7 +293,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Walk Action-->
-    <action enum ="walk" speed="200">
+    <action enum ="walk" speed="100">
       <direction enum="south">
         <sprite n="HeavyCavalryArcher_walk/000_Heavy CavalryArcher_walk.bmp" x="666" y="811" w="33" h="81" pX="0.666667" pY="0.777778"/>
         <sprite n="HeavyCavalryArcher_walk/001_Heavy CavalryArcher_walk.bmp" x="701" y="811" w="33" h="81" pX="0.666667" pY="0.790123"/>

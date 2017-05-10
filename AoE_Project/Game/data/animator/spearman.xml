@@ -27,7 +27,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Attack Action-->
-    <action enum ="attack" speed="200">
+    <action enum ="attack" speed="105">
       <direction enum="south">
         <sprite n="Spearman_attack/000_Spearman_attack.bmp" x="1" y="1" w="39" h="61" pX="0.769231" pY="0.606557"/>
         <sprite n="Spearman_attack/001_Spearman_attack.bmp" x="42" y="1" w="34" h="60" pX="0.735294" pY="0.6"/>
@@ -165,7 +165,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Disappear Action-->
-    <action enum ="disappear" speed="200">
+    <action enum ="disappear" speed="1500">
       <direction enum="south">
         <sprite n="Spearman_dissapear/000_Spearman_idle.bmp" x="575" y="369" w="48" h="45" pX="0.791667" pY="0.133333"/>
         <sprite n="Spearman_dissapear/001_Spearman_idle.bmp" x="625" y="369" w="48" h="45" pX="0.791667" pY="0.133333"/>
@@ -209,7 +209,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Idle Action-->
-    <action enum ="idle" speed="200">
+    <action enum ="idle" speed="150">
       <direction enum="south">
         <sprite n="Spearman_idle/000_Spearman_dissapear.bmp" x="713" y="469" w="56" h="50" pX="0.625" pY="0.76"/>
         <sprite n="Spearman_idle/001_Spearman_dissapear.bmp" x="771" y="469" w="57" h="50" pX="0.614035" pY="0.78"/>
@@ -273,7 +273,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Walk Action-->
-    <action enum ="walk" speed="200">
+    <action enum ="walk" speed="100">
       <direction enum="south">
         <sprite n="Spearman_walk/000_Spearman_walk.bmp" x="53" y="649" w="61" h="46" pX="0.622951" pY="0.804348"/>
         <sprite n="Spearman_walk/001_Spearman_walk.bmp" x="116" y="649" w="63" h="44" pX="0.634921" pY="0.818182"/>

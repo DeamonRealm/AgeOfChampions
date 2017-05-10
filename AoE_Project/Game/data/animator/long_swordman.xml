@@ -25,7 +25,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <unit id ="long_swordman">
 
     <!-- Attack Action-->
-    <action enum= "attack" speed="300">
+    <action enum= "attack" speed="203">
       <direction enum="south">
         <sprite n="longswordman/Longswordman_attack/000_longswordman_attack.bmp" x="1" y="1" w="28" h="46" pX="0.392857" pY="0.782609"/>
         <sprite n="longswordman/Longswordman_attack/001_longswordman_attack.bmp" x="31" y="1" w="25" h="41" pX="0.52" pY="0.780488"/>
@@ -92,7 +92,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
     </action>
     <!--Die Action-->
-    <action enum ="die" speed="300">
+    <action enum ="die" speed="200">
       <direction enum="south">
         <sprite n="longswordman/Longswordman_die/000_longswordman_die.bmp" x="487" y="117" w="23" h="48" pX="0.478261" pY="0.75"/>
         <sprite n="longswordman/Longswordman_die/001_longswordman_die.bmp" x="512" y="117" w="24" h="44" pX="0.458333" pY="0.818182"/>
@@ -159,7 +159,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
     </action>
      <!--Disappear Action-->
-    <action enum ="disappear" speed="300">
+    <action enum ="disappear" speed="1500">
       <direction enum="south">
         <sprite n="longswordman/Longswordman_dissapear/000_longswordman_dissapear.bmp" x="502" y="270" w="38" h="29" pX="0.447368" pY="0.965517"/>
         <sprite n="longswordman/Longswordman_dissapear/001_longswordman_dissapear.bmp" x="542" y="270" w="37" h="29" pX="0.459459" pY="0.965517"/>
@@ -248,7 +248,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
      </direction>
     </action>
     <!--Walk Action-->
-    <action enum ="walk" speed="300">
+    <action enum ="walk" speed="100">
       <direction enum="south">
         <sprite n="longswordman/Longswordman_walk/000_longswordman_walk.bmp" x="533" y="395" w="24" h="46" pX="0.458333" pY="0.804348"/>
         <sprite n="longswordman/Longswordman_walk/001_longswordman_walk.bmp" x="559" y="395" w="25" h="46" pX="0.48" pY="0.782609"/>

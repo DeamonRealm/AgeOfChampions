@@ -23,7 +23,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="no_item">
 <TextureAtlas   blue_texture="villager.png" red_texture="villager_red.png" width="677" height="677"/>
   <!-- Attack Action-->
-  <action enum= "attack" speed="200">
+  <action enum= "attack" speed="203">
     <direction enum="south">
       <sprite n="aldeano_attack/000_mVillager_attack.bmp" x="1" y="1" w="21" h="42" pX="0.571429" pY="0.833333"/>
       <sprite n="aldeano_attack/001_mVillager_attack.bmp" x="24" y="1" w="27" h="38" pX="0.296296" pY="0.789474"/>
@@ -211,7 +211,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
   <!--Disappear Action-->
-  <action enum ="disappear" speed="200">
+  <action enum ="disappear" speed="1500">
     <direction enum="south">
       <sprite n="aldeano_dissapear/000_mVillager_dissapear.bmp" x="325" y="331" w="39" h="25" pX="0.487179" pY="1.24"/>
       <sprite n="aldeano_dissapear/001_mVillager_dissapear.bmp" x="366" y="331" w="40" h="25" pX="0.5" pY="1.28"/>
@@ -255,7 +255,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
   <!--Idle Action-->
-  <action enum ="idle" speed="200">
+  <action enum ="idle" speed="150">
     <direction enum="south">
       <sprite n="aldeano_idle/000_mVillager_idle.bmp" x="86" y="396" w="22" h="42" pX="0.545455" pY="0.857143"/>
       <sprite n="aldeano_idle/001_mVillager_idle.bmp" x="110" y="396" w="22" h="42" pX="0.5" pY="0.857143"/>
@@ -349,7 +349,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk/000_mVillager_walk.bmp" x="552" y="488" w="21" h="45" pX="0.714286" pY="0.777778"/>
       <sprite n="aldeano_walk/001_mVillager_walk.bmp" x="575" y="488" w="21" h="44" pX="0.619048" pY="0.795455"/>
@@ -444,7 +444,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="axe">
   <TextureAtlas  blue_texture="villager_axe.png" red_texture="villager_axe_red.png" width="854" height="854"/>
   <!--Chopping Action-->
-  <action enum ="attack" speed="200">
+  <action enum ="attack" speed="150">
     <direction enum="south">
       <sprite n="aldeano_chopping/000_mVillager_chopping.bmp" x="1" y="1" w="29" h="47" pX="0.37931" pY="0.851064"/>
       <sprite n="aldeano_chopping/001_mVillager_chopping.bmp" x="32" y="1" w="20" h="52" pX="0.4" pY="0.865385"/>
@@ -630,7 +630,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Disappear Action-->
-  <action enum ="disappear" speed="200">
+  <action enum ="disappear" speed="1500">
     <direction enum="south">
       <sprite n="aldeano_dissapear_ax/000_mVillager_dissapear_ax.bmp" x="182" y="310" w="46" h="27" pX="0.5" pY="-0.148148"/>
       <sprite n="aldeano_dissapear_ax/001_mVillager_dissapear_ax.bmp" x="230" y="310" w="45" h="26" pX="0.511111" pY="-0.153846"/>
@@ -673,7 +673,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Farming Action-->
-  <action enum ="farming" speed="200">
+  <action enum ="farming" speed="150">
     <direction enum="south">
       <sprite n="aldeano_farming_ax/000_mVillager_farming_ax.bmp" x="509" y="341" w="25" h="46" pX="0.44" pY="0.847826"/>
       <sprite n="aldeano_farming_ax/001_mVillager_farming_ax.bmp" x="536" y="341" w="27" h="54" pX="0.555556" pY="0.87037"/>
@@ -766,7 +766,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Idle Action-->
-  <action enum ="idle" speed="200">
+  <action enum ="idle" speed="150">
     <direction enum="south">
       <sprite n="aldeano_idle_ax/000_mVillager_idle_ax.bmp" x="686" y="497" w="28" h="47" pX="0.392857" pY="0.851064"/>
       <sprite n="aldeano_idle_ax/001_mVillager_idle_ax.bmp" x="716" y="497" w="26" h="49" pX="0.423077" pY="0.857143"/>
@@ -859,7 +859,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_ax/000_mVillager_walk_ax.bmp" x="241" y="651" w="31" h="44" pX="0.419355" pY="0.818182"/>
       <sprite n="aldeano_walk_ax/001_mVillager_walk_ax.bmp" x="274" y="651" w="31" h="44" pX="0.419355" pY="0.818182"/>
@@ -955,7 +955,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="basket">
   <TextureAtlas blue_texture="villager_basket.png" red_texture="villager_basket_red.png" width="942" height="942"/>
   <!--Attack Action-->
-  <action enum ="attack" speed="200">
+  <action enum ="attack" speed="150">
     <direction enum="south">
       <sprite n="aldeano_attack_basket/000_mVillager_attack_basket.bmp" x="1" y="1" w="27" h="41" pX="0.407407" pY="0.853659"/>
       <sprite n="aldeano_attack_basket/001_mVillager_attack_basket.bmp" x="30" y="1" w="24" h="39" pX="0.333333" pY="0.846154"/>
@@ -1141,7 +1141,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Disappear Action-->
-  <action enum ="disappear" speed="200">
+  <action enum ="disappear" speed="1500">
     <direction enum="south">
       <sprite n="aldeano_dissapear_basket/000_mVillager_dissapea_basket.bmp" x="617" y="266" w="36" h="41" pX="0.416667" pY="0.243902"/>
       <sprite n="aldeano_dissapear_basket/001_mVillager_dissapea_basket.bmp" x="655" y="266" w="33" h="40" pX="0.363636" pY="0.25"/>
@@ -1184,7 +1184,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Farming Action-->
-  <action enum ="farming" speed="200">
+  <action enum ="farming" speed="150">
     <direction enum="south">
       <sprite n="aldeano_farming_bascket/000_mVillager_farming_basket.bmp" x="37" y="349" w="27" h="30" pX="0.333333" pY="0.366667"/>
       <sprite n="aldeano_farming_bascket/001_mVillager_farming_basket.bmp" x="66" y="349" w="27" h="29" pX="0.333333" pY="0.344828"/>
@@ -1277,7 +1277,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Idle Action-->
-  <action enum ="idle" speed="200">
+  <action enum ="idle" speed="150">
     <direction enum="south">
       <sprite n="aldeano_idle_basket/000_mVillager_idle_basket.bmp" x="116" y="452" w="27" h="41" pX="0.407407" pY="0.829268"/>
       <sprite n="aldeano_idle_basket/001_mVillager_idle_basket.bmp" x="145" y="452" w="28" h="45" pX="0.392857" pY="0.755556"/>
@@ -1370,7 +1370,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Plant Action-->
-  <action enum ="plant" speed="200">
+  <action enum ="plant" speed="150">
     <direction enum="north">
       <sprite n="aldeano_plant/000_mVillager_plant.bmp" x="400" y="545" w="27" h="41" pX="0.444444" pY="0.853659"/>
       <sprite n="aldeano_plant/001_mVillager_plant.bmp" x="429" y="545" w="27" h="41" pX="0.444444" pY="0.853659"/>
@@ -1468,7 +1468,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_basket/000_mVillager_walk_basket.bmp" x="246" y="793" w="28" h="44" pX="0.428571" pY="0.818182"/>
       <sprite n="aldeano_walk_basket/001_mVillager_walk_basket.bmp" x="276" y="793" w="27" h="43" pX="0.407407" pY="0.837209"/>
@@ -1564,7 +1564,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="bow">
   <TextureAtlas blue_texture="villager_bow.png" red_texture="villager_bow_red.png" width="863" height="863"/>
   <!--Attack Action-->
-  <action enum ="attack" speed="200">
+  <action enum ="attack" speed="150">
     <direction enum="south">
       <sprite n="aldeano_attack_bow/000_mVillager_attack_bow.bmp" x="1" y="1" w="44" h="47" pX="0.5" pY="0.765957"/>
       <sprite n="aldeano_attack_bow/001_mVillager_attack_bow.bmp" x="47" y="1" w="43" h="46" pX="0.55814" pY="0.76087"/>
@@ -1657,7 +1657,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Die Action-->
-  <action enum ="die" speed="200">
+  <action enum ="die" speed="150">
     <direction enum="south">
       <sprite n="aldeano_die_bow/000_mVillager_die_bow.bmp" x="75" y="178" w="44" h="42" pX="0.477273" pY="0.857143"/>
       <sprite n="aldeano_die_bow/001_mVillager_die_bow.bmp" x="121" y="178" w="43" h="43" pX="0.44186" pY="0.813953"/>
@@ -1750,7 +1750,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Disappear Action-->
-  <action enum ="disappear" speed="200">
+  <action enum ="disappear" speed="1500">
     <direction enum="south">
       <sprite n="aldeano_dissapear_bow/000_mVillager_dissapear_bow.bmp" x="46" y="375" w="50" h="26" pX="0.34" pY="-0.0769231"/>
       <sprite n="aldeano_dissapear_bow/001_mVillager_dissapear_bow.bmp" x="98" y="375" w="50" h="25" pX="0.34" pY="-0.08"/>
@@ -1793,7 +1793,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Farming Action-->
-  <action enum ="farming" speed="200">
+  <action enum ="farming" speed="150">
     <direction enum="south">
       <sprite n="aldeano_farming_bow/000_mVillager_farming_bow.bmp" x="347" y="405" w="28" h="31" pX="0.464286" pY="0.741935"/>
       <sprite n="aldeano_farming_bow/001_mVillager_farming_bow.bmp" x="377" y="405" w="27" h="34" pX="0.407407" pY="0.676471"/>
@@ -1886,7 +1886,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Idle Action-->
-  <action enum ="idle" speed="200">
+  <action enum ="idle" speed="150">
     <direction enum="south">
       <sprite n="aldeano_idle_bow/000_mVillager_idle_bow.bmp" x="296" y="533" w="44" h="42" pX="0.5" pY="0.857143"/>
       <sprite n="aldeano_idle_bow/001_mVillager_idle_bow.bmp" x="342" y="533" w="45" h="42" pX="0.488889" pY="0.857143"/>
@@ -1979,7 +1979,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_bow/000_mVillager_walk_bow.bmp" x="545" y="676" w="45" h="43" pX="0.466667" pY="0.860465"/>
       <sprite n="aldeano_walk_bow/001_mVillager_walk_bow.bmp" x="592" y="676" w="45" h="42" pX="0.466667" pY="0.857143"/>
@@ -2172,7 +2172,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="gold">
   <TextureAtlas blue_texture="villager_carry.png" red_texture="villager_carry_red.png" width="723" height="723"/>
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_gold/000_mVillager_walk_gold.bmp" x="597" y="95" w="19" h="45" pX="0.578947" pY="0.822222"/>
       <sprite n="aldeano_walk_gold/001_mVillager_walk_gold.bmp" x="618" y="95" w="19" h="43" pX="0.578947" pY="0.860465"/>
@@ -2268,7 +2268,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="meat">
   <TextureAtlas blue_texture="villager_carry.png" red_texture="villager_carry_red.png" width="723" height="723"/>
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_meat/000_mVillager_walk_meat.bmp" x="272" y="233" w="32" h="49" pX="0.4375" pY="0.877551"/>
       <sprite n="aldeano_walk_meat/001_mVillager_walk_meat.bmp" x="306" y="233" w="32" h="48" pX="0.4375" pY="0.875"/>
@@ -2364,7 +2364,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="stone">
   <TextureAtlas blue_texture="villager_carry.png" red_texture="villager_carry_red.png" width="723" height="723"/>
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_stone/000_mVillager_walk_stone.bmp" x="370" y="396" w="19" h="45" pX="0.578947" pY="0.822222"/>
       <sprite n="aldeano_walk_stone/001_mVillager_walk_stone.bmp" x="391" y="396" w="19" h="43" pX="0.578947" pY="0.860465"/>
@@ -2460,7 +2460,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="wood">
   <TextureAtlas blue_texture="villager_carry.png" red_texture="villager_carry_red.png" width="723" height="723"/>
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_wood/000_mVillager_walk_wood.bmp" x="22" y="538" w="31" h="45" pX="0.548387" pY="0.822222"/>
       <sprite n="aldeano_walk_wood/001_mVillager_walk_wood.bmp" x="55" y="538" w="30" h="43" pX="0.533333" pY="0.837209"/>
@@ -2742,7 +2742,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Disappear Action-->
-  <action enum ="disappear" speed="200">
+  <action enum ="disappear" speed="1500">
     <direction enum="south">
       <sprite n="aldeano_dissapear_hammer/000_mVillager_dissapear_hammer.bmp" x="67" y="305" w="33" h="26" pX="0.333333" pY="-0.307692"/>
       <sprite n="aldeano_dissapear_hammer/001_mVillager_dissapear_hammer.bmp" x="102" y="305" w="33" h="26" pX="0.333333" pY="-0.307692"/>
@@ -2785,7 +2785,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Idle Action-->
-  <action enum ="idle" speed="200">
+  <action enum ="idle" speed="150">
     <direction enum="south">
       <sprite n="aldeano_idle_hammer/000_mVillager_idle_hammer.bmp" x="437" y="335" w="20" h="42" pX="0.55" pY="0.833333"/>
       <sprite n="aldeano_idle_hammer/001_mVillager_idle_hammer.bmp" x="459" y="335" w="21" h="42" pX="0.52381" pY="0.833333"/>
@@ -2878,7 +2878,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_hammer/000_mVillager_walk_hammer.bmp" x="177" y="471" w="21" h="46" pX="0.619048" pY="0.76087"/>
       <sprite n="aldeano_walk_hammer/001_mVillager_walk_hammer.bmp" x="200" y="471" w="21" h="46" pX="0.619048" pY="0.76087"/>
@@ -2974,7 +2974,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="pick">
   <TextureAtlas blue_texture="villager_pick.png" red_texture="villager_pick_red.png" width="748" height="748"/>
   <!--Die Action-->
-  <action enum ="die" speed="300">
+  <action enum ="die" speed="200">
     <direction enum="south">
       <sprite n="aldeano_die_minning/000_mVillager_die_minning.bmp" x="1" y="1" w="27" h="42" pX="0.555556" pY="0.857143"/>
       <sprite n="aldeano_die_minning/001_mVillager_die_minning.bmp" x="30" y="1" w="27" h="43" pX="0.481481" pY="0.813953"/>
@@ -3067,7 +3067,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Disapear Action-->
-  <action enum ="disapear" speed="300">
+  <action enum ="disapear" speed="1500">
     <direction enum="south">
       <sprite n="aldeano_dissapear_minning/000_mVillager_dissapear_minning.bmp" x="168" y="184" w="43" h="27" pX="0.395349" pY="-0.0740741"/>
       <sprite n="aldeano_dissapear_minning/001_mVillager_dissapear_minning.bmp" x="213" y="184" w="43" h="26" pX="0.395349" pY="-0.0769231"/>
@@ -3110,7 +3110,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Idle Action-->
-  <action enum ="idle" speed="300">
+  <action enum ="idle" speed="150">
     <direction enum="south">
       <sprite n="aldeano_idle_minning/000_mVillager_idle_minning.bmp" x="580" y="214" w="28" h="42" pX="0.357143" pY="0.857143"/>
       <sprite n="aldeano_idle_minning/001_mVillager_idle_minning.bmp" x="610" y="214" w="26" h="42" pX="0.346154" pY="0.857143"/>
@@ -3203,7 +3203,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!-- Attack Action-->
-  <action enum= "attack" speed="300">
+  <action enum= "attack" speed="150">
     <direction enum="south">
       <sprite n="aldeano_minning/000_mVillager_minning.bmp" x="250" y="348" w="28" h="42" pX="0.357143" pY="0.857143"/>
       <sprite n="aldeano_minning/001_mVillager_minning.bmp" x="280" y="348" w="29" h="40" pX="0.275862" pY="0.85"/>
@@ -3296,7 +3296,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Walk Action-->
-  <action enum ="walk" speed="300">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_minning/000_mVillager_walk_minning.bmp" x="449" y="517" w="32" h="44" pX="0.40625" pY="0.818182"/>
       <sprite n="aldeano_walk_minning/001_mVillager_walk_minning.bmp" x="483" y="517" w="31" h="44" pX="0.419355" pY="0.818182"/>
@@ -3392,7 +3392,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <item id="plow">
   <TextureAtlas blue_texture="villager_plow.png" red_texture="villager_plow_red.png" width="862" height="862"/>
   <!-- Plowing Action-->
-  <action enum= "plowing" speed="200">
+  <action enum= "plowing" speed="150">
     <direction enum="south">
       <sprite n="aldeano_arando/000_mVillager_arando.bmp" x="1" y="1" w="31" h="43" pX="0.387097" pY="0.534884"/>
       <sprite n="aldeano_arando/001_mVillager_arando.bmp" x="34" y="1" w="31" h="52" pX="0.387097" pY="0.557692"/>
@@ -3578,7 +3578,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Disappear Action-->
-  <action enum ="disappear" speed="200">
+  <action enum ="disappear" speed="1500">
     <direction enum="south">
       <sprite n="aldeano_dissapear_azada/000_mVillager_dissapear_azada.bmp" x="671" y="443" w="47" h="42" pX="0.617021" pY="0.261905"/>
       <sprite n="aldeano_dissapear_azada/001_mVillager_dissapear_azada.bmp" x="720" y="443" w="47" h="41" pX="0.617021" pY="0.268293"/>
@@ -3621,7 +3621,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Idle Action-->
-  <action enum ="idle" speed="200">
+  <action enum ="idle" speed="150">
     <direction enum="south">
       <sprite n="aldeano_idle_azada/000_mVillager_idle_azada.bmp" x="325" y="537" w="24" h="54" pX="0.541667" pY="0.851852"/>
       <sprite n="aldeano_idle_azada/001_mVillager_idle_azada.bmp" x="351" y="537" w="23" h="54" pX="0.521739" pY="0.851852"/>
@@ -3714,7 +3714,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   </action>
 
   <!--Walk Action-->
-  <action enum ="walk" speed="200">
+  <action enum ="walk" speed="100">
     <direction enum="south">
       <sprite n="aldeano_walk_azada/000_mVillager_walk_azada.bmp" x="49" y="694" w="26" h="54" pX="0.615385" pY="0.87037"/>
       <sprite n="aldeano_walk_azada/001_mVillager_walk_azada.bmp" x="77" y="694" w="26" h="48" pX="0.615385" pY="0.854167"/>

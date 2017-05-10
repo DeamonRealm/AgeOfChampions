@@ -22,7 +22,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 <TextureAtlas blue_texture="two_handed_swordman.png" red_texture="two_handed_swordman_red.png" width="689" height="689">
  <unit id ="two_handed_swordman">
    
-  <action enum ="attack" speed="200">
+  <action enum ="attack" speed="203">
    <direction enum="south">
      <sprite n="twoHandedSwordman_attack/000_twoHandedSwordman_attack.bmp" x="1" y="1" w="27" h="47" pX="0.296296" pY="0.829787"/>
      <sprite n="twoHandedSwordman_attack/001_twoHandedSwordman_attack.bmp" x="30" y="1" w="37" h="42" pX="0.189189" pY="0.809524"/>
@@ -151,7 +151,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
    </direction>
 
  </action>
- <action enum ="disappear" speed="200">
+ <action enum ="disappear" speed="1500">
    <direction enum="south">
      <sprite n="twoHandedSwordman_dissapear/000_twoHandedSwordman_dissapear.bmp" x="310" y="356" w="50" h="23" pX="-0.1" pY="0.434783"/>
      <sprite n="twoHandedSwordman_dissapear/001_twoHandedSwordman_dissapear.bmp" x="362" y="356" w="48" h="22" pX="-0.125" pY="0.409091"/>
@@ -189,7 +189,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
    </direction>
 
  </action>
- <action enum ="idle" speed="200">
+ <action enum ="idle" speed="150">
    <direction enum="south">
      <sprite n="twoHandedSwordman_idle/000_twoHandedSwordman_idle.bmp" x="150" y="429" w="37" h="42" pX="0.540541" pY="0.833333"/>
      <sprite n="twoHandedSwordman_idle/001_twoHandedSwordman_idle.bmp" x="189" y="429" w="40" h="42" pX="0.55" pY="0.833333"/>
@@ -231,7 +231,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
      <sprite n="twoHandedSwordman_idle/029_twoHandedSwordman_idle.bmp" x="1" y="528" w="36" h="44" pX="0.472222" pY="0.863636"/>
    </direction>     
  </action>
- <action enum ="walk" speed="200">
+ <action enum ="walk" speed="100">
    <direction enum="south">
      <sprite n="twoHandedSwordman_walk/000_twoHandedSwordman_walk.bmp" x="39" y="528" w="23" h="53" pX="0.565217" pY="0.830189"/>
      <sprite n="twoHandedSwordman_walk/001_twoHandedSwordman_walk.bmp" x="64" y="528" w="24" h="48" pX="0.625" pY="0.854167"/>

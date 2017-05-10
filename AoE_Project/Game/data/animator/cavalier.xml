@@ -25,7 +25,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <unit id ="cavalier">
 
     <!--Attack Action-->
-    <action enum ="attack" speed="200">
+    <action enum ="attack" speed="303">
       <direction enum="south">
         <sprite n="cavalier_attack/000_cavalier_attack.bmp" x="0" y="0" w="43" h="88" pX="0.511628" pY="0.761364"/>
         <sprite n="cavalier_attack/001_cavalier_attack.bmp" x="43" y="0" w="32" h="93" pX="0.46875" pY="0.774194"/>
@@ -161,7 +161,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Disappear Action-->
-    <action enum ="disappear" speed="200">
+    <action enum ="disappear" speed="1500">
       <direction enum="south">
         <sprite n="cavalier_dissapear/000_cavalier_dissapear.bmp" x="872" y="425" w="86" h="45" pX="0.697674" pY="0.488889"/>
         <sprite n="cavalier_dissapear/001_cavalier_dissapear.bmp" x="958" y="425" w="85" h="43" pX="0.694118" pY="0.488372"/>
@@ -204,7 +204,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Idle Action-->
-    <action enum ="idle" speed="200">
+    <action enum ="idle" speed="150">
       <direction enum="south">
         <sprite n="cavalier_idle/000_cavalier_idle.bmp" x="899" y="555" w="38" h="80" pX="0.394737" pY="0.725"/>
         <sprite n="cavalier_idle/001_cavalier_idle.bmp" x="937" y="555" w="37" h="77" pX="0.432432" pY="0.74026"/>
@@ -273,7 +273,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 
 
     <!--Walk Action-->
-    <action enum ="walk" speed="200">
+    <action enum ="walk" speed="100">
       <direction enum="south">
         <sprite n="cavalier_walk/000_cavalier_walk.bmp" x="379" y="798" w="43" h="78" pX="0.395349" pY="0.75641"/>
         <sprite n="cavalier_walk/001_cavalier_walk.bmp" x="422" y="798" w="44" h="78" pX="0.409091" pY="0.75641"/>

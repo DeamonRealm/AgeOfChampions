@@ -24,7 +24,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <unit id ="man_at_arms">
     
         <!-- Attack Action-->
-      <action enum= "attack" speed="300">
+      <action enum= "attack" speed="203">
       <direction enum="south">
     <sprite n="manonarms/Manatarms_attack/000_manatarms_attack.bmp" x="1" y="1" w="26" h="41" pX="0.615385" pY="0.804878"/>
     <sprite n="manonarms/Manatarms_attack/001_manatarms_attack.bmp" x="29" y="1" w="29" h="42" pX="0.689655" pY="0.809524"/>
@@ -97,7 +97,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
        </action>
     
     <!--Die Action-->
-    <action enum ="die" speed="300">
+    <action enum ="die" speed="200">
        <direction enum="south">
     <sprite n="manonarms/Manatarms_die/000_manatarms_die.bmp" x="472" y="129" w="28" h="47" pX="0.357143" pY="0.744681"/>
     <sprite n="manonarms/Manatarms_die/001_manatarms_die.bmp" x="502" y="129" w="31" h="49" pX="0.451613" pY="0.755102"/>
@@ -170,7 +170,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
     
     <!--Disappear Action-->
-    <action enum ="disappear" speed="300">
+    <action enum ="disappear" speed="1500">
       
           <direction enum="south"> 
     <sprite n="manonarms/Manatarms_dissapear/000_manatarms_dissapear.bmp" x="378" y="335" w="67" h="35" pX="1.04478" pY="0.457143"/>
@@ -214,7 +214,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
     
     <!--Idle Action-->
-    <action enum ="idle" speed="300">
+    <action enum ="idle" speed="150">
       <direction enum="south">
             <sprite n="manonarms/Manatarms_idle/000_manatarms_idle.bmp" x="590" y="418" w="26" h="41" pX="0.615385" pY="0.804878"/>
     <sprite n="manonarms/Manatarms_idle/001_manatarms_idle.bmp" x="618" y="418" w="26" h="42" pX="0.615385" pY="0.809524"/>
@@ -287,7 +287,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
     
     <!--Walk Action-->
-    <action enum ="walk" speed="300">
+    <action enum ="walk" speed="100">
             <direction enum="south">
         <sprite n="manonarms/Manatarms_walk/000_manatarms_walk.bmp" x="143" y="562" w="23" h="45" pX="0.565217" pY="0.8"/>
     <sprite n="manonarms/Manatarms_walk/001_manatarms_walk.bmp" x="168" y="562" w="23" h="43" pX="0.565217" pY="0.813953"/>
