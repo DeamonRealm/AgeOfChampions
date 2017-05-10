@@ -55,6 +55,35 @@ void j1FogOfWar::Disable()
 
 }
 
+void j1FogOfWar::Reset()
+{
+	entities_dinamic_update.clear();
+	entities_static_update.clear();
+	entities_release.clear();
+	buildings_to_spawn.clear();
+	cells_in_screen.clear();
+
+	//Reset fog of war alpha layer
+	for (uint y = 0; y < alpha_layer_height; y++)
+	{
+		for (uint x = 0; x < alpha_layer_width; x++)
+		{
+			AlphaCell* current_cell = &alpha_layer[y * alpha_layer_width + x];
+			current_cell->alpha = ALPHA_LIMIT;
+			current_cell->locked = false;
+		}
+	}
+
+	//Reset fog of war logic layer
+	uint size = App->map->data.width * App->map->data.height;
+	for (uint k = 0; k < size; k++)
+	{
+		fog_layer[k].locked = false;
+		fog_layer[k].type = DARK_FOG;
+	}
+
+}
+
 void j1FogOfWar::Init()
 {
 	active = false;

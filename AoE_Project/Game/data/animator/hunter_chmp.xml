@@ -161,7 +161,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Disappear Action-->
-    <action enum ="disappear" speed="200">
+    <action enum ="disappear" speed="1500">
       <direction enum="south">
         <sprite n="archer_dissapear/000_archer_dissapear.bmp" x="235" y="431" w="76" h="53" pX="0.131579" pY="0.660377"/>
         <sprite n="archer_dissapear/001_archer_dissapear.bmp" x="313" y="431" w="76" h="53" pX="0.131579" pY="0.660377"/>
@@ -237,11 +237,11 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
         <sprite n="archer_idle/022_archer_idle.bmp" x="44" y="652" w="39" h="50" pX="0.589744" pY="0.76"/>
         <sprite n="archer_idle/023_archer_idle.bmp" x="85" y="652" w="37" h="50" pX="0.567568" pY="0.76"/>
         <sprite n="archer_idle/024_archer_idle.bmp" x="124" y="652" w="40" h="50" pX="0.6" pY="0.76"/>
-        <sprite n="archer_idle/025_archer_idle.bmp" x="166" y="652" w="39" h="50" pX="0.589744" pY="0.76"/>
+        <sprite n="archer_idle/025_archer_idle.bmp" x="166" y="652" w="39" h="50" pX="0.615385" pY="0.76"/>
         <sprite n="archer_idle/026_archer_idle.bmp" x="207" y="652" w="39" h="50" pX="0.615385" pY="0.76"/>
-        <sprite n="archer_idle/027_archer_idle.bmp" x="248" y="652" w="40" h="50" pX="0.55" pY="0.76"/>
+        <sprite n="archer_idle/027_archer_idle.bmp" x="248" y="652" w="40" h="50" pX="0.615385" pY="0.76"/>
         <sprite n="archer_idle/028_archer_idle.bmp" x="290" y="652" w="38" h="50" pX="0.631579" pY="0.76"/>
-        <sprite n="archer_idle/029_archer_idle.bmp" x="330" y="652" w="40" h="50" pX="0.475" pY="0.76"/>
+        <sprite n="archer_idle/029_archer_idle.bmp" x="330" y="652" w="40" h="50" pX="0.615385" pY="0.76"/>
       </direction>
 
       <direction enum="north-west">
@@ -274,7 +274,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Walk Action-->
-    <action enum ="walk" speed="200">
+    <action enum ="walk" speed="100">
       <direction enum="south">
         <sprite n="archer_walk/000_archer_walk.bmp" x="414" y="705" w="20" h="48" pX="0.5" pY="0.791667"/>
     <sprite n="archer_walk/001_archer_walk.bmp" x="436" y="705" w="22" h="48" pX="0.5" pY="0.75"/>

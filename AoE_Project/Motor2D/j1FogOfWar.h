@@ -55,6 +55,7 @@ public:
 
 
 	void Disable();
+	void Reset();
 
 	void Init();
 
