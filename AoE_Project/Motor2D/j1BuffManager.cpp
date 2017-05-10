@@ -27,11 +27,16 @@ Particle::~Particle()
 {
 }
 
+void Particle::SetBlitColor(const SDL_Color new_color)
+{
+	blit_color = new_color;
+}
+
 //Functionality =============
 void Particle::Draw(double angle)
 {
 	Sprite* sprite = (Sprite*)animation.GetCurrentSprite();
-	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - z_depth, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(),NULL,angle);
+	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - z_depth, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), &blit_color, angle);
 }
 
 /// -----------------------------------
@@ -752,7 +757,8 @@ PARTICLE_TYPE j1BuffManager::StrToParticleType(const char * str) const
 	if (strcmp("one_hit_particle", str) == 0)			return PARTICLE_TYPE::ONE_HIT_PARTICLE;
 	if (strcmp("laser_particle", str) == 0)				return PARTICLE_TYPE::LASER_PARTICLE;
 	if (strcmp("long_shoot_particle", str) == 0)		return PARTICLE_TYPE::LONG_SHOT_PARTICLE;
-
+	if (strcmp("radius_hit_small_particle", str) == 0)		return PARTICLE_TYPE::RADIUS_HIT_SMALL_PARTICLE;
+	if (strcmp("radius_hit_big_particle", str) == 0)		return PARTICLE_TYPE::RADIUS_HIT_BIG_PARTICLE;
 	
 	return UNKNOWN_PARTICLE;
 }

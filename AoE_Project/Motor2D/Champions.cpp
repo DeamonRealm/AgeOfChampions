@@ -1030,27 +1030,44 @@ bool Wizard::Update()
 	CheckCooldown();
 	return true;
 }
-
 bool Wizard::Draw(bool debug)
 {
 	bool ret = false;
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint mouse_position(x - App->render->camera.x, y - App->render->camera.y);
 
 	//Draw wizard Selection Mark
+	bool check = false;
+
 	if (selected)
 	{
 		if (ability_lvl_2_prepare_mode)
 		{
-
-			area_attack_spell_2.Draw();
+			check = CalculateSpecialAttackArea(mouse_position, true);
+			if (ability[1])
+			{
+				if (!check)
+					radius_hit_lvl_2_particle.SetBlitColor({ 255,10,10,50 });
+				radius_hit_lvl_2_particle.position = this->GetPositionRounded();
+				radius_hit_lvl_2_particle.Draw();
+			}
+			radius_hit_lvl_2_particle.position = mouse_position;
+			radius_hit_lvl_2_particle.Draw();
+			//area_attack_spell_2.Draw();
 
 		}
-		else if (ability_lvl_3_prepare_mode) {
-
-			area_attack_spell_3.Draw();
+		else if (ability_lvl_3_prepare_mode)
+		{
+			check = CalculateSpecialAttackArea(mouse_position, false);
+			if (!check)
+				radius_hit_lvl_3_particle.SetBlitColor({ 255,10,10,255 });
+			radius_hit_lvl_3_particle.position = mouse_position;
+			radius_hit_lvl_3_particle.Draw();
+			//area_attack_spell_3.Draw();
 		}
 		mark.Draw();
 	}
-
 	//Draw wizard logic areas
 	if (debug && selected) {
 
@@ -1065,9 +1082,8 @@ bool Wizard::Draw(bool debug)
 	}
 
 	//Calculate & draw wizard special attack area
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true);
+
+	CalculateSpecialAttackArea(mouse_position, true);
 	if (debug && selected) {
 		//area_limit_spell_2.Draw();
 		//area_limit_spell_3.Draw();
@@ -1189,6 +1205,7 @@ void Wizard::SetAbility_lvl_2(bool choosed)
 		ability_lvl_2_ready = true;
 
 	}
+	radius_hit_lvl_2_particle = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, NO_DIRECTION);
 	skill_choosed[1] = true;
 	ability[1] = choosed;
 }
@@ -1349,6 +1366,8 @@ void Wizard::SetAbility_lvl_3(bool choosed)
 
 
 	}
+	radius_hit_lvl_3_particle = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, NO_DIRECTION);
+
 	skill_choosed[2] = true;
 	ability[2] = choosed;
 }
@@ -1760,7 +1779,10 @@ bool Hunter::Update()
 bool Hunter::Draw(bool debug)
 {
 	bool ret = false;
-
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint mouse_position(x - App->render->camera.x, y - App->render->camera.y);
+	bool check = false;
 	//Draw wizard Selection Mark
 	if (selected)
 	{
@@ -1768,8 +1790,12 @@ bool Hunter::Draw(bool debug)
 		{
 			if (ability[1])
 			{
+				check = CalculateSpecialAttackArea(mouse_position, true);
+				if (!check)
+					radius_hit_lvl_2_particle.SetBlitColor({ 255,10,10,255 });
+				radius_hit_lvl_2_particle.position = mouse_position;
 
-				area_attack_skill_B_lvl_2.Draw();
+				radius_hit_lvl_2_particle.Draw();
 			}
 			else
 			{
@@ -1784,7 +1810,12 @@ bool Hunter::Draw(bool debug)
 			}
 			else
 			{
-				area_attack_skill_A_lvl_3.Draw();
+				check = CalculateSpecialAttackArea(mouse_position, false);
+				if (!check)
+					radius_hit_lvl_3_particle.SetBlitColor({ 255,10,10,255 });
+				radius_hit_lvl_3_particle.position = mouse_position;
+				radius_hit_lvl_3_particle.Draw();
+				//	area_attack_skill_A_lvl_3.Draw();
 			}
 		}
 		mark.Draw();
@@ -1807,10 +1838,9 @@ bool Hunter::Draw(bool debug)
 	}
 
 	//Calculate & draw wizard special attack area
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	CalculateSpecialAttackArea(iPoint(x - App->render->camera.x, y - App->render->camera.y), true);
-	direction_type = LookDirection(iPoint(x - App->render->camera.x, y - App->render->camera.y), GetPositionRounded());
+
+
+	direction_type = LookDirection(mouse_position, GetPositionRounded());
 	CalculateTriangleAttackArea(GetiPointFromDirection(direction_type));
 	if (debug && selected) {
 		//area_limit_spell_2.Draw();
@@ -1823,6 +1853,7 @@ bool Hunter::Draw(bool debug)
 
 	return ret;
 }
+
 
 void Hunter::SetAbility_lvl_1(bool choosed)
 {
@@ -1866,6 +1897,8 @@ void Hunter::SetAbility_lvl_2(bool choosed)
 
 	if (choosed)
 	{
+		radius_hit_lvl_2_particle = App->buff_manager->GetParticle(RADIUS_HIT_SMALL_PARTICLE, NO_DIRECTION);
+
 		ability_lvl_2_particle = App->buff_manager->GetParticle(LONG_SHOT_PARTICLE, NO_DIRECTION);
 		ability_lvl_2_attack_value = ability_lvl_2_skill_B_attack_value;
 		ability_lvl_2_ready = true;
@@ -1998,7 +2031,7 @@ void Hunter::SetAbility_lvl_3(bool choosed)
 	else
 	{
 		
-		
+		radius_hit_lvl_3_particle = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, NO_DIRECTION);
 		ability_lvl_3_particle = App->buff_manager->GetParticle(DRAGON_SHOT_PARTICLE, NO_DIRECTION);
 		ability_lvl_3_attack_value = ability_lvl_3_skill_B_attack_value;
 		ability_lvl_3_ready = true;

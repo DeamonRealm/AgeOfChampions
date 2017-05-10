@@ -207,6 +207,10 @@ private:
 	Particle			ability_lvl_2_B_particle;
 	Particle			ability_lvl_3_particle;
 
+	Particle			radius_hit_lvl_2_particle;
+	Particle			radius_hit_lvl_3_particle;
+
+	
 	uint				ability_lvl_2_heal_value = 0;
 
 	uint				ability_lvl_3_attack_value = 0;
@@ -284,6 +288,10 @@ private:
 	Particle			ability_lvl_2_particle;
 	Particle			ability_lvl_3_particle;
 
+	Particle			radius_hit_lvl_2_particle;
+	Particle			radius_hit_lvl_3_particle;
+
+	
 
 
 

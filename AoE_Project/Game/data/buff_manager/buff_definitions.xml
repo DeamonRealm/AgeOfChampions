@@ -26,6 +26,8 @@
   <particle document = "LvlUp.xml"/>
 
   <particle document = "Burn.xml"/>
+  <particle document = "RadiusHit.xml"/>
+
 
   <buff
     buff_type ="passive"

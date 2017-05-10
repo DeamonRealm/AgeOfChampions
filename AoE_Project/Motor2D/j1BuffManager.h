@@ -24,7 +24,9 @@ enum PARTICLE_TYPE
 	LEVEL_UP_PARTICLE,
 	ONE_HIT_PARTICLE,
 	LASER_PARTICLE,
-	LONG_SHOT_PARTICLE
+	LONG_SHOT_PARTICLE,
+	RADIUS_HIT_SMALL_PARTICLE,
+	RADIUS_HIT_BIG_PARTICLE
 
 };
 
@@ -67,9 +69,10 @@ public:
 	int				z_depth = 0;
 	Animation		animation;
 	bool			flip_sprite = false;
+	SDL_Color		blit_color = { 255,255,255,255 };
 
 public:
-
+	void			SetBlitColor(const SDL_Color new_color);
 	virtual void Draw(double angle =0.0);
 
 };

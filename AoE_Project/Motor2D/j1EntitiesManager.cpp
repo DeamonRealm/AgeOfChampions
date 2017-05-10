@@ -812,15 +812,22 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 			uint level = cur_unit_node.attribute("lvl").as_uint();
 			((Champion*)new_unit)->SetLevel(level);
 			for (uint k = 0; k < level; k++)((Champion*)new_unit)->LevelUp(false);
+			bool choosed_1 = cur_unit_node.attribute("ab_choosed_1").as_bool();
+			bool choosed_2 = cur_unit_node.attribute("ab_choosed_2").as_bool();
+			bool choosed_3 = cur_unit_node.attribute("ab_choosed_3").as_bool();
 
 			//Load champion abilities choosed state
-			((Champion*)new_unit)->SetSkillChoosed(cur_unit_node.attribute("ab_choosed_1").as_bool(), 0);
-			((Champion*)new_unit)->SetSkillChoosed(cur_unit_node.attribute("ab_choosed_2").as_bool(), 1);
-			((Champion*)new_unit)->SetSkillChoosed(cur_unit_node.attribute("ab_choosed_3").as_bool(), 2);
+			((Champion*)new_unit)->SetSkillChoosed(choosed_1, 0);
+			((Champion*)new_unit)->SetSkillChoosed(choosed_2, 1);
+			((Champion*)new_unit)->SetSkillChoosed(choosed_3, 2);
 
 			//Load champion abilities chosen
+			if (choosed_1)
 			((Champion*)new_unit)->SetAbility_lvl_1(cur_unit_node.attribute("ability_1").as_bool());
+			if (choosed_2)
 			((Champion*)new_unit)->SetAbility_lvl_2(cur_unit_node.attribute("ability_2").as_bool());
+			if (choosed_3)
+
 			((Champion*)new_unit)->SetAbility_lvl_3(cur_unit_node.attribute("ability_3").as_bool());
 
 			break;
@@ -1344,8 +1351,8 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 									((Hunter*)new_def)->SetAbility_lvl_2_B_AttackValue(unit_node->attribute("ability_lvl_2_skill_B_attack_value").as_uint());
 									((Hunter*)new_def)->SetAbility_lvl_3_A_AttackValue(unit_node->attribute("ability_lvl_3_skill_A_attack_value").as_uint());
 									((Hunter*)new_def)->SetAbility_lvl_3_B_AttackValue(unit_node->attribute("ability_lvl_3_skill_B_attack_value").as_uint());
-									((Hunter*)new_def)->SetAreaLimitLvl2(unit_node->attribute("ability_lvl_2_cooldown").as_uint());
-									((Hunter*)new_def)->SetAreaLimitLvl3(unit_node->attribute("ability_lvl_3_cooldown").as_uint());
+									((Hunter*)new_def)->SetAreaLimitLvl2(unit_node->attribute("area_limit_skill_B_lvl_2").as_uint());
+									((Hunter*)new_def)->SetAreaLimitLvl3(unit_node->attribute("area_limit_skill_A_lvl_3").as_uint());
 
 		chmp = true;
 
