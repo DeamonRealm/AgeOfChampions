@@ -1045,13 +1045,14 @@ bool Wizard::Draw(bool debug)
 		if (ability_lvl_2_prepare_mode)
 		{
 			check = CalculateSpecialAttackArea(mouse_position, true);
+		
 			if (ability[1])
-			{
-				if (!check)
-					radius_hit_lvl_2_particle.SetBlitColor({ 255,10,10,50 });
+			{	
 				radius_hit_lvl_2_particle.position = this->GetPositionRounded();
 				radius_hit_lvl_2_particle.Draw();
 			}
+			if (!check)
+				radius_hit_lvl_2_particle.SetBlitColor({ 255,10,10,50 });
 			radius_hit_lvl_2_particle.position = mouse_position;
 			radius_hit_lvl_2_particle.Draw();
 			//area_attack_spell_2.Draw();
@@ -1564,7 +1565,13 @@ bool Wizard::CalculateSpecialAttackArea(const iPoint & base, bool attack_lvl_2)
 		}
 		else
 		{
+		
 			area_attack_spell_2.SetPosition(base);
+			if (ability[1])
+			{
+				if (!App->entities_manager->CheckAreaToSpawn(area_attack_spell_2))
+					return false;
+			}
 			return true;
 		}
 	}
