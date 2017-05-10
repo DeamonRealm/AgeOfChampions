@@ -25,7 +25,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
   <unit id ="arbalest">
 
     <!-- Attack Action-->
-    <action enum="attack" speed="200">
+    <action enum="attack" speed="203">
       <direction enum="south">
         <sprite n="arbalest_attack/000_Arbalest_attack.bmp" x="1" y="1" w="30" h="56" pX="0.466667" pY="0.767857"/>
         <sprite n="arbalest_attack/001_Arbalest_attack.bmp" x="33" y="1" w="28" h="58" pX="0.571429" pY="0.706897"/>
@@ -166,7 +166,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Disappear Action-->
-    <action enum ="disappear" speed="500">
+    <action enum ="disappear" speed="1500">
       <direction enum="south">
         <sprite n="arbalest_dissapear/000_Arbalest_dissapear.bmp" x="51" y="344" w="47" h="45" pX="0.531915" pY="0.355556"/>
         <sprite n="arbalest_dissapear/001_Arbalest_dissapear.bmp" x="100" y="344" w="47" h="45" pX="0.531915" pY="0.355556"/>
@@ -282,7 +282,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Walk Action-->
-    <action enum ="walk" speed="200">
+    <action enum ="walk" speed="100">
       <direction enum="south">
         <sprite n="arbalest_walk/000_Arbalest_walk.bmp" x="374" y="545" w="32" h="54" pX="0.71875" pY="0.796296"/>
         <sprite n="arbalest_walk/001_Arbalest_walk.bmp" x="408" y="545" w="33" h="53" pX="0.727273" pY="0.792453"/>
