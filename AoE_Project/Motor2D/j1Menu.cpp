@@ -53,6 +53,9 @@ bool j1Menu::Enable()
 	loadgame->Desactivate();
 	loadgame->DesactivateChids();
 
+	alphagame->Desactivate();
+	alphagame_text->DesactivateChids();
+
 	load_screen->Desactivate();
 
 	return true;
@@ -156,18 +159,25 @@ bool j1Menu::Start()
 	
 	// Single Player Buttons
 	standardgame = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	standardgame->SetBox({ 163,670,193,43 });
+	standardgame->SetBox({ 163,650,193,43 });
 	standardgame->SetTexON({ 300,0,193,43 }, STANDARD);
 	standardgame->SetTexOFF({ 493,0,193,43 }, STANDARD);
 	standardgame->SetTexOVER({ 493,0,193,43 }, STANDARD);
 	singleplayer->AddChild(standardgame);
 
 	loadgame = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	loadgame->SetBox({ 406,670,193,43 });
+	loadgame->SetBox({ 406,650,193,43 });
 	loadgame->SetTexON({ 300,0,193,43 }, STANDARD);
 	loadgame->SetTexOFF({ 493,0,193,43 }, STANDARD);
 	loadgame->SetTexOVER({ 493,0,193,43 }, STANDARD);
 	singleplayer->AddChild(loadgame);
+
+	alphagame = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	alphagame->SetBox({ 406,700,193,43 });
+	alphagame->SetTexON({ 300,0,193,43 }, STANDARD);
+	alphagame->SetTexOFF({ 493,0,193,43 }, STANDARD);
+	alphagame->SetTexOVER({ 493,0,193,43 }, STANDARD);
+	singleplayer->AddChild(alphagame);
 
 	standardgame_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	standardgame_text->SetColor({ 255, 255, 255, 255 });
@@ -182,6 +192,14 @@ bool j1Menu::Start()
 	loadgame_text->Activate();
 	loadgame_text->SetBox({ 45, 13,0,0 });
 	loadgame->AddChild(loadgame_text);
+
+	alphagame_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	alphagame_text->SetColor({ 255, 255, 255, 255 });
+	alphagame_text->SetString("Load Alpha Game");
+	alphagame_text->Activate();
+	alphagame_text->SetBox({ 45, 13,0,0 });
+	alphagame->AddChild(alphagame_text);
+
 
 	singleplayer->DesactivateChids();
 
@@ -317,6 +335,13 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 				App->LoadGame("party_file.xml");
 			}
 			else LOG("No party Saved");
+		}
+		if (target == alphagame)
+		{
+			option_selected->button_state = UP;
+			menu_screen->DesactivateChids();
+			load_screen->Activate();
+			App->LoadDefaultGame("scene/standard_match.xml");
 		}
 		break;
 	case MOUSE_RIGHT_BUTTON:
