@@ -83,12 +83,12 @@ pc => population cost to activate cell
     </BlackSmith>
     <Archery_Range>
       <cell cp ="0" cl ="0" al ="2" x="0"   y="549" w="36" h="36" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="3" rt ="1" ci ="Create Archer"/>
-      <cell cp ="0" cl ="1" al ="3" x="324" y="549" w="36" h="36" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="3" rt ="2" ci ="Create Crossbowman"/>
+      <cell cp ="0" cl ="1" al ="3" x="324" y="549" w="36" h="36" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="21" rt ="2" ci ="Create Crossbowman"/>
       <cell cp ="0" cl ="2" al ="4" x="609" y="513" w="36" h="36" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="2" ci ="Create Arbalest"/>
-      <cell cp ="1" cl ="0" al ="2" x="360" y="621" w="36" h="36" wc ="35" fc ="25" gc ="0"  sc ="0" pc ="1" ut ="6" rt ="3" ci ="Create Skirmisher"/>
+      <cell cp ="1" cl ="0" al ="2" x="360" y="621" w="36" h="36" wc ="35" fc ="25" gc ="0"  sc ="0" pc ="1" ut ="22" rt ="3" ci ="Create Skirmisher"/>
       <cell cp ="1" cl ="1" al ="3" x="432" y="549" w="36" h="36" wc ="35" fc ="25" gc ="0"  sc ="0" pc ="1" ut ="6" ci ="Create Elite Skirmisher"/>
       <cell cp ="2" cl ="0" al ="3" x="216" y="549" w="36" h="36" wc ="40" fc ="0"  gc ="60" sc ="0" pc ="1" ut ="5" rt ="4" ci ="Create Cavalry Archer"/>
-      <cell cp ="2" cl ="1" al ="4" x="540" y="549" w="36" h="36" wc ="40" fc ="0"  gc ="60" sc ="0" pc ="1" ut ="5" ci ="Create Elite Cavalry Archer"/>
+      <cell cp ="2" cl ="1" al ="4" x="540" y="549" w="36" h="36" wc ="40" fc ="0"  gc ="60" sc ="0" pc ="1" ut ="7" ci ="Create Elite Cavalry Archer"/>
       <cell cp ="5" cl ="0" al ="3" x="352" y="333" w="36" h="36" wc ="0" fc ="125"  gc ="75" sc ="0" pc ="0" rt ="1" ci ="Upgrade To Crossbowman"/>
       <cell cp ="5" cl ="1" al ="4" x="424" y="333" w="36" h="36" wc ="0" fc ="350"  gc ="300" sc ="0" pc ="0" rt ="2" ci ="Upgrade To Arbalest"/>
       <cell cp ="6" cl ="0" al ="3" x="496" y="333" w="36" h="36" wc ="200" fc ="0"  gc ="100" sc ="0" pc ="0" rt ="3" ci ="Upgrade To Elite Skirmisher"/>

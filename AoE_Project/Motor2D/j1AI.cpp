@@ -595,7 +595,7 @@ UNIT_TYPE j1AI::GetNextSpawnType(UNIT_TYPE u_type)
 	{
 		UNIT_TYPE u_type = unit_it._Ptr->_Myval->GetUnitType();
 
-		if (u_type == VILLAGER) villager++;
+		if (u_type == VILLAGER)														villager++;
 		else if (u_type == MILITIA || u_type == MAN_AT_ARMS ||
 				u_type == LONG_SWORDMAN || u_type == TWO_HANDED_SWORDMAN)			militia++;
 		else if (u_type == ARCHER || u_type == CROSSBOWMAN || u_type == ARBALEST)	archer++;
@@ -608,36 +608,51 @@ UNIT_TYPE j1AI::GetNextSpawnType(UNIT_TYPE u_type)
 		unit_it++;
 	}
 
+	uint min = max_population;
 
-
-	switch (u_type)
+	if (militia < min && units_production[MILITIA].base_type_unit != NO_UNIT)
 	{
-	case NO_UNIT:
-		break;
-	case MILITIA:
 		ret = MILITIA;
-		break;
-	case ARCHER:
-		break;
-	case CAVALRY_ARCHER:
-		break;
-	case KNIGHT:
-		break;
-	case MONK:
-		break;
-	case SPEARMAN:
-		break;
-	case VILLAGER:
-		ret = MILITIA;
-		break;
-	case SKIRMISHER:
-		break;
-	default:
-		break;
+		min = militia;
 	}
+	if (archer < min && units_production[ARCHER].base_type_unit != NO_UNIT)
+	{
+		ret = ARCHER;
+		min = archer;
+	}
+	if (cavalry_archer < min && units_production[CAVALRY_ARCHER].base_type_unit != NO_UNIT)
+	{
+		ret = CAVALRY_ARCHER;
+		min = cavalry_archer;
+	}
+	if (knight < min && units_production[KNIGHT].base_type_unit != NO_UNIT)
+	{
+		ret = KNIGHT;
+		min = knight;
+	}
+	if (monk < min && units_production[MONK].base_type_unit != NO_UNIT)
+	{
+		ret = MONK;
+		min = monk;
+	}
+	if (spearman < min && units_production[SPEARMAN].base_type_unit != NO_UNIT)
+	{
+		ret = SPEARMAN;
+		min = spearman;
+	}
+	if (skirmisher < min && units_production[SKIRMISHER].base_type_unit != NO_UNIT)
+	{
+		ret = SKIRMISHER;
+		min = skirmisher;
+	}
+
+
+	if (villager < MIN_VILLAGERS)
+		ret = VILLAGER;
 
 	return ret;
 }
+
 
 Building * j1AI::FindBuilding(BUILDING_TYPE type, BUILDING_TYPE type2)
 {
@@ -783,6 +798,8 @@ bool j1AI::GenerateUnit(UNIT_TYPE type)
 			CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost, UNIT);
 			productive_building->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)productive_building, units_production[type].u_type, ENEMY));
 		}
+		else GenerateBuilding(units_production[type].spawn_from);
+
 	}
 }
 
