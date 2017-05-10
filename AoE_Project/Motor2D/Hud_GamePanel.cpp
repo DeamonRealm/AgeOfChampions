@@ -326,6 +326,12 @@ void Game_Panel::Disable()
 	exit_menu_screen->DesactivateChids();
 }
 
+void Game_Panel::Reset()
+{
+	Disable();
+	Enable();
+}
+
 bool Game_Panel::Load(pugi::xml_node &data)
 {
 	// Load Game Panel Data ------------------------------

@@ -117,7 +117,7 @@ bool Minimap_Panel::PreUpdate()
 
 bool Minimap_Panel::PostUpdate()
 {
-	return false;
+	return true;
 }
 
 bool Minimap_Panel::Draw()
@@ -181,11 +181,32 @@ void Minimap_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 
 void Minimap_Panel::Enable()
 {
+	SDL_FillRect(minimap_fow, NULL, SDL_MapRGBA(minimap_fow->format, 0, 0, 0, 255));
+	if (minimap_fow_texture != nullptr) SDL_DestroyTexture(minimap_fow_texture);
+	minimap_fow_texture = SDL_CreateTextureFromSurface(App->render->renderer, minimap_fow);
+}
+
+void Minimap_Panel::Disable()
+{
+	units_to_print.clear();
+	buildings_to_print.clear();
+	fow_cells_to_clear.clear();
+}
+
+void Minimap_Panel::Reset()
+{
+	Disable();
+	Enable();
+}
+
+bool Minimap_Panel::Load(pugi::xml_node & data)
+{
 	units_to_print.clear();
 	units_to_print.reserve(App->entities_manager->units.size());
 	std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
 	std::list<Unit*>::const_iterator end = App->entities_manager->units.end();
 
+	// Fill List with units in map
 	iPoint pos = { 0,0 };
 	while (unit != end)
 	{
@@ -209,23 +230,10 @@ void Minimap_Panel::Enable()
 	}
 	update_timer.Start();
 
-	SDL_FillRect(minimap_fow, NULL, SDL_MapRGBA(minimap_fow->format, 0, 0, 0, 255));
-	minimap_fow_texture = SDL_CreateTextureFromSurface(App->render->renderer, minimap_fow);
-
+	// Edit minimap FOW
 	EditMinimapFoW();
 
-}
-
-void Minimap_Panel::Disable()
-{
-	units_to_print.clear();
-	buildings_to_print.clear();
-	fow_cells_to_clear.clear();
-}
-
-bool Minimap_Panel::Load(pugi::xml_node & data)
-{
-	return false;
+	return true;
 }
 
 bool Minimap_Panel::Save(pugi::xml_node & data) const

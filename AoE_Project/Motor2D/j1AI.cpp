@@ -73,7 +73,7 @@ void j1AI::Reset()
 	update_timer.Start();
 	research_timer.Start();
 
-	/*current_age = 2;
+	current_age = 2;
 	next_research = 0;
 
 	for (int i = 0; i < PRODUCTIVE_SIZE; i++)
@@ -82,9 +82,7 @@ void j1AI::Reset()
 		buildings_lvl[i] = 0;
 	}
 	UpdateAIUnits();
-	UpdateAIBuildings();*/
-
-	research_timer.Start();
+	UpdateAIBuildings();
 }
 
 

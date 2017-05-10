@@ -470,6 +470,8 @@ void j1App::LoadGame(const char* file,bool activate_modules)
 	else
 	{
 		App->entities_manager->Reset();
+		App->player->Reset();
+		App->AI->Reset();
 	}
 
 	want_to_load = true;

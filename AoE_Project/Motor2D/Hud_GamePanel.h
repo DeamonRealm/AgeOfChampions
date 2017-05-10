@@ -49,6 +49,7 @@ public:
 	// Disable/Enable Module
 	void Enable();
 	void Disable();
+	void Reset();
 
 	bool Load(pugi::xml_node &data);
 

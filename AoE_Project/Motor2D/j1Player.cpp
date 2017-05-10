@@ -72,6 +72,14 @@ void j1Player::Disable()
 	minimap_panel->Disable();
 }
 
+void j1Player::Reset()
+{
+	game_panel->Reset();
+	selection_panel->Reset();
+	action_panel->Reset();
+	minimap_panel->Reset();
+}
+
 bool j1Player::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Player");

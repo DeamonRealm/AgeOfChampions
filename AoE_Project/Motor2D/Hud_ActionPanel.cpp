@@ -659,21 +659,21 @@ bool HeroPanel::Save(pugi::xml_node & data) const
 	pugi::xml_node curr_cell = data.append_child("warrior_levels");
 	for (int i = 0; i < 5; i++)
 	{
-		curr_cell = data.append_child("cell");
+		curr_cell = data.child("warrior_levels").append_child("cell");
 		curr_cell.append_attribute("level") = mele_learned[i];
 	}
 
 	curr_cell = data.append_child("wizard_levels");
 	for (int i = 0; i < 5; i++)
 	{
-		curr_cell = data.append_child("cell");
+		curr_cell = data.child("wizard_levels").append_child("cell");
 		curr_cell.append_attribute("level") = wizard_learned[i];
 	}
 
 	curr_cell = data.append_child("archer_levels");
 	for (int i = 0; i < 5; i++)
 	{
-		curr_cell = data.append_child("cell");
+		curr_cell = data.child("archer_levels").append_child("cell");
 		curr_cell.append_attribute("level") = archer_learned[i];
 	}
 
@@ -1414,6 +1414,20 @@ bool Action_Panel::Save(pugi::xml_node & data) const
 	heropanel->Save(game_panel_data.append_child("heroes"));
 
 	return true;
+}
+
+void Action_Panel::Reset()
+{
+	towncenterpanel->ResetPanel();
+	barrackpanel->ResetPanel();
+	archerypanel->ResetPanel();
+	stablepanel->ResetPanel();
+	blacksmithpanel->ResetPanel();
+	lumbercamppanel->ResetPanel();
+	miningcamppanel->ResetPanel();
+	universitypanel->ResetPanel();
+	villagerpanel->ResetPanel();
+	heropanel->ResetPanel();
 }
 
 void Action_Panel::SetSelectionPanelPointer(Selection_Panel * selection_panel)

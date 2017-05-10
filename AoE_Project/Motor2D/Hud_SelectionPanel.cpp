@@ -533,6 +533,12 @@ void Selection_Panel::Disable()
 	Selected->Reset();
 }
 
+void Selection_Panel::Reset()
+{
+	Disable();
+	Enable();
+}
+
 bool Selection_Panel::Load(pugi::xml_node & data)
 {
 	// Load Selection Panel Data ------------------------------

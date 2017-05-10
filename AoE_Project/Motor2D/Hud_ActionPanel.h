@@ -274,6 +274,8 @@ public:
 
 	bool Save(pugi::xml_node &data) const;
 
+	void Reset();
+
 	// Set Pointer To Selection Panel
 	void SetSelectionPanelPointer(Selection_Panel* selection_panel);
 
