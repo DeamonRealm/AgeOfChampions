@@ -823,12 +823,11 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 
 			//Load champion abilities chosen
 			if (choosed_1)
-			((Champion*)new_unit)->SetAbility_lvl_1(cur_unit_node.attribute("ability_1").as_bool());
+				((Champion*)new_unit)->SetAbility_lvl_1(cur_unit_node.attribute("ability_1").as_bool());
 			if (choosed_2)
-			((Champion*)new_unit)->SetAbility_lvl_2(cur_unit_node.attribute("ability_2").as_bool());
+				((Champion*)new_unit)->SetAbility_lvl_2(cur_unit_node.attribute("ability_2").as_bool());
 			if (choosed_3)
-
-			((Champion*)new_unit)->SetAbility_lvl_3(cur_unit_node.attribute("ability_3").as_bool());
+				((Champion*)new_unit)->SetAbility_lvl_3(cur_unit_node.attribute("ability_3").as_bool());
 
 			break;
 		}
@@ -1317,6 +1316,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 		/*Atk Triangle Length*/		atk_triangle.SetLength(unit_node->attribute("atk_triangle_length").as_uint());
 		/*Atk Triangle Width*/		atk_triangle.SetWidthAngle(unit_node->attribute("atk_triangle_width_angle").as_float());
 									atk_triangle.SetXAngle(12.0);
+									atk_triangle.SetColor({ 0, 0, 255, 255 });
 									((Warrior*)new_def)->SetSpecialAttackArea(atk_triangle);
 									Circle circle;
 									circle.SetColor({ 100, 100, 100, 255 });
@@ -1332,7 +1332,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 		/*Atk Triangle Length*/		atk_triangle.SetLength(unit_node->attribute("area_triangle_length").as_uint());
 		/*Atk Triangle Width*/		atk_triangle.SetWidthAngle(unit_node->attribute("area_triangle_width_angle").as_float());
 									atk_triangle.SetXAngle(12.0);
-									atk_triangle.SetColor({ 0, 0, 0, 255 });
+									atk_triangle.SetColor({ 0, 0, 255, 255 });
 									((Hunter*)new_def)->SetSpecialAttackArea(atk_triangle);
 		/*Circle Spell*/			Circle temp_circle;
 									temp_circle.SetRad(unit_node->attribute("area_attack_skill_B_lvl_2").as_uint());
