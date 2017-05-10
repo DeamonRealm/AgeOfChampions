@@ -1501,7 +1501,7 @@ bool Unit::AttackBuilding(Building * target)
 	}
 
 	//Check if the target is in the attack area
-	if (!attack_area.Intersects((target)->GetInteractArea())&& target->GetLife() > 0)
+	if (!attack_area.Overlap((target)->GetInteractArea())&& target->GetLife() > 0)
 	{
 
 		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
@@ -2417,7 +2417,7 @@ void Building::SaveAsDef(pugi::xml_node & node)
 
 	/*Interact X*/	node.append_attribute("interaction_area_x") = interact_area.GetPosition().x;
 	/*Interact Y*/	node.append_attribute("interaction_area_y") = interact_area.GetPosition().y;
-	/*Interact W*/	node.append_attribute("interaction_area_w") = interact_area.GetWidth();
+	/*Interact W*/	node.append_attribute("interaction_area_w") = interact_area.GetRad();
 
 	/*Tiles W*/		node.append_attribute("width_in_tiles") = width_in_tiles;
 	/*Tiles H*/		node.append_attribute("height_in_tiles") = height_in_tiles;
@@ -2753,7 +2753,7 @@ void Building::SetMark(const Rectng& rectangle)
 	mark = rectangle;
 }
 
-void Building::SetInteractArea(const Rectng& rectangle)
+void Building::SetInteractArea(const Circle& rectangle)
 {
 	interact_area = rectangle;
 }
@@ -2822,7 +2822,7 @@ const Rectng & Building::GetMark() const
 	return mark;
 }
 
-const Rectng* Building::GetInteractArea() const
+const Circle* Building::GetInteractArea() const
 {
 	return &interact_area;
 }

@@ -1509,9 +1509,8 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 						mark.SetDisplacement(displacement);
 	/*Mark Color*/		mark.SetColor({ 55,255,255,255 });
 						new_def->SetMark(mark);
-	/*Interaction Area*/Rectng area;
-	/*I.Area Width*/	area.SetWidth(building_node->attribute("interaction_area_w").as_uint());
-	/*I.Area Height*/	area.SetHeight(area.GetWidth() * sin(area.GetXAngle()));
+	/*Interaction Area*/Circle area;
+	/*I.Area Width*/	area.SetRad(building_node->attribute("interaction_area_w").as_uint());
 	/*I.Area Displace*/	displacement.create(building_node->attribute("interaction_area_x").as_int(), building_node->attribute("interaction_area_y").as_int());
 						area.SetDisplacement(displacement);
 	/*I.Area Color*/	area.SetColor({ 0,0,255,255 });

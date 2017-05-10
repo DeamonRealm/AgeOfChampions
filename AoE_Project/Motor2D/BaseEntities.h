@@ -599,7 +599,7 @@ public:
 protected:
 
 	Rectng			mark;
-	Rectng			interact_area;
+	Circle			interact_area;
 	uint			width_in_tiles = 0;
 	uint			height_in_tiles = 0;
 	BUILDING_TYPE	building_type = NO_BUILDING;
@@ -631,7 +631,7 @@ public:
 	void	SetPosition(float x, float y, bool insert = true);
 	void	OnlySetPosition(float x, float y);
 	void	SetMark(const Rectng& rectangle);
-	void	SetInteractArea(const Rectng& rectangle);
+	void	SetInteractArea(const Circle& rectangle);
 	void	SetWidthInTiles(uint width);
 	void	SetHeightInTiles(uint height);
 	void	SetBuildingType(BUILDING_TYPE type);
@@ -642,7 +642,7 @@ public:
 
 	//Get Methods -----------
 	const Rectng&	GetMark()const;
-	const Rectng*	GetInteractArea()const;
+	const Circle*	GetInteractArea()const;
 	BUILDING_TYPE	GetBuildingType()const;
 	ACTION_TYPE		GetActionType()const;
 	DIRECTION_TYPE	GetDirectionType()const;
