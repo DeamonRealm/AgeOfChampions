@@ -135,6 +135,11 @@ void Champion::CheckHability_lvl_2()
 
 }
 
+void Champion::Cancel_Ability_lvl_2()
+{
+	ability_lvl_2_prepare_mode = false;
+}
+
 void Champion::SetAbility_lvl_3(bool choosed)
 {
 }
@@ -152,10 +157,16 @@ void Champion::CheckHability_lvl_3()
 {
 }
 
+void Champion::Cancel_Ability_lvl_3()
+{
+	ability_lvl_3_prepare_mode = false;
+}
+
 void Champion::LevelUp(bool particle)
 {
 	if (particle)SetLevelUpParticle();
 
+	App->buff_manager->RemoveTargetBuffs(this);
 	to_level_up = false;
 	level_up_particle.position = this->GetPositionRounded();
 	level_up_particle.animation.Reset();

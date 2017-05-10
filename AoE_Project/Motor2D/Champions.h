@@ -75,11 +75,14 @@ public:
 	virtual bool PrepareAbility_lvl_2();
 	virtual void Hability_lvl_2(int x = 0, int y = 0);
 	virtual void CheckHability_lvl_2();
+	virtual void Cancel_Ability_lvl_2();
 	//Ability lvl3 methods
 	virtual void SetAbility_lvl_3(bool choosed);
 	virtual bool PrepareAbility_lvl_3();
 	virtual void Hability_lvl_3(int x = 0, int y = 0);
 	virtual void CheckHability_lvl_3();
+	virtual void Cancel_Ability_lvl_3();
+
 	//Level system methods
 	void	LevelUp(bool particle = true);
 	void	LevelUpAnimation();

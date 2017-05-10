@@ -141,7 +141,7 @@ bool Circle::Overlap(const Circle* target) const
 {
 	if (target == nullptr)return false;
 
-	int radius = rad + target->GetRad()+1;
+	int radius = rad + target->GetRad()+3;
 	int deltaX = position.x - target->GetPosition().x;
 	int deltaY = position.y - target->GetPosition().y;
 
