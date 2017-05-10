@@ -2549,6 +2549,39 @@ bool Building::Die()
 		}
 
 		App->entities_manager->AddDeadBuilding(this);
+
+		if (this->entity_diplomacy == ALLY)
+		{
+			//Completely release all the fog around that is collected by other entities (buildings or units)
+			//App->fog_of_war->ReleaseEntityFog(this);
+			this->ResetFogAround();
+			/*App->fog_of_war->ClearFogLayer(vision, GRAY_FOG, false);
+			App->fog_of_war->ClearAlphaLayer(vision, MID_ALPHA, false);*/
+			//Collect all the units around to release the fog
+			std::vector<Unit*> coll_units;
+			std::vector<Building*> coll_buildings;
+			Circle coll_area = render_area;
+			coll_area.SetRad(coll_area.GetRad() + 400);
+			uint size = App->entities_manager->units_quadtree.CollectCandidates(coll_units, coll_area);
+			uint b_size = App->entities_manager->buildings_quadtree.CollectCandidates(coll_buildings, coll_area);
+			for (uint k = 0; k < b_size; k++)
+			{
+				if (coll_buildings[k]->GetDiplomacy() == ALLY)coll_buildings[k]->ResetFogAround();
+			}
+			for (uint k = 0; k < b_size; k++)
+			{
+				if (coll_buildings[k]->GetDiplomacy() == ALLY)coll_buildings[k]->CleanFogAround();
+			}
+			for (uint k = 0; k < size; k++)
+			{
+				if (coll_units[k]->GetDiplomacy() == ALLY)coll_units[k]->ResetFogAround();
+			}
+			for (uint k = 0; k < size; k++)
+			{
+				if (coll_units[k]->GetDiplomacy() == ALLY)coll_units[k]->CleanFogAround();
+			}
+		}
+
 		App->animator->BuildingPlay(this);
 		current_animation->Reset();
 		building_type = prev_building_type;
@@ -2560,7 +2593,6 @@ bool Building::Die()
 		current_animation->GetCurrentSprite();
 		if (current_animation->IsEnd())
 		{
-			//App->entities_manager->RemoveDeathBuilding(this);
 			this->CleanMapLogic();
 			App->entities_manager->DeleteEntity(this);
 			return true;

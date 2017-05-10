@@ -341,7 +341,7 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			option_selected->button_state = UP;
 			menu_screen->DesactivateChids();
 			load_screen->Activate();
-			App->LoadDefaultGame("scene/standard_match.xml");
+			App->LoadDefaultGame("scene/alpha_match.xml");
 		}
 		break;
 	case MOUSE_RIGHT_BUTTON:

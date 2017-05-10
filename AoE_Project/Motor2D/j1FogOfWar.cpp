@@ -105,11 +105,11 @@ bool j1FogOfWar::PostUpdate()
 		ResetFogTilesInCamera();
 	}
 
-	while (!entities_release.empty())
+	for (uint k = 0; k < entities_release.size(); k++)
 	{
-		entities_release.back()->ResetFogAround();
-		entities_release.pop_back();
+		entities_release[k]->ResetFogAround();
 	}
+	entities_release.clear();
 
 	j1Timer timer;
 	while (timer.Read() < UPDATE_TIME  && !entities_static_update.empty())

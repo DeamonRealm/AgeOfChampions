@@ -110,6 +110,7 @@ void j1InputManager::SendInputEvent(int id, INPUT_STATE state)
 			key_pressed.first = key_event->second;
 			key_pressed.second = state;
 			current_events.insert(key_pressed);
+			break;
 		}
 		key_event++;
 	}

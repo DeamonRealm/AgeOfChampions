@@ -61,7 +61,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(fs);
 	AddModule(input);
-	AddModule(input_manager);
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
@@ -86,7 +85,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// render last to swap buffer
 	AddModule(render);
-
+	AddModule(input_manager);
 
 	PERF_PEEK(ptimer);
 }

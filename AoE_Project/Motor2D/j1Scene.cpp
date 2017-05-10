@@ -18,6 +18,7 @@
 #include "j1AI.h"
 #include "j1Menu.h"
 #include "j1FogOfWar.h"
+#include "j1InputManager.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -146,10 +147,16 @@ bool j1Scene::PostUpdate()
 	}*/
 
 	//Call save game method
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) App->SaveGame("party_file.xml");
+	if (App->input_manager->GetEvent(SAVE) == INPUT_STATE::INPUT_DOWN)
+	{
+		App->SaveGame("party_file.xml");
+	}
 
 	//Call load game method 
-	else if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)App->LoadGame("party_file.xml");
+	else if (App->input_manager->GetEvent(LOAD) == INPUT_STATE::INPUT_DOWN)
+	{
+		App->LoadGame("party_file.xml", false);
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
