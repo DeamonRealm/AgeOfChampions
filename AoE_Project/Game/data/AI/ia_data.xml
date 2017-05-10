@@ -21,31 +21,31 @@ pc => population cost to activate cell
 <HudActionPanelData>
   <Buildings>
      <Villager spawn_from="villager" spawn_from2="villager">
-       <cell base_type ="town_center" cl ="0" al ="1" wc ="100" fc ="0" gc ="0" sc ="1" pc ="-15" bt="1" rt="32" ci ="Bulid Town Center"/>
-       <cell base_type ="town_center" cl ="1" al ="3" wc ="0" fc ="0" gc ="0" sc ="1" pc ="-15" bt="11" ci ="Bulid Town Center"/>
+       <cell base_type ="town_center" cl ="0" al ="1" wc ="275" fc ="0" gc ="0" sc ="100" pc ="-15" bt="1" rt="32" ci ="Bulid Town Center"/>
+       <cell base_type ="town_center" cl ="1" al ="3" wc ="275" fc ="0" gc ="0" sc ="100" pc ="-15" bt="11" ci ="Bulid Town Center"/>
         
        <cell base_type ="houseA" cl ="0" al ="1" wc ="25" fc ="0" gc ="0" sc ="0" pc ="-5" bt="6" rt="32" ci ="Bulid House"/>
        <cell base_type ="houseA" cl ="1" al ="3" wc ="25" fc ="0" gc ="0" sc ="0" pc ="-5" bt="16" ci ="Bulid House"/>
     
-       <cell base_type ="mining_camp" cl ="0" al ="1" wc ="50" fc ="0" gc ="0" sc ="0" pc ="0" bt="10"  ci ="Bulid Mining Camp"/>
-       <cell base_type ="lumber_camp" cl ="0" al ="1" wc ="50" fc ="0" gc ="0" sc ="0" pc ="0" bt="9" ci ="Bulid Lumber Camp"/>
+       <cell base_type ="mining_camp" cl ="0" al ="1" wc ="100" fc ="0" gc ="0" sc ="0" pc ="0" bt="10"  ci ="Bulid Mining Camp"/>
+       <cell base_type ="lumber_camp" cl ="0" al ="1" wc ="100" fc ="0" gc ="0" sc ="0" pc ="0" bt="9" ci ="Bulid Lumber Camp"/>
      
-       <cell base_type ="blacksmith" cl ="0" al ="2" wc ="0" fc ="0" gc ="0" sc ="50" pc ="0" bt="4" rt="32" ci ="Bulid Blacksmith"/>
-       <cell base_type ="blacksmith" cl ="1" al ="3" wc ="0" fc ="0" gc ="0" sc ="50" pc ="0" bt="14" ci ="Bulid Blacksmith"/>
+       <cell base_type ="blacksmith" cl ="0" al ="2" wc ="150" fc ="0" gc ="0" sc ="0" pc ="0" bt="4" rt="32" ci ="Bulid Blacksmith"/>
+       <cell base_type ="blacksmith" cl ="1" al ="3" wc ="150" fc ="0" gc ="0" sc ="0" pc ="0" bt="14" ci ="Bulid Blacksmith"/>
      
-       <cell base_type ="monastery" cl ="0" al ="3" wc ="0" fc ="0" gc ="100" sc ="0" pc ="0" bt="19" ci ="Bulid Monastery"/>
+       <cell base_type ="monastery" cl ="0" al ="3" wc ="175" fc ="0" gc ="0" sc ="0" pc ="0" bt="19" ci ="Bulid Monastery"/>
        
-       <cell base_type ="university_c" cl ="0" al ="3" wc ="0" fc ="0" gc ="0" sc ="50" pc ="0" bt="20" rt="32" ci ="Bulid University"/>    
-       <cell base_type ="university_c" cl ="1" al ="4" wc ="0" fc ="0" gc ="0" sc ="50" pc ="0" bt="21" ci ="Bulid University"/>    
-       
-       <cell base_type ="barrack" cl ="0" al ="1" wc ="50" fc ="50" gc ="0" sc ="0" pc ="0" bt="2"  rt="32" ci ="Bulid Barrack"/>
-       <cell base_type ="barrack" cl ="1" al ="3" wc ="50" fc ="50" gc ="0" sc ="0" pc ="0" bt="12" ci ="Bulid Barrack"/>
+       <cell base_type ="university_c" cl ="0" al ="3" wc ="200" fc ="0" gc ="0" sc ="0" pc ="0" bt="20" rt="32" ci ="Bulid University"/>    
+       <cell base_type ="university_c" cl ="1" al ="4" wc ="200" fc ="0" gc ="0" sc ="0" pc ="0" bt="21" ci ="Bulid University"/>    
       
-       <cell base_type ="archery_range" cl ="0" al ="1" wc ="50" fc ="0" gc ="0" sc ="0" pc ="0" bt="3" rt="32" ci ="Bulid Archery Range"/>
-       <cell base_type ="archery_range" cl ="1" al ="3" wc ="50" fc ="0" gc ="0" sc ="0" pc ="0" bt="13" ci ="Bulid Archery Range"/>
+       <cell base_type ="barrack" cl ="0" al ="1" wc ="175" fc ="0" gc ="0" sc ="0" pc ="0" bt="2"  rt="32" ci ="Bulid Barrack"/>
+       <cell base_type ="barrack" cl ="1" al ="3" wc ="175" fc ="0" gc ="0" sc ="0" pc ="0" bt="12" ci ="Bulid Barrack"/>
+      
+       <cell base_type ="archery_range" cl ="0" al ="1" wc ="175" fc ="0" gc ="0" sc ="0" pc ="0" bt="3" rt="32" ci ="Bulid Archery Range"/>
+       <cell base_type ="archery_range" cl ="1" al ="3" wc ="175" fc ="0" gc ="0" sc ="0" pc ="0" bt="13" ci ="Bulid Archery Range"/>
      
-       <cell base_type ="stable" cl ="0" al ="1" wc ="50" fc ="0" gc ="0" sc ="0" pc ="0" bt="5" rt="32" ci ="Bulid Stable"/>
-       <cell base_type ="stable" cl ="1" al ="3" wc ="50" fc ="0" gc ="0" sc ="0" pc ="0" bt="15" ci ="Bulid Stable"/>
+       <cell base_type ="stable" cl ="0" al ="1" wc ="175" fc ="0" gc ="0" sc ="0" pc ="0" bt="5" rt="32" ci ="Bulid Stable"/>
+       <cell base_type ="stable" cl ="1" al ="3" wc ="175" fc ="0" gc ="0" sc ="0" pc ="0" bt="15" ci ="Bulid Stable"/>
      </Villager>
   </Buildings>
   <Units>
