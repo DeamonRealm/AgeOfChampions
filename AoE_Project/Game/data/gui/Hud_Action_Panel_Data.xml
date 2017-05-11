@@ -30,12 +30,11 @@ pc => population cost to activate cell
       <cell cp ="3" cl ="0" al ="1" x="432" y="585" w="36" h="36" wc ="0" fc ="50" gc ="60" sc ="0" pc ="1" ut ="19" ci ="Create Archer Champion"/>
       <cell cp ="5" cl ="0" al ="1" x="540" y="477" w="36" h="36" wc ="0" fc ="0" gc ="50" sc ="0" pc ="0" rt ="34" ci ="Research Loom (+15 villager hitpoints, +1/+2P armor)"/>
       <cell cp ="6" cl ="0" al ="2" x="0" y="513" w="36" h="36" wc ="50" fc ="175" gc ="0" sc ="0" pc ="0" rt ="37" ci ="Research Wheelbarrow (+10% villager speed; +25% capacity)"/>
-      <cell cp ="6" cl ="1" al ="3" x="468" y="477" w="36" h="36" wc ="0" fc ="0" gc ="50" sc ="0" pc ="0" rt ="38" ci ="Research Hand Cart (+10% villager speed; +50% capacity)"/>
+      <cell cp ="6" cl ="1" al ="3" x="468" y="477" w="36" h="36" wc ="200" fc ="300" gc ="0" sc ="0" pc ="0" rt ="38" ci ="Research Hand Cart (+10% villager speed; +50% capacity)"/>
       <cell cp ="7" cl ="0" al ="2" x="612" y="477" w="36" h="36" wc ="0" fc ="75" gc ="0" sc ="0" pc ="0" rt ="36" ci ="Research Town Watch (+4 Building LOS)"/>
       <cell cp ="7" cl ="1" al ="3" x="576" y="477" w="36" h="36" wc ="0" fc ="300" gc ="100" sc ="0" pc ="0" rt ="35" ci ="Research Town Patrol (+4 Building LOS)"/>
-     <!-- <cell cp ="10" cl ="0" al ="1" x="432" y="477" w="36" h="36" wc ="0" fc ="500" gc ="0" sc ="0" pc ="0" rt ="31" ci ="Advance to Feudal Age"/>-->
-      <cell cp ="10" cl ="0" al ="2" x="396" y="477" w="36" h="36" wc ="0" fc ="8" gc ="2" sc ="0" pc ="0" rt ="32" ci ="Advance to Castle Age"/>
-      <cell cp ="10" cl ="1" al ="3" x="504" y="477" w="36" h="36" wc ="0" fc ="10" gc ="8" sc ="0" pc ="0" rt="33" ci ="Advance to Imperial Age"/>
+      <cell cp ="10" cl ="0" al ="2" x="396" y="477" w="36" h="36" wc ="0" fc ="800" gc ="200" sc ="0" pc ="0" rt ="32" ci ="Advance to Castle Age"/>
+      <cell cp ="10" cl ="1" al ="3" x="504" y="477" w="36" h="36" wc ="0" fc ="1000" gc ="800" sc ="0" pc ="0" rt="33" ci ="Advance to Imperial Age"/>
     </TownCenter>
     <Lumber_Camp>
       <cell cp ="0" cl ="0" al ="2" x="396" y="405" w="36" h="36" wc ="50" fc ="100" gc ="0" sc ="0" pc ="0" rt ="42" ci ="Research Double-Bit Axe (Choop Speed +20%)"/>
@@ -43,10 +42,10 @@ pc => population cost to activate cell
       <cell cp ="0" cl ="2" al ="4" x="432" y="405" w="36" h="36" wc ="200" fc ="300" gc ="0" sc ="0" pc ="0" rt ="44" ci ="Research Two-Man Saw (Choop Speed +10%)"/>
     </Lumber_Camp>
     <Mining_Camp>
-      <cell cp ="3" cl ="0" al ="2" x="612" y="405" w="36" h="36" wc ="50" fc ="100" gc ="0" sc ="0" pc ="0" rt ="45" ci ="Research Gold Mining (Gather Gold +15% Faster)"/>
-      <cell cp ="3" cl ="1" al ="3" x="0"   y="441" w="36" h="36" wc ="100" fc ="150" gc ="0" sc ="0" pc ="0" rt ="46" ci ="Research Gold Shaft Mining (Gather Gold +15% Faster)"/>
-      <cell cp ="4" cl ="0" al ="2" x="36"  y="441" w="36" h="36" wc ="200" fc ="300" gc ="0" sc ="0" pc ="0" rt ="47" ci ="Research Stone Mining (Gather Stone +15% Faster)"/>
-      <cell cp ="4" cl ="1" al ="3" x="72"  y="441" w="36" h="36" wc ="50" fc ="100" gc ="0" sc ="0" pc ="0" rt ="48" ci ="Research Stone Shaft Mining (Gather Stone +15% Faster)"/>
+      <cell cp ="3" cl ="0" al ="2" x="612" y="405" w="36" h="36" wc ="75" fc ="100" gc ="0" sc ="0" pc ="0" rt ="45" ci ="Research Gold Mining (Gather Gold +15% Faster)"/>
+      <cell cp ="3" cl ="1" al ="3" x="0"   y="441" w="36" h="36" wc ="150" fc ="200" gc ="0" sc ="0" pc ="0" rt ="46" ci ="Research Gold Shaft Mining (Gather Gold +15% Faster)"/>
+      <cell cp ="4" cl ="0" al ="2" x="36"  y="441" w="36" h="36" wc ="75" fc ="100" gc ="0" sc ="0" pc ="0" rt ="47" ci ="Research Stone Mining (Gather Stone +15% Faster)"/>
+      <cell cp ="4" cl ="1" al ="3" x="72"  y="441" w="36" h="36" wc ="150" fc ="200" gc ="0" sc ="0" pc ="0" rt ="48" ci ="Research Stone Shaft Mining (Gather Stone +15% Faster)"/>
     </Mining_Camp>
     <Barrack>
       <cell cp ="0" cl ="0" al ="1" x="504" y="585" w="36" h="36" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="1"  rt="6" ci ="Create Militia"/>
@@ -104,7 +103,7 @@ pc => population cost to activate cell
      <!-- <cell cp ="5" cl ="0" al ="4" x="144" y="477" w="36" h="36" wc ="0" fc ="125"  gc ="75" sc ="0" pc ="0" rt ="30" ci ="Upgrade To Light Cavalry"/>-->
       <cell cp ="6" cl ="0" al ="4" x="108" y="477" w="36" h="36" wc ="0" fc ="350"  gc ="300" sc ="0" pc ="0" rt ="27" ci ="Upgrade To Cavalier"/>
       <cell cp ="6" cl ="1" al ="4" x="36"  y="477" w="36" h="36" wc ="200" fc ="0"  gc ="100" sc ="0" pc ="0" rt ="28" ci ="Upgrade To Paladin"/>
-      <cell cp ="6" cl ="2" al ="3" x="0"   y="477" w="36" h="36" wc ="250" fc ="300" gc ="0" sc ="0" pc ="0" rt ="26" ci ="Research Bloodlines (Cavalry +20 Healthpoints)"/>
+      <cell cp ="6" cl ="2" al ="3" x="0"   y="477" w="36" h="36" wc ="0" fc ="150" gc ="100" sc ="0" pc ="0" rt ="26" ci ="Research Bloodlines (Cavalry +20 Healthpoints)"/>
       <cell cp ="10" cl ="0" al ="3" x="72" y="477" w="36" h="36" wc ="0" fc ="150" gc ="0" sc ="0" pc ="0" rt ="29" ci ="Research Husbandry (Cavalry +10% Speed)"/>
     </Stable>
     <Monastery>
@@ -158,24 +157,24 @@ pc => population cost to activate cell
       <cell cp ="0" cl ="2" al ="1" x="651" y="0" w="36" h="36"    ci ="Passive Hability: Berserk"/>
       <cell cp ="1" cl ="1" al ="1" x="651" y="114" w="36" h="36"  ci ="Stun"/>
       <cell cp ="1" cl ="2" al ="1" x="651" y="76" w="36" h="36"   ci ="Slash"/>
-      <cell cp ="2" cl ="1" al ="1" x="651" y="190" w="36" h="36"  ci ="n3 special special"/>
-      <cell cp ="2" cl ="2" al ="1" x="651" y="152" w="36" h="36"  ci ="n3 special special 2"/>
+      <cell cp ="2" cl ="1" al ="1" x="651" y="190" w="36" h="36"  ci ="Agro"/>
+      <cell cp ="2" cl ="2" al ="1" x="651" y="152" w="36" h="36"  ci ="One hit attack"/>
       <cell cp ="3" cl ="0" al ="1" x="651" y="750" w="36" h="36"  ci ="Open Warrior Skill Tree"/>
       <cell cp ="4" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Warrior"/>
       <cell cp ="5" cl ="1" al ="1" x="689" y="454" w="36" h="36"  ci ="Passive Hability: Heal All"/>
       <cell cp ="5" cl ="2" al ="1" x="689" y="491" w="36" h="36"  ci ="Passive Hability: Vitaliti Up"/>
-      <cell cp ="6" cl ="1" al ="1" x="689" y="565" w="36" h="36"  ci ="heal"/>
-      <cell cp ="6" cl ="2" al ="1" x="689" y="528" w="36" h="36"  ci ="tp"/>
-      <cell cp ="7" cl ="1" al ="1" x="689" y="639" w="36" h="36"  ci ="n3 special special"/>
-      <cell cp ="7" cl ="2" al ="1" x="689" y="602" w="36" h="36"  ci ="n3 special special2"/>
+      <cell cp ="6" cl ="1" al ="1" x="689" y="565" w="36" h="36"  ci ="Heal"/>
+      <cell cp ="6" cl ="2" al ="1" x="689" y="528" w="36" h="36"  ci ="Teleport"/>
+      <cell cp ="7" cl ="1" al ="1" x="689" y="639" w="36" h="36"  ci ="Revive"/>
+      <cell cp ="7" cl ="2" al ="1" x="689" y="602" w="36" h="36"  ci ="Thunder"/>
       <cell cp ="8" cl ="0" al ="1" x="651" y="713" w="36" h="36"  ci ="Open Mage Skill Tree"/>
       <cell cp ="9" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Mage"/>
       <cell cp ="10" cl ="1" al ="1" x="651" y="454" w="36" h="36" ci ="Passive Hability: Archer acc++"/>
       <cell cp ="10" cl ="2" al ="1" x="651" y="491" w="36" h="36" ci ="Passive Hability: Archer los++"/>
-      <cell cp ="11" cl ="1" al ="1" x="651" y="528" w="36" h="36" ci ="shot"/>
-      <cell cp ="11" cl ="2" al ="1" x="651" y="565" w="36" h="36" ci ="shot shot shot"/>
-      <cell cp ="12" cl ="1" al ="1" x="651" y="602" w="36" h="36" ci ="n"/>
-      <cell cp ="12" cl ="2" al ="1" x="651" y="639" w="36" h="36" ci ="n"/>
+      <cell cp ="11" cl ="1" al ="1" x="651" y="528" w="36" h="36" ci ="Multi-shoot"/>
+      <cell cp ="11" cl ="2" al ="1" x="651" y="565" w="36" h="36" ci ="Smoke-shoot"/>
+      <cell cp ="12" cl ="1" al ="1" x="651" y="602" w="36" h="36" ci ="Dragon"/>
+      <cell cp ="12" cl ="2" al ="1" x="651" y="639" w="36" h="36" ci ="Laser"/>
       <cell cp ="13" cl ="0" al ="1" x="689" y="713" w="36" h="36" ci ="Open Archer Skill Tree"/>
       <cell cp ="14" cl ="0" al ="1" x="0" y="76" w="36" h="36"    ci ="Kill Archer"/>
     </Champion>

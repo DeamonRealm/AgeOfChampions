@@ -84,49 +84,49 @@ pc => population cost to activate cell
   </Units>
   <Research>
       <!-- Feudal Age -->
-      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="1" wc ="20" fc ="20"  gc ="20"  sc ="0" pc ="0" rt ="34" ci ="Research Loom"/>
-      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="2" wc ="20" fc ="20"  gc ="20"  sc ="0" pc ="0" rt ="37" ci ="Research Wheelbarrow"/>
+      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="1" wc ="0" fc ="0"  gc ="50"  sc ="0" pc ="0" rt ="34" ci ="Research Loom"/>
+      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="2" wc ="50" fc ="175"  gc ="0"  sc ="0" pc ="0" rt ="37" ci ="Research Wheelbarrow"/>
       <cell spawn_from="barrack" spawn_from2="barrack_c" al ="2" wc ="0"  fc ="75"  gc ="75"  sc ="0" pc ="0" rt="6"   ci ="Upgrade To Man-at-Arms"/>
-      <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="2" wc ="0"  fc ="15"  gc ="0"   sc ="0" pc ="0" rt ="26" ci ="Research Scale Barding Armor"/>
-      <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="2" wc ="0"  fc ="10"  gc ="0"   sc ="0" pc ="0" rt ="17" ci ="Research Padded Archer Armor"/>
-      <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="2" wc ="0"  fc ="15"  gc ="0"   sc ="0" pc ="0" rt ="23" ci ="Research Forging"/>
+      <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="2" wc ="0"  fc ="150"  gc ="0"   sc ="0" pc ="0" rt ="26" ci ="Research Scale Barding Armor"/>
+      <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="2" wc ="0"  fc ="100"  gc ="0"   sc ="0" pc ="0" rt ="17" ci ="Research Padded Archer Armor"/>
+      <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="2" wc ="0"  fc ="150"  gc ="0"   sc ="0" pc ="0" rt ="23" ci ="Research Forging"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="2" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="29" ci ="Research Scale Mail Armor"/>
     
-      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="2" wc ="50"  fc ="50" gc ="50" sc ="50" pc ="0" rt ="32" ci ="Advance to Castle Age"/>
+      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="2" wc ="0"  fc ="800" gc ="200" sc ="0" pc ="0" rt ="32" ci ="Advance to Castle Age"/>
     
       <!-- Castle Age -->
     
-      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="3" wc ="20" fc ="20" gc ="20" sc ="0" pc ="0" rt ="38" ci ="Research Hand Cart"/>
-      <cell spawn_from="barrack" spawn_from2="barrack_c" al ="3" wc ="0"  fc ="20" gc ="65" sc ="0" pc ="0" rt="7"   ci ="Upgrade To Long Swordsman"/>
-      <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="3" wc ="0"  fc ="25" gc ="15" sc ="0" pc ="0" rt ="27" ci ="Research Chain Barding Armor"/>
-      <cell spawn_from="archery_range" spawn_from2="archery_range_c" al ="3" wc ="0"  fc ="12"  gc ="7" sc ="0" pc ="0" rt ="1"  ci ="Upgrade To Crossbowman"/>
+      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="3" wc ="200" fc ="0" gc ="0" sc ="0" pc ="0" rt ="38" ci ="Research Hand Cart"/>
+      <cell spawn_from="barrack" spawn_from2="barrack_c" al ="3" wc ="0"  fc ="200" gc ="65" sc ="0" pc ="0" rt="7"   ci ="Upgrade To Long Swordsman"/>
+      <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="3" wc ="0"  fc ="250" gc ="150" sc ="0" pc ="0" rt ="27" ci ="Research Chain Barding Armor"/>
+      <cell spawn_from="archery_range" spawn_from2="archery_range_c" al ="3" wc ="0"  fc ="125"  gc ="75" sc ="0" pc ="0" rt ="1"  ci ="Upgrade To Crossbowman"/>
     
-      <cell spawn_from="barrack" spawn_from2="barrack_c" al ="3" wc ="0"  fc ="21" gc ="9"  sc ="0"  pc ="0"  rt="10" ci ="Upgrade To Pikeman"/>
-      <cell spawn_from="archery_range" spawn_from2="archery_range_c" al ="3" wc ="20" fc ="0"  gc ="10" sc ="0"  pc ="0"  rt ="3" ci ="Upgrade To Elite Skirmisher"/>
+      <cell spawn_from="barrack" spawn_from2="barrack_c" al ="3" wc ="0"  fc ="210" gc ="90"  sc ="0"  pc ="0"  rt="10" ci ="Upgrade To Pikeman"/>
+      <cell spawn_from="archery_range" spawn_from2="archery_range_c" al ="3" wc ="200" fc ="0"  gc ="100" sc ="0"  pc ="0"  rt ="3" ci ="Upgrade To Elite Skirmisher"/>
     
       <cell spawn_from="stable" spawn_from2="stable_c" al ="3" wc ="250" fc ="300" gc ="0" sc ="0" pc ="0" rt ="26" ci ="Research Bloodlines"/>
       <cell spawn_from="stable" spawn_from2="stable_c" al ="3" wc ="0" fc ="150" gc ="0" sc ="0" pc ="0" rt ="29"   ci ="Research Husbandry"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="2" wc ="0" fc ="100" gc ="50"  sc ="0" pc ="0" rt ="20" ci ="Research Fletching"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="3" wc ="0" fc ="150" gc ="150" sc ="0" pc ="0" rt ="18" ci ="Research Leather Archer Armor"/>
     
-      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="3" wc ="50" fc ="50" gc ="50" sc ="50" pc ="0" rt="33" ci ="Advance to Imperial Age"/>
+      <cell spawn_from="town_center" spawn_from2="town_center_c" al ="3" wc ="0" fc ="1000" gc ="800" sc ="0" pc ="0" rt="33" ci ="Advance to Imperial Age"/>
     
       <!-- Imperial Age -->
     
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="4" wc ="0" fc ="300" gc ="200" sc ="0" pc ="0" rt ="22" ci ="Research Bracer"/>
-      <cell spawn_from="barrack" spawn_from2="barrack_c" al ="4" wc ="0" fc ="30"  gc ="10"  sc ="0" pc ="0" rt="8"   ci ="Upgrade To Two-Handed Swordsman"/>
+      <cell spawn_from="barrack" spawn_from2="barrack_c" al ="4" wc ="0" fc ="300"  gc ="100"  sc ="0" pc ="0" rt="8"   ci ="Upgrade To Two-Handed Swordsman"/>
       <cell spawn_from="stable" spawn_from2="stable_c" al ="4" wc ="0" fc ="350" gc ="300" sc ="0" pc ="0" rt ="27" ci ="Upgrade To Cavalier"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="3" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="30" ci ="Research Chain Mail Armor"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="4" wc ="0" fc ="275" gc ="225" sc ="0" pc ="0" rt ="25" ci ="Research Blast Furnace"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="4" wc ="0" fc ="350" gc ="200" sc ="0" pc ="0" rt ="28" ci ="Research Plate Barding Armor"/>
-      <cell spawn_from="stable" spawn_from2="stable_c" al ="4" wc ="2" fc ="0"   gc ="100" sc ="0" pc ="0" rt ="28" ci ="Upgrade To Paladin"/>
-      <cell spawn_from="barrack" spawn_from2="barrack_c" al ="4" wc ="0" fc ="75"  gc ="35"  sc ="0" pc ="0" rt="9"   ci ="Upgrade To Champion"/>
+      <cell spawn_from="stable" spawn_from2="stable_c" al ="4" wc ="2" fc ="1300"   gc ="750" sc ="0" pc ="0" rt ="28" ci ="Upgrade To Paladin"/>
+      <cell spawn_from="barrack" spawn_from2="barrack_c" al ="4" wc ="0" fc ="750"  gc ="350"  sc ="0" pc ="0" rt="9"   ci ="Upgrade To Champion"/>
       <cell spawn_from="archery_range" spawn_from2="archery_range_c" al ="4" wc ="0" fc ="350" gc ="300" sc ="0" pc ="0" rt ="2"  ci ="Upgrade To Arbalest"/>
       <cell spawn_from="archery_range" spawn_from2="archery_range_c" al ="4" wc ="0" fc ="900" gc ="500" sc ="0" pc ="0" rt ="4"  ci ="Upgrade To Elite Cavalry Archer"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="4" wc ="0" fc ="250" gc ="250" sc ="0" pc ="0" rt ="19" ci ="Research Ring Archer Armor"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="3" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="21" ci ="Research Bodkin Arrow"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="3" wc ="0" fc ="220" gc ="120" sc ="0" pc ="0" rt ="24" ci ="Research Iron Casting"/>
       <cell spawn_from="blacksmith" spawn_from2="blacksmith_c" al ="4" wc ="0" fc ="300" gc ="150" sc ="0" pc ="0" rt ="31" ci ="Research Plate Mail Armor"/>
-      <cell spawn_from="archery_range" spawn_from2="archery_range_c" al ="3" wc ="20" fc ="30" gc ="0"   sc ="0" pc ="0" rt ="5"  ci ="Research Thumb Ring"/>
+      <cell spawn_from="archery_range" spawn_from2="archery_range_c" al ="3" wc ="250" fc ="300" gc ="0"   sc ="0" pc ="0" rt ="5"  ci ="Research Thumb Ring"/>
   </Research>
 </HudActionPanelData>
