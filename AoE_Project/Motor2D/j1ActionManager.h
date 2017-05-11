@@ -126,10 +126,11 @@ private:
 
 	//Timer that counts the time that the action has been paused
 	j1Timer pause_timer;
-	uint	paused_time;
+	uint	paused_time = 0;
 	bool	paused = false;
 
 public:
+
 	//Updates every list
 	void Update();
 
@@ -153,6 +154,8 @@ public:
 
 	void Pause();
 	void Restart();
+
+	uint GetPausedTime()const;
 
 private:
 
@@ -202,8 +205,8 @@ public:
 	SaveResourcesVillagerAction*SaveResourcesAction(Villager* actor, Building* target);
 
 	// Building Functions
-	SpawnUnitAction*			SpawnAction(ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0);
-	ResearchTecAction*			ResearchAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy);
+	SpawnUnitAction*			SpawnAction(ActionWorker* worker, ProductiveBuilding* actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time = 0);
+	ResearchTecAction*			ResearchAction(ActionWorker* worker, RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy);
 
 	//Passive actions------------------
 	//Scann for units

@@ -38,7 +38,7 @@ public:
 	void				SetType(SOUND_TYPE type);
 	void				SetSound(const int value,const char* string);
 	//Get Methods -----------
-	Sound*					GetAudio(int index);
+	Sound*				GetAudio(int index);
 	int					GetSoundSize();
 	SOUND_TYPE			GetType()const;
 

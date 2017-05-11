@@ -183,18 +183,18 @@ SaveResourcesVillagerAction * j1ActionManager::SaveResourcesAction(Villager * ac
 	return action;
 }
 
-SpawnUnitAction* j1ActionManager::SpawnAction(ProductiveBuilding * actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time)
+SpawnUnitAction* j1ActionManager::SpawnAction(ActionWorker* worker, ProductiveBuilding * actor, UNIT_TYPE type, DIPLOMACY diplomacy, uint runned_time)
 {
-	SpawnUnitAction* action = new SpawnUnitAction(actor, type, diplomacy, runned_time);
+	SpawnUnitAction* action = new SpawnUnitAction(worker, actor, type, diplomacy, runned_time);
 
 	all_actions.push_back(action);
 
 	return action;
 }
 
-ResearchTecAction * j1ActionManager::ResearchAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy)
+ResearchTecAction * j1ActionManager::ResearchAction(ActionWorker* worker, RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy)
 {
-	ResearchTecAction* action = new ResearchTecAction(type, r_time, diplomacy);
+	ResearchTecAction* action = new ResearchTecAction(worker, type, r_time, diplomacy);
 
 	all_actions.push_back(action);
 	return action;
@@ -500,7 +500,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		//Load unit to spawn diplomacy
 		DIPLOMACY diplomacy = (DIPLOMACY)node.attribute("unit_diplomacy").as_int();
 		//Build spawn action from unit type, diplomacy and timer runned
-		actor->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)actor, unit_type, diplomacy, node.attribute("time").as_uint()));
+		actor->AddAction(App->action_manager->SpawnAction(actor->GetWorker(), (ProductiveBuilding*)actor, unit_type, diplomacy, node.attribute("time").as_uint()));
 		break;
 	}
 	case TASK_B_RESEARCH:
@@ -512,7 +512,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		//Load research time
 		uint time = MAX(node.attribute("research_time").as_int() - node.attribute("res_cur_time").as_int(), 0);
 		//Build research with the loaded characteristics
-		actor->AddAction(App->action_manager->ResearchAction(research_type, time, research_diplomacy), channel);
+		actor->AddAction(App->action_manager->ResearchAction(actor->GetWorker(), research_type, time, research_diplomacy), channel);
 		break;
 	}
 	case TASK_NONE:
@@ -543,6 +543,9 @@ ActionWorker::~ActionWorker()
 void ActionWorker::Update()
 {
 	//Don't update if the worker is paused
+	if (App->paused && !paused)Pause();
+	if (!App->paused && paused)Restart();
+
 	if (paused)
 		return;
 
@@ -561,7 +564,7 @@ void ActionWorker::Update()
 		DoWork(&secondary_action_queue, &current_secondary_action);
 
 		//Make the passive_action logic only work on a refresh rate
-		if (refresh_timer.Read() + paused_time > refresh_rate)
+		if (refresh_timer.Read() > refresh_rate)
 		{
 			DoWork(&passive_action_queue, &current_passive_action);
 			refresh_timer.Start();
@@ -813,11 +816,17 @@ std::list<Action*>* ActionWorker::GetActionListPointer(TASK_CHANNELS channel)
 void ActionWorker::Pause()
 {
 	pause_timer.Start();
+	paused_time = 0;
 	paused = true;
 }
 void ActionWorker::Restart()
 {
 	paused_time += pause_timer.Read();
 	paused = false;
+}
+
+uint ActionWorker::GetPausedTime() const
+{
+	return paused_time;
 }
 ///----------------------------------------------

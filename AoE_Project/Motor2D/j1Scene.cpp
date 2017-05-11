@@ -40,7 +40,7 @@ void j1Scene::Init()
 bool j1Scene::Enable()
 {
 	active = true;
-	//App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
+	App->sound->PlayMusicAudio(SOUND_TYPE::INGAME_SONG);
 	return true;
 }
 

@@ -91,7 +91,7 @@ class SpawnUnitAction : public Action
 {
 public:
 
-	SpawnUnitAction(ProductiveBuilding* actor, UNIT_TYPE new_type, DIPLOMACY diplomacy, uint runned_time = 0) : Action(actor, TASK_B_SPAWN_UNITS), u_type(new_type), diplomacy(diplomacy)
+	SpawnUnitAction(ActionWorker* worker, ProductiveBuilding* actor, UNIT_TYPE new_type, DIPLOMACY diplomacy, uint runned_time = 0) : Action(actor, TASK_B_SPAWN_UNITS), u_type(new_type), diplomacy(diplomacy), worker(worker)
 	{
 		new_unit = App->entities_manager->GenerateUnit(u_type, diplomacy, false);
 		if (runned_time > new_unit->GetTrainTime())time = 0;
@@ -115,7 +115,7 @@ public:
 
 	bool Execute()
 	{
-		if (timer.Read() >= time)
+		if (timer.Read() >= (time + (worker->GetPausedTime() * 2)))
 		{
 			iPoint spawn_point = ((ProductiveBuilding*)actor)->GetSpawnPoint();
 
@@ -172,18 +172,20 @@ public:
 
 private:
 
-	Unit*		new_unit = nullptr;
-	uint		time = 0;
-	j1Timer		timer;
-	UNIT_TYPE	u_type = UNIT_TYPE::NO_UNIT;
-	DIPLOMACY	diplomacy = DIPLOMACY::NEUTRAL;
+	ActionWorker*	worker = nullptr;
+	Unit*			new_unit = nullptr;
+	uint			time = 0;
+	j1Timer			timer;
+	UNIT_TYPE		u_type = UNIT_TYPE::NO_UNIT;
+	DIPLOMACY		diplomacy = DIPLOMACY::NEUTRAL;
 
 };
 
 class ResearchTecAction : public Action
 {
 public:
-	ResearchTecAction(RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy = ALLY) : Action(nullptr, TASK_B_RESEARCH), r_type(type), diplomacy(diplomacy), research_time(r_time) {};
+
+	ResearchTecAction(ActionWorker*	worker, RESEARCH_TECH type, uint r_time, DIPLOMACY diplomacy = ALLY) : Action(nullptr, TASK_B_RESEARCH), r_type(type), diplomacy(diplomacy), research_time(r_time), worker(worker){};
 	~ResearchTecAction() {};
 
 	bool Activation()
@@ -194,7 +196,7 @@ public:
 
 	bool Execute()
 	{
-		if (research_time <= timer.Read())
+		if ((research_time + (worker->GetPausedTime() * 2)) <= timer.Read())
 		{
 			App->entities_manager->UpgradeEntity(r_type, diplomacy);
 			if (diplomacy == ALLY)
@@ -233,6 +235,7 @@ public:
 
 private:
 
+	ActionWorker*	worker = nullptr;
 	uint			research_time = 0;
 	j1Timer			timer;
 	RESEARCH_TECH	r_type = RESEARCH_TECH::NO_TECH;

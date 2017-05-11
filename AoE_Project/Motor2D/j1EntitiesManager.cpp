@@ -139,6 +139,8 @@ void j1EntitiesManager::Disable()
 	{
 		RELEASE(arrows._Ptr->_Myval);
 	}
+	all_arrows.clear();
+
 	//Clean Up Units List
 	std::list<Unit*>::iterator units_item = units.begin();
 	while (units_item != units.end())
@@ -218,6 +220,8 @@ void j1EntitiesManager::Reset()
 	{
 		RELEASE(arrows._Ptr->_Myval);
 	}
+	all_arrows.clear();
+
 	//Clean Up Units List
 	std::list<Unit*>::iterator units_item = units.begin();
 	while (units_item != units.end())
@@ -306,22 +310,23 @@ bool j1EntitiesManager::Start()
 
 bool j1EntitiesManager::Update(float dt)
 {
-	if (App->paused)return true;
-
 	bool ret = true;
-
-	//Update alive arrows
-	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
-	for (; arrows != all_arrows.end(); arrows++)
+	
+	if (!App->paused)
 	{
-
-		if (arrows._Ptr->_Myval->Update())
+		//Update alive arrows
+		std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
+		for (; arrows != all_arrows.end(); arrows++)
 		{
-			RemoveArrow(arrows._Ptr->_Myval);
-			RELEASE(arrows._Ptr->_Myval);
+
+			if (arrows._Ptr->_Myval->Update())
+			{
+				RemoveArrow(arrows._Ptr->_Myval);
+				RELEASE(arrows._Ptr->_Myval);
+			}
 		}
 	}
-
+	 
 	//Update all the units
 	std::list<Unit*>::const_iterator item = units.begin();
 	while (item != units.end())

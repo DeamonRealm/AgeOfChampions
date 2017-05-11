@@ -527,7 +527,7 @@ void j1AI::UpdateResearch()
 				if (CheckResources(research_queue[next_research].wood_cost, research_queue[next_research].food_cost, research_queue[next_research].gold_cost,
 					research_queue[next_research].stone_cost, 0))
 				{
-					ai_research_worker->AddAction(App->action_manager->ResearchAction(research_queue[next_research].r_type, AI_RESEARCH_DURATION, ENEMY));
+					ai_research_worker->AddAction(App->action_manager->ResearchAction(ai_research_worker,research_queue[next_research].r_type, AI_RESEARCH_DURATION, ENEMY));
 				}
 			}
 			else
@@ -809,7 +809,7 @@ bool j1AI::GenerateUnit(UNIT_TYPE type)
 		if (productive_building != nullptr)
 		{
 			CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost, UNIT);
-			productive_building->AddAction(App->action_manager->SpawnAction((ProductiveBuilding*)productive_building, units_production[type].u_type, ENEMY));
+			productive_building->AddAction(App->action_manager->SpawnAction(productive_building->GetWorker(),(ProductiveBuilding*)productive_building, units_production[type].u_type, ENEMY));
 		}
 		else GenerateBuilding(units_production[type].spawn_from);
 
@@ -1128,7 +1128,7 @@ bool SpawnUnitCommand::Execute()
 	//If AI already has max units end the spawn
 	if (App->AI->population >= MAX_POPULATION) return true;
 
-	generator->GetWorker()->AddAction(new SpawnUnitAction(generator, type, ENEMY));
+	generator->GetWorker()->AddAction(new SpawnUnitAction(generator->GetWorker(),generator, type, ENEMY));
 
 	/*Unit* new_unit = App->entities_manager->GenerateUnit(type, ENEMY);
 	new_unit->AddAction(App->action_manager->ScanAction(new_unit), TASK_CHANNELS::PASSIVE);
