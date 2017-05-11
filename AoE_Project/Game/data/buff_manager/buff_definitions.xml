@@ -44,7 +44,7 @@
   <buff
     buff_type ="timed"
     attribute_type="super_attack"
-    buff_duration ="5000"
+    buff_duration ="12000"
 
     actor="1"
     value="7"
@@ -115,7 +115,7 @@
   <buff
   buff_type ="timed"
   attribute_type="taunt"
-  buff_duration ="10000"
+  buff_duration ="12000"
   actor="0"
   value="0"
   />
