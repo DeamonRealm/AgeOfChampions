@@ -789,7 +789,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       <sprite n="aldeano_idle_ax/015_mVillager_idle_ax.bmp" x="257" y="549" w="25" h="44" pX="0.6" pY="0.840909"/>
       <sprite n="aldeano_idle_ax/016_mVillager_idle_ax.bmp" x="284" y="549" w="27" h="45" pX="0.518519" pY="0.844444"/>
       <sprite n="aldeano_idle_ax/017_mVillager_idle_ax.bmp" x="313" y="549" w="27" h="46" pX="0.481481" pY="0.847826"/>
-      <sprite n="aldeano_idle_ax/018_mVillager_idle_ax.bmp" x="342" y="549" w="26" h="46" pX="0.5" pY="8.69565"/>
+      <sprite n="aldeano_idle_ax/018_mVillager_idle_ax.bmp" x="342" y="549" w="26" h="46" pX="0.5" pY="0.869565"/>
       <sprite n="aldeano_idle_ax/019_mVillager_idle_ax.bmp" x="370" y="549" w="25" h="46" pX="0.52" pY="0.869565"/>
       <sprite n="aldeano_idle_ax/020_mVillager_idle_ax.bmp" x="397" y="549" w="25" h="46" pX="0.52" pY="0.869565"/>
       <sprite n="aldeano_idle_ax/021_mVillager_idle_ax.bmp" x="424" y="549" w="25" h="45" pX="0.56" pY="0.866667"/>
