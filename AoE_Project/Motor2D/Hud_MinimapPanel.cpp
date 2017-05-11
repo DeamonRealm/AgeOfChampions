@@ -6,6 +6,7 @@
 #include "j1Render.h"
 #include "j1Player.h"
 #include "j1EntitiesManager.h"
+#include "j1FogOfWar.h"
 
 #include "Hud_SelectionPanel.h"
 
@@ -98,6 +99,7 @@ bool Minimap_Panel::PreUpdate()
 				units_to_print.push_back(cells[120 * pos.y + pos.x]);
 				break;
 			case ENEMY:
+				if (App->fog_of_war->GetFogID(pos.x, pos.y) != NO_FOG) break;
 				cells[120 * pos.y + pos.x].cell_color = { 255,20,20,255 };
 				units_to_print.push_back(cells[120 * pos.y + pos.x]);
 				break;

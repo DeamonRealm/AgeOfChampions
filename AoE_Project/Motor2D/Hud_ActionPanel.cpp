@@ -875,6 +875,8 @@ bool HeroPanel::CancelAction()
 		skill_tree->DesactivateChids();
 	}
 	// Cancel Skill;
+	if (activate_skill == 1) ((Champion*)entitis_panel)->Cancel_Ability_lvl_2();
+	else ((Champion*)entitis_panel)->Cancel_Ability_lvl_3();
 	activate_skill = -1;
 
 	return false;

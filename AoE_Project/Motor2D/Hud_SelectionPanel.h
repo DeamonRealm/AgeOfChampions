@@ -58,7 +58,7 @@ private:
 	std::string		profile_text;
 
 	Entity*			element = nullptr;
-	ENTITY_TYPE		e_type;
+	ENTITY_TYPE		e_type = (ENTITY_TYPE)0;
 	SDL_Rect		background = {0,0,0,0};
 
 	//General
@@ -183,7 +183,7 @@ private:
 	bool			double_clickon = false;
 
 	bool			expand = false;
-	SDL_Rect		selection_rect;
+	SDL_Rect		selection_rect = {0,0,0,0};
 	const SDL_Rect	map_viewport;
 
 
@@ -201,10 +201,10 @@ private:
 	j1Timer			refresh_upperentity;
 
 	// Selected Types;
-	DIPLOMACY		selected_diplomacy;
-	ENTITY_TYPE		selected_entity_type;
-	UNIT_TYPE		selected_unit_type;
-	BUILDING_TYPE   selected_building_type;
+	DIPLOMACY		selected_diplomacy = (DIPLOMACY)0;
+	ENTITY_TYPE		selected_entity_type = (ENTITY_TYPE)0;
+	UNIT_TYPE		selected_unit_type = (UNIT_TYPE)0;
+	BUILDING_TYPE   selected_building_type = (BUILDING_TYPE)0;
 	bool			champions_selected = false;
 
 	//Action inputs

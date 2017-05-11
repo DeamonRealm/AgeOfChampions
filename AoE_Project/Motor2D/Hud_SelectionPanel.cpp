@@ -71,7 +71,11 @@ Entity_Profile::~Entity_Profile()
 //Functionality ==================================================================
 void Entity_Profile::SetEntity(Entity * entity_selected)
 {
-	if (entity_selected == nullptr) return;
+	if (entity_selected == nullptr)
+	{
+		entity_selected = nullptr;
+		return;
+	}
 	element = entity_selected;
 	background = { 650,371,40,40 };
 
@@ -1135,8 +1139,12 @@ void Selection_Panel::CheckSelectedType()
 	
 	UNIT_TYPE curr_type = NO_UNIT;
 	champions_selected = false;
+	if (selected_elements.size() > 0)
+	{
+		selected_unit_type = ((Unit*)selected_elements.begin()._Ptr->_Myval)->GetUnitType();
+	}
+	else ResetSelectedType();
 	std::list<Entity*>::iterator it = selected_elements.begin();
-	selected_unit_type = ((Unit*)it._Ptr->_Myval)->GetUnitType();
 	while(it != selected_elements.end())
 	{
 		curr_type = ((Unit*)it._Ptr->_Myval)->GetUnitType();
