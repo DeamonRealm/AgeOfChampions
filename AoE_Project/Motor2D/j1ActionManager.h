@@ -109,7 +109,6 @@ public:
 	~ActionWorker();
 
 private:
-	bool paused = false;
 
 	//Diferent action list
 	std::list<Action*> primary_action_queue;
@@ -124,6 +123,11 @@ private:
 	//Refresh rate in ms		Default = 0
 	j1Timer refresh_timer;
 	uint	refresh_rate = 0;
+
+	//Timer that counts the time that the action has been paused
+	j1Timer pause_timer;
+	uint	paused_time;
+	bool	paused = false;
 
 public:
 	//Updates every list

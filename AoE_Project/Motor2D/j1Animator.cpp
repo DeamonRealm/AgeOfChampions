@@ -119,6 +119,8 @@ const Sprite* Animation::GetCurrentSprite()
 {
 	if (current_frame == -1)return &sprites[sprites.size() - 1];
 
+	if (App->paused)return &sprites[(int)current_frame];
+
 	current_frame = (float)floor(timer.Read() / speed);
 	if (current_frame >= sprites.size())
 	{

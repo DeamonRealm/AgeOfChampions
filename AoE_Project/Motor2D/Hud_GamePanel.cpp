@@ -231,12 +231,15 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			lose = false;
 			win = false;
 
-			if (exit_menu_image->GetActiveState()) {
+			if (exit_menu_image->GetActiveState())
+			{
+				App->paused = false;
 				exit_menu_image->Desactivate();
 				exit_menu_image->DesactivateChids();
 			}
 			else
 			{
+				App->paused = true;
 				exit_menu_image->Activate();
 				exit_menu_image->ActivateChilds();
 			}			
@@ -250,6 +253,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 	{
 		if (ui_element == exit_to_main_menu)
 		{
+			App->paused = false;
 			App->scene->Disable();
 			App->player->Disable();
 			App->AI->Disable();
@@ -263,6 +267,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		}
 		else if (ui_element == cancel_game_menu)
 		{
+			App->paused = false;
 			exit_menu_image->Desactivate();
 			exit_menu_image->DesactivateChids();
 		}
@@ -274,6 +279,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		{
 			if (App->fs->Exists("save/party_file.xml"))
 			{
+				App->paused = false;
 				App->LoadGame("party_file.xml",false);
 			}
 			else LOG("No party Saved");
@@ -538,11 +544,13 @@ void Game_Panel::ActivatePauseMenu()
 {
 	if (exit_menu_image->GetActiveState())
 	{
+		App->paused = false;
 		exit_menu_image->Desactivate();
 		exit_menu_image->DesactivateChids();
 	}
 	else
 	{
+		App->paused = true;
 		exit_menu_image->Activate();
 		exit_menu_image->ActivateChilds();
 	}

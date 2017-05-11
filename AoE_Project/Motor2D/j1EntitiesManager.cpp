@@ -306,9 +306,11 @@ bool j1EntitiesManager::Start()
 
 bool j1EntitiesManager::Update(float dt)
 {
+	if (App->paused)return true;
+
 	bool ret = true;
 
-	//Draw alive arrows
+	//Update alive arrows
 	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
 	for (; arrows != all_arrows.end(); arrows++)
 	{
@@ -318,12 +320,6 @@ bool j1EntitiesManager::Update(float dt)
 			RemoveArrow(arrows._Ptr->_Myval);
 			RELEASE(arrows._Ptr->_Myval);
 		}
-	}
-	//Update alive arrows
-	arrows = all_arrows.begin();
-	for (; arrows != all_arrows.end(); arrows++)
-	{
-		arrows._Ptr->_Myval->Draw();
 	}
 
 	//Update all the units
@@ -396,8 +392,14 @@ bool j1EntitiesManager::Update(float dt)
 bool j1EntitiesManager::Draw()
 {
 	bool ret = true;
-	//Draw all arrows
-	
+
+	//Draw alive arrows
+	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
+	for (; arrows != all_arrows.end(); arrows++)
+	{
+		arrows._Ptr->_Myval->Draw();
+	}
+
 	//Draw all units
 	std::vector<Unit*> units_vec;
 	units_quadtree.CollectCandidates(units_vec, App->render->camera_viewport);

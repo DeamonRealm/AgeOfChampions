@@ -121,9 +121,9 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate()
 {
-
 	App->gui->CalculateUpperElement(game_hud);
-
+	if (App->paused)return true;
+	
 	int x, y;
 	App->input->GetMousePosition(x, y);
 

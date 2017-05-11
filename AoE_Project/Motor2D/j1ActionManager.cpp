@@ -561,7 +561,7 @@ void ActionWorker::Update()
 		DoWork(&secondary_action_queue, &current_secondary_action);
 
 		//Make the passive_action logic only work on a refresh rate
-		if (refresh_timer.Read() > refresh_rate)
+		if (refresh_timer.Read() + paused_time > refresh_rate)
 		{
 			DoWork(&passive_action_queue, &current_passive_action);
 			refresh_timer.Start();
@@ -812,10 +812,12 @@ std::list<Action*>* ActionWorker::GetActionListPointer(TASK_CHANNELS channel)
 
 void ActionWorker::Pause()
 {
+	pause_timer.Start();
 	paused = true;
 }
 void ActionWorker::Restart()
 {
+	paused_time += pause_timer.Read();
 	paused = false;
 }
 ///----------------------------------------------
