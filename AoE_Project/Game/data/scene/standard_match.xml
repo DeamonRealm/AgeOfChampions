@@ -123,372 +123,1094 @@
 		  </units>
 	  </definitions>
     <resources>
-     	<res pos_x="-1152" pos_y="4200" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1104" pos_y="4176" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1152" pos_y="4152" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1104" pos_y="4128" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1152" pos_y="4104" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1248" pos_y="4104" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1200" pos_y="4128" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1248" pos_y="4152" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1296" pos_y="4224" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1200" pos_y="4176" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1248" pos_y="4200" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1488" pos_y="4176" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1440" pos_y="4200" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1488" pos_y="4224" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1440" pos_y="4248" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1392" pos_y="4224" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1392" pos_y="4272" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1344" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1440" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1488" pos_y="4272" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-960" pos_y="4296" res_type="4" life="200" selected="false" />
-			<res pos_x="-912" pos_y="4320" res_type="4" life="200" selected="false" />
-			<res pos_x="-864" pos_y="4344" res_type="4" life="200" selected="false" />
-			<res pos_x="-1008" pos_y="4320" res_type="4" life="200" selected="false" />
-			<res pos_x="-960" pos_y="4344" res_type="4" life="200" selected="false" />
-			<res pos_x="-912" pos_y="4368" res_type="4" life="200" selected="false" />
-			<res pos_x="-96" pos_y="4296" res_type="7" life="400" selected="false" />
-			<res pos_x="-144" pos_y="4320" res_type="7" life="400" selected="false" />
-			<res pos_x="-192" pos_y="4344" res_type="7" life="400" selected="false" />
-			<res pos_x="-240" pos_y="4320" res_type="7" life="400" selected="false" />
-			<res pos_x="-192" pos_y="4296" res_type="7" life="400" selected="false" />
-			<res pos_x="-144" pos_y="4272" res_type="7" life="400" selected="false" />
-			<res pos_x="-528" pos_y="4416" res_type="5" life="400" selected="false" />
-			<res pos_x="-576" pos_y="4440" res_type="5" life="400" selected="false" />
-			<res pos_x="-528" pos_y="4464" res_type="5" life="400" selected="false" />
-			<res pos_x="-480" pos_y="4440" res_type="5" life="400" selected="false" />
-			<res pos_x="-624" pos_y="4464" res_type="5" life="400" selected="false" />
-			<res pos_x="-432" pos_y="4464" res_type="5" life="400" selected="false" />
-			<res pos_x="-576" pos_y="4488" res_type="5" life="400" selected="false" />
-			<res pos_x="-480" pos_y="4488" res_type="5" life="400" selected="false" />
-			<res pos_x="-1440" pos_y="4104" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1488" pos_y="4128" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1536" pos_y="4104" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1632" pos_y="4056" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1584" pos_y="4080" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1488" pos_y="4080" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1536" pos_y="4056" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1392" pos_y="4080" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1440" pos_y="4152" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1392" pos_y="4128" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1392" pos_y="4176" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1344" pos_y="4104" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1296" pos_y="4080" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1296" pos_y="4128" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1344" pos_y="4152" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1296" pos_y="4176" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1344" pos_y="4200" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="1776" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="480" pos_y="1800" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="1824" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="1800" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="336" pos_y="1824" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="1848" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="1872" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="1896" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="336" pos_y="1872" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="288" pos_y="1896" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="336" pos_y="1920" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="288" pos_y="1944" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="240" pos_y="1920" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="336" pos_y="1968" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="1944" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="1968" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="1992" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="336" pos_y="2016" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="288" pos_y="1992" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="576" pos_y="2040" res_type="4" life="200" selected="false" />
-			<res pos_x="624" pos_y="2064" res_type="4" life="200" selected="false" />
-			<res pos_x="672" pos_y="2088" res_type="4" life="200" selected="false" />
-			<res pos_x="624" pos_y="2112" res_type="4" life="200" selected="false" />
-			<res pos_x="576" pos_y="2088" res_type="4" life="200" selected="false" />
-			<res pos_x="528" pos_y="2064" res_type="4" life="200" selected="false" />
-			<res pos_x="912" pos_y="2112" res_type="7" life="400" selected="false" />
-			<res pos_x="864" pos_y="2136" res_type="7" life="400" selected="false" />
-			<res pos_x="912" pos_y="2160" res_type="7" life="400" selected="false" />
-			<res pos_x="960" pos_y="2136" res_type="7" life="400" selected="false" />
-			<res pos_x="1008" pos_y="2160" res_type="7" life="400" selected="false" />
-			<res pos_x="1392" pos_y="2112" res_type="7" life="400" selected="false" />
-			<res pos_x="1440" pos_y="2088" res_type="7" life="400" selected="false" />
-			<res pos_x="1488" pos_y="2064" res_type="7" life="400" selected="false" />
-			<res pos_x="1680" pos_y="1920" res_type="5" life="400" selected="false" />
-			<res pos_x="1728" pos_y="1944" res_type="5" life="400" selected="false" />
-			<res pos_x="1728" pos_y="1896" res_type="5" life="400" selected="false" />
-			<res pos_x="1680" pos_y="1872" res_type="5" life="400" selected="false" />
-			<res pos_x="1728" pos_y="1848" res_type="5" life="400" selected="false" />
-			<res pos_x="1680" pos_y="1824" res_type="5" life="400" selected="false" />
-			<res pos_x="1200" pos_y="4752" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1152" pos_y="4728" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1104" pos_y="4704" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1056" pos_y="4728" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1008" pos_y="4704" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="960" pos_y="4728" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1008" pos_y="4752" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1104" pos_y="4752" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1056" pos_y="4776" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="960" pos_y="4776" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="912" pos_y="4752" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="864" pos_y="4776" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="768" pos_y="4776" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="816" pos_y="4800" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="912" pos_y="4800" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="864" pos_y="4824" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="768" pos_y="4824" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="720" pos_y="4800" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="672" pos_y="4824" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="720" pos_y="4848" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="624" pos_y="4800" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="576" pos_y="4824" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="624" pos_y="4848" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="912" pos_y="4848" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="960" pos_y="4824" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1056" pos_y="4824" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1104" pos_y="4848" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1104" pos_y="4800" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1008" pos_y="4800" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1008" pos_y="4848" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1056" pos_y="4872" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="960" pos_y="4872" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="912" pos_y="4896" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="864" pos_y="4872" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="816" pos_y="4848" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="768" pos_y="4872" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="816" pos_y="4896" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="768" pos_y="4920" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="720" pos_y="4896" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="672" pos_y="4920" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="576" pos_y="4920" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="624" pos_y="4944" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="528" pos_y="4944" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="576" pos_y="4968" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="480" pos_y="4968" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="528" pos_y="4992" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="624" pos_y="4992" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="672" pos_y="4968" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="4944" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="4968" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="4992" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="5016" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="5040" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="480" pos_y="5016" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="528" pos_y="5040" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="480" pos_y="5064" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="528" pos_y="5088" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="624" pos_y="5040" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="576" pos_y="5064" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="672" pos_y="5064" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="624" pos_y="5088" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="720" pos_y="5040" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="768" pos_y="5064" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="720" pos_y="5088" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="672" pos_y="5112" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="624" pos_y="5136" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="576" pos_y="5112" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="528" pos_y="5136" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="480" pos_y="5112" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="5088" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="5064" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="5112" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="5136" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="5160" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="432" pos_y="5184" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="480" pos_y="5160" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1296" pos_y="4944" res_type="4" life="200" selected="false" />
-			<res pos_x="1344" pos_y="4968" res_type="4" life="200" selected="false" />
-			<res pos_x="1296" pos_y="4992" res_type="4" life="200" selected="false" />
-			<res pos_x="1248" pos_y="5016" res_type="4" life="200" selected="false" />
-			<res pos_x="1200" pos_y="5040" res_type="4" life="200" selected="false" />
-			<res pos_x="1248" pos_y="5064" res_type="4" life="200" selected="false" />
-			<res pos_x="1296" pos_y="5040" res_type="4" life="200" selected="false" />
-			<res pos_x="1344" pos_y="5016" res_type="4" life="200" selected="false" />
-			<res pos_x="0" pos_y="5400" res_type="7" life="400" selected="false" />
-			<res pos_x="48" pos_y="5424" res_type="7" life="400" selected="false" />
-			<res pos_x="96" pos_y="5448" res_type="7" life="400" selected="false" />
-			<res pos_x="144" pos_y="5424" res_type="7" life="400" selected="false" />
-			<res pos_x="192" pos_y="5400" res_type="7" life="400" selected="false" />
-			<res pos_x="96" pos_y="5400" res_type="7" life="400" selected="false" />
-			<res pos_x="144" pos_y="5376" res_type="7" life="400" selected="false" />
-			<res pos_x="-48" pos_y="5424" res_type="7" life="400" selected="false" />
-			<res pos_x="816" pos_y="4416" res_type="5" life="400" selected="false" />
-			<res pos_x="864" pos_y="4440" res_type="5" life="400" selected="false" />
-			<res pos_x="912" pos_y="4464" res_type="5" life="400" selected="false" />
-			<res pos_x="864" pos_y="4488" res_type="5" life="400" selected="false" />
-			<res pos_x="816" pos_y="4464" res_type="5" life="400" selected="false" />
-			<res pos_x="768" pos_y="4488" res_type="5" life="400" selected="false" />
-			<res pos_x="2256" pos_y="4320" res_type="7" life="400" selected="false" />
-			<res pos_x="2304" pos_y="4296" res_type="7" life="400" selected="false" />
-			<res pos_x="2352" pos_y="4320" res_type="7" life="400" selected="false" />
-			<res pos_x="2400" pos_y="4296" res_type="7" life="400" selected="false" />
-			<res pos_x="2448" pos_y="4272" res_type="7" life="400" selected="false" />
-			<res pos_x="2304" pos_y="4344" res_type="7" life="400" selected="false" />
-			<res pos_x="1680" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1728" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1776" pos_y="4272" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1824" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1776" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1872" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1920" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="2016" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1968" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1968" pos_y="4272" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1632" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1584" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1536" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1488" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1584" pos_y="4272" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1536" pos_y="4344" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1584" pos_y="4368" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1536" pos_y="4392" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1488" pos_y="4368" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1440" pos_y="4392" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1488" pos_y="4416" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1440" pos_y="4440" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1392" pos_y="4416" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1728" pos_y="4392" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1680" pos_y="4416" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1632" pos_y="4392" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1584" pos_y="4416" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1536" pos_y="4440" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1584" pos_y="4464" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1632" pos_y="4440" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1776" pos_y="4704" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1776" pos_y="4752" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1824" pos_y="4728" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1824" pos_y="4680" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1920" pos_y="4680" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="2016" pos_y="4680" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1968" pos_y="4704" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1872" pos_y="4704" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1920" pos_y="4728" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1872" pos_y="4752" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1776" pos_y="4800" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1824" pos_y="4776" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="192" pos_y="4344" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="240" pos_y="4368" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="336" pos_y="4368" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="288" pos_y="4344" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="384" pos_y="4392" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="336" pos_y="4416" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="288" pos_y="4392" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="240" pos_y="4416" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="144" pos_y="4416" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="192" pos_y="4440" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="96" pos_y="4440" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="144" pos_y="4464" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="192" pos_y="4488" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="240" pos_y="4512" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="144" pos_y="4512" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="96" pos_y="4488" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="48" pos_y="4512" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="144" pos_y="4560" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="192" pos_y="4536" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="192" pos_y="4584" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="144" pos_y="4608" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-48" pos_y="4752" res_type="4" life="200" selected="false" />
-			<res pos_x="0" pos_y="4776" res_type="4" life="200" selected="false" />
-			<res pos_x="-48" pos_y="4800" res_type="4" life="200" selected="false" />
-			<res pos_x="-96" pos_y="4824" res_type="4" life="200" selected="false" />
-			<res pos_x="-144" pos_y="4848" res_type="4" life="200" selected="false" />
-			<res pos_x="-192" pos_y="4824" res_type="4" life="200" selected="false" />
-			<res pos_x="-144" pos_y="4800" res_type="4" life="200" selected="false" />
-			<res pos_x="-96" pos_y="4776" res_type="4" life="200" selected="false" />
-			<res pos_x="-1392" pos_y="4608" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1344" pos_y="4632" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1296" pos_y="4608" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1248" pos_y="4632" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1152" pos_y="4632" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1200" pos_y="4656" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1248" pos_y="4680" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1440" pos_y="4632" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1488" pos_y="4608" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1536" pos_y="4632" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1584" pos_y="4608" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1632" pos_y="4632" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1680" pos_y="4608" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1584" pos_y="4656" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1200" pos_y="4704" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1296" pos_y="4704" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1248" pos_y="4728" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-1632" pos_y="4728" res_type="4" life="200" selected="false" />
-			<res pos_x="-1584" pos_y="4752" res_type="4" life="200" selected="false" />
-			<res pos_x="-1536" pos_y="4776" res_type="4" life="200" selected="false" />
-			<res pos_x="-1584" pos_y="4800" res_type="4" life="200" selected="false" />
-			<res pos_x="-1632" pos_y="4776" res_type="4" life="200" selected="false" />
-			<res pos_x="-2112" pos_y="4392" res_type="7" life="400" selected="false" />
-			<res pos_x="-2160" pos_y="4368" res_type="7" life="400" selected="false" />
-			<res pos_x="-2112" pos_y="4344" res_type="7" life="400" selected="false" />
-			<res pos_x="-2064" pos_y="4320" res_type="7" life="400" selected="false" />
-			<res pos_x="-2064" pos_y="4368" res_type="7" life="400" selected="false" />
-			<res pos_x="-2016" pos_y="4296" res_type="7" life="400" selected="false" />
-			<res pos_x="-2352" pos_y="4368" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2400" pos_y="4344" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2352" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2400" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2352" pos_y="4272" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2304" pos_y="4248" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2256" pos_y="4272" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2256" pos_y="4224" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2208" pos_y="4248" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2160" pos_y="4224" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2448" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2496" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2544" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2592" pos_y="4296" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2640" pos_y="4320" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2400" pos_y="4392" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2352" pos_y="4416" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2400" pos_y="4440" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2352" pos_y="4464" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2448" pos_y="4368" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2496" pos_y="4344" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-2496" pos_y="4392" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1440" pos_y="2136" res_type="7" life="400" selected="false" />
-			<res pos_x="1392" pos_y="2064" res_type="7" life="400" selected="false" />
-			<res pos_x="912" pos_y="2256" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="960" pos_y="2280" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1056" pos_y="2280" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1104" pos_y="2304" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1200" pos_y="2304" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1152" pos_y="2280" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1296" pos_y="2304" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1248" pos_y="2328" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1200" pos_y="2352" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1152" pos_y="2328" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1104" pos_y="2352" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1056" pos_y="2328" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="1008" pos_y="2352" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="912" pos_y="2304" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="816" pos_y="2304" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="864" pos_y="2328" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="720" pos_y="2304" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="768" pos_y="2280" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="720" pos_y="2256" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="0" pos_y="2280" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="0" pos_y="2328" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-48" pos_y="2304" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-48" pos_y="2352" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-144" pos_y="2352" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-96" pos_y="2376" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-48" pos_y="2400" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="0" pos_y="2424" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-48" pos_y="2448" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-96" pos_y="2424" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-144" pos_y="2448" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-96" pos_y="2472" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-48" pos_y="2496" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-144" pos_y="2544" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-96" pos_y="2520" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-48" pos_y="2544" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-96" pos_y="2568" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="-48" pos_y="2592" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="0" pos_y="2568" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="48" pos_y="2592" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="96" pos_y="2568" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="48" pos_y="2544" res_type="2" life="100" cortex="30" selected="false" />
-			<res pos_x="144" pos_y="2544" res_type="2" life="100" cortex="30" selected="false" />
-		</resources>
+      <res pos_x="-1152" pos_y="4200" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1104" pos_y="4176" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1152" pos_y="4152" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1104" pos_y="4128" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1152" pos_y="4104" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="4104" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="4128" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="4152" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1296" pos_y="4224" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="4176" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="4200" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="4176" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1440" pos_y="4200" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="4224" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1440" pos_y="4248" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1392" pos_y="4224" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1392" pos_y="4272" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1344" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1440" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="4272" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-960" pos_y="4296" res_type="4" life="200" selected="false" />
+      <res pos_x="-912" pos_y="4320" res_type="4" life="200" selected="false" />
+      <res pos_x="-864" pos_y="4344" res_type="4" life="200" selected="false" />
+      <res pos_x="-1008" pos_y="4320" res_type="4" life="200" selected="false" />
+      <res pos_x="-960" pos_y="4344" res_type="4" life="200" selected="false" />
+      <res pos_x="-912" pos_y="4368" res_type="4" life="200" selected="false" />
+      <res pos_x="-96" pos_y="4296" res_type="7" life="400" selected="false" />
+      <res pos_x="-144" pos_y="4320" res_type="7" life="400" selected="false" />
+      <res pos_x="-192" pos_y="4344" res_type="7" life="400" selected="false" />
+      <res pos_x="-240" pos_y="4320" res_type="7" life="400" selected="false" />
+      <res pos_x="-192" pos_y="4296" res_type="7" life="400" selected="false" />
+      <res pos_x="-144" pos_y="4272" res_type="7" life="400" selected="false" />
+      <res pos_x="-528" pos_y="4416" res_type="5" life="400" selected="false" />
+      <res pos_x="-576" pos_y="4440" res_type="5" life="400" selected="false" />
+      <res pos_x="-528" pos_y="4464" res_type="5" life="400" selected="false" />
+      <res pos_x="-480" pos_y="4440" res_type="5" life="400" selected="false" />
+      <res pos_x="-624" pos_y="4464" res_type="5" life="400" selected="false" />
+      <res pos_x="-432" pos_y="4464" res_type="5" life="400" selected="false" />
+      <res pos_x="-576" pos_y="4488" res_type="5" life="400" selected="false" />
+      <res pos_x="-480" pos_y="4488" res_type="5" life="400" selected="false" />
+      <res pos_x="-1440" pos_y="4104" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="4128" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1536" pos_y="4104" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1632" pos_y="4056" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1584" pos_y="4080" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="4080" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1536" pos_y="4056" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1392" pos_y="4080" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1440" pos_y="4152" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1392" pos_y="4128" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1392" pos_y="4176" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1344" pos_y="4104" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1296" pos_y="4080" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1296" pos_y="4128" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1344" pos_y="4152" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1296" pos_y="4176" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1344" pos_y="4200" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="1776" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="480" pos_y="1800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="1824" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="1800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="1824" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="1848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="1872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="1896" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="1872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="288" pos_y="1896" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="1920" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="288" pos_y="1944" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="240" pos_y="1920" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="1968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="1944" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="1968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="1992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="2016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="288" pos_y="1992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="576" pos_y="2040" res_type="4" life="200" selected="false" />
+      <res pos_x="624" pos_y="2064" res_type="4" life="200" selected="false" />
+      <res pos_x="672" pos_y="2088" res_type="4" life="200" selected="false" />
+      <res pos_x="624" pos_y="2112" res_type="4" life="200" selected="false" />
+      <res pos_x="576" pos_y="2088" res_type="4" life="200" selected="false" />
+      <res pos_x="528" pos_y="2064" res_type="4" life="200" selected="false" />
+      <res pos_x="912" pos_y="2112" res_type="7" life="400" selected="false" />
+      <res pos_x="864" pos_y="2136" res_type="7" life="400" selected="false" />
+      <res pos_x="912" pos_y="2160" res_type="7" life="400" selected="false" />
+      <res pos_x="960" pos_y="2136" res_type="7" life="400" selected="false" />
+      <res pos_x="1008" pos_y="2160" res_type="7" life="400" selected="false" />
+      <res pos_x="1392" pos_y="2112" res_type="7" life="400" selected="false" />
+      <res pos_x="1440" pos_y="2088" res_type="7" life="400" selected="false" />
+      <res pos_x="1488" pos_y="2064" res_type="7" life="400" selected="false" />
+      <res pos_x="1680" pos_y="1920" res_type="5" life="400" selected="false" />
+      <res pos_x="1728" pos_y="1944" res_type="5" life="400" selected="false" />
+      <res pos_x="1728" pos_y="1896" res_type="5" life="400" selected="false" />
+      <res pos_x="1680" pos_y="1872" res_type="5" life="400" selected="false" />
+      <res pos_x="1728" pos_y="1848" res_type="5" life="400" selected="false" />
+      <res pos_x="1680" pos_y="1824" res_type="5" life="400" selected="false" />
+      <res pos_x="1200" pos_y="4752" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1152" pos_y="4728" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1104" pos_y="4704" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1056" pos_y="4728" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1008" pos_y="4704" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="4728" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1008" pos_y="4752" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1104" pos_y="4752" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1056" pos_y="4776" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="4776" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="912" pos_y="4752" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="864" pos_y="4776" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="4776" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="816" pos_y="4800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="912" pos_y="4800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="864" pos_y="4824" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="4824" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="4800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="672" pos_y="4824" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="4848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="4800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="576" pos_y="4824" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="4848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="912" pos_y="4848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="4824" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1056" pos_y="4824" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1104" pos_y="4848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1104" pos_y="4800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1008" pos_y="4800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1008" pos_y="4848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1056" pos_y="4872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="4872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="912" pos_y="4896" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="864" pos_y="4872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="816" pos_y="4848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="4872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="816" pos_y="4896" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="4920" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="4896" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="672" pos_y="4920" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="576" pos_y="4920" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="4944" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="528" pos_y="4944" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="576" pos_y="4968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="480" pos_y="4968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="528" pos_y="4992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="4992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="672" pos_y="4968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="4944" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="4968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="4992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="5016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="480" pos_y="5016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="528" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="480" pos_y="5064" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="528" pos_y="5088" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="576" pos_y="5064" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="672" pos_y="5064" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="5088" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="5064" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="5088" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="672" pos_y="5112" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="5136" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="576" pos_y="5112" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="528" pos_y="5136" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="480" pos_y="5112" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="5088" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="5064" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="5112" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="5136" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="5160" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="5184" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="480" pos_y="5160" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1296" pos_y="4944" res_type="4" life="200" selected="false" />
+      <res pos_x="1344" pos_y="4968" res_type="4" life="200" selected="false" />
+      <res pos_x="1296" pos_y="4992" res_type="4" life="200" selected="false" />
+      <res pos_x="1248" pos_y="5016" res_type="4" life="200" selected="false" />
+      <res pos_x="1200" pos_y="5040" res_type="4" life="200" selected="false" />
+      <res pos_x="1248" pos_y="5064" res_type="4" life="200" selected="false" />
+      <res pos_x="1296" pos_y="5040" res_type="4" life="200" selected="false" />
+      <res pos_x="1344" pos_y="5016" res_type="4" life="200" selected="false" />
+      <res pos_x="0" pos_y="5400" res_type="7" life="400" selected="false" />
+      <res pos_x="48" pos_y="5424" res_type="7" life="400" selected="false" />
+      <res pos_x="96" pos_y="5448" res_type="7" life="400" selected="false" />
+      <res pos_x="144" pos_y="5424" res_type="7" life="400" selected="false" />
+      <res pos_x="192" pos_y="5400" res_type="7" life="400" selected="false" />
+      <res pos_x="96" pos_y="5400" res_type="7" life="400" selected="false" />
+      <res pos_x="144" pos_y="5376" res_type="7" life="400" selected="false" />
+      <res pos_x="-48" pos_y="5424" res_type="7" life="400" selected="false" />
+      <res pos_x="816" pos_y="4416" res_type="5" life="400" selected="false" />
+      <res pos_x="864" pos_y="4440" res_type="5" life="400" selected="false" />
+      <res pos_x="912" pos_y="4464" res_type="5" life="400" selected="false" />
+      <res pos_x="864" pos_y="4488" res_type="5" life="400" selected="false" />
+      <res pos_x="816" pos_y="4464" res_type="5" life="400" selected="false" />
+      <res pos_x="768" pos_y="4488" res_type="5" life="400" selected="false" />
+      <res pos_x="2256" pos_y="4320" res_type="7" life="400" selected="false" />
+      <res pos_x="2304" pos_y="4296" res_type="7" life="400" selected="false" />
+      <res pos_x="2352" pos_y="4320" res_type="7" life="400" selected="false" />
+      <res pos_x="2400" pos_y="4296" res_type="7" life="400" selected="false" />
+      <res pos_x="2448" pos_y="4272" res_type="7" life="400" selected="false" />
+      <res pos_x="2304" pos_y="4344" res_type="7" life="400" selected="false" />
+      <res pos_x="1680" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1728" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="4272" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1824" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1872" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1920" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2016" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1968" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1968" pos_y="4272" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1632" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1584" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1488" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1584" pos_y="4272" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="4344" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1584" pos_y="4368" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="4392" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1488" pos_y="4368" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1440" pos_y="4392" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1488" pos_y="4416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1440" pos_y="4440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1392" pos_y="4416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1728" pos_y="4392" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1680" pos_y="4416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1632" pos_y="4392" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1584" pos_y="4416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="4440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1584" pos_y="4464" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1632" pos_y="4440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="4704" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="4752" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1824" pos_y="4728" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1824" pos_y="4680" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1920" pos_y="4680" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2016" pos_y="4680" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1968" pos_y="4704" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1872" pos_y="4704" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1920" pos_y="4728" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1872" pos_y="4752" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="4800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1824" pos_y="4776" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="192" pos_y="4344" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="240" pos_y="4368" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="4368" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="288" pos_y="4344" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="4392" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="4416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="288" pos_y="4392" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="240" pos_y="4416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="144" pos_y="4416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="192" pos_y="4440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="96" pos_y="4440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="144" pos_y="4464" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="192" pos_y="4488" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="240" pos_y="4512" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="144" pos_y="4512" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="96" pos_y="4488" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="48" pos_y="4512" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="144" pos_y="4560" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="192" pos_y="4536" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="192" pos_y="4584" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="144" pos_y="4608" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="4752" res_type="4" life="200" selected="false" />
+      <res pos_x="0" pos_y="4776" res_type="4" life="200" selected="false" />
+      <res pos_x="-48" pos_y="4800" res_type="4" life="200" selected="false" />
+      <res pos_x="-96" pos_y="4824" res_type="4" life="200" selected="false" />
+      <res pos_x="-144" pos_y="4848" res_type="4" life="200" selected="false" />
+      <res pos_x="-192" pos_y="4824" res_type="4" life="200" selected="false" />
+      <res pos_x="-144" pos_y="4800" res_type="4" life="200" selected="false" />
+      <res pos_x="-96" pos_y="4776" res_type="4" life="200" selected="false" />
+      <res pos_x="-1392" pos_y="4608" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1344" pos_y="4632" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1296" pos_y="4608" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="4632" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1152" pos_y="4632" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="4656" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="4680" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1440" pos_y="4632" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="4608" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1536" pos_y="4632" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1584" pos_y="4608" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1632" pos_y="4632" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1680" pos_y="4608" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1584" pos_y="4656" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="4704" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1296" pos_y="4704" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="4728" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1632" pos_y="4728" res_type="4" life="200" selected="false" />
+      <res pos_x="-1584" pos_y="4752" res_type="4" life="200" selected="false" />
+      <res pos_x="-1536" pos_y="4776" res_type="4" life="200" selected="false" />
+      <res pos_x="-1584" pos_y="4800" res_type="4" life="200" selected="false" />
+      <res pos_x="-1632" pos_y="4776" res_type="4" life="200" selected="false" />
+      <res pos_x="-2112" pos_y="4392" res_type="7" life="400" selected="false" />
+      <res pos_x="-2160" pos_y="4368" res_type="7" life="400" selected="false" />
+      <res pos_x="-2112" pos_y="4344" res_type="7" life="400" selected="false" />
+      <res pos_x="-2064" pos_y="4320" res_type="7" life="400" selected="false" />
+      <res pos_x="-2064" pos_y="4368" res_type="7" life="400" selected="false" />
+      <res pos_x="-2016" pos_y="4296" res_type="7" life="400" selected="false" />
+      <res pos_x="-2352" pos_y="4368" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="4344" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="4272" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2304" pos_y="4248" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2256" pos_y="4272" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2256" pos_y="4224" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2208" pos_y="4248" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2160" pos_y="4224" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2496" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2544" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2592" pos_y="4296" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2640" pos_y="4320" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="4392" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="4416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="4440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="4464" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="4368" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2496" pos_y="4344" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2496" pos_y="4392" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1440" pos_y="2136" res_type="7" life="400" selected="false" />
+      <res pos_x="1392" pos_y="2064" res_type="7" life="400" selected="false" />
+      <res pos_x="912" pos_y="2256" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="2280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1056" pos_y="2280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1104" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1200" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1152" pos_y="2280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1296" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1248" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1200" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1152" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1104" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1056" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1008" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="912" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="816" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="864" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="2280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="2256" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="0" pos_y="2280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="0" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-144" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-96" pos_y="2376" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="2400" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="0" pos_y="2424" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="2448" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-96" pos_y="2424" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-144" pos_y="2448" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-96" pos_y="2472" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="2496" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-144" pos_y="2544" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-96" pos_y="2520" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="2544" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-96" pos_y="2568" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="2592" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="0" pos_y="2568" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="48" pos_y="2592" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="96" pos_y="2568" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="48" pos_y="2544" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="144" pos_y="2544" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-912" pos_y="4992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-864" pos_y="5016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-816" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-768" pos_y="4968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-816" pos_y="4992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-720" pos_y="4992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-768" pos_y="5016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-624" pos_y="4992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-576" pos_y="5016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-528" pos_y="4992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-480" pos_y="5016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-528" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-576" pos_y="5064" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-624" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="5016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-720" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="5064" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-624" pos_y="5088" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-624" pos_y="5136" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="5112" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-720" pos_y="5136" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="5160" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-384" pos_y="5016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-432" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="5040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-480" pos_y="5256" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-528" pos_y="5232" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-576" pos_y="5256" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-528" pos_y="5280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-432" pos_y="5280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-384" pos_y="5256" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="5280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-288" pos_y="5256" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-288" pos_y="5208" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-192" pos_y="5208" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-240" pos_y="5232" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2304" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2208" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2256" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2160" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2112" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2064" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2592" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2592" pos_y="3672" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2640" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2688" pos_y="3672" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2640" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2688" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2736" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2784" pos_y="3672" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2832" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2928" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2880" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2832" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2784" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="3672" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="3768" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="3792" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="3792" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2496" pos_y="3816" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2496" pos_y="3768" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2544" pos_y="3792" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2496" pos_y="3864" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2544" pos_y="3840" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="3888" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1728" pos_y="3576" res_type="7" life="400" selected="false" />
+      <res pos_x="-1776" pos_y="3600" res_type="7" life="400" selected="false" />
+      <res pos_x="-1728" pos_y="3624" res_type="7" life="400" selected="false" />
+      <res pos_x="-1680" pos_y="3552" res_type="7" life="400" selected="false" />
+      <res pos_x="-1680" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1632" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1680" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1680" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1632" pos_y="3672" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1584" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1536" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1584" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1440" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1392" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1296" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1344" pos_y="3528" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1344" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1392" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2928" pos_y="3888" res_type="5" life="400" selected="false" />
+      <res pos_x="-2976" pos_y="3912" res_type="5" life="400" selected="false" />
+      <res pos_x="-2976" pos_y="3960" res_type="5" life="400" selected="false" />
+      <res pos_x="-2928" pos_y="3936" res_type="5" life="400" selected="false" />
+      <res pos_x="-3648" pos_y="3384" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3600" pos_y="3408" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3648" pos_y="3432" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3648" pos_y="3480" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3696" pos_y="3456" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3552" pos_y="3480" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3600" pos_y="3456" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3600" pos_y="3504" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3648" pos_y="3528" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3600" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3648" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3696" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3744" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3792" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3840" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3792" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3840" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3792" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3744" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3744" pos_y="3672" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3696" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3696" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3792" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3840" pos_y="3672" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3408" pos_y="3360" res_type="4" life="200" selected="false" />
+      <res pos_x="-3360" pos_y="3336" res_type="4" life="200" selected="false" />
+      <res pos_x="-3312" pos_y="3312" res_type="4" life="200" selected="false" />
+      <res pos_x="-3264" pos_y="3288" res_type="4" life="200" selected="false" />
+      <res pos_x="-3312" pos_y="3264" res_type="4" life="200" selected="false" />
+      <res pos_x="-3360" pos_y="3288" res_type="4" life="200" selected="false" />
+      <res pos_x="-4512" pos_y="2904" res_type="7" life="400" selected="false" />
+      <res pos_x="-4560" pos_y="2928" res_type="7" life="400" selected="false" />
+      <res pos_x="-4512" pos_y="2952" res_type="7" life="400" selected="false" />
+      <res pos_x="-4560" pos_y="2976" res_type="7" life="400" selected="false" />
+      <res pos_x="-4608" pos_y="3000" res_type="7" life="400" selected="false" />
+      <res pos_x="-4656" pos_y="3024" res_type="7" life="400" selected="false" />
+      <res pos_x="-4656" pos_y="3072" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4704" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4656" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4608" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4560" pos_y="3072" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4464" pos_y="3072" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4368" pos_y="3072" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4272" pos_y="3072" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4320" pos_y="3048" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4320" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4416" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4512" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4464" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4464" pos_y="3168" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4416" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4416" pos_y="3192" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4368" pos_y="3168" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4464" pos_y="3216" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4512" pos_y="3192" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4560" pos_y="3216" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4560" pos_y="3264" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4464" pos_y="3264" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4512" pos_y="3240" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4416" pos_y="3432" res_type="5" life="400" selected="false" />
+      <res pos_x="-4368" pos_y="3456" res_type="5" life="400" selected="false" />
+      <res pos_x="-4320" pos_y="3480" res_type="5" life="400" selected="false" />
+      <res pos_x="-4272" pos_y="3504" res_type="5" life="400" selected="false" />
+      <res pos_x="-4224" pos_y="3480" res_type="5" life="400" selected="false" />
+      <res pos_x="-4272" pos_y="3456" res_type="5" life="400" selected="false" />
+      <res pos_x="-5616" pos_y="2880" res_type="5" life="400" selected="false" />
+      <res pos_x="-5568" pos_y="2904" res_type="5" life="400" selected="false" />
+      <res pos_x="-5520" pos_y="2880" res_type="5" life="400" selected="false" />
+      <res pos_x="-5568" pos_y="2856" res_type="5" life="400" selected="false" />
+      <res pos_x="-5520" pos_y="2832" res_type="5" life="400" selected="false" />
+      <res pos_x="-5472" pos_y="2856" res_type="5" life="400" selected="false" />
+      <res pos_x="-5424" pos_y="2832" res_type="5" life="400" selected="false" />
+      <res pos_x="-5472" pos_y="2808" res_type="5" life="400" selected="false" />
+      <res pos_x="-5424" pos_y="2784" res_type="5" life="400" selected="false" />
+      <res pos_x="-5376" pos_y="2808" res_type="5" life="400" selected="false" />
+      <res pos_x="-5424" pos_y="2976" res_type="5" life="400" selected="false" />
+      <res pos_x="-5376" pos_y="3000" res_type="5" life="400" selected="false" />
+      <res pos_x="-5328" pos_y="3024" res_type="5" life="400" selected="false" />
+      <res pos_x="-5280" pos_y="3048" res_type="5" life="400" selected="false" />
+      <res pos_x="-5232" pos_y="2688" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5232" pos_y="2736" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5136" pos_y="2736" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5184" pos_y="2760" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5136" pos_y="2784" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5184" pos_y="2808" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5136" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5184" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5136" pos_y="2880" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5136" pos_y="2928" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5088" pos_y="2952" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5136" pos_y="2976" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5184" pos_y="2952" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5184" pos_y="2904" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5232" pos_y="2928" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5040" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5040" pos_y="2880" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4992" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5136" pos_y="3072" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5184" pos_y="3048" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5088" pos_y="3048" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5088" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-5136" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-576" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-624" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-576" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-528" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-480" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-432" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-384" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-288" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-240" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-240" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-288" pos_y="3672" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-384" pos_y="3672" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-384" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-240" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-288" pos_y="3768" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-240" pos_y="3792" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-192" pos_y="3768" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-144" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-96" pos_y="3768" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-144" pos_y="3792" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-96" pos_y="3816" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-144" pos_y="3840" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-144" pos_y="3888" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-192" pos_y="3864" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-720" pos_y="3792" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="3768" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-624" pos_y="3792" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-576" pos_y="3768" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="3984" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="4032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-288" pos_y="4008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-192" pos_y="4008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-240" pos_y="3984" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4608" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4560" pos_y="2640" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4512" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4416" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4464" pos_y="2640" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-4368" pos_y="2640" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3792" pos_y="2592" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3840" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3744" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3792" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3744" pos_y="2376" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3792" pos_y="2400" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3840" pos_y="2424" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3792" pos_y="2448" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3696" pos_y="2448" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3744" pos_y="2472" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3744" pos_y="2424" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3648" pos_y="2472" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3552" pos_y="2472" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3600" pos_y="2496" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3552" pos_y="2520" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3696" pos_y="2592" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3744" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3696" pos_y="2640" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3744" pos_y="2664" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3504" pos_y="2880" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3408" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3456" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3360" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3312" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3312" pos_y="2880" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3264" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3168" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3216" pos_y="2880" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3360" pos_y="2904" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3312" pos_y="2928" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3120" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3072" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3120" pos_y="2880" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2592" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2544" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2496" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2304" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2256" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2304" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2256" pos_y="3168" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2208" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="2952" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="2928" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="2904" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="2880" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="2784" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2304" pos_y="2952" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2256" pos_y="2976" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="2976" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2304" pos_y="3000" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2208" pos_y="3048" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2160" pos_y="2880" res_type="7" life="400" selected="false" />
+      <res pos_x="-2112" pos_y="2904" res_type="7" life="400" selected="false" />
+      <res pos_x="-2064" pos_y="2928" res_type="7" life="400" selected="false" />
+      <res pos_x="-2112" pos_y="2952" res_type="7" life="400" selected="false" />
+      <res pos_x="-1536" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1536" pos_y="3048" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1440" pos_y="3048" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="3024" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="3072" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1392" pos_y="3024" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1344" pos_y="3048" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1296" pos_y="3024" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="3048" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1296" pos_y="3072" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1104" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1152" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-720" pos_y="2784" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="2808" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-624" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-576" pos_y="2808" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-528" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-480" pos_y="2808" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-432" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-384" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-432" pos_y="2880" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-384" pos_y="2904" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="2928" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="2976" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="288" pos_y="3000" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="3024" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="288" pos_y="3048" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="3072" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="240" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="288" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="432" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="384" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="528" pos_y="3168" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="480" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="576" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="3168" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="672" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="3168" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="192" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="144" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="528" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="576" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="672" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="3552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="3576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="3600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="3624" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="816" pos_y="3648" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="912" pos_y="3552" res_type="4" life="200" selected="false" />
+      <res pos_x="960" pos_y="3576" res_type="4" life="200" selected="false" />
+      <res pos_x="912" pos_y="3600" res_type="4" life="200" selected="false" />
+      <res pos_x="960" pos_y="3624" res_type="4" life="200" selected="false" />
+      <res pos_x="816" pos_y="3936" res_type="7" life="400" selected="false" />
+      <res pos_x="864" pos_y="3912" res_type="7" life="400" selected="false" />
+      <res pos_x="912" pos_y="3936" res_type="7" life="400" selected="false" />
+      <res pos_x="960" pos_y="3912" res_type="7" life="400" selected="false" />
+      <res pos_x="1680" pos_y="3648" res_type="5" life="400" selected="false" />
+      <res pos_x="1728" pos_y="3672" res_type="5" life="400" selected="false" />
+      <res pos_x="1776" pos_y="3648" res_type="5" life="400" selected="false" />
+      <res pos_x="1824" pos_y="3672" res_type="5" life="400" selected="false" />
+      <res pos_x="1872" pos_y="3648" res_type="5" life="400" selected="false" />
+      <res pos_x="1872" pos_y="3696" res_type="5" life="400" selected="false" />
+      <res pos_x="1488" pos_y="3696" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1488" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1440" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1584" pos_y="3792" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="3768" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1488" pos_y="3792" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="3816" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="3864" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-528" pos_y="2880" res_type="4" life="200" selected="false" />
+      <res pos_x="-576" pos_y="2904" res_type="4" life="200" selected="false" />
+      <res pos_x="-528" pos_y="2928" res_type="4" life="200" selected="false" />
+      <res pos_x="-1632" pos_y="2424" res_type="7" life="400" selected="false" />
+      <res pos_x="-1584" pos_y="2400" res_type="7" life="400" selected="false" />
+      <res pos_x="-1680" pos_y="2448" res_type="7" life="400" selected="false" />
+      <res pos_x="-1728" pos_y="2424" res_type="7" life="400" selected="false" />
+      <res pos_x="-1728" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1680" pos_y="2640" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1632" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1584" pos_y="2592" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1536" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1488" pos_y="2592" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1440" pos_y="2568" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1440" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1584" pos_y="2640" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1728" pos_y="1800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1776" pos_y="1824" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1824" pos_y="1848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1776" pos_y="1872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1728" pos_y="1848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1680" pos_y="1872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1776" pos_y="1920" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1824" pos_y="1944" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1776" pos_y="1968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1824" pos_y="1992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1776" pos_y="2016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1920" pos_y="1992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1968" pos_y="2016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2016" pos_y="1992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2064" pos_y="2016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1872" pos_y="2016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="1608" res_type="4" life="200" selected="false" />
+      <res pos_x="-2352" pos_y="1584" res_type="4" life="200" selected="false" />
+      <res pos_x="-2304" pos_y="1560" res_type="4" life="200" selected="false" />
+      <res pos_x="-2256" pos_y="1536" res_type="4" life="200" selected="false" />
+      <res pos_x="-2256" pos_y="1584" res_type="4" life="200" selected="false" />
+      <res pos_x="-2208" pos_y="1560" res_type="4" life="200" selected="false" />
+      <res pos_x="-1824" pos_y="1128" res_type="7" life="400" selected="false" />
+      <res pos_x="-1776" pos_y="1104" res_type="7" life="400" selected="false" />
+      <res pos_x="-1728" pos_y="1080" res_type="7" life="400" selected="false" />
+      <res pos_x="-1680" pos_y="1104" res_type="7" life="400" selected="false" />
+      <res pos_x="-1632" pos_y="1080" res_type="7" life="400" selected="false" />
+      <res pos_x="-2256" pos_y="1440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2160" pos_y="1440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2208" pos_y="1416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2112" pos_y="1416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2016" pos_y="1416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2064" pos_y="1440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1968" pos_y="1440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1920" pos_y="1416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1824" pos_y="1416" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1872" pos_y="1440" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1920" pos_y="1464" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1872" pos_y="1488" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3072" pos_y="1896" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3024" pos_y="1920" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3072" pos_y="1944" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3120" pos_y="1968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3072" pos_y="1992" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3024" pos_y="1968" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3024" pos_y="2016" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-3072" pos_y="2040" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2784" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2736" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2784" pos_y="2376" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2688" pos_y="2376" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2592" pos_y="2376" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2640" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2544" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2496" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2400" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2352" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2256" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2304" pos_y="2280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2304" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2208" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2256" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2208" pos_y="2376" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2160" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2832" pos_y="2304" res_type="4" life="200" selected="false" />
+      <res pos_x="-2880" pos_y="2328" res_type="4" life="200" selected="false" />
+      <res pos_x="-2496" pos_y="1560" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2544" pos_y="1584" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2544" pos_y="1632" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2496" pos_y="1608" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2592" pos_y="1608" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="1536" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-2448" pos_y="1584" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="1032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="1056" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="1080" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="1104" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1248" pos_y="1128" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="1152" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="3984" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="4008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="816" pos_y="4032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="864" pos_y="4008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="912" pos_y="4032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="4008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="864" pos_y="4056" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1056" pos_y="4008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1008" pos_y="3984" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1008" pos_y="4032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="864" pos_y="2760" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="912" pos_y="2736" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="2712" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1008" pos_y="2736" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="2760" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1104" pos_y="2736" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1056" pos_y="2760" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1584" pos_y="2544" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1680" pos_y="2544" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1728" pos_y="2568" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="2592" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1824" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="2640" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1728" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1632" pos_y="2568" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="2568" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1872" pos_y="2640" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1920" pos_y="2616" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1968" pos_y="2640" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1680" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1728" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1824" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1920" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1872" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1968" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2016" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2016" pos_y="3144" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2064" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2160" pos_y="3120" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2112" pos_y="3096" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1872" pos_y="3168" res_type="4" life="200" selected="false" />
+      <res pos_x="1920" pos_y="3192" res_type="4" life="200" selected="false" />
+      <res pos_x="1824" pos_y="3192" res_type="4" life="200" selected="false" />
+      <res pos_x="2736" pos_y="2784" res_type="7" life="400" selected="false" />
+      <res pos_x="2784" pos_y="2808" res_type="7" life="400" selected="false" />
+      <res pos_x="2832" pos_y="2784" res_type="7" life="400" selected="false" />
+      <res pos_x="2832" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2880" pos_y="2808" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2928" pos_y="2784" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2784" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2736" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1344" pos_y="1512" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1440" pos_y="1512" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1488" pos_y="1536" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1536" pos_y="1512" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1584" pos_y="1536" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1632" pos_y="1512" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1680" pos_y="1536" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1728" pos_y="1512" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="1536" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1728" pos_y="1560" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1776" pos_y="1584" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1872" pos_y="1584" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1824" pos_y="1608" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1872" pos_y="1632" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1872" pos_y="1680" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1824" pos_y="1656" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="1056" res_type="4" life="200" selected="false" />
+      <res pos_x="672" pos_y="1032" res_type="4" life="200" selected="false" />
+      <res pos_x="720" pos_y="1008" res_type="4" life="200" selected="false" />
+      <res pos_x="768" pos_y="1032" res_type="4" life="200" selected="false" />
+      <res pos_x="720" pos_y="1056" res_type="4" life="200" selected="false" />
+      <res pos_x="816" pos_y="1008" res_type="4" life="200" selected="false" />
+      <res pos_x="528" pos_y="1008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="576" pos_y="984" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="624" pos_y="960" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="672" pos_y="936" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="912" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="768" pos_y="936" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="816" pos_y="960" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="912" pos_y="960" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="864" pos_y="936" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="984" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="960" pos_y="936" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1008" pos_y="960" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1056" pos_y="936" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1152" pos_y="936" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="1104" pos_y="960" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="720" pos_y="480" res_type="7" life="400" selected="false" />
+      <res pos_x="768" pos_y="504" res_type="7" life="400" selected="false" />
+      <res pos_x="816" pos_y="528" res_type="7" life="400" selected="false" />
+      <res pos_x="864" pos_y="552" res_type="7" life="400" selected="false" />
+      <res pos_x="816" pos_y="576" res_type="7" life="400" selected="false" />
+      <res pos_x="768" pos_y="552" res_type="7" life="400" selected="false" />
+      <res pos_x="432" pos_y="480" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="480" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="336" pos_y="432" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="288" pos_y="456" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="192" pos_y="456" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="240" pos_y="480" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="144" pos_y="480" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="96" pos_y="456" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="600" res_type="5" life="400" selected="false" />
+      <res pos_x="-624" pos_y="576" res_type="5" life="400" selected="false" />
+      <res pos_x="-576" pos_y="600" res_type="5" life="400" selected="false" />
+      <res pos_x="-528" pos_y="576" res_type="5" life="400" selected="false" />
+      <res pos_x="-480" pos_y="600" res_type="5" life="400" selected="false" />
+      <res pos_x="-432" pos_y="576" res_type="5" life="400" selected="false" />
+      <res pos_x="-384" pos_y="600" res_type="5" life="400" selected="false" />
+      <res pos_x="-720" pos_y="576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-624" pos_y="528" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-768" pos_y="552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-864" pos_y="552" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-720" pos_y="528" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-816" pos_y="528" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-960" pos_y="600" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-912" pos_y="576" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-576" pos_y="1032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-528" pos_y="1008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-528" pos_y="1056" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-480" pos_y="1032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-384" pos_y="1032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-288" pos_y="1032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="1056" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-240" pos_y="1056" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-192" pos_y="1032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-144" pos_y="1008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-96" pos_y="1032" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="1008" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-48" pos_y="960" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-96" pos_y="936" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-672" pos_y="1512" res_type="4" life="200" selected="false" />
+      <res pos_x="-624" pos_y="1536" res_type="4" life="200" selected="false" />
+      <res pos_x="-576" pos_y="1512" res_type="4" life="200" selected="false" />
+      <res pos_x="-528" pos_y="1536" res_type="4" life="200" selected="false" />
+      <res pos_x="0" pos_y="1608" res_type="7" life="400" selected="false" />
+      <res pos_x="48" pos_y="1584" res_type="7" life="400" selected="false" />
+      <res pos_x="96" pos_y="1560" res_type="7" life="400" selected="false" />
+      <res pos_x="48" pos_y="1536" res_type="7" life="400" selected="false" />
+      <res pos_x="-336" pos_y="1536" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-288" pos_y="1560" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-336" pos_y="1584" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-384" pos_y="1656" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-432" pos_y="1680" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-480" pos_y="1704" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-432" pos_y="1728" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-480" pos_y="1752" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="1728" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1152" pos_y="1752" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="1776" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1152" pos_y="1800" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1200" pos_y="1872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1152" pos_y="1848" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1104" pos_y="1872" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1056" pos_y="1896" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-1008" pos_y="1920" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-912" pos_y="1920" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-960" pos_y="1896" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="-288" pos_y="840" res_type="7" life="400" selected="false" />
+      <res pos_x="-192" pos_y="840" res_type="7" life="400" selected="false" />
+      <res pos_x="-240" pos_y="816" res_type="7" life="400" selected="false" />
+      <res pos_x="-192" pos_y="792" res_type="7" life="400" selected="false" />
+      <res pos_x="0" pos_y="216" res_type="5" life="400" selected="false" />
+      <res pos_x="-48" pos_y="192" res_type="5" life="400" selected="false" />
+      <res pos_x="-96" pos_y="216" res_type="5" life="400" selected="false" />
+      <res pos_x="48" pos_y="192" res_type="5" life="400" selected="false" />
+      <res pos_x="0" pos_y="168" res_type="5" life="400" selected="false" />
+      <res pos_x="96" pos_y="216" res_type="7" life="400" selected="false" />
+      <res pos_x="144" pos_y="240" res_type="7" life="400" selected="false" />
+      <res pos_x="192" pos_y="264" res_type="7" life="400" selected="false" />
+      <res pos_x="240" pos_y="240" res_type="7" life="400" selected="false" />
+      <res pos_x="192" pos_y="216" res_type="7" life="400" selected="false" />
+      <res pos_x="960" pos_y="1416" res_type="4" life="200" selected="false" />
+      <res pos_x="864" pos_y="1416" res_type="4" life="200" selected="false" />
+      <res pos_x="912" pos_y="1392" res_type="4" life="200" selected="false" />
+      <res pos_x="960" pos_y="1368" res_type="4" life="200" selected="false" />
+      <res pos_x="1008" pos_y="1392" res_type="4" life="200" selected="false" />
+      <res pos_x="1056" pos_y="1368" res_type="4" life="200" selected="false" />
+      <res pos_x="1008" pos_y="1344" res_type="4" life="200" selected="false" />
+      <res pos_x="1968" pos_y="1296" res_type="7" life="400" selected="false" />
+      <res pos_x="2016" pos_y="1320" res_type="7" life="400" selected="false" />
+      <res pos_x="2064" pos_y="1344" res_type="7" life="400" selected="false" />
+      <res pos_x="2112" pos_y="1368" res_type="7" life="400" selected="false" />
+      <res pos_x="1920" pos_y="1320" res_type="7" life="400" selected="false" />
+      <res pos_x="1968" pos_y="1344" res_type="7" life="400" selected="false" />
+      <res pos_x="2688" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2640" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2688" pos_y="3768" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2736" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2832" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2880" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2928" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2976" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="3024" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="3072" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="3168" pos_y="3720" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="3120" pos_y="3744" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="2976" pos_y="3816" res_type="4" life="200" selected="false" />
+      <res pos_x="3072" pos_y="3816" res_type="4" life="200" selected="false" />
+      <res pos_x="3024" pos_y="3840" res_type="4" life="200" selected="false" />
+      <res pos_x="3408" pos_y="3072" res_type="7" life="400" selected="false" />
+      <res pos_x="3456" pos_y="3048" res_type="7" life="400" selected="false" />
+      <res pos_x="3504" pos_y="3024" res_type="7" life="400" selected="false" />
+      <res pos_x="3552" pos_y="3048" res_type="7" life="400" selected="false" />
+      <res pos_x="3504" pos_y="3072" res_type="7" life="400" selected="false" />
+      <res pos_x="3552" pos_y="3096" res_type="7" life="400" selected="false" />
+      <res pos_x="4368" pos_y="3168" res_type="5" life="400" selected="false" />
+      <res pos_x="4416" pos_y="3144" res_type="5" life="400" selected="false" />
+      <res pos_x="4464" pos_y="3120" res_type="5" life="400" selected="false" />
+      <res pos_x="4512" pos_y="3096" res_type="5" life="400" selected="false" />
+      <res pos_x="3696" pos_y="3216" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="3792" pos_y="3216" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="3840" pos_y="3192" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="3744" pos_y="3192" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="3888" pos_y="3216" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="3936" pos_y="3240" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4992" pos_y="2808" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="5040" pos_y="2832" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4992" pos_y="2856" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="5040" pos_y="2880" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4992" pos_y="2904" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="5040" pos_y="2928" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4992" pos_y="2952" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4944" pos_y="2784" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4896" pos_y="2760" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4848" pos_y="2736" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="5376" pos_y="2808" res_type="7" life="400" selected="false" />
+      <res pos_x="5424" pos_y="2832" res_type="7" life="400" selected="false" />
+      <res pos_x="5472" pos_y="2856" res_type="7" life="400" selected="false" />
+      <res pos_x="5424" pos_y="2880" res_type="7" life="400" selected="false" />
+      <res pos_x="4080" pos_y="2256" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4032" pos_y="2280" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4080" pos_y="2304" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4080" pos_y="2352" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4128" pos_y="2328" res_type="1" life="100" cortex="30" selected="false" />
+      <res pos_x="4224" pos_y="2328" res_type="4" life="200" selected="false" />
+      <res pos_x="4272" pos_y="2352" res_type="4" life="200" selected="false" />
+      <res pos_x="3168" pos_y="2136" res_type="7" life="400" selected="false" />
+      <res pos_x="3216" pos_y="2160" res_type="7" life="400" selected="false" />
+      <res pos_x="3168" pos_y="2184" res_type="7" life="400" selected="false" />
+      <res pos_x="3120" pos_y="2160" res_type="7" life="400" selected="false" />
+      <res pos_x="2880" pos_y="2424" res_type="1" life="100" cortex="30" selected="false" />
+    </resources>
 		<buildings>
 			<build build_type="1" pos_x="-672" pos_y="4104" life="2400" diplomacy="1" selected="false" cur_units_in="0">
 				<actions>
@@ -595,9 +1317,9 @@
 <AI>
   <ai_data>
    <Resources>
-    <normal_resources wood="0" meat="0" gold="0" stone="0" population="0" max_population="5" />
+    <normal_resources wood="500" meat="500" gold="500" stone="300" population="6" max_population="5" />
    </Resources>
-   <Research_Resources wood="0" meat="0" gold="0" stone="0" next_research="0" />
+   <Research_Resources wood="500" meat="500" gold="500" stone="500" next_research="0" />
    <Updates current_age="2">
     <units_level />
     <buildings_level />
