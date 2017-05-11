@@ -453,7 +453,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			Selected->GetEntity()->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (UpperEntity != nullptr)
 			{
-				if (UpperEntity->GetDiplomacy() == ENEMY && selected_unit_type != MONK)
+				if (UpperEntity->GetDiplomacy() == ENEMY && selected_unit_type != MONK && selected_unit_type != WIZARD_CHMP)
 				{
 					if (UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
 					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
@@ -463,7 +463,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				{
 					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource*)UpperEntity));
 				}
-				else if ((selected_unit_type == WIZARD_CHMP || selected_unit_type == MONK) && UpperEntity->GetEntityType() == UNIT)
+				else if ((selected_unit_type == WIZARD_CHMP || selected_unit_type == MONK) && UpperEntity->GetEntityType() == UNIT && selected_diplomacy == ALLY)
 				{
 					Selected->GetEntity()->AddAction(App->action_manager->HealAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
 				}
