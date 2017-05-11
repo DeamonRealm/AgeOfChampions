@@ -36,11 +36,13 @@ void j1Pathfinding::Disable()
 	enabled = false;
 }
 
+void j1Pathfinding::Reset()
+{
+	to_path.clear();
+}
+
 bool j1Pathfinding::Start()
 {
-	//Load debug tiles trexture
-	path_texture = App->tex->Load("maps/path_tex.png");
-
 	return true;
 }
 
@@ -87,8 +89,7 @@ bool j1Pathfinding::PreUpdate()
 bool j1Pathfinding::CleanUp()
 {
 	to_path.clear();
-	App->tex->UnLoad(path_texture);
-	if(path_nodes != nullptr)	RELEASE_ARRAY(path_nodes);
+	if(path_nodes != nullptr)RELEASE_ARRAY(path_nodes);
 	return true;
 }
 

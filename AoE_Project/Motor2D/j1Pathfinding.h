@@ -36,6 +36,7 @@ public:
 
 	void Init();
 	void Disable();
+	void Reset();
 
 	// Called before the first frame
 	bool Start();
@@ -47,6 +48,7 @@ public:
 	uchar GetValueMap(int x, int y) const;
 	PathNode* GetPathNode(int x, int y);
 private:
+
 	PathNode* path_nodes = nullptr;
 	int width = 0;
 	int height = 0;
@@ -60,7 +62,6 @@ private:
 public:
 
 	//Path tile debug texture
-	SDL_Texture* path_texture = nullptr;
 	std::list<ToPath> to_path;
 	j1Timer pathTime;
 

@@ -689,6 +689,17 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 
 		//Load life
 		new_res->SetLife(cur_res_node.attribute("life").as_int());
+		//Tree can be saved in fall state
+		if (correct_type == TREE)
+		{
+			//Load tree cortex value
+			((Tree*)new_res)->SetCortex(cur_res_node.attribute("cortex").as_int());
+			if (((Tree*)new_res)->GetCortex() == 0)
+			{
+				new_res->SetResourceType(TREE_CUT);
+				App->animator->ResourcePlay(new_res);
+			}
+		}
 
 		//Load current building selected
 		if (cur_res_node.attribute("selected").as_bool() == true) new_res->Select();
@@ -984,6 +995,13 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 	std::list<Resource*>::const_iterator current_resource = resources.begin();
 	while (current_resource != resources.end())
 	{
+		//Dead tree are not saved
+		if (current_resource._Ptr->_Myval->GetResourceType() == CHOP)
+		{
+			current_resource++;
+			continue;
+		}
+
 		//Node where current resource is saved
 		pugi::xml_node cur_res_node = resources_node.append_child("res");
 
@@ -1003,6 +1021,12 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 		//Save resource life
 		cur_res_node.append_attribute("life") = current_resource._Ptr->_Myval->GetLife();
 
+		//If is a tree the cortex is saved
+		if (current_resource._Ptr->_Myval->GetResourceType() == TREE || current_resource._Ptr->_Myval->GetResourceType() == TREE_CUT)
+		{
+			cur_res_node.append_attribute("cortex") = ((Tree*)current_resource._Ptr->_Myval)->GetCortex();
+		}
+
 		//Save current resource selected
 		cur_res_node.append_attribute("selected") = current_resource._Ptr->_Myval->GetIfSelected();
 
@@ -1019,6 +1043,13 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 	std::list<Building*>::const_iterator current_building = buildings.begin();
 	while (current_building != buildings.end())
 	{
+		//Death buildings are not saved
+		if (current_building._Ptr->_Myval->GetLife() == 0)
+		{
+			current_building++;
+			continue;
+		}
+
 		//Node where current building is saved
 		pugi::xml_node cur_build_node = buildings_node.append_child("build");
 
@@ -1092,6 +1123,13 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 	std::list<Unit*>::const_iterator current_unit = units.begin();
 	while (current_unit != units.end())
 	{
+		//Death units are not saved
+		if (current_unit._Ptr->_Myval->GetLife() == 0)
+		{
+			current_unit++;
+			continue;
+		}
+
 		/*
 		- UNIT_TYPE
 		- diplomacy

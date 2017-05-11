@@ -63,6 +63,7 @@ void j1AI::Disable()
 	ai_research_worker->HardReset();
 	enemy_units.clear();
 	enemy_buildings.clear();
+	enemy_raid.clear();
 }
 
 void j1AI::Reset()
@@ -72,6 +73,7 @@ void j1AI::Reset()
 	ai_research_worker->HardReset();
 	enemy_units.clear();
 	enemy_buildings.clear();
+	enemy_raid.clear();
 
 	update_timer.Start();
 	research_timer.Start();
