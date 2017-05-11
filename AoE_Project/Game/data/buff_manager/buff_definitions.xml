@@ -71,7 +71,7 @@
   buff_type ="passive"
   attribute_type="vision"
   actor="0"
-  value="0.2"
+  value="1"
   />
   <buff
     buff_type ="passive"
