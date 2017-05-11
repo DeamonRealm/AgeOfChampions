@@ -47,12 +47,27 @@ void j1GroupMovement::AttackOnGroup(std::list<Entity*>* units, Entity* target, b
 		return;
 	for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 	{
+		
 		Unit* current_unit = (Unit*)item._Ptr->_Myval;
+		if (current_unit->GetUnitType() == MONK || current_unit->GetUnitType() == WIZARD_CHMP) continue;
 		if(building)
 			current_unit->AddAction((Action*)App->action_manager->AttackToBuildingAction(current_unit, (Building*)target));
 
 		else
 			current_unit->AddAction((Action*)App->action_manager->AttackToUnitAction(current_unit, (Unit*)target));
+	}
+}
+
+void j1GroupMovement::HealOnGroup(std::list<Entity*>* units, Entity * target)
+{
+	if (units->empty())
+		return;
+	for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
+	{
+
+		Unit* current_unit = (Unit*)item._Ptr->_Myval;
+		if (current_unit->GetUnitType() == MONK || current_unit->GetUnitType() == WIZARD_CHMP)
+				current_unit->AddAction((Action*)App->action_manager->AttackToUnitAction(current_unit, (Unit*)target));
 	}
 }
 

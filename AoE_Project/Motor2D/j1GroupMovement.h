@@ -40,6 +40,7 @@ public:
 	iPoint destination;
 	iPoint map_destination;
 	void AttackOnGroup(std::list<Entity*>* units, Entity* target, bool active);
+	void HealOnGroup(std::list<Entity*>* units, Entity* target);
 	void RecolectOnGroup(std::list<Entity*>* units, Resource* resource);
 
 	void GetGroupOfUnits(std::list<Entity*>* units, int x, int y, bool active);
