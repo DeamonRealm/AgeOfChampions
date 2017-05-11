@@ -4,9 +4,9 @@ Tribute game to Age of Empires II developed by DemonRealm.
 Age of Champions aims to preserve the core gameplay of the Age of Empires franchise while introducing new features such as champions similar to the ones from Warcraft III.
 
 
-## How to play (v0.7)
+## How to play (v0.8)
 
-The AI revamp started at 0.6 it's almost done but still need a lot of polish and tweaking, so give it a chance and play, play, play!! :·3
+To win you have to find the enemy city and destroy the enemy town center, don't forget to defend your town or the enemies will raid towards your city and destroy it. If the enemy manages to destroy your town center you lose the game.
 
 
 ### Main Menu
@@ -14,7 +14,7 @@ The AI revamp started at 0.6 it's almost done but still need a lot of polish and
 * Click on the book to open the game wiki in your browser
 * Click on the arrow to quit the game
 
-### Game
+### Game controls
 * Mouse Left Click to select a unit, building or resource
 * Mouse Right Click to Make the unit do actions (Move/Attack/Recolect)
 * Mouse Double Click to select all units of the same type
@@ -24,10 +24,14 @@ The AI revamp started at 0.6 it's almost done but still need a lot of polish and
 * Click on the [+] buttons on the skill tree to gain that skills (only one per tier)
 * Click on the skill icons to activate them
 * Arrows or drag the mouse to the corners to move the camera 
-* [F] Toggle Fullscreen/Windowed mode
 * Click on the scroll at the upper-right part of the screen to open the in-game menu
+* [F]: Toggle Fullscreen/Windowed mode
+* [P]: Pause the game
+* 2: Save game
+* 3: Load game
 
-Note: All spawns require the player to wait some time before the actual unit spawns, this is not shown in the UI.    
+Note: All spawns require the player to wait some time before the actual unit spawns, this is not shown in the 
+
 
 #### Debug controls
 (only available after activating debug mode (F1))
@@ -41,8 +45,7 @@ Note: All spawns require the player to wait some time before the actual unit spa
 * [W]: Generate Warrior
 * [E]: Generate Wizard
 * [R]: Generate Hunter
-* 2: Save
-* 3: Load
+
 
 ## Media 
 **Facebook:** https://www.facebook.com/DemonRealm.P2    
@@ -66,6 +69,27 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ## Changelog
+### v0.8 (Pre-Alpha)
+Added: Default game map has more resources
+Added: Skill indicators for champions skills
+Added: Multiple units can collect resources
+Added: Champion skills icons
+Added: Hunter skills sounds
+Added: Pause system
+Added: Champions lvl up system
+Improved: Mulitple units attacks
+Improved: AI troop generation
+Improved: AI building 
+Improved: Animation timing
+Fixed: #34 
+Fixed: #36 
+Fixed: #37 
+Fixed: #38 
+Fixed: #45 
+Fixed: #47 
+Fixed: #46 
+Fixed: #50 
+
 ### v0.7
 * Added: Art for the right branch hunter skills
 * Added: Art for enemy buildings 
