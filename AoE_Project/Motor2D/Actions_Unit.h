@@ -426,6 +426,8 @@ public:
 
 	bool Execute()
 	{
+		bool ret = false;
+
 		if (target->GetLife() == 0)
 		{
 			if (((Villager*)actor)->GetCurrentResources() > 0)
@@ -441,11 +443,24 @@ public:
 			//Reset the animation
 			((Unit*)actor)->SetAction(IDLE);
 			App->animator->UnitPlay((Villager*)actor);
-			return true;
+			ret = true;
 		}
 
 		//Actor recollect
-		return ((Villager*)actor)->Recollect(target);
+		ret = ((Villager*)actor)->Recollect(target);
+
+		//If there are more resources near to the depleted one add an action to continue the recollection
+		if (ret == true)
+		{
+			Resource* next_resource = App->entities_manager->GetNearestResource(target->GetPositionRounded(), target->GetResourceType(), target->GetDiplomacy(), 500);
+			if (next_resource != nullptr)
+			{
+				actor->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)actor, next_resource), PRIMARY);
+			}
+		}
+
+	
+		return ret;
 	}
 
 	//Get Methods -----------
