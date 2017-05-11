@@ -539,6 +539,7 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 			CorrectPath(path);
 			if (path->empty())
 			{
+				ToIdle();
 				delete path;
 				path = nullptr;
 				return true;
@@ -573,7 +574,10 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 			{
 				if (unit_target != nullptr)
 					if (unit_target == other_unit)
+					{
+						ToIdle();
 						return true;
+					}
 				if (path->size() < 2) {
 					if (target != iPoint(-1, -1))
 					{
@@ -624,7 +628,10 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 			int target_ditance = last_position.DistanceTo(unit_target->GetPositionRounded());
 			LOG("target_ditance %i", target_ditance);
 			if (MAX_DISTANCE > target_ditance)
+			{
+				ToIdle();
 				return true;
+			}
 		}
 		if (collisions == 0 && mutable_speed != 0.0f) 
 			mutable_speed = 0.0f;		
@@ -657,6 +664,12 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 void Unit::ResetDistance()
 {
 	current_distance = 0;
+}
+
+void Unit::ToIdle()
+{
+	action_type = IDLE;
+	App->animator->UnitPlay(this);
 }
 
 

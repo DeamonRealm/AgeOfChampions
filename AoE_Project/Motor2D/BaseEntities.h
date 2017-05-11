@@ -435,7 +435,7 @@ public:
 	//Actions ---------------
 	bool					Move(std::vector<iPoint>*& path, const iPoint& target = { -1,-1 },Unit* unit_target=nullptr);
 	void					ResetDistance();
-
+	void					ToIdle();
 	iPoint					Spawn( const iPoint& target = { -1,-1 });
 
 	bool					Repath(std::vector<iPoint>*& path, const iPoint & destination);

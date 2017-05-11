@@ -934,6 +934,9 @@ Wizard::Wizard(const Wizard & copy) : Champion(copy), area_attack_spell_2(copy.a
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, VISION_BUFF, false);
 	ability_lvl_2_A_particle = App->buff_manager->GetParticle(HEAL_PARTICLE, NO_DIRECTION);
 	ability_lvl_2_B_particle = App->buff_manager->GetParticle(TELEPORT_PARTICLE, NO_DIRECTION);
+	radius_hit_lvl_2_particle = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, NO_DIRECTION);
+	radius_hit_lvl_2_particle_teleport = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, NO_DIRECTION);
+	radius_hit_lvl_3_particle = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, NO_DIRECTION);
 
 	for (uint k = 0; k < 3; k++)
 	{
@@ -1048,8 +1051,10 @@ bool Wizard::Draw(bool debug)
 		
 			if (ability[1])
 			{	
-				radius_hit_lvl_2_particle.position = this->GetPositionRounded();
-				radius_hit_lvl_2_particle.Draw();
+				if (!check)
+					radius_hit_lvl_2_particle_teleport.SetBlitColor({ 255,10,10,50 });
+				radius_hit_lvl_2_particle_teleport.position = this->GetPositionRounded();
+				radius_hit_lvl_2_particle_teleport.Draw();
 			}
 			if (!check)
 				radius_hit_lvl_2_particle.SetBlitColor({ 255,10,10,50 });
@@ -1197,7 +1202,7 @@ void Wizard::SetAbility_lvl_2(bool choosed)
 		ability_lvl_2_B_particle = App->buff_manager->GetParticle(TELEPORT_PARTICLE, NO_DIRECTION);
 		ability_lvl_2_current_time = ability_lvl_2_cooldown;
 		ability_lvl_2_ready = true;
-
+		radius_hit_lvl_2_particle_teleport = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, NO_DIRECTION);
 	}
 	else
 	{
@@ -1673,8 +1678,8 @@ area_attack_skill_A_lvl_3(copy.area_attack_skill_A_lvl_3), area_limit_skill_A_lv
 	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
 	ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
 	ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
-
-
+	radius_hit_lvl_2_particle = App->buff_manager->GetParticle(RADIUS_HIT_SMALL_PARTICLE, SOUTH);
+	radius_hit_lvl_3_particle = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, SOUTH);
 	for (uint k = 0; k < 3; k++)
 	{
 		actived[k] = false;

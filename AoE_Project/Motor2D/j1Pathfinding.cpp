@@ -64,6 +64,7 @@ bool j1Pathfinding::PreUpdate()
 				std::vector<iPoint>* path = SimpleAstar(current_unit.unit->GetPositionRounded(), current_unit.destination);
 				if (path == nullptr)
 				{
+					current_unit.unit->ToIdle();
 					unit_it++;
 					to_path.pop_front();
 					continue;

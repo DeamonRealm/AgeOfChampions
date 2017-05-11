@@ -208,6 +208,7 @@ private:
 	Particle			ability_lvl_3_particle;
 
 	Particle			radius_hit_lvl_2_particle;
+	Particle			radius_hit_lvl_2_particle_teleport;
 	Particle			radius_hit_lvl_3_particle;
 
 	
