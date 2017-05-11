@@ -827,8 +827,11 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 			*/
 			//Load champion level
 			uint level = cur_unit_node.attribute("lvl").as_uint();
+			for (uint k = 1; k < level; k++)
+				((Champion*)new_unit)->LevelUp(false);
+
 			((Champion*)new_unit)->SetLevel(level);
-			for (uint k = 0; k < level; k++)((Champion*)new_unit)->LevelUp(false);
+
 			bool choosed_1 = cur_unit_node.attribute("ab_choosed_1").as_bool();
 			bool choosed_2 = cur_unit_node.attribute("ab_choosed_2").as_bool();
 			bool choosed_3 = cur_unit_node.attribute("ab_choosed_3").as_bool();
@@ -1427,8 +1430,8 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 		/*Buff Area*/				Circle buff_area({ 0,0 }, unit_node->attribute("buff_area_rad").as_uint());
 									buff_area.SetColor({ 255,50,50,255 });
 									((Champion*)new_def)->SetBuffArea(buff_area);
-		/*level 2 cap*/				((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("experience_lvl_2").as_uint());
-		/*level 3 cap*/				((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("experience_lvl_3").as_uint());
+		/*level 2 cap*/				((Champion*)new_def)->SetLvl2Cap(unit_node->attribute("experience_lvl_2").as_uint());
+		/*level 3 cap*/				((Champion*)new_def)->SetLvl3Cap(unit_node->attribute("experience_lvl_3").as_uint());
 		/*Ability lvl 3 Cooldown*/	((Champion*)new_def)->SetAbility_lvl_2_Cooldown(unit_node->attribute("ability_lvl_2_cooldown").as_uint());
 		/*Ability lvl 2 Cooldown*/	((Champion*)new_def)->SetAbility_lvl_3_Cooldown(unit_node->attribute("ability_lvl_3_cooldown").as_uint());
 		/*Attack for level*/		((Champion*)new_def)->SetAttackForLevel(unit_node->attribute("attack_for_level").as_uint());
@@ -1437,7 +1440,6 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 		/*Defense for level*/		((Champion*)new_def)->SetDefenseForLevel(unit_node->attribute("defense_for_level").as_float());
 		/*Speed for level*/			((Champion*)new_def)->SetSpeedForLevel(unit_node->attribute("speed_for_level").as_float());
 		/*View Area for level*/		((Champion*)new_def)->SetViewAreaForLevel(unit_node->attribute("view_area_for_level").as_uint());
-
 	}
 
 	//Add the generated unit in the units definitions entities manager array

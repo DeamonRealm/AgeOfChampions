@@ -182,8 +182,9 @@ void Champion::Cancel_Ability_lvl_3()
 
 void Champion::LevelUp(bool particle)
 {
-	if (particle)SetLevelUpParticle();
+	if (level >= MAX_LEVEL) return;
 
+	if (particle)SetLevelUpParticle();
 	App->buff_manager->RemoveTargetBuffs(this);
 	to_level_up = false;
 	level_up_particle.position = this->GetPositionRounded();
@@ -196,7 +197,7 @@ void Champion::LevelUp(bool particle)
 	defense += defense_for_level;
 	//Upgrade life
 	max_life += life_for_level;
-	life += life_for_level;
+//	life += life_for_level;
 	level_up_animation = particle;
 }
 
@@ -214,7 +215,7 @@ void Champion::LevelUpAnimation()
 
 void Champion::SetExperience(int exp)
 {
-	if (level == MAX_LEVEL) return;
+	if (level >= MAX_LEVEL) return;
 
 	current_experience += exp;
 	if (level < 1)
@@ -447,6 +448,8 @@ void Warrior::SaveAsDef(pugi::xml_node & node)
 	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
+
+
 
 	/*Max Life*/	node.append_attribute("max_life") = max_life;
 	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
@@ -978,6 +981,7 @@ void Wizard::SaveAsDef(pugi::xml_node & node)
 	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
+
 
 	/*Max Life*/	node.append_attribute("max_life") = max_life;
 	/*Life Pos X*/	node.append_attribute("life_pos_x") = life_position.x;
