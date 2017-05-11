@@ -71,6 +71,24 @@ bool Champion::Die()
 	return false;
 }
 
+bool Champion::Update()
+{
+	//Check if champion lvl up;
+	if (to_level_up) LevelUp();
+	if (level_up_animation) LevelUpAnimation();
+	if (actived[0] && level >= 0)CheckHability_lvl_1();
+	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
+	else if (actived[1] && level >= 1)CheckHability_lvl_2();
+	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
+	else if (actived[2] && level >= 2)CheckHability_lvl_3();
+
+	CheckCooldown();
+
+	action_worker.Update();
+
+	return true;
+}
+
 //Functionality =======================
 //Actions -------------------
 void Champion::CleanBuffedUnits()
@@ -462,24 +480,6 @@ void Warrior::SaveAsDef(pugi::xml_node & node)
 	/*Atk Tri Lenght*/		node.append_attribute("atk_triangle_length") = this->special_attack_area.GetLength();
 	/*Atk Tri Width*/		node.append_attribute("atk_triangle_width_angle") = this->special_attack_area.GetWidthAngle();
 
-}
-
-bool Warrior::Update()
-{
-	//Check if champion lvl up;
-	if (to_level_up) LevelUp();
-	if (level_up_animation) LevelUpAnimation();
-	if (actived[0] && level >= 0)CheckHability_lvl_1();
-	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level >= 1)CheckHability_lvl_2();
-	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
-	else if (actived[2] && level >= 2)CheckHability_lvl_3();
-
-	CheckCooldown();
-
-	action_worker.Update();
-
-	return true;
 }
 
 bool Warrior::Draw(bool debug)
@@ -1016,23 +1016,7 @@ void Wizard::SaveAsDef(pugi::xml_node & node)
 
 }
 
-bool Wizard::Update()
-{
-	//Check if champion lvl up;
-	if (to_level_up) LevelUp();
-	if (level_up_animation) LevelUpAnimation();
 
-	if (actived[0] && level >= 0)CheckHability_lvl_1();
-	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level >= 1)CheckHability_lvl_2();
-	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
-	else if (actived[2] && level >= 2)CheckHability_lvl_3();
-	action_worker.Update();
-
-
-	CheckCooldown();
-	return true;
-}
 bool Wizard::Draw(bool debug)
 {
 	bool ret = false;
@@ -1769,24 +1753,7 @@ void Hunter::SaveAsDef(pugi::xml_node & node)
 
 }
 
-bool Hunter::Update()
-{
-	//Check if champion lvl up;
-	if (to_level_up) LevelUp();
-	if (level_up_animation) LevelUpAnimation();
-	if (actived[0] && level >= 0)CheckHability_lvl_1();
-	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level >= 1)CheckHability_lvl_2();
-	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
-	else if (actived[2] && level >= 2)CheckHability_lvl_3();
-	action_worker.Update();
 
-	CheckCooldown();
-
-
-
-	return true;
-}
 
 bool Hunter::Draw(bool debug)
 {
@@ -2036,8 +2003,8 @@ void Hunter::SetAbility_lvl_3(bool choosed)
 	if (choosed)
 	{
 		ability_lvl_3_particle = App->buff_manager->GetParticle(LASER_PARTICLE, NO_DIRECTION);
-		ability_lvl_3_attack_value = ability_lvl_3_skill_A_attack_value;
-		ability_lvl_3_ready = true;
+		ability_lvl_3_attack_value = ability_lvl_3_skill_B_attack_value;
+		ability_lvl_3_ready = true; 
 		
 	}
 	else
@@ -2045,7 +2012,7 @@ void Hunter::SetAbility_lvl_3(bool choosed)
 		
 		radius_hit_lvl_3_particle = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, NO_DIRECTION);
 		ability_lvl_3_particle = App->buff_manager->GetParticle(DRAGON_SHOT_PARTICLE, NO_DIRECTION);
-		ability_lvl_3_attack_value = ability_lvl_3_skill_B_attack_value;
+		ability_lvl_3_attack_value = ability_lvl_3_skill_A_attack_value;
 		ability_lvl_3_ready = true;
 
 	}
@@ -2094,7 +2061,7 @@ void Hunter::Hability_lvl_3(int x, int y)
 {
 	ability_lvl_3_prepare_mode = false;
 
-	if (ability_lvl_3_timer.Read() < ability_lvl_3_cooldown)return;
+	if (!ability_lvl_3_ready)return;
 
 	//Focus the wizard in the spell direction
 	iPoint destination = iPoint(x, y);
@@ -2140,8 +2107,10 @@ void Hunter::Hability_lvl_3(int x, int y)
 		units_in[k]->DirectDamage(ability_lvl_3_attack_value);
 		}
 		else {
-		
-			units_in[k]->DirectDamage(ability_lvl_3_attack_value);
+
+		App->buff_manager->CallBuff(units_in[k], TIMED_BUFF, BURN_BUFF);
+		units_in[k]->DirectDamage(ability_lvl_3_attack_value);
+
 		}
 	}
 

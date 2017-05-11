@@ -63,6 +63,8 @@ public:
 
 	//Functionality ---------
 	virtual bool Die();
+	virtual bool Update();
+
 	//Actions -----
 	void		CleanBuffedUnits();
 	void		CheckCooldown();
@@ -153,8 +155,7 @@ public:
 	void ClearProtectedUnits();
 	//Save/Load methods
 	void	SaveAsDef(pugi::xml_node& node);
-	//Game Loop ---
-	bool Update();
+
 	//Draw --------
 	bool	Draw(bool debug);
 	//Actions -----
@@ -222,8 +223,7 @@ public:
 	//Functionality ---------
 	//Save/Load methods
 	void	SaveAsDef(pugi::xml_node& node);
-	//Game Loop ---
-	bool Update();
+
 	//Draw --------
 	bool	Draw(bool debug);
 	//Actions -----
@@ -301,8 +301,7 @@ public:
 	//Functionality ---------
 	//Save/Load methods
 	void	SaveAsDef(pugi::xml_node& node);
-	//Game Loop ---
-	bool Update();
+
 	//Draw --------
 	bool	Draw(bool debug);
 	//Actions -----
