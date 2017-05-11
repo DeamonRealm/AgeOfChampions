@@ -539,7 +539,6 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 			CorrectPath(path);
 			if (path->empty())
 			{
-				ToIdle();
 				delete path;
 				path = nullptr;
 				return true;
@@ -575,7 +574,6 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 				if (unit_target != nullptr)
 					if (unit_target == other_unit)
 					{
-						ToIdle();
 						return true;
 					}
 				if (path->size() < 2) {
@@ -629,7 +627,6 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 			LOG("target_ditance %i", target_ditance);
 			if (MAX_DISTANCE > target_ditance)
 			{
-				ToIdle();
 				return true;
 			}
 		}

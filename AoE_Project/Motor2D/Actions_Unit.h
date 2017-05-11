@@ -33,7 +33,7 @@ public:
 	//Destructor ------------
 	~MoveUnitAction()
 	{
-
+	
 	}
 
 	//Functionality ---------
@@ -106,6 +106,7 @@ public:
 
 	void CleanUp()
 	{
+		((Unit*)actor)->ToIdle();
 		((Unit*)actor)->ResetDistance();
 		this->actor = nullptr;
 		if (path != nullptr)
