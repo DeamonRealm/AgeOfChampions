@@ -162,7 +162,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
     
     <!-- Disappear Action-->
-    <action enum="disappear" speed="200">
+    <action enum="disappear" speed="1500">
       <direction enum="south">
         <sprite n="warrior_dissapear/000_warrior_dissapear.bmp" x="310" y="356" w="50" h="23" pX="-0.1" pY="0.434783"/>
         <sprite n="warrior_dissapear/001_warrior_dissapear.bmp" x="362" y="356" w="48" h="22" pX="-0.125" pY="0.409091"/>
@@ -205,7 +205,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
     
         <!-- Idle Action-->
-    <action enum="idle" speed="200">
+    <action enum="idle" speed="150">
       <direction enum="south">
         <sprite n="warrior_idle/000_warrior_idle.bmp" x="150" y="429" w="37" h="42" pX="0.540541" pY="0.833333"/>
         <sprite n="warrior_idle/001_warrior_idle.bmp" x="189" y="429" w="40" h="42" pX="0.55" pY="0.833333"/>
@@ -253,7 +253,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
     
         <!-- Walk Action-->
-    <action enum="walk" speed="200">
+    <action enum="walk" speed="100">
       <direction enum="south">
         <sprite n="warrior_walk/000_warrior_walk.bmp" x="39" y="528" w="23" h="53" pX="0.565217" pY="0.830189"/>
         <sprite n="warrior_walk/001_warrior_walk.bmp" x="64" y="528" w="24" h="48" pX="0.625" pY="0.854167"/>

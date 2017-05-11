@@ -204,7 +204,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     </action>
 
     <!--Idle Action-->
-    <action enum ="idle" speed="200">
+    <action enum ="idle" speed="150">
       <direction enum="south">
         <sprite n="archer_idle/000_archer_idle.bmp" x="753" y="541" w="49" h="51" pX="0.591837" pY="0.72549"/>
         <sprite n="archer_idle/001_archer_idle.bmp" x="804" y="541" w="48" h="51" pX="0.583333" pY="0.72549"/>
