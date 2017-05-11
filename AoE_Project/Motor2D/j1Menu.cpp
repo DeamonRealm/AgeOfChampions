@@ -16,6 +16,7 @@
 #include "j1SoundManager.h"
 #include "j1FogOfWar.h"
 #include "j1Map.h"
+#include "j1InputManager.h"
 
 //UI Elements
 #include "UI_Button.h"
@@ -249,7 +250,7 @@ bool j1Menu::PreUpdate()
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) App->SetQuit();
+	if (App->input_manager->GetEvent(ESCAPE) == INPUT_DOWN) App->SetQuit();
 
 	return true;
 }

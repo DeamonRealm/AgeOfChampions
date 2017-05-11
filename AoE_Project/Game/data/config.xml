@@ -57,6 +57,10 @@
     <!--Load/Save-->
     <key id ="2"  event ="save"/>
     <key id ="3"  event ="load"/>
+    <!--Pause-->
+    <key id ="P"  event="pause"/>
+    <!--Full Screen-->
+    <key id ="F"  event="full_screen"/>
   </input_manager>
   
   <file_system>

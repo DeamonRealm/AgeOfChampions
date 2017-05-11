@@ -17,6 +17,55 @@
 #include "Hud_GamePanel.h"
 #include "Hud_MinimapPanel.h"
 
+///Class Arrow ----------------------------------
+Arrow::Arrow()
+{
+}
+Arrow::~Arrow()
+{
+}
+bool Arrow::Update()
+{
+	NewPosition(destination);
+	if (position == destination)return true;
+	return false;
+}
+
+void Arrow::Draw()
+{
+	App->render->CallBlit(App->animator->arrow, position.x, position.y, &arrow_rect, flip, 0, 255, pivot_x, pivot_y, nullptr, angle);
+}
+
+void Arrow::NewPosition(iPoint goal)
+{
+	iPoint location = position;
+
+	int norm = location.DistanceTo(goal);
+	float x_step = speed * (App->GetDT() * 100) * (goal.x - location.x) / norm;
+	float y_step = speed * (App->GetDT() * 100) * (goal.y - location.y) / norm;
+
+
+	//Add the calculated values at the unit & mark position
+	position.x += x_step;
+	position.y += y_step;
+}
+
+void Arrow::PrepareArrow(iPoint start, iPoint goal)
+{
+	int deltaY = start.y - goal.y;
+	int deltaX = start.x - goal.x;
+	angle = atan2(deltaY, deltaX)*(180 / 3.14) + 180;
+	//angle = 
+	//	if (angle >= 0 && angle < 90 || angle < 270 && angle >= 360)
+	//	flip = true;
+}
+
+bool Arrow::operator==(const Arrow & other) const
+{
+	return this->destination == other.destination && this->angle == other.angle&&this->position == other.position;
+}
+///---------------------------------------------
+
 ///Class Entity ---------------------------------
 //Constructors ========================
 Entity::Entity() :name(""), action_worker()
@@ -2884,53 +2933,4 @@ bool Building::GetFogDiscovered() const
 {
 	return fog_discovered;
 }
-Arrow::Arrow()
-{
-}
-Arrow::~Arrow()
-{
-}
-///-----------------------------------------------
-bool Arrow::Draw()
-{
-
-	NewPosition(destination);
-
-		App->render->CallBlit(App->animator->arrow, position.x, position.y, &arrow_rect, flip, 0, 255, pivot_x, pivot_y, nullptr,angle);
-	if (position == destination)return true;
-	return false;
-}
-
-
-
-void Arrow::NewPosition(iPoint goal)
-{
-	iPoint location = position;
-
-	int norm = location.DistanceTo(goal);
-	float x_step = speed * (App->GetDT() * 100) * (goal.x - location.x) / norm;
-	float y_step = speed * (App->GetDT() * 100) * (goal.y - location.y) / norm;
-
-
-	//Add the calculated values at the unit & mark position
-	position.x += x_step;
-	position.y += y_step;
-}
-
-void Arrow::PrepareArrow(iPoint start, iPoint goal)
-{
-	int deltaY = start.y - goal.y;
-	int deltaX = start.x - goal.x;
-	angle = atan2(deltaY, deltaX)*(180 / 3.14)+180;
-	//angle = 
-//	if (angle >= 0 && angle < 90 || angle < 270 && angle >= 360)
-	//	flip = true;
-}
-
-bool Arrow::operator==(const Arrow & other) const
-{
-	return this->destination == other.destination && this->angle == other.angle&&this->position == other.position;
-}
-
-
-///---------------------------------------------
+///----------------------------------------------

@@ -184,47 +184,32 @@ bool j1App::Update()
 	{
 		EnableActiveModulesNow();
 	}
-	else
+	
+	PrepareUpdate();
+
+	if (input->GetWindowEvent(WE_QUIT) == true)
+		ret = false;
+
+	if (ret == true)
 	{
-		//Activate/Deactivate debug mode
-		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		{
-			debug_mode = !debug_mode;
-		}
-
-		//Activate/Deactivate draw debug mode
-		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		{
-			map_debug_mode = !map_debug_mode;
-		}
-
+		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
+		BROFILER_FRAME("PreUpdate");
+		ret = PreUpdate();
 	}
 
-		PrepareUpdate();
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
+		BROFILER_FRAME("DoUpdate");
+		ret = DoUpdate();
+	}
 
-		if (input->GetWindowEvent(WE_QUIT) == true)
-			ret = false;
-
-		if (ret == true)
-		{
-			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
-			BROFILER_FRAME("PreUpdate");
-			ret = PreUpdate();
-		}
-
-		if (ret == true)
-		{
-			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
-			BROFILER_FRAME("DoUpdate");
-			ret = DoUpdate();
-		}
-
-		if (ret == true)
-		{
-			BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
-			BROFILER_FRAME("PostUpdate");
-			ret = PostUpdate();
-		}
+	if (ret == true)
+	{
+		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
+		BROFILER_FRAME("PostUpdate");
+		ret = PostUpdate();
+	}
 
 	
 

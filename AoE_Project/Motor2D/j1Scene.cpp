@@ -133,19 +133,6 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	/*if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		App->scene->Disable();
-		App->player->Disable();
-		App->AI->Disable();
-		App->entities_manager->Disable();
-		App->fog_of_war->Disable();
-		App->animator->Disable();
-		App->buff_manager->Disable();
-		App->map->Disable();
-		App->menu->Enable();
-	}*/
-
 	//Call save game method
 	if (App->input_manager->GetEvent(SAVE) == INPUT_STATE::INPUT_DOWN)
 	{
@@ -158,7 +145,24 @@ bool j1Scene::PostUpdate()
 		App->LoadGame("party_file.xml", false);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	//Activate/Deactivate debug mode
+	else if (App->input_manager->GetEvent(ENTITY_DEBUG_MODE) == INPUT_DOWN)
+	{
+		App->debug_mode = !App->debug_mode;
+	}
+
+	//Activate/Deactivate draw debug mode
+	else if (App->input_manager->GetEvent(MAP_DEBUG_MODE) == INPUT_DOWN)
+	{
+		App->map_debug_mode = !App->map_debug_mode;
+	}
+
+	else if (App->input_manager->GetEvent(PAUSE) == INPUT_DOWN)
+	{
+		App->paused = !App->paused;
+	}
+
+	if (App->input_manager->GetEvent(FULL_SCREEN) == INPUT_DOWN)
 	{
 		if (App->win->fullscreen)
 		{

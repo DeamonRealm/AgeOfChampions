@@ -91,6 +91,8 @@ INPUT_EVENT j1InputManager::StrToInputEvent(const char * str) const
 	if (strcmp(str, "set_hability_b") == 0)		return INPUT_EVENT::SET_HABILITY_B;
 	if (strcmp(str, "save") == 0)				return INPUT_EVENT::SAVE;
 	if (strcmp(str, "load") == 0)				return INPUT_EVENT::LOAD;
+	if (strcmp(str, "pause") == 0)				return INPUT_EVENT::PAUSE;
+	if (strcmp(str, "full_screen") == 0)		return INPUT_EVENT::FULL_SCREEN;
 	return UNKNOWN_INPUT;
 }
 

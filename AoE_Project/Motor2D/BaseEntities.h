@@ -220,28 +220,35 @@ enum COLLISION_TYPE
 	COLLISION_MOVE
 };
 // --------------------------
+
+///Class Arrow ----------------------------------
 struct Arrow
 {
 	Arrow();
 	~Arrow();
-	bool Draw();
 
-	
-	iPoint position = { 0.0f,0.0f };
-	iPoint destination = { 0,0 };
-	SDL_Rect arrow_rect = { 0,0,0,0 };
-	uint pivot_x = 0;
-	uint pivot_y = 0;
-	float speed = 5.0f;
-	double angle = 0.0;
-	int id = 0;
-	//SDL_Texture* arrow_texture = nullptr;
-	//Sprite arrow_sprite;
-	bool flip = false;
+	//Game Loop
+	bool Update();
+	void Draw();
+
+	//Data
+	iPoint		position = { 0.0f,0.0f };
+	iPoint		destination = { 0,0 };
+	SDL_Rect	arrow_rect = { 0,0,0,0 };
+	uint		pivot_x = 0;
+	uint		pivot_y = 0;
+	float		speed = 5.0f;
+	double		angle = 0.0;
+	int			id = 0;
+	bool		flip = false;
+
+	//Functionality
 	void NewPosition(iPoint goal);
 	void PrepareArrow(iPoint start, iPoint goal);
 	bool operator ==(const Arrow& other)const;
 };
+///----------------------------------------------
+
 ///Class Entity ---------------------------------
 //Base Class that define the general attributes of all kind of entities
 class Entity

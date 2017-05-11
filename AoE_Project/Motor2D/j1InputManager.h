@@ -32,7 +32,14 @@ enum INPUT_EVENT
 	
 	//Save / Load
 	SAVE,
-	LOAD
+	LOAD,
+
+	//Pause
+	PAUSE,
+
+	//Full Screen
+	FULL_SCREEN
+
 };
 
 enum INPUT_STATE

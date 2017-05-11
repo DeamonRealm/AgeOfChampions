@@ -47,9 +47,6 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
-	// Called each loop iteration
-	virtual bool PostUpdate();
-
 	//Draw entities
 	bool Draw();
 

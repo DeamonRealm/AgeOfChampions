@@ -194,6 +194,8 @@ public:
 
 	bool	debug_mode = false;
 	bool	map_debug_mode = false;
+	
+	bool	paused = false;
 
 };
 

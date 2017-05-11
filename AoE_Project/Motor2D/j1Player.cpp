@@ -263,7 +263,7 @@ bool j1Player::PreUpdate()
 
 bool j1Player::PostUpdate()
 {
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->input_manager->GetEvent(ESCAPE) == INPUT_DOWN)
 	{
 		game_panel->ActivatePauseMenu();
 	}

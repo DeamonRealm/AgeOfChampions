@@ -308,16 +308,22 @@ bool j1EntitiesManager::Update(float dt)
 {
 	bool ret = true;
 
-	//Update alive arrows
+	//Draw alive arrows
 	std::list<Arrow*>::const_iterator arrows = all_arrows.begin();
 	for (; arrows != all_arrows.end(); arrows++)
 	{
 
-		if (arrows._Ptr->_Myval->Draw())
+		if (arrows._Ptr->_Myval->Update())
 		{
 			RemoveArrow(arrows._Ptr->_Myval);
 			RELEASE(arrows._Ptr->_Myval);
 		}
+	}
+	//Update alive arrows
+	arrows = all_arrows.begin();
+	for (; arrows != all_arrows.end(); arrows++)
+	{
+		arrows._Ptr->_Myval->Draw();
 	}
 
 	//Update all the units
@@ -385,13 +391,6 @@ bool j1EntitiesManager::Update(float dt)
 	ready_to_waste.clear();
 
 	return ret;
-}
-
-bool j1EntitiesManager::PostUpdate()
-{
-
-
-	return true;
 }
 
 bool j1EntitiesManager::Draw()
@@ -1545,7 +1544,7 @@ bool j1EntitiesManager::AddBuildingDefinition(const pugi::xml_node * building_no
 	/*Mark Height*/		mark.SetHeight(mark.GetWidth() * sin(mark.GetXAngle()));
 	/*Mark Displace*/	iPoint displacement(building_node->attribute("mark_x").as_int(), building_node->attribute("mark_y").as_int());
 						mark.SetDisplacement(displacement);
-	/*Mark Color*/		mark.SetColor({ 55,255,255,255 });
+	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
 						new_def->SetMark(mark);
 	/*Interaction Area*/Circle area;
 	/*I.Area Width*/	area.SetRad(building_node->attribute("interaction_area_w").as_uint());
