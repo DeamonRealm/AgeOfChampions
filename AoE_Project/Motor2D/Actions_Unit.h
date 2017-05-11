@@ -450,7 +450,7 @@ public:
 		ret = ((Villager*)actor)->Recollect(target);
 
 		//If there are more resources near to the depleted one add an action to continue the recollection
-		if (ret == true)
+		if (ret == true && actor->GetDiplomacy() != ENEMY)
 		{
 			Resource* next_resource = App->entities_manager->GetNearestResource(target->GetPositionRounded(), target->GetResourceType(), target->GetDiplomacy(), 500);
 			if (next_resource != nullptr)
