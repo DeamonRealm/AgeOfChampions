@@ -574,14 +574,29 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	skill_tree->SetLayer(15);
 	skill_tree->AdjustBox();
 
-	mele_champion.reserve(MAX_SKILLS_LEARNED);
-	mele_champion.push_back({ 651,38, 36, 36 });
-	mele_champion.push_back({ 651,0,36,36 });
-	mele_champion.push_back({ 651,114,36,36 });
-	mele_champion.push_back({ 651,76,36,36 });
-	// must Change
-	mele_champion.push_back({ 576,477, 36, 36 });
-	mele_champion.push_back({ 612,477,36,36 });
+	warrior_skills_rect.reserve(MAX_SKILLS_LEARNED);
+	warrior_skills_rect.push_back({ 651,38, 36, 36 });
+	warrior_skills_rect.push_back({ 651,0,36,36 });
+	warrior_skills_rect.push_back({ 651,114,36,36 });
+	warrior_skills_rect.push_back({ 651,76,36,36 });
+	warrior_skills_rect.push_back({ 651,190, 36, 36 });
+	warrior_skills_rect.push_back({ 651,152,36,36 });
+
+	wizard_skills_rect.reserve(MAX_SKILLS_LEARNED);
+	wizard_skills_rect.push_back({ 689,454, 36, 36 });
+	wizard_skills_rect.push_back({ 689,491,36,36 });
+	wizard_skills_rect.push_back({ 689,565,36,36 });
+	wizard_skills_rect.push_back({ 689,528,36,36 });
+	wizard_skills_rect.push_back({ 689,639,36,36 });
+	wizard_skills_rect.push_back({ 689,602, 36, 36 });
+
+	archer_skills_rect.reserve(MAX_SKILLS_LEARNED);
+	archer_skills_rect.push_back({ 651,454, 36, 36 });
+	archer_skills_rect.push_back({ 651,491,36,36 });
+	archer_skills_rect.push_back({ 651,528,36,36 });
+	archer_skills_rect.push_back({ 651,565,36,36 });
+	archer_skills_rect.push_back({ 651,602, 36, 36 });
+	archer_skills_rect.push_back({ 651,639,36,36 });
 
 	skills.reserve(MAX_SKILLS_LEARNED);
 	skills_buttons.reserve(MAX_SKILLS_LEARNED);
@@ -590,7 +605,7 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills.push_back((UI_Image*)App->gui->GenerateUI_Element(IMG));
 		skills[i]->SetBox({ 0, 0, 67, 61 });
 		skills[i]->ChangeTextureId(ICONS);
-		skills[i]->ChangeTextureRect(mele_champion[i]);
+		skills[i]->ChangeTextureRect(warrior_skills_rect[i]);
 		skills[i]->SetBoxPosition(97 + 67 * (i % 2), 177 + 55 * (i / 2));
 		skills[i]->Desactivate();
 
@@ -840,6 +855,7 @@ bool HeroPanel::ActivateCell(int i)
 		if (skill_tree->GetActiveState() == true)
 		{
 			App->sound->PlayGUIAudio(CLICK_INGAME);
+			SetSkillTree();
 			skill_tree->Desactivate();
 			skill_tree->DesactivateChids();
 		}
@@ -982,6 +998,24 @@ void HeroPanel::SetSkillTree()
 	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
 	{
 		skills_buttons[i]->button_state = UP;
+	}
+	if (curr_skills_tree != champion_selected)
+	{
+		curr_skills_tree = champion_selected;
+		ChangeSkillIcons();
+	}
+}
+
+void HeroPanel::ChangeSkillIcons()
+{
+	std::vector<SDL_Rect>* curr;
+	if (curr_skills_tree == WARRIOR_CHMP) curr = &warrior_skills_rect;
+	else if (curr_skills_tree == WIZARD_CHMP) curr = &wizard_skills_rect;
+	else curr = &archer_skills_rect;
+
+	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
+	{
+		skills[i]->ChangeTextureRect((*curr)[i]);
 	}
 }
 

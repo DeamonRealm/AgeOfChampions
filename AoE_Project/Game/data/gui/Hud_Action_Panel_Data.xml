@@ -158,25 +158,25 @@ pc => population cost to activate cell
       <cell cp ="0" cl ="2" al ="1" x="651" y="0" w="36" h="36"    ci ="Passive Hability: Berserk"/>
       <cell cp ="1" cl ="1" al ="1" x="651" y="114" w="36" h="36"  ci ="Stun"/>
       <cell cp ="1" cl ="2" al ="1" x="651" y="76" w="36" h="36"   ci ="Slash"/>
-      <cell cp ="2" cl ="1" al ="1" x="576" y="477" w="36" h="36"  ci ="n3 special special"/>
-      <cell cp ="2" cl ="2" al ="1" x="612" y="477" w="36" h="36"  ci ="n3 special special 2"/>
-      <cell cp ="3" cl ="0" al ="1" x="504" y="441" w="36" h="36"  ci ="Open Warrior Skill Tree"/>
+      <cell cp ="2" cl ="1" al ="1" x="651" y="190" w="36" h="36"  ci ="n3 special special"/>
+      <cell cp ="2" cl ="2" al ="1" x="651" y="152" w="36" h="36"  ci ="n3 special special 2"/>
+      <cell cp ="3" cl ="0" al ="1" x="651" y="750" w="36" h="36"  ci ="Open Warrior Skill Tree"/>
       <cell cp ="4" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Warrior"/>
-      <cell cp ="5" cl ="1" al ="1" x="651" y="38" w="36" h="36"   ci ="Passive Hability: Heal All"/>
-      <cell cp ="5" cl ="2" al ="1" x="651" y="0" w="36" h="36"    ci ="Passive Hability: Vitaliti Up"/>
-      <cell cp ="6" cl ="1" al ="1" x="651" y="114" w="36" h="36"  ci ="tp"/>
-      <cell cp ="6" cl ="2" al ="1" x="651" y="76" w="36" h="36"   ci ="Kaboom"/>
-      <cell cp ="7" cl ="1" al ="1" x="576" y="477" w="36" h="36"  ci ="n3 special special"/>
-      <cell cp ="7" cl ="2" al ="1" x="612" y="477" w="36" h="36"  ci ="n3 special special 2"/>
-      <cell cp ="8" cl ="0" al ="1" x="504" y="441" w="36" h="36"  ci ="Open Mage Skill Tree"/>
+      <cell cp ="5" cl ="1" al ="1" x="689" y="454" w="36" h="36"  ci ="Passive Hability: Heal All"/>
+      <cell cp ="5" cl ="2" al ="1" x="689" y="491" w="36" h="36"  ci ="Passive Hability: Vitaliti Up"/>
+      <cell cp ="6" cl ="1" al ="1" x="689" y="565" w="36" h="36"  ci ="heal"/>
+      <cell cp ="6" cl ="2" al ="1" x="689" y="528" w="36" h="36"  ci ="tp"/>
+      <cell cp ="7" cl ="1" al ="1" x="689" y="639" w="36" h="36"  ci ="n3 special special"/>
+      <cell cp ="7" cl ="2" al ="1" x="689" y="602" w="36" h="36"  ci ="n3 special special2"/>
+      <cell cp ="8" cl ="0" al ="1" x="651" y="713" w="36" h="36"  ci ="Open Mage Skill Tree"/>
       <cell cp ="9" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Mage"/>
-      <cell cp ="10" cl ="1" al ="1" x="651" y="38" w="36" h="36"  ci ="Passive Hability: Archer acc++"/>
-      <cell cp ="10" cl ="2" al ="1" x="651" y="0" w="36" h="36"   ci ="Passive Hability: Archer los++"/>
-      <cell cp ="11" cl ="1" al ="1" x="651" y="114" w="36" h="36" ci ="shot"/>
-      <cell cp ="11" cl ="2" al ="1" x="651" y="76" w="36" h="36"  ci ="shot shot shot"/>
-      <cell cp ="12" cl ="1" al ="1" x="576" y="477" w="36" h="36" ci ="n"/>
-      <cell cp ="12" cl ="2" al ="1" x="612" y="477" w="36" h="36" ci ="n"/>
-      <cell cp ="13" cl ="0" al ="1" x="504" y="441" w="36" h="36" ci ="Open Archer Skill Tree"/>
+      <cell cp ="10" cl ="1" al ="1" x="651" y="454" w="36" h="36" ci ="Passive Hability: Archer acc++"/>
+      <cell cp ="10" cl ="2" al ="1" x="651" y="491" w="36" h="36" ci ="Passive Hability: Archer los++"/>
+      <cell cp ="11" cl ="1" al ="1" x="651" y="528" w="36" h="36" ci ="shot"/>
+      <cell cp ="11" cl ="2" al ="1" x="651" y="565" w="36" h="36" ci ="shot shot shot"/>
+      <cell cp ="12" cl ="1" al ="1" x="651" y="602" w="36" h="36" ci ="n"/>
+      <cell cp ="12" cl ="2" al ="1" x="651" y="639" w="36" h="36" ci ="n"/>
+      <cell cp ="13" cl ="0" al ="1" x="689" y="713" w="36" h="36" ci ="Open Archer Skill Tree"/>
       <cell cp ="14" cl ="0" al ="1" x="0" y="76" w="36" h="36"    ci ="Kill Archer"/>
     </Champion>
   </Units>

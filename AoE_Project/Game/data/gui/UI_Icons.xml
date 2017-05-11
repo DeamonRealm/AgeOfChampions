@@ -337,7 +337,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Twohandedswordman_enemy" x="540" y="729" w="36" h="36" pX="0" pY="0"/>
     <sprite n="Wagon_enemy" x="576" y="729" w="36" h="36" pX="0" pY="0"/>
 
-<sprite n="Arbalest" x="609" y="513" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="Arbalest" x="609" y="513" w="36" h="36" pX="0" pY="0"/>
     <sprite n="Archer" x="0" y="549" w="36" h="36" pX="0" pY="0"/>
     <sprite n="BatteringRam" x="36" y="549" w="36" h="36" pX="0" pY="0"/>
     <sprite n="Berserker" x="72" y="549" w="36" h="36" pX="0" pY="0"/>
@@ -393,28 +393,46 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="Wagon" x="576" y="621" w="36" h="36" pX="0" pY="0"/>
     <sprite n="Wolf" x="612" y="621" w="36" h="36" pX="0" pY="0"/>
 
+    <sprite n="IU_Campions/IU_IconWarrior.png" x="651" y="227" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Ability1.png" x="651" y="0" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Ability2.png" x="651" y="38" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Ability3.png" x="651" y="76" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Ability4.png" x="651" y="114" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Ability5.png" x="651" y="152" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Ability6.png" x="651" y="190" w="36" h="36" pX="0" pY="0"/>
 
- <sprite n="IU_Campions/IU_IconWarrior.png" x="651" y="227" w="36" h="36" pX="0" pY="0"/>
-<sprite n="IU_Campions/IU_Ability1.png" x="651" y="0" w="36" h="36" pX="0" pY="0"/>
- <sprite n="IU_Campions/IU_Ability2.png" x="651" y="38" w="36" h="36" pX="0" pY="0"/>
- <sprite n="IU_Campions/IU_Ability3.png"  x="651" y="76" w="36" h="36" pX="0" pY="0"/>
- <sprite n="IU_Campions/IU_Ability4.png" x="651" y="114" w="36" h="36" pX="0" pY="0"/>
- <sprite n="IU_Campions/IU_Ability5.png"  x="651" y="152" w="36" h="36" pX="0" pY="0"/>
- <sprite n="IU_Campions/IU_Ability6.png"  x="651" y="190" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl1AtkArcher.png" x="651" y="454" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl1DefArcher.png" x="651" y="491" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl2AtkArcher.png" x="651" y="528" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl2DefArcher.png" x="651" y="565" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl3AtkArcher.png" x="651" y="602" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl3DefArcher.png" x="651" y="639" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_IconArcher.png" x="651" y="676" w="36" h="36" pX="0" pY="0"/>
+    
+    <sprite n="IU_Campions/IU_Lvl1AtkWizard.png" x="689" y="454" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl1DefWizard.png" x="689" y="491" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl2AtkWizard.png" x="689" y="528" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl2DefWizard.png" x="689" y="565" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl3AtkWizard.png" x="689" y="602" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Lvl3DefWizard.png" x="689" y="639" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_IconWizard.png" x="689" y="676" w="36" h="36" pX="0" pY="0"/>
+    
+    <sprite n="IU_Campions/IU_ArcherTree.png" x="689" y="713" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_WizardTree.png" x="651" y="713" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_WarriorTree.png" x="651" y="750" w="36" h="36" pX="0" pY="0"/>
 
- <sprite n="IU_Campions/IU_Cooldown0.png"  x="689" y="259" w="36" h="36" pX="0" pY="0"/>
-<sprite n="IU_Campions/IU_Cooldown1.png"  x="689" y="222" w="36" h="36" pX="0" pY="0"/>
-<sprite n="IU_Campions/IU_Cooldown2.png"  x="689" y="185" w="36" h="36" pX="0" pY="0"/>
-<sprite n="IU_Campions/IU_Cooldown3.png"  x="689" y="148" w="36" h="36" pX="0" pY="0"/>
-<sprite n="IU_Campions/IU_Cooldown4.png"  x="689" y="111" w="36" h="36" pX="0" pY="0"/>
-<sprite n="IU_Campions/IU_Cooldown5.png"  x="689" y="74" w="36" h="36" pX="0" pY="0"/>
-<sprite n="IU_Campions/IU_Cooldown6.png"  x="689" y="37" w="36" h="36" pX="0" pY="0"/>
-<sprite n="IU_Campions/IU_Cooldown7.png"  x="689" y="0" w="36" h="36" pX="0" pY="0"/>
-
-
- <sprite n="IU_Campions/IU_SquareDown.png" x="650" y="330" w="40" h="40" pX="0" pY="0"/>
- <sprite n="IU_Campions/IU_SquareWood.png"  x="650" y="371" w="40" h="40" pX="0" pY="0"/>
- <sprite n="IU_Campions/IU_SquareUp.png"  x="650" y="412" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Cooldown0.png" x="689" y="259" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Cooldown1.png" x="689" y="222" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Cooldown2.png" x="689" y="185" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Cooldown3.png" x="689" y="148" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Cooldown4.png" x="689" y="111" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Cooldown5.png" x="689" y="74" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Cooldown6.png" x="689" y="37" w="36" h="36" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_Cooldown7.png" x="689" y="0" w="36" h="36" pX="0" pY="0"/>
+    
+    <sprite n="IU_Campions/IU_SquareDown.png" x="650" y="330" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_SquareWood.png"  x="650" y="371" w="40" h="40" pX="0" pY="0"/>
+    <sprite n="IU_Campions/IU_SquareUp.png" x="650" y="412" w="40" h="40" pX="0" pY="0"/>
 
 	</Units>
 </TextureAtlas>

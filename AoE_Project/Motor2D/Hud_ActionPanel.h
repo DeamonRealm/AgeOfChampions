@@ -209,6 +209,7 @@ public:
 
 	void LearnSkill(int i);
 	void SetSkillTree();
+	void ChangeSkillIcons();
 	void SetNewOrder();
 	void ChangePanelTarget(Entity* new_target);
 
@@ -234,7 +235,10 @@ private:
 	std::vector<UI_Fixed_Button*>	skills_buttons;
 
 	// Champions Skills;
-	std::vector<SDL_Rect>			mele_champion;
+	std::vector<SDL_Rect>			warrior_skills_rect;
+	std::vector<SDL_Rect>			wizard_skills_rect;
+	std::vector<SDL_Rect>			archer_skills_rect;
+	UNIT_TYPE						curr_skills_tree = (UNIT_TYPE)0;
 	int								activate_skill = -1;
 };
 
