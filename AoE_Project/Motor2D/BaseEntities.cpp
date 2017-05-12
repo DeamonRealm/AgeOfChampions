@@ -409,7 +409,7 @@ void Unit::SaveAsDef(pugi::xml_node & node)
 	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
-	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+	/*Vision rad*/	node.append_attribute("vision_rad") = GetVisionBase();
 	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
@@ -420,7 +420,7 @@ void Unit::SaveAsDef(pugi::xml_node & node)
 	/*Speed*/		node.append_attribute("speed") = speed;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
 	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
-	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
+	/*Atk Range*/	node.append_attribute("attack_range") = GetAttackAreaBase();
 	/*Defense*/		node.append_attribute("defense") = defense;
 	/*Food Cost*/	node.append_attribute("food_cost") = food_cost;
 	/*Wood Cost*/	node.append_attribute("wood_cost") = wood_cost;
@@ -1585,7 +1585,7 @@ bool Unit::HealUnit(Unit* target)
 	//Reset action timer
 	action_timer.Start();
 
-	if (target->GetLife() >= target->GetMaxLife()) ret = true;
+	if (target->GetLife() >= target->GetTotalMaxLife()) ret = true;
 	return ret;
 }
 
@@ -1647,13 +1647,15 @@ bool Unit::Cover()
 bool Unit::DirectDamage(uint damage)
 {
 	bool ret = false;
+	
+	uint total_damage = MAX(damage-MIN(damage,defense), 1);
 	if (unit_protected == true && tank != nullptr)
 	{
 		tank->DirectDamage(1);
 		return false;
 	}
 	//Deal damage to the unit
-	life -= MIN(life, damage);
+	life -= MIN(life, total_damage);
 	if (life <= 0)
 	{
 		ACTION_TYPE act = action_type;
@@ -1924,9 +1926,9 @@ void Unit::SetAttackArea(const Circle & atk_area)
 	attack_area = atk_area;
 }
 
-void Unit::SetAttackAreaBuff(uint atk_range)
+void Unit::SetRangeBase(uint atk_range)
 {
-	attack_area_buff = atk_range;
+	attack_area_base = atk_range;
 }
 
 void Unit::SetDefense(uint def)
@@ -1939,9 +1941,9 @@ void Unit::SetDefenseBuff(float def_buff)
 	defense_buff += def_buff;
 }
 
-void Unit::SetVisionBuff(float vis_buff)
+void Unit::SetVisionBase(float vis_buff)
 {
-	vision_buff = vis_buff;
+	vision_base = vis_buff;
 }
 
 void Unit::SetLifeBuff(float hp_buff)
@@ -1950,8 +1952,12 @@ void Unit::SetLifeBuff(float hp_buff)
 	{
 		life = 1;
 	}
-	life += hp_buff;
+	else {
+		life += hp_buff;
+	}
 	life_buff += hp_buff;
+	if (life > GetTotalMaxLife())
+		life = GetTotalMaxLife();
 }
 
 void Unit::SetFoodCost(uint food_cst)
@@ -2109,9 +2115,11 @@ const Circle * Unit::GetAttackArea() const
 {
 	return &attack_area;
 }
-uint Unit::GetAttackAreaBuff()const
+uint Unit::GetAttackAreaBase()const
 {
-	return attack_area_buff;
+	if (attack_area_base == 0)
+		return attack_area.GetRad();
+	return attack_area_base;
 }
 uint Unit::GetDefense()const
 {
@@ -2124,6 +2132,10 @@ float Unit::GetDefenseBuff() const
 }
 
 uint Unit::GetMaxLife() const
+{
+	return max_life;
+}
+uint Unit::GetTotalMaxLife() const
 {
 	return max_life + life_buff;
 }
@@ -2173,9 +2185,9 @@ iPoint Unit::GetFuturePosition() const
 {
 	return future_position;
 }
-float Unit::GetVisionBuff() const
+float Unit::GetVisionBase() const
 {
-	return vision_buff;
+	return vision_base;
 }
 float Unit::GetLifeBuff() const
 {

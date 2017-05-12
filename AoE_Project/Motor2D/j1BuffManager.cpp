@@ -204,9 +204,8 @@ bool PassiveBuff::ApplyBuff()
 	{
 		base = target->GetVision().GetRad();
 		buff = base * value;
-		target->SetVisionBuff(buff);
 		Circle tmp = target->GetVision();
-		tmp.SetRad(tmp.GetRad() + target->GetVisionBuff());
+		tmp.SetRad(tmp.GetRad() + buff);
 		target->SetVision(tmp);
 		break;
 	}
@@ -222,17 +221,17 @@ bool PassiveBuff::ApplyBuff()
 		break;
 	case RANGE_BUFF:
 	{
-		base = target->GetAttackArea()->GetRad();
+		base = target->GetAttackRange();
 		buff = base * value;
 		Circle tmp = *target->GetAttackArea();
-		target->SetAttackAreaBuff(buff);
-		tmp.SetRad(base + buff);
+		tmp.SetRad(tmp.GetRad() + buff);
+		target->SetAttackArea(tmp);
 		break;
 	}
 	case BURN_BUFF:
 		base_float = target->GetSpeedBuff();
 		buff = base_float * value;
-		target->SetLifeBuff(buff);
+		target->SetSpeedBuff(buff);
 		break;
 	}
 
@@ -273,13 +272,10 @@ bool PassiveBuff::RemoveBuff()
 		break;
 	case VISION_BUFF:
 	{
-		LOG("vision_buff %i", target->GetVisionBuff());
+		base = target->GetVisionBase();
 		Circle tmp = target->GetVision();
-		tmp.SetRad(tmp.GetRad() - target->GetVisionBuff());
-		target->SetVisionBuff(0);
-		LOG("vision_buff %i", target->GetVisionBuff());
-
-		target->SetVision(tmp);	
+		tmp.SetRad(base);
+		target->SetVision(tmp);
 		break;
 	}
 	case LIFE_BUFF:
@@ -297,12 +293,10 @@ bool PassiveBuff::RemoveBuff()
 		break;
 	case RANGE_BUFF:
 	{
-		base = target->GetAttackArea()->GetRad();
-		int buff = target->GetAttackAreaBuff();
+		base = target->GetAttackAreaBase();
 		Circle tmp = *target->GetAttackArea();
-		tmp.SetRad(base - buff);
-		current_buff = base * value;
-		target->SetAttackAreaBuff(-current_buff);	
+		tmp.SetRad(base);
+		target->SetAttackArea(tmp);
 		break;
 	}
 		break;
@@ -366,57 +360,55 @@ bool Buff::ApplyBuff()
 
 	switch (attribute_type)
 	{
-	case ATTACK_BUFF:
-		base = target->GetAttackHitPoints();
-		buff = base * value;
-		target->SetAttackBuff(buff);
-		break;
-	case SUPER_ATTACK_BUFF:
-		base = target->GetAttackHitPoints();
-		buff = base * value;
-		target->SetAttackBuff(buff);
-		break;
-	case DEFENSE_BUFF:
-		base = target->GetDefense();
-		buff = base * value;
-		target->SetDefenseBuff(buff);
-		break;
-	case VISION_BUFF:
-	{
-		base = target->GetVision().GetRad();
-		buff = base * value;
-		target->SetVisionBuff(buff);
-		Circle tmp = target->GetVision();
-		tmp.SetRad(tmp.GetRad() + target->GetVisionBuff());
-		target->SetVision(tmp);
-	}
-		break;
-	case LIFE_BUFF:
-		base = target->GetBaseMaxLife();
-		buff = base * value;
-		target->SetLifeBuff(buff);
-		break;
-	case SPEED_BUFF:
-		base = target->GetAttackRateBuff();
-		buff = base * value;
-		target->SetAttackRateBuff(buff);
-		break;
-	case RANGE_BUFF:
-	{
-		base = target->GetAttackArea()->GetRad();
-		buff = base * value;
-		Circle tmp = *target->GetAttackArea();
-		target->SetAttackAreaBuff(buff);
-		tmp.SetRad(base + buff);
-		break;
-	}
-	case BURN_BUFF:
-		base_float = target->GetSpeedBuff();
-		buff = base_float * value;
-		target->SetLifeBuff(buff);
-		break;
-	}
-
+		case ATTACK_BUFF:
+			base = target->GetAttackHitPoints();
+			buff = base * value;
+			target->SetAttackBuff(buff);
+			break;
+		case SUPER_ATTACK_BUFF:
+			base = target->GetAttackHitPoints();
+			buff = base * value;
+			target->SetAttackBuff(buff);
+			break;
+		case DEFENSE_BUFF:
+			base = target->GetDefense();
+			buff = base * value;
+			target->SetDefenseBuff(buff);
+			break;
+		case VISION_BUFF:
+		{
+			base = target->GetVision().GetRad();
+			buff = base * value;
+			Circle tmp = target->GetVision();
+			tmp.SetRad(tmp.GetRad() + buff);
+			target->SetVision(tmp);
+			break;
+		}
+		case LIFE_BUFF:
+			base = target->GetBaseMaxLife();
+			buff = base * value;
+			target->SetLifeBuff(buff);
+			break;
+		case SPEED_BUFF:
+			base = target->GetAttackRateBuff();
+			buff = base * value;
+			target->SetAttackRateBuff(buff);
+			break;
+		case RANGE_BUFF:
+		{
+			base = target->GetAttackRange();
+			buff = base * value;
+			Circle tmp = *target->GetAttackArea();
+			tmp.SetRad(tmp.GetRad() + buff);
+			target->SetAttackArea(tmp);
+			break;
+		}
+		case BURN_BUFF:
+			base_float = target->GetSpeedBuff();
+			buff = base_float * value;
+			target->SetSpeedBuff(buff);
+			break;
+		}
 	timer.Start();
 	return true;
 }

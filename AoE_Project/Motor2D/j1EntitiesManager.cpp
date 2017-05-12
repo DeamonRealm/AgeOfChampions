@@ -791,7 +791,7 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 
 
 		//Load current unit life
-		new_unit->SetLife(cur_unit_node.attribute("life").as_uint());
+		new_unit->SetLife(MIN(cur_unit_node.attribute("life").as_uint(), new_unit->GetMaxLife()));
 
 		//Load current unit position
 		new_unit->SetPosition(cur_unit_node.attribute("pos_x").as_float(), cur_unit_node.attribute("pos_y").as_float());
@@ -1303,6 +1303,8 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 	/*Vision Radius*/	vision.SetRad(unit_node->attribute("vision_rad").as_uint());
 	/*Vision Color*/	vision.SetColor({ 0,255,255,255 });
 						new_def->SetVision(vision);
+						new_def->SetVisionBase(vision.GetRad());
+
 	/*Mark*/			Circle mark;
 	/*Mark Radius*/		mark.SetRad(unit_node->attribute("mark_rad").as_uint());
 	/*Mark Color*/		mark.SetColor({ 255,255,255,255 });
@@ -1338,6 +1340,7 @@ bool j1EntitiesManager::AddUnitDefinition(const pugi::xml_node* unit_node, DIPLO
 	/*Attack Area*/		Circle area({ 0,0 }, unit_node->attribute("attack_range").as_uint(), { 0,0 });
 						area.SetColor({ 0, 0, 255, 255 });
 						new_def->SetAttackArea(area);
+						new_def->SetRangeBase(area.GetRad());
 	/*Defense*/			new_def->SetDefense(unit_node->attribute("defense").as_uint());
 	/*Food Cost*/		new_def->SetFoodCost(unit_node->attribute("food_cost").as_uint());
 	/*Wood Cost*/		new_def->SetWoodCost(unit_node->attribute("wood_cost").as_uint());

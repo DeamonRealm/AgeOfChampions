@@ -444,7 +444,7 @@ void Warrior::SaveAsDef(pugi::xml_node & node)
 
 	
 	/*buff rad*/	node.append_attribute("buff_area_rad") = buff_area.GetRad();
-	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+	/*Vision rad*/	node.append_attribute("vision_rad") = GetVisionBase();
 	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
@@ -457,7 +457,7 @@ void Warrior::SaveAsDef(pugi::xml_node & node)
 	/*Speed*/		node.append_attribute("speed") = speed;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
 	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
-	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
+	/*Atk Range*/	node.append_attribute("attack_range") = GetAttackAreaBase();
 	/*Defense*/		node.append_attribute("defense") = defense;
 	/*Food Cost*/	node.append_attribute("food_cost") = food_cost;
 	/*Wood Cost*/	node.append_attribute("wood_cost") = wood_cost;
@@ -977,7 +977,7 @@ void Wizard::SaveAsDef(pugi::xml_node & node)
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
 	/*buff rad*/	node.append_attribute("buff_area_rad") = buff_area.GetRad();
-	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+	/*Vision rad*/	node.append_attribute("vision_rad") = GetVisionBase();
 	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
@@ -989,7 +989,7 @@ void Wizard::SaveAsDef(pugi::xml_node & node)
 	/*Speed*/		node.append_attribute("speed") = speed;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
 	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
-	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
+	/*Atk Range*/	node.append_attribute("attack_range") = GetAttackAreaBase();
 	/*Defense*/		node.append_attribute("defense") = defense;
 	/*Food Cost*/	node.append_attribute("food_cost") = food_cost;
 	/*Wood Cost*/	node.append_attribute("wood_cost") = wood_cost;
@@ -1705,7 +1705,7 @@ void Hunter::SaveAsDef(pugi::xml_node & node)
 	/*Icon W*/	node.append_attribute("icon_w") = icon_rect.w;
 	/*Icon H*/	node.append_attribute("icon_h") = icon_rect.h;
 
-	/*Vision rad*/	node.append_attribute("vision_rad") = vision.GetRad();
+	/*Vision rad*/	node.append_attribute("vision_rad") = GetVisionBase();
 	/*Mark Rad*/	node.append_attribute("mark_rad") = mark.GetRad();
 	/*Soft Rad*/	node.append_attribute("soft_rad") = soft_collider.GetRad();
 	/*Hard Rad*/	node.append_attribute("hard_rad") = hard_collider.GetRad();
@@ -1716,7 +1716,7 @@ void Hunter::SaveAsDef(pugi::xml_node & node)
 	/*Speed*/		node.append_attribute("speed") = speed;
 	/*Atk HitP*/	node.append_attribute("attack_hitpoints") = attack_hitpoints;
 	/*Atk Rate*/	node.append_attribute("attack_rate") = attack_rate;
-	/*Atk Range*/	node.append_attribute("attack_range") = attack_area.GetRad();
+	/*Atk Range*/	node.append_attribute("attack_range") = GetAttackAreaBase();
 	/*Defense*/		node.append_attribute("defense") = defense;
 	/*Food Cost*/	node.append_attribute("food_cost") = food_cost;
 	/*Wood Cost*/	node.append_attribute("wood_cost") = wood_cost;

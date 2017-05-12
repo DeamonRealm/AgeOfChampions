@@ -388,7 +388,7 @@ protected:
 	j1Timer			action_timer;
 	uint			attack_hitpoints = 0;
 	float			attack_buff = 0;
-	uint			attack_area_buff = 0;
+	uint			attack_area_base = 0;
 	uint			attack_rate = 0;
 	uint			attack_rate_buff = 0;
 
@@ -404,9 +404,9 @@ protected:
 	uint			train_time = 0;
 	uint			exp = 0;
 	//Vision
-	float			vision_buff = 0;
+	float				vision_base = 0;
 	//Life
-	float			life_buff = 0;
+	float				life_buff = 0;
 	//Others
 	uint			unit_experience = 0;
 	bool			unit_protected = false;
@@ -490,10 +490,12 @@ public:
 
 	void	SetAttackType(ATTACK_TYPE atk_type);
 	void	SetAttackArea(const Circle& atk_area);
-	void	SetAttackAreaBuff(uint atk_range);
+
+	void	SetRangeBase(uint atk_range);
+
 	void	SetDefense(uint def);
 	void	SetDefenseBuff(float def_buff);
-	void	SetVisionBuff(float vis_buff);
+	void	SetVisionBase(float vis_buff);
 	void	SetLifeBuff(float hp_buff);
 	void	SetFoodCost(uint food_cst);
 	void	SetWoodCost(uint wood_cst);
@@ -524,7 +526,7 @@ public:
 	uint			GetAttackRange()const;
 
 	const Circle*	GetAttackArea()const;
-	uint			GetAttackAreaBuff()const;
+	uint			GetAttackAreaBase()const;
 
 	uint			GetDefense()const;
 	float			GetDefenseBuff()const;
@@ -537,9 +539,10 @@ public:
 	std::vector<iPoint>* GetPath() const;
 	iPoint			GetFuturePosition() const;
 	uint			GetMaxLife() const;
+	uint			GetTotalMaxLife() const;
 	uint			GetBaseMaxLife() const;
 
-	float			GetVisionBuff()const;
+	float			GetVisionBase()const;
 	float			GetLifeBuff()const;
 
 
