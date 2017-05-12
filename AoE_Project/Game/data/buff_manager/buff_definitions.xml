@@ -95,7 +95,7 @@
     buff_type ="passive"
     attribute_type="range_attack"
     actor="1"
-    value="0.2"
+    value="0.1"
   />
   <buff
     buff_type ="timed"

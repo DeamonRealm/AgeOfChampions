@@ -406,7 +406,7 @@ void Villager::CheckCarryResource()
 		item_type = ITEM_TYPE::WOOD;
 		break;
 	case GP_MEAT:
-		item_type = ITEM_TYPE::MEAT;
+		item_type = ITEM_TYPE::BASKET;
 		break;
 	case GP_GOLD:
 		item_type = ITEM_TYPE::GOLD;

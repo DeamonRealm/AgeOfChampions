@@ -1018,7 +1018,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       <sprite n="aldeano_attack_basket/049_mVillager_attack_basket.bmp" x="618" y="62" w="29" h="36" pX="0.62069" pY="0.777778"/>
       <sprite n="aldeano_attack_basket/050_mVillager_attack_basket.bmp" x="649" y="62" w="33" h="35" pX="0.606061" pY="0.771429"/>
       <sprite n="aldeano_attack_basket/051_mVillager_attack_basket.bmp" x="684" y="62" w="33" h="39" pX="0.666667" pY="0.769231"/>
-      <sprite n="aldeano_attack_basket/052_mVillager_attack_basket.bmp" x="719" y="62" w="44" h="45" pX="0.886364" pY="1.22222"/>
+      <sprite n="aldeano_attack_basket/052_mVillager_attack_basket.bmp" x="719" y="62" w="44" h="45" pX="0.886364" pY="0.86222"/>
       <sprite n="aldeano_attack_basket/053_mVillager_attack_basket.bmp" x="765" y="62" w="28" h="58" pX="0.857143" pY="0.862069"/>
       <sprite n="aldeano_attack_basket/054_mVillager_attack_basket.bmp" x="795" y="62" w="33" h="43" pX="0.666667" pY="0.883721"/>
       <sprite n="aldeano_attack_basket/055_mVillager_attack_basket.bmp" x="830" y="62" w="31" h="46" pX="0.548387" pY="0.826087"/>
