@@ -2972,6 +2972,27 @@ BUILDING_TYPE Building::GetBuildingType() const
 	return building_type;
 }
 
+BUILDING_TYPE Building::GetBasicBuildingType() const
+{
+	BUILDING_TYPE ret = NO_BUILDING;
+
+	if (building_type == TOWN_CENTER || building_type == TOWN_CENTER_C)					ret = TOWN_CENTER;
+	else if (building_type == BARRACK || building_type == BARRACK_C)					ret = BARRACK;
+	else if (building_type == ARCHERY_RANGE || building_type == ARCHERY_RANGE_C)		ret = ARCHERY_RANGE;
+	else if (building_type == STABLE || building_type == STABLE_C)						ret = STABLE;
+	else if (building_type == LUMBER_CAMP)												ret = LUMBER_CAMP;
+	else if (building_type == MINING_CAMP)												ret = MINING_CAMP;
+	else if (building_type == MONASTERY)												ret = MONASTERY;
+	else if (building_type == CASTLE)													ret = CASTLE;
+	else if (building_type == UNIVERSITY_C || building_type == UNIVERSITY_I)			ret = UNIVERSITY_C;
+
+	else if (building_type == HOUSE_A || building_type == HOUSE_AI || building_type == HOUSE_B ||
+		building_type == HOUSE_BI || building_type == HOUSE_C || building_type == HOUSE_CI)	ret = HOUSE_A;
+
+
+	return ret;
+}
+
 ACTION_TYPE Building::GetActionType() const
 {
 	return action_type;

@@ -159,7 +159,7 @@ public:
 
 	//Get nearest Entity methods
 	Unit*		GetNearestUnit(iPoint point, DIPLOMACY diplomacy, int max_dist = -1, UNIT_TYPE type = NO_UNIT);
-	Building*	GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy, int max_dist = -1);
+	Building*	GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy, int max_dist = -1, bool use_basic_type = false);
 	Building*	GetNearestSavePoint(iPoint position, PLAYER_RESOURCES resource_to_save, DIPLOMACY diplomacy);
 	Resource*	GetNearestResource(iPoint point, RESOURCE_TYPE type, DIPLOMACY diplomacy, int max_dist = -1);
 	

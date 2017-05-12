@@ -355,7 +355,7 @@ void j1AI::ManageAttack()
 		std::list<Unit*>::const_iterator raid_it = enemy_raid.begin();
 		while (raid_it != enemy_raid.end())
 		{
-			Building* to_kill = App->entities_manager->GetNearestBuilding(iPoint(110, 100), TOWN_CENTER, ALLY);
+			Building* to_kill = App->entities_manager->GetNearestBuilding(iPoint(110, 100), TOWN_CENTER, ALLY, -1, true);
 			if (to_kill == nullptr) return;
 
 			if (!raid_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY))

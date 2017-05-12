@@ -2581,7 +2581,7 @@ Unit * j1EntitiesManager::GetNearestUnit(iPoint point, DIPLOMACY diplomacy, int 
 
 }
 
-Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy, int max_dist)
+Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy, int max_dist, bool use_basic_type)
 {
 	Building* ret = nullptr;
 
@@ -2591,11 +2591,23 @@ Building * j1EntitiesManager::GetNearestBuilding(iPoint point, BUILDING_TYPE typ
 
 	while (building_it != buildings.end())
 	{
-		//Check resource type
-		if (building_it._Ptr->_Myval->GetBuildingType() != type || building_it._Ptr->_Myval->GetDiplomacy() != diplomacy)
+		if (use_basic_type)
 		{
-			building_it++;
-			continue;
+			//Check resource type
+			if (building_it._Ptr->_Myval->GetBasicBuildingType() != type || building_it._Ptr->_Myval->GetDiplomacy() != diplomacy)
+			{
+				building_it++;
+				continue;
+			}
+		}
+		else
+		{
+			//Check resource type
+			if (building_it._Ptr->_Myval->GetBuildingType() != type || building_it._Ptr->_Myval->GetDiplomacy() != diplomacy)
+			{
+				building_it++;
+				continue;
+			}
 		}
 
 		//Calculate distance between resource pos & point

@@ -653,6 +653,7 @@ public:
 	const Rectng&	GetMark()const;
 	const Circle*	GetInteractArea()const;
 	BUILDING_TYPE	GetBuildingType()const;
+	BUILDING_TYPE	GetBasicBuildingType()const;
 	ACTION_TYPE		GetActionType()const;
 	DIRECTION_TYPE	GetDirectionType()const;
 	bool			GetFogDiscovered()const;
