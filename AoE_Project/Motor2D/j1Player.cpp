@@ -190,8 +190,8 @@ bool j1Player::PreUpdate()
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
-			new_unit->AddAction(App->action_manager->AutoAttackAction(new_unit), TASK_CHANNELS::PASSIVE);
-			game_panel->IncressPopulation(1, false);
+			//new_unit->AddAction(App->action_manager->AutoAttackAction(new_unit), TASK_CHANNELS::PASSIVE);
+			//game_panel->IncressPopulation(1, false);
 		}
 		//Generate Tree resource in mouse coordinates
 		if (App->input_manager->GetEvent(GENERATE_TREE) == INPUT_DOWN)

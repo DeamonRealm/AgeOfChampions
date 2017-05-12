@@ -26,8 +26,17 @@ Arrow::~Arrow()
 }
 bool Arrow::Update()
 {
-	NewPosition(destination);
-	if (position == destination)return true;
+	float norm = position.DistanceTo(destination);
+	float x_step = speed * (App->GetDT() * 100) * (destination.x - position.x) / norm;
+	float y_step = speed * (App->GetDT() * 100) * (destination.y - position.y) / norm;
+
+
+	//Add the calculated values at the unit & mark position
+	position.x += x_step;
+	position.y += y_step;
+
+	if (position.DistanceTo(destination) < 5.0f)return true;
+
 	return false;
 }
 
@@ -36,28 +45,12 @@ void Arrow::Draw()
 	App->render->CallBlit(App->animator->arrow, position.x, position.y, &arrow_rect, flip, 0, 255, pivot_x, pivot_y, nullptr, angle);
 }
 
-void Arrow::NewPosition(iPoint goal)
-{
-	iPoint location = position;
-
-	int norm = location.DistanceTo(goal);
-	float x_step = speed * (App->GetDT() * 100) * (goal.x - location.x) / norm;
-	float y_step = speed * (App->GetDT() * 100) * (goal.y - location.y) / norm;
-
-
-	//Add the calculated values at the unit & mark position
-	position.x += x_step;
-	position.y += y_step;
-}
-
-void Arrow::PrepareArrow(iPoint start, iPoint goal)
+void Arrow::PrepareArrow(fPoint start, fPoint goal)
 {
 	int deltaY = start.y - goal.y;
 	int deltaX = start.x - goal.x;
 	angle = atan2(deltaY, deltaX)*(180 / 3.14) + 180;
-	//angle = 
-	//	if (angle >= 0 && angle < 90 || angle < 270 && angle >= 360)
-	//	flip = true;
+	LOG("ang : %f", angle);
 }
 
 bool Arrow::operator==(const Arrow & other) const
@@ -1517,8 +1510,8 @@ bool Unit::AttackUnit(Unit* target)
 	if (attack_type == DISTANCE)
 	{
 		const Sprite* sprite = this->current_animation->GetCurrentSprite();
-		iPoint arrow_position(this->GetPositionRounded().x, this->GetPositionRounded().y-sprite->GetYpivot());
-		iPoint arrow_destination(target->GetPositionRounded().x, target->GetPositionRounded().y);
+		fPoint arrow_position(position.x, position.y-sprite->GetYpivot());
+		fPoint arrow_destination(target->GetPosition().x, target->GetPosition().y);
 		ShotArrow(arrow_position, arrow_destination);
 	}
 		//Set unit attack animation
@@ -2188,7 +2181,7 @@ float Unit::GetLifeBuff() const
 {
 	return life_buff;
 }
-void Unit::ShotArrow(iPoint start, iPoint goal)
+void Unit::ShotArrow(fPoint start, fPoint goal)
 {
 	Arrow* arrow = new Arrow();
 	arrow->position = start;

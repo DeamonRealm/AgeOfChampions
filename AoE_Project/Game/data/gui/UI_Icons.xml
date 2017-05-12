@@ -158,6 +158,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="ShipUp" x="190" y="287" w="45" h="43" pX="0" pY="0"/>
     <sprite n="Time" x="235" y="287" w="26" h="38" pX="0" pY="0"/>
     <sprite n="Trumpet" x="261" y="287" w="39" h="39" pX="0.5" pY="0.5"/>
+
+<sprite n="Curso00.png" x="1" y="765" w="47" h="29" pX="0.489362" pY="0.551724"/>
+    <sprite n="Cursor01.png" x="50" y="765" w="47" h="29" pX="0.489362" pY="0.551724"/>
+    <sprite n="Cursor02.png" x="99" y="765" w="47" h="29" pX="0.489362" pY="0.551724"/>
+    <sprite n="Cursor03.png" x="148" y="765" w="47" h="29" pX="0.489362" pY="0.551724"/>
+    <sprite n="Cursor04.png" x="197" y="765" w="47" h="29" pX="0.489362" pY="0.551724"/>
+    <sprite n="Cursor05.png" x="246" y="765" w="47" h="29" pX="0.489362" pY="0.551724"/>
+
 	</Mouse>
 	<Profile>
     <sprite n="Range" x="300" y="287" w="36" h="21" pX="0" pY="0"/>
@@ -433,6 +441,8 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="IU_Campions/IU_SquareDown.png" x="650" y="330" w="40" h="40" pX="0" pY="0"/>
     <sprite n="IU_Campions/IU_SquareWood.png"  x="650" y="371" w="40" h="40" pX="0" pY="0"/>
     <sprite n="IU_Campions/IU_SquareUp.png" x="650" y="412" w="40" h="40" pX="0" pY="0"/>
+
+
 
 	</Units>
 </TextureAtlas>

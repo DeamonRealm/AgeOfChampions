@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:0beb56ff4fc2a1e230b8375551b644c2:fe568d4bbf36fafd57d2f838df21f726:64184529942979f5f1f849e4b2b346cf$ -->
+<!-- $TexturePacker:SmartUpdate:83f031ad5b131314a04682d653f7894f:ed03f8fe377787789120c32444b287b4:da05d9343b7eef86639b52f68c102d78$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,26 +19,44 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Area_Defense.png" width="470" height="1393">
-  <particle particle_type="buff_particle" actor="1" buff_type="passive" attribute_type="life" draw_rate="2500">
+<TextureAtlas imagePath="Area_life.png" width="1692" height="1398">
+  <particle particle_type="buff_particle" actor="1" buff_type="passive" attribute_type="life" draw_rate="2500"
+z="-200">
     <anim_data speed="150" loop="0"/>
-    <sprite n="DeffenseArea_00.png" opacity ="255" x="1" y="1" w="30" h="21" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_01.png" opacity ="255" x="33" y="1" w="22" h="20" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_02.png" opacity ="255" x="57" y="1" w="20" h="11" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_03.png" opacity ="255" x="79" y="1" w="19" h="12" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_04.png" opacity ="255" x="100" y="1" w="29" h="19" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_05.png" opacity ="255" x="131" y="1" w="71" h="42" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_06.png" opacity ="255" x="204" y="1" w="225" h="135" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_07.png" opacity ="255" x="1" y="138" w="325" h="191" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_08.png" opacity ="255" x="1" y="331" w="418" h="245" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_09.png" opacity ="255" x="1" y="578" w="429" h="252" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_10.png" opacity ="255" x="1" y="832" w="445" h="261" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_11.png" opacity ="255" x="1" y="1095" w="468" h="274" pX="0.5" pY="0.5"/>
+    <sprite n="MainBuffWizard_0002_0002-shot.png.png" opacity ="255" x="1" y="1" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0003_0003-shot.png.png" opacity ="255" x="424" y="1" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0004_0004-shot.png.png" opacity ="255" x="847" y="1" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0005_0005-shot.png.png" opacity ="255" x="1270" y="1" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0006_0006-shot.png.png" opacity ="255" x="1" y="234" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0007_0007-shot.png.png" opacity ="255" x="424" y="234" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0008_0008-shot.png.png" opacity ="255" x="847" y="234" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0009_0009-shot.png.png" opacity ="255" x="1270" y="234" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0010_0010-shot.png.png" opacity ="255" x="1" y="467" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0011_0011-shot.png.png" opacity ="255" x="424" y="467" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0012_0012-shot.png.png" opacity ="255" x="847" y="467" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0013_0013-shot.png.png" opacity ="255" x="1270" y="467" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0014_0014-shot.png.png" opacity ="255" x="1" y="700" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0015_0015-shot.png.png" opacity ="255" x="424" y="700" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0016_0016-shot.png.png" opacity ="255" x="847" y="700" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0017_0017-shot.png.png" opacity ="255" x="1270" y="700" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0018_0018-shot.png.png" opacity ="255" x="1" y="933" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0019_0019-shot.png.png" opacity ="255" x="424" y="933" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0020_0020-shot.png.png" opacity ="255" x="847" y="933" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0021_0021-shot.png.png" opacity ="255" x="1270" y="933" w="421" h="231" pX="0.498812" pY="0.497835"/>
+    <sprite n="MainBuffWizard_0022_0022-shot.png.png" opacity ="255" x="1" y="1166" w="421" h="231" pX="0.498812" pY="0.497835"/>
   </particle>
-  <particle particle_type="buff_particle" actor="0" buff_type="passive" attribute_type="life" draw_rate ="0">
+  <particle particle_type="buff_particle" actor="0" buff_type="passive" attribute_type="life" draw_rate ="0" z="-20">
     <anim_data speed="150" loop="1"/>
-    <sprite n="DeffenseArea_12.png" opacity ="255" x="57" y="1" w="20" h="11" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_13.png" opacity ="255" x="1" y="1371" w="22" h="20" pX="0.5" pY="0.5"/>
-    <sprite n="DeffenseArea_14.png" opacity ="255" x="25" y="1371" w="30" h="21" pX="0.5" pY="0.5"/>
-  </particle>
+    <sprite n="Minibuf/MiniBuff_0001_1.png" opacity ="255" x="424" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
+    <sprite n="Minibuf/MiniBuff_0002_2.png" opacity ="255" x="424" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
+    <sprite n="Minibuf/MiniBuff_0003_3.png" opacity ="255" x="487" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
+    <sprite n="Minibuf/MiniBuff_0004_4.png" opacity ="255" x="550" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
+    <sprite n="Minibuf/MiniBuff_0005_5.png" opacity ="255" x="613" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
+    <sprite n="Minibuf/MiniBuff_0006_6.png" opacity ="255" x="676" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
+    <sprite n="Minibuf/MiniBuff_0007_7.png" opacity ="255" x="739" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
+    <sprite n="Minibuf/MiniBuff_0008_8.png" opacity ="255" x="802" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
+    <sprite n="Minibuf/MiniBuff_0009_9.png" opacity ="255" x="865" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
+ </particle>
 </TextureAtlas>
+
+
