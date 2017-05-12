@@ -911,7 +911,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       <sprite n="aldeano_walk_ax/041_mVillager_walk_ax.bmp" x="678" y="702" w="25" h="49" pX="0.68" pY="0.795918"/>
       <sprite n="aldeano_walk_ax/042_mVillager_walk_ax.bmp" x="705" y="702" w="23" h="49" pX="0.73913" pY="0.795918"/>
       <sprite n="aldeano_walk_ax/043_mVillager_walk_ax.bmp" x="730" y="702" w="24" h="49" pX="0.708333" pY="0.77551"/>
-      <sprite n="aldeano_walk_ax/044_mVillager_walk_ax.bmp" x="756" y="702" w="26" h="48" pX="0.961538" pY="0.8125"/>
+      <sprite n="aldeano_walk_ax/044_mVillager_walk_ax.bmp" x="756" y="702" w="26" h="48" pX="0.708333" pY="0.8125"/>
     </direction>
 
     <direction enum="north-west">
