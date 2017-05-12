@@ -232,19 +232,17 @@ struct Arrow
 	void Draw();
 
 	//Data
-	iPoint		position = { 0.0f,0.0f };
-	iPoint		destination = { 0,0 };
+	fPoint		position = { 0.0f,0.0f };
+	fPoint		destination = { 0,0 };
 	SDL_Rect	arrow_rect = { 0,0,0,0 };
 	uint		pivot_x = 0;
 	uint		pivot_y = 0;
 	float		speed = 5.0f;
 	double		angle = 0.0;
-	int			id = 0;
 	bool		flip = false;
 
 	//Functionality
-	void NewPosition(iPoint goal);
-	void PrepareArrow(iPoint start, iPoint goal);
+	void PrepareArrow(fPoint start, fPoint goal);
 	bool operator ==(const Arrow& other)const;
 };
 ///----------------------------------------------
@@ -544,7 +542,7 @@ public:
 	float			GetLifeBuff()const;
 
 
-	void ShotArrow(iPoint start, iPoint goal);
+	void ShotArrow(fPoint start, fPoint goal);
 
 };
 /// ---------------------------------------------
