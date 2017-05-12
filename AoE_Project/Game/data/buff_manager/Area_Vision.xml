@@ -45,7 +45,7 @@ z="-200">
     <sprite n="MainBuffWizard_0021_0021-shot.png.png" opacity ="255" x="1270" y="933" w="421" h="231" pX="0.498812" pY="0.497835"/>
     <sprite n="MainBuffWizard_0022_0022-shot.png.png" opacity ="255" x="1" y="1166" w="421" h="231" pX="0.498812" pY="0.497835"/>
   </particle>
-  <particle particle_type="buff_particle" actor="0" buff_type="passive" attribute_type="life" draw_rate ="0" z="-20">
+  <particle particle_type="buff_particle" actor="0" buff_type="passive" attribute_type="vision" draw_rate ="0" z="-20">
     <anim_data speed="150" loop="1"/>
     <sprite n="Minibuf/MiniBuff_0001_1.png" opacity ="255" x="424" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>
     <sprite n="Minibuf/MiniBuff_0002_2.png" opacity ="255" x="424" y="1166" w="61" h="33" pX="0.498812" pY="0.497835"/>

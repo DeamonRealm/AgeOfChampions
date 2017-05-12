@@ -108,6 +108,9 @@
     <sound soundPath="male_01_move_02.wav" name="move"/>
     <sound soundPath="male_01_move_03.wav" name="move"/>
   </type>
+  <type enum="level_up"  song_type ="fx">
+    <sound soundPath="level_up.wav" name="level_up"/>
+  </type>
   <type enum="warrior_skill_lvl1_a"  song_type ="fx">
     <sound soundPath="warrior_skill_lvl1_a.wav" name="warrior_skill_lvl1_a"/>
   </type>

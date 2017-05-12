@@ -243,7 +243,7 @@ void Champion::SetSkillChoosed(bool val, uint index)
 void Champion::SetLevelUpParticle()
 {
 	level_up_particle = App->buff_manager->GetParticle(LEVEL_UP_PARTICLE, NO_DIRECTION);
-
+	App->sound->PlayFXAudio(LEVEL_UP_SOUND);
 }
 
 //Set Methods ---------------

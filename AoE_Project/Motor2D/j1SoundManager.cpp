@@ -175,6 +175,8 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 	else if (strcmp(str, "unit_attack") == 0)						return ATTACK_SOUND;
 	else if (strcmp(str, "unit_click") == 0)						return CLICK_SOUND;
 	else if (strcmp(str, "unit_move") == 0)							return MOVE_SOUND;
+	//Level UP
+	else if (strcmp(str, "level_up") == 0)							return LEVEL_UP_SOUND;	
 	//Warrior skills
 	else if (strcmp(str, "warrior_skill_lvl1_a") == 0)				return WARRIOR_SKILL_LVL1_A;
 	else if (strcmp(str, "warrior_skill_lvl1_b") == 0)				return WARRIOR_SKILL_LVL1_B;
