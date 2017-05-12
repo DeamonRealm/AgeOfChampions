@@ -5,6 +5,7 @@
 #include "p2Log.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1FogOfWar.h"
 #include "Champions.h"
 #include "j1SoundManager.h"
 
@@ -207,6 +208,8 @@ bool PassiveBuff::ApplyBuff()
 		Circle tmp = target->GetVision();
 		tmp.SetRad(tmp.GetRad() + buff);
 		target->SetVision(tmp);
+		tmp.SetRad(tmp.GetRad() + RENDER_MARGIN);
+		target->SetRenderArea(tmp);
 		break;
 	}
 	case LIFE_BUFF:
@@ -276,6 +279,8 @@ bool PassiveBuff::RemoveBuff()
 		Circle tmp = target->GetVision();
 		tmp.SetRad(base);
 		target->SetVision(tmp);
+		tmp.SetRad(tmp.GetRad() + RENDER_MARGIN);
+		target->SetRenderArea(tmp);
 		break;
 	}
 	case LIFE_BUFF:
@@ -382,6 +387,8 @@ bool Buff::ApplyBuff()
 			Circle tmp = target->GetVision();
 			tmp.SetRad(tmp.GetRad() + buff);
 			target->SetVision(tmp);
+			tmp.SetRad(tmp.GetRad() + RENDER_MARGIN);
+			target->SetRenderArea(tmp);
 			break;
 		}
 		case LIFE_BUFF:
