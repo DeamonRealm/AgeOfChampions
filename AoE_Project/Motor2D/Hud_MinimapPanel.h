@@ -13,9 +13,12 @@
 
 class UI_Element;
 class UI_Image;
+class UI_Fixed_Button;
+class Unit;
 
 enum GUI_INPUT;
 enum DIPLOMACY;
+enum UNIT_TYPE;
 
 #define MINIMAP_UPDATE_RATE		1000
 #define MINIMAP_TIME_TO_UPDATE	1
@@ -79,6 +82,10 @@ public:
 	void PushTilestoClear(uint k);
 	bool EditMinimapFoW();
 
+	// Hero Shortcut
+	void SetHeroShortcut(UNIT_TYPE u_type);
+	void SetHeroShortcut(Unit* new_hero, UNIT_TYPE u_type);
+
 public:
 
 	//HUD Panels
@@ -106,6 +113,14 @@ private:
 	j1Timer			fow_timer;
 	SDL_Surface*	minimap_fow = nullptr;
 	SDL_Texture*	minimap_fow_texture = nullptr;
+
+	UI_Fixed_Button* warrior_button = nullptr;
+	UI_Fixed_Button* wizard_button = nullptr;
+	UI_Fixed_Button* archer_button = nullptr;
+
+	Unit*			warrior_shortcut = nullptr;
+	Unit*			wizard_shortcut = nullptr;
+	Unit*			archer_shortcut = nullptr;
 
 };
 

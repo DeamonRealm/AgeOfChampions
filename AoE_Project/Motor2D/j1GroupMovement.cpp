@@ -66,6 +66,8 @@ void j1GroupMovement::HealOnGroup(std::list<Entity*>* units, Entity * target)
 	{
 
 		Unit* current_unit = (Unit*)item._Ptr->_Myval;
+		if (target->GetDiplomacy() != current_unit->GetDiplomacy())
+			return;
 		if (current_unit->GetUnitType() == MONK || current_unit->GetUnitType() == WIZARD_CHMP)
 				current_unit->AddAction((Action*)App->action_manager->HealAction(current_unit, (Unit*)target));
 	}

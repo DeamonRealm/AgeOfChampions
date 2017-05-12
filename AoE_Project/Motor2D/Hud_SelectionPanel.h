@@ -137,6 +137,7 @@ public:
 
 	// Select Methods
 	void Select(SELECT_TYPE type);
+	void Select(Unit* unit);
 	void UpdateSelected();
 	bool UpdateGroup();
 

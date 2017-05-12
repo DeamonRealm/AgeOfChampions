@@ -8,11 +8,14 @@
 #include "j1EntitiesManager.h"
 #include "j1FogOfWar.h"
 
+#include "BaseEntities.h"
+
 #include "Hud_SelectionPanel.h"
 
 //UI Elements
 #include "UI_Element.h"
 #include "UI_Image.h"
+#include "UI_Fixed_Button.h"
 
 
 Minimap_Panel::Minimap_Panel() : map_rect({ 1030,600,325,161 }), minimap_size({0, 0, 325, 161})
@@ -24,6 +27,39 @@ Minimap_Panel::Minimap_Panel() : map_rect({ 1030,600,325,161 }), minimap_size({0
 	minimap_background->ChangeTextureRect({1030, 600, 325, 161});
 	minimap_background->ChangeTextureId(HUD);
 	
+	warrior_button = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
+	warrior_button->SetTexUP({ 578,193,33,33 }, {0,0}, ICONS);
+	warrior_button->SetTexDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
+	warrior_button->SetTexOVERDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
+	warrior_button->SetTexOVERUP({ 578,193,33,33 }, { 0,0 }, ICONS);
+	warrior_button->SetBox({ 239, 11, 33, 33 });
+	warrior_button->Activate();
+	minimap_background->AddChild(warrior_button);
+	warrior_button->SetLayer(21);
+	warrior_button->button_state = DOWN;
+
+	wizard_button = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
+	wizard_button->SetTexUP({ 578,193,33,33 }, { 0,0 }, ICONS);
+	wizard_button->SetTexDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
+	wizard_button->SetTexOVERDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
+	wizard_button->SetTexOVERUP({ 578,193,33,33 }, { 0,0 }, ICONS);
+	wizard_button->SetBox({ 267, 6, 33, 33 });
+	wizard_button->Activate();
+	minimap_background->AddChild(wizard_button);
+	wizard_button->SetLayer(21);
+	wizard_button->button_state = DOWN;
+
+	archer_button = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
+	archer_button->SetTexUP({ 578,193,33,33 }, { 0,0 }, ICONS);
+	archer_button->SetTexDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
+	archer_button->SetTexOVERDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
+	archer_button->SetTexOVERUP({ 578,193,33,33 }, { 0,0 }, ICONS);
+	archer_button->SetBox({ 276, 31, 33, 33 });
+	archer_button->Activate();
+	minimap_background->AddChild(archer_button);
+	archer_button->SetLayer(21);
+	archer_button->button_state = DOWN;
+
 	map_size.x = 120;
 	map_size.y = 120;
 
@@ -179,6 +215,37 @@ void Minimap_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 	{
 		in_minimap = false;
 	}
+	if (ui_input == MOUSE_LEFT_BUTTON_UP)
+	{
+		iPoint pos = { 0,0 };
+		bool movecamera = true;
+		if (ui_element == warrior_button && warrior_shortcut != nullptr)
+		{
+			pos = warrior_shortcut->GetPositionRounded();
+			warrior_button->button_state = UP;
+			App->player->selection_panel->Select(warrior_shortcut);
+		}
+		else if (ui_element == wizard_button && wizard_shortcut != nullptr)
+		{
+			pos = wizard_shortcut->GetPositionRounded();
+			wizard_button->button_state = UP;
+			App->player->selection_panel->Select(wizard_shortcut);
+		}
+		else if (ui_element == archer_button && archer_shortcut != nullptr)
+		{
+			pos = archer_shortcut->GetPositionRounded();
+			archer_button->button_state = UP;
+			App->player->selection_panel->Select(archer_shortcut);
+		}
+		else movecamera = false;
+
+		if (movecamera)
+		{
+			App->render->camera.x = -pos.x + App->render->camera.w / 2;
+			App->render->camera.y = -pos.y + App->render->camera.h / 2;
+			App->render->CalculateCameraViewport();
+		}
+	}
 }
 
 void Minimap_Panel::Enable()
@@ -186,6 +253,14 @@ void Minimap_Panel::Enable()
 	SDL_FillRect(minimap_fow, NULL, SDL_MapRGBA(minimap_fow->format, 0, 0, 0, 255));
 	if (minimap_fow_texture != nullptr) SDL_DestroyTexture(minimap_fow_texture);
 	minimap_fow_texture = SDL_CreateTextureFromSurface(App->render->renderer, minimap_fow);
+
+	warrior_button->button_state = DOWN;
+	wizard_button->button_state = DOWN;
+	archer_button->button_state = DOWN;
+
+	warrior_shortcut = nullptr;
+	wizard_shortcut = nullptr;
+	archer_shortcut = nullptr;
 }
 
 void Minimap_Panel::Disable()
@@ -369,4 +444,42 @@ bool Minimap_Panel::EditMinimapFoW()
 	
 
 	return false;
+}
+
+void Minimap_Panel::SetHeroShortcut(UNIT_TYPE u_type)
+{
+	switch (u_type)
+	{
+	case WARRIOR_CHMP: {
+			warrior_button->button_state = DOWN;
+			warrior_shortcut = nullptr;
+		}
+		break;
+	case WIZARD_CHMP: {
+			wizard_button->button_state = DOWN;
+			wizard_shortcut = nullptr;
+		}
+		break;
+	case ARCHER_CHMP: {
+			archer_button->button_state = DOWN;
+			archer_shortcut = nullptr;
+		}
+		break;
+	}
+}
+
+void Minimap_Panel::SetHeroShortcut(Unit * new_hero, UNIT_TYPE u_type)
+{
+	if (u_type == WARRIOR_CHMP){
+		warrior_shortcut = new_hero;
+		warrior_button->button_state = UP;
+	}
+	else if (u_type == WIZARD_CHMP) {
+		wizard_shortcut = new_hero;
+		wizard_button->button_state = UP;
+	}
+	else {
+		archer_shortcut = new_hero;
+		archer_button->button_state = UP;
+	}
 }

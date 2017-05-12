@@ -463,7 +463,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				{
 					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource*)UpperEntity));
 				}
-				else if ((selected_unit_type == WIZARD_CHMP || selected_unit_type == MONK) && UpperEntity->GetEntityType() == UNIT && selected_diplomacy == ALLY)
+				else if ((selected_unit_type == WIZARD_CHMP || selected_unit_type == MONK) && UpperEntity->GetEntityType() == UNIT && UpperEntity->GetDiplomacy() == ALLY)
 				{
 					Selected->GetEntity()->AddAction(App->action_manager->HealAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
 				}
@@ -854,6 +854,20 @@ void Selection_Panel::Select(SELECT_TYPE type)
 	}
 }
 
+void Selection_Panel::Select(Unit * unit)
+{
+	ResetSelectedType();
+	selected_diplomacy = ALLY;
+	selected_entity_type = UNIT;
+	selected_unit_type = unit->GetUnitType();
+	champions_selected = true;
+	UnSelect_Entity();
+	Selected->SetEntity(unit);
+	selected_elements.push_back(unit);
+	App->player->action_panel->SetPanelType();
+
+}
+
 void Selection_Panel::UpdateSelected()
 {
 	if (Selected->GetEntity() != nullptr)
@@ -895,6 +909,7 @@ void Selection_Panel::UnSelect_Entity()
 		item++;
 	}
 	selected_elements.clear();
+	Selected->Reset();
 }
 
 void Selection_Panel::Expand_SelectionRect()

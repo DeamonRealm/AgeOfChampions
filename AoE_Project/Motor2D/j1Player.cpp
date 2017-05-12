@@ -370,6 +370,7 @@ void j1Player::GUI_Input(UI_Element* target, GUI_INPUT input)
 		break;
 	case MOUSE_LEFT_BUTTON_UP:
 		{
+			minimap_panel->Handle_Input(target, input);
 			action_panel->Handle_Input(target, input);
 		}
 		break;

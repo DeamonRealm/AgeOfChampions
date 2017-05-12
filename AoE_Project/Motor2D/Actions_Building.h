@@ -10,6 +10,8 @@
 #include "j1Player.h"
 #include "j1AI.h"
 
+#include "Hud_MinimapPanel.h"
+
 enum RESEARCH_TECH
 {
 	NO_TECH,
@@ -125,8 +127,14 @@ public:
 			App->entities_manager->AddUnit(new_unit);
 			new_unit->SetPosition((float)position.x, (float)position.y);
 			App->animator->UnitPlay(new_unit);
-			if (diplomacy == ALLY)App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
-
+			if (diplomacy == ALLY)
+			{
+				App->sound->PlayFXAudio(SOUND_TYPE::VILLAGER_CREATED_SOUND);
+				if (u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP)
+				{
+					App->player->minimap_panel->SetHeroShortcut(new_unit, u_type);
+				}
+			}
 
 			//Add an autoattack passive action
 			new_unit->AddAction(App->action_manager->AutoAttackAction(new_unit), TASK_CHANNELS::PASSIVE);

@@ -10,6 +10,7 @@
 #include "j1SoundManager.h"
 #include "Hud_ActionPanel.h"
 #include "Hud_GamePanel.h"
+#include "Hud_MinimapPanel.h"
 #include "j1FogOfWar.h"
 
 ///Class Champion -------------------------------
@@ -39,8 +40,10 @@ bool Champion::Die()
 	
 	if (action_type != DIE && action_type != DISAPPEAR)
 	{
-		if (GetDiplomacy() == DIPLOMACY::ALLY)
+		if (GetDiplomacy() == DIPLOMACY::ALLY) {
 			App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ALLY);
+			App->player->minimap_panel->SetHeroShortcut(unit_type);
+		}
 		else
 			App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
 
