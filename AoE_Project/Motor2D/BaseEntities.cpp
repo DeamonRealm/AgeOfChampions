@@ -1125,6 +1125,7 @@ iPoint Unit::FindWalkableCell(const iPoint & center)
 
 iPoint Unit::FindSpawnCell(const iPoint & center)
 {
+
 	iPoint cell;
 	iPoint pos = center;
 	iPoint cell_map;
@@ -1132,6 +1133,42 @@ iPoint Unit::FindSpawnCell(const iPoint & center)
 	int radius = GetSoftCollider().GetRad();
 	int doble_radius = radius * 2;
 	iPoint unit_location = this->GetPositionRounded();
+
+	int x, y, dx, dy;
+	x = y = dx = 0;
+	dy = -1;
+	int X = 20;
+	int Y = 20;
+	int t = MAX(X, Y);
+	int maxI = t*t;
+	for (int i = 0; i < maxI; i++) {
+		if ((-X / 2 <= x) && (x <= X / 2) && (-Y / 2 <= y) && (y <= Y / 2)) {
+			cell.create(pos.x + radius*x, pos.y + radius*y);
+			cell_map = App->map->WorldToMap(cell.x, cell.y);
+
+			if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
+			{
+				return cell;
+			}
+		}
+		if ((x == y) || ((x < 0) && (x == -y)) || ((x > 0) && (x == 1 - y))) {
+			t = dx;
+			dx = -dy;
+			dy = t;
+		}
+		x += dx;
+		y += dy;
+	}
+	/*
+	iPoint cell;
+	iPoint pos = center;
+	iPoint cell_map;
+
+	int radius = GetSoftCollider().GetRad();
+	int doble_radius = radius * 2;
+	iPoint unit_location = this->GetPositionRounded();
+	*/
+	/*
 	int i = 1;
 	while (i <= 5) {
 		// south
@@ -1204,6 +1241,7 @@ iPoint Unit::FindSpawnCell(const iPoint & center)
 		}
 		i++;
 	}
+	*/
 	return iPoint(-1, -1);
 }
 
