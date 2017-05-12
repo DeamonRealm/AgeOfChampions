@@ -453,7 +453,11 @@ public:
 		//If there are more resources near to the depleted one add an action to continue the recollection
 		if (ret == true && actor->GetDiplomacy() != ENEMY)
 		{
-			Resource* next_resource = App->entities_manager->GetNearestResource(target->GetPositionRounded(), target->GetResourceType(), target->GetDiplomacy(), 500);
+			RESOURCE_TYPE next_type = target->GetResourceType();
+			if (next_type == TREE_CUT || next_type == CHOP)
+				next_type = TREE;
+
+			Resource* next_resource = App->entities_manager->GetNearestResource(target->GetPositionRounded(), next_type, target->GetDiplomacy(), 500);
 			if (next_resource != nullptr)
 			{
 				actor->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)actor, next_resource), PRIMARY);
@@ -564,7 +568,7 @@ public:
 		uint size = surrounding_units.size();
 		for (uint i = 0; i < size; i++)
 		{
-			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
+			if (actor->GetDiplomacy() != surrounding_units[i]->GetDiplomacy() && (surrounding_units[i]->GetAction() != DIE || surrounding_units[i]->GetAction() != DISAPPEAR))
 			{
 				if (surrounding_units[i]->SurroundedUnit() && ((Unit*)actor)->GetAttackType() == MELEE) 
 					continue;
