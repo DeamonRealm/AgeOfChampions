@@ -212,8 +212,7 @@ public:
 	void ChangeSkillIcons();
 	void SetNewOrder();
 	void ChangePanelTarget(Entity* new_target);
-
-	
+	const char* GetSkillOvering() const;
 
 public:
 	UI_Image*						skill_tree = nullptr;
@@ -230,7 +229,6 @@ private:
 
 	std::vector<Unit*>				champion_row;
 
-
 	std::vector<UI_Image*>			skills;
 	std::vector<UI_Fixed_Button*>	skills_buttons;
 
@@ -240,6 +238,9 @@ private:
 	std::vector<SDL_Rect>			archer_skills_rect;
 	UNIT_TYPE						curr_skills_tree = (UNIT_TYPE)0;
 	int								activate_skill = -1;
+
+	// Skill Info
+	int								show_skill = -1;
 };
 
 
@@ -357,6 +358,7 @@ private:
 	// Unit On Action   
 	bool						on_action = false;
 	bool						show_cell_info = false;
+	bool						show_hero_skills = false;
 
 
 public:

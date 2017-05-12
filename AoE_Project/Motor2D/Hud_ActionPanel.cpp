@@ -618,7 +618,7 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
 	{
 		skills.push_back((UI_Image*)App->gui->GenerateUI_Element(IMG));
-		skills[i]->SetBox({ 0, 0, 67, 61 });
+		skills[i]->SetBox({ 0, 0, 36,36 });
 		skills[i]->ChangeTextureId(ICONS);
 		skills[i]->ChangeTextureRect(warrior_skills_rect[i]);
 		skills[i]->SetBoxPosition(97 + 67 * (i % 2), 177 + 55 * (i / 2));
@@ -741,6 +741,7 @@ void HeroPanel::ResetPanel()
 	SetDataFromXML();
 
 	activate_skill = -1;
+	show_skill = -1;
 }
 
 void HeroPanel::HeroisDead(UNIT_TYPE u_type)
@@ -890,6 +891,7 @@ bool HeroPanel::ActivateCell(int i)
 		HeroisDead(u_type);
 		champion_selected = NO_UNIT;
 		activate_skill = -1;
+		show_skill = -1;
 		}
 		break;
 	default:
@@ -949,8 +951,31 @@ bool HeroPanel::Hero_Handle_input(UI_Element * ui_element, GUI_INPUT ui_input)
 		}
 		break;
 	case MOUSE_RIGHT_BUTTON:			break;
-	case MOUSE_IN:						break;
-	case MOUSE_OUT:						break;
+	case MOUSE_IN: {
+		if (!skill_tree->GetActiveState()) return false;
+		for (int count = 0; count < MAX_SKILLS_LEARNED; count++)
+		{
+			if (ui_element == skills[count])
+			{
+				show_skill = count;
+				return true;
+			}
+		}
+		}
+		break;
+	case MOUSE_OUT: {
+		if (show_skill == -1 || !skill_tree->GetActiveState()) return true;
+		for (int count = 0; count < MAX_SKILLS_LEARNED; count++)
+		{
+			if (ui_element == skills[count] && count == show_skill)
+			{
+				show_skill = -1;
+				return false;
+			}
+		}
+		return true;
+		}				
+		break;
 	case SUPR:							break;
 	case BACKSPACE:						break;
 	case ENTER:							break;
@@ -1023,6 +1048,7 @@ void HeroPanel::SetSkillTree()
 
 void HeroPanel::ChangeSkillIcons()
 {
+	show_skill = -1;
 	std::vector<SDL_Rect>* curr;
 	if (curr_skills_tree == WARRIOR_CHMP) curr = &warrior_skills_rect;
 	else if (curr_skills_tree == WIZARD_CHMP) curr = &wizard_skills_rect;
@@ -1099,7 +1125,6 @@ void HeroPanel::SetNewOrder()
 
 void HeroPanel::ChangePanelTarget(Entity * new_target)
 {
-
 	activate_skill = -1;
 	App->player->selection_panel->GetChampionsSelected(champion_mele, champion_wizard, champion_archer);
 	champion_row.clear();
@@ -1113,6 +1138,24 @@ void HeroPanel::ChangePanelTarget(Entity * new_target)
 	entitis_panel = champion_row[0];
 	if (entitis_panel != nullptr) champion_selected = ((Unit*)entitis_panel)->GetUnitType();
 	SetNewOrder();
+}
+
+const char * HeroPanel::GetSkillOvering() const
+{
+	int i = show_skill%2;
+	int r = show_skill;
+	if (entitis_panel == champion_wizard) r += 10;
+	else if (entitis_panel == champion_archer) r += 20;
+	r = r / 2;
+	int size = cell_data.size();
+	for (int j = 0; j < size; j++)
+	{
+		if (cell_data[j].cell_position == r && cell_data[j].cell_at_level == i+1)
+		{
+			return cell_data[j].GetInfo();
+		}
+	}
+	return ("");
 }
 
 // ACTION PANEL  ================================================================================================
@@ -1227,6 +1270,8 @@ bool Action_Panel::CleanUp()
 void Action_Panel::Enable()
 {
 	on_action = false;
+	show_cell_info = false;
+	show_hero_skills = false;
 	
 	action_screen->Activate();
 	action_screen->DesactivateChids();
@@ -1379,6 +1424,14 @@ void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 				}
 			}
 		}
+		else if (ui_element->GetUItype() == IMG && show_hero_skills == false && actualpanel == heropanel)
+		{
+			if (heropanel->Hero_Handle_input(ui_element, ui_input))
+			{
+				cell_information->SetString((char*)heropanel->GetSkillOvering());
+				show_hero_skills = true;
+			}
+		}
 	}
 		break;
 	case MOUSE_OUT:
@@ -1390,6 +1443,13 @@ void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		else if (ui_element == panel_buttons[cell_shown] && isin)
 		{
 			show_cell_info = false;
+		}
+		else if (actualpanel == heropanel && show_hero_skills == true)
+		{
+			if ((ui_element->GetUItype() == IMG && !heropanel->Hero_Handle_input(ui_element, ui_input)) || !heropanel->skill_tree->GetActiveState())
+			{
+				show_hero_skills = false;
+			}
 		}
 		break;
 	default:
@@ -1409,7 +1469,7 @@ bool Action_Panel::Draw()
 	{
 		if(panel_cells[count]->GetTextureBox().w > 1) panel_cells[count]->Draw(false);
 	}
-	if (show_cell_info)
+	if (show_cell_info || show_hero_skills)
 	{
 		cell_information->Draw(false);
 	}
@@ -1471,6 +1531,13 @@ bool Action_Panel::Save(pugi::xml_node & data) const
 
 void Action_Panel::Reset()
 {
+	on_action = false;
+	show_cell_info = false;
+	show_hero_skills = false;
+
+	action_screen->Activate();
+	action_screen->DesactivateChids();
+
 	towncenterpanel->ResetPanel();
 	barrackpanel->ResetPanel();
 	archerypanel->ResetPanel();

@@ -88,10 +88,15 @@ void UI_Element::HandleInput()
 	if (this->MouseIsIn())
 	{
 		input_target->GUI_Input(this, MOUSE_IN);
+		isin = true;
 	}
-	else
+	else 
 	{
-		input_target->GUI_Input(this, MOUSE_OUT);
+		if (isin)
+		{
+			input_target->GUI_Input(this, MOUSE_OUT);
+			isin = false;
+		}
 	}
 
 	//Mouse Left Button -------------------------

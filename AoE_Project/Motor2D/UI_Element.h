@@ -34,6 +34,7 @@ protected:
 	uint					layer = 0;
 	uint					tab_num = 0;
 	mutable bool			IsActive = true;
+	bool					isin = false;
 	UI_TYPE					ui_type;
 
 	UI_Element*				parent = nullptr;
