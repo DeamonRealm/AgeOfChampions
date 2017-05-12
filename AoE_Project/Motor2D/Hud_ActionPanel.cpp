@@ -303,6 +303,21 @@ bool TownCenterPanel::ActivateCell(int i)
 		else App->sound->PlayGUIAudio(ERROR_SOUND);
 	}
 			break;
+	case 3: {
+		if (got_archchmp == false)
+		{
+			if (player_game_panel_resources->UseResource(panel_icons[i].wood_cost, panel_icons[i].food_cost, panel_icons[i].gold_cost,
+				panel_icons[i].stone_cost, panel_icons[i].population_cost))
+			{
+				App->sound->PlayGUIAudio(CLICK_INGAME);
+				entitis_panel->AddAction(App->action_manager->SpawnAction(entitis_panel->GetWorker(), (ProductiveBuilding*)entitis_panel, panel_icons[i].u_type, ALLY));
+				got_archchmp = true;
+			}
+			else App->sound->PlayGUIAudio(ERROR_SOUND);
+		}
+		else App->sound->PlayGUIAudio(ERROR_SOUND);
+	}
+		break;
 	default:
 	{
 		if (panel_icons[i].u_type != NO_UNIT)
@@ -501,7 +516,7 @@ bool VillagerPanel::CancelAction()
 		buildingthis = nullptr;
 		isbuilding = false;
 	}
-	return true;
+	return false;
 }
 
 bool VillagerPanel::Villager_Handle_input(GUI_INPUT input)
@@ -1286,7 +1301,9 @@ void Action_Panel::Handle_Input(GUI_INPUT newevent)
 		break;
 	case MOUSE_RIGHT_BUTTON:
 		{
-		if (on_action) actualpanel->CancelAction();
+		if (on_action) {
+			on_action = actualpanel->CancelAction();;
+		}
 		}
 		break;
 	default:

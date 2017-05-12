@@ -2547,7 +2547,7 @@ bool Building::Die()
 
 	if (action_type != DISAPPEAR)
 	{
-		if (building_type == TOWN_CENTER)
+		if (building_type == TOWN_CENTER || building_type == TOWN_CENTER_C)
 		{
 			//Do lose condition
 			App->player->game_panel->DoLose();

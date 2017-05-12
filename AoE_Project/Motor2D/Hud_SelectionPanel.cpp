@@ -524,17 +524,18 @@ void Selection_Panel::Enable()
 	champions_selected = false;
 
 	refresh_upperentity.Start();
+
+	ResetSelectedType();
 }
 
 void Selection_Panel::Disable()
 {
-	selected_elements.clear();
 	group_profile.clear();
-
 	unit_quad_selection.clear();
 	building_quad_selection.clear();
 	resource_quad_selection.clear();
-	Selected->Reset();
+
+	ResetSelectedType();
 }
 
 void Selection_Panel::Reset()
@@ -1126,7 +1127,7 @@ void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
 void Selection_Panel::ResetSelectedType()
 {
 	selected_elements.clear();
-	Selected->SetEntity(nullptr);
+	Selected->Reset();
 	selected_diplomacy = NEUTRAL;
 	selected_entity_type = NO_ENTITY;
 	selected_unit_type = NO_UNIT;
