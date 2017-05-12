@@ -2,7 +2,7 @@
 
 #include <time.h>
 #include <stdlib.h>
-
+#include "j1Render.h"
 #include "j1FileSystem.h"
 #include "p2Log.h"
 #include "j1Audio.h"
@@ -102,6 +102,12 @@ void j1SoundManager::Disable()
 
 bool j1SoundManager::Start()
 {
+	//timers start
+	arrow_sound.Start();
+	sword_sound.Start();
+	heal_sound.Start();
+	alert_sound.Start();
+
 	//Load xml sounds ---------------------------
 	std::string load_folder = name + "/" + "SoundsData.xml";
 	App->sound->LoadSoundBlock(load_folder.c_str());
@@ -208,6 +214,53 @@ SOUND_TYPE j1SoundManager::StrToSoundEnum(const char * str) const
 
 
 	return NO_SOUND;
+}
+
+void j1SoundManager::CheckAttackSound(iPoint location, ATTACK_TYPE attack_type, bool heal)
+{
+	if (!App->render->IsOnCamera(location))return;
+
+	if (attack_type == MELEE)
+	{
+		if (sword_sound.Read() > SWORD_SOUND_TIME)
+		{
+			PlayFXAudio(SWORD_ATTACK_SOUND);
+			sword_sound.Start();
+		}
+	}
+	else if (attack_type == DISTANCE)
+	{
+		if (heal)
+		{
+			if (heal_sound.Read() > HEAL_SOUND_TIME)
+			{
+				PlayFXAudio(MONK_HEALING_SOUND);
+				heal_sound.Start();
+			}
+		}
+		else 
+		{
+			if (arrow_sound.Read() > ARROW_SOUND_TIME)
+			{
+				PlayFXAudio(ARROW_ATTACK_SOUND);
+				arrow_sound.Start();
+			}
+		}
+	}
+}
+
+void j1SoundManager::CheckAlertSound(iPoint location, bool building)
+{
+	if (App->render->IsOnCamera(location))return;
+	if (alert_sound.Read() > ALERT_SOUND_TIME)
+	{
+		if(building)
+			PlayGUIAudio(PLAYER_BUILDING_ALERT);
+		else
+			PlayGUIAudio(PLAYER_UNIT_ALERT);
+
+		alert_sound.Start();
+	}
 }
 
 

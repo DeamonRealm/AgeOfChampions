@@ -4,6 +4,11 @@
 #include "j1Module.h"
 #include "j1Timer.h"
 #include "BaseEntities.h"
+#define ARROW_SOUND_TIME 500
+#define SWORD_SOUND_TIME 500
+#define HEAL_SOUND_TIME 500
+#define ALERT_SOUND_TIME 5000
+
 enum SOUND_TYPE;
 
 struct Sound
@@ -74,6 +79,10 @@ private:
 	std::vector<Sound_Block*> music_blocks;
 	std::vector<Sound_Block*> gui_blocks;
 
+	j1Timer arrow_sound;
+	j1Timer sword_sound;
+	j1Timer heal_sound;
+	j1Timer alert_sound;
 
 public:
 
@@ -81,6 +90,8 @@ public:
 	//Methods that transform strings to enums (used when loading data from xml)
 	SOUND_TYPE		StrToSoundEnum(const char* str)const;
 
+	void			CheckAttackSound(iPoint location,ATTACK_TYPE attack_type,bool heal = false);
+	void			CheckAlertSound(iPoint location, bool building = false);
 
 	//Blocks Load Methods ---
 	bool			LoadSoundBlock(const char* xml_folder);

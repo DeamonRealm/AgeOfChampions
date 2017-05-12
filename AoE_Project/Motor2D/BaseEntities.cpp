@@ -1160,8 +1160,6 @@ iPoint Unit::FindSpawnCell(const iPoint & center)
 	int radius = GetSoftCollider().GetRad();
 	int doble_radius = radius * 2;
 	iPoint unit_location = this->GetPositionRounded();
-	*/
-	/*
 	int i = 1;
 	while (i <= 5) {
 		// south
@@ -1506,7 +1504,10 @@ bool Unit::AttackUnit(Unit* target)
 	//Control action rate
 	if (action_timer.Read() < attack_rate)return false;
 
+
 	//App->sound->PlayFXAudio(SWORD_ATTACK_SOUND);
+	App->sound->CheckAttackSound(this->GetPositionRounded(), attack_type);
+	if (this->GetDiplomacy() == ENEMY)	App->sound->CheckAlertSound(this->GetPositionRounded());
 	if (attack_type == DISTANCE)
 	{
 		const Sprite* sprite = this->current_animation->GetCurrentSprite();
@@ -1570,6 +1571,7 @@ bool Unit::HealUnit(Unit* target)
 	if (action_timer.Read() < attack_rate)return false;
 
 	//App->sound->PlayFXAudio(SWORD_ATTACK_SOUND);
+	App->sound->CheckAttackSound(this->GetPositionRounded(), attack_type,true);
 
 	//Set unit attack animation
 	if (action_type != ATTATCK)
@@ -1609,6 +1611,9 @@ bool Unit::AttackBuilding(Building * target)
 
 	//Control action rate
 	if (action_timer.Read() < attack_rate)return false;
+
+	App->sound->CheckAttackSound(this->GetPositionRounded(), attack_type);
+	if(this->GetDiplomacy()==ENEMY)	App->sound->CheckAlertSound(this->GetPositionRounded(),true);
 
 	//Set unit attack animation
 	if (action_type != ATTATCK)
