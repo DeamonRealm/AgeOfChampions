@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <data>
+  <particle document = "UIArrows.xml"/>
+  
   <particle document = "Area_Defense.xml"/>
   <particle document = "Aura_Range_Attack.xml"/>
   <particle document = "Aura_Speed_Attack.xml"/>
@@ -29,6 +31,7 @@
   <particle document = "RadiusHit.xml"/>
 
 
+  
   <buff
     buff_type ="passive"
     attribute_type="attack"
