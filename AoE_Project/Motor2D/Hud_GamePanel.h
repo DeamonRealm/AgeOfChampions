@@ -119,13 +119,14 @@ private:
 	UI_String*  units_dead			= nullptr;
 	UI_String*  your_units			= nullptr;
 
-
+	UI_String*	resource_info		= nullptr;
+	bool		show_resource_info	= false;
+	int			curr_resource		= -1;
 
 	bool win = false;
 	bool lose = false;
 	
 	bool game_ended = false;
-
 };
 
 
