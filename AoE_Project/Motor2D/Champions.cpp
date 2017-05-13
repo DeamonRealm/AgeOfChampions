@@ -77,16 +77,18 @@ bool Champion::Die()
 bool Champion::Update()
 {
 	//Check if champion lvl up;
-	if (to_level_up) LevelUp();
-	if (level_up_animation) LevelUpAnimation();
-	if (actived[0] && level >= 0)CheckHability_lvl_1();
-	if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
-	else if (actived[1] && level >= 1)CheckHability_lvl_2();
-	if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
-	else if (actived[2] && level >= 2)CheckHability_lvl_3();
+	if (this->GetAction() != DIE && this->GetAction() != DISAPPEAR)
+	{
+		if (to_level_up) LevelUp();
+		if (level_up_animation) LevelUpAnimation();
+		if (actived[0] && level >= 0)CheckHability_lvl_1();
+		if (ability_lvl_2_prepare_mode)PrepareAbility_lvl_2();
+		else if (actived[1] && level >= 1)CheckHability_lvl_2();
+		if (ability_lvl_3_prepare_mode)PrepareAbility_lvl_3();
+		else if (actived[2] && level >= 2)CheckHability_lvl_3();
 
-	CheckCooldown();
-
+		CheckCooldown();
+	}
 	action_worker.Update();
 
 	return true;
@@ -1141,7 +1143,7 @@ void Wizard::Hability_lvl_1()
 
 void Wizard::CheckHability_lvl_1()
 {
-
+	
 	//Collect all the units in the buff area
 	std::vector<Unit*> units_around;
 	App->entities_manager->units_quadtree.CollectCandidates(units_around, buff_area);
