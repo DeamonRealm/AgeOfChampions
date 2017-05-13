@@ -117,7 +117,7 @@ public:
 
 	bool Execute()
 	{
-		if (timer.Read() >= (time + (worker->GetPausedTime() * 2)))
+		if (timer.Read() >= time)
 		{
 			iPoint spawn_point = ((ProductiveBuilding*)actor)->GetSpawnPoint();
 
@@ -167,6 +167,7 @@ public:
 		return timer.Read();
 	}
 
+	//Set Methods -----------
 	void SetUnitType(UNIT_TYPE new_type)
 	{
 		u_type = new_type;
@@ -176,6 +177,11 @@ public:
 		{
 			LOG("ups SetUnitType() doesnt work");
 		}
+	}
+
+	void SetPausedTime(uint time)
+	{
+		this->time += time;
 	}
 
 private:
@@ -204,7 +210,7 @@ public:
 
 	bool Execute()
 	{
-		if ((research_time + (worker->GetPausedTime() * 2)) <= timer.Read())
+		if (research_time <= timer.Read())
 		{
 			App->entities_manager->UpgradeEntity(r_type, diplomacy);
 			if (diplomacy == ALLY)
@@ -239,6 +245,12 @@ public:
 	uint GetResearchTime()const
 	{
 		return research_time;
+	}
+
+	//Set Methods -----------
+	void SetPausedTime(uint time)
+	{
+		this->research_time += time;
 	}
 
 private:

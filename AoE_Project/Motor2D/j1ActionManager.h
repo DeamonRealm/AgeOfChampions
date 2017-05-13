@@ -96,6 +96,9 @@ public:
 	//Get methods -----------
 	TASK_TYPE GetType();
 
+	//Set Methods -----------
+	virtual void SetPausedTime(uint time);
+	
 };
 /// ---------------------------------------------
 

@@ -21,6 +21,11 @@ TASK_TYPE Action::GetType()
 {
 	return type;
 }
+
+void Action::SetPausedTime(uint time)
+{
+
+}
 /// ---------------------------------------------
 
 
@@ -823,6 +828,10 @@ void ActionWorker::Restart()
 {
 	paused_time += pause_timer.Read();
 	paused = false;
+	if (this->current_primary_action != nullptr)
+	{
+		current_primary_action->SetPausedTime(paused_time);
+	}
 }
 
 uint ActionWorker::GetPausedTime() const

@@ -467,7 +467,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			else {
 				App->pathfinding->PushPath(actor, iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 				// Move Arrow
-				SetMinimapAlert(iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
+				SetMoveArrows();
 			}
 		}
 		else if (selected_elements.size() > 1 && selected_entity_type == UNIT) {
@@ -674,9 +674,14 @@ bool Selection_Panel::Draw()
 
 	if (map_alert_particle != nullptr)
 	{
+		//Set minimap alert particle position
 		SetMinimapAlertPosition();
-		map_alert_particle->Draw();
-
+		//Ge minimap alert current sprite
+		const Sprite* cur_sprite = map_alert_particle->animation.GetCurrentSprite();
+		//Call minimap alert blit
+		App->render->Blit(map_alert_particle->animation.GetTexture(), map_alert_particle->position.x,
+		map_alert_particle->position.y, cur_sprite->GetFrame(), false, 255, cur_sprite->GetXpivot(), cur_sprite->GetYpivot());
+		//Check if minimap alert particle animation is end
 		if (map_alert_particle->animation.IsEnd())
 		{
 			delete map_alert_particle;
@@ -1340,7 +1345,6 @@ void Selection_Panel::SetMinimapAlert(iPoint pos)
 void Selection_Panel::SetMinimapAlertPosition()
 {
 	iPoint new_pos = App->player->minimap_panel->MaptoMinimap(map_alert_pos.x, map_alert_pos.y);
-	new_pos.y = new_pos.y / 2;
 	new_pos.x -= App->render->camera.x;
 	new_pos.y -= App->render->camera.y;
 	map_alert_particle->position = new_pos;
