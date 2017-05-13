@@ -518,6 +518,8 @@ public:
 	ACTION_TYPE		GetAction()const;
 	DIRECTION_TYPE	GetDirection()const;
 	uint			GetAttackHitPoints()const;
+	uint			GetTotalAttackHitPoints()const;
+
 	float			GetAttackBuff()const;
 	uint			GetAttackRate()const;
 	uint			GetAttackRateBuff()const;
