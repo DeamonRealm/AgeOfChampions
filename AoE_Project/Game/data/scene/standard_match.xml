@@ -1306,7 +1306,7 @@
   <player>
     <player_data>
       <hud_game_panel>
-        <player_resources wood="500" meat="800" gold="500" stone="300" population="7" max_population="5" />
+        <player_resources wood="300" meat="300" gold="200" stone="100" population="7" max_population="5" />
         <player_score all_resources="0" player_death_units="0" player_death_enemies="0" player_all_units="0" />
       </hud_game_panel>
       <hud_selection_panel>

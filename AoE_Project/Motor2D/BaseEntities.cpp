@@ -1637,6 +1637,14 @@ bool Unit::AttackBuilding(Building * target, TASK_CHANNELS channel)
 		App->animator->UnitPlay(this);
 	}
 
+	if (attack_type == DISTANCE)
+	{
+		const Sprite* sprite = this->current_animation->GetCurrentSprite();
+		fPoint arrow_position(position.x, position.y - sprite->GetYpivot());
+		fPoint arrow_destination(target->GetPosition().x, target->GetPosition().y);
+		ShotArrow(arrow_position, arrow_destination);
+	}
+
 	if (target->GetLife() == 0)
 	{
 		ACTION_TYPE act = target->GetActionType();
@@ -2619,8 +2627,18 @@ bool Building::Die()
 		if (building_type == TOWN_CENTER || building_type == TOWN_CENTER_C)
 		{
 			//Do lose condition
-			App->player->game_panel->DoLose();
+			if (entity_diplomacy == ALLY)
+			{
+				App->player->game_panel->DoLose();
+			}
+			else
+			{
+				App->player->game_panel->DoWin();
+			}
+
+			// App->paused = true;
 		}
+
 		//Remove from minimap
 		iPoint pos = GetPositionRounded();
 		App->player->minimap_panel->RemoveBuildingToPrint(pos.x, pos.y, entity_diplomacy);
@@ -2902,7 +2920,15 @@ void Building::OnlySetPosition(float x, float y)
 	case HOUSE_A:
 	case HOUSE_B:
 	case HOUSE_C:
+	case HOUSE_BI:
+	case HOUSE_AI:
+	case HOUSE_CI:
 		pos.y -= (App->map->data.tile_height + 1) * 0.5f;
+		break;
+	case UNIVERSITY_C:
+	case UNIVERSITY_I:
+	case CASTLE:
+		pos.y += (App->map->data.tile_height + 1) * 0.5f;
 		break;
 	case RUBBLE_THREE:
 		break;
