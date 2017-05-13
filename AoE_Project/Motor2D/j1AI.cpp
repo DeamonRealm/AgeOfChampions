@@ -177,9 +177,9 @@ bool j1AI::Update(float dt)
 
 	ManageTroopsCreation();
 
-	if (noob_timer.Read() >= 4)
+	if (noob_timer.Read() >= 4*60000)
 	{
-		if (raid_timer.Read() >= 2)
+		if (raid_timer.Read() >= 2*60000)
 		{
 			ManageAttack();
 		}
