@@ -55,11 +55,11 @@ pc => population cost to activate cell
       <cell cp ="0" cl ="4" al ="4" x="252" y="549" w="36" h="36" wc ="0" fc ="60" gc ="20" sc ="0" pc ="1" ut ="17" ci ="Create Champion"/>
       <cell cp ="1" cl ="0" al ="2" x="396" y="621" w="36" h="36" wc ="25" fc ="35" gc ="0" sc ="0" pc ="1" ut ="12" rt="10" ci ="Create Spearman"/>
       <cell cp ="1" cl ="1" al ="3" x="72" y="621" w="36" h="36" wc ="25" fc ="35" gc ="0" sc ="0" pc ="1" ut ="11" ci ="Create Pikeman"/>
-      <cell cp ="6" cl ="0" al ="3" x="36" y="369" w="36" h="36" wc ="0" fc ="21" gc ="9" sc ="0" pc ="0" rt="10" ci ="Upgrade To Pikeman"/>
+      <cell cp ="6" cl ="0" al ="3" x="36" y="369" w="36" h="36" wc ="0" fc ="210" gc ="90" sc ="0" pc ="0" rt="10" ci ="Upgrade To Pikeman"/>
       <cell cp ="5" cl ="0" al ="2" x="604" y="333" w="36" h="36" wc ="0" fc ="100" gc ="45" sc ="0" pc ="0" rt="6" ci ="Upgrade To Man-at-Arms"/>
       <cell cp ="5" cl ="1" al ="3" x="568" y="333" w="36" h="36" wc ="0" fc ="200" gc ="65" sc ="0" pc ="0" rt="7" ci ="Upgrade To Long Swordsman"/>
       <cell cp ="5" cl ="2" al ="4" x="468" y="405" w="36" h="36" wc ="0" fc ="300" gc ="100" sc ="0" pc ="0" rt="8" ci ="Upgrade To Two-Handed Swordsman"/>
-      <cell cp ="5" cl ="3" al ="4" x="144" y="369" w="36" h="36" wc ="0" fc ="75" gc ="35" sc ="0" pc ="0" rt="9" ci ="Upgrade To Champion"/>
+      <cell cp ="5" cl ="3" al ="4" x="144" y="369" w="36" h="36" wc ="0" fc ="750" gc ="350" sc ="0" pc ="0" rt="9" ci ="Upgrade To Champion"/>
     </Barrack>
     <BlackSmith>
       <cell cp ="0" cl ="0" al ="2" x="504" y="369" w="36" h="36" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="11" ci ="Research Padded Archer Armor (Archers +1/+1P armor)"/>
@@ -102,7 +102,7 @@ pc => population cost to activate cell
       <cell cp ="1" cl ="2" al ="4" x="0"   y="621" w="36" h="36" wc ="0" fc ="60"  gc ="75"  sc ="0" pc ="1" ut ="10" ci ="Create Paladin"/>
      <!-- <cell cp ="5" cl ="0" al ="4" x="144" y="477" w="36" h="36" wc ="0" fc ="125"  gc ="75" sc ="0" pc ="0" rt ="30" ci ="Upgrade To Light Cavalry"/>-->
       <cell cp ="6" cl ="0" al ="4" x="108" y="477" w="36" h="36" wc ="0" fc ="350"  gc ="300" sc ="0" pc ="0" rt ="27" ci ="Upgrade To Cavalier"/>
-      <cell cp ="6" cl ="1" al ="4" x="36"  y="477" w="36" h="36" wc ="200" fc ="0"  gc ="100" sc ="0" pc ="0" rt ="28" ci ="Upgrade To Paladin"/>
+      <cell cp ="6" cl ="1" al ="4" x="36"  y="477" w="36" h="36" wc ="0" fc ="1300"  gc ="750" sc ="0" pc ="0" rt ="28" ci ="Upgrade To Paladin"/>
       <cell cp ="6" cl ="2" al ="3" x="0"   y="477" w="36" h="36" wc ="0" fc ="150" gc ="100" sc ="0" pc ="0" rt ="26" ci ="Research Bloodlines (Cavalry +20 Healthpoints)"/>
       <cell cp ="10" cl ="0" al ="3" x="72" y="477" w="36" h="36" wc ="0" fc ="150" gc ="0" sc ="0" pc ="0" rt ="29" ci ="Research Husbandry (Cavalry +10% Speed)"/>
     </Stable>
