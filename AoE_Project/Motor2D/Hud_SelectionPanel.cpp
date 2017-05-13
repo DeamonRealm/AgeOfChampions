@@ -776,7 +776,9 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		if (type == DOUBLECLICK)
 		{
 			if (Selected->GetEntity() == nullptr) return;
-			else if (selected_entity_type != UNIT || selected_diplomacy != ALLY) return;
+			UnSelect_Entity();
+			ResetSelectedType(SINGLE);
+			if (selected_entity_type != UNIT || selected_diplomacy != ALLY) return;
 
 			App->win->GetWindowSize(width, height);
 			selection_rect = { 0, 32 , (int)width, 560 };
@@ -784,6 +786,8 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		else if (selection_rect.w == 0 || selection_rect.h == 0) return;
 		else
 		{
+			UnSelect_Entity();
+			ResetSelectedType();
 			if (selection_rect.w < 0)
 			{
 				selection_rect.x += selection_rect.w;
@@ -818,7 +822,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		for (int count = 0; count < size; count++)
 		{
 			if (unit_quad_selection[count]->GetDiplomacy() != ALLY) continue;
-			else if (type == DOUBLECLICK && selected_unit_type != unit_quad_selection[count]->GetUnitType());
+			else if (type == DOUBLECLICK && selected_unit_type != unit_quad_selection[count]->GetUnitType()) continue;
 			else if (!unit_quad_selection[count]->GetIfSelected())
 			{
 				selected_amount++;
@@ -826,11 +830,12 @@ void Selection_Panel::Select(SELECT_TYPE type)
 				UpperEntity->Select();
 				u_type = ((Unit*)UpperEntity)->GetUnitType();
 				selected_elements.push_back(UpperEntity);
-				if (selected_elements.size() == 1)
+				if (type == DOUBLECLICK) continue;
+				else if (selected_elements.size() == 1)
 				{
 					ResetSelectedType(SINGLE);
 				}
-				else if ((type != DOUBLECLICK && selected_unit_type != NO_UNIT && champions_selected == false)
+				else if ((selected_unit_type != NO_UNIT && champions_selected == false)
 					|| (u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP))
 				{
 					ResetSelectedType(GROUP);
@@ -841,20 +846,22 @@ void Selection_Panel::Select(SELECT_TYPE type)
 	}
 	else
 	{
-		if (type == SINGLE) UnSelect_Entity();
-
 		UpperEntity = GetUpperEntity(mouse_x, mouse_y);
 		if (UpperEntity == nullptr)
 		{
-			if (type != ADD) ResetSelectedType();
+			if (type != ADD)
+			{
+				UnSelect_Entity();
+				ResetSelectedType();
+			}
 			return;
 		}
 		UpperEntity->Select();
 
-
 		if (type == SINGLE)
 		{
 			UnSelect_Entity();
+			UpperEntity->Select();
 			selected_elements.push_back(UpperEntity);
 			ResetSelectedType(SINGLE);
 		}
@@ -863,7 +870,8 @@ void Selection_Panel::Select(SELECT_TYPE type)
 			if (std::find(selected_elements.begin(), selected_elements.end(), UpperEntity) == selected_elements.end())
 			{
 				selected_elements.push_back(UpperEntity);
-				if (selected_elements.size() == 1 || selected_unit_type != NO_UNIT) ResetSelectedType(ADD);
+				if (selected_elements.size() == 1) ResetSelectedType(SINGLE);
+				else if(selected_unit_type != NO_UNIT) ResetSelectedType(ADD);
 			}
 		}
 	}
@@ -1142,11 +1150,16 @@ void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
 		{
 			selected_unit_type = ((Unit*)UpperEntity)->GetUnitType();
 			selected_building_type = NO_BUILDING;
+			if (selected_unit_type == WARRIOR_CHMP || selected_unit_type == WARRIOR_CHMP || selected_unit_type == WARRIOR_CHMP)
+			{
+				champions_selected = true;
+			}
 		}
 		else if (selected_entity_type == BUILDING)
 		{
 			selected_building_type = ((Building*)UpperEntity)->GetBuildingType();
 			selected_unit_type = NO_UNIT;
+			champions_selected = false;
 		}
 	}
 				 break;
@@ -1163,7 +1176,16 @@ void Selection_Panel::ResetSelectedType(SELECT_TYPE select_type)
 				break;
 	case DOUBLECLICK: break;
 	case ADD: {
-		if (selected_unit_type != ((Unit*)UpperEntity)->GetUnitType()) selected_unit_type = NO_UNIT;
+		UNIT_TYPE u_type = ((Unit*)UpperEntity)->GetUnitType();
+		if (u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP) {
+			selected_unit_type = u_type;
+			champions_selected = true;
+		}
+		else if (selected_unit_type != u_type && selected_unit_type != WARRIOR_CHMP
+			&& selected_unit_type != WIZARD_CHMP && selected_unit_type != ARCHER_CHMP)
+		{
+			selected_unit_type = NO_UNIT;
+		}
 	}
 			  break;
 	default:
