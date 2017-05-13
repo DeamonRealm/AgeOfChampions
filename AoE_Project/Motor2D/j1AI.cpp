@@ -363,6 +363,14 @@ void j1AI::ManageAttack()
 
 			raid_it++;
 		}
+
+		//Clean the list to prepare for the next raid
+		enemy_raid.clear();
+		
+		//Make the raid each time more powerfull
+		if (raid_size <= 30)
+			raid_size += 5;
+
 		return;
 	}
 
@@ -370,7 +378,7 @@ void j1AI::ManageAttack()
 	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
 	while (unit_it != enemy_units.end())
 	{
-		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER)
+		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER && !unit_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY) && !unit_it._Ptr->_Myval->GetWorker()->IsBusy(PRIMARY))
 		{
 			enemy_raid.remove(unit_it._Ptr->_Myval);
 			enemy_raid.push_back(unit_it._Ptr->_Myval);

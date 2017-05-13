@@ -13,6 +13,7 @@
 #include "j1BuffManager.h"
 #include "j1FogOfWar.h"
 #include "Actions_Unit.h"
+#include "j1AI.h"
 
 #include "Hud_GamePanel.h"
 #include "Hud_MinimapPanel.h"
@@ -1693,6 +1694,8 @@ bool Unit::Die()
 	}
 	if (GetDiplomacy() == DIPLOMACY::ENEMY)
 	{
+		App->AI->enemy_units.remove(this);
+
 		//App->player->game_panel->IncreaseDeathEnemies();
 		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);
 
