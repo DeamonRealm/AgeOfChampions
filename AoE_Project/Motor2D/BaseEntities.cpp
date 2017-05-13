@@ -1604,7 +1604,10 @@ bool Unit::AttackBuilding(Building * target)
 
 		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
 		LOG("X: %i || Y: %i", goal.x, goal.y);
-		App->pathfinding->PushPath(this, goal);
+		
+			App->pathfinding->PushPath(this, goal, { -1,-1 }, true, SECONDARY);
+		
+		
 
 		return false;
 	}

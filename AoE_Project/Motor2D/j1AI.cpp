@@ -350,7 +350,7 @@ void j1AI::ManageAttack()
 {
 	if (enemy_units.size() < 30) return;
 
-	if (enemy_raid.size() >= 10)
+	if (enemy_raid.size() >= raid_size)
 	{
 		std::list<Unit*>::const_iterator raid_it = enemy_raid.begin();
 		while (raid_it != enemy_raid.end())

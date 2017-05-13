@@ -14,7 +14,7 @@ struct SDL_Texture;
 struct PathNode;
 struct ToPath
 {
-	ToPath(Unit* unit, const iPoint& destination, const iPoint& target, bool priority = true, TASK_CHANNELS task = PRIMARY,Unit* unit_target=nullptr);
+	ToPath(Unit* unit, const iPoint& destination, const iPoint& target, bool priority = true, TASK_CHANNELS task_channel = PRIMARY,Unit* unit_target=nullptr);
 	~ToPath();
 	Unit* unit = nullptr;
 	Unit* unit_target = nullptr;
@@ -23,7 +23,7 @@ struct ToPath
 	iPoint target = { -1,-1 };
 	bool priority = true;
 	bool operator ==(const ToPath& unit)const;
-	TASK_CHANNELS task;
+	TASK_CHANNELS task_channel = TASK_CHANNELS::PRIMARY;
 
 };
 ///class Pathfinding ------------------

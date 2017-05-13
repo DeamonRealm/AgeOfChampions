@@ -71,11 +71,11 @@ bool j1Pathfinding::PreUpdate()
 
 				if (current_unit.priority)
 				{
-					current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target,current_unit.unit_target));
+					current_unit.unit->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target,current_unit.unit_target), current_unit.task_channel);
 				}
 				else
 				{
-					current_unit.unit->AddAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target, current_unit.unit_target));
+					current_unit.unit->AddAction((Action*)App->action_manager->MoveAction(path, current_unit.unit, current_unit.target, current_unit.unit_target), current_unit.task_channel);
 				}
 				}
 		}
@@ -265,9 +265,9 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 	return nullptr;
 }
 
-void j1Pathfinding::PushPath(Unit * unit, iPoint destination, iPoint target, bool priority, TASK_CHANNELS task, Unit* unit_target)
+void j1Pathfinding::PushPath(Unit * unit, iPoint destination, iPoint target, bool priority, TASK_CHANNELS task_channel, Unit* unit_target)
 {
-	ToPath getUnit(unit, destination,target, priority,task,unit_target);
+	ToPath getUnit(unit, destination,target, priority,task_channel,unit_target);
 	to_path.remove(getUnit);
 	to_path.push_back(getUnit);
 }
@@ -439,7 +439,7 @@ bool PathNode::operator!=(const PathNode & node) const
 
 
 
-ToPath::ToPath(Unit * getUnit, const iPoint & destination, const iPoint& target, bool priority, TASK_CHANNELS task, Unit* unit_target) :unit(getUnit), destination(destination), target(target), priority(priority),task(task),unit_target(unit_target)
+ToPath::ToPath(Unit * getUnit, const iPoint & destination, const iPoint& target, bool priority, TASK_CHANNELS task_channel, Unit* unit_target) :unit(getUnit), destination(destination), target(target), priority(priority),task_channel(task_channel),unit_target(unit_target)
 {
 }
 

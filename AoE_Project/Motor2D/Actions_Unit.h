@@ -586,7 +586,7 @@ public:
 		{
 			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy())
 			{
-				actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, surrounding_buildings[k]), PRIMARY);
+				actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, surrounding_buildings[k]), SECONDARY);
 				return false;
 			}
 		};

@@ -171,6 +171,7 @@ private:
 
 private:
 	uint current_age = 2;
+	uint raid_size = 10;
 
 	AIWorker* ai_worker = nullptr;
 	j1Timer update_timer;
