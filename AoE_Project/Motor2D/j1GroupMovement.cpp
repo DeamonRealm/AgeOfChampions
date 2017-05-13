@@ -78,13 +78,23 @@ void j1GroupMovement::RecolectOnGroup(std::list<Entity*>* units, Resource* resou
 
 	if (units->empty())
 		return;
+	std::list<Entity*> no_villager_units;
 	for (std::list<Entity*>::iterator item = units->begin(); item != units->end(); item++)
 	{
 		Unit* current_unit = (Unit*)item._Ptr->_Myval;
-		if (current_unit->GetUnitType() != VILLAGER) continue;
+		if (current_unit->GetUnitType() != VILLAGER)
+		{
+			no_villager_units.push_back(current_unit);
+			continue;
+		}
 		current_unit->AddAction((Action*)App->action_manager->RecollectAction((Villager*)item._Ptr->_Myval, resource));
-
 	}
+	if (!no_villager_units.empty())
+	{
+		iPoint resource_destination = resource->GetPositionRounded();
+		GetGroupOfUnits(&no_villager_units, resource_destination.x, resource_destination.y, true);
+	}
+	no_villager_units.clear();
 }
 
 void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get, int x, int y, bool active)
@@ -92,10 +102,8 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get, int x, int y, boo
 	map_destination = App->map->WorldToMap(x, y);
 	destination = { x, y };
 
-	if (!App->pathfinding->IsWalkable(map_destination))
-	{
-		return;
-	}
+	
+	
 	//Get the list of units
 	units = get;
 	//get the size of units and set formation
@@ -104,6 +112,12 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get, int x, int y, boo
 	//Get the middle point and set the lead of formation
 	//	middle_point = GetMiddlePoint();
 	lead = *(units->begin());
+	if (!App->pathfinding->IsWalkable(map_destination))
+	{
+		destination = ((Unit*)lead)->FindSpawnCell(destination);
+		if (destination == iPoint(-1, -1))
+			return;
+	}
 	//Create the lead path
 	std::vector<iPoint>* second_destination = nullptr;
 	//	first_destination = CreateFirstDestination();
@@ -120,9 +134,11 @@ void j1GroupMovement::GetGroupOfUnits(std::list<Entity*>* get, int x, int y, boo
 	lead_direcction = ((Unit*)lead)->LookDirection(*(second_destination->begin()), *(second_destination->begin() + 1));
 	delete second_destination;
 	second_destination = nullptr;
-	//do the other units path
-	OtherUnitsPath(active);
-
+	if (units->size() > 1)
+	{
+		//do the other units path
+		OtherUnitsPath(active);
+	}
 }
 
 void j1GroupMovement::OtherUnitsPath(bool active)
