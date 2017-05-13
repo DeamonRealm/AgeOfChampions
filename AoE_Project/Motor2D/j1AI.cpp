@@ -177,9 +177,9 @@ bool j1AI::Update(float dt)
 
 	ManageTroopsCreation();
 
-	if (noob_timer.Read() >= 4*60000)
+	if (noob_timer.Read() >= 4)
 	{
-		if (raid_timer.Read() >= 2 * 60000)
+		if (raid_timer.Read() >= 2)
 		{
 			ManageAttack();
 		}
@@ -387,7 +387,7 @@ void j1AI::ManageAttack()
 	{
 		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER && !unit_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY) && !unit_it._Ptr->_Myval->GetWorker()->IsBusy(PRIMARY))
 		{
-			if (!enemy_raid.size() >= raid_size)
+			if (enemy_raid.size() < raid_size)
 			{
 				enemy_raid.remove(unit_it._Ptr->_Myval);
 				enemy_raid.push_back(unit_it._Ptr->_Myval);
