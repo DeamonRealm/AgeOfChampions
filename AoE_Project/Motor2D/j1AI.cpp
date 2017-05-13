@@ -348,7 +348,7 @@ Resource * j1AI::GetNearestNeed(iPoint pos)
 
 void j1AI::ManageAttack()
 {
-	if (enemy_units.size() < 30) return;
+	if (enemy_units.size() < raid_size + 10) return;
 
 	if (enemy_raid.size() >= raid_size)
 	{
@@ -820,73 +820,67 @@ Building* j1AI::GenerateBuilding(BUILDING_TYPE type)
 {
 	iPoint position = { 0,0 };
 	if (buildings_production[type].base_type_building == NO_BUILDING) return nullptr;
-		
-	if (CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING, false))
+
+	if (!CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING, false))
+		return nullptr;
+
+
+	//Search for the enemy town center
+	std::list<Building*>::const_iterator building_it = enemy_buildings.begin();
+	while (building_it != enemy_buildings.end())
 	{
-		Unit* villager = nullptr;
-		UNIT_TYPE u_type;
-		std::list<Unit*>::const_iterator unit = enemy_units.end();
-		while (unit != enemy_units.begin())
+		if (building_it._Ptr->_Myval->GetBasicBuildingType() == TOWN_CENTER && building_it._Ptr->_Myval->GetDiplomacy() == ENEMY)
 		{
-			unit--;
-			u_type = unit._Ptr->_Myval->GetUnitType();
-			if (u_type == VILLAGER && unit._Ptr->_Myval->GetDiplomacy() == ENEMY)
-			{
-				if (villager != nullptr)
-				{
-					if (villager->GetWorker()->IsBusy(PRIMARY))
-					{
-						villager = unit._Ptr->_Myval;
-					}
-				}
-				else villager = unit._Ptr->_Myval;
-			}
-		}
-		if (villager != nullptr)
-		{
-			CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING);
-			position = villager->GetPositionRounded();
-			Building* new_building = App->entities_manager->GenerateBuilding(buildings_production[type].b_type, ENEMY, true);
-			if (new_building == nullptr) return nullptr;
-
-			j1Timer save_alpha_timer;
-			srand(time(NULL));
-			float displacement = 100.0;
-			new_building->OnlySetPosition(position.x, position.y);
-			while (!new_building->CheckZone(position.x, position.y))
-			{
-				int direction = rand() % 4;
-				switch (direction)
-				{
-				case 0:				//Decrease y
-					position.y -= (displacement);
-					break;
-				case 1:				//Increase x
-					position.x += (displacement);
-					break;
-				case 2:				//Increase y
-					position.y += (displacement);
-					break;
-				case 3:				//Decrease x
-					position.x -= (displacement);
-					break;
-				default:
-					break;
-				}
-
-				new_building->OnlySetPosition(position.x, position.y);
-
-				if (save_alpha_timer.Read() > 4)
-				{
-					App->entities_manager->DeleteEntity(new_building);
-					return nullptr;
-				}
-			}
-			new_building->SetPosition(position.x, position.y);
-			enemy_buildings.push_back(new_building);
-			return new_building;
+			position = building_it._Ptr->_Myval->GetPositionRounded();
+			break;
 		}
 	}
+	//Check the position, if it's 0,0 it means that the town center has not been found
+	if (position == iPoint(0, 0)) return nullptr;
+
+	CheckResources(buildings_production[type].wood_cost, buildings_production[type].food_cost, buildings_production[type].gold_cost, buildings_production[type].stone_cost, buildings_production[type].population_cost, BUILDING);
+	Building* new_building = App->entities_manager->GenerateBuilding(buildings_production[type].b_type, ENEMY, true);
+	if (new_building == nullptr) return nullptr;
+
+	j1Timer save_alpha_timer; //To avoid infinte loops in case the AI doesn't find a place to put the buildinf
+	srand(time(NULL));
+	float displacement = 100.0;
+	new_building->OnlySetPosition(position.x, position.y);
+	while (!new_building->CheckZone(position.x, position.y))
+	{
+		int direction = rand() % 4;
+		switch (direction)
+		{
+		case 0:				//Decrease y
+			position.y -= (displacement);
+			break;
+		case 1:				//Increase x
+			position.x += (displacement);
+			break;
+		case 2:				//Increase y
+			position.y += (displacement);
+			break;
+		case 3:				//Decrease x
+			position.x -= (displacement);
+			break;
+		default:
+			break;
+		}
+
+		new_building->OnlySetPosition(position.x, position.y);
+
+		if (save_alpha_timer.Read() > 4)
+		{
+			App->entities_manager->DeleteEntity(new_building);
+			return nullptr;
+		}
+	}
+	new_building->SetPosition(position.x, position.y);
+	enemy_buildings.push_back(new_building);
+	return new_building;
+
+
+
 	return nullptr;
 }
 
