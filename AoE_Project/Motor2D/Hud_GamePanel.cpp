@@ -518,7 +518,7 @@ bool Game_Panel::AddResource(int amount, PLAYER_RESOURCES resource_type)
 
 bool Game_Panel::UseResource(int amount_wood, int amount_food, int amount_gold, int amount_stone, int used_population, bool use)
 {
-	if(wood-amount_wood >= 0 && meat-amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 &&  population + used_population <= (int)max_population)
+	if(wood-amount_wood >= 0 && meat-amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 &&  (population + used_population <= (int)max_population || used_population <= 0))
 	{
 		if (use)
 		{

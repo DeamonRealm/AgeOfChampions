@@ -927,7 +927,7 @@ bool j1AI::CheckResources(int amount_wood, int amount_food, int amount_gold, int
 {
 	if (type == ENTITY_TYPE::UNIT || type == ENTITY_TYPE::BUILDING)
 	{
-		if (wood - amount_wood >= 0 && meat - amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 && (population + used_population <= max_population || used_population < 0))
+		if (wood - amount_wood >= 0 && meat - amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 && (population + used_population <= max_population || used_population <= 0))
 		{
 			if (use)
 			{
