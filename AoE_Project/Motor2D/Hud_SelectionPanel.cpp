@@ -448,27 +448,36 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 		if (selected_elements.size() == 1 && selected_elements.begin()._Ptr->_Myval->GetEntityType() == UNIT)
 		{
 			if (Selected->GetEntity() == nullptr || selected_diplomacy == ENEMY) break;
-
+			Unit* actor = (Unit*)Selected->GetEntity();
 			//Set entity target to the selected unit
 			Selected->GetEntity()->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 			if (UpperEntity != nullptr)
 			{
-				if (UpperEntity->GetDiplomacy() == ENEMY && selected_unit_type != MONK && selected_unit_type != WIZARD_CHMP)
+				ENTITY_TYPE upper_type = UpperEntity->GetEntityType();
+				DIPLOMACY upper_diplomacy = UpperEntity->GetDiplomacy();
+				if (upper_diplomacy == ENEMY && selected_unit_type != MONK && selected_unit_type != WIZARD_CHMP)
 				{
-					if (UpperEntity->GetEntityType() == UNIT) Selected->GetEntity()->AddAction(App->action_manager->AttackToUnitAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
-					else if (UpperEntity->GetEntityType() == BUILDING)Selected->GetEntity()->AddAction(App->action_manager->AttackToBuildingAction((Unit*)Selected->GetEntity(), (Building*)UpperEntity));
+					if (upper_type == UNIT) actor->AddAction(App->action_manager->AttackToUnitAction(actor, (Unit*)UpperEntity));
+					else if (upper_type == BUILDING) actor->AddAction(App->action_manager->AttackToBuildingAction(actor, (Building*)UpperEntity));
 					App->sound->PlayFXAudio(ATTACK_SOUND);
 				}
-				else if (UpperEntity->GetEntityType() == RESOURCE && selected_unit_type == VILLAGER)
+				else if (upper_type == RESOURCE && selected_unit_type == VILLAGER)
 				{
-					Selected->GetEntity()->AddAction(App->action_manager->RecollectAction((Villager*)Selected->GetEntity(), (Resource*)UpperEntity));
+					actor->AddAction(App->action_manager->RecollectAction((Villager*)actor, (Resource*)UpperEntity));
 				}
-				else if ((selected_unit_type == WIZARD_CHMP || selected_unit_type == MONK) && UpperEntity->GetEntityType() == UNIT && UpperEntity->GetDiplomacy() == ALLY)
+				else if (upper_type == RESOURCE) {
+					App->pathfinding->PushPath(actor, actor->FindSpawnCell(iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
+					// Move Arrow
+				}
+				else if ((selected_unit_type == WIZARD_CHMP || selected_unit_type == MONK) && upper_type == UNIT && upper_diplomacy == ALLY)
 				{
-					Selected->GetEntity()->AddAction(App->action_manager->HealAction((Unit*)Selected->GetEntity(), (Unit*)UpperEntity));
+					actor->AddAction(App->action_manager->HealAction(actor, (Unit*)UpperEntity));
 				}
 			}
-			else App->pathfinding->PushPath((Unit*)Selected->GetEntity(), iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
+			else {
+				App->pathfinding->PushPath(actor, iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
+				// Move Arrow
+			}
 		}
 		else if (selected_elements.size() > 1 && selected_entity_type == UNIT) {
 			{
@@ -490,7 +499,10 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 						App->group_move->RecolectOnGroup(&(selected_elements), (Resource*)UpperEntity);
 					}
 				}
-				else App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y, true);
+				else {
+					App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y, true);
+					// Move Arrow
+				}
 			}
 		}
 		break;

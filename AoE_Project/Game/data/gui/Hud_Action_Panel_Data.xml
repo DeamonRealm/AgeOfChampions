@@ -62,23 +62,23 @@ pc => population cost to activate cell
       <cell cp ="5" cl ="3" al ="4" x="144" y="369" w="36" h="36" wc ="0" fc ="75" gc ="35" sc ="0" pc ="0" rt="9" ci ="Upgrade To Champion"/>
     </Barrack>
     <BlackSmith>
-      <cell cp ="0" cl ="0" al ="2" x="504" y="369" w="36" h="36" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="17" ci ="Research Padded Archer Armor (Archers +1/+1P armor)"/>
-      <cell cp ="0" cl ="1" al ="3" x="468" y="369" w="36" h="36" wc ="0" fc ="150" gc ="150" sc ="0" pc ="0" rt ="18" ci ="Research Leather Archer Armor (Archers +1/+1P armor)"/>
-      <cell cp ="0" cl ="2" al ="4" x="612" y="369" w="36" h="36" wc ="0" fc ="250" gc ="250" sc ="0" pc ="0" rt ="19" ci ="Research Ring Archer Armor (Archers +1/+2P armor)"/>
-      <cell cp ="1" cl ="0" al ="2" x="360" y="369" w="36" h="36" wc ="0" fc ="100" gc ="50"  sc ="0" pc ="0" rt ="20" ci ="Research Fletching (Archers, Tower and Castle +1 Attack, +1 Range, Town Center +1 Attack)"/>
-      <cell cp ="1" cl ="1" al ="3" x="216" y="369" w="36" h="36" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="21" ci ="Research Bodkin Arrow (Archers, Tower and Castle +1 Attack, +1 Range, Town Center +1 Attack)"/>
-      <cell cp ="1" cl ="2" al ="4" x="252" y="369" w="36" h="36" wc ="0" fc ="300" gc ="200" sc ="0" pc ="0" rt ="22" ci ="Research Bracer (Archers, Tower and Castle +1 Attack, +1 Range, Town Center +1 Attack)"/>
-      <cell cp ="2" cl ="0" al ="2" x="396" y="369" w="36" h="36" wc ="0" fc ="150" gc ="0"   sc ="0" pc ="0" rt ="23" ci ="Research Forging (Infantry, Cavalry +1 Attack)"/>
-      <cell cp ="2" cl ="1" al ="3" x="432" y="369" w="36" h="36" wc ="0" fc ="220" gc ="120" sc ="0" pc ="0" rt ="24" ci ="Research Iron Casting (Infantry, Cavalry +1 Attack)"/>
-      <cell cp ="2" cl ="2" al ="4" x="180" y="369" w="36" h="36" wc ="0" fc ="275" gc ="225" sc ="0" pc ="0" rt ="25" ci ="Research Blast Furnace (Infantry, Cavalry +2 Attack)"/>
+      <cell cp ="0" cl ="0" al ="2" x="504" y="369" w="36" h="36" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="11" ci ="Research Padded Archer Armor (Archers +1/+1P armor)"/>
+      <cell cp ="0" cl ="1" al ="3" x="468" y="369" w="36" h="36" wc ="0" fc ="150" gc ="150" sc ="0" pc ="0" rt ="12" ci ="Research Leather Archer Armor (Archers +1/+1P armor)"/>
+      <cell cp ="0" cl ="2" al ="4" x="612" y="369" w="36" h="36" wc ="0" fc ="250" gc ="250" sc ="0" pc ="0" rt ="13" ci ="Research Ring Archer Armor (Archers +1/+2P armor)"/>
+      <cell cp ="1" cl ="0" al ="2" x="360" y="369" w="36" h="36" wc ="0" fc ="100" gc ="50"  sc ="0" pc ="0" rt ="14" ci ="Research Fletching (Archers, Tower and Castle +1 Attack, +1 Range, Town Center +1 Attack)"/>
+      <cell cp ="1" cl ="1" al ="3" x="216" y="369" w="36" h="36" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="15" ci ="Research Bodkin Arrow (Archers, Tower and Castle +1 Attack, +1 Range, Town Center +1 Attack)"/>
+      <cell cp ="1" cl ="2" al ="4" x="252" y="369" w="36" h="36" wc ="0" fc ="300" gc ="200" sc ="0" pc ="0" rt ="16" ci ="Research Bracer (Archers, Tower and Castle +1 Attack, +1 Range, Town Center +1 Attack)"/>
+      <cell cp ="2" cl ="0" al ="2" x="396" y="369" w="36" h="36" wc ="0" fc ="150" gc ="0"   sc ="0" pc ="0" rt ="17" ci ="Research Forging (Infantry, Cavalry +1 Attack)"/>
+      <cell cp ="2" cl ="1" al ="3" x="432" y="369" w="36" h="36" wc ="0" fc ="220" gc ="120" sc ="0" pc ="0" rt ="18" ci ="Research Iron Casting (Infantry, Cavalry +1 Attack)"/>
+      <cell cp ="2" cl ="2" al ="4" x="180" y="369" w="36" h="36" wc ="0" fc ="275" gc ="225" sc ="0" pc ="0" rt ="19" ci ="Research Blast Furnace (Infantry, Cavalry +2 Attack)"/>
       
-      <cell cp ="5" cl ="0" al ="2" x="0"   y="405" w="36" h="36" wc ="0" fc ="150" gc ="0"   sc ="0" pc ="0" rt ="26" ci ="Research Scale Barding Armor (Cavalry +1/+1P Armor)"/>
-      <cell cp ="5" cl ="1" al ="3" x="288" y="369" w="36" h="36" wc ="0" fc ="250" gc ="150" sc ="0" pc ="0" rt ="27" ci ="Research Chain Barding Armor (Cavalry +1/+1P Armor)"/>
-      <cell cp ="5" cl ="2" al ="4" x="540" y="369" w="36" h="36" wc ="0" fc ="350" gc ="200" sc ="0" pc ="0" rt ="28" ci ="Research Plate Barding Armor (Cavalry +1/+2P Armor)"/>
+      <cell cp ="5" cl ="0" al ="2" x="0"   y="405" w="36" h="36" wc ="0" fc ="150" gc ="0"   sc ="0" pc ="0" rt ="20" ci ="Research Scale Barding Armor (Cavalry +1/+1P Armor)"/>
+      <cell cp ="5" cl ="1" al ="3" x="288" y="369" w="36" h="36" wc ="0" fc ="250" gc ="150" sc ="0" pc ="0" rt ="21" ci ="Research Chain Barding Armor (Cavalry +1/+1P Armor)"/>
+      <cell cp ="5" cl ="2" al ="4" x="540" y="369" w="36" h="36" wc ="0" fc ="350" gc ="200" sc ="0" pc ="0" rt ="22" ci ="Research Plate Barding Armor (Cavalry +1/+2P Armor)"/>
       
-      <cell cp ="6" cl ="0" al ="2" x="36"  y="405" w="36" h="36" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="29" ci ="Research Scale Mail Armor (Infantry +1/+1P Armor)"/>
-      <cell cp ="6" cl ="1" al ="3" x="324" y="369" w="36" h="36" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="30" ci ="Research Chain Mail Armor (Infantry +1/+1P Armor)"/>
-      <cell cp ="6" cl ="2" al ="4" x="576" y="369" w="36" h="36" wc ="0" fc ="300" gc ="150" sc ="0" pc ="0" rt ="31" ci ="Research Plate Mail Armor (Infantry +1/+2P Armor)"/>
+      <cell cp ="6" cl ="0" al ="2" x="36"  y="405" w="36" h="36" wc ="0" fc ="100" gc ="0"   sc ="0" pc ="0" rt ="23" ci ="Research Scale Mail Armor (Infantry +1/+1P Armor)"/>
+      <cell cp ="6" cl ="1" al ="3" x="324" y="369" w="36" h="36" wc ="0" fc ="200" gc ="100" sc ="0" pc ="0" rt ="24" ci ="Research Chain Mail Armor (Infantry +1/+1P Armor)"/>
+      <cell cp ="6" cl ="2" al ="4" x="576" y="369" w="36" h="36" wc ="0" fc ="300" gc ="150" sc ="0" pc ="0" rt ="25" ci ="Research Plate Mail Armor (Infantry +1/+2P Armor)"/>
     </BlackSmith>
     <Archery_Range>
       <cell cp ="0" cl ="0" al ="2" x="0"   y="549" w="36" h="36" wc ="25" fc ="0"  gc ="45" sc ="0" pc ="1" ut ="3" rt ="1" ci ="Create Archer"/>

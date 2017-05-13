@@ -271,7 +271,7 @@ public:
 	// Handle input GUI
 	void Handle_Input(UI_Element* ui_element, GUI_INPUT ui_input);
 	// Activate with Input
-	void ActivateCell(int i);
+	void ActivateSkill(int i);
 
 	// Draw Game Panel
 	bool Draw();

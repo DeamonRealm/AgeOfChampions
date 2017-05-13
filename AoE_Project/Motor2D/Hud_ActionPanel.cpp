@@ -1469,9 +1469,11 @@ void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 	}
 }
 
-void Action_Panel::ActivateCell(int i)
+void Action_Panel::ActivateSkill(int i)
 {
-	if (actualpanel != nullptr) actualpanel->ActivateCell(i);
+	if (actualpanel == heropanel) {
+		on_action = actualpanel->ActivateCell(i);
+	}
 }
 
 bool Action_Panel::Draw()

@@ -243,15 +243,15 @@ bool j1Player::PreUpdate()
 	// Skills
 	if (App->input_manager->GetEvent(SET_HABILITY_A) == INPUT_DOWN)
 	{
-		action_panel->heropanel->ActivateSkill(0);
+		action_panel->ActivateSkill(0);
 	}
 	if (App->input_manager->GetEvent(SET_HABILITY_B) == INPUT_DOWN)
 	{
-		action_panel->heropanel->ActivateSkill(1);
+		action_panel->ActivateSkill(1);
 	}
 	if (App->input_manager->GetEvent(SET_HABILITY_C) == INPUT_DOWN)
 	{
-		action_panel->heropanel->ActivateSkill(2);
+		action_panel->ActivateSkill(2);
 	}
 
 	return true;
