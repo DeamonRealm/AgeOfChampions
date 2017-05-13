@@ -6,10 +6,12 @@
 ///Class Action ---------------------------------
 //Base class to build action definitions
 //Constructors ========================
-Action::Action(Entity* actor, TASK_TYPE type) : actor(actor), type(type)
+Action::Action(Entity* actor, TASK_TYPE type, TASK_CHANNELS channel) : actor(actor), type(type), task_channel(channel)
 {
 
 }
+
+
 
 //Destructors =========================
 Action::~Action()
@@ -110,10 +112,10 @@ AttackUnitAction* j1ActionManager::AttackToUnitAction(Unit * actor, Unit * targe
 	return action;
 }
 
-AttackBuildingAction * j1ActionManager::AttackToBuildingAction(Unit * actor, Building* target)
+AttackBuildingAction * j1ActionManager::AttackToBuildingAction(Unit * actor, Building* target, TASK_CHANNELS channel)
 {
 	//Generate a new move action definition
-	AttackBuildingAction* action = new AttackBuildingAction(actor, target);
+	AttackBuildingAction* action = new AttackBuildingAction(actor, target, channel);
 
 	//Add the new action at the action manager
 	all_actions.push_back(action);
@@ -431,7 +433,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 			return false;
 		}
 		//Build the task with the actor and the target found
-		actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, target));
+		actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, target, SECONDARY));
 		break;
 	}
 	case TASK_U_STUN:

@@ -1588,7 +1588,7 @@ bool Unit::HealUnit(Unit* target)
 	return ret;
 }
 
-bool Unit::AttackBuilding(Building * target)
+bool Unit::AttackBuilding(Building * target, TASK_CHANNELS channel)
 {
 	if (target == nullptr)
 	{
@@ -1602,9 +1602,23 @@ bool Unit::AttackBuilding(Building * target)
 		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
 		LOG("X: %i || Y: %i", goal.x, goal.y);
 		
+		switch (channel)
+		{
+		case NO_CHANNEL:
+			break;
+		case PRIMARY:
+			App->pathfinding->PushPath(this, goal, true, PRIMARY);
+			break;
+		case SECONDARY:
 			App->pathfinding->PushPath(this, goal, true, SECONDARY);
-		
-		
+			break;
+		case PASSIVE:
+			App->pathfinding->PushPath(this, goal, true, PASSIVE);
+			break;
+		default:
+			break;
+		}
+
 
 		return false;
 	}

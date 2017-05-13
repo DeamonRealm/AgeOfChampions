@@ -448,7 +448,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				if (upper_diplomacy == ENEMY && selected_unit_type != MONK && selected_unit_type != WIZARD_CHMP)
 				{
 					if (upper_type == UNIT) actor->AddAction(App->action_manager->AttackToUnitAction(actor, (Unit*)UpperEntity));
-					else if (upper_type == BUILDING) actor->AddAction(App->action_manager->AttackToBuildingAction(actor, (Building*)UpperEntity));
+					else if (upper_type == BUILDING) actor->AddAction(App->action_manager->AttackToBuildingAction(actor, (Building*)UpperEntity, PRIMARY));
 					App->sound->PlayFXAudio(ATTACK_SOUND);
 				}
 				else if (upper_type == RESOURCE && selected_unit_type == VILLAGER)

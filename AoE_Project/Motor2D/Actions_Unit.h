@@ -233,7 +233,7 @@ class AttackBuildingAction : public Action
 public:
 
 	//Constructor -----------
-	AttackBuildingAction(Unit* actor, Building* target) : Action(actor, TASK_U_ATTACK_B), target(target)
+	AttackBuildingAction(Unit* actor, Building* target, TASK_CHANNELS channel) : Action(actor, TASK_U_ATTACK_B, channel), target(target)
 	{
 
 	}
@@ -256,7 +256,7 @@ public:
 		}
 
 		//Actor attack the target
-		return ((Unit*)actor)->AttackBuilding(target);
+		return ((Unit*)actor)->AttackBuilding(target, task_channel);
 	}
 
 	//Get Methods -----------
@@ -586,7 +586,7 @@ public:
 		{
 			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy())
 			{
-				actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, surrounding_buildings[k]), SECONDARY);
+				actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, surrounding_buildings[k], SECONDARY), SECONDARY);
 				return false;
 			}
 		};

@@ -454,7 +454,7 @@ public:
 	DIRECTION_TYPE			LookDirection(const iPoint& from, const iPoint& to);
 	bool					AttackUnit(Unit* target);
 	bool					HealUnit(Unit* target);
-	bool					AttackBuilding(Building* target);
+	bool					AttackBuilding(Building* target, TASK_CHANNELS channel);
 	bool					Cover();
 	bool					DirectDamage(uint damage);
 	void					Heal(uint heal);

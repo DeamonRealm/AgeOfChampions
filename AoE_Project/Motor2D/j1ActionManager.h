@@ -60,6 +60,7 @@ enum TASK_TYPE
 
 enum TASK_CHANNELS
 {
+	NO_CHANNEL = 0,
 	PRIMARY,
 	SECONDARY,
 	PASSIVE
@@ -73,13 +74,16 @@ class Action
 public:
 
 	//Set all the Actions to a list on the Entities manager to clean them up at closing the app.
-	Action(Entity* actor, TASK_TYPE type);
+	Action(Entity* actor, TASK_TYPE type, TASK_CHANNELS channel = PRIMARY);
 	virtual ~Action();
 
 protected:
 
 	Entity*					actor = nullptr;
 	TASK_TYPE				type = TASK_NONE;
+
+public:
+	TASK_CHANNELS			task_channel = NO_CHANNEL;
 
 public:
 
@@ -197,7 +201,7 @@ public:
 
 	//Attack Functions
 	AttackUnitAction*			AttackToUnitAction(Unit* actor, Unit* target);
-	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target);
+	AttackBuildingAction*		AttackToBuildingAction(Unit* actor, Building* target, TASK_CHANNELS channel);
 	DieUnitAction*				DieAction(Unit* actor);
 	DieBuildingAction*			DieBuildngAction(Building* actor);
 	StunUnitAction*				StunAction(Unit* actor, uint time);

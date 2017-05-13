@@ -359,7 +359,7 @@ void j1AI::ManageAttack()
 			if (to_kill == nullptr) return;
 
 			if (!raid_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY))
-				raid_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->AttackToBuildingAction(raid_it._Ptr->_Myval, (Building*)to_kill), SECONDARY);
+				raid_it._Ptr->_Myval->GetWorker()->AddAction(App->action_manager->AttackToBuildingAction(raid_it._Ptr->_Myval, (Building*)to_kill, SECONDARY), SECONDARY);
 
 			raid_it++;
 		}

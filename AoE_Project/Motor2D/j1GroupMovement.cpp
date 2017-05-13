@@ -53,7 +53,7 @@ void j1GroupMovement::AttackOnGroup(std::list<Entity*>* units, Entity* target, b
 			continue;	
 		current_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 		if(building)
-			current_unit->AddAction((Action*)App->action_manager->AttackToBuildingAction(current_unit, (Building*)target));
+			current_unit->AddAction((Action*)App->action_manager->AttackToBuildingAction(current_unit, (Building*)target, PRIMARY));
 
 		else
 			current_unit->AddAction((Action*)App->action_manager->AttackToUnitAction(current_unit, (Unit*)target));
