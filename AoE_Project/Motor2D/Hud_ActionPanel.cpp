@@ -655,6 +655,10 @@ HeroPanel::~HeroPanel()
 {
 	skills.clear();
 	skills_buttons.clear();
+
+	warrior_skills_rect.clear();
+	wizard_skills_rect.clear();
+	archer_skills_rect.clear();
 }
 
 bool HeroPanel::Load(pugi::xml_node & data)
@@ -898,6 +902,14 @@ bool HeroPanel::ActivateCell(int i)
 		break;
 	}
 	return false;
+}
+
+bool HeroPanel::ActivateSkill(int i)
+{
+	int n = i;
+	if (entitis_panel == champion_row[1]) n += 5;
+	else if (entitis_panel == champion_row[2]) n += 10;
+	return ActivateCell(n);
 }
 
 bool HeroPanel::CancelAction()

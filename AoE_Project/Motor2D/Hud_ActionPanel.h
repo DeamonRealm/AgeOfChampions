@@ -203,6 +203,7 @@ public:
 	void SetDefault();
 
 	bool ActivateCell(int i);
+	bool ActivateSkill(int i);
 	bool CancelAction();
 	bool Hero_Handle_input(UI_Element* ui_element, GUI_INPUT ui_input);
 	bool Handle_input(GUI_INPUT input);

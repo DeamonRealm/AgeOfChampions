@@ -239,23 +239,19 @@ bool j1Player::PreUpdate()
 		}
 
 	}
-	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
-	{
-		App->entities_manager->UpgradeUnit(MILITIA, ARBALEST, ALLY);
-	}
 
 	// Skills
 	if (App->input_manager->GetEvent(SET_HABILITY_A) == INPUT_DOWN)
 	{
-		action_panel->ActivateCell(0);
+		action_panel->heropanel->ActivateSkill(0);
 	}
 	if (App->input_manager->GetEvent(SET_HABILITY_B) == INPUT_DOWN)
 	{
-		action_panel->ActivateCell(1);
+		action_panel->heropanel->ActivateSkill(1);
 	}
 	if (App->input_manager->GetEvent(SET_HABILITY_C) == INPUT_DOWN)
 	{
-		action_panel->ActivateCell(2);
+		action_panel->heropanel->ActivateSkill(2);
 	}
 
 	return true;
