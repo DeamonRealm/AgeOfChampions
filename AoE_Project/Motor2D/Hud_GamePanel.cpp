@@ -23,19 +23,6 @@
 // Constructor ================================================================
 Game_Panel::Game_Panel() : wood(0), meat(0), gold(0), stone(0), population(0), max_population(5)
 {
-	player_resources.reserve(MAX_GAME_RESOURCES);
-
-	UI_String* resource_text;
-	int i = 0;
-	while (i < MAX_GAME_RESOURCES)
-	{
-		resource_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
-		resource_text->SetColor({ 255, 255, 255, 255 });
-		resource_text->SetBoxPosition(73 + 77 * i, 5);
-		player_resources.push_back(resource_text);
-		i++;
-	}
-
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
 
 	//Exit Menu 
@@ -44,6 +31,21 @@ Game_Panel::Game_Panel() : wood(0), meat(0), gold(0), stone(0), population(0), m
 	exit_menu_screen->SetBox({ 0,0,App->win->screen_surface->w, 23});
 	exit_menu_screen->SetInputTarget((j1Module*)App->player);
 	exit_menu_screen->SetLayer(3);
+
+	player_resources.reserve(MAX_GAME_RESOURCES);
+
+	UI_String* resource_text;
+	int i = 0;
+	while (i < MAX_GAME_RESOURCES)
+	{
+		resource_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+		resource_text->SetColor({ 255, 255, 255, 255 });
+		resource_text->SetBox({ 73 + 77 * i, 5, 30,15 });
+		player_resources.push_back(resource_text);
+		exit_menu_screen->AddChild(resource_text);
+		i++;
+	}
+
 
 	exit_menu_button = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
 	exit_menu_button->SetBox({ 1306,3,50,17 });
@@ -151,6 +153,12 @@ Game_Panel::Game_Panel() : wood(0), meat(0), gold(0), stone(0), population(0), m
 	your_units->SetBox({ 60, 90,0,0 });
 	final_menu_image->AddChild(your_units);
 
+	resource_info = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	resource_info->SetBoxPosition(10, 570);
+	resource_info->Activate();
+	resource_info->SetColor({ 255, 255, 255, 255 });
+
+
 	exit_menu_screen->Desactivate();
 }
 
@@ -195,14 +203,19 @@ bool Game_Panel::PostUpdate()
 
 bool Game_Panel::Draw()
 {
-	for (int i = 0; i < MAX_GAME_RESOURCES; i++)
+/*	for (int i = 0; i < MAX_GAME_RESOURCES; i++)
 	{
 		player_resources[i]->Draw(false);
-	}
+	}*/
 
 	if (exit_menu_image->GetActiveState())
 	{
 		exit_menu_image->Draw(false);
+	}
+
+	if (show_resource_info)
+	{
+		resource_info->Draw(false);
 	}
 
 	return true;
@@ -288,9 +301,44 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 		break;
 	case MOUSE_RIGHT_BUTTON:
 		break;
-	case MOUSE_IN:
+	case MOUSE_IN: {
+		if (show_resource_info == true) return;
+		{
+			int i = 0;
+			while (i < MAX_GAME_RESOURCES)
+			{
+				if (ui_element == player_resources[i])
+				{
+					show_resource_info = true;
+					break;
+				}
+				i++;
+			}
+			if (show_resource_info)
+			{
+				curr_resource = i;
+				switch (curr_resource)
+				{
+				case 0: resource_info->SetString("Wood: collected from Trees");
+					break;
+				case 1: resource_info->SetString("Food: collected from Berry Bushes");
+					break;
+				case 2: resource_info->SetString("Gold: collected from Gold Ore");
+					break;
+				case 3: resource_info->SetString("Stone: collected from Stone Ore");
+					break;
+				case 4: resource_info->SetString("Population: current population/max population");
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		}
 		break;
 	case MOUSE_OUT:
+		if (show_resource_info == false) return;
+		else if (ui_element == player_resources[curr_resource]) show_resource_info = false;
 		break;
 	case SUPR:
 		break;
@@ -310,9 +358,14 @@ void Game_Panel::Enable()
 	exit_menu_screen->Activate();
 	exit_menu_button->Activate();
 	final_menu_image->ActivateChilds();
+
+	for (int i = 0; i < MAX_GAME_RESOURCES; i++)
+		player_resources[i]->Activate();
+
 	win = false;
 	lose = false;
 	game_ended = false;
+	show_resource_info = false;
 }
 
 void Game_Panel::Disable()
