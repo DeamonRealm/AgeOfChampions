@@ -49,7 +49,9 @@ void j1GroupMovement::AttackOnGroup(std::list<Entity*>* units, Entity* target, b
 	{
 		
 		Unit* current_unit = (Unit*)item._Ptr->_Myval;
-		if (current_unit->GetUnitType() == MONK || current_unit->GetUnitType() == WIZARD_CHMP) continue;
+		if (current_unit->GetUnitType() == MONK || current_unit->GetUnitType() == WIZARD_CHMP) 
+			continue;	
+		current_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
 		if(building)
 			current_unit->AddAction((Action*)App->action_manager->AttackToBuildingAction(current_unit, (Building*)target));
 
@@ -68,8 +70,11 @@ void j1GroupMovement::HealOnGroup(std::list<Entity*>* units, Entity * target)
 		Unit* current_unit = (Unit*)item._Ptr->_Myval;
 		if (target->GetDiplomacy() != current_unit->GetDiplomacy())
 			return;
-		if (current_unit->GetUnitType() == MONK || current_unit->GetUnitType() == WIZARD_CHMP)
-				current_unit->AddAction((Action*)App->action_manager->HealAction(current_unit, (Unit*)target));
+		if (current_unit->GetUnitType() == MONK || current_unit->GetUnitType() == WIZARD_CHMP) 
+		{
+			current_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
+			current_unit->AddAction((Action*)App->action_manager->HealAction(current_unit, (Unit*)target));
+		}
 	}
 }
 
@@ -87,6 +92,8 @@ void j1GroupMovement::RecolectOnGroup(std::list<Entity*>* units, Resource* resou
 			no_villager_units.push_back(current_unit);
 			continue;
 		}
+		current_unit->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
+
 		current_unit->AddAction((Action*)App->action_manager->RecollectAction((Villager*)item._Ptr->_Myval, resource));
 	}
 	if (!no_villager_units.empty())

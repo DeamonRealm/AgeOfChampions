@@ -440,6 +440,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			Unit* actor = (Unit*)Selected->GetEntity();
 			//Set entity target to the selected unit
 			Selected->GetEntity()->GetWorker()->ResetChannel(TASK_CHANNELS::PRIMARY);
+			Selected->GetEntity()->GetWorker()->ResetChannel(TASK_CHANNELS::SECONDARY);
 			if (UpperEntity != nullptr)
 			{
 				ENTITY_TYPE upper_type = UpperEntity->GetEntityType();
