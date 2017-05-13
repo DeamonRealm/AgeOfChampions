@@ -383,6 +383,7 @@ bool UnitPanel::ActivateCell(int i)
 	case 3: {
 		App->sound->PlayGUIAudio(CLICK_INGAME);
 		entitis_panel->SetLife(0);
+		App->player->selection_panel->RemoveDeadSelectedUnits((Unit*)entitis_panel);
 		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
 		entitis_panel = nullptr;
 		return false;
@@ -1774,8 +1775,9 @@ void Action_Panel::CheckSelected(int selected)
 	{
 		if (actualpanel->GetActualEntity() == nullptr || actualpanel->GetActualEntity()->GetLife() == 0)
 		{
-			if (actualpanel == heropanel) SetPanelType(true);
-			else actualpanel->ChangePanelTarget(player_selection_panel->GetSelected());
+			//if (actualpanel == heropanel)
+			SetPanelType(true);
+			//else actualpanel->ChangePanelTarget(player_selection_panel->GetSelected());
 		}
 	}
 }

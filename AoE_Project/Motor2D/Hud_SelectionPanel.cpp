@@ -1243,9 +1243,12 @@ void Selection_Panel::RemoveDeadSelectedUnits(Unit* removed_unit)
 		{
 			Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 		}
-		else Selected->SetEntity(nullptr);
+		else Selected->Reset();
 	}
-	else selected_elements.remove(removed_unit);
+	else {
+		selected_elements.remove(removed_unit);
+		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+	}
 
 	UpdateSelected();
 	CheckSelectedType();
