@@ -1517,6 +1517,13 @@ bool Unit::AttackUnit(Unit* target)
 	{
 		action_type = ATTATCK;
 		Focus(target->GetPositionRounded());
+		
+		//Villagers don't attack with materials
+		if (this->unit_type == VILLAGER && ((Villager*)this)->GetItemType() != NO_ITEM)
+		{
+			((Villager*)this)->SetItemType(NO_ITEM);
+		}
+
 		App->animator->UnitPlay(this);
 	}
 
@@ -1634,6 +1641,13 @@ bool Unit::AttackBuilding(Building * target, TASK_CHANNELS channel)
 	{
 		action_type = ATTATCK;
 		Focus(target->GetPositionRounded());
+
+		//Villagers don't attack with materials
+		if (this->unit_type == VILLAGER && ((Villager*)this)->GetItemType() != NO_ITEM)
+		{
+			((Villager*)this)->SetItemType(NO_ITEM);
+		}
+
 		App->animator->UnitPlay(this);
 	}
 
