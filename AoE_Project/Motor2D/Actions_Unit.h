@@ -17,11 +17,11 @@ class MoveUnitAction : public Action
 {
 public:
 	//Constructor -----------
-	MoveUnitAction(Unit* actor, const iPoint& destination, const iPoint& target) : Action(actor, TASK_U_MOVE), destination(destination), target(target)
+	MoveUnitAction(Unit* actor, const iPoint& destination) : Action(actor, TASK_U_MOVE), destination(destination), target(target)
 	{
 	}
 
-	MoveUnitAction(Unit* actor, std::vector<iPoint>* path, const iPoint& target,Unit* unit_target=nullptr) : Action(actor, TASK_U_MOVE), path(path), target(target),unit_target(unit_target)
+	MoveUnitAction(Unit* actor, std::vector<iPoint>* path,Unit* unit_target=nullptr) : Action(actor, TASK_U_MOVE), path(path), target(target),unit_target(unit_target)
 	{
 		if (path != nullptr )
 		{
@@ -79,7 +79,7 @@ public:
 
 	bool Execute()
 	{
-		if (((Unit*)actor)->Move(path, target, unit_target))
+		if (((Unit*)actor)->Move(path, unit_target))
 		{
 			//Stop idle walk animation
 			bool exception = false;

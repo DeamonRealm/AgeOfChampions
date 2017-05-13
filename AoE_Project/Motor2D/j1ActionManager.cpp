@@ -62,10 +62,10 @@ bool j1ActionManager::CleanUp()
 }
 
 //Action Calls ========================
-MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destination, const iPoint& target)
+MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destination)
 {
 	//Generate a new move action definition
-	MoveUnitAction* action = new MoveUnitAction(actor, destination, target);
+	MoveUnitAction* action = new MoveUnitAction(actor, destination);
 
 	//Add the new action at the action manager
 	all_actions.push_back(action);
@@ -73,12 +73,12 @@ MoveUnitAction* j1ActionManager::MoveAction(Unit * actor, const iPoint& destinat
 	return action;
 }
 
-MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor, const iPoint& target, Unit* unit_target)
+MoveUnitAction* j1ActionManager::MoveAction(std::vector<iPoint>* path, Unit * actor, Unit* unit_target)
 {
 	//Generate a new move action definition
 	MoveUnitAction* action = nullptr;
 	//if unit_target is nullptr move normal
-		 action = new MoveUnitAction(actor, path, target, unit_target);
+		 action = new MoveUnitAction(actor, path,  unit_target);
 	//else do attack move
 	//else
 		//MoveUnitAction* action = new MoveUnitAction(actor, path, target);
@@ -363,7 +363,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		goal.x = node.attribute("goal_x").as_int();
 		goal.y = node.attribute("goal_y").as_int();
 		//Build move action from entity position and goal
-		new_action = new MoveUnitAction((Unit*)actor, App->pathfinding->SimpleAstar(actor->GetPositionRounded(), goal), goal);
+		new_action = new MoveUnitAction((Unit*)actor, App->pathfinding->SimpleAstar(actor->GetPositionRounded(), goal));
 		//Add the task at the chosen channel
 		actor->AddAction(new_action, channel);
 		break;

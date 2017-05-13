@@ -487,7 +487,7 @@ bool Unit::Draw(bool debug)
 
 
 //Actions ---------
-bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_target) ///Returns true when it ends
+bool Unit::Move(std::vector<iPoint>*& path, Unit* unit_target) ///Returns true when it ends
 {
 	//Check if the unit have an assigned path
 	if (path == nullptr)
@@ -570,15 +570,11 @@ bool Unit::Move(std::vector<iPoint>*& path, const iPoint& target, Unit* unit_tar
 					{
 						return true;
 					}
-				if (path->size() < 2) {
-					if (target != iPoint(-1, -1))
-					{
-						if (!Repath(path, target)) return true;
-					}
-					else
-					{
+				if (path->size() < 2) 
+				{
 						if (!Repath(path, *(path->begin()))) return true;
-					}
+					
+
 					return false;
 				}
 			}
@@ -1491,7 +1487,7 @@ bool Unit::AttackUnit(Unit* target)
 		iPoint goal = attack_area.NearestPoint(&target->GetSoftCollider());
 		iPoint target_pos(-1,-1);
 	
-		App->pathfinding->PushPath(this, goal, target_pos,true,PRIMARY,target);
+		App->pathfinding->PushPath(this, goal, true,PRIMARY,target);
 /*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
@@ -1557,7 +1553,7 @@ bool Unit::HealUnit(Unit* target)
 	{
 
 		iPoint goal = attack_area.NearestPoint(&target->GetSoftCollider() + attack_area.GetRad());
-		App->pathfinding->PushPath(this, goal,target->GetPositionRounded());
+		App->pathfinding->PushPath(this, goal);
 		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
@@ -1606,7 +1602,7 @@ bool Unit::AttackBuilding(Building * target)
 		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
 		LOG("X: %i || Y: %i", goal.x, goal.y);
 		
-			App->pathfinding->PushPath(this, goal, { -1,-1 }, true, SECONDARY);
+			App->pathfinding->PushPath(this, goal, true, SECONDARY);
 		
 		
 
