@@ -66,7 +66,7 @@ public:
 		
 
 		//Chacked here so check both in case of repath and in case of not repath
-		if (path == nullptr)	return false;
+		if (path == nullptr || path->size()> 120 * 120)	return false;
 		
 		//Animate the actor
 		((Unit*)actor)->SetAction(WALK);

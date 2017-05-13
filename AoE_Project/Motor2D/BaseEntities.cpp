@@ -1234,7 +1234,7 @@ iPoint Unit::FindSpawnCell(const iPoint & center)
 		i++;
 	}
 	*/
-	return iPoint(-1, -1);
+	return center;
 }
 
 iPoint Unit::FindWalkableAdjacent(const iPoint & center)
