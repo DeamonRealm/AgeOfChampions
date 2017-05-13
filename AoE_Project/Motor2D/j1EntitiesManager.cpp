@@ -2725,10 +2725,10 @@ bool j1EntitiesManager::CheckAreaToSpawn(const Circle & area) const
 {
 	std::vector<iPoint> tiles;
 	uint size = App->map->map_quadtree.CollectCandidates(tiles, area);
-
+	float tiles_size = ceil((float)area.GetRad() / (float)App->map->data.tile_height);
 	for (uint k = 0; k < size; k++)
 	{
-		if (!App->pathfinding->IsWalkable(tiles[k]) || !App->map->CheckConstructionMap(tiles[k], 1, 1))
+		if (!App->pathfinding->IsWalkable(tiles[k]) || !App->map->CheckConstructionMap(tiles[k], tiles_size, tiles_size))
 		{
 			return false;
 		}
