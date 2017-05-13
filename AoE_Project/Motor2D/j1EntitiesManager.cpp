@@ -827,7 +827,7 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 			*/
 			//Load champion level
 			uint level = cur_unit_node.attribute("lvl").as_uint();
-			for (uint k = 1; k < level; k++)
+			for (int k = 0; k < level; k++)
 				((Champion*)new_unit)->LevelUp(false);
 
 			((Champion*)new_unit)->SetLevel(level);

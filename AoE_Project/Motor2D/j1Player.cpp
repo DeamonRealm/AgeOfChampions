@@ -174,25 +174,22 @@ bool j1Player::PreUpdate()
 
 			game_panel->IncressPopulation(1, false);
 		}
-
+		/*
 		//Generate a Militia unit in the mouse coordinates
 		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		{
-			Building* test_building = App->entities_manager->GenerateBuilding(BUILDING_TYPE::TOWN_CENTER, ENEMY);
+			Building* test_building = App->entities_manager->GenerateBuilding(BUILDING_TYPE::BARRACK, ENEMY);
 			test_building->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 			
-			
-			/*Unit* new_unit = App->entities_manager->GenerateUnit(PALADIN, ALLY);
-			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);*/
 		}
 		//Generate a Arbalest unit in the mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation()*/)
+		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN /*&& game_panel->CheckPopulation())
 		{
-			Unit* new_unit = App->entities_manager->GenerateUnit(MILITIA, ENEMY);
+			Unit* new_unit = App->entities_manager->GenerateUnit(KNIGHT, ENEMY);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 			//new_unit->AddAction(App->action_manager->AutoAttackAction(new_unit), TASK_CHANNELS::PASSIVE);
 			//game_panel->IncressPopulation(1, false);
-		}
+		}*/
 		//Generate Tree resource in mouse coordinates
 		if (App->input_manager->GetEvent(GENERATE_TREE) == INPUT_DOWN)
 		{
