@@ -647,9 +647,9 @@ public:
 		{
 			if (actor->GetDiplomacy() == surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 			{
-				if(surrounding_units[i] != actor && surrounding_units[i]->GetLife() < surrounding_units[i]->GetMaxLife())actor->AddAction(new HealUnitAction((Unit*)actor, surrounding_units[i]));
+				if (surrounding_units[i] != actor && surrounding_units[i]->GetLife() < surrounding_units[i]->GetMaxLife())
+					actor->AddAction(new HealUnitAction((Unit*)actor, surrounding_units[i]));
 
-				return false;
 			}
 		};
 		return false;
