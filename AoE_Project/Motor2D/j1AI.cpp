@@ -32,6 +32,7 @@ bool j1AI::Enable()
 
 	update_timer.Start();
 	research_timer.Start();
+	noob_timer.Start();
 
 	current_age = 2;
 	next_research = 0;
@@ -175,10 +176,15 @@ bool j1AI::Update(float dt)
 
 
 	ManageTroopsCreation();
-	
 
-	ManageAttack();
-	
+	if (noob_timer.Read() >= 4*60000)
+	{
+		if (raid_timer.Read() >= 2 * 60000)
+		{
+			ManageAttack();
+		}
+	}
+
 	update_timer.Start();
 
 	return true;
@@ -366,7 +372,8 @@ void j1AI::ManageAttack()
 
 		//Clean the list to prepare for the next raid
 		enemy_raid.clear();
-		
+		raid_timer.Start();
+
 		//Make the raid each time more powerfull
 		if (raid_size <= 30)
 			raid_size += 5;
@@ -380,8 +387,11 @@ void j1AI::ManageAttack()
 	{
 		if (unit_it._Ptr->_Myval->GetUnitType() != VILLAGER && !unit_it._Ptr->_Myval->GetWorker()->IsBusy(SECONDARY) && !unit_it._Ptr->_Myval->GetWorker()->IsBusy(PRIMARY))
 		{
-			enemy_raid.remove(unit_it._Ptr->_Myval);
-			enemy_raid.push_back(unit_it._Ptr->_Myval);
+			if (!enemy_raid.size() >= raid_size)
+			{
+				enemy_raid.remove(unit_it._Ptr->_Myval);
+				enemy_raid.push_back(unit_it._Ptr->_Myval);
+			}
 		}
 		unit_it++;
 	}
@@ -927,7 +937,7 @@ bool j1AI::CheckResources(int amount_wood, int amount_food, int amount_gold, int
 {
 	if (type == ENTITY_TYPE::UNIT || type == ENTITY_TYPE::BUILDING)
 	{
-		if (wood - amount_wood >= 0 && meat - amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 && (population + used_population <= max_population || used_population <= 0))
+		if (wood - amount_wood >= 0 && meat - amount_food >= 0 && gold - amount_gold >= 0 && stone - amount_stone >= 0 && (population + used_population <= max_population || used_population < 0))
 		{
 			if (use)
 			{

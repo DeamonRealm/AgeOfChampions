@@ -176,7 +176,8 @@ private:
 	AIWorker* ai_worker = nullptr;
 	j1Timer update_timer;
 	j1Timer building_timer;
-
+	j1Timer noob_timer;
+	j1Timer	raid_timer;
 
 	//ProductiveBuilding* ai_starting_tc;
 	std::list<Building*> enemy_buildings;
