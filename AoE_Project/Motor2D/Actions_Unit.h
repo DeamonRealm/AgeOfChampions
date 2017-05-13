@@ -373,9 +373,16 @@ private:
 class HealUnitAction : public Action
 {
 public:
+	
 	HealUnitAction(Unit* actor, Unit* target) : Action(actor, TASK_U_HEAL_U), target(target)
-	{};
-	~HealUnitAction() {};
+	{
+	
+	}
+
+	~HealUnitAction()
+	{
+	
+	}
 
 public:
 
@@ -388,6 +395,7 @@ public:
 
 
 private:
+
 	Unit* target = nullptr;
 
 };
@@ -613,9 +621,16 @@ private:
 class AutoHealPassiveAction : public Action
 {
 public:
+	
 	AutoHealPassiveAction(Unit* actor) : Action(actor, TASK_U_AH)
-	{};
-	~AutoHealPassiveAction() {};
+	{
+	
+	}
+	
+	~AutoHealPassiveAction()
+	{
+	
+	}
 
 public:
 
@@ -632,7 +647,8 @@ public:
 		{
 			if (actor->GetDiplomacy() == surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
 			{
-				actor->AddAction(new HealUnitAction((Unit*)actor, surrounding_units[i]));
+				if(surrounding_units[i] != actor && surrounding_units[i]->GetLife() < surrounding_units[i]->GetMaxLife())actor->AddAction(new HealUnitAction((Unit*)actor, surrounding_units[i]));
+
 				return false;
 			}
 		};
