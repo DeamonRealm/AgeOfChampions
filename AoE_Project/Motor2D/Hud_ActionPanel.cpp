@@ -373,7 +373,11 @@ void TownCenterPanel::ChampionIsDead(UNIT_TYPE type)
 
 UnitPanel::UnitPanel() : Action_Panel_Elements() {};
 
-void UnitPanel::ResetPanel(){}
+void UnitPanel::ResetPanel()
+{
+	entitis_panel = nullptr;
+	SetDataFromXML();
+}
 
 bool UnitPanel::ActivateCell(int i)
 {
@@ -419,6 +423,7 @@ void VillagerPanel::ResetPanel()
 	SetDataFromXML();
 	isbuilding = false;
 	buildingthis = nullptr;
+	building_type = 0;
 }
 
 void VillagerPanel::SetDefault()
@@ -744,6 +749,7 @@ void HeroPanel::ResetPanel()
 	}
 	SetDataFromXML();
 
+	curr_skills_tree = NO_UNIT;
 	activate_skill = -1;
 	show_skill = -1;
 }
@@ -1545,9 +1551,16 @@ bool Action_Panel::Save(pugi::xml_node & data) const
 
 void Action_Panel::Reset()
 {
+	isin = false;
 	on_action = false;
 	show_cell_info = false;
 	show_hero_skills = false;
+
+	cell_shown = 0;
+	cell = 0;
+	
+	actual_entity = nullptr;
+	actualpanel = nullptr;
 
 	action_screen->Activate();
 	action_screen->DesactivateChids();

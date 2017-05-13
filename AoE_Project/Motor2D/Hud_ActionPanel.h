@@ -219,7 +219,7 @@ public:
 	UI_Image*						skill_tree = nullptr;
 private:
 
-	UNIT_TYPE						champion_selected;
+	UNIT_TYPE						champion_selected = (UNIT_TYPE)0;
 	int								mele_learned[5] = {0,0,0,0,0};
 	int								wizard_learned[5] = { 0,0,0,0,0 };
 	int								archer_learned[5] = { 0,0,0,0,0 };
@@ -320,9 +320,9 @@ private:
 	Game_Panel*					player_game_panel = nullptr;
 
 	// Action Panel Detection
-	bool						isin;
-	SDL_Point					mouse_pos;
-	SDL_Rect					action_rect;
+	bool						isin = false;
+	SDL_Point					mouse_pos = {0,0};
+	SDL_Rect					action_rect = {0,0,0,0};
 	UI_Element*					action_screen = nullptr;
 
 	uint						cell_shown = 0;
@@ -330,8 +330,8 @@ private:
 
 
 	// Panell Settings 
-	int							cell;
-	iPoint						panel_pos;
+	int							cell = 0;
+	iPoint						panel_pos = {0,0};
 	std::vector<UI_Image*>		panel_cells;
 	std::vector<UI_Button*>		panel_buttons;
 	Entity*						actual_entity = nullptr;

@@ -856,8 +856,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 			}
 			return;
 		}
-		UpperEntity->Select();
-
+	
 		if (type == SINGLE)
 		{
 			UnSelect_Entity();
@@ -869,9 +868,11 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		{
 			if (std::find(selected_elements.begin(), selected_elements.end(), UpperEntity) == selected_elements.end())
 			{
+				UNIT_TYPE u_type = ((Unit*)UpperEntity)->GetUnitType();
+				UpperEntity->Select();
 				selected_elements.push_back(UpperEntity);
 				if (selected_elements.size() == 1) ResetSelectedType(SINGLE);
-				else if(selected_unit_type != NO_UNIT) ResetSelectedType(ADD);
+				else if(selected_unit_type != NO_UNIT || u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP) ResetSelectedType(ADD);
 			}
 		}
 	}

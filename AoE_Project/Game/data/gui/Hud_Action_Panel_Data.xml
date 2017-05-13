@@ -103,7 +103,7 @@ pc => population cost to activate cell
      <!-- <cell cp ="5" cl ="0" al ="4" x="144" y="477" w="36" h="36" wc ="0" fc ="125"  gc ="75" sc ="0" pc ="0" rt ="30" ci ="Upgrade To Light Cavalry"/>-->
       <cell cp ="6" cl ="0" al ="4" x="108" y="477" w="36" h="36" wc ="0" fc ="350"  gc ="300" sc ="0" pc ="0" rt ="27" ci ="Upgrade To Cavalier"/>
       <cell cp ="6" cl ="1" al ="4" x="36"  y="477" w="36" h="36" wc ="0" fc ="1300"  gc ="750" sc ="0" pc ="0" rt ="28" ci ="Upgrade To Paladin"/>
-      <cell cp ="6" cl ="2" al ="3" x="0"   y="477" w="36" h="36" wc ="0" fc ="150" gc ="100" sc ="0" pc ="0" rt ="26" ci ="Research Bloodlines (Cavalry +20 Healthpoints)"/>
+      <cell cp ="5" cl ="0" al ="3" x="0"   y="477" w="36" h="36" wc ="0" fc ="150" gc ="100" sc ="0" pc ="0" rt ="26" ci ="Research Bloodlines (Cavalry +20 Healthpoints)"/>
       <cell cp ="10" cl ="0" al ="3" x="72" y="477" w="36" h="36" wc ="0" fc ="150" gc ="0" sc ="0" pc ="0" rt ="29" ci ="Research Husbandry (Cavalry +10% Speed)"/>
     </Stable>
     <Monastery>

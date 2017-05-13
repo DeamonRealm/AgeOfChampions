@@ -2289,6 +2289,7 @@ bool j1EntitiesManager::UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY d
 				else target = App->entities_manager->enemy_units_defs[k];
 
 				target->SetMaxLife(target->GetMaxLife() + 20);
+				target->SetLife(target->GetLife() + 20);
 			}
 		}
 		std::list<Unit*>::const_iterator unit = App->entities_manager->units.begin();
@@ -2297,6 +2298,7 @@ bool j1EntitiesManager::UpgradeResearch(RESEARCH_TECH research_type, DIPLOMACY d
 			if (unit._Ptr->_Myval->GetUnitClass() == CAVALRY && unit._Ptr->_Myval->GetDiplomacy() == diplomacy)
 			{
 				unit._Ptr->_Myval->SetMaxLife(unit._Ptr->_Myval->GetMaxLife() + 20);
+				unit._Ptr->_Myval->SetLife(unit._Ptr->_Myval->GetLife() + 20);
 			}
 			unit++;
 		}
