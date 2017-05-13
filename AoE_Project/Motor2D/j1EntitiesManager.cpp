@@ -1763,6 +1763,9 @@ Unit* j1EntitiesManager::GenerateUnit(UNIT_TYPE type, DIPLOMACY diplomacy, bool 
 				units.push_back(new_unit);
 			}
 
+			//Add the autoattack/heal passives tothe unit
+			App->action_manager->SetUnitAutoPassive(new_unit);
+
 			return new_unit;
 		}
 	}

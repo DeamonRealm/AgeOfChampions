@@ -253,7 +253,7 @@ bool Villager::Recollect(Resource* target)
 		}
 
 
-		App->pathfinding->PushPath(this, goal, target->GetPositionRounded());
+		App->pathfinding->PushPath(this, goal);
 
 		//this->AddPriorizedAction((Action*)App->action_manager->MoveAction(this, goal, (*target)->GetPositionRounded()));
 		return false;
