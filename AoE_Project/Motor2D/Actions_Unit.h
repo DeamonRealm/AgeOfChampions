@@ -584,7 +584,7 @@ public:
 		uint sizeb = surrounding_buildings.size();
 		for (uint k = 0; k < sizeb; k++)
 		{
-			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy())
+			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy() && actor->GetWorker()->IsBusy(SECONDARY))
 			{
 				actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, surrounding_buildings[k], SECONDARY), SECONDARY);
 				return false;

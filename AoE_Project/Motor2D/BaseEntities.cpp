@@ -1522,7 +1522,7 @@ bool Unit::AttackUnit(Unit* target)
 
 	//Calculate the attack & apply the value at the target life points
 	//((Unit*)(*target))->life -= MIN(((Unit*)(*target))->life, attack_hitpoints);
-	ret = target->DirectDamage(attack_hitpoints);
+	ret = target->DirectDamage(GetTotalAttackHitPoints());
 	if (ret || target->GetLife() <= 0)
 	{
 		ret = true;
@@ -1650,7 +1650,7 @@ bool Unit::AttackBuilding(Building * target, TASK_CHANNELS channel)
 	}
 
 	//Calculate the attack & apply the value at the target life points
-	target->SetLife(target->GetLife() - MIN(target->GetLife(), attack_hitpoints));
+	target->SetLife(target->GetLife() - MIN(target->GetLife(), GetTotalAttackHitPoints()));
 
 	//Reset action timer
 	action_timer.Start();
@@ -2104,6 +2104,11 @@ DIRECTION_TYPE Unit::GetDirection()const
 uint Unit::GetAttackHitPoints()const
 {
 	return attack_hitpoints;
+}
+
+uint Unit::GetTotalAttackHitPoints() const
+{
+	return  attack_hitpoints + attack_buff;
 }
 
 float Unit::GetAttackBuff() const

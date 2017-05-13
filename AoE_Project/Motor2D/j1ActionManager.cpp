@@ -566,7 +566,7 @@ void ActionWorker::Update()
 	}
 
 	//Secondary and passive actions take place when there is no active_action
-	if (current_primary_action == nullptr)
+	if (current_primary_action == nullptr && primary_action_queue.empty())
 	{
 		DoWork(&secondary_action_queue, &current_secondary_action);
 

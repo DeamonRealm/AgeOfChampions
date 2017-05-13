@@ -56,9 +56,9 @@ pc => population cost to activate cell
       <cell cp ="1" cl ="0" al ="2" x="396" y="621" w="36" h="36" wc ="25" fc ="35" gc ="0" sc ="0" pc ="1" ut ="12" rt="10" ci ="Create Spearman"/>
       <cell cp ="1" cl ="1" al ="3" x="72" y="621" w="36" h="36" wc ="25" fc ="35" gc ="0" sc ="0" pc ="1" ut ="11" ci ="Create Pikeman"/>
       <cell cp ="6" cl ="0" al ="3" x="36" y="369" w="36" h="36" wc ="0" fc ="21" gc ="9" sc ="0" pc ="0" rt="10" ci ="Upgrade To Pikeman"/>
-      <cell cp ="5" cl ="0" al ="2" x="604" y="333" w="36" h="36" wc ="0" fc ="10" gc ="0" sc ="0" pc ="0" rt="6" ci ="Upgrade To Man-at-Arms"/>
-      <cell cp ="5" cl ="1" al ="3" x="568" y="333" w="36" h="36" wc ="0" fc ="20" gc ="65" sc ="0" pc ="0" rt="7" ci ="Upgrade To Long Swordsman"/>
-      <cell cp ="5" cl ="2" al ="4" x="468" y="405" w="36" h="36" wc ="0" fc ="30" gc ="10" sc ="0" pc ="0" rt="8" ci ="Upgrade To Two-Handed Swordsman"/>
+      <cell cp ="5" cl ="0" al ="2" x="604" y="333" w="36" h="36" wc ="0" fc ="100" gc ="45" sc ="0" pc ="0" rt="6" ci ="Upgrade To Man-at-Arms"/>
+      <cell cp ="5" cl ="1" al ="3" x="568" y="333" w="36" h="36" wc ="0" fc ="200" gc ="65" sc ="0" pc ="0" rt="7" ci ="Upgrade To Long Swordsman"/>
+      <cell cp ="5" cl ="2" al ="4" x="468" y="405" w="36" h="36" wc ="0" fc ="300" gc ="100" sc ="0" pc ="0" rt="8" ci ="Upgrade To Two-Handed Swordsman"/>
       <cell cp ="5" cl ="3" al ="4" x="144" y="369" w="36" h="36" wc ="0" fc ="75" gc ="35" sc ="0" pc ="0" rt="9" ci ="Upgrade To Champion"/>
     </Barrack>
     <BlackSmith>
