@@ -85,10 +85,6 @@ private:
 	uint			m_capacity = 0;
 	UI_String*		capacity = nullptr;
 
-	//Resources
-	int				u_resources = 0;
-	UI_String*		resources = nullptr;
-
 	//Buff stats
 	int				attack_up = 0;
 	int				deffence_up = 0;

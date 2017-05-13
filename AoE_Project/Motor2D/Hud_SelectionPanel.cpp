@@ -30,7 +30,7 @@
 
 //Entity Profile Constructor =====================================================
 Entity_Profile::Entity_Profile() : element(nullptr), e_type(NO_ENTITY), isenemy(false), life_update(0), u_attack(0), u_deffence(0), u_range(0),
-u_capacity(0), u_resources(0), m_capacity(0), m_life(0)
+u_capacity(0), m_capacity(0), m_life(0)
 {
 	name = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	name->SetColor({ 0,0,0,255 });
@@ -56,10 +56,6 @@ u_capacity(0), u_resources(0), m_capacity(0), m_life(0)
 	//Buildings
 	capacity = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	capacity->SetColor({ 0,0,0,255 });
-
-	//resources
-	resources = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	resources->SetColor({ 0,0,0,255 });
 }
 
 //Entity Profile Destructor ======================================================
@@ -139,11 +135,6 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 		profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_capacity);
 		capacity->SetString((char*)profile_text.c_str());
 	
-	}
-	else if (e_type = RESOURCE)
-	{
-		u_resources = ((Resource*)element)->GetMaxLife();
-		resources->SetString(App->gui->SetStringFromInt(u_resources));
 	}
 }
 
@@ -230,10 +221,6 @@ void Entity_Profile::DrawProfile() const
 			range->DrawAt(390, 720);
 		}
 	}
-	else if (e_type == RESOURCE)
-	{
-		resources->DrawAt(390, 680);
-	}
 	
 	//Draw Life
 	element->DrawLife();
@@ -243,7 +230,7 @@ void Entity_Profile::UpdateStats()
 {
 	if (element == nullptr) return;
 
-	if (element->GetEntityType() != RESOURCE && element->GetLife() != life_update)
+	if (element->GetLife() != life_update)
 	{
 		life_update = element->GetLife();
 		if (life_update == 0)
@@ -298,15 +285,6 @@ void Entity_Profile::UpdateStats()
 			profile_text = App->gui->SetStringFromInt(u_capacity);
 			profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_capacity);
 			capacity->SetString((char*)profile_text.c_str());
-		}
-	}
-	if (e_type == RESOURCE)
-	{
-		if (u_resources != ((Resource*)element)->GetLife())
-		{
-			u_resources = ((Resource*)element)->GetLife();
-			resources->SetString(App->gui->SetStringFromInt(u_resources));
-			if (u_resources == 0) element = nullptr;
 		}
 	}
 }
