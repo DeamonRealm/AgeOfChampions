@@ -8,6 +8,9 @@
 #include "j1Audio.h"
 #include "j1EntitiesManager.h"
 #include "j1App.h"
+#include "j1Player.h"
+
+#include "Hud_SelectionPanel.h"
 
 
 /// Sound Block Class -----------------------
@@ -258,7 +261,7 @@ void j1SoundManager::CheckAlertSound(iPoint location, bool building)
 			PlayGUIAudio(PLAYER_BUILDING_ALERT);
 		else
 			PlayGUIAudio(PLAYER_UNIT_ALERT);
-
+		App->player->selection_panel->SetMinimapAlert(location);
 		alert_sound.Start();
 	}
 }

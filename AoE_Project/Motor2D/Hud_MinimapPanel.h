@@ -74,6 +74,7 @@ public:
 	// Minimap to Map 
 	bool MiniMToMap(int& x, int& y);
 	iPoint MiniMToScreen(int x, int y);
+	iPoint MaptoMinimap(int x, int y);
 
 	// Set cells to print
 	void SetBuildingToPrint(int x, int y, DIPLOMACY diplomacy_type);

@@ -162,6 +162,9 @@ public:
 	bool	GetInViewport()const;
 	bool WindowsMove();
 
+	//		Minimap Alert
+	void	SetMinimapAlert(iPoint pos);
+	void	SetMinimapAlertPosition();
 private:
 
 	// SelectionPanel Viewport
@@ -211,11 +214,11 @@ private:
 	//UI Particles
 	Particle* arrows_particle = nullptr;
 	Particle* map_alert_particle = nullptr;
+	iPoint	  map_alert_pos = { 0,0 };
 
 private:
 
 	void SetMoveArrows();
-	void SetMinimapAlert(iPoint pos);
 
 };
 

@@ -359,6 +359,12 @@ iPoint Minimap_Panel::MiniMToScreen(int x, int y)
 	return iPoint((int)(x - y) * (half_tile_size.x),(int)(x + y) * (half_tile_size.y));
 }
 
+iPoint Minimap_Panel::MaptoMinimap(int x, int y)
+{
+	iPoint ret = App->map->WorldToMap(x, y);
+	return cells[120 * ret.y + ret.x].cell_position;
+}
+
 void Minimap_Panel::SetBuildingToPrint(int x, int y, DIPLOMACY diplomacy_type)
 {
 	iPoint pos = App->map->WorldToMap(x, y);

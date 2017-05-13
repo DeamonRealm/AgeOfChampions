@@ -283,17 +283,17 @@ bool j1Player::PostUpdate()
 		action_panel->SetPanelType();
 	}
 	
-	// Draw Selected Units
-	selection_panel->Draw();
-
 	// Draw Action Panel
 	action_panel->Draw();
 
-	// Draw Game Panel (HUD)
-	game_panel->Draw();
-
 	// Draw Minimap
 	minimap_panel->Draw();
+
+	// Draw Selected Units
+	selection_panel->Draw();
+
+	// Draw Game Panel (HUD)
+	game_panel->Draw();
 
 	//Draw Mouse Last one
 	if (SDL_ShowCursor(-1) == 0) App->gui->DrawMouseTexture();

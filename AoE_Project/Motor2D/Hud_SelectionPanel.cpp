@@ -1,5 +1,6 @@
 #include "Hud_SelectionPanel.h"
 #include "Hud_ActionPanel.h"
+#include "Hud_MinimapPanel.h"
 
 //Modules
 #include "j1App.h"
@@ -222,9 +223,6 @@ void Entity_Profile::DrawProfile() const
 			range->DrawAt(390, 720);
 		}
 	}
-	
-	//Draw Life
-	element->DrawLife();
 }
 
 void Entity_Profile::UpdateStats()
@@ -469,7 +467,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			else {
 				App->pathfinding->PushPath(actor, iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 				// Move Arrow
-				SetMoveArrows();
+				SetMinimapAlert(iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 			}
 		}
 		else if (selected_elements.size() > 1 && selected_entity_type == UNIT) {
@@ -676,6 +674,7 @@ bool Selection_Panel::Draw()
 
 	if (map_alert_particle != nullptr)
 	{
+		SetMinimapAlertPosition();
 		map_alert_particle->Draw();
 
 		if (map_alert_particle->animation.IsEnd())
@@ -1332,7 +1331,17 @@ void Selection_Panel::SetMinimapAlert(iPoint pos)
 		delete map_alert_particle;
 		map_alert_particle = nullptr;
 	}
+	map_alert_pos = pos;
 	map_alert_particle = new Particle(App->buff_manager->GetParticle(PARTICLE_TYPE::UI_MAP_ALERT_PARTICLE, NO_DIRECTION));
-	map_alert_particle->position = pos;
+	SetMinimapAlertPosition();
 	map_alert_particle->animation.Reset();
+}
+
+void Selection_Panel::SetMinimapAlertPosition()
+{
+	iPoint new_pos = App->player->minimap_panel->MaptoMinimap(map_alert_pos.x, map_alert_pos.y);
+	new_pos.y = new_pos.y / 2;
+	new_pos.x -= App->render->camera.x;
+	new_pos.y -= App->render->camera.y;
+	map_alert_particle->position = new_pos;
 }
