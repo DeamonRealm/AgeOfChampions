@@ -26,6 +26,7 @@ class Entity;
 class Unit;
 class Building;
 class Resource;
+class Particle;
 
 enum ENTITY_TYPE;
 enum GUI_INPUT;
@@ -207,6 +208,15 @@ private:
 	//Action inputs
 	Action* action_command = nullptr;
 	
+	//UI Particles
+	Particle* arrows_particle = nullptr;
+	Particle* map_alert_particle = nullptr;
+
+private:
+
+	void SetMoveArrows();
+	void SetMinimapAlert(iPoint pos);
+
 };
 
 #endif // !HUD_SELECTION_PANEL

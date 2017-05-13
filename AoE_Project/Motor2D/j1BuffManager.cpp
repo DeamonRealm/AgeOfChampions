@@ -761,6 +761,7 @@ PARTICLE_TYPE j1BuffManager::StrToParticleType(const char * str) const
 	if (strcmp("radius_hit_small_particle", str) == 0)	return PARTICLE_TYPE::RADIUS_HIT_SMALL_PARTICLE;
 	if (strcmp("radius_hit_big_particle", str) == 0)	return PARTICLE_TYPE::RADIUS_HIT_BIG_PARTICLE;
 	if (strcmp("ui_arrows_particle", str) == 0)			return PARTICLE_TYPE::UI_ARROWS_PARTICLE;
+	if (strcmp("ui_map_alert_particle", str) == 0)		return PARTICLE_TYPE::UI_MAP_ALERT_PARTICLE;
 	return UNKNOWN_PARTICLE;
 }
 

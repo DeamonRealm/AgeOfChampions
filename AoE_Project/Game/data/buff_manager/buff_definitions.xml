@@ -2,6 +2,7 @@
 
 <data>
   <particle document = "UIArrows.xml"/>
+  <particle document = "UIMapAlert.xml"/>
   
   <particle document = "Area_Defense.xml"/>
   <particle document = "Aura_Range_Attack.xml"/>

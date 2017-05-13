@@ -13,6 +13,7 @@
 #include "j1FogOfWar.h"
 #include "SDL\include\SDL_rect.h"
 #include "j1Map.h"
+#include "j1BuffManager.h"
 //GUI Elements
 #include "UI_String.h"
 #include "UI_Image.h"
@@ -359,6 +360,18 @@ bool Selection_Panel::CleanUp()
 	{
 		delete Selected;
 	}
+
+	if (arrows_particle != nullptr)
+	{
+		delete arrows_particle;
+		arrows_particle = nullptr;
+	}
+	if (map_alert_particle != nullptr)
+	{
+		delete map_alert_particle;
+		map_alert_particle = nullptr;
+	}
+
 	return true;
 }
 
@@ -446,6 +459,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				else if (upper_type == RESOURCE) {
 					App->pathfinding->PushPath(actor, actor->FindSpawnCell(iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y)));
 					// Move Arrow
+					SetMoveArrows();
 				}
 				else if ((selected_unit_type == WIZARD_CHMP || selected_unit_type == MONK) && upper_type == UNIT && upper_diplomacy == ALLY)
 				{
@@ -455,6 +469,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 			else {
 				App->pathfinding->PushPath(actor, iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));
 				// Move Arrow
+				SetMoveArrows();
 			}
 		}
 		else if (selected_elements.size() > 1 && selected_entity_type == UNIT) {
@@ -480,6 +495,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				else {
 					App->group_move->GetGroupOfUnits(&(selected_elements), mouse_x - App->render->camera.x, mouse_y - App->render->camera.y, true);
 					// Move Arrow
+					SetMoveArrows();
 				}
 			}
 		}
@@ -645,6 +661,28 @@ bool Selection_Panel::Draw()
 		Selected->UpdateStats();
 		Selected->DrawProfile();
 		if (Selected->GetEntity() == nullptr) selected_elements.clear();
+	}
+
+	if (arrows_particle != nullptr)
+	{
+		arrows_particle->Draw();
+
+		if (arrows_particle->animation.IsEnd())
+		{
+			delete arrows_particle;
+			arrows_particle = nullptr;
+		}
+	}
+
+	if (map_alert_particle != nullptr)
+	{
+		map_alert_particle->Draw();
+
+		if (map_alert_particle->animation.IsEnd())
+		{
+			delete map_alert_particle;
+			map_alert_particle = nullptr;
+		}
 	}
 
 	return true;
@@ -1273,4 +1311,28 @@ bool Selection_Panel::WindowsMove()
 	if (ret)App->render->CalculateCameraViewport();
 
 	return ret;
+}
+
+void Selection_Panel::SetMoveArrows()
+{
+	if (arrows_particle != nullptr)
+	{
+		delete arrows_particle;
+		arrows_particle = nullptr;
+	}
+	arrows_particle = new Particle(App->buff_manager->GetParticle(PARTICLE_TYPE::UI_ARROWS_PARTICLE, NO_DIRECTION));
+	arrows_particle->position = iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y);
+	arrows_particle->animation.Reset();
+}
+
+void Selection_Panel::SetMinimapAlert(iPoint pos)
+{
+	if (map_alert_particle != nullptr)
+	{
+		delete map_alert_particle;
+		map_alert_particle = nullptr;
+	}
+	map_alert_particle = new Particle(App->buff_manager->GetParticle(PARTICLE_TYPE::UI_MAP_ALERT_PARTICLE, NO_DIRECTION));
+	map_alert_particle->position = pos;
+	map_alert_particle->animation.Reset();
 }

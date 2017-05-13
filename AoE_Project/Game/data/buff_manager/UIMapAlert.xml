@@ -19,8 +19,8 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="UIArrows.png" width="245" height="24">
-  <simple_particle particle_type="ui_arrows_particle" direction="no_direction">
+<TextureAtlas imagePath="UIMapAlert.png" width="245" height="24">
+  <simple_particle particle_type="ui_map_alert_particle" direction="no_direction">
     <anim_data speed="200" loop="0"/>
     <sprite n="0002 shot.png" opacity ="255" z ="100"  x="0" y="0" w="40" h="24" pX="0.5" pY="0.5"/>
     <sprite n="0003 shot.png" opacity ="255" z ="100" x="41" y="0" w="40" h="24" pX="0.5" pY="0.5"/>
