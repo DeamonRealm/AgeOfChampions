@@ -219,12 +219,16 @@ bool j1Player::PreUpdate()
 		if (App->input_manager->GetEvent(GENERATE_WARRIOR) == INPUT_DOWN)
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(WARRIOR_CHMP, ALLY);
+			((Champion*)new_unit)->LevelUp(false);
+			((Champion*)new_unit)->LevelUp(false);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 		//Generate Wizard unit in mouse coordinates
 		if (App->input_manager->GetEvent(GENERATE_WIZARD) == INPUT_DOWN)
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(WIZARD_CHMP, ALLY);
+			((Champion*)new_unit)->LevelUp(false);
+			((Champion*)new_unit)->LevelUp(false);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 
@@ -232,6 +236,8 @@ bool j1Player::PreUpdate()
 		if (App->input_manager->GetEvent(GENERATE_HUNTER) == INPUT_DOWN)
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(ARCHER_CHMP, ALLY);
+			((Champion*)new_unit)->LevelUp(false);
+			((Champion*)new_unit)->LevelUp(false);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 
