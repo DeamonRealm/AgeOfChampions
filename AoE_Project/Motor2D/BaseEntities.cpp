@@ -354,7 +354,7 @@ Unit::Unit() :Entity()
 }
 
 Unit::Unit(const Unit& copy) : Entity(copy), unit_type(copy.unit_type), mark(copy.mark), soft_collider(copy.soft_collider), hard_collider(copy.hard_collider),
-speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints),
+speed(copy.speed), action_type(copy.action_type), direction_type(copy.direction_type), attack_hitpoints(copy.attack_hitpoints),vision_base(copy.vision_base),
 attack_rate(copy.attack_rate), attack_type(copy.attack_type), attack_area(copy.attack_area), defense(copy.defense), unit_class(copy.unit_class),
 food_cost(copy.food_cost), wood_cost(copy.wood_cost), gold_cost(copy.gold_cost), population_cost(copy.population_cost), train_time(copy.train_time), unit_experience(copy.unit_experience)
 {
@@ -1685,18 +1685,24 @@ bool Unit::Cover()
 	return true;
 }
 
-bool Unit::DirectDamage(uint damage)
+bool Unit::DirectDamage(uint damage,bool gui_action)
 {
 	bool ret = false;
-	
-	uint total_damage = MAX(damage-MIN(damage,defense), 1);
-	if (unit_protected == true && tank != nullptr)
+	if (gui_action)
 	{
-		tank->DirectDamage(1);
-		return false;
+		life -= MIN(life, damage);
 	}
-	//Deal damage to the unit
-	life -= MIN(life, total_damage);
+	else 
+	{
+		uint total_damage = MAX(damage - MIN(damage, defense), 1);
+		if (unit_protected == true && tank != nullptr)
+		{
+			tank->DirectDamage(1);
+			return false;
+		}
+		//Deal damage to the unit
+		life -= MIN(life, total_damage);
+	}
 	if (life <= 0)
 	{
 		ACTION_TYPE act = action_type;

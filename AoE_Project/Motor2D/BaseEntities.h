@@ -456,7 +456,7 @@ public:
 	bool					HealUnit(Unit* target);
 	bool					AttackBuilding(Building* target, TASK_CHANNELS channel);
 	bool					Cover();
-	bool					DirectDamage(uint damage);
+	bool					DirectDamage(uint damage,bool gui_action = false);
 	void					Heal(uint heal);
 
 	bool					Die();
