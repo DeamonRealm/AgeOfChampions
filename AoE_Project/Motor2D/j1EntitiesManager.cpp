@@ -849,6 +849,8 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 			if (choosed_3)
 				((Champion*)new_unit)->SetAbility_lvl_3(cur_unit_node.attribute("ability_3").as_bool());
 
+			if(new_unit->GetDiplomacy()== ALLY)
+				App->player->minimap_panel->SetHeroShortcut(((Unit*)new_unit), unit_type);
 			break;
 		}
 

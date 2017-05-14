@@ -258,7 +258,44 @@ const char* Action_Panel_Elements::GetCellInfo(int i) const
 
 // TOWNCENTER ------------------------------------------------------------------------------------------------------------
 
-TownCenterPanel::TownCenterPanel() : Action_Panel_Elements(), got_melechmp(false){};
+TownCenterPanel::TownCenterPanel() : Action_Panel_Elements(), got_melechmp(false){}
+bool TownCenterPanel::Load(pugi::xml_node & data)
+{
+	// Load cell levels
+	if (data != NULL)
+	{
+		pugi::xml_node curr_cell = data.first_child();
+		int i = 0;
+		while (curr_cell != NULL)
+		{
+			cell_lvl[i] = curr_cell.attribute("level").as_int(0);
+			curr_cell = curr_cell.next_sibling();
+			i++;
+		}
+		UpdateCells();
+
+		got_melechmp = data.attribute("got_warrior").as_bool(false);
+		got_wizchmp = data.attribute("got_wizard").as_bool(false);
+		got_archchmp = data.attribute("got_archer").as_bool(false);
+	}
+	return true;
+}
+
+bool TownCenterPanel::Save(pugi::xml_node & data) const
+{
+	data.append_attribute("got_warrior") = got_melechmp;
+	data.append_attribute("got_wizard") = got_wizchmp;
+	data.append_attribute("got_archer") = got_archchmp;
+
+	// Save Panel Cell Levels
+	pugi::xml_node curr_cell;
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		curr_cell = data.append_child("cell");
+		curr_cell.append_attribute("level") = cell_lvl[i];
+	}
+	return true;
+}
 
 void TownCenterPanel::ResetPanel()
 {

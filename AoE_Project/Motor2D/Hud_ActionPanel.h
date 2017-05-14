@@ -117,6 +117,10 @@ public:
 	TownCenterPanel();
 	~TownCenterPanel() {};
 
+	// Save and Load
+	bool Load(pugi::xml_node &data);
+	bool Save(pugi::xml_node &data) const;
+
 	// Reset Panel
 	void ResetPanel();
 
