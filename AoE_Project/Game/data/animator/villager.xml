@@ -1583,7 +1583,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       <sprite n="aldeano_attack_bow/014_mVillager_attack_bow.bmp" x="435" y="1" w="41" h="45" pX="0.512195" pY="0.822222"/>
     </direction>
 
-    <direction enum="souht-west">
+    <direction enum="south-west">
       <sprite n="aldeano_attack_bow/015_mVillager_attack_bow.bmp" x="478" y="1" w="34" h="46" pX="0.647059" pY="0.782609"/>
       <sprite n="aldeano_attack_bow/016_mVillager_attack_bow.bmp" x="514" y="1" w="31" h="44" pX="0.709677" pY="0.818182"/>
       <sprite n="aldeano_attack_bow/017_mVillager_attack_bow.bmp" x="547" y="1" w="32" h="43" pX="0.71875" pY="0.860465"/>
@@ -2751,7 +2751,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       <sprite n="aldeano_dissapear_hammer/004_mVillager_dissapear_hammer.bmp" x="205" y="305" w="27" h="24" pX="0.407407" pY="-0.25"/>
     </direction>
 
-    <direction enum="souht-west">
+    <direction enum="south-west">
       <sprite n="aldeano_dissapear_hammer/005_mVillager_dissapear_hammer.bmp" x="234" y="305" w="42" h="24" pX="0.5" pY="0.5"/>
       <sprite n="aldeano_dissapear_hammer/006_mVillager_dissapear_hammer.bmp" x="278" y="305" w="41" h="24" pX="1.12195" pY="-0.166667"/>
       <sprite n="aldeano_dissapear_hammer/007_mVillager_dissapear_hammer.bmp" x="321" y="305" w="41" h="24" pX="1.12195" pY="-0.166667"/>
