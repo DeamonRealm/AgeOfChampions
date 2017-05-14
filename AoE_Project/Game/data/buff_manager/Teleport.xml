@@ -20,7 +20,7 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Teleport.png" width="902" height="1593">
- <simple_particle particle_type="teleport_particle" direction="no_direction">
+ <simple_particle particle_type="teleport_particle" direction="no_direction" z="-200">
     <anim_data speed="100" loop="0"/>
 
     <sprite n="0002 shot.png" opacity ="255" x="1" y="1" w="293" h="172" pX="0.5" pY="0.398844" oX="7" oY="1" oW="300" oH="173"/>

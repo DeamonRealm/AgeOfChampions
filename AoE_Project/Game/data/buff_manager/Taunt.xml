@@ -20,19 +20,16 @@ verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="Taunt.png" width="1298" height="1298">
-  <particle particle_type="buff_particle" actor="0" buff_type="timed" attribute_type="taunt" draw_rate="0">
+  <particle particle_type="buff_particle" actor="0" buff_type="timed" attribute_type="taunt" draw_rate="0" z="-20">
     <anim_data speed="150" loop="0"/>
-    <sprite n="FireArea/FireArea_00.png" opacity ="255" x="1" y="1" w="392" h="241" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_01.png" opacity ="255" x="395" y="1" w="402" h="246" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_02.png" opacity ="255" x="799" y="1" w="410" h="252" pX="0.525" pY="0.5"/>
-    <sprite n="FireArea/FireArea_03.png" opacity ="255" x="1" y="255" w="406" h="267" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_04.png" opacity ="255" x="409" y="255" w="417" h="270" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_05.png" opacity ="255" x="828" y="255" w="433" h="283" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_06.png" opacity ="255" x="1" y="540" w="425" h="283" pX="0.5" pY="0.5"/>
-    <sprite n="FireArea/FireArea_07.png" opacity ="255" x="428" y="540" w="425" h="290" pX="0.51" pY="0.53"/>
-    <sprite n="FireArea/FireArea_08.png" opacity ="255" x="855" y="540" w="442" h="300" pX="0.51" pY="0.53"/>
-    <sprite n="FireArea/FireArea_09.png" opacity ="255" x="1" y="842" w="417" h="302" pX="0.53" pY="0.51"/>
-    <sprite n="FireArea/FireArea_10.png" opacity ="255" x="420" y="842" w="395" h="281" pX="0.54" pY="0.5"/>
-    <sprite n="FireArea/FireArea_11.png" opacity ="255" x="817" y="842" w="395" h="281" pX="0.54" pY="0.5"/>
+    <sprite n="IndividualBuff_0009_0009-shot.png.png" opacity ="255" x="1" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
+    <sprite n="IndividualBuff_0008_0008-shot.png.png" opacity ="255" x="63" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
+    <sprite n="IndividualBuff_0007_0007-shot.png.png" opacity ="255" x="125" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
+    <sprite n="IndividualBuff_0006_0006-shot.png.png" opacity ="255" x="187" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
+    <sprite n="IndividualBuff_0005_0005-shot.png.png" opacity ="255" x="249" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
+    <sprite n="IndividualBuff_0004_0004-shot.png.png" opacity ="255" x="311" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
+    <sprite n="IndividualBuff_0003_0003-shot.png.png" opacity ="255" x="373" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
+    <sprite n="IndividualBuff_0002_0002-shot.png.png" opacity ="255" x="435" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
+    <sprite n="IndividualBuff_0001_0001-shot.png.png" opacity ="255" x="435" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
   </particle>
 </TextureAtlas>
