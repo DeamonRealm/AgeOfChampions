@@ -8,8 +8,10 @@ class UI_Image;
 class UI_Element;
 class UI_Fixed_Button;
 class UI_Button;
-class  Unit;
-class  Building;
+class Unit;
+class Building;
+class Animation;
+struct SDL_Texture;
 
 class j1Menu : public j1Module
 {
@@ -82,6 +84,8 @@ private:
 	UI_String*			report_bug = nullptr;
 	UI_String*			singleplayer_text = nullptr;
 
+	SDL_Texture*		loading_texture = nullptr;
+	Animation*			loading_particle = nullptr;
 };
 
 #endif // __j1MENU_H__

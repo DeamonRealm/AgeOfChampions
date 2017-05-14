@@ -184,12 +184,14 @@ bool Game_Panel::PreUpdate()
 	{
 
 		final_menu_image->Activate();
+		App->paused = true;
 	}
 
 
-	if (win)
+	else if (win)
 	{
 		final_menu_image->Activate();
+		App->paused = true;
 	}
 	return true;
 }

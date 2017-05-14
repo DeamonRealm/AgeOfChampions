@@ -196,7 +196,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 		PathNode* current = nullptr;
 		while (open.queue.size() != 0)
 		{
-			if (path_time.Read()>MAX_PATH_TIME)
+			if (path_time.Read() > MAX_PATH_TIME)
 			{
 				return nullptr;
 			}

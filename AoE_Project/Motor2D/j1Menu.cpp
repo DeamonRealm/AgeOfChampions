@@ -238,6 +238,20 @@ bool j1Menu::Start()
 //	App->gui->CalculateUpperElement(menu_screen);
 	
 
+	//Load loading particle
+	loading_texture = App->tex->Load("gui/UILoading.png");
+	if (loading_texture != nullptr)
+	{
+		loading_particle = new Animation();
+		loading_particle->SetTexture(loading_texture);
+		loading_particle->AddSprite({ 0,0,18,4 }, { 0,0 });
+		loading_particle->AddSprite({ 19,0,18,4 }, { 0,0 });
+		loading_particle->AddSprite({ 38,0,18,4 }, { 0,0 });
+		loading_particle->SetLoop(true);
+		loading_particle->SetSpeed(400);
+		loading_particle->Reset();
+	}
+
 	return true;
 }
 
@@ -270,12 +284,28 @@ bool j1Menu::Update(float dt)
 
 bool j1Menu::PostUpdate()
 {
+	if (load_screen->GetActiveState() && loading_particle != nullptr)
+	{
+		const Sprite* current_sprite = loading_particle->GetCurrentSprite();
+		if(current_sprite != nullptr)App->render->Blit(loading_particle->GetTexture(), 1205, 752, current_sprite->GetFrame());
+	}
+
 	if (SDL_ShowCursor(-1) == 0 && !load_screen->GetActiveState()) App->gui->DrawMouseTexture();
 	return true;
 }
 
 bool j1Menu::CleanUp()
 {
+	if (loading_texture != nullptr)
+	{
+		App->tex->UnLoad(loading_texture);
+		loading_texture = nullptr;
+	}
+	if (loading_particle != nullptr)
+	{
+		delete loading_particle;
+		loading_particle = nullptr;
+	}
 	return true;
 }
 

@@ -6,7 +6,7 @@
 #include "BaseEntities.h"
 #include <queue>
 #define INVALID_WALK_CODE 255
-#define MAX_PATH_TIME 3
+#define MAX_PATH_TIME 5
 
 struct PathList;
 struct Node;

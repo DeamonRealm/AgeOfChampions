@@ -907,6 +907,7 @@ void Selection_Panel::Select(Unit * unit)
 	selected_entity_type = UNIT;
 	selected_unit_type = unit->GetUnitType();
 	champions_selected = true;
+	unit->Select();
 	UnSelect_Entity();
 	Selected->SetEntity(unit);
 	selected_elements.push_back(unit);
