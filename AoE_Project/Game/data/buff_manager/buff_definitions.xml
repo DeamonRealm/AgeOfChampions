@@ -107,7 +107,7 @@
     buff_duration ="5000"
 
     actor="0"
-    value="0.2"
+    value="0.5"
   />
   <buff
     buff_type ="timed"
