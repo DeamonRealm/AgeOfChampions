@@ -161,7 +161,7 @@ PathNode* j1Pathfinding::GetPathNode(int x, int y)
 
 std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoint& destination)
 {
-
+	j1Timer path_time;
 	int size = width*height;
 	std::fill(path_nodes, path_nodes + size, PathNode(-1, -1, iPoint(-1, -1), nullptr));
 
@@ -183,7 +183,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 	/*LOG("ORIGIN WORLD: X=%i Y=%i		ORIGIN MAP: X=%i Y=%i", origin.x, origin.y, map_origin.x, map_origin.y);
 	LOG("GOAL WORLD: X=%i Y=%i			GOAL MAP: X=%i Y=%i", destination.x, destination.y, map_goal.x, map_goal.y);*/
 
-	if (IsWalkable(map_origin) && IsWalkable(map_goal))
+	if (IsWalkable(map_goal))
 	{
 		ret = 1;
 		OpenList open;
@@ -196,7 +196,7 @@ std::vector<iPoint>* j1Pathfinding::SimpleAstar(const iPoint& origin, const iPoi
 		PathNode* current = nullptr;
 		while (open.queue.size() != 0)
 		{
-			if (open.queue.size() > 1000)
+			if (path_time.Read()>MAX_PATH_TIME)
 			{
 				return nullptr;
 			}
