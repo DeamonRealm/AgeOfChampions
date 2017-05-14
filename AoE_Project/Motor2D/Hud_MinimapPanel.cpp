@@ -28,33 +28,33 @@ Minimap_Panel::Minimap_Panel() : map_rect({ 1030,600,325,161 }), minimap_size({0
 	minimap_background->ChangeTextureId(HUD);
 	
 	warrior_button = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
-	warrior_button->SetTexUP({ 578,193,33,33 }, {0,0}, ICONS);
-	warrior_button->SetTexDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
-	warrior_button->SetTexOVERDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
-	warrior_button->SetTexOVERUP({ 578,193,33,33 }, { 0,0 }, ICONS);
-	warrior_button->SetBox({ 239, 11, 33, 33 });
+	warrior_button->SetTexUP({ 66,211,33,33 }, {0,0}, ICONS);
+	warrior_button->SetTexDOWN({ 99,211,33,33 }, { 0,0 }, ICONS);
+	warrior_button->SetTexOVERDOWN({ 99,211,33,33 }, { 0,0 }, ICONS);
+	warrior_button->SetTexOVERUP({ 66,211,33,33 }, { 0,0 }, ICONS);
+	warrior_button->SetBox({ 233, 5, 33, 33 });
 	warrior_button->Activate();
 	minimap_background->AddChild(warrior_button);
 	warrior_button->SetLayer(21);
 	warrior_button->button_state = DOWN;
 
 	wizard_button = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
-	wizard_button->SetTexUP({ 578,193,33,33 }, { 0,0 }, ICONS);
-	wizard_button->SetTexDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
-	wizard_button->SetTexOVERDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
-	wizard_button->SetTexOVERUP({ 578,193,33,33 }, { 0,0 }, ICONS);
-	wizard_button->SetBox({ 267, 6, 33, 33 });
+	wizard_button->SetTexUP({ 132,211,33,33 }, { 0,0 }, ICONS);
+	wizard_button->SetTexDOWN({ 165,211,33,33 }, { 0,0 }, ICONS);
+	wizard_button->SetTexOVERDOWN({ 165,211,33,33 }, { 0,0 }, ICONS);
+	wizard_button->SetTexOVERUP({ 132,211,33,33 }, { 0,0 }, ICONS);
+	wizard_button->SetBox({ 265, -1, 33, 33 });
 	wizard_button->Activate();
 	minimap_background->AddChild(wizard_button);
 	wizard_button->SetLayer(21);
 	wizard_button->button_state = DOWN;
 
 	archer_button = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
-	archer_button->SetTexUP({ 578,193,33,33 }, { 0,0 }, ICONS);
-	archer_button->SetTexDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
-	archer_button->SetTexOVERDOWN({ 611,193,33,33 }, { 0,0 }, ICONS);
-	archer_button->SetTexOVERUP({ 578,193,33,33 }, { 0,0 }, ICONS);
-	archer_button->SetBox({ 276, 31, 33, 33 });
+	archer_button->SetTexUP({ 0,211,33,33 }, { 0,0 }, ICONS);
+	archer_button->SetTexDOWN({ 33,211,33,33 }, { 0,0 }, ICONS);
+	archer_button->SetTexOVERDOWN({ 33,211,33,33 }, { 0,0 }, ICONS);
+	archer_button->SetTexOVERUP({ 0,211,33,33 }, { 0,0 }, ICONS);
+	archer_button->SetBox({ 275, 31, 33, 33 });
 	archer_button->Activate();
 	minimap_background->AddChild(archer_button);
 	archer_button->SetLayer(21);
