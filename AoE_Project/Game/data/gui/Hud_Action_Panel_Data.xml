@@ -120,7 +120,6 @@ pc => population cost to activate cell
     <Villager>
       <cell cp ="0" cl ="0" al ="1" x="76" y="153" w="36" h="36"   ci ="Buildings"/>
       <cell cp ="1" cl ="0" al ="1" x="593" y="36" w="36" h="36"   ci ="Militari Building"/>
-      <cell cp ="2" cl ="0" al ="1" x="405" y="36" w="36" h="36"   ci ="Repair Building"/>
       <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36"     ci ="Kill Unit"/>
       <cell cp ="0" cl ="1" al ="1" x="348" y="0" w="36" h="36" wc ="25" fc ="0" gc ="0" sc ="0" pc ="-5" bt="6" ci ="Bulid House: Increase +5 population"/>
       <cell cp ="2" cl ="1" al ="1" x="492" y="0" w="36" h="36" wc ="100" fc ="0" gc ="0" sc ="0" pc ="0" bt="10" ci ="Bulid Mining Camp: Improve mining skills"/>

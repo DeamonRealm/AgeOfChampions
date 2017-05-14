@@ -89,7 +89,7 @@ bool j1Scene::Update(float dt)
 {
 
 	//MAP MOVEMENT-----------------------------------------
-	bool moved = false;
+	/*bool moved = false;
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		App->render->camera.y += SDL_ceil(1500 * dt);
@@ -118,7 +118,7 @@ bool j1Scene::Update(float dt)
 	{
 		App->render->CalculateCameraViewport();
 		App->map->CalculateTilesInView();
-	}
+	}*/
 
 	// ------------------------------------------
 
@@ -142,7 +142,11 @@ bool j1Scene::PostUpdate()
 	//Call load game method 
 	else if (App->input_manager->GetEvent(LOAD) == INPUT_STATE::INPUT_DOWN)
 	{
+		if (App->fs->Exists("save/party_file.xml"))
+		{
 		App->LoadGame("party_file.xml", false);
+		}
+		else LOG("No party Saved");
 	}
 
 	//Activate/Deactivate debug mode

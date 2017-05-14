@@ -93,7 +93,6 @@ private:
 	uint					tabable_elements = 0;
 
 	//UI Textures
-	SDL_Texture*			atlas;
 	std::list<SDL_Texture*>	ui_textures;
 
 	std::string				atlas_file_name;
@@ -124,7 +123,6 @@ public:
 	mutable uint				upper_element = 0;
 
 	//UI textures functions
-	const SDL_Texture*	GetAtlas() const;
 	SDL_Texture*		Get_UI_Texture(uint tex_id);
 
 	//UI tab functions

@@ -57,8 +57,6 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	j1Timer time;
-	//Load Atlas
-	atlas = App->tex->Load(atlas_file_name.c_str());
 
 	//Add textures to Ui_textures
 	ui_textures.push_back(App->tex->Load(background_file_name.c_str()));
@@ -174,11 +172,6 @@ bool j1Gui::CleanUp()
 
 
 // =================================================================
-const SDL_Texture* j1Gui::GetAtlas() const
-{
-	return atlas;
-}
-
 SDL_Texture * j1Gui::Get_UI_Texture(uint tex_id)
 {
 	if (tex_id >= ui_textures.size())return nullptr;

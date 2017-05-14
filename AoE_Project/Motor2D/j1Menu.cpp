@@ -59,6 +59,8 @@ bool j1Menu::Enable()
 
 	load_screen->Desactivate();
 
+	App->render->camera.x = App->render->camera.y = 0;
+
 	return true;
 }
 
@@ -288,6 +290,8 @@ bool j1Menu::PostUpdate()
 	{
 		const Sprite* current_sprite = loading_particle->GetCurrentSprite();
 		if(current_sprite != nullptr)App->render->Blit(loading_particle->GetTexture(), 1205, 752, current_sprite->GetFrame());
+		
+		if (loading_particle->IsEnd())loading_particle->Reset();
 	}
 
 	if (SDL_ShowCursor(-1) == 0 && !load_screen->GetActiveState()) App->gui->DrawMouseTexture();

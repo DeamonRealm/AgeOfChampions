@@ -48,7 +48,7 @@ void j1EntitiesManager::Init()
 
 bool j1EntitiesManager::Enable()
 {
-	LOG("FRAME");
+	//LOG("FRAME");
 	j1Timer time;
 
 	//Load Civilization Animations --------------

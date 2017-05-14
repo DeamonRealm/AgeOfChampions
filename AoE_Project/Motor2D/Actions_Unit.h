@@ -413,6 +413,7 @@ public:
 	//Constructor -----------
 	RecollectVillagerAction(Villager* actor, Resource* target) : Action(actor, TASK_U_RECOLLECT), target(target)
 	{
+
 	}
 
 	//Destructor ------------
@@ -472,6 +473,13 @@ public:
 			if (next_resource != nullptr)
 			{
 				actor->GetWorker()->AddAction(App->action_manager->RecollectAction((Villager*)actor, next_resource), PRIMARY);
+			}
+			else
+			{
+				//Reset the animation
+				((Unit*)actor)->SetAction(IDLE);
+				App->animator->UnitPlay((Villager*)actor);
+				ret = true;
 			}
 		}
 

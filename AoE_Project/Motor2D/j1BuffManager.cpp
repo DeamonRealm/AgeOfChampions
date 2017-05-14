@@ -452,7 +452,7 @@ void j1BuffManager::Init()
 
 bool j1BuffManager::Enable()
 {
-	LOG("FRAME");
+	//LOG("FRAME");
 	if (!buffs_data_loaded)
 	{
 		//Load all buffs definitions
@@ -468,7 +468,7 @@ bool j1BuffManager::Enable()
 	}
 
 	//Iterate all the buff particles definitions
-	while (particle_document_node != NULL)
+	while (particle_document_node != NULL && !load_step)
 	{
 		//Load particle animation document
 		pugi::xml_document particle_data;

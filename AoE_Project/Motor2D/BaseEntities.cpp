@@ -614,7 +614,7 @@ bool Unit::Move(std::vector<iPoint>*& path, Unit* unit_target) ///Returns true w
 		if (unit_target != nullptr&&collisions == 0)
 		{
 			int target_ditance = last_position.DistanceTo(unit_target->GetPositionRounded());
-			LOG("target_ditance %i", target_ditance);
+			//LOG("target_ditance %i", target_ditance);
 			if (MAX_DISTANCE > target_ditance)
 			{
 				return true;
@@ -716,7 +716,7 @@ void Unit::CorrectPath(std::vector<iPoint>*& path)
 	}
 	new_path = App->pathfinding->SimpleAstar(GetPositionRounded(), next_goal);
 	if (new_path != nullptr) {
-		LOG("PATH SIZE %i", new_path->size());
+		//LOG("PATH SIZE %i", new_path->size());
 		path->insert(path->end(), new_path->begin(), new_path->end());
 		delete new_path;
 	}
@@ -1944,7 +1944,7 @@ void Unit::SetSpeed(float speed_val)
 
 void Unit::SetSpeedBuff(float speed_val)
 {
-	speed_buff = speed_buff;
+	speed_buff = speed_val;
 }
 
 void Unit::SetAction(ACTION_TYPE action_val)
@@ -2123,7 +2123,7 @@ float Unit::GetSpeedBuff() const
 
 float Unit::GetTotalSpeed() const
 {
-	return speed + mutable_speed + speed_buff;
+	return speed + mutable_speed - speed_buff;
 }
 
 ACTION_TYPE Unit::GetAction()const
