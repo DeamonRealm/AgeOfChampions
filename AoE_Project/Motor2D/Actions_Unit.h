@@ -388,8 +388,11 @@ public:
 
 	bool Execute()
 	{
-		if (target == nullptr) return true;
-
+		if (target == nullptr || target->GetDiplomacy() != actor->GetDiplomacy() || target == actor)
+		{
+			return true;
+		}
+		
 		return ((Unit*)actor)->HealUnit(target);
 	}
 
@@ -552,9 +555,16 @@ private:
 class AutoAttackPassiveAction : public Action
 {
 public:
+
 	AutoAttackPassiveAction(Unit* actor) : Action(actor, TASK_U_AA)
-	{};
-	~AutoAttackPassiveAction() {};
+	{
+	
+	}
+	
+	~AutoAttackPassiveAction()
+	{
+	
+	}
 
 public:
 
@@ -592,7 +602,7 @@ public:
 		uint sizeb = surrounding_buildings.size();
 		for (uint k = 0; k < sizeb; k++)
 		{
-			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy() && actor->GetWorker()->IsBusy(SECONDARY))
+			if (actor->GetDiplomacy() != surrounding_buildings[k]->GetDiplomacy() && !actor->GetWorker()->IsBusy(SECONDARY))
 			{
 				actor->AddAction(App->action_manager->AttackToBuildingAction((Unit*)actor, surrounding_buildings[k], SECONDARY), SECONDARY);
 				return false;
@@ -645,11 +655,12 @@ public:
 		uint size = surrounding_units.size();
 		for (uint i = 0; i < size; i++)
 		{
-			if (actor->GetDiplomacy() == surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != (DIE || DISAPPEAR))
+			if (actor->GetDiplomacy() == surrounding_units[i]->GetDiplomacy() && surrounding_units[i]->GetAction() != DIE || surrounding_units[i]->GetAction() !=  DISAPPEAR)
 			{
-				if (surrounding_units[i] != actor && surrounding_units[i]->GetLife() < surrounding_units[i]->GetMaxLife())
+				if (surrounding_units[i] != actor && surrounding_units[i]->GetLife() < surrounding_units[i]->GetTotalMaxLife())
+				{
 					actor->AddAction(new HealUnitAction((Unit*)actor, surrounding_units[i]));
-
+				}
 			}
 		};
 		return false;

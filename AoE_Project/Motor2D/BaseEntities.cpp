@@ -1554,28 +1554,29 @@ bool Unit::HealUnit(Unit* target)
 	{
 		return true;
 	}
-
-
+	
 	if (!attack_area.Overlap(&target->GetSoftCollider()))
 	{
 
-		iPoint goal = attack_area.NearestPoint(&target->GetSoftCollider() + attack_area.GetRad());
+		iPoint goal = attack_area.NearestPoint(&target->GetSoftCollider());
 		App->pathfinding->PushPath(this, goal);
+		LOG("X %i, Y %i", goal.x, goal.y);
+
 		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
 		if (path == nullptr)return true;
 
 		this->AddPriorizedAction((Action*)App->action_manager->MoveAction(path, this));
 		*/
+
 		return false;
 	}
-
-
+	
 	//Control action rate
 	if (action_timer.Read() < attack_rate)return false;
 
 	//App->sound->PlayFXAudio(SWORD_ATTACK_SOUND);
-	App->sound->CheckAttackSound(this->GetPositionRounded(), attack_type,true);
+	App->sound->CheckAttackSound(this->GetPositionRounded(), attack_type, true);
 
 	//Set unit attack animation
 	if (action_type != ATTATCK)
@@ -1591,9 +1592,15 @@ bool Unit::HealUnit(Unit* target)
 	//Reset action timer
 	action_timer.Start();
 
-	if (target->GetLife() >= target->GetTotalMaxLife()) ret = true;
+	if (target->GetLife() >= target->GetTotalMaxLife())
+	{
+		ret = true;
+		this->action_type = IDLE;
+		App->animator->UnitPlay(this);
+	}
 	return ret;
 }
+
 
 bool Unit::AttackBuilding(Building * target, TASK_CHANNELS channel)
 {
@@ -1717,8 +1724,8 @@ bool Unit::DirectDamage(uint damage,bool gui_action)
 
 void Unit::Heal(uint heal)
 {
-	//Deal damage to the unit
-	life = MIN(max_life, life + heal);
+	//Heal the unit
+	life = MIN(GetTotalMaxLife(), life + heal);
 }
 
 bool Unit::Die()
