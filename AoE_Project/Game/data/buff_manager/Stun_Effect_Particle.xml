@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:a9f39b4d74ed5602d9c98b2dd2e245f1:04d8498baf52c266f1bc0ef03dce195f:d9863e7a8c7de8627669e7a95792d069$ -->
+<!-- $TexturePacker:SmartUpdate:67c144c464c7d6f3ea8d34e85a1d21a5:aa625721b243f3e5a47dc3fa647c273f:e174e95e5e77963e942894f0b28faa63$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,13 +19,28 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Stun_Effect_Particle.png" width="79" height="207">
+<TextureAtlas imagePath="Stun_Effect_Particle.png" width="236" height="236">
   <particle particle_type="buff_particle" actor="0" buff_type="timed" attribute_type="stun" draw_rate ="0" z="-20">
     <anim_data speed="150" loop="1"/>
-      <sprite n="StunAffect_00.png" opacity ="255"  x="1" y="0" w="77" h="41" pX="0.5" pY="0.5"/>
-      <sprite n="StunAffect_01.png" opacity ="255"  x="1" y="44" w="75" h="41" pX="0.5" pY="0.5"/>
-      <sprite n="StunAffect_02.png" opacity ="255"  x="1" y="87" w="73" h="39" pX="0.5" pY="0.5"/>
-      <sprite n="StunAffect_03.png" opacity ="255"  x="1" y="128" w="73" h="38" pX="0.5" pY="0.5"/>
-      <sprite n="StunAffect_04.png" opacity ="255"  x="1" y="168" w="73" h="38" pX="0.5" pY="0.5"/>
+
+    <sprite n="Stun_0000_0001-shot.png.png" opacity="255"  x="1" y="1" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0001_0002-shot.png.png" opacity="255" x="1" y="1" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0002_0003-shot.png.png" opacity="255" x="48" y="1" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0003_0004-shot.png.png" opacity="255" x="95" y="1" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0004_0005-shot.png.png" opacity="255" x="142" y="1" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0005_0006-shot.png.png" opacity="255" x="189" y="1" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0006_0007-shot.png.png" opacity="255" x="1" y="60" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0007_0008-shot.png.png" opacity="255" x="48" y="60" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0008_0009-shot.png.png" opacity="255" x="95" y="60" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0009_0010-shot.png.png" opacity="255" x="142" y="60" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0010_0011-shot.png.png" opacity="255" x="189" y="60" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0011_0012-shot.png.png" opacity="255" x="1" y="119" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0012_0013-shot.png.png" opacity="255" x="48" y="119" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0013_0014-shot.png.png" opacity="255"  x="95" y="119" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0014_0015-shot.png.png" opacity="255" x="142" y="119" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0015_0016-shot.png.png" opacity="255" x="189" y="119" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0016_0017-shot.png.png" opacity="255" x="1" y="178" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0017_0018-shot.png.png" opacity="255" x="48" y="178" w="45" h="57" pX="0.511111" pY="0.77193"/>
+    <sprite n="Stun_0018_0019-shot.png.png" opacity="255" x="95" y="178" w="45" h="57" pX="0.511111" pY="0.77193"/>
   </particle>
 </TextureAtlas>

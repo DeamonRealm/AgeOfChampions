@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:09f8c60aa193f5fcad32bd9d75c7b473:b2f5e78ceed66efbb42c594fe5a4f119:5c2a2c00668ec52693550397bb7ea822$ -->
+<!-- $TexturePacker:SmartUpdate:3a92b733804dd6217ed314bf59b9f93f:e02827134963b568a2b5f50db07f7865:61d33d6b18bcd0db46cd2593db5d9267$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,17 +19,45 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Taunt.png" width="1298" height="1298">
+<TextureAtlas imagePath="Taunt.png" width="272" height="272">
   <particle particle_type="buff_particle" actor="0" buff_type="timed" attribute_type="taunt" draw_rate="0" z="-20">
-    <anim_data speed="150" loop="0"/>
-    <sprite n="IndividualBuff_0009_0009-shot.png.png" opacity ="255" x="1" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
-    <sprite n="IndividualBuff_0008_0008-shot.png.png" opacity ="255" x="63" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
-    <sprite n="IndividualBuff_0007_0007-shot.png.png" opacity ="255" x="125" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
-    <sprite n="IndividualBuff_0006_0006-shot.png.png" opacity ="255" x="187" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
-    <sprite n="IndividualBuff_0005_0005-shot.png.png" opacity ="255" x="249" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
-    <sprite n="IndividualBuff_0004_0004-shot.png.png" opacity ="255" x="311" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
-    <sprite n="IndividualBuff_0003_0003-shot.png.png" opacity ="255" x="373" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
-    <sprite n="IndividualBuff_0002_0002-shot.png.png" opacity ="255" x="435" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
-    <sprite n="IndividualBuff_0001_0001-shot.png.png" opacity ="255" x="435" y="1" z="-5000" w="60" h="38" pX="0.509091" pY="0.673852"/>
-  </particle>
+    <anim_data speed="100" loop="0"/>
+    <sprite n="Taunt_0000_0006-shot.png.png" opacity ="255" x="1" y="1" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0001_0007-shot.png.png" opacity ="255" x="35" y="1" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0002_0008-shot.png.png" opacity ="255" x="69" y="1" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0003_0009-shot.png.png" opacity ="255" x="103" y="1" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0004_0010-shot.png.png" opacity ="255" x="137" y="1" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0005_0011-shot.png.png" opacity ="255" x="171" y="1" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0006_0012-shot.png.png" opacity ="255" x="205" y="1" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0007_0013-shot.png.png" opacity ="255" x="239" y="1" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0008_0014-shot.png.png" opacity ="255" x="1" y="47" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0009_0015-shot.png.png" opacity ="255" x="35" y="47" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0010_0016-shot.png.png" opacity ="255" x="69" y="47" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0011_0017-shot.png.png" opacity ="255" x="103" y="47" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0012_0018-shot.png.png" opacity ="255" x="137" y="47" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0013_0019-shot.png.png" opacity ="255" x="171" y="47" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0014_0020-shot.png.png" opacity ="255" x="205" y="47" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0015_0021-shot.png.png" opacity ="255" x="239" y="47" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0016_0022-shot.png.png" opacity ="255" x="1" y="93" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0017_0023-shot.png.png" opacity ="255" x="35" y="93" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0018_0024-shot.png.png" opacity ="255" x="69" y="93" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0019_0025-shot.png.png" opacity ="255" x="103" y="93" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0020_0026-shot.png.png" opacity ="255" x="137" y="93" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0021_0027-shot.png.png" opacity ="255" x="171" y="93" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0022_0028-shot.png.png" opacity ="255" x="205" y="93" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0023_0029-shot.png.png" opacity ="255" x="239" y="93" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0024_0030-shot.png.png" opacity ="255" x="1" y="139" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0025_0031-shot.png.png" opacity ="255" x="35" y="139" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0026_0032-shot.png.png" opacity ="255" x="69" y="139" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0027_0033-shot.png.png" opacity ="255" x="103" y="139" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0028_0034-shot.png.png" opacity ="255" x="137" y="139" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0029_0035-shot.png.png" opacity ="255" x="171" y="139" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0031_0036-shot.png.png" opacity ="255" x="205" y="139" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0032_0037-shot.png.png" opacity ="255" x="239" y="139" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0033_0038-shot.png.png" opacity ="255" x="1" y="185" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0034_0039-shot.png.png" opacity ="255" x="35" y="185" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0035_0040-shot.png.png" opacity ="255" x="69" y="185" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0036_0041-shot.png.png" opacity ="255" x="103" y="185" w="32" h="44" pX="0.5" pY="0.818182"/>
+    <sprite n="Taunt_0037_0042-shot.png.png" opacity ="255" x="137" y="185" w="32" h="44" pX="0.5" pY="0.818182"/>
+</particle>
 </TextureAtlas>
