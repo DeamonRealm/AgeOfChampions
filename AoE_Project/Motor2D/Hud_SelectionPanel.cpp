@@ -821,6 +821,7 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		int size = unit_quad_selection.size();
 		for (int count = 0; count < size; count++)
 		{
+			if (selected_amount == max_selected_units) break;
 			if (unit_quad_selection[count]->GetDiplomacy() != ALLY) continue;
 			else if (type == DOUBLECLICK && selected_unit_type != unit_quad_selection[count]->GetUnitType()) continue;
 			else if (!unit_quad_selection[count]->GetIfSelected())
@@ -841,7 +842,6 @@ void Selection_Panel::Select(SELECT_TYPE type)
 					ResetSelectedType(GROUP);
 				}
 			}
-			if (selected_amount == max_selected_units) break;
 		}
 	}
 	else
@@ -931,14 +931,15 @@ bool Selection_Panel::UpdateGroup()
 			item._Ptr->_Myval->Deselect();
 			selected_elements.remove(item._Ptr->_Myval);
 			item++;
-			if (item != selected_elements.end()) Selected->SetEntity(item._Ptr->_Myval);
-			else Selected->SetEntity(nullptr);
 			ret = true;
-			continue;
 		}
 	}
-	if (ret) 
+	if (ret)
+	{
+		if(selected_elements.size() > 0)Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+		else Selected->Reset();
 		SetGroupProfile();
+	}
 	return ret;
 }
 

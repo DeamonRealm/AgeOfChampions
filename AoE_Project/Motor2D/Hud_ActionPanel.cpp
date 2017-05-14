@@ -376,7 +376,6 @@ UnitPanel::UnitPanel() : Action_Panel_Elements() {};
 void UnitPanel::ResetPanel()
 {
 	entitis_panel = nullptr;
-	SetDataFromXML();
 }
 
 bool UnitPanel::ActivateCell(int i)
@@ -1635,6 +1634,8 @@ void Action_Panel::SetPanelType(bool force_setup)
 			}
 			else
 			{
+				if (unitpanel->GetActualEntity() != actual_entity)
+					unitpanel->ResetPanel();
 				actualpanel = unitpanel;
 			}
 		}
