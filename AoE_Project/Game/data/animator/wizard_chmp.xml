@@ -292,7 +292,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
         <sprite n="monk_walk/024_monk_walk.bmp" x="500" y="546" w="31" h="50" pX="0.633333" pY="0.863636"/>
         <sprite n="monk_walk/025_monk_walk.bmp" x="533" y="546" w="37" h="50" pX="0.594595" pY="0.837209"/>
         <sprite n="monk_walk/026_monk_walk.bmp" x="573" y="546" w="43" h="51" pX="0.590909" pY="0.822222"/>
-        <sprite n="monk_walk/027_monk_walk.bmp" x="618" y="546" w="43" h="44" pX="0.674419" pY="0.840909"/>
+        <sprite n="monk_walk/027_monk_walk.bmp" x="618" y="546" w="43" h="44" pX="0.674419" pY="0.920909"/>
         <sprite n="monk_walk/028_monk_walk.bmp" x="662" y="546" w="40" h="52" pX="0.763158" pY="0.840909"/>
         <sprite n="monk_walk/029_monk_walk.bmp" x="0" y="604" w="41" h="48" pX="0.74359" pY="0.840909"/>
       </direction>

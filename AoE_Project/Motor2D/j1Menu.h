@@ -79,6 +79,7 @@ private:
 	UI_Element*			standard_match_screen = nullptr;
 
 	UI_String*			wiki = nullptr;
+	UI_String*			report_bug = nullptr;
 	UI_String*			singleplayer_text = nullptr;
 
 };

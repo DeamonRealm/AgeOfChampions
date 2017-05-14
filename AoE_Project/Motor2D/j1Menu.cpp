@@ -211,6 +211,13 @@ bool j1Menu::Start()
 	wiki->SetBox({ 58, 13,0,0 });
 	history->AddChild(wiki);
 
+	report_bug = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	report_bug->SetColor({ 255, 255, 255, 255 });
+	report_bug->SetString("Report Bug");
+	report_bug->Activate();
+	report_bug->SetBox({ 45, 12,0,0 });
+	multiplayer->AddChild(report_bug);
+
 	singleplayer_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	singleplayer_text->SetColor({ 255, 255, 255, 255 });
 	singleplayer_text->SetString("Single Player");
@@ -313,6 +320,11 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		{
 			ShellExecute(NULL, "open", "https://github.com/DeamonRealm/Age_of_Empires_II/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
 			history->button_state = UP;
+		}
+		if (target == multiplayer)
+		{
+			ShellExecute(NULL, "open", "https://github.com/DeamonRealm/Age_of_Empires_II/issues", NULL, NULL, SW_SHOWMAXIMIZED);
+			multiplayer->button_state = UP;
 		}
 		if (target == exit)
 		{

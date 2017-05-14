@@ -169,9 +169,6 @@ bool j1App::Start()
 
 	PERF_PEEK(ptimer);
 
-	//Load load screen
-	load_screen = App->tex->Load("gui/LoadingScreenWIP.png");
-
 	return ret;
 }
 
@@ -305,7 +302,7 @@ void j1App::FinishUpdate()
 	}
 	else
 	{
-		sprintf_s(title, 50, "Age Of Champions|| FPS: %u", frames_on_last_update);
+		sprintf_s(title, 50, "Age Of Champions", frames_on_last_update);
 	}
 
 	App->win->SetTitle(title);

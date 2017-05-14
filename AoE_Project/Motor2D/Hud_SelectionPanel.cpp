@@ -76,6 +76,7 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	}
 	element = entity_selected;
 	background = { 650,371,40,40 };
+	e_type = element->GetEntityType();
 
 	name->SetString((char*)element->GetName());
 
@@ -102,7 +103,6 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	}
 	else isenemy = false;
 
-	e_type = element->GetEntityType();
 	if (e_type == UNIT)
 	{
 		u_attack = ((Unit*)element)->GetAttackHitPoints();
@@ -163,7 +163,8 @@ void Entity_Profile::Reset()
 
 void Entity_Profile::DrawProfile() const
 {
-	if (element == nullptr) return;
+	if (element == nullptr || m_life == 0) return;
+
 	App->render->Blit(App->gui->Get_UI_Texture(ICONS), 342 - App->render->camera.x, 634 - App->render->camera.y, &element->GetIcon());
 
 	//Draw profile icon
@@ -1015,6 +1016,7 @@ Entity * Selection_Panel::GetUpperEntity(int x, int y)
 		rect.x = (int)pos.x - current_sprite->GetXpivot();
 		rect.y = (int)pos.y - current_sprite->GetYpivot();
 
+		
 		if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h)
 		{
 			if (ret == nullptr) ret = unit_quad_selection[count];
