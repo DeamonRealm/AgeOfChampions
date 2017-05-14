@@ -19,8 +19,8 @@ public:
 
 	UI_Image		tex_selection;
 	UI_Image		tex_menu;
-	SDL_Color		menu_color;
-	SDL_Color		Selection_color;
+	SDL_Color		menu_color = {0,0,0,0};
+	SDL_Color		Selection_color = { 0,0,0,0 };
 
 private:
 	//List of menu options and its locations

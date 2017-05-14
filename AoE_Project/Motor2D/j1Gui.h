@@ -107,12 +107,12 @@ private:
 	std::string				load_screen_file_name;
 
 	//Target Module of gui input
-	j1Module*				default_input_target;
+	j1Module*				default_input_target = nullptr;
 
 	//Cursor type;
 	CURSOR_TARGET			cursor_type;
-	SDL_Rect				cursor_rect;
-	iPoint					cursor_pivot;
+	SDL_Rect				cursor_rect = {0,0,0,0};
+	iPoint					cursor_pivot = {0,0};
 
 	std::vector<SDL_Rect>	cursors_rects;
 	std::vector<iPoint>		cursors_pivots;

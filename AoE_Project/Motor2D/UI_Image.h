@@ -15,9 +15,9 @@ public:
 
 private:
 
-	SDL_Rect	texture_rect;
-	iPoint		pivot;
-	int			texture_id;
+	SDL_Rect	texture_rect = { 0,0,0,0 };
+	iPoint		pivot = { 0,0 };
+	int			texture_id = 0;
 
 public:
 

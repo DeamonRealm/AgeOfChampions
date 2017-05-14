@@ -30,12 +30,12 @@ public:
 
 protected:
 
-	SDL_Rect				box;
+	SDL_Rect				box = { 0,0,0,0 };
 	uint					layer = 0;
 	uint					tab_num = 0;
 	mutable bool			IsActive = true;
 	bool					isin = false;
-	UI_TYPE					ui_type;
+	UI_TYPE					ui_type = UNDEFINED;
 
 	UI_Element*				parent = nullptr;
 

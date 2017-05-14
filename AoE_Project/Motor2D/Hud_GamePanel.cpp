@@ -354,7 +354,7 @@ void Game_Panel::Enable()
 {
 	exit_menu_screen->Activate();
 	exit_menu_button->Activate();
-	final_menu_image->ActivateChilds();
+	
 
 	for (int i = 0; i < MAX_GAME_RESOURCES; i++)
 		player_resources[i]->Activate();

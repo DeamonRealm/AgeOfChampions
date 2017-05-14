@@ -25,7 +25,7 @@ public:
 private:
 
 	SCROLL_TYPE				Scroll_Type;
-	bool					ScrollSelected;
+	bool					ScrollSelected = false;
 	
 	SDL_Rect				ContentWindow;
 

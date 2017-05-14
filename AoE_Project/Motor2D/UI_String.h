@@ -21,7 +21,7 @@ private:
 	std::string			text;
 	_TTF_Font*			text_font = nullptr;
 	SDL_Texture*		text_texture = nullptr;
-	SDL_Color			text_color;
+	SDL_Color			text_color = { 255,255,255,255 };
 
 public:
 

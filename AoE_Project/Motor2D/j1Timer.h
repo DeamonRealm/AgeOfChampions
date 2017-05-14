@@ -16,7 +16,8 @@ public:
 	void AddTime(uint val);
 
 private:
-	uint32	started_at;
+
+	uint32	started_at = 0;
 };
 
 #endif //__j1TIMER_H__

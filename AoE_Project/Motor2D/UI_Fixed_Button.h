@@ -28,7 +28,7 @@ public:
 	UI_Image			tex_down;
 	UI_Image			tex_over;
 	UI_Image			tex_over_down;
-	FIX_BUTTON_STATE	button_state;
+	FIX_BUTTON_STATE	button_state = UP;
 
 public:
 	//Game Loop

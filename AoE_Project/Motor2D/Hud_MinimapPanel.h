@@ -100,7 +100,7 @@ private:
 	SDL_Rect	minimap_camera_size = { 0,0,0,0 };
 	fPoint		map_to_minimap = { 0.0f,0.0f };
 	fPoint		half_tile_size = { 0.0f,0.0f };
-	iPoint		map_size;
+	iPoint		map_size = { 0,0 };
 
 	// Map Cells
 	std::vector<minimap_cell>	cells;
