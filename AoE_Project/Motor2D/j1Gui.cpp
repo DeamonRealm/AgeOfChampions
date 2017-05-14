@@ -111,16 +111,17 @@ bool j1Gui::PostUpdate()
 		}*/
 
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	if (App->debug_mode)
 	{
-		SDL_ShowCursor(0);
+		if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+		{
+			SDL_ShowCursor(0);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			SDL_ShowCursor(1);
+		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		SDL_ShowCursor(1);
-	}
-
 
 	// Update & draw the UI screens
 	std::list<UI_Element*>::iterator item = screens.begin();
