@@ -241,10 +241,10 @@ bool Villager::Recollect(Resource* target)
 	{
 		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
 		iPoint woop = App->map->WorldToMap(goal.x,goal.y);
-		iPoint woop_tile = App->map->WorldToMap(target->GetPositionRounded().x, target->GetPositionRounded().y);
 
-		if (!App->pathfinding->IsWalkable(woop)) {
-			goal = this->FindWalkableAdjacent(target->GetPositionRounded());
+		if (!App->pathfinding->IsWalkable(woop)) 
+		{
+			goal = this->FindSpawnCell(target->GetPositionRounded());
 			if (goal == iPoint(-1, -1))
 				return true;
 			/*LOG("GOAL %i %i ", goal.x, goal.y);

@@ -885,13 +885,21 @@ bool HeroPanel::ActivateCell(int i)
 	switch (cellpos)
 	{
 	case 0: {
+		if (entitis_panel == this->champion_archer && archer_learned[0] == 0) return false;
+		else if (entitis_panel == this->champion_mele && mele_learned[0] == 0) return false;
+		else if (entitis_panel == this->champion_wizard && wizard_learned[0] == 0) return false;
 		App->sound->PlayGUIAudio(CLICK_INGAME);
 		((Champion*)entitis_panel)->Hability_lvl_1();
 		return false;
 		}
 		break;
 	case 1: {
-			if (((Champion*)entitis_panel)->PrepareAbility_lvl_2()) {
+		if (entitis_panel == this->champion_archer && archer_learned[1] == 0) return false;
+		else if (entitis_panel == this->champion_mele && mele_learned[1] == 0) return false;
+		else if (entitis_panel == this->champion_wizard && wizard_learned[1] == 0) return false;
+
+			if (((Champion*)entitis_panel)->PrepareAbility_lvl_2()) 
+			{
 				activate_skill = 1;
 				App->sound->PlayGUIAudio(CLICK_INGAME);
 				return true;
@@ -900,6 +908,10 @@ bool HeroPanel::ActivateCell(int i)
 		}
 		break;
 	case 2:
+		if (entitis_panel == this->champion_archer && archer_learned[2] == 0) return false;
+		else if (entitis_panel == this->champion_mele && mele_learned[2] == 0) return false;
+		else if (entitis_panel == this->champion_wizard && wizard_learned[2] == 0) return false;
+
 		if (champion_selected == WARRIOR_CHMP)
 		{
 			App->sound->PlayGUIAudio(CLICK_INGAME);

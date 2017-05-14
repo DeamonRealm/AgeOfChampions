@@ -379,7 +379,11 @@ bool Selection_Panel::CleanUp()
 
 void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 {
-	if (inviewport == false)return;
+	if (inviewport == false)
+	{
+		expand = false;
+		return;
+	}
 	switch (newevent)
 	{
 	case UP_ARROW:
@@ -722,7 +726,7 @@ void Selection_Panel::DrawGroup()
 		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36 * life / max_life, 3 }, 0, 255, 0);
 		
 		//Draw icon
-		group_profile[i]->Draw(App->debug_mode);
+		group_profile[i]->Draw(false);
 
 		i--;
 	}
@@ -902,13 +906,13 @@ void Selection_Panel::Select(SELECT_TYPE type)
 
 void Selection_Panel::Select(Unit * unit)
 {
+	UnSelect_Entity();
 	ResetSelectedType();
 	selected_diplomacy = ALLY;
 	selected_entity_type = UNIT;
 	selected_unit_type = unit->GetUnitType();
 	champions_selected = true;
 	unit->Select();
-	UnSelect_Entity();
 	Selected->SetEntity(unit);
 	selected_elements.push_back(unit);
 	App->player->action_panel->SetPanelType();

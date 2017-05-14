@@ -1487,6 +1487,15 @@ bool Unit::AttackUnit(Unit* target)
 		iPoint goal = attack_area.NearestPoint(&target->GetSoftCollider());
 		iPoint target_pos(-1,-1);
 	
+		iPoint woop = App->map->WorldToMap(goal.x, goal.y);
+
+		if (!App->pathfinding->IsWalkable(woop))
+		{
+			goal = this->FindSpawnCell(target->GetPositionRounded());
+			if (goal == iPoint(-1, -1))
+				return true;
+		}
+
 		App->pathfinding->PushPath(this, goal, true,PRIMARY,target);
 /*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);

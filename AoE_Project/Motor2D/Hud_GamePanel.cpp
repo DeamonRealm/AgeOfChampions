@@ -180,19 +180,14 @@ bool Game_Panel::CleanUp()
 
 bool Game_Panel::PreUpdate()
 {
-	if (lose)
+	if (lose || win)
 	{
 
 		final_menu_image->Activate();
+		final_menu_image->ActivateChilds();
 		App->paused = true;
 	}
 
-
-	else if (win)
-	{
-		final_menu_image->Activate();
-		App->paused = true;
-	}
 	return true;
 }
 
