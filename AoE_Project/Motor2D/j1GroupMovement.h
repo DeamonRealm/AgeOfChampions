@@ -37,8 +37,8 @@ public:
 	//leader path on middle_point other units path around the middle_point
 	//leader do path to destination other units copy the path with minor modifications
 	//return the path to units
-	iPoint destination;
-	iPoint map_destination;
+	iPoint destination = { 0,0 };;
+	iPoint map_destination = { 0,0 };;
 	void AttackOnGroup(std::list<Entity*>* units, Entity* target, bool active);
 	void HealOnGroup(std::list<Entity*>* units, Entity* target);
 	void RecolectOnGroup(std::list<Entity*>* units, Resource* resource);
@@ -60,10 +60,10 @@ private:
 	// Pointer first unit "leader"
 	std::list<Entity*>* units = nullptr;
 	Entity* lead = nullptr;
-	iPoint middle_point;
+	iPoint middle_point = { 0,0 };
 	Formation formation;
 	int group_size = 0;
-	DIRECTION_TYPE lead_direcction;
+	DIRECTION_TYPE lead_direcction = NO_DIRECTION;
 };
 
 #endif // !_J1_GROUP_MOVEMENT_

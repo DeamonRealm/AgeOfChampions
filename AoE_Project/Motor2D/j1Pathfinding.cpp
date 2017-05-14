@@ -295,7 +295,7 @@ PathNode::PathNode(const PathNode & node) : g(node.g), h(node.h), pos(node.pos),
 //Functionality =============
 uint PathNode::FindWalkableAdjacents(PathList* list_to_fill) const
 {
-	iPoint cell;
+	iPoint cell(-1,-1);
 	uint before = list_to_fill->list.size();
 	bool northClose = false, southClose = false, eastClose = false, westClose = false;
 	// south
