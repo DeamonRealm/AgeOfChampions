@@ -1668,11 +1668,12 @@ Hunter::Hunter() :Champion()
 Hunter::Hunter(const Hunter & copy) : Champion(copy), area_triangle_attack_skill_A_lvl_2(copy.area_triangle_attack_skill_A_lvl_2), ability_lvl_2_skill_A_attack_value(copy.ability_lvl_2_skill_A_attack_value), area_attack_skill_B_lvl_2(copy.area_attack_skill_B_lvl_2), area_limit_skill_B_lvl_2(copy.area_limit_skill_B_lvl_2), ability_lvl_2_skill_B_attack_value(copy.ability_lvl_2_skill_B_attack_value),
 area_attack_skill_A_lvl_3(copy.area_attack_skill_A_lvl_3), area_limit_skill_A_lvl_3(copy.area_limit_skill_A_lvl_3), ability_lvl_3_skill_A_attack_value(copy.ability_lvl_3_skill_A_attack_value), area_attack_skill_B_lvl_3(copy.area_attack_skill_B_lvl_3), ability_lvl_3_skill_B_attack_value(copy.ability_lvl_3_skill_B_attack_value)
 {
-	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, ATTACK_BUFF, false);
-	ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
-	ability_lvl_3_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
-	radius_hit_lvl_2_particle = App->buff_manager->GetParticle(RADIUS_HIT_SMALL_PARTICLE, SOUTH);
-	radius_hit_lvl_3_particle = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, SOUTH);
+	buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, SPEED_BUFF, true);
+	ability_lvl_1_particle = App->buff_manager->GetParticle(FRONT_RANGE_PARTICLE, NO_DIRECTION);
+	ability_lvl_2_particle = App->buff_manager->GetParticle(DRAGON_SHOT_PARTICLE, NO_DIRECTION);
+	ability_lvl_3_particle = App->buff_manager->GetParticle(LASER_PARTICLE, SOUTH);
+	radius_hit_lvl_2_particle = App->buff_manager->GetParticle(RADIUS_HIT_SMALL_PARTICLE, NO_DIRECTION);
+	radius_hit_lvl_3_particle = App->buff_manager->GetParticle(RADIUS_HIT_BIG_PARTICLE, NO_DIRECTION);
 	for (uint k = 0; k < 3; k++)
 	{
 		actived[k] = false;
@@ -1850,10 +1851,14 @@ void Hunter::SetAbility_lvl_1(bool choosed)
 	if (choosed)
 	{
 		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, SPEED_BUFF, true);
+		ability_lvl_1_particle = App->buff_manager->GetParticle(FRONT_SPEED_PARTICLE, NO_DIRECTION);
+
 	}
 	else
 	{
 		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, RANGE_BUFF, true);
+		ability_lvl_1_particle = App->buff_manager->GetParticle(FRONT_RANGE_PARTICLE, NO_DIRECTION);
+
 	}
 	skill_choosed[0] = true;
 	ability[0] = choosed;
@@ -1876,6 +1881,9 @@ void Hunter::Hability_lvl_1()
 
 void Hunter::CheckHability_lvl_1()
 {
+	ability_lvl_1_particle.position = GetPositionRounded();
+	
+	ability_lvl_1_particle.Draw();
 	//	App->buff_manager->CallBuff(this, buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), true);
 }
 

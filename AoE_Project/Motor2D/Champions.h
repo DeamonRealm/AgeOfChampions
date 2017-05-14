@@ -286,6 +286,9 @@ private:
 	uint				ability_lvl_2_attack_value;
 	uint				ability_lvl_3_attack_value;
 
+	Particle			ability_lvl_1_particle;
+
+
 	Particle			ability_lvl_2_particle;
 	Particle			ability_lvl_3_particle;
 
