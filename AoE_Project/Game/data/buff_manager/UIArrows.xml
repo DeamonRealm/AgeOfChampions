@@ -21,7 +21,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
 <TextureAtlas imagePath="UIArrows.png" width="245" height="24">
   <simple_particle particle_type="ui_arrows_particle" direction="no_direction">
-    <anim_data speed="200" loop="0"/>
+    <anim_data speed="80" loop="0"/>
     <sprite n="0002 shot.png" opacity ="255" z ="100"  x="0" y="0" w="40" h="24" pX="0.5" pY="0.5"/>
     <sprite n="0003 shot.png" opacity ="255" z ="100" x="41" y="0" w="40" h="24" pX="0.5" pY="0.5"/>
     <sprite n="0004 shot.png" opacity ="255" z ="100" x="82" y="0" w="40" h="24" pX="0.5" pY="0.5"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:c125b4f588ec2e6578ecde4cc2df0bd2:112fc79e45a5468ef7c4c979c9d80e66:11a7ab280ed8b6170b75beeb321debfa$ -->
+<!-- $TexturePacker:SmartUpdate:084e61df2ecf55632a7fd96e3adbc074:6e4baab9d941ef7626e426520ebc531f:dca9c51900eb34f22aa8af95c4aec4d2$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,38 +19,70 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Aura_Speed_Attack.png" width="2107" height="1920">
-  <particle particle_type="buff_particle" actor="0" buff_type="passive" attribute_type="speed_attack" draw_rate ="0">
+<TextureAtlas imagePath="Aura_Speed_Attack.png" width="330" height="330">  
+<particle particle_type="buff_particle" actor="0" buff_type="passive" attribute_type="speed_attack" draw_rate ="0">
 <anim_data speed="100" loop="0"/>
+    <sprite n="AuraArcher_0000s_0000_0001-shot.png.png" opacity ="255" x="1" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0001_0002-shot.png.png" opacity ="255" x="1" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0002_0003-shot.png.png" opacity ="255" x="31" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0003_0004-shot.png.png" opacity ="255" x="61" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0004_0005-shot.png.png" opacity ="255" x="91" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0005_0006-shot.png.png" opacity ="255" x="121" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0006_0007-shot.png.png" opacity ="255" x="151" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0007_0008-shot.png.png" opacity ="255" x="181" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0008_0009-shot.png.png" opacity ="255" x="211" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0009_0010-shot.png.png" opacity ="255" x="241" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0010_0011-shot.png.png" opacity ="255" x="271" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0011_0012-shot.png.png" opacity ="255" x="301" y="1" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0012_0013-shot.png.png" x="1" opacity ="255" opacity ="255" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0013_0014-shot.png.png" x="31" opacity ="255" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0014_0015-shot.png.png" x="61" opacity ="255" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0015_0016-shot.png.png" x="91" opacity ="255" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0016_0017-shot.png.png" opacity ="255" x="121" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0017_0018-shot.png.png" opacity ="255" x="151" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0018_0019-shot.png.png" opacity ="255" x="181" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0019_0020-shot.png.png" opacity ="255" x="211" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0020_0021-shot.png.png" opacity ="255" x="241" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0021_0022-shot.png.png" opacity ="255" x="271" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0022_0023-shot.png.png" opacity ="255" x="301" y="56" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0023_0024-shot.png.png" x="1" opacity ="255" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0024_0025-shot.png.png" x="31" opacity ="255" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0025_0026-shot.png.png" x="61" opacity ="255" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0026_0027-shot.png.png" x="91" opacity ="255" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0027_0028-shot.png.png" opacity ="255" x="121" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0000s_0028_0029-shot.png.png" opacity ="255" x="151" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+   </particle>
 
-    <sprite n="Lightning_0000_0001-shot.png.png" opacity ="255" x="1" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0001_0002-shot.png.png" opacity ="255" x="1" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0002_0003-shot.png.png" opacity ="255" x="302" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0003_0004-shot.png.png" opacity ="255" x="603" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0004_0005-shot.png.png" opacity ="255" x="904" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0005_0006-shot.png.png" opacity ="255" x="1205" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0006_0007-shot.png.png" opacity ="255" x="1506" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0007_0008-shot.png.png" opacity ="255" x="1807" y="1" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0008_0009-shot.png.png" opacity ="255" x="1" y="481" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0009_0010-shot.png.png" opacity ="255" x="302" y="481" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0010_0011-shot.png.png" opacity ="255" x="603" y="481" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0011_0012-shot.png.png" opacity ="255" x="904" y="481" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0012_0013-shot.png.png" opacity ="255" x="1205" y="481" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0013_0014-shot.png.png" opacity ="255" x="1506" y="481" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0014_0015-shot.png.png" opacity ="255" x="1807" y="481" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0015_0016-shot.png.png" opacity ="255" x="1" y="961" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0016_0017-shot.png.png" opacity ="255" x="302" y="961" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0017_0018-shot.png.png" opacity ="255" x="603" y="961" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0018_0019-shot.png.png" opacity ="255" x="904" y="961" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0019_0020-shot.png.png" opacity ="255" x="1205" y="961" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0020_0021-shot.png.png" opacity ="255" x="1506" y="961" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0021_0022-shot.png.png" opacity ="255" x="1807" y="961" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0022_0023-shot.png.png" opacity ="255" x="1" y="1441" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0023_0024-shot.png.png" opacity ="255" x="302" y="1441" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0024_0025-shot.png.png" opacity ="255" x="603" y="1441" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0025_0026-shot.png.png" opacity ="255" x="904" y="1441" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0026_0027-shot.png.png" opacity ="255" x="1205" y="1441" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0027_0028-shot.png.png" opacity ="255" x="1506" y="1441" w="299" h="478" pX="0.498328" pY="0.853556"/>
-    <sprite n="Lightning_0028_0029-shot.png.png" opacity ="255" x="1807" y="1441" w="299" h="478" pX="0.498328" pY="0.853556"/>
-</particle>
+    <simple_particle particle_type="Aura_Vision_particle" direction="no_direction" z="-50">
+    <sprite n="AuraArcher_0001s_0000_0001-shot.png.png" opacity ="255" x="181" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0001_0002-shot.png.png" opacity ="255" x="181" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0002_0003-shot.png.png" opacity ="255" x="211" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0003_0004-shot.png.png" opacity ="255" x="241" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0004_0005-shot.png.png" opacity ="255" x="271" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0005_0006-shot.png.png" opacity ="255" x="301" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0006_0007-shot.png.png" x="1" opacity ="255" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0007_0008-shot.png.png" x="31" opacity ="255" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0008_0009-shot.png.png" x="61" opacity ="255" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0009_0010-shot.png.png" x="91" opacity ="255" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0010_0011-shot.png.png" opacity ="255" x="121" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0011_0012-shot.png.png" opacity ="255" x="151" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0012_0013-shot.png.png" opacity ="255" x="181" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0013_0014-shot.png.png" opacity ="255" x="211" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0014_0015-shot.png.png" opacity ="255" x="241" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0015_0016-shot.png.png" opacity ="255"  x="271" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0016_0017-shot.png.png" opacity ="255" x="301" y="166" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0017_0018-shot.png.png" opacity ="255" x="1" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0018_0019-shot.png.png" opacity ="255" x="31" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0019_0020-shot.png.png" opacity ="255" x="61" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0020_0021-shot.png.png" opacity ="255" x="91" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0021_0022-shot.png.png" opacity ="255" x="121" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0022_0023-shot.png.png" opacity ="255" x="151" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0023_0024-shot.png.png" opacity ="255" x="181" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0024_0025-shot.png.png" opacity ="255" x="211" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0025_0026-shot.png.png" opacity ="255" x="241" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0026_0027-shot.png.png" opacity ="255" x="271" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0027_0028-shot.png.png" opacity ="255" x="301" y="221" w="28" h="53" pX="0.5" pY="0.849057"/>
+    <sprite n="AuraArcher_0001s_0028_0029-shot.png.png" opacity ="255" x="151" y="111" w="28" h="53" pX="0.5" pY="0.849057"/>
+      </simple_particle>
+
 </TextureAtlas>
