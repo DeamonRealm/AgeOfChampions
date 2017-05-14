@@ -376,6 +376,11 @@ UnitPanel::UnitPanel() : Action_Panel_Elements() {};
 void UnitPanel::ResetPanel()
 {
 	entitis_panel = nullptr;
+	for (int i = 0; i < MAX_PANEL_CELLS; i++)
+	{
+		cell_lvl[i] = 0;
+	}
+	UpdateCells();
 }
 
 bool UnitPanel::ActivateCell(int i)
@@ -641,8 +646,6 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills_buttons[i]->SetLayer(8);
 		skills[i]->SetLayer(8);
 	}
-	skill_tree->Desactivate();
-	skill_tree->DesactivateChids();
 
 	champion_mele = nullptr;
 	champion_wizard = nullptr;
@@ -652,7 +655,8 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	champion_row.push_back(champion_wizard);
 	champion_row.push_back(champion_archer);
 
-
+	skill_tree->Desactivate();
+	skill_tree->DesactivateChids();
 }
 
 HeroPanel::~HeroPanel()
@@ -1516,7 +1520,7 @@ bool Action_Panel::Load(pugi::xml_node & data)
 	universitypanel->Load(game_panel_data.child("university"));
 	heropanel->Load(game_panel_data.child("heroes"));
 
-	villagerpanel->UpgradeCurrentAge(current_age);
+	this->UpgradeCivilizationAge(current_age);
 
 	SetPanelType();
 
@@ -1633,8 +1637,7 @@ void Action_Panel::SetPanelType(bool force_setup)
 			}
 			else
 			{
-				if (unitpanel->GetActualEntity() != actual_entity)
-					unitpanel->ResetPanel();
+				unitpanel->ResetPanel();
 				actualpanel = unitpanel;
 			}
 		}
@@ -1650,60 +1653,70 @@ void Action_Panel::SetPanelType(bool force_setup)
 			{
 				if(towncenterpanel->GetActualEntity() != actual_entity || actualpanel != towncenterpanel) App->sound->PlayFXAudio(TOWN_CENTER_SELECTED_SOUND);
 				towncenterpanel->ChangePlayerGamePanel(player_game_panel);
+				towncenterpanel->UpdateCells();
 				actualpanel = towncenterpanel;
 			}
 			else if (b_type == BARRACK || b_type == BARRACK_C)
 			{
 				if (barrackpanel->GetActualEntity() != actual_entity || actualpanel != barrackpanel)App->sound->PlayFXAudio(BARRACK_SOUND);
 				barrackpanel->ChangePlayerGamePanel(player_game_panel);
+				barrackpanel->UpdateCells();
 				actualpanel = barrackpanel;
 			}
 			else if (b_type == ARCHERY_RANGE || b_type == ARCHERY_RANGE_C)
 			{
 				if (archerypanel->GetActualEntity() != actual_entity || actualpanel != archerypanel)App->sound->PlayFXAudio(ARCHERY_SOUND);
 				archerypanel->ChangePlayerGamePanel(player_game_panel);
+				archerypanel->UpdateCells();
 				actualpanel = archerypanel;
 			}
 			else if (b_type == STABLE || b_type == STABLE_C)
 			{
 				if (stablepanel->GetActualEntity() != actual_entity || actualpanel != stablepanel)App->sound->PlayFXAudio(STABLE_SOUND);
 				stablepanel->ChangePlayerGamePanel(player_game_panel);
+				stablepanel->UpdateCells();
 				actualpanel = stablepanel;
 			}
 			else if (b_type == BLACKSMITH || b_type == BLACKSMITH_C)
 			{
 				if (blacksmithpanel->GetActualEntity() != actual_entity || actualpanel != blacksmithpanel)App->sound->PlayFXAudio(BLACKSMITH_SOUND);
 				blacksmithpanel->ChangePlayerGamePanel(player_game_panel);
+				blacksmithpanel->UpdateCells();
 				actualpanel = blacksmithpanel;
 			}
 			else if (b_type == LUMBER_CAMP)
 			{
 				if (lumbercamppanel->GetActualEntity() != actual_entity || actualpanel != lumbercamppanel)App->sound->PlayFXAudio(LUMBER_CAMP_SOUND);
 				lumbercamppanel->ChangePlayerGamePanel(player_game_panel);
+				lumbercamppanel->UpdateCells();
 				actualpanel = lumbercamppanel;
 			}
 			else if (b_type == MINING_CAMP)
 			{
 				if (miningcamppanel->GetActualEntity() != actual_entity || actualpanel != miningcamppanel)App->sound->PlayFXAudio(MINING_CAMP_SOUND);
 				miningcamppanel->ChangePlayerGamePanel(player_game_panel);
+				actualpanel->UpdateCells();
 				actualpanel = miningcamppanel;
 			}
 			else if (b_type == MONASTERY)
 			{
 				if (monasterypanel->GetActualEntity() != actual_entity || actualpanel != monasterypanel)App->sound->PlayFXAudio(MONASTERY_SOUND);
 				monasterypanel->ChangePlayerGamePanel(player_game_panel);
+				monasterypanel->UpdateCells();
 				actualpanel = monasterypanel;
 			}
 			else if (b_type == UNIVERSITY_C || b_type == UNIVERSITY_I)
 			{
 				if (universitypanel->GetActualEntity() != actual_entity || actualpanel != universitypanel)App->sound->PlayFXAudio(UNIVERSITY_SOUND);
 				universitypanel->ChangePlayerGamePanel(player_game_panel);
+				universitypanel->UpdateCells();
 				actualpanel = universitypanel;
 			}
 			else if (b_type == CASTLE)
 			{
 				if (castlepanel->GetActualEntity() != actual_entity || actualpanel != castlepanel)App->sound->PlayFXAudio(CASTLE_SOUND);
 				castlepanel->ChangePlayerGamePanel(player_game_panel);
+				castlepanel->UpdateCells();
 				actualpanel = castlepanel;
 			}
 			else actualpanel = nullptr;		
@@ -1718,7 +1731,6 @@ void Action_Panel::SetPanelType(bool force_setup)
 
 	if (actualpanel != nullptr)
 	{
-		action_screen->DesactivateChids();
 		actualpanel->ChangePanelTarget(actual_entity);
 		actualpanel->ChangePanelIcons(panel_cells);
 		SetButtons();

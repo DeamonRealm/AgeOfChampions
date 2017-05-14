@@ -144,7 +144,7 @@ pc => population cost to activate cell
       <cell cp ="1" cl ="2" al ="3" x="96"  y="0" w="36" h="36" wc ="175" fc ="0" gc ="0" sc ="0" pc ="0" bt="13" ci ="Bulid Archery Range"/>
       <cell cp ="2" cl ="2" al ="3" x="36" y="36" w="36" h="36" wc ="175" fc ="0" gc ="0" sc ="0" pc ="0" bt="15" ci ="Bulid Stable"/>
 
-      <cell cp ="3" cl ="2" al ="3" x="240" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="650" pc ="0" bt="22" ci ="Bulid Castle"/>
+  <!--    <cell cp ="3" cl ="2" al ="3" x="240" y="0" w="36" h="36" wc ="0" fc ="0" gc ="0" sc ="650" pc ="0" bt="22" ci ="Bulid Castle"/> -->
 
       <cell cp ="13" cl ="2" al ="1" x="332" y="36" w="36" h="36"  ci ="Buildings"/>
       <cell cp ="14" cl ="2" al ="1" x="477" y="36" w="36" h="36"  ci ="Menu"/>

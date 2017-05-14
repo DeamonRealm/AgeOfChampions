@@ -173,7 +173,7 @@ void Entity_Profile::DrawProfile() const
 	if (isenemy) diplomacy->DrawAt(472, 660);
 
 	//Draw life
-	if (life_update >= 0)
+	if (life_update >= 0 && m_life > 0)
 	{
 		App->render->DrawQuad({ 342 - App->render->camera.x, 670 - App->render->camera.y, 36, 2 }, 255, 0, 0);
 		App->render->DrawQuad({ 342 - App->render->camera.x, 670 - App->render->camera.y, 36 * life_update / m_life, 2 }, 0, 255, 0);
@@ -915,11 +915,15 @@ void Selection_Panel::Select(Unit * unit)
 
 void Selection_Panel::UpdateSelected()
 {
-	if (Selected->GetEntity() != nullptr)
+	if (selected_elements.size() == 1)
 	{
-		Selected->SetEntity(Selected->GetEntity());
+		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 	}
-	if (selected_elements.size() > 1) SetGroupProfile();
+	if (selected_elements.size() > 1)
+	{
+		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
+		SetGroupProfile();
+	}
 }
 
 bool Selection_Panel::UpdateGroup()

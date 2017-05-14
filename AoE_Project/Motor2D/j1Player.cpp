@@ -137,6 +137,7 @@ bool j1Player::PreUpdate()
 		if (selection_panel->GetInViewport() && !action_panel->GetOnAction())
 		{
 			selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
+			action_panel->SetPanelType();
 		}
 		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 	}
