@@ -232,7 +232,7 @@ bool PassiveBuff::ApplyBuff()
 		break;
 	}
 	case BURN_BUFF:
-		base_float = target->GetSpeedBuff();
+		base_float = target->GetSpeed();
 		buff = base_float * value;
 		target->SetSpeedBuff(buff);
 		break;
@@ -306,7 +306,7 @@ bool PassiveBuff::RemoveBuff()
 	}
 		break;
 	case BURN_BUFF:
-		base_float = target->GetSpeed();
+		base_float = target->GetSpeedBuff();
 		current_buff = base_float * value;
 		target->SetSpeedBuff(-current_buff);
 		break;
@@ -411,7 +411,7 @@ bool Buff::ApplyBuff()
 			break;
 		}
 		case BURN_BUFF:
-			base_float = target->GetSpeedBuff();
+			base_float = target->GetSpeed();
 			buff = base_float * value;
 			target->SetSpeedBuff(buff);
 			break;
