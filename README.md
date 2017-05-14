@@ -4,7 +4,7 @@ Tribute game to Age of Empires II developed by DemonRealm.
 Age of Champions aims to preserve the core gameplay of the Age of Empires franchise while introducing new features such as champions similar to the ones from Warcraft III.
 
 
-## How to play (v0.8)
+## How to play (Alpha)
 
 To win you have to find the enemy city and destroy the enemy town center, don't forget to defend your town or the enemies will raid towards your city and destroy it. If the enemy manages to destroy your town center you lose the game.
 
@@ -25,12 +25,19 @@ To win you have to find the enemy city and destroy the enemy town center, don't 
 * Click on the skill icons to activate them
 * Arrows or drag the mouse to the corners to move the camera 
 * Click on the scroll at the upper-right part of the screen to open the in-game menu
+* Champions selections shortcuts are placed in the upper right corner of the minimap
+* Holding Ctrl while building will allow build more buildings of the same type without the need to clik on the building icon again
+* Ctrl+unit selection allows to select more units without deselecting other ones
+* [A]: Activate the first skill of the selected champion
+* [S]: Activate the second skill of the selected champion
+* [D]: Activate the third skill of the selected champion
 * [F]: Toggle Fullscreen/Windowed mode
 * [P]: Pause the game
 * 2: Save game
 * 3: Load game
 
-Note: All spawns require the player to wait some time before the actual unit spawns, this is not shown in the 
+Note: All spawns require the player to wait some time before the actual unit spawns, this is not shown in the current UI.
+Note2: In case of having multiple champions selected the shortcut keys will affect the latest champion the player has interacted with.
 
 
 #### Debug controls
@@ -69,6 +76,24 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ## Changelog
+### v0.8.1 (Alpha)
+Added: Shortcut buttons to the 3 champions 
+Added: Shortcut keys to the champion skills
+Added: Bug report button in the main menu
+Added: Loading screen dot animation
+Added: Remaining particles for champions skills
+Added: Attack alert
+Added: Move indicator
+Improved: AI raids
+Improved: Movement system
+Fixed: #51 
+Fixed: #52 
+Fixed: #53 
+Fixed: #55 
+Fixed: #59 
+Fixed: #60 
+Fixed: #61 
+
 ### v0.8 (Pre-Alpha)
 Added: Default game map has more resources
 Added: Skill indicators for champions skills
