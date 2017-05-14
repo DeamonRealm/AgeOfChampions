@@ -82,7 +82,8 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	life_update = element->GetLife();
 	if (life_update > 0)
 	{
-		m_life = element->GetMaxLife();
+		if (e_type == UNIT) m_life = ((Unit*)element)->GetTotalMaxLife();
+		else m_life = element->GetMaxLife();
 		profile_text.clear();
 		profile_text = App->gui->SetStringFromInt(life_update);
 		profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_life);
@@ -240,7 +241,9 @@ void Entity_Profile::UpdateStats()
 		}
 		profile_text.clear();
 		profile_text = App->gui->SetStringFromInt(life_update);
-		profile_text = profile_text + "/" + App->gui->SetStringFromInt(element->GetMaxLife());
+		if (e_type == UNIT) m_life = ((Unit*)element)->GetTotalMaxLife();
+		else m_life = element->GetMaxLife();
+		profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_life);
 		life->SetString((char*)profile_text.c_str());
 	}
 	if (e_type == UNIT)
@@ -707,7 +710,7 @@ void Selection_Panel::DrawGroup()
 		item--;
 
 		life = item._Ptr->_Myval->GetLife();
-		max_life = item._Ptr->_Myval->GetMaxLife();
+		max_life = ((Unit*)item._Ptr->_Myval)->GetTotalMaxLife();
 
 		box = group_profile[i]->GetBox();
 		//Draw profile background
@@ -1209,7 +1212,6 @@ void Selection_Panel::ResetSelectedType()
 
 void Selection_Panel::CheckSelectedType()
 {
-	
 	UNIT_TYPE curr_type = NO_UNIT;
 	champions_selected = false;
 	if (selected_elements.size() > 0)
@@ -1226,7 +1228,7 @@ void Selection_Panel::CheckSelectedType()
 			selected_unit_type = curr_type;
 			champions_selected = true;
 		}
-		else if (selected_unit_type != curr_type)
+		else if (selected_unit_type != curr_type && champions_selected == false)
 		{
 			selected_unit_type = NO_UNIT;
 		}
@@ -1249,7 +1251,6 @@ void Selection_Panel::RemoveDeadSelectedUnits(Unit* removed_unit)
 	}
 	else {
 		selected_elements.remove(removed_unit);
-		Selected->SetEntity(selected_elements.begin()._Ptr->_Myval);
 	}
 
 	UpdateSelected();

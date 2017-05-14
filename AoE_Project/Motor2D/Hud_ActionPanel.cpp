@@ -385,8 +385,8 @@ bool UnitPanel::ActivateCell(int i)
 	{
 	case 3: {
 		App->sound->PlayGUIAudio(CLICK_INGAME);
-		entitis_panel->SetLife(0);
-		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
+		((Unit*)entitis_panel)->DirectDamage(((Unit*)entitis_panel)->GetTotalMaxLife()*2);
+		App->player->selection_panel->RemoveDeadSelectedUnits((Unit*)entitis_panel);
 		entitis_panel = nullptr;
 		return false;
 	}
@@ -478,8 +478,8 @@ bool VillagerPanel::ActivateCell(int i)
 		break;
 	case 3: {
 		App->sound->PlayGUIAudio(CLICK_INGAME);
-		entitis_panel->SetLife(0);
-		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
+		((Unit*)entitis_panel)->DirectDamage(((Unit*)entitis_panel)->GetTotalMaxLife()*2);
+		App->player->selection_panel->RemoveDeadSelectedUnits((Unit*)entitis_panel);
 		entitis_panel = nullptr;
 		return false;
 	}
@@ -894,8 +894,7 @@ bool HeroPanel::ActivateCell(int i)
 	case 4: {
 		App->sound->PlayGUIAudio(CLICK_INGAME);
 		UNIT_TYPE u_type = ((Unit*)entitis_panel)->GetUnitType();
-		entitis_panel->SetLife(0);
-		((Unit*)entitis_panel)->AddPriorizedAction(App->action_manager->DieAction((Unit*)entitis_panel));
+		((Unit*)entitis_panel)->DirectDamage(((Unit*)entitis_panel)->GetTotalMaxLife()*2);
 		App->player->selection_panel->RemoveDeadSelectedUnits((Unit*)entitis_panel);
 		HeroisDead(u_type);
 		champion_selected = NO_UNIT;
