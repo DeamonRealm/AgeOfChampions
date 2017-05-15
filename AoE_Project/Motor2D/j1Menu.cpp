@@ -36,8 +36,8 @@ j1Menu::~j1Menu()
 
 void j1Menu::Init()
 {
-	active = true;
-	enabled = true;
+	active = false;
+	enabled = false;
 }
 
 bool j1Menu::Enable()

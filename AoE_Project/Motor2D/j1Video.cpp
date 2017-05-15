@@ -42,6 +42,12 @@ j1Video::j1Video() : j1Module()
 j1Video::~j1Video()
 {}
 
+void j1Video::Disable()
+{
+	enabled = active = false;
+	ResetValues();
+}
+
 // Called before render is available
 bool j1Video::Awake(pugi::xml_node& config)
 {
@@ -189,23 +195,7 @@ void j1Video::PlayVideo(const char *fname, SDL_Rect r)
 
 bool j1Video::PostUpdate()
 {
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
-	{
-		if (playing_intro)
-		{
-			playing_intro = false;
-			ResetValues();
-		}
-		else
-		{
-			playing_intro = true;
-			//quit = true;
-			SDL_Rect r = { 500, 450, 340, 160 };
-			PlayVideo("data/dudu_video.ogv", r);
-		}
-	}
-
-	if (playing_intro && THEORAPLAY_isDecoding(decoder))
+	if (THEORAPLAY_isDecoding(decoder))
 	{
 		Uint32 now = SDL_GetTicks() - baseticks;
 
@@ -264,16 +254,19 @@ bool j1Video::PostUpdate()
 		// Render the texture. Use SDL_RenderCopy and the rendering rect (if you want).
 		SDL_RenderCopy(App->render->renderer, texture, NULL, &rendering_rect);
 	}
+	else want_to_play = false;
+
+	if(App->GetQuit())ResetValues();
 
 	return true;
 }
 
 void j1Video::ResetValues()
 {
-	if (texture) SDL_DestroyTexture(texture);
-	if (video) THEORAPLAY_freeVideo(video);
-	if (audio) THEORAPLAY_freeAudio(audio);
-	if (decoder) THEORAPLAY_stopDecode(decoder);
+	if (texture != nullptr) SDL_DestroyTexture(texture);
+	if (video != nullptr) THEORAPLAY_freeVideo(video);
+	if (audio != nullptr) THEORAPLAY_freeAudio(audio);
+	if (decoder != nullptr) THEORAPLAY_stopDecode(decoder);
 
 	decoder = NULL;
 	video = NULL;

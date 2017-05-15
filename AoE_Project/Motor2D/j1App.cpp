@@ -28,6 +28,8 @@
 #include "j1AI.h"
 #include "j1FogOfWar.h"
 #include "j1Video.h"
+#include "j1Intro.h"
+
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -57,6 +59,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	action_manager = new j1ActionManager();
 	fog_of_war = new j1FogOfWar();
 	video = new j1Video();
+	intro = new j1Intro();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -82,11 +85,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// scene last
 	AddModule(scene);
-
 	AddModule(menu);
+	AddModule(intro);
 	
-	
-
 	// render last to swap buffer
 	AddModule(render);
 	AddModule(input_manager);
@@ -711,6 +712,11 @@ pugi::xml_node j1App::GetConfigXML() const
 void j1App::SetQuit()
 {
 	want_to_quit = true;
+}
+
+bool j1App::GetQuit() const
+{
+	return want_to_quit;
 }
 
 

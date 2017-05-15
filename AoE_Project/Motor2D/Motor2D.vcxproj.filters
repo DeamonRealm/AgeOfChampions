@@ -301,6 +301,9 @@
     <ClInclude Include="j1Video.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="j1Intro.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

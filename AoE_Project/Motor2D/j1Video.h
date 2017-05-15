@@ -26,6 +26,8 @@ public:
 	// Destructor
 	virtual ~j1Video();
 
+	void Disable();
+
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
@@ -66,14 +68,16 @@ private:
 
 	void* pixels = nullptr;
 	int pitch;
-	bool want_to_play;
 
 	static AudioQueue* audio_queue;
 	static AudioQueue* audio_queue_tail;
 
 	SDL_Rect rendering_rect = { 0,0,0,0 };
 
-	bool playing_intro = false;
+public:
+
+	bool want_to_play = false;
+
 };
 
 #endif // __VIDEO_H__

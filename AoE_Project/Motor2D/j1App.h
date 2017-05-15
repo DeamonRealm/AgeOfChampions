@@ -41,6 +41,7 @@ class j1Pathfinding;
 class j1FogOfWar;
 class j1InputManager;
 class j1Video;
+class j1Intro;
 
 class j1App
 {
@@ -136,6 +137,7 @@ public:
 	j1Pathfinding*		pathfinding = NULL;
 	j1FogOfWar*			fog_of_war = NULL;
 	j1Video*			video = NULL;
+	j1Intro*			intro = NULL;
 
 	// Add a new module to handle
 	void		AddModule(j1Module* module);
@@ -192,6 +194,7 @@ private:
 public:
 
 	void SetQuit();
+	bool GetQuit()const;
 
 	bool	debug_mode = false;
 	bool	map_debug_mode = false;
