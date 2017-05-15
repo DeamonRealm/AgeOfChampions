@@ -40,6 +40,7 @@ class j1AI;
 class j1Pathfinding;
 class j1FogOfWar;
 class j1InputManager;
+class j1Video;
 
 class j1App
 {
@@ -134,7 +135,7 @@ public:
 	j1AI*				AI = NULL;
 	j1Pathfinding*		pathfinding = NULL;
 	j1FogOfWar*			fog_of_war = NULL;
-
+	j1Video*			video = NULL;
 
 	// Add a new module to handle
 	void		AddModule(j1Module* module);

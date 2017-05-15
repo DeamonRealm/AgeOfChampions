@@ -27,7 +27,7 @@
 #include "j1BuffManager.h"
 #include "j1AI.h"
 #include "j1FogOfWar.h"
-
+#include "j1Video.h"
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -56,6 +56,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new j1Pathfinding();
 	action_manager = new j1ActionManager();
 	fog_of_war = new j1FogOfWar();
+	video = new j1Video();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -77,11 +78,14 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fog_of_war);
 	AddModule(player);
 	AddModule(AI);
+	AddModule(video);
 
 	// scene last
 	AddModule(scene);
 
 	AddModule(menu);
+	
+	
 
 	// render last to swap buffer
 	AddModule(render);
@@ -431,6 +435,7 @@ void j1App::LoadGame(const char* file,bool activate_modules)
 		App->buff_manager->Disable();
 		App->AI->Disable();
 		App->pathfinding->Disable();
+		App->video->Disable();
 
 		//Reactivate all the modules (only say active but data is not loaded in the same loop)
 		App->map->Active();
@@ -442,8 +447,9 @@ void j1App::LoadGame(const char* file,bool activate_modules)
 		App->AI->Active();
 		App->action_manager->Active();
 		App->pathfinding->Active();
+		App->video->Active();
 		App->scene->Enable();
-
+		
 		want_to_enable = true;
 
 		EnableActiveModules();
@@ -591,6 +597,7 @@ bool j1App::LoadDefaultGame(const char* folder_str)
 	App->buff_manager->Disable();
 	App->AI->Disable();
 	App->pathfinding->Disable();
+	App->video->Disable();
 
 	//Reactivate all the modules (only say active but data is not loaded in the same loop)
 	App->map->Active();
@@ -601,6 +608,8 @@ bool j1App::LoadDefaultGame(const char* folder_str)
 	App->buff_manager->Active(); /*This load the particles textures*/
 	App->AI->Active();
 	App->pathfinding->Active();
+	App->video->Active();
+
 	App->scene->Enable();
 
 	App->EnableActiveModules();

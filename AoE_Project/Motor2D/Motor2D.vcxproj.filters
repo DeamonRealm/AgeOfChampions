@@ -135,6 +135,12 @@
     <ClCompile Include="j1InputManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="theoraplay.c">
+      <Filter>Tools\Theora%28Video CODEC lib%29</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Video.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -289,6 +295,12 @@
     <ClInclude Include="j1InputManager.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="theoraplay.h">
+      <Filter>Tools\Theora%28Video CODEC lib%29</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Video.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -326,6 +338,9 @@
     </Filter>
     <Filter Include="Modules\AI">
       <UniqueIdentifier>{753ec0cd-567d-42d6-b8fb-12dc59d9dc40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Theora%28Video CODEC lib%29">
+      <UniqueIdentifier>{a0daceba-c1f2-47d8-b759-ff6558a38795}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

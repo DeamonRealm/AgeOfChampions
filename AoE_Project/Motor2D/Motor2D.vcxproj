@@ -114,6 +114,7 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="j1ActionManager.cpp" />
+    <ClCompile Include="theoraplay.c" />
     <ClCompile Include="UI_Button.cpp" />
     <ClCompile Include="UI_Element.cpp" />
     <ClCompile Include="UI_Fixed_Button.cpp" />
@@ -123,6 +124,7 @@
     <ClCompile Include="UI_String.cpp" />
     <ClCompile Include="UI_Text_Box.cpp" />
     <ClCompile Include="Units.cpp" />
+    <ClCompile Include="j1Video.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actions_Building.h" />
@@ -167,6 +169,7 @@
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="j1ActionManager.h" />
+    <ClInclude Include="theoraplay.h" />
     <ClInclude Include="UI_Button.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="UI_Fixed_Button.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="UI_Text_Box.h" />
     <ClInclude Include="Actions_Unit.h" />
     <ClInclude Include="Units.h" />
+    <ClInclude Include="j1Video.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
