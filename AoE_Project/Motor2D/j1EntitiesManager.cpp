@@ -1895,6 +1895,8 @@ bool j1EntitiesManager::SetUnitPath(Unit* target, const iPoint& goal)
 
 bool j1EntitiesManager::SetGroupPath(const std::vector<Unit*>& targets, const iPoint& goal)
 {
+	LOG("ALERT!");
+	LOG("ALERT!");
 	/*
 	if(targets.size() > 0)return false;
 
@@ -1936,6 +1938,7 @@ void j1EntitiesManager::AddDeathUnit(Unit * unit)
 
 void j1EntitiesManager::ResurrectUnit(Unit * unit)
 {
+	units.remove((Unit*)unit);
 	units.push_back((Unit*)unit);
 	death_units.remove(unit);
 	units_quadtree.Insert(unit, &unit->GetPosition());

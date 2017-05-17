@@ -345,5 +345,13 @@
     <Filter Include="Tools\Theora%28Video CODEC lib%29">
       <UniqueIdentifier>{a0daceba-c1f2-47d8-b759-ff6558a38795}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\Snippets">
+      <UniqueIdentifier>{6194d0d5-fc00-447f-b9c1-6a6b14afd0c1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test.snippet">
+      <Filter>Tools\Snippets</Filter>
+    </None>
   </ItemGroup>
 </Project>
