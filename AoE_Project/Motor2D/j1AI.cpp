@@ -137,7 +137,7 @@ bool j1AI::Update(float dt)
 	ai_research_worker->Update();
 	
 	//only update every 2 seconds
-	if (update_timer.Read() < 1000)
+	if (update_timer.Read() < UPDATE_RATE)
 	{
 		return true;
 	}
@@ -167,7 +167,7 @@ bool j1AI::Update(float dt)
 
 
 	//	WIP
-	if (building_timer.Read() > 10000)
+	if (building_timer.Read() > BUILD_RATE)
 	{
 		ManageConstrucion();
 
@@ -177,9 +177,9 @@ bool j1AI::Update(float dt)
 
 	ManageTroopsCreation();
 
-	if (noob_timer.Read() >= 4*60000)
+	if (noob_timer.ReadSec() >= 4.0f)
 	{
-		if (raid_timer.Read() >= 2*60000)
+		if (raid_timer.Read() >= RAID_RATE)
 		{
 			ManageAttack();
 		}
@@ -354,6 +354,7 @@ Resource * j1AI::GetNearestNeed(iPoint pos)
 
 void j1AI::ManageAttack()
 {
+
 	if (enemy_units.size() < raid_size + 10) return;
 
 	if (enemy_raid.size() >= raid_size)

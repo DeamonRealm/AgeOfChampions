@@ -13,7 +13,12 @@ class ActionWorker;
 enum PLAYER_RESOURCES;
 enum RESEARCH_TECH;
 
+//IA timing macros
 #define	RESEARCH_RATE 15000
+#define BUILD_RATE 10000
+#define RAID_RATE 2000
+#define UPDATE_RATE 1000
+
 #define AI_RESEARCH_DURATION 10000
 #define MIN_VILLAGERS 10
 #define UNITS_PRODUCTIVE_SIZE 23

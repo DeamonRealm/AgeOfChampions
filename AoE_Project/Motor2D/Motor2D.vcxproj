@@ -184,7 +184,7 @@
     <ClInclude Include="j1Video.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Test.snippet" />
+    <None Include="CodeShortcuts.snippet" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
