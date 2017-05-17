@@ -350,7 +350,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CodeShortcuts.snippet">
+    <None Include="Snippets\CodeShortcuts.snippet">
       <Filter>Tools\Snippets</Filter>
     </None>
   </ItemGroup>
