@@ -184,6 +184,11 @@ public:
 		this->time += time;
 	}
 
+	SDL_Rect GetIcon()
+	{
+		return new_unit->GetIcon();
+	}
+
 private:
 
 	ActionWorker*	worker = nullptr;

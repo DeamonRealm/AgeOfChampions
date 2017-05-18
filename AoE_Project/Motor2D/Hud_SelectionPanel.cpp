@@ -58,12 +58,26 @@ u_capacity(0), m_capacity(0), m_life(0)
 	//Buildings
 	capacity = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	capacity->SetColor({ 0,0,0,255 });
+
+	UI_Image*	profile;
+	production_queue.reserve(PROFILE_QUEUE_SIZE);
+	int i = 0;
+	while (i < PROFILE_QUEUE_SIZE)
+	{
+		profile = (UI_Image*)App->gui->GenerateUI_Element(IMG);
+		profile->Desactivate();
+		profile->ChangeTextureId(ICONS);
+		profile->SetBoxPosition(450 + i * (550 /15), 680);
+		production_queue.push_back(profile);
+		i++;
+	}
 }
 
 //Entity Profile Destructor ======================================================
 Entity_Profile::~Entity_Profile()
 {
 	element = nullptr;
+	production_queue.clear();
 }
 
 //Functionality ==================================================================
@@ -96,6 +110,8 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	deffence_up = 0;
 	u_attack = 0;
 	attack_up = 0;
+	production_queue_size = 0;
+	got_queue = false;
 
 	if (element->GetDiplomacy() == ENEMY)
 	{
@@ -137,7 +153,7 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 		profile_text = App->gui->SetStringFromInt(u_capacity);
 		profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_capacity);
 		capacity->SetString((char*)profile_text.c_str());
-	
+		UpdateQueue();
 	}
 }
 
@@ -158,7 +174,10 @@ void Entity_Profile::Reset()
 	deffence_up = 0;
 	u_range = 0;
 	u_capacity = 0;
-	m_capacity = 0;
+	m_capacity = 0;	
+	got_queue = false;
+	production_queue_size = 0;
+
 }
 
 void Entity_Profile::DrawProfile() const
@@ -224,6 +243,23 @@ void Entity_Profile::DrawProfile() const
 			App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 720 - App->render->camera.y, &rect);
 			range->DrawAt(390, 720);
 		}
+		DrawQueue();
+	}
+}
+
+void Entity_Profile::DrawQueue() const
+{
+	if (!got_queue) return;
+
+	SDL_Rect box = { 0,0,0,0 };
+	for(int i = production_queue_size-1; i >= 0; i--)
+	{
+		box = *production_queue[i]->GetBox();
+		//Draw profile background
+		App->render->DrawQuad({ box.x - 2 - App->render->camera.x, box.y - 2 - App->render->camera.y, 39, 41 }, 138, 138, 138);
+
+		//Draw icon
+		production_queue[i]->Draw(false);
 	}
 }
 
@@ -289,6 +325,44 @@ void Entity_Profile::UpdateStats()
 			profile_text = profile_text + "/" + App->gui->SetStringFromInt(m_capacity);
 			capacity->SetString((char*)profile_text.c_str());
 		}
+		UpdateQueue();
+	}
+}
+
+void Entity_Profile::UpdateQueue()
+{
+	int size = (int)element->GetWorker()->GetActionListPointer(PRIMARY)->size();
+	if (element->GetWorker()->IsBusy(PRIMARY)) size++;
+	if (production_queue_size != size)
+	{
+		int count = 0;
+		if (size > 0) {
+			got_queue = true;
+			// Add Current Action if it's Spawn Action
+			Action* curr_queue_action = element->GetWorker()->GetCurrentPrimaryAction();
+			if (curr_queue_action->GetType() == TASK_B_SPAWN_UNITS)
+			{
+				production_queue[count]->ChangeTextureRect(((SpawnUnitAction*)curr_queue_action)->GetIcon());
+				count++;
+			}
+			std::list<Action*>*	action_list = element->GetWorker()->GetActionListPointer(PRIMARY);
+			std::list<Action*>::const_iterator action_list_item = action_list->begin();
+			while (action_list_item != action_list->end())
+			{
+				if (action_list_item._Ptr->_Myval->GetType() == TASK_B_SPAWN_UNITS && count < PROFILE_QUEUE_SIZE)
+				{
+					production_queue[count]->ChangeTextureRect(((SpawnUnitAction*)action_list_item._Ptr->_Myval)->GetIcon());
+					count++;
+				}
+				action_list_item++;
+			}
+		}
+
+		if (count <= 0)
+		{
+			got_queue = false;
+		}
+		production_queue_size = count;
 	}
 }
 
@@ -474,10 +548,7 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				}
 				else if (selected_unit_type == VILLAGER && upper_type == BUILDING)
 				{
-					BUILDING_TYPE b_type = ((Building*)UpperEntity)->GetBuildingType();
-					PLAYER_RESOURCES r_type = ((Villager*)Selected->GetEntity())->GetResourceCollectedType();
-					uint r_num = ((Villager*)Selected->GetEntity())->GetCurrentResources();
-					if (r_num > 0 && (b_type == TOWN_CENTER || b_type == TOWN_CENTER_C || (b_type == MINING_CAMP && (r_type == GP_GOLD || r_type == GP_STONE)) || (b_type == LUMBER_CAMP && r_type == GP_WOOD)))
+					if (App->entities_manager->CheckSavePoint(((Villager*)actor), (Building*)UpperEntity))
 					{
 						actor->AddAction(App->action_manager->SaveResourcesAction((Villager*)actor, (Building*)UpperEntity), PRIMARY);
 					}
@@ -713,7 +784,7 @@ bool Selection_Panel::Draw()
 
 void Selection_Panel::DrawGroup()
 {
-	SDL_Rect* box = nullptr;
+	SDL_Rect box = { 0,0,0,0 };
 	int	  life = 0, max_life = 0;
 
 	UpdateGroup();
@@ -727,13 +798,13 @@ void Selection_Panel::DrawGroup()
 		life = item._Ptr->_Myval->GetLife();
 		max_life = ((Unit*)item._Ptr->_Myval)->GetTotalMaxLife();
 
-		box = group_profile[i]->GetBox();
+		box = *group_profile[i]->GetBox();
 		//Draw profile background
-		App->render->DrawQuad({ box->x - 2 - App->render->camera.x, box->y - 2 - App->render->camera.y, 39, 41 }, 138, 138, 138);
+		App->render->DrawQuad({ box.x - 2 - App->render->camera.x, box.y - 2 - App->render->camera.y, 39, 41 }, 138, 138, 138);
 
 		//Draw life
-		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36, 3 }, 255, 0, 0);
-		App->render->DrawQuad({ box->x - App->render->camera.x, box->y + 36 - App->render->camera.y, 36 * life / max_life, 3 }, 0, 255, 0);
+		App->render->DrawQuad({ box.x - App->render->camera.x, box.y + 36 - App->render->camera.y, 36, 3 }, 255, 0, 0);
+		App->render->DrawQuad({ box.x - App->render->camera.x, box.y + 36 - App->render->camera.y, 36 * life / max_life, 3 }, 0, 255, 0);
 		
 		//Draw icon
 		group_profile[i]->Draw(false);

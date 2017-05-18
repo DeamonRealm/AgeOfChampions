@@ -16,7 +16,7 @@
 
 #define OFFSET_Y 10
 #define OFFSET_X 10
-
+#define PROFILE_QUEUE_SIZE 15
 #define REFRESH_RATE 200
 
 class UI_String;
@@ -52,7 +52,9 @@ public:
 	void Reset();
 
 	void DrawProfile() const;
+	void DrawQueue() const;
 	void UpdateStats();
+	void UpdateQueue();
 
 private:
 
@@ -85,6 +87,9 @@ private:
 	uint			u_capacity = 0;
 	uint			m_capacity = 0;
 	UI_String*		capacity = nullptr;
+	bool			got_queue = false;
+	int				production_queue_size = 0;
+	std::vector<UI_Image*>  production_queue;
 
 	//Buff stats
 	int				attack_up = 0;
