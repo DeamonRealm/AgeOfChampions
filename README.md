@@ -1,10 +1,9 @@
-
 # Age of Champions
 Tribute game to Age of Empires II developed by DemonRealm.   
 Age of Champions aims to preserve the core gameplay of the Age of Empires franchise while introducing new features such as champions similar to the ones from Warcraft III.
 
 
-## How to play (Alpha)
+## How to play (v0.8.2)
 
 To win you have to find the enemy city and destroy the enemy town center, don't forget to defend your town or the enemies will raid towards your city and destroy it. If the enemy manages to destroy your town center you lose the game.
 
@@ -33,6 +32,8 @@ To win you have to find the enemy city and destroy the enemy town center, don't 
 * [D]: Activate the third skill of the selected champion
 * [F]: Toggle Fullscreen/Windowed mode
 * [P]: Pause the game
+* [+]: Turn up the volume
+* [-]: Turn down the volume
 * 2: Save game
 * 3: Load game
 
@@ -76,6 +77,13 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ## Changelog
+### v0.8.2
+Added: Intro video
+Added: Volume controls
+Added: You can order the villager to go save resources
+Added: Production queue (need polish)
+Improved: Mage revive skill
+
 ### v0.8.1 (Alpha)
 Added: Shortcut buttons to the 3 champions 
 Added: Shortcut keys to the champion skills
