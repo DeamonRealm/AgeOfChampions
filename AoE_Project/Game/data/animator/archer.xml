@@ -120,7 +120,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
         <sprite n="archer_die/019_archer_die.bmp" x="551" y="212" w="78" h="53" pX="0.0897436" pY="0.396226"/>
       </direction>
 
-      <direction enum="west">
+      <direction enum="south-west">
         <sprite n="archer_die/020_archer_die.bmp" x="631" y="212" w="26" h="53" pX="0.807692" pY="0.792453"/>
         <sprite n="archer_die/021_archer_die.bmp" x="659" y="212" w="31" h="54" pX="0.870968" pY="0.685185"/>
         <sprite n="archer_die/022_archer_die.bmp" x="692" y="212" w="54" h="55" pX="0.592593" pY="0.672727"/>
@@ -219,44 +219,46 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
       </direction>
 
       <direction enum="south-west">
-        <sprite n="archer_idle/010_archer_idle.bmp" x="405" y="599" w="35" h="48" pX="0.657143" pY="0.791667"/>
-        <sprite n="archer_idle/011_archer_idle.bmp" x="442" y="599" w="37" h="48" pX="0.675676" pY="0.791667"/>
-        <sprite n="archer_idle/012_archer_idle.bmp" x="481" y="599" w="38" h="48" pX="0.657895" pY="0.791667"/>
-        <sprite n="archer_idle/013_archer_idle.bmp" x="521" y="599" w="39" h="48" pX="0.641026" pY="0.791667"/>
-        <sprite n="archer_idle/014_archer_idle.bmp" x="562" y="599" w="40" h="48" pX="0.65" pY="0.791667"/>
-        <sprite n="archer_idle/015_archer_idle.bmp" x="604" y="599" w="41" h="48" pX="0.634146" pY="0.791667"/>
-        <sprite n="archer_idle/016_archer_idle.bmp" x="647" y="599" w="41" h="48" pX="0.634146" pY="0.791667"/>
-        <sprite n="archer_idle/017_archer_idle.bmp" x="690" y="599" w="40" h="48" pX="0.65" pY="0.791667"/>
-        <sprite n="archer_idle/018_archer_idle.bmp" x="732" y="599" w="39" h="48" pX="0.641026" pY="0.791667"/>
-        <sprite n="archer_idle/019_archer_idle.bmp" x="773" y="599" w="38" h="48" pX="0.657895" pY="0.791667"/>
+    <sprite n="archer_idle/010_archer_idle.bmp" x="405" y="599" w="35" h="48" pX="0.657143" pY="0.791667"/>
+    <sprite n="archer_idle/011_archer_idle.bmp" x="442" y="599" w="37" h="48" pX="0.675676" pY="0.791667"/>
+    <sprite n="archer_idle/012_archer_idle.bmp" x="481" y="599" w="38" h="48" pX="0.657895" pY="0.791667"/>
+    <sprite n="archer_idle/013_archer_idle.bmp" x="521" y="599" w="39" h="48" pX="0.641026" pY="0.791667"/>
+    <sprite n="archer_idle/014_archer_idle.bmp" x="562" y="599" w="40" h="48" pX="0.65" pY="0.791667"/>
+    <sprite n="archer_idle/015_archer_idle.bmp" x="604" y="599" w="41" h="48" pX="0.634146" pY="0.791667"/>
+    <sprite n="archer_idle/016_archer_idle.bmp" x="647" y="599" w="41" h="48" pX="0.634146" pY="0.791667"/>
+    <sprite n="archer_idle/017_archer_idle.bmp" x="690" y="599" w="40" h="48" pX="0.65" pY="0.791667"/>
+    <sprite n="archer_idle/018_archer_idle.bmp" x="732" y="599" w="39" h="48" pX="0.641026" pY="0.791667"/>
+    <sprite n="archer_idle/019_archer_idle.bmp" x="773" y="599" w="38" h="48" pX="0.657895" pY="0.791667"/>
       </direction>
 
       <direction enum="west">
-           <sprite n="archer_idle/020_archer_idle.bmp" x="813" y="599" w="41" h="49" pX="0.5" pY="0.5"/>
-    <sprite n="archer_idle/021_archer_idle.bmp" x="1" y="652" w="41" h="50" pX="0.5" pY="0.5"/>
-    <sprite n="archer_idle/022_archer_idle.bmp" x="44" y="652" w="39" h="50" pX="0.5" pY="0.5"/>
-    <sprite n="archer_idle/023_archer_idle.bmp" x="85" y="652" w="37" h="50" pX="0.5" pY="0.5"/>
-    <sprite n="archer_idle/024_archer_idle.bmp" x="124" y="652" w="40" h="50" pX="0.5" pY="0.5"/>
-    <sprite n="archer_idle/025_archer_idle.bmp" x="166" y="652" w="39" h="50" pX="0.5" pY="0.5"/>
-    <sprite n="archer_idle/026_archer_idle.bmp" x="207" y="652" w="39" h="50" pX="0.5" pY="0.5"/>
-    <sprite n="archer_idle/027_archer_idle.bmp" x="248" y="652" w="40" h="50" pX="0.5" pY="0.5"/>
-    <sprite n="archer_idle/028_archer_idle.bmp" x="290" y="652" w="38" h="50" pX="0.5" pY="0.5"/>
-    <sprite n="archer_idle/029_archer_idle.bmp" x="330" y="652" w="40" h="50" pX="0.5" pY="0.5"/>
+           <sprite n="archer_idle/020_archer_idle.bmp" x="813" y="599" w="41" h="49" pX="0.609756" pY="0.77551"/>
+    <sprite n="archer_idle/021_archer_idle.bmp" x="1" y="652" w="41" h="50" pX="0.609756" pY="0.76"/>
+    <sprite n="archer_idle/022_archer_idle.bmp" x="44" y="652" w="39" h="50" pX="0.589744" pY="0.76"/>
+    <sprite n="archer_idle/023_archer_idle.bmp" x="85" y="652" w="37" h="50" pX="0.567568" pY="0.76"/>
+    <sprite n="archer_idle/024_archer_idle.bmp" x="124" y="652" w="40" h="50" pX="0.6" pY="0.76"/>
+    <sprite n="archer_idle/025_archer_idle.bmp" x="166" y="652" w="39" h="50" pX="0.589744" pY="0.76"/>
+    <sprite n="archer_idle/026_archer_idle.bmp" x="207" y="652" w="39" h="50" pX="0.589744" pY="0.76"/>
+    <sprite n="archer_idle/027_archer_idle.bmp" x="248" y="652" w="40" h="50" pX="0.6" pY="0.76"/>
+    <sprite n="archer_idle/028_archer_idle.bmp" x="290" y="652" w="38" h="50" pX="0.578947" pY="0.76"/>
+    <sprite n="archer_idle/029_archer_idle.bmp" x="330" y="652" w="40" h="50" pX="0.6" pY="0.76"/>
+
 
       </direction>
 
       <direction enum="north-west">
-        <sprite n="archer_idle/030_archer_idle.bmp" x="372" y="652" w="34" h="51" pX="0.617647" pY="0.745098"/>
-        <sprite n="archer_idle/031_archer_idle.bmp" x="408" y="652" w="36" h="51" pX="0.611111" pY="0.745098"/>
-        <sprite n="archer_idle/032_archer_idle.bmp" x="446" y="652" w="37" h="51" pX="0.594595" pY="0.745098"/>
-        <sprite n="archer_idle/033_archer_idle.bmp" x="485" y="652" w="37" h="51" pX="0.621622" pY="0.745098"/>
-        <sprite n="archer_idle/034_archer_idle.bmp" x="524" y="652" w="38" h="51" pX="0.605263" pY="0.745098"/>
-        <sprite n="archer_idle/035_archer_idle.bmp" x="564" y="652" w="38" h="51" pX="0.605263" pY="0.745098"/>
-        <sprite n="archer_idle/036_archer_idle.bmp" x="604" y="652" w="38" h="51" pX="0.605263" pY="0.745098"/>
-        <sprite n="archer_idle/037_archer_idle.bmp" x="644" y="652" w="38" h="51" pX="0.578947" pY="0.745098"/>
-        <sprite n="archer_idle/038_archer_idle.bmp" x="684" y="652" w="37" h="51" pX="0.594595" pY="0.745098"/>
-        <sprite n="archer_idle/039_archer_idle.bmp" x="723" y="652" w="37" h="51" pX="0.513514" pY="0.745098"/>
-        <sprite n="archer_idle/040_archer_idle.bmp" x="762" y="652" w="34" h="51" pX="0.588235" pY="0.72549"/>
+            <sprite n="archer_idle/030_archer_idle.bmp" x="372" y="652" w="34" h="51" pX="0.558824" pY="0.745098"/>
+    <sprite n="archer_idle/031_archer_idle.bmp" x="408" y="652" w="36" h="51" pX="0.583333" pY="0.745098"/>
+    <sprite n="archer_idle/032_archer_idle.bmp" x="446" y="652" w="37" h="51" pX="0.594595" pY="0.745098"/>
+    <sprite n="archer_idle/033_archer_idle.bmp" x="485" y="652" w="37" h="51" pX="0.594595" pY="0.745098"/>
+    <sprite n="archer_idle/034_archer_idle.bmp" x="524" y="652" w="38" h="51" pX="0.605263" pY="0.745098"/>
+    <sprite n="archer_idle/035_archer_idle.bmp" x="564" y="652" w="38" h="51" pX="0.605263" pY="0.745098"/>
+    <sprite n="archer_idle/036_archer_idle.bmp" x="604" y="652" w="38" h="51" pX="0.605263" pY="0.745098"/>
+    <sprite n="archer_idle/037_archer_idle.bmp" x="644" y="652" w="38" h="51" pX="0.605263" pY="0.745098"/>
+    <sprite n="archer_idle/038_archer_idle.bmp" x="684" y="652" w="37" h="51" pX="0.594595" pY="0.745098"/>
+    <sprite n="archer_idle/039_archer_idle.bmp" x="723" y="652" w="37" h="51" pX="0.594595" pY="0.745098"/>
+    <sprite n="archer_idle/040_archer_idle.bmp" x="762" y="652" w="34" h="51" pX="0.558824" pY="0.745098"/>
+
       </direction>
 
       <direction enum="north">
