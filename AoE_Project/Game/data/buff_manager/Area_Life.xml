@@ -19,7 +19,7 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Area_life.png" width="1692" height="1398">
+<TextureAtlas imagePath="Area_Life.png" width="1692" height="1398">
   <particle particle_type="buff_particle" actor="1" buff_type="passive" attribute_type="life" draw_rate="2500"
 z="-200">
     <anim_data speed="150" loop="0"/>
