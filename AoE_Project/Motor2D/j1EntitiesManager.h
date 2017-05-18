@@ -166,5 +166,8 @@ public:
 	//Check if an area is apropiate to spawn an entity
 	bool CheckAreaToSpawn(const Circle& area)const;
 
+	//Check if the actor can save resources in the target
+	bool CheckSavePoint(Villager* actor, Building* target)const;
+
 };
 #endif // _ENTITIES_MANAGER_

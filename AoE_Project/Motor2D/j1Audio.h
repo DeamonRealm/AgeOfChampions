@@ -2,6 +2,7 @@
 #define __j1AUDIO_H__
 
 #include "j1Module.h"
+#include "j1Timer.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -20,6 +21,8 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
+	bool PostUpdate();
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -32,10 +35,17 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
+	void VolumeUp();
+	void VolumeDown();
+
 private:
 
 	_Mix_Music*				music = NULL;
 	std::list<Mix_Chunk*>	fx;
+	j1Timer					go_down_time;
+	bool					go_down = false;
+	uint					volume = 65;
+
 };
 
 #endif // __j1AUDIO_H__

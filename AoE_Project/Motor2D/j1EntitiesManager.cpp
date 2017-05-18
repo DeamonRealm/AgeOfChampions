@@ -2754,3 +2754,11 @@ bool j1EntitiesManager::CheckAreaToSpawn(const Circle & area) const
 
 	return true;
 }
+
+bool j1EntitiesManager::CheckSavePoint(Villager * actor, Building * target) const
+{
+	BUILDING_TYPE b_type = target->GetBuildingType();
+	PLAYER_RESOURCES r_type = actor->GetResourceCollectedType();
+	uint r_num = actor->GetCurrentResources();
+	return (r_num > 0 && (b_type == TOWN_CENTER || b_type == TOWN_CENTER_C || (b_type == MINING_CAMP && (r_type == GP_GOLD || r_type == GP_STONE)) || (b_type == LUMBER_CAMP && r_type == GP_WOOD)));
+}

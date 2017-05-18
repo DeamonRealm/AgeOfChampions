@@ -94,6 +94,8 @@ INPUT_EVENT j1InputManager::StrToInputEvent(const char * str) const
 	if (strcmp(str, "load") == 0)				return INPUT_EVENT::LOAD;
 	if (strcmp(str, "pause") == 0)				return INPUT_EVENT::PAUSE;
 	if (strcmp(str, "full_screen") == 0)		return INPUT_EVENT::FULL_SCREEN;
+	if (strcmp(str, "volume_up") == 0)			return INPUT_EVENT::VOLUME_UP;
+	if (strcmp(str, "volume_down") == 0)		return INPUT_EVENT::VOLUME_DOWN;
 	return UNKNOWN_INPUT;
 }
 

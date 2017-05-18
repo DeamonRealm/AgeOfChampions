@@ -38,7 +38,11 @@ enum INPUT_EVENT
 	PAUSE,
 
 	//Full Screen
-	FULL_SCREEN
+	FULL_SCREEN,
+
+	//Audio Volume
+	VOLUME_UP,
+	VOLUME_DOWN
 
 };
 

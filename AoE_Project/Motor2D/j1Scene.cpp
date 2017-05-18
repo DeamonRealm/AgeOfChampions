@@ -19,6 +19,7 @@
 #include "j1Menu.h"
 #include "j1FogOfWar.h"
 #include "j1InputManager.h"
+#include "j1Audio.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -120,6 +121,17 @@ bool j1Scene::Update(float dt)
 		App->map->CalculateTilesInView();
 	}*/
 
+	// ------------------------------------------
+
+	//VOLUME ------------------------------------
+	if (App->input_manager->GetEvent(VOLUME_UP) == INPUT_DOWN)
+	{
+		App->audio->VolumeUp();
+	}
+	else if (App->input_manager->GetEvent(VOLUME_DOWN) == INPUT_DOWN)
+	{
+		App->audio->VolumeDown();
+	}
 	// ------------------------------------------
 
 	App->map->Draw(App->map_debug_mode);

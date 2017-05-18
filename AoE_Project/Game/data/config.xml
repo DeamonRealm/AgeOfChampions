@@ -37,6 +37,9 @@
   </window>
 
   <input_manager>
+    <!--Volume UP/DOWN-->
+    <key id ="Keypad +"  event="volume_up"/>
+    <key id ="Keypad -"  event="volume_down"/>
     <!--Escape-->
     <key id ="Escape" event ="escape"/>
     <key id ="F1" event ="enti_debug"/>
@@ -60,6 +63,7 @@
     <key id ="P"  event="pause"/>
     <!--Full Screen-->
     <key id ="F"  event="full_screen"/>
+
   </input_manager>
   
   <file_system>

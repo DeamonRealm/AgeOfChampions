@@ -3,7 +3,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1FileSystem.h"
-
+#include "j1SoundManager.h"
 
 #include "SDL/include/SDL.h"
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -51,8 +51,21 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
-
+	
 	return ret;
+}
+
+bool j1Audio::PostUpdate()
+{
+	if (go_down && go_down_time.Read() > 250)
+	{
+		volume = 1;
+		Mix_Volume(-1, volume);
+		Mix_VolumeMusic(volume);
+		go_down = false;
+	}
+
+	return true;
 }
 
 // Called before quitting
@@ -176,4 +189,29 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+
+void j1Audio::VolumeUp()
+{
+	volume = MIN(volume + 10, 128);
+	Mix_Volume(-1, volume);
+	Mix_VolumeMusic(volume);
+	if (volume == 128)
+	{
+		App->sound->PlayGUIAudio(SOUND_TYPE::ERROR_SOUND);
+	}
+}
+
+void j1Audio::VolumeDown()
+{
+	volume = MAX(volume - MIN(volume,10), 1);
+	Mix_Volume(-1, volume);
+	Mix_VolumeMusic(volume);
+	if (volume == 1)
+	{
+		go_down = true;
+		Mix_Volume(-1, 120);
+		App->sound->PlayGUIAudio(SOUND_TYPE::ERROR_SOUND);
+		go_down_time.Start();
+	}
 }

@@ -17,6 +17,7 @@
 #include "j1FogOfWar.h"
 #include "j1Map.h"
 #include "j1InputManager.h"
+#include "j1Audio.h"
 
 //UI Elements
 #include "UI_Button.h"
@@ -281,6 +282,18 @@ bool j1Menu::PreUpdate()
 bool j1Menu::Update(float dt)
 {
 	App->gui->CalculateUpperElement(menu_screen);
+
+	//VOLUME ------------------------------------
+	if (App->input_manager->GetEvent(VOLUME_UP) == INPUT_DOWN)
+	{
+		App->audio->VolumeUp();
+	}
+	else if (App->input_manager->GetEvent(VOLUME_DOWN) == INPUT_DOWN)
+	{
+		App->audio->VolumeDown();
+	}
+	// ------------------------------------------
+
 	return true;
 }
 
