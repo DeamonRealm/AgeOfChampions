@@ -472,6 +472,16 @@ void Selection_Panel::Handle_Input(GUI_INPUT newevent)
 				{
 					actor->AddAction(App->action_manager->HealAction(actor, (Unit*)UpperEntity));
 				}
+				else if (selected_unit_type == VILLAGER && upper_type == BUILDING)
+				{
+					BUILDING_TYPE b_type = ((Building*)UpperEntity)->GetBuildingType();
+					PLAYER_RESOURCES r_type = ((Villager*)Selected->GetEntity())->GetResourceCollectedType();
+					uint r_num = ((Villager*)Selected->GetEntity())->GetCurrentResources();
+					if (r_num > 0 && (b_type == TOWN_CENTER || b_type == TOWN_CENTER_C || (b_type == MINING_CAMP && (r_type == GP_GOLD || r_type == GP_STONE)) || (b_type == LUMBER_CAMP && r_type == GP_WOOD)))
+					{
+						actor->AddAction(App->action_manager->SaveResourcesAction((Villager*)actor, (Building*)UpperEntity), PRIMARY);
+					}
+				}
 			}
 			else {
 				App->pathfinding->PushPath(actor, iPoint(mouse_x - App->render->camera.x, mouse_y - App->render->camera.y));

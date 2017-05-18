@@ -1623,7 +1623,7 @@ bool Unit::AttackBuilding(Building * target, TASK_CHANNELS channel)
 	{
 
 		iPoint goal = attack_area.NearestPoint(target->GetInteractArea());
-		LOG("X: %i || Y: %i", goal.x, goal.y);
+		//LOG("X: %i || Y: %i", goal.x, goal.y);
 		
 		switch (channel)
 		{
