@@ -38,6 +38,8 @@ public:
 	void VolumeUp();
 	void VolumeDown();
 
+	void ResetAudioSystem();
+
 private:
 
 	_Mix_Music*				music = NULL;
