@@ -22,7 +22,7 @@
    <id xml = "crossbowman.xml"/>
    <id xml = "hunter_chmp.xml"/>
    <id xml = "skirmisher.xml"/>
-
+   <id xml = "god_unit.xml"/>
   </units>
   <buildings>
     <id xml = "feudal_buildings.xml"/>

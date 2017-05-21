@@ -489,7 +489,7 @@ UNIT_TYPE j1Animator::StrToUnitEnum(const char* str) const
 	if (strcmp(str, "warrior_chmp") == 0)			return WARRIOR_CHMP;
 	if (strcmp(str, "wizard_chmp") == 0)			return WIZARD_CHMP;
 	if (strcmp(str, "hunter_chmp") == 0)			return ARCHER_CHMP;
-
+	if (strcmp(str, "god_unit") == 0)				return GOD_UNIT;
 	return NO_UNIT;
 }
 
