@@ -177,9 +177,9 @@ bool j1AI::Update(float dt)
 
 	ManageTroopsCreation();
 
-	if (noob_timer.ReadSec() >= 4.0f)
+	if (noob_timer.Read() >= noob_time)
 	{
-		if (raid_timer.Read() >= RAID_RATE)
+		if (raid_timer.Read() >= raid_time)
 		{
 			ManageAttack();
 		}
@@ -216,7 +216,18 @@ bool j1AI::Load(pugi::xml_node & data)
 	// AI node
 	pugi::xml_node ai_node = data.child("ai_data");
 
-	pugi::xml_node curr_node = ai_node.child("Resources");
+	//Load timers times
+	pugi::xml_node curr_node = ai_node.child("time_control");
+	pugi::xml_node time_node = curr_node;
+	curr_node = time_node.child("time");
+	noob_time = curr_node.attribute("noob").as_int(360000);
+	raid_time = curr_node.attribute("raid").as_int(120000);
+	//substract the saved timer to the default time
+	noob_time -= time_node.child("timers").attribute("noob").as_int(0);
+	raid_time -= time_node.child("timers").attribute("raid").as_int(0);
+	
+
+	curr_node = ai_node.child("Resources");
 	curr_node = curr_node.child("normal_resources");
 	wood = curr_node.attribute("wood").as_int(50000);
 	meat = curr_node.attribute("meat").as_int(50000);
@@ -279,7 +290,18 @@ bool j1AI::Save(pugi::xml_node & data) const
 	// AI node
 	pugi::xml_node ai_node = data.append_child("ai_data");
 
-	pugi::xml_node curr_node = ai_node.append_child("Resources");
+	//Save timers time
+	pugi::xml_node curr_node = ai_node.append_child("time_control");
+	pugi::xml_node time_node = curr_node;
+	curr_node = time_node.append_child("time");
+	curr_node.append_attribute("noob") = noob_time;
+	curr_node.append_attribute("raid") = raid_time;
+	curr_node = time_node.append_child("timers");
+	curr_node.append_attribute("noob") = noob_timer.Read();
+	curr_node.append_attribute("raid") = raid_timer.Read();
+
+
+	curr_node = ai_node.append_child("Resources");
 	curr_node = curr_node.append_child("normal_resources");
 	curr_node.append_attribute("wood") = wood;
 	curr_node.append_attribute("meat") = meat;

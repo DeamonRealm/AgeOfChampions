@@ -1319,6 +1319,10 @@
   </player>
 <AI>
   <ai_data>
+    <time_control>
+      <time noob="360000" raid="120000"/>
+      <timers noob="0" raid="0" />
+    </time_control>
     <Resources>
       <normal_resources wood="300" meat="300" gold="300" stone="300" population="7" max_population="5" />
     </Resources>

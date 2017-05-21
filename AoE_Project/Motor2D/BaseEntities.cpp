@@ -393,6 +393,7 @@ void Unit::SaveAsDef(pugi::xml_node & node)
 	case CHAMPION:				name = "Champion";				break;
 	case CROSSBOWMAN:			name = "Crossbowman";			break;
 	case SKIRMISHER:			name = "Skirmisher";			break;
+	case GOD_UNIT:				name = "God";					break;
 	}
 	node.append_attribute("name") = name.c_str();
 
