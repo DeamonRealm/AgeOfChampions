@@ -44,7 +44,7 @@ void j1Menu::Init()
 bool j1Menu::Enable()
 {
 	active = true;
-	App->sound->PlayMusicAudio(MAIN_MENU_SONG);
+	//App->sound->PlayMusicAudio(MAIN_MENU_SONG);
 
 	menu_screen->Activate();
 	menu_screen->ActivateChilds();

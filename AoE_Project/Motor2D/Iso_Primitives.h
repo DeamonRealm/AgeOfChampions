@@ -3,6 +3,8 @@
 
 #include"p2Defs.h"
 #include "p2Point.h"
+#include "j1Timer.h"
+
 #include"SDL_image/include/SDL_image.h"
 
 class Rectng;
@@ -241,10 +243,11 @@ public:
 
 public:
 
-	iPoint position = { 0,0 };
-	unsigned short alpha = 255;
-	bool locked = false;
-
+	iPoint			position = { 0,0 };
+	unsigned short	alpha = 255;
+	bool			locked = false;
+	j1Timer			unlock_timer;
+	
 };
 /// ---------------------------------------------
 #endif // _ISO_PRIMITVES_

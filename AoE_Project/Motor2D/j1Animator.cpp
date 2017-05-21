@@ -629,7 +629,7 @@ const char * j1Animator::EnumToUnitStr(UNIT_TYPE type) const
 	case WIZARD_CHMP:			return "wizard_chmp";
 	case CROSSBOWMAN:			return "crossbowman";
 	case SKIRMISHER:			return "skirmisher";
-	case GOD_UNIT:				return "god";
+	case GOD_UNIT:				return "god_unit";
 	}
 	return nullptr;
 }

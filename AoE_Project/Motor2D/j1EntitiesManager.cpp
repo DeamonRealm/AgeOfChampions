@@ -785,7 +785,6 @@ bool j1EntitiesManager::Load(pugi::xml_node& data)
 		//Load current unit type
 		UNIT_TYPE unit_type = (UNIT_TYPE)cur_unit_node.attribute("unit_type").as_int();
 
-
 		//Generate unit from unit type and diplomacy
 		Unit* new_unit = GenerateUnit(unit_type, (DIPLOMACY)cur_unit_node.attribute("diplomacy").as_int());
 

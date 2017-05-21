@@ -13,6 +13,7 @@
 #define RENDER_MARGIN 80		/* Values between 0 & INF */
 #define	UPDATE_TIME	4.5			/* Time in MS that the fog have to do the update */
 #define UPDATE_RATE 500			/* Time in MS between the fog update call */
+#define UNLOCK_TIME 1500
 
 class Unit;
 class Entity;
@@ -106,8 +107,7 @@ public:
 	void	CheckEntityFog(Entity* target);
 	void	ReleaseEntityFog(Entity* target);
 
-	void	ClearBuildingFog(Building* target);
-
+	void	SoftAlphaCell(AlphaCell* target);
 };
 
 #endif

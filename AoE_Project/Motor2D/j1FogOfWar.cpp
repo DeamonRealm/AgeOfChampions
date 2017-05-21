@@ -123,7 +123,7 @@ bool j1FogOfWar::PostUpdate()
 	uint size = cells_in_screen.size();
 	for (uint k = 0; k < size; k++)
 	{
-		if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA)cells_in_screen[k]->alpha = MID_ALPHA;
+		if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA && cells_in_screen[k]->unlock_timer.Read() > UNLOCK_TIME)cells_in_screen[k]->alpha = MID_ALPHA;
 		if(!cells_in_screen[k]->locked)App->render->FogBlit(cells_in_screen[k]->position, alpha_cell_size, cells_in_screen[k]->alpha);
 	}
 
@@ -266,7 +266,6 @@ void j1FogOfWar::GenerateFogOfWar()
 		for (uint x = 0; x < alpha_layer_width; x++)
 		{
 			AlphaCell* current_cell = &alpha_layer[y * alpha_layer_width + x];
-
 			current_cell->position = { (int)mid_map_lenght + (int)alpha_cell_size * (int)x, (int)(int)alpha_cell_size * (int)y };
 			fog_quadtree.Insert(current_cell, &iPoint(current_cell->position.x + mid_alpha_cell_size, current_cell->position.y + mid_alpha_cell_size));
 		}
@@ -285,8 +284,12 @@ void j1FogOfWar::CollectFogCells()
 	uint size = fog_quadtree.CollectCandidates(cells_in_screen, App->render->camera_viewport);
 	for (uint k = 0; k < size; k++)
 	{
-		if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA)cells_in_screen[k]->alpha = MID_ALPHA;
+		if (!cells_in_screen[k]->locked && cells_in_screen[k]->alpha < MID_ALPHA && cells_in_screen[k]->unlock_timer.Read() > UNLOCK_TIME)cells_in_screen[k]->alpha = MID_ALPHA;
 	}
+	/*for (uint k = 0; k < size; k++)
+	{
+		SoftAlphaCell(cells_in_screen[k]);
+	}*/
 }
 
 void j1FogOfWar::ResetFogTilesInCamera()
@@ -321,6 +324,7 @@ std::vector<AlphaCell*> j1FogOfWar::ClearAlphaLayer(const Circle zone, unsigned 
 		{
 			fog_cells[k]->alpha = alpha;
 			fog_cells[k]->locked = lock;
+			fog_cells[k]->unlock_timer.Start();
 			definitive.push_back(fog_cells[k]);
 		}
 	}
@@ -362,5 +366,20 @@ void j1FogOfWar::CheckEntityFog(Entity * target)
 void j1FogOfWar::ReleaseEntityFog(Entity * target)
 {
 	entities_release.push_back(target);
+}
+
+void j1FogOfWar::SoftAlphaCell(AlphaCell * target)
+{
+	iPoint coordinates(target->position.x / alpha_cell_size, target->position.y / alpha_cell_size);
+
+	if (coordinates.x == 0 || coordinates.x == alpha_layer_width || coordinates.y == 0 || coordinates.y ==  alpha_layer_height)
+	{
+		LOG("CAN'T SOFT ALPHA");
+	}
+	else
+	{
+		uint index = coordinates.x * coordinates.y;
+		target->alpha = alpha_layer[index + 1].alpha + alpha_layer[index - 1].alpha + alpha_layer[index + alpha_layer_width].alpha + alpha_layer[index + alpha_layer_width].alpha;
+	}
 }
 
