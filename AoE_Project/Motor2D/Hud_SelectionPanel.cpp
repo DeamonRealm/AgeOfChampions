@@ -333,7 +333,7 @@ void Entity_Profile::UpdateQueue()
 {
 	int size = (int)element->GetWorker()->GetActionListPointer(PRIMARY)->size();
 	if (element->GetWorker()->IsBusy(PRIMARY)) size++;
-	if (production_queue_size != size)
+	if (previous_queue_size != size)
 	{
 		int count = 0;
 		if (size > 0) {
@@ -363,6 +363,7 @@ void Entity_Profile::UpdateQueue()
 			got_queue = false;
 		}
 		production_queue_size = count;
+		previous_queue_size = size;
 	}
 }
 
@@ -407,9 +408,7 @@ bool Selection_Panel::PreUpdate()
 {
 	App->input->GetMousePosition(mouse_x, mouse_y);
 
-
 	if (WindowsMove()) App->map->CalculateTilesInView();
-
 
 	if (selected_elements.size() == 0 || inviewport == false || refresh_upperentity.Read() < REFRESH_RATE) return false;
 	refresh_upperentity.Start();
@@ -875,8 +874,6 @@ void Selection_Panel::Select(SELECT_TYPE type)
 		else if (selection_rect.w == 0 || selection_rect.h == 0) return;
 		else
 		{
-			UnSelect_Entity();
-			ResetSelectedType();
 			if (selection_rect.w < 0)
 			{
 				selection_rect.x += selection_rect.w;
@@ -888,6 +885,8 @@ void Selection_Panel::Select(SELECT_TYPE type)
 				selection_rect.h = -selection_rect.h;
 			}
 			if (((uint)selection_rect.w) < 15 && ((uint)selection_rect.h) < 15)	return;
+			UnSelect_Entity();
+			ResetSelectedType();
 		}
 
 		selection_rect.x -= App->render->camera.x;
@@ -1360,7 +1359,7 @@ bool Selection_Panel::GetInViewport() const
 	return inviewport;
 }
 
-bool Selection_Panel::WindowsMove()
+bool Selection_Panel::WindowsMove(MOVE_CAMERA must_move)
 {
 	if (expand) return false;
 	iPoint c_pos = { 0,0 };
@@ -1370,8 +1369,10 @@ bool Selection_Panel::WindowsMove()
 	float speed_y = 439.71 / 2;
 	float speed = 500;
 
+	if (must_move != C_DONT_MOVE) speed = 750;
+
 	bool ret = false;
-	if (mouse_x < OFFSET_X)
+	if (mouse_x < OFFSET_X || must_move == C_MOVE_LEFT)
 	{
 		if (c_pos.x == 1 && c_pos.y < 119)
 		{
@@ -1387,7 +1388,7 @@ bool Selection_Panel::WindowsMove()
 		ret = true;
 
 	}
-	else if (mouse_x >= App->render->camera.w - OFFSET_X)
+	else if (mouse_x >= App->render->camera.w - OFFSET_X || must_move == C_MOVE_RIGHT)
 	{
 		if (c_pos.x == 119 && c_pos.y > 0)
 		{
@@ -1402,7 +1403,7 @@ bool Selection_Panel::WindowsMove()
 		else if (c_pos.y > 0 && c_pos.x < 119) App->render->camera.x -= (int)SDL_ceil(speed * App->GetDT());
 		ret = true;
 	}
-	if (mouse_y < OFFSET_Y)
+	if (mouse_y < OFFSET_Y || must_move == C_MOVE_UP)
 	{
 		if (c_pos.x == 1 && c_pos.y > 0)
 		{
@@ -1417,7 +1418,7 @@ bool Selection_Panel::WindowsMove()
 		else if (c_pos.y >0 && c_pos.x >1) App->render->camera.y += (int)SDL_ceil(speed * App->GetDT());
 		ret = true;
 	}
-	else if (mouse_y > App->render->camera.h - OFFSET_Y)
+	else if (mouse_y > App->render->camera.h - OFFSET_Y || must_move == C_MOVE_DOWN)
 	{
 		if (c_pos.x == 119 && c_pos.y < 119)
 		{

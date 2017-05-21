@@ -137,7 +137,6 @@ bool j1Player::PreUpdate()
 		if (selection_panel->GetInViewport() && !action_panel->GetOnAction())
 		{
 			selection_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
-			action_panel->SetPanelType();
 		}
 		action_panel->Handle_Input(MOUSE_LEFT_BUTTON_DOWN);
 	}
@@ -151,6 +150,28 @@ bool j1Player::PreUpdate()
 		action_panel->Handle_Input(MOUSE_RIGHT_BUTTON);
 	}
 
+	//MAP MOVEMENT-----------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		selection_panel->WindowsMove(C_MOVE_UP);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		selection_panel->WindowsMove(C_MOVE_DOWN);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		selection_panel->WindowsMove(C_MOVE_LEFT);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		selection_panel->WindowsMove(C_MOVE_RIGHT);
+	}
+
+	// Debug Keys To Produce Entities in Game
 	if (App->debug_mode)
 	{
 		//Generate a town center in the mouse coordinates

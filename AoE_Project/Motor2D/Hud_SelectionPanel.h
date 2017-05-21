@@ -40,6 +40,15 @@ enum SELECT_TYPE
 	ADD
 };
 
+enum MOVE_CAMERA
+{
+	C_DONT_MOVE,
+	C_MOVE_RIGHT,
+	C_MOVE_LEFT,
+	C_MOVE_DOWN,
+	C_MOVE_UP
+};
+
 class Entity_Profile
 {
 public:
@@ -88,6 +97,7 @@ private:
 	uint			m_capacity = 0;
 	UI_String*		capacity = nullptr;
 	bool			got_queue = false;
+	int				previous_queue_size = 0;
 	int				production_queue_size = 0;
 	std::vector<UI_Image*>  production_queue;
 
@@ -165,7 +175,7 @@ public:
 
 	UI_Element*	GetViewport();
 	bool	GetInViewport()const;
-	bool WindowsMove();
+	bool	WindowsMove(MOVE_CAMERA must_move = C_DONT_MOVE);
 
 	//		Minimap Alert
 	void	SetMinimapAlert(iPoint pos);
