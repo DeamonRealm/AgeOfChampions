@@ -1,6 +1,12 @@
-# Age of Champions
-Tribute game to Age of Empires II developed by DemonRealm.   
-Age of Champions aims to preserve the core gameplay of the Age of Empires franchise while introducing new features such as champions similar to the ones from Warcraft III.
+# **Age of Champions**
+![1st Image](https://msgpwebcdn.azureedge.net/ageofempires/wp-content/uploads/2015/06/AOE2_boxdesktop.jpg)
+
+Age of Champions is a tribute to Age of Empires 2: The Age of Kings(Aoe2). It is set on the Middle Age and has two civilizations. Players want to collect resources, which will we used to build cities and armies to conquist their enemies.
+
+It is designed to play solo (vs IA) and to be faster than the original Aoe2. Players will start with more resources and they will be able to produce Champions that will buff their armies or debuff those of their enemies.
+
+Water and fishing will be deleted but Champions will have new and exclusive skills like teleport part of the army (and him) at a close distance.
+
 
 
 ## How to play (v0.8.2)
