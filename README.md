@@ -29,6 +29,7 @@ To win you have to find the enemy city and destroy the enemy town center, don't 
 
 
 
-
-
+<p align="center">
 [![](http://files.softicons.com/download/iphone-icons/olira-icons-by-ampeross/png/100x100/twitter.png)](https://twitter.com/Demon_Realm)
+</p>
+
