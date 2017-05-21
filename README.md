@@ -27,4 +27,4 @@ To win you have to find the enemy city and destroy the enemy town center, don't 
 * Art: Gerard Gil (add link here)
 * Game Design & Management: Sebastián Delgado (add link here)
 
-* [Twitter](https://twitter.com/Demon_Realm)
+* [![](https://cdn1.iconfinder.com/data/icons/simple-icons/256/twitter-256-black.png)](https://twitter.com/Demon_Realm)
