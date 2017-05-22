@@ -3,7 +3,7 @@ Tribute game to Age of Empires II developed by DemonRealm.
 Age of Champions aims to preserve the core gameplay of the Age of Empires franchise while introducing new features such as champions similar to the ones from Warcraft III.
 
 
-## How to play (v0.8.2)
+## How to play (v0.8.3)
 
 To win you have to find the enemy city and destroy the enemy town center, don't forget to defend your town or the enemies will raid towards your city and destroy it. If the enemy manages to destroy your town center you lose the game.
 
@@ -42,7 +42,9 @@ Note2: In case of having multiple champions selected the shortcut keys will affe
 
 
 #### Debug controls
-(only available after activating debug mode (F1))
+(only available after activating debug mode (F1))   
+These controls are not meant to be used during normal playthroughs, the use of this keys i meant for testing purposes only.
+
 * [F1]:Activate/Deactivate debug mode     
 * [F2]: Activate map logic Debug
 * [F3]: Generate Villager 
@@ -53,6 +55,7 @@ Note2: In case of having multiple champions selected the shortcut keys will affe
 * [W]: Generate Warrior
 * [E]: Generate Wizard
 * [R]: Generate Hunter
+* [G]: Generate God unit
 
 
 ## Media 
@@ -77,51 +80,62 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ## Changelog
+
+### v0.8.3
+* Added: God unit for debug mode (only for testing purposes)
+* Improved: Warrior Slash animation
+* Fixed: #63
+* Fixed: #64
+* Fixed: #66
+* Fixed: #67
+* Fixed: #68
+* Fixed: #69
+
 ### v0.8.2
-Added: Intro video
-Added: Volume controls
-Added: You can order the villager to go save resources
-Added: Production queue (need polish)
-Improved: Mage revive skill
+* Added: Intro video
+* Added: Volume controls
+* Added: You can order the villager to go save resources
+* Added: Production queue (need polish)
+* Improved: Mage revive skill
 
 ### v0.8.1 (Alpha)
-Added: Shortcut buttons to the 3 champions 
-Added: Shortcut keys to the champion skills
-Added: Bug report button in the main menu
-Added: Loading screen dot animation
-Added: Remaining particles for champions skills
-Added: Attack alert
-Added: Move indicator
-Improved: AI raids
-Improved: Movement system
-Fixed: #51 
-Fixed: #52 
-Fixed: #53 
-Fixed: #55 
-Fixed: #59 
-Fixed: #60 
-Fixed: #61 
+* Added: Shortcut buttons to the 3 champions 
+* Added: Shortcut keys to the champion skills
+* Added: Bug report button in the main menu
+* Added: Loading screen dot animation
+* Added: Remaining particles for champions skills
+* Added: Attack alert
+* Added: Move indicator
+* Improved: AI raids
+* Improved: Movement system
+* Fixed: #51 
+* Fixed: #52 
+* Fixed: #53 
+* Fixed: #55 
+* Fixed: #59 
+* Fixed: #60 
+* Fixed: #61 
 
 ### v0.8 (Pre-Alpha)
-Added: Default game map has more resources
-Added: Skill indicators for champions skills
-Added: Multiple units can collect resources
-Added: Champion skills icons
-Added: Hunter skills sounds
-Added: Pause system
-Added: Champions lvl up system
-Improved: Mulitple units attacks
-Improved: AI troop generation
-Improved: AI building 
-Improved: Animation timing
-Fixed: #34 
-Fixed: #36 
-Fixed: #37 
-Fixed: #38 
-Fixed: #45 
-Fixed: #47 
-Fixed: #46 
-Fixed: #50 
+* Added: Default game map has more resources
+* Added: Skill indicators for champions skills
+* Added: Multiple units can collect resources
+* Added: Champion skills icons
+* Added: Hunter skills sounds
+* Added: Pause system
+* Added: Champions lvl up system
+* Improved: Mulitple units attacks
+* Improved: AI troop generation
+* Improved: AI building 
+* Improved: Animation timing
+* Fixed: #34 
+* Fixed: #36 
+* Fixed: #37 
+* Fixed: #38 
+* Fixed: #45 
+* Fixed: #47 
+* Fixed: #46 
+* Fixed: #50 
 
 ### v0.7
 * Added: Art for the right branch hunter skills
