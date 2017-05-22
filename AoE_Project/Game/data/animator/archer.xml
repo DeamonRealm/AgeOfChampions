@@ -120,7 +120,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
         <sprite n="archer_die/019_archer_die.bmp" x="551" y="212" w="78" h="53" pX="0.0897436" pY="0.396226"/>
       </direction>
 
-      <direction enum="south-west">
+      <direction enum="west">
         <sprite n="archer_die/020_archer_die.bmp" x="631" y="212" w="26" h="53" pX="0.807692" pY="0.792453"/>
         <sprite n="archer_die/021_archer_die.bmp" x="659" y="212" w="31" h="54" pX="0.870968" pY="0.685185"/>
         <sprite n="archer_die/022_archer_die.bmp" x="692" y="212" w="54" h="55" pX="0.592593" pY="0.672727"/>
