@@ -167,8 +167,7 @@ private:
 	void UpdateAIUnits();
 	void UpdateAIBuildings();
 
-	void GetSpawnUnitTypes(UNIT_TYPE& u_type);
-	UNIT_TYPE  GetNextSpawnType(UNIT_TYPE u_type);
+	UNIT_TYPE  GetNextSpawnType();
 
 	Building* FindBuilding(BUILDING_TYPE type, BUILDING_TYPE type2);
 

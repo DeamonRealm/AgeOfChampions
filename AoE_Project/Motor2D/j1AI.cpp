@@ -435,9 +435,7 @@ void j1AI::ManageTroopsCreation()
 
 	UNIT_TYPE		unit_type		= UNIT_TYPE::NO_UNIT;
 
-	GetSpawnUnitTypes(unit_type);
-
-	GenerateUnit(unit_type);
+	GenerateUnit(GetNextSpawnType());
 }
 
 
@@ -609,28 +607,9 @@ void j1AI::UpdateAIBuildings()
 	}
 }
 
-void j1AI::GetSpawnUnitTypes(UNIT_TYPE& u_type)
-{
-	uint troop_count = 0;
-	UNIT_TYPE spawn_type = VILLAGER;
-
-	std::list<Unit*>::const_iterator unit_it = enemy_units.begin();
-	while (unit_it != enemy_units.end())
-	{
-		if (unit_it._Ptr->_Myval->GetUnitType() == spawn_type)
-		{
-				spawn_type = GetNextSpawnType(spawn_type);
-		}
-		
-		unit_it++;
-	}
-	
-	u_type = spawn_type;
 
 
-}
-
-UNIT_TYPE j1AI::GetNextSpawnType(UNIT_TYPE u_type)
+UNIT_TYPE j1AI::GetNextSpawnType()
 {
 	UNIT_TYPE ret = UNIT_TYPE::NO_UNIT;
 
@@ -649,7 +628,8 @@ UNIT_TYPE j1AI::GetNextSpawnType(UNIT_TYPE u_type)
 	{
 		UNIT_TYPE u_type = unit_it._Ptr->_Myval->GetUnitType();
 
-		if (u_type == VILLAGER)														villager++;
+
+if (u_type == VILLAGER)														villager++;
 		else if (u_type == MILITIA || u_type == MAN_AT_ARMS ||
 				u_type == LONG_SWORDMAN || u_type == TWO_HANDED_SWORDMAN)			militia++;
 		else if (u_type == ARCHER || u_type == CROSSBOWMAN || u_type == ARBALEST)	archer++;
@@ -701,7 +681,7 @@ UNIT_TYPE j1AI::GetNextSpawnType(UNIT_TYPE u_type)
 	}
 
 
-	if (villager < MIN_VILLAGERS)
+	if (villager < MIN_VILLAGERS || ret == NO_UNIT)
 		ret = VILLAGER;
 
 	return ret;
@@ -826,7 +806,8 @@ bool j1AI::GenerateUnit(UNIT_TYPE type)
 {
 	if (units_production[type].base_type_unit == NO_UNIT) return false;
 	
-	if (CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost,UNIT , false))
+	if (CheckResources(units_production[type].wood_cost, units_production[type].food_cost, units_production[type].gold_cost, units_production[type].stone_cost, units_production[type].population_cost,UNIT , false) 
+		|| (type == VILLAGER && enemy_units.empty()))
 	{
 		Building* productive_building = nullptr;
 		BUILDING_TYPE b_type;
