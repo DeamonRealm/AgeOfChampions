@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:166a36e24180337169aa8c83a3bb5287:74a04d4c21a97d8082af03a183f0bf65:ea757f83f784623c2619da57817ef975$ -->
+<!-- $TexturePacker:SmartUpdate:2ac725d6e488f2b9de43ed32c950ed63:75da52bcfb2717703fe7804184ea67e0:ea757f83f784623c2619da57817ef975$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,61 +19,172 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Slash_Effect.png" width="730" height="730">
-  <simple_particle particle_type="slash_particle" direction="north">
-    <anim_data speed="100" loop="0"/>
-      <sprite n="Slash/Slash_Back_00.png" opacity ="255" x="1" y="1" w="8" h="15" pX="1" pY="2"/>
-      <sprite n="Slash/Slash_Back_01.png" opacity ="255" x="11" y="1" w="18" h="10" pX="1.5" pY="2.1"/>
-      <sprite n="Slash/Slash_Back_02.png" opacity ="255" x="31" y="1" w="76" h="41" pX="0.6" pY="1.3"/>
-      <sprite n="Slash/Slash_Back_03.png" opacity ="255" x="109" y="1" w="99" h="62" pX="0.5" pY="1.1"/>
-      <sprite n="Slash/Slash_Back_04.png" opacity ="255" x="210" y="1" w="137" h="72" pX="0.49" pY="1.2"/>
-      <sprite n="Slash/Slash_Back_05.png" opacity ="255" x="349" y="1" w="202" h="100" pX="0.5" pY="1.16"/>
-      <sprite n="Slash/Slash_Back_06.png" opacity ="255" x="553" y="1" w="165" h="32" pX="0.5" pY="4.4"/>
-      <sprite n="Slash/Slash_Back_07.png" opacity ="255" x="1" y="103" w="119" h="18" pX="0.7" pY="8.2"/>
-  </simple_particle>
-  <simple_particle particle_type="slash_particle" direction="south-west">
-    <anim_data speed="100" loop="0"/>
-      <sprite n="Slash/Slash_DiagonalB_00.png" opacity ="255" x="122" y="103" w="17" h="9" pX="-1" pY="4"/>
-      <sprite n="Slash/Slash_DiagonalB_01.png" opacity ="255" x="141" y="103" w="13" h="6" pX="-1" pY="3"/>
-      <sprite n="Slash/Slash_DiagonalB_02.png" opacity ="255" x="156" y="103" w="58" h="36" pX="0.65" pY="0.65"/>
-      <sprite n="Slash/Slash_DiagonalB_03.png" opacity ="255" x="216" y="103" w="84" h="71" pX="0.75" pY="0.5"/>
-      <sprite n="Slash/Slash_DiagonalB_04.png" opacity ="255" x="302" y="103" w="94" h="91" pX="1" pY="0.4"/>
-      <sprite n="Slash/Slash_DiagonalB_05.png" opacity ="255" x="302" y="103" w="94" h="91" pX="1" pY="0.4"/>
-      <sprite n="Slash/Slash_DiagonalB_06.png" opacity ="255" x="398" y="103" w="132" h="106" pX="1" pY="0.3"/>
-      <sprite n="Slash/Slash_DiagonalB_07.png" opacity ="255" x="532" y="103" w="132" h="106" pX="1" pY="0.3"/>
-      <sprite n="Slash/Slash_DiagonalB_08.png" opacity ="255" x="1" y="211" w="83" h="31" pX="1.6" pY="-1.9"/>
-  </simple_particle>
-  <simple_particle particle_type="slash_particle" direction="north-west">
-    <anim_data speed="100" loop="0"/>
-      <sprite n="Slash/Slash_DiagonalF_00.png" opacity ="255" x="86" y="211" w="14" h="10" pX="0.5" pY="0.5"/>
-      <sprite n="Slash/Slash_DiagonalF_01.png" opacity ="255" x="102" y="211" w="12" h="6" pX="0.5" pY="0.5"/>
-      <sprite n="Slash/Slash_DiagonalF_02.png" opacity ="255" x="116" y="211" w="54" h="33" pX="0.7" pY="1.6"/>
-      <sprite n="Slash/Slash_DiagonalF_03.png" opacity ="255" x="172" y="211" w="78" h="67" pX="0.8" pY="1"/>
-      <sprite n="Slash/Slash_DiagonalF_04.png" opacity ="255" x="252" y="211" w="86" h="84" pX="1" pY="1"/>
-      <sprite n="Slash/Slash_DiagonalF_05.png" opacity ="255" x="340" y="211" w="123" h="99" pX="1" pY="1"/>
-      <sprite n="Slash/Slash_DiagonalF_06.png" opacity ="255" x="465" y="211" w="129" h="99" pX="1" pY="1"/>
-      <sprite n="Slash/Slash_DiagonalF_07.png" opacity ="255" x="596" y="211" w="78" h="29" pX="1.6" pY="3.5"/>
-  </simple_particle>
-  <simple_particle particle_type="slash_particle" direction="south">
-    <anim_data speed="100" loop="0"/>
-      <sprite n="Slash/Slash_Front_00.png" opacity ="255" x="676" y="211" w="6" h="23" pX="-1" pY="2.3"/>
-      <sprite n="Slash/Slash_Front_01.png" opacity ="255" x="684" y="211" w="17" h="14" pX="-0.7" pY="2.5"/>
-      <sprite n="Slash/Slash_Front_02.png" opacity ="255" x="1" y="312" w="77" h="64" pX="0.4" pY="0.5"/>
-      <sprite n="Slash/Slash_Front_03.png" opacity ="255" x="80" y="312" w="102" h="98" pX="0.5" pY="0.4"/>
-      <sprite n="Slash/Slash_Front_04.png" opacity ="255" x="184" y="312" w="139" h="111" pX="0.47" pY="0.19"/>
-      <sprite n="Slash/Slash_Front_05.png" opacity ="255" x="325" y="312" w="199" h="158" pX="0.45" pY="0.12"/>
-      <sprite n="Slash/Slash_Front_06.png" opacity ="255" x="526" y="312" w="164" h="155" pX="0.4" pY="0.1"/>
-      <sprite n="Slash/Slash_Front_07.png" opacity ="255" x="1" y="472" w="119" h="29" pX="0.3" pY="-3.9"/>
-  </simple_particle>
-  <simple_particle particle_type="slash_particle" direction="west">
-    <anim_data speed="100" loop="0"/>
-      <sprite n="Slash/Slash_Side_00.png" opacity ="255" x="122" y="472" w="27" h="8" pX="0.2" pY="2.5"/>
-      <sprite n="Slash/Slash_Side_01.png" opacity ="255" x="151" y="472" w="16" h="15" pX="0.4" pY="1"/>
-      <sprite n="Slash/Slash_Side_02.png" opacity ="255" x="169" y="472" w="74" h="61" pX="0.9" pY="0.9"/>
-      <sprite n="Slash/Slash_Side_03.png" opacity ="255" x="245" y="472" w="113" h="76" pX="0.9" pY="0.9"/>
-      <sprite n="Slash/Slash_Side_04.png" opacity ="255" x="360" y="472" w="134" h="102" pX="1.03" pY="0.76"/>
-      <sprite n="Slash/Slash_Side_05.png" opacity ="255" x="496" y="472" w="179" h="141" pX="1.02" pY="0.75"/>
-      <sprite n="Slash/Slash_Side_06.png" opacity ="255" x="677" y="472" w="52" h="119" pX="4.4" pY="0.75"/>
-      <sprite n="Slash/Slash_Side_07.png" opacity ="255" x="1" y="615" w="32" h="87" pX="8" pY="0.9"/>
-  </simple_particle>
+<TextureAtlas imagePath="Slash_Effect.png" width="2048" height="1662">
+
+<simple_particle particle_type="slash_particle" direction="north-west">
+    <anim_data speed="20" loop="0"/>
+    <sprite n="North-West_0001_0007-shot.png.png" opacity ="255" x="1" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0002_0008-shot.png.png" opacity ="255" x="175" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0003_0009-shot.png.png" opacity ="255" x="349" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0004_0010-shot.png.png" opacity ="255" x="523" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0005_0011-shot.png.png" opacity ="255" x="697" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0006_0012-shot.png.png" opacity ="255" x="871" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0007_0013-shot.png.png" opacity ="255" x="1045" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0008_0014-shot.png.png" opacity ="255" x="1219" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0009_0015-shot.png.png" opacity ="255" x="1393" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0010_0016-shot.png.png" opacity ="255" x="1567" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0011_0017-shot.png.png" opacity ="255" x="1741" y="1" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0012_0018-shot.png.png" opacity ="255" x="1" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0013_0019-shot.png.png" opacity ="255" x="175" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0014_0020-shot.png.png" opacity ="255" x="349" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0015_0021-shot.png.png" opacity ="255" x="523" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0016_0022-shot.png.png" opacity ="255" x="697" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0017_0023-shot.png.png" opacity ="255" x="871" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0018_0024-shot.png.png" opacity ="255" x="1045" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0019_0025-shot.png.png" opacity ="255" x="1219" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0020_0026-shot.png.png" opacity ="255" x="1393" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0021_0027-shot.png.png" opacity ="255" x="1567" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0022_0028-shot.png.png" opacity ="255" x="1741" y="129" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0023_0029-shot.png.png" opacity ="255" x="1" y="257" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0024_0030-shot.png.png" opacity ="255" x="175" y="257" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0025_0031-shot.png.png" opacity ="255" x="349" y="257" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0026_0032-shot.png.png" opacity ="255" x="523" y="257" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0027_0033-shot.png.png" opacity ="255" x="697" y="257" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0028_0034-shot.png.png" opacity ="255" x="871" y="257" w="172" h="126" pX="0.755814" pY="0.777778"/>
+    <sprite n="North-West_0029_0035-shot.png.png" opacity ="255" x="1045" y="257" w="172" h="126" pX="0.755814" pY="0.777778"/>
+</simple_particle>
+
+<simple_particle particle_type="slash_particle" direction="north">
+    <anim_data speed="20" loop="0"/>
+    <sprite n="North_0001_0007-shot.png.png" opacity ="255" x="1219" y="257" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0002_0008-shot.png.png" opacity ="255" x="1385" y="257" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0003_0009-shot.png.png" opacity ="255" x="1551" y="257" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0004_0010-shot.png.png" opacity ="255" x="1717" y="257" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0005_0011-shot.png.png" opacity ="255" x="1883" y="257" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0006_0012-shot.png.png" opacity ="255" x="1" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0007_0013-shot.png.png" opacity ="255" x="167" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0008_0014-shot.png.png" opacity ="255" x="333" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0009_0015-shot.png.png" opacity ="255" x="499" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0010_0016-shot.png.png" opacity ="255" x="665" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0011_0017-shot.png.png" opacity ="255" x="831" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0012_0018-shot.png.png" opacity ="255" x="997" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0013_0019-shot.png.png" opacity ="255" x="1163" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0014_0020-shot.png.png" opacity ="255" x="1329" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0015_0021-shot.png.png" opacity ="255" x="1495" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0016_0022-shot.png.png" opacity ="255" x="1661" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0017_0023-shot.png.png" opacity ="255" x="1827" y="385" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0018_0024-shot.png.png" opacity ="255" x="1" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0019_0025-shot.png.png" opacity ="255" x="167" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0020_0026-shot.png.png" opacity ="255" x="333" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0021_0027-shot.png.png" opacity ="255" x="499" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0022_0028-shot.png.png" opacity ="255" x="665" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0023_0029-shot.png.png" opacity ="255" x="831" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0024_0030-shot.png.png" opacity ="255" x="997" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0025_0031-shot.png.png" opacity ="255" x="1163" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0026_0032-shot.png.png" opacity ="255" x="1329" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0027_0033-shot.png.png" opacity ="255" x="1495" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0028_0034-shot.png.png" opacity ="255" x="1661" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+    <sprite n="North_0029_0035-shot.png.png" opacity ="255" x="1827" y="509" w="164" h="122" pX="0.426829" pY="0.754098"/>
+</simple_particle>
+
+<simple_particle particle_type="slash_particle" direction="south-west">
+    <anim_data speed="20" loop="0"/>
+    <sprite n="south-west_0001_0007-shot.png.png" opacity ="255" x="1" y="633" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0002_0008-shot.png.png" opacity ="255" x="233" y="633" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0003_0009-shot.png.png" opacity ="255" x="465" y="633" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0004_0010-shot.png.png" opacity ="255" x="697" y="633" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0005_0011-shot.png.png" opacity ="255" x="929" y="633" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0006_0012-shot.png.png" opacity ="255" x="1161" y="633" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0007_0013-shot.png.png" opacity ="255" x="1393" y="633" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0008_0014-shot.png.png" opacity ="255" x="1625" y="633" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0009_0015-shot.png.png" opacity ="255" x="1" y="729" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0010_0016-shot.png.png" opacity ="255" x="233" y="729" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0011_0017-shot.png.png" opacity ="255" x="465" y="729" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0012_0018-shot.png.png" opacity ="255" x="697" y="729" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0013_0019-shot.png.png" opacity ="255" x="929" y="729" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0014_0020-shot.png.png" opacity ="255" x="1161" y="729" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0015_0021-shot.png.png" opacity ="255" x="1393" y="729" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0016_0022-shot.png.png" opacity ="255" x="1625" y="729" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0017_0023-shot.png.png" opacity ="255" x="1" y="825" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0018_0024-shot.png.png" opacity ="255" x="233" y="825" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0019_0025-shot.png.png" opacity ="255" x="465" y="825" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0020_0026-shot.png.png" opacity ="255" x="697" y="825" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0021_0027-shot.png.png" opacity ="255" x="929" y="825" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0022_0028-shot.png.png" opacity ="255" x="1161" y="825" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0023_0029-shot.png.png" opacity ="255" x="1393" y="825" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0024_0030-shot.png.png" opacity ="255" x="1625" y="825" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0025_0031-shot.png.png" opacity ="255" x="1" y="921" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0026_0032-shot.png.png" opacity ="255" x="233" y="921" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0027_0033-shot.png.png" opacity ="255" x="465" y="921" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0028_0034-shot.png.png" opacity ="255" x="697" y="921" w="230" h="94" pX="0.778261" pY="0.191489"/>
+    <sprite n="south-west_0029_0035-shot.png.png" opacity ="255" x="929" y="921" w="230" h="94" pX="0.778261" pY="0.191489"/>
+</simple_particle>
+
+<simple_particle particle_type="slash_particle" direction="south">
+    <anim_data speed="20" loop="0"/>
+
+    <sprite n="south_0001_0007-shot.png.png" opacity ="255" x="1161" y="921" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0002_0008-shot.png.png" opacity ="255" x="1324" y="921" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0003_0009-shot.png.png" opacity ="255" x="1487" y="921" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0004_0010-shot.png.png" opacity ="255" x="1650" y="921" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0005_0011-shot.png.png" opacity ="255" x="1813" y="921" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0006_0012-shot.png.png" opacity ="255" x="1" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0007_0013-shot.png.png" opacity ="255" x="164" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0008_0014-shot.png.png" opacity ="255" x="327" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0009_0015-shot.png.png" opacity ="255" x="490" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0010_0016-shot.png.png" opacity ="255" x="653" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0011_0017-shot.png.png" opacity ="255" x="816" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0012_0018-shot.png.png" opacity ="255" x="979" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0013_0019-shot.png.png" opacity ="255" x="1142" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0014_0020-shot.png.png" opacity ="255" x="1305" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0015_0021-shot.png.png" opacity ="255" x="1468" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0016_0022-shot.png.png" opacity ="255" x="1631" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0017_0023-shot.png.png" opacity ="255" x="1794" y="1039" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0018_0024-shot.png.png" opacity ="255" x="1" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0019_0025-shot.png.png" opacity ="255" x="164" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0020_0026-shot.png.png" opacity ="255" x="327" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0021_0027-shot.png.png" opacity ="255" x="490" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0022_0028-shot.png.png" opacity ="255" x="653" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0023_0029-shot.png.png" opacity ="255" x="816" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0024_0030-shot.png.png" opacity ="255" x="979" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0025_0031-shot.png.png" opacity ="255" x="1142" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0026_0032-shot.png.png" opacity ="255" x="1305" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0027_0033-shot.png.png" opacity ="255" x="1468" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0028_0034-shot.png.png" opacity ="255" x="1631" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+    <sprite n="south_0029_0035-shot.png.png" opacity ="255" x="1794" y="1157" w="161" h="116" pX="0.590062" pY="0.0775862"/>
+</simple_particle>
+
+<simple_particle particle_type="slash_particle" direction="west">
+    <anim_data speed="20" loop="0"/>
+
+    <sprite n="West_0001_0007-shot.png.png" opacity ="255" x="1" y="1275" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0002_0008-shot.png.png" opacity ="255" x="215" y="1275" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0003_0009-shot.png.png" opacity ="255" x="429" y="1275" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0004_0010-shot.png.png" opacity ="255" x="643" y="1275" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0005_0011-shot.png.png" opacity ="255" x="857" y="1275" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0006_0012-shot.png.png" opacity ="255" x="1071" y="1275" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0007_0013-shot.png.png" opacity ="255" x="1285" y="1275" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0008_0014-shot.png.png" opacity ="255" x="1499" y="1275" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0009_0015-shot.png.png" opacity ="255" x="1713" y="1275" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0010_0016-shot.png.png" opacity ="255" x="1" y="1372" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0011_0017-shot.png.png" opacity ="255" x="215" y="1372" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0012_0018-shot.png.png" opacity ="255" x="429" y="1372" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0013_0019-shot.png.png" opacity ="255" x="643" y="1372" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0014_0020-shot.png.png" opacity ="255" x="857" y="1372" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0015_0021-shot.png.png" opacity ="255" x="1071" y="1372" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0016_0022-shot.png.png" opacity ="255" x="1285" y="1372" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0017_0023-shot.png.png" opacity ="255" x="1499" y="1372" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0018_0024-shot.png.png" opacity ="255" x="1713" y="1372" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0019_0025-shot.png.png" opacity ="255" x="1" y="1469" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0020_0026-shot.png.png" opacity ="255" x="215" y="1469" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0021_0027-shot.png.png" opacity ="255" x="429" y="1469" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0022_0028-shot.png.png" opacity ="255" x="643" y="1469" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0023_0029-shot.png.png" opacity ="255" x="857" y="1469" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0024_0030-shot.png.png" opacity ="255" x="1071" y="1469" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0025_0031-shot.png.png" opacity ="255" x="1285" y="1469" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0026_0032-shot.png.png" opacity ="255" x="1499" y="1469" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0027_0033-shot.png.png" opacity ="255" x="1713" y="1469" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0028_0034-shot.png.png" opacity ="255" x="1" y="1566" w="212" h="95" pX="0.834906" pY="0.505263"/>
+    <sprite n="West_0029_0035-shot.png.png" opacity ="255" x="215" y="1566" w="212" h="95" pX="0.834906" pY="0.505263"/>
+</simple_particle>
 </TextureAtlas>
