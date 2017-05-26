@@ -243,7 +243,7 @@ void Entity_Profile::DrawProfile() const
 			App->render->Blit(App->gui->Get_UI_Texture(ICONS), 340 - App->render->camera.x, 720 - App->render->camera.y, &rect);
 			range->DrawAt(390, 720);
 		}
-		DrawQueue();
+		if (!isenemy) DrawQueue();
 	}
 }
 
@@ -340,7 +340,7 @@ void Entity_Profile::UpdateQueue()
 			got_queue = true;
 			// Add Current Action if it's Spawn Action
 			Action* curr_queue_action = element->GetWorker()->GetCurrentPrimaryAction();
-			if (curr_queue_action->GetType() == TASK_B_SPAWN_UNITS)
+			if (curr_queue_action != nullptr && curr_queue_action->GetType() == TASK_B_SPAWN_UNITS)
 			{
 				production_queue[count]->ChangeTextureRect(((SpawnUnitAction*)curr_queue_action)->GetIcon());
 				count++;

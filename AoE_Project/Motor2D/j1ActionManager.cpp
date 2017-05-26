@@ -751,15 +751,15 @@ bool ActionWorker::IsBusy(TASK_CHANNELS channel)
 	{
 
 	case PRIMARY:
-		if (current_primary_action == nullptr && primary_action_queue.empty())
+		if (current_primary_action == nullptr)
 			return false;
 		break;
 	case SECONDARY:
-		if (current_secondary_action == nullptr && secondary_action_queue.empty())
+		if (current_secondary_action == nullptr)
 			return false;
 		break;
 	case PASSIVE:
-		if (current_passive_action == nullptr && passive_action_queue.empty())
+		if (current_passive_action == nullptr)
 			return false;
 		break;
 	default:
@@ -768,7 +768,7 @@ bool ActionWorker::IsBusy(TASK_CHANNELS channel)
 	}
 
 
-	return true;;
+	return true;
 }
 
 std::list<Action*> ActionWorker::GetActionList(TASK_CHANNELS channel)
