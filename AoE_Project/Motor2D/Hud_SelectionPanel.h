@@ -228,6 +228,10 @@ private:
 	
 	//UI Particles
 	Particle* arrows_particle = nullptr;
+	Particle* warrior_lvl_up = nullptr;
+	Particle* wizard_lvl_up = nullptr;
+	Particle* hunter_lvl_up = nullptr;
+
 	Particle* map_alert_particle = nullptr;
 	iPoint	  map_alert_pos = { 0,0 };
 

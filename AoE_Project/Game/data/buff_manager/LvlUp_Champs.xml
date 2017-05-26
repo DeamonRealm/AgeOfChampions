@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:7dbed97c83d27ff2345b65170699d288:38856af8b60d9b2b4b1d47cc30a12f4c:40282e7756d9a7403d57e21a54d63165$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="LvlUp_Champs.png" width="121" height="31">
+  <simple_particle particle_type="lvl_up_hunter" direction="no_direction" z="200">
+    <anim_data speed="2000" loop="0"/>
+    <sprite n="lvl_up_hunter" x="0" y="0" opacity ="255" w="113" h="9" pX="0.5" pY="0.5"/>
+  </simple_particle>
+  <simple_particle particle_type="lvl_up_wizard" direction="no_direction" z="200">
+    <anim_data speed="2000" loop="0"/>
+    <sprite n="lvl_up_wizard" x="0" y="11" opacity ="255" w="111" h="9" pX="0.5" pY="0.5"/>
+  </simple_particle>
+  <simple_particle particle_type="lvl_up_warrior" direction="no_direction" z="200">
+    <anim_data speed="2000" loop="0"/>
+    <sprite n="lvl_up_warrior" x="0" y="22" opacity ="255" w="121" h="9" pX="0.5" pY="0.5"/>
+  </simple_particle>
+</TextureAtlas>

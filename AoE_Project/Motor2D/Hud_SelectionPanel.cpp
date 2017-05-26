@@ -441,6 +441,21 @@ bool Selection_Panel::CleanUp()
 		delete arrows_particle;
 		arrows_particle = nullptr;
 	}
+	if (warrior_lvl_up != nullptr)
+	{
+		delete warrior_lvl_up;
+		warrior_lvl_up = nullptr;
+	}
+	if (wizard_lvl_up != nullptr)
+	{
+		delete wizard_lvl_up;
+		wizard_lvl_up = nullptr;
+	}
+	if (hunter_lvl_up != nullptr)
+	{
+		delete hunter_lvl_up;
+		hunter_lvl_up = nullptr;
+	}
 	if (map_alert_particle != nullptr)
 	{
 		delete map_alert_particle;

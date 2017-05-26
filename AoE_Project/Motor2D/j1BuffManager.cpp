@@ -765,6 +765,9 @@ PARTICLE_TYPE j1BuffManager::StrToParticleType(const char * str) const
 	if (strcmp("range_particle_front", str) == 0)		return PARTICLE_TYPE::FRONT_RANGE_PARTICLE;
 	if (strcmp("speed_particle_front", str) == 0)		return PARTICLE_TYPE::FRONT_SPEED_PARTICLE;
 
+	if (strcmp("lvl_up_hunter", str) == 0)				return PARTICLE_TYPE::UI_HUNTER_LVL_UP;
+	if (strcmp("lvl_up_wizard", str) == 0)				return PARTICLE_TYPE::UI_WIZARD_LVL_UP;
+	if (strcmp("lvl_up_warrior", str) == 0)				return PARTICLE_TYPE::UI_WARRIOR_LVL_UP;
 	return UNKNOWN_PARTICLE;
 }
 
