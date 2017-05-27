@@ -111,6 +111,7 @@ void Entity_Profile::SetEntity(Entity * entity_selected)
 	u_attack = 0;
 	attack_up = 0;
 	production_queue_size = 0;
+	previous_queue_size = 0;
 	got_queue = false;
 
 	if (element->GetDiplomacy() == ENEMY)
@@ -368,7 +369,7 @@ void Entity_Profile::UpdateQueue()
 }
 
 
-Selection_Panel::Selection_Panel() : selection_rect({ 0,0,0,0 }), map_viewport({ 0, 32, 1366, 560 }), double_clickon(false), expand(false), inviewport(false)
+Selection_Panel::Selection_Panel() : selection_rect({ 0,0,0,0 }), map_viewport({ 0, 32, 1366, 560 }), double_clickon(false), expand(false), inviewport(false), champions_up_position(653, 312)
 {
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
 
@@ -630,6 +631,7 @@ void Selection_Panel::Enable()
 	UpperEntity = nullptr;
 	action_command = nullptr;
 	champions_selected = false;
+	champions_up = false;
 
 	refresh_upperentity.Start();
 
@@ -642,6 +644,7 @@ void Selection_Panel::Disable()
 	unit_quad_selection.clear();
 	building_quad_selection.clear();
 	resource_quad_selection.clear();
+	champions_lvlup_order.clear();
 
 	ResetSelectedType();
 }
@@ -792,6 +795,8 @@ bool Selection_Panel::Draw()
 			map_alert_particle = nullptr;
 		}
 	}
+
+	DrawChampionsUp();
 
 	return true;
 }
@@ -1485,4 +1490,96 @@ void Selection_Panel::SetMinimapAlertPosition()
 	new_pos.x -= App->render->camera.x;
 	new_pos.y -= App->render->camera.y;
 	map_alert_particle->position = new_pos;
+}
+
+void Selection_Panel::SetChampionsLvlUp(UNIT_TYPE champ_type)
+{
+	switch (champ_type)
+	{
+	case WARRIOR_CHMP: 
+		if (warrior_lvl_up != nullptr) {
+			champions_lvlup_order.remove(warrior_lvl_up);
+		}
+		else {
+			warrior_lvl_up = new Particle(App->buff_manager->GetParticle(PARTICLE_TYPE::UI_WARRIOR_LVL_UP, NO_DIRECTION));
+		}
+		warrior_lvl_up->animation.Reset();
+		champions_lvlup_order.push_back(warrior_lvl_up);
+		break;
+	case ARCHER_CHMP: 
+		if (hunter_lvl_up != nullptr) {
+			champions_lvlup_order.remove(hunter_lvl_up);
+		}
+		else {
+			hunter_lvl_up = new Particle(App->buff_manager->GetParticle(PARTICLE_TYPE::UI_HUNTER_LVL_UP, NO_DIRECTION));
+		}
+		hunter_lvl_up->animation.Reset();
+		champions_lvlup_order.push_back(hunter_lvl_up);
+		break;
+	case WIZARD_CHMP:
+		if (wizard_lvl_up != nullptr)
+		{
+			champions_lvlup_order.remove(wizard_lvl_up);
+		}
+		else {
+			wizard_lvl_up = new Particle(App->buff_manager->GetParticle(PARTICLE_TYPE::UI_WIZARD_LVL_UP, NO_DIRECTION));
+		}
+		wizard_lvl_up->animation.Reset();
+		champions_lvlup_order.push_back(wizard_lvl_up);
+		break;
+	default: return;
+	}
+	champions_up = true;
+	SetChampionsLvlUpPosition();
+}
+
+void Selection_Panel::SetChampionsLvlUpPosition()
+{
+	int size = champions_lvlup_order.size();
+	SDL_Rect* curr = nullptr;
+	std::list<Particle*>::iterator item = champions_lvlup_order.begin();
+	while (item != champions_lvlup_order.end())
+	{
+		size--;
+		curr = (SDL_Rect*)item._Ptr->_Myval->animation.GetCurrentSprite()->GetFrame();
+		item._Ptr->_Myval->position = champions_up_position;
+		item._Ptr->_Myval->position.y -= App->render->camera.y + (2*curr->h*size);
+		item._Ptr->_Myval->position.x -= (App->render->camera.x - curr->w/2);
+		item++;
+	}
+}
+
+void Selection_Panel::UpdateChampionsLvlUpState()
+{
+	bool particle_removed = false;
+	std::list<Particle*>::iterator item = champions_lvlup_order.begin();
+	while (item != champions_lvlup_order.end())
+	{
+		if (item._Ptr->_Myval->animation.IsEnd())
+		{
+			champions_lvlup_order.remove(item._Ptr->_Myval);
+			item--;
+			particle_removed = true;
+		}
+		else item++;
+	}
+	if (champions_lvlup_order.size() > 0)
+	{
+		SetChampionsLvlUpPosition();
+	}
+	else champions_up = false;
+}
+
+void Selection_Panel::DrawChampionsUp()
+{
+	if (champions_up)
+	{
+		UpdateChampionsLvlUpState();
+		std::list<Particle*>::const_iterator particle = champions_lvlup_order.begin();
+		while (particle != champions_lvlup_order.end())
+		{
+			particle._Ptr->_Myval->Draw();
+			particle++;
+		}
+	}
 }

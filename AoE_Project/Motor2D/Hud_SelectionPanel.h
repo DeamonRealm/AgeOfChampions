@@ -180,6 +180,13 @@ public:
 	//		Minimap Alert
 	void	SetMinimapAlert(iPoint pos);
 	void	SetMinimapAlertPosition();
+
+	//		Champions Lvl Up Alert
+	void	SetChampionsLvlUp(UNIT_TYPE champ_type);
+	void	SetChampionsLvlUpPosition();
+	void	UpdateChampionsLvlUpState();
+	void	DrawChampionsUp();
+
 private:
 
 	// SelectionPanel Viewport
@@ -231,6 +238,9 @@ private:
 	Particle* warrior_lvl_up = nullptr;
 	Particle* wizard_lvl_up = nullptr;
 	Particle* hunter_lvl_up = nullptr;
+	bool	  champions_up = false;
+	iPoint	  champions_up_position = {0,0};
+	std::list<Particle*> champions_lvlup_order;
 
 	Particle* map_alert_particle = nullptr;
 	iPoint	  map_alert_pos = { 0,0 };

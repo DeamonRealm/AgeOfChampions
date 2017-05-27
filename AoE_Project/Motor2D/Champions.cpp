@@ -8,10 +8,13 @@
 #include "j1ActionManager.h"
 #include "j1Player.h"
 #include "j1SoundManager.h"
+#include "j1FogOfWar.h"
+
+// Hud module
 #include "Hud_ActionPanel.h"
 #include "Hud_GamePanel.h"
 #include "Hud_MinimapPanel.h"
-#include "j1FogOfWar.h"
+#include "Hud_SelectionPanel.h"
 
 ///Class Champion -------------------------------
 //Base class that define the champions bases
@@ -204,6 +207,8 @@ void Champion::LevelUp(bool particle)
 	max_life += life_for_level;
 //	life += life_for_level;
 	level_up_animation = particle;
+
+	App->player->selection_panel->SetChampionsLvlUp(unit_type);
 }
 
 void Champion::LevelUpAnimation()
