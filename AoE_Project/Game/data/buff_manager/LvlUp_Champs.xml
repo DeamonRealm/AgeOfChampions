@@ -19,17 +19,17 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="LvlUp_Champs.png" width="121" height="31">
+<TextureAtlas imagePath="LvlUp_Champs.png" width="200" height="47">
   <simple_particle particle_type="lvl_up_hunter" direction="no_direction" z="200">
     <anim_data speed="2000" loop="0"/>
-    <sprite n="lvl_up_hunter" x="0" y="0" opacity ="255" w="113" h="9" pX="0.5" pY="0.5"/>
+    <sprite n="lvl_up_hunter" x="0" y="0" opacity ="255" w="186" h="15" pX="0.5" pY="0.5"/>
   </simple_particle>
   <simple_particle particle_type="lvl_up_wizard" direction="no_direction" z="200">
     <anim_data speed="2000" loop="0"/>
-    <sprite n="lvl_up_wizard" x="0" y="11" opacity ="255" w="111" h="9" pX="0.5" pY="0.5"/>
+    <sprite n="lvl_up_wizard" x="0" y="16" opacity ="255" w="184" h="15" pX="0.5" pY="0.5"/>
   </simple_particle>
   <simple_particle particle_type="lvl_up_warrior" direction="no_direction" z="200">
     <anim_data speed="2000" loop="0"/>
-    <sprite n="lvl_up_warrior" x="0" y="22" opacity ="255" w="121" h="9" pX="0.5" pY="0.5"/>
+    <sprite n="lvl_up_warrior" x="0" y="32" opacity ="255" w="200" h="15" pX="0.5" pY="0.5"/>
   </simple_particle>
 </TextureAtlas>
