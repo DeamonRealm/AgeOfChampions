@@ -1235,6 +1235,7 @@ void Selection_Panel::GetSelectedType(DIPLOMACY & d_type, ENTITY_TYPE & e_type, 
 
 void Selection_Panel::GetChampionsSelected(Unit *& warrior, Unit *& wizard, Unit *& archer)
 {
+	warrior = wizard = archer = nullptr;
 	std::list<Entity*>::const_iterator item = selected_elements.end();
 	UNIT_TYPE u_type = NO_UNIT;
 	while (item != selected_elements.begin())

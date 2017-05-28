@@ -239,6 +239,8 @@ private:
 
 	std::vector<UI_Image*>			skills;
 	std::vector<UI_Fixed_Button*>	skills_buttons;
+	UI_String*						skill_tree_champions_lvl = nullptr;
+	UI_Image*						champion_icon = nullptr;
 
 	// Champions Skills;
 	std::vector<SDL_Rect>			warrior_skills_rect;

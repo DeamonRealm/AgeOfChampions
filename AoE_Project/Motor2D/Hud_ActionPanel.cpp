@@ -635,6 +635,17 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 	skill_tree->SetLayer(15);
 	skill_tree->AdjustBox();
 
+	skill_tree_champions_lvl = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	skill_tree_champions_lvl->SetBoxPosition(85, 30);
+	skill_tree_champions_lvl->SetColor({ 0, 0, 0, 255 });
+	skill_tree->AddChild(skill_tree_champions_lvl);
+
+	champion_icon = (UI_Image*)App->gui->GenerateUI_Element(IMG);
+	champion_icon->ChangeTextureId(ICONS);
+	champion_icon->ChangeTextureRect({0,0,1,1});
+	champion_icon->SetBoxPosition(35, 29);
+	skill_tree->AddChild(champion_icon);
+
 	warrior_skills_rect.reserve(MAX_SKILLS_LEARNED);
 	warrior_skills_rect.push_back({ 651,38, 36, 36 });
 	warrior_skills_rect.push_back({ 651,0,36,36 });
@@ -668,7 +679,6 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills[i]->ChangeTextureId(ICONS);
 		skills[i]->ChangeTextureRect(warrior_skills_rect[i]);
 		skills[i]->SetBoxPosition(97 + 67 * (i % 2), 177 + 55 * (i / 2));
-		skills[i]->Desactivate();
 
 		skills_buttons.push_back((UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON));
 		skills_buttons[i]->SetBox({ 77 + 67 * (i % 2), 188 + 55 * (i / 2),16,15 });
@@ -676,12 +686,9 @@ HeroPanel::HeroPanel() : Action_Panel_Elements()
 		skills_buttons[i]->SetTexUP({ 244,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
 		skills_buttons[i]->SetTexOVERUP({ 244,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
 		skills_buttons[i]->SetTexOVERDOWN({ 266,62,16,15 }, { 0,0 }, CHAMPION_SKILL);
-		skills_buttons[i]->Desactivate();
 
 		skill_tree->AddChild(skills_buttons[i]);
 		skill_tree->AddChild(skills[i]);
-		skills_buttons[i]->SetLayer(8);
-		skills[i]->SetLayer(8);
 	}
 
 	champion_mele = nullptr;
@@ -1117,16 +1124,32 @@ void HeroPanel::SetSkillTree()
 
 void HeroPanel::ChangeSkillIcons()
 {
+	std::string text = "";
 	show_skill = -1;
 	std::vector<SDL_Rect>* curr;
-	if (curr_skills_tree == WARRIOR_CHMP) curr = &warrior_skills_rect;
-	else if (curr_skills_tree == WIZARD_CHMP) curr = &wizard_skills_rect;
-	else curr = &archer_skills_rect;
+	if (curr_skills_tree == WARRIOR_CHMP) {
+		curr = &warrior_skills_rect;
+		text = "Warrior: Level ";
+	}
+	else if (curr_skills_tree == WIZARD_CHMP) {
+		curr = &wizard_skills_rect;
+		text = "Wizard: Level ";
+	}
+	else {
+		curr = &archer_skills_rect;
+		text = "Hunter: Level ";
+	}
 
 	for (int i = 0; i < MAX_SKILLS_LEARNED; i++)
 	{
 		skills[i]->ChangeTextureRect((*curr)[i]);
 	}
+
+	// Champion's Profile
+	text += App->gui->SetStringFromInt(((Champion*)entitis_panel)->GetLevel() + 1);
+	skill_tree_champions_lvl->SetString((char*)text.c_str());
+	text.clear();
+	champion_icon->ChangeTextureRect(entitis_panel->GetIcon());
 }
 
 void HeroPanel::SetNewOrder()
@@ -1209,6 +1232,8 @@ void HeroPanel::ChangePanelTarget(Entity * new_target)
 	{
 		champion_selected = NO_UNIT;
 		entitis_panel = champion_row[0];
+		skill_tree->Desactivate();
+		skill_tree->DesactivateChids();
 	}
 	if (entitis_panel != nullptr) champion_selected = ((Unit*)entitis_panel)->GetUnitType();
 	SetNewOrder();
