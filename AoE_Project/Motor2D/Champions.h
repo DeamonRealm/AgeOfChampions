@@ -29,13 +29,15 @@ protected:
 	Circle			buff_area;
 	PassiveBuff*	buff_to_apply = nullptr;
 
-	//ability area 
+	//Hability area 
 	bool	ability[3];
 	bool	actived[3];
 	bool	skill_choosed[3];
 
 	bool	ability_lvl_2_prepare_mode = false;
 	bool	ability_lvl_3_prepare_mode = false;
+	//Hability lvl 1
+	bool	ability_lvl_1_ready = false;
 	//Attack area lvl 2
 	j1Timer	ability_lvl_2_timer;
 	uint	ability_lvl_2_cooldown = 0;
@@ -118,6 +120,7 @@ public:
 	uint			GetViewAreaForLevel()const;
 	bool			GetAbilityChosen(uint index)const;
 	bool			GetSkillChoosed(uint index)const;
+	bool			GetSkillInCoolDown(int index)const;
 
 };
 /// ---------------------------------------------

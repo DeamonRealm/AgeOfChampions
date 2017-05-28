@@ -219,6 +219,9 @@ public:
 	void ChangePanelTarget(Entity* new_target);
 	const char* GetSkillOvering() const;
 
+	// Get Champion Skills in Cool down
+	bool SkillIsInCoolDown(int i);
+
 public:
 	UI_Image*						skill_tree = nullptr;
 private:

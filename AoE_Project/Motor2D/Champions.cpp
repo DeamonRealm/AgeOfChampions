@@ -392,6 +392,15 @@ bool Champion::GetSkillChoosed(uint index) const
 {
 	return skill_choosed[index];
 }
+
+bool Champion::GetSkillInCoolDown(int index) const
+{
+	if (index == 0) return ability_lvl_1_ready;
+	else if (index == 1) return ability_lvl_2_ready;
+	else if (index == 2) return ability_lvl_3_ready;
+	
+	return false;
+}
 /// ---------------------------------------------
 
 /// Class Warrior -------------------------------
@@ -551,7 +560,7 @@ void Warrior::SetAbility_lvl_1(bool choosed)
 	}
 	skill_choosed[0] = true;
 	ability[0] = choosed;
-
+	ability_lvl_1_ready = true;
 }
 
 void Warrior::Hability_lvl_1()
@@ -579,6 +588,7 @@ void Warrior::Hability_lvl_1()
 			}
 		}
 	}
+	ability_lvl_1_ready = false;
 	actived[0] = true;
 }
 
@@ -633,16 +643,15 @@ void Warrior::SetAbility_lvl_2(bool choosed)
 	if (choosed)
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(SLASH_PARTICLE, SOUTH);
-		ability_lvl_2_current_time = ability_lvl_2_cooldown;
-		ability_lvl_2_ready = true;
-
 	}
 	else
 	{
 		ability_lvl_2_particle = App->buff_manager->GetParticle(STUN_PARTICLE, SOUTH);
-		ability_lvl_2_current_time = ability_lvl_2_cooldown;
-		ability_lvl_2_ready = true;
 	}
+
+	ability_lvl_2_current_time = ability_lvl_2_cooldown;
+	ability_lvl_2_ready = true;
+
 	skill_choosed[1] = true;
 	ability[1] = choosed;
 }
@@ -1112,6 +1121,7 @@ void Wizard::SetAbility_lvl_1(bool choosed)
 	{
 		buff_to_apply = App->buff_manager->GetPassiveBuff(PASSIVE_BUFF, VISION_BUFF, false);
 	}
+	ability_lvl_1_ready = true;
 	skill_choosed[0] = true;
 	ability[0] = choosed;
 
@@ -1143,6 +1153,7 @@ void Wizard::Hability_lvl_1()
 			}
 		}
 	}
+	ability_lvl_1_ready = false;
 	actived[0] = true;
 }
 
@@ -1865,6 +1876,7 @@ void Hunter::SetAbility_lvl_1(bool choosed)
 		ability_lvl_1_particle = App->buff_manager->GetParticle(FRONT_RANGE_PARTICLE, NO_DIRECTION);
 
 	}
+	ability_lvl_1_ready = true;
 	skill_choosed[0] = true;
 	ability[0] = choosed;
 }
@@ -1880,7 +1892,7 @@ void Hunter::Hability_lvl_1()
 	App->buff_manager->CallBuff(this, buff_to_apply->GetBuffType(), buff_to_apply->GetAttributeType(), true);
 
 
-
+	ability_lvl_1_ready = false;
 	actived[0] = true;
 }
 

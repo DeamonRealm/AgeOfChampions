@@ -1197,14 +1197,19 @@ void HeroPanel::ChangePanelTarget(Entity * new_target)
 	activate_skill = -1;
 	App->player->selection_panel->GetChampionsSelected(champion_mele, champion_wizard, champion_archer);
 	champion_row.clear();
-	if (champion_mele != nullptr) champion_row.push_back(champion_mele);
+	if (champion_mele != nullptr) 	champion_row.push_back(champion_mele);
 	if (champion_wizard != nullptr) champion_row.push_back(champion_wizard);
 	if (champion_archer != nullptr) champion_row.push_back(champion_archer);
 	while (champion_row.size() < 3)
 	{
 		champion_row.push_back(nullptr);
 	}
-	entitis_panel = champion_row[0];
+	if ((champion_selected == WARRIOR_CHMP && champion_mele == nullptr) || (champion_selected == WIZARD_CHMP && champion_wizard == nullptr) ||
+		(champion_selected == ARCHER_CHMP && champion_archer == nullptr) || champion_selected == NO_UNIT)
+	{
+		champion_selected = NO_UNIT;
+		entitis_panel = champion_row[0];
+	}
 	if (entitis_panel != nullptr) champion_selected = ((Unit*)entitis_panel)->GetUnitType();
 	SetNewOrder();
 }
@@ -1225,6 +1230,12 @@ const char * HeroPanel::GetSkillOvering() const
 		}
 	}
 	return ("");
+}
+
+bool HeroPanel::SkillIsInCoolDown(int i)
+{
+	if (champion_row[i / 5] != nullptr && !((Champion*)champion_row[i / 5])->GetSkillInCoolDown(i % 5)) return true;
+	return false;
 }
 
 // ACTION PANEL  ================================================================================================
@@ -1529,7 +1540,7 @@ void Action_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 void Action_Panel::ActivateSkill(int i)
 {
 	if (actualpanel == heropanel) {
-		on_action = actualpanel->ActivateCell(i);
+		on_action = heropanel->ActivateSkill(i);
 	}
 }
 
@@ -1538,7 +1549,14 @@ bool Action_Panel::Draw()
 	if (actualpanel == nullptr) return false;
 	for (int count = 0; count < MAX_PANEL_CELLS; count++)
 	{
-		if(panel_cells[count]->GetTextureBox().w > 1) panel_cells[count]->Draw(false);
+		if (panel_cells[count]->GetTextureBox().w > 1)
+		{
+			panel_cells[count]->Draw(false);
+			if (actualpanel == heropanel && count%5 < 3 && heropanel->SkillIsInCoolDown(count))
+			{
+				App->render->DrawQuad(*panel_buttons[count]->GetBox(), 0, 0, 0, 200,true,false);
+			}
+		}
 	}
 	if (show_cell_info || show_hero_skills)
 	{
@@ -1681,7 +1699,7 @@ void Action_Panel::SetPanelType(bool force_setup)
 			}
 			else if (u_type == WARRIOR_CHMP || u_type == WIZARD_CHMP || u_type == ARCHER_CHMP)
 			{
-				heropanel->SetDefault();
+				//heropanel->SetDefault();
 				actualpanel = heropanel;
 			}
 			else
