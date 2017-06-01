@@ -12,9 +12,9 @@ struct THEORAPLAY_VideoFrame;
 
 struct AudioQueue
 {
-	const THEORAPLAY_AudioPacket *audio;
-	int offset;
-	struct AudioQueue *next;
+	const THEORAPLAY_AudioPacket *audio = nullptr;
+	int offset = 0;
+	struct AudioQueue *next = nullptr;
 };
 
 class j1Video : public j1Module
@@ -61,13 +61,13 @@ private:
 	SDL_AudioSpec spec;
 	SDL_Event event;
 
-	Uint32 baseticks;
-	Uint32 framems;
-	int init_failed;
-	bool quit;
+	Uint32 baseticks = 0;
+	Uint32 framems = 0;
+	int init_failed = 0;
+	bool quit = false;
 
 	void* pixels = nullptr;
-	int pitch;
+	int pitch = 0;
 
 	static AudioQueue* audio_queue;
 	static AudioQueue* audio_queue_tail;
