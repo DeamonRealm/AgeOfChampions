@@ -35,7 +35,7 @@ public:
 
 	bool Update(float dt)
 	{
-		if (!App->video->want_to_play || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (!App->video->want_to_play || App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
 			this->Disable();
 			App->video->Disable();
@@ -44,12 +44,6 @@ public:
 		}
 		return true;
 	}
-
-private:
-
-
-public:
-
 };
 /// ---------------------------------------------
 #endif

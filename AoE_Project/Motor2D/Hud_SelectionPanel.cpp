@@ -645,7 +645,14 @@ void Selection_Panel::Disable()
 	building_quad_selection.clear();
 	resource_quad_selection.clear();
 	champions_lvlup_order.clear();
-
+	if(arrows_particle != nullptr)delete arrows_particle;
+	arrows_particle = nullptr;
+	if (warrior_lvl_up != nullptr)delete warrior_lvl_up;
+	warrior_lvl_up = nullptr;
+	if (wizard_lvl_up != nullptr)delete wizard_lvl_up;
+	wizard_lvl_up = nullptr;
+	if (hunter_lvl_up != nullptr)delete hunter_lvl_up;
+	hunter_lvl_up = nullptr;
 	ResetSelectedType();
 }
 

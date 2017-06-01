@@ -205,10 +205,10 @@ void Champion::LevelUp(bool particle)
 	defense += defense_for_level;
 	//Upgrade life
 	max_life += life_for_level;
-//	life += life_for_level;
+	
 	level_up_animation = particle;
 
-	App->player->selection_panel->SetChampionsLvlUp(unit_type);
+	if (particle)App->player->selection_panel->SetChampionsLvlUp(unit_type);
 }
 
 void Champion::LevelUpAnimation()
