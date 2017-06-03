@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+
+    <style>
+        p.lead {
+            color: white;
+            font-size:medium;
+        }
+
+        p.important {
+            color: lightsteelblue;
+            font-size:x-large;
+        }
+    </style>
+
+
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="Age of Champions" content="Age of Champions">
+
+    <meta name="Demon Realm" content="">
+
+
+
+    <title>Age of Champions</title>
+
+
+
+    <!-- Bootstrap Core CSS -->
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+
+
+    <!-- Custom CSS -->
+
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+
+
+    <!-- Custom Fonts -->
+
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+
+</head>
+
+
+
+<body>
+
+
+
+    <div id="wrapper">
+
+
+
+        <!-- Navigation -->
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
+
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+
+                    <span class="sr-only">Toggle navigation</span>
+
+                    <span class="icon-bar"></span>
+
+                    <span class="icon-bar"></span>
+
+                    <span class="icon-bar"></span>
+
+                </button>
+
+                <a class="navbar-brand" href="index.html">Age of Champions</a>
+
+            </div>
+
+            <!-- Top Menu Items -->
+
+            <ul class="nav navbar-right top-nav">
+
+                <li class="dropdown">
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Demon Realm <b class="caret"></b></a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+
+                            <a target="_blank" href="https://github.com/DeamonRealm"><i class="fa fa-fw fa-github"></i> GitHub </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                <ul class="nav navbar-nav side-nav">
+
+                    <li>
+
+                        <a href="index.html"><i class="fa fa-fw fa-home"></i> Home</a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="team.html"><i class="fa fa-users" aria-hidden="true"></i> Team</a>
+                    </li>
+
+                    <li>
+
+                    <li> <a href="andreu.html"><i class="fa fa-user" aria-hidden="true"></i> Andreu Rojas</a> </li>
+                    <li> <a href="ferran.html"><i class="fa fa-user" aria-hidden="true"></i> Ferran Martín</a> </li>
+                    <li> <a href="pere.html"><i class="fa fa-user" aria-hidden="true"></i> Pere Rifà</a> </li>
+                    <li> <a href="joan.html"><i class="fa fa-user" aria-hidden="true"></i> Joan Pareja</a> </li>
+                    <li> <a href="gerard.html"><i class="fa fa-user" aria-hidden="true"></i> Gerard Gil</a> </li>
+                    <li> <a href="sebastian.html"><i class="fa fa-user" aria-hidden="true"></i> Sebastián Delgado</a> </li>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- /.navbar-collapse -->
+
+        </nav>
+
+
+
+        <div>
+
+
+
+            <div class="container-fluid">
+
+
+
+                <!-- Page Heading -->
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <h1 class="page-header">
+
+                            <p align="center">Contribution</p>
+
+                        </h1>
+
+                    </div>
+
+                </div>
+
+                <!-- /.row -->
+
+
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <p class="important">Entities Manager:</p>
+                        <p class="lead">A module that manages all the entities definitions and all the current entities stats in the game. Entities definitions are loaded and the entities factory use them to create the new ones. When an entity dies this module is the responsible to delete it.</p>
+                        <img class="img-responsive left-block" src="img/entities.png" width="600" height="600">
+                        <p class="important"><br/> Animation:</p>
+                        <p class="lead">This module sets the animations of all the entities. All animations are loaded and organized in trees. When an entity needs to update his animation it calls the module animation and the correct animation is searched in the animations trees depending of the entity characteristics.</p>
+                        <p class="important"><br /> Render Queue:</p>
+                        <p class="lead">Module renderer uses a priority queue to organize all the blit calls and simulate a 3rd dimension. Blit calls are organized in relation with the y coordinate of the entity and a priority value that the animation sprite contains.</p>
+                        <p class="important"><br /> Render Opacity & Color:</p>
+                        <p class="lead">Another render update is the possibility to blit sprites with an opacity and a color to modify them temporally. Opacity is used in buildings shadows and colors are used in heroes abilities.</p>
+                        <p class="important"><br /> Primitives:</p>
+                        <p class="lead">A family of basic isometric primitives used in logic to get the entities that are located in a certain zone. Primitives are used in heroes abilities and units collisions and interaction areas.</p>
+                        <p class="important"><br /> Quadtree:</p>
+                        <p class="lead">Logical optimization that consists in divide the game area in shorter zones and organize that zones in a tree. Quadtree is used in map draw optimization, entities draw optimization and logic management, and fog of war. Draw optimization refers to that only objects in screen are blited.</p>
+                        <p class="important"><br /> Entities Debug Mode:</p>
+                        <p class="lead">A debug mode that show all the entities logic areas and let the player spawn entities using the debug keys.</p>
+                        <p class="important"><br /> Map Debug Mode:</p>
+                        <p class="lead">This debug mode shows the map logic (walkability), the units quadtree blited in pink squares and hides the fog of war. In this mode the user can see all the map and the enemy units.</p>
+                        <p class="important"><br /> Champions logic base:</p>
+                        <p class="lead">Champions have a system of abilities and cooldowns that variate depending of the champion current level. I only define the logic base and was Andreu who improve it for adapt the system to all the champions abilities.</p>
+                        <p class="important"><br /> Buff Manager:</p>
+                        <p class="lead">A module that manages all the buffs logic and particles. Buffs definitions are loaded and entities can use them to apply buffs. Buff definitions have the same organization as module animation so all definitions are organized in a tree. This module was elaborated in contribution with Sebas.</p>
+                        <p class="important"><br /> Input Manager:</p>
+                        <p class="lead">A basic module that handle input and let the user configure the input keys using the config xml. Only keyboard inputs are programmable.</p>
+                        <p class="important"><br /> Module Video:</p>
+                        <p class="lead">This module has the functionality to reproduce ovg video format and uses theoraplay library to do it. This functionality is only used in the initial video where the team logo is showed.</p>
+                        <p class="important"><br /> Fog of war:</p>
+                        <p class="lead">Fog of War module has a huge grid of black squares with an alpha value that are settled to transparent value when the square is inside an ally entity vision area. This module also uses an isometric grid identic to the map tiles grid that contains the fog ID per cell. The fog ID is used to optimize the number of blits so depending of the fog ID map tiles and entities are not drawn. Fog of war also uses Quadtree to optimize the grid iteration.</p>
+                        <p class="important"><br /> Load Screen:</p>
+                        <p class="lead">Only basic modules like renderer, file system, GUI, … Are loaded at the app start all the other modules related with the game content like animation, entities manager, buff manager, … Are loaded in a load screen when the party starts. To maintain a frame rate in the load screen a load time per frame is specified and when that time is wasted the current module that where loading save the current load point and let the app do an iteration to update the other active modules. To see the frame rate there’s a loading particle in the right bottom corner.</p>
+                        <p class="important"><br /> Modules Management:</p>
+                        <p class="lead">Apart of the load screen, there’s an unload process when the player leave the party. Where all the content related with the game like animations, entities and buffs is deleted to be loaded again in the load screen. Because not all the parties have the same content so it has to be load and unload every time the player starts or leave the party. So in the initial menu the only data loaded is principally the GUI textures and the audio.</p>
+                        <p class="important"><br /> Pause:</p>
+                        <p class="lead">To make game more comfortable a pause mechanic was implemented when the player pulse “P” or opens the menu. This pause mechanic pauses the entities logic so during the time that the pause is active entities don’t do any action and animations frames don’t loop.</p>
+                        <p class="important"><br /> Report Bug and Wiki buttons:</p>
+                        <p class="lead">In the initial menu there’s two buttons. One that link the user to the develop team Github’s to report a bug, and other to consult the game wiki for more information. This buttons have been done in collaboration with Pere.</p>
+                        <p class="important"><br /> God Unit:</p>
+                        <p class="lead">Another debug mechanic is the God Unit that is simply a buffed unit with high stats used to test the game during the develop process.</p>
+
+                    </div>
+
+
+
+                </div>
+
+                <!-- /.row -->
+
+
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <br>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+            <!-- /.container-fluid -->
+
+
+
+        </div>
+
+        <!-- /#page-wrapper -->
+
+
+
+    </div>
+
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+
+    <script src="js/jquery.js"></script>
+
+
+
+    <!-- Bootstrap Core JavaScript -->
+
+    <script src="js/bootstrap.min.js"></script>
+
+
+
+    <!-- Morris Charts JavaScript -->
+
+    <script src="js/plugins/morris/raphael.min.js"></script>
+
+    <script src="js/plugins/morris/morris.min.js"></script>
+
+    <script src="js/plugins/morris/morris-data.js"></script>
+
+
+
+</body>
+
+
+
+</html>
