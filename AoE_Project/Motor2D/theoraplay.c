@@ -338,11 +338,11 @@ static void WorkerThread(TheoraDecoder *ctx)
 			(tinfo.colorspace != TH_CS_ITU_REC_470M) &&
 			(tinfo.colorspace != TH_CS_ITU_REC_470BG))
 		{
-			assert(0 && "Unsupported colorspace.");  // !!! FIXME
+			//assert(0 && "Unsupported colorspace.");  // !!! FIXME
 			goto cleanup;
 		} // if
 
-		if (tinfo.pixel_fmt != TH_PF_420) { assert(0); goto cleanup; } // !!! FIXME
+		//if (tinfo.pixel_fmt != TH_PF_420) { assert(0); goto cleanup; } // !!! FIXME
 
 		if (tinfo.fps_denominator != 0)
 			fps = ((double)tinfo.fps_numerator) / ((double)tinfo.fps_denominator);
@@ -431,12 +431,12 @@ static void WorkerThread(TheoraDecoder *ctx)
 				ctx->audioms += item->playms;
 				if (ctx->audiolisttail)
 				{
-					assert(ctx->audiolist);
+					//assert(ctx->audiolist);
 					ctx->audiolisttail->next = item;
 				} // if
 				else
 				{
-					assert(!ctx->audiolist);
+					//assert(!ctx->audiolist);
 					ctx->audiolist = item;
 				} // else
 				ctx->audiolisttail = item;
@@ -497,12 +497,12 @@ static void WorkerThread(TheoraDecoder *ctx)
 						Mutex_Lock(ctx->lock);
 						if (ctx->videolisttail)
 						{
-							assert(ctx->videolist);
+							//assert(ctx->videolist);
 							ctx->videolisttail->next = item;
 						} // if
 						else
 						{
-							assert(!ctx->videolist);
+							//assert(!ctx->videolist);
 							ctx->videolist = item;
 						} // else
 						ctx->videolisttail = item;
@@ -782,7 +782,7 @@ void THEORAPLAY_freeAudio(const THEORAPLAY_AudioPacket *_item)
 	THEORAPLAY_AudioPacket *item = (THEORAPLAY_AudioPacket *)_item;
 	if (item != NULL)
 	{
-		assert(item->next == NULL);
+		//assert(item->next == NULL);
 		free(item->samples);
 		free(item);
 	} // if
@@ -802,7 +802,7 @@ const THEORAPLAY_VideoFrame *THEORAPLAY_getVideo(THEORAPLAY_Decoder *decoder)
 		retval->next = NULL;
 		if (ctx->videolist == NULL)
 			ctx->videolisttail = NULL;
-		assert(ctx->videocount > 0);
+		//assert(ctx->videocount > 0);
 		ctx->videocount--;
 	} // if
 	Mutex_Unlock(ctx->lock);
@@ -816,7 +816,7 @@ void THEORAPLAY_freeVideo(const THEORAPLAY_VideoFrame *_item)
 	THEORAPLAY_VideoFrame *item = (THEORAPLAY_VideoFrame *)_item;
 	if (item != NULL)
 	{
-		assert(item->next == NULL);
+		//assert(item->next == NULL);
 		free(item->pixels);
 		free(item);
 	} // if
