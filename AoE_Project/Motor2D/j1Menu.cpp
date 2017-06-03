@@ -155,12 +155,19 @@ bool j1Menu::Start()
 	singleplayer->Activate();
 	menu_screen->AddChild(singleplayer);
 
-	turotial = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
-	turotial->SetTexFromXML(unit_node.child("tutorial"), 1);
-	turotial->SetBoxPosition(142, 8);
-	turotial->Activate();
-	menu_screen->AddChild(turotial);
+	tutorial = (UI_Fixed_Button*)App->gui->GenerateUI_Element(FIXED_BUTTON);
+	tutorial->SetTexFromXML(unit_node.child("tutorial"), 1);
+	tutorial->SetBoxPosition(142, 8);
+	tutorial->Activate();
+	menu_screen->AddChild(tutorial);
 	
+	tutorial_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	tutorial_text->SetColor({ 255, 255, 255, 255 });
+	tutorial_text->SetString("Tutorial");
+	tutorial_text->Activate();
+	tutorial_text->SetBox({ 75, 16,0,0 });
+	tutorial->AddChild(tutorial_text);
+
 	// Single Player Buttons
 	standardgame = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
 	standardgame->SetBox({ 163,650,193,43 });
@@ -302,7 +309,7 @@ bool j1Menu::PostUpdate()
 	if (load_screen->GetActiveState() && loading_particle != nullptr)
 	{
 		const Sprite* current_sprite = loading_particle->GetCurrentSprite();
-		if(current_sprite != nullptr)App->render->Blit(loading_particle->GetTexture(), 1205, 752, current_sprite->GetFrame());
+		if(current_sprite != nullptr)App->render->Blit(loading_particle->GetTexture(), 1283, 742, current_sprite->GetFrame());
 		
 		if (loading_particle->IsEnd())loading_particle->Reset();
 	}
@@ -372,6 +379,11 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 		{
 			ShellExecute(NULL, "open", "https://github.com/DeamonRealm/Age_of_Empires_II/issues", NULL, NULL, SW_SHOWMAXIMIZED);
 			multiplayer->button_state = UP;
+		}
+		if (target == tutorial)
+		{
+			ShellExecute(NULL, "open", "https://github.com/DeamonRealm/AgeOfChampions/wiki/Tutorial", NULL, NULL, SW_SHOWMAXIMIZED);
+			tutorial->button_state = UP;
 		}
 		if (target == exit)
 		{

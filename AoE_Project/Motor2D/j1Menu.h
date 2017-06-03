@@ -60,7 +60,7 @@ private:
 	UI_Fixed_Button*	exit = nullptr;
 	UI_Fixed_Button*	singleplayer = nullptr;
 	UI_Fixed_Button*	multiplayer = nullptr;
-	UI_Fixed_Button*	turotial = nullptr;
+	UI_Fixed_Button*	tutorial = nullptr;
 	UI_Fixed_Button*	mapeditor = nullptr;
 	UI_Fixed_Button*	history = nullptr;
 	UI_Fixed_Button*	options = nullptr;
@@ -75,6 +75,7 @@ private:
 	UI_String*			standardgame_text = nullptr;
 	UI_String*			loadgame_text = nullptr;
 	UI_String*			alphagame_text = nullptr;
+	
 
 	//Menu UI screens
 	UI_Element*			menu_screen = nullptr;
@@ -83,6 +84,7 @@ private:
 	UI_String*			wiki = nullptr;
 	UI_String*			report_bug = nullptr;
 	UI_String*			singleplayer_text = nullptr;
+	UI_String*			tutorial_text = nullptr;
 
 	SDL_Texture*		loading_texture = nullptr;
 	Animation*			loading_particle = nullptr;
