@@ -883,8 +883,8 @@ bool HeroPanel::ActivateCell(int i)
 			skill_tree->Desactivate();
 			skill_tree->DesactivateChids();
 		}
+		if (activate_skill != -1) CancelAction();
 		entitis_panel = champion_row[i / 5];
-		activate_skill = -1;
 		champion_selected = ((Unit*)entitis_panel)->GetUnitType();
 	}
 
@@ -949,17 +949,6 @@ bool HeroPanel::ActivateCell(int i)
 			SetSkillTree();
 			skill_tree->Activate();
 			skill_tree->ActivateChilds();
-		}
-		break;
-	case 4: {
-		App->sound->PlayGUIAudio(CLICK_INGAME);
-		UNIT_TYPE u_type = ((Unit*)entitis_panel)->GetUnitType();
-		((Unit*)entitis_panel)->DirectDamage(((Unit*)entitis_panel)->GetTotalMaxLife() * 2, true);
-		App->player->selection_panel->RemoveDeadSelectedUnits((Unit*)entitis_panel);
-		HeroisDead(u_type);
-		champion_selected = NO_UNIT;
-		activate_skill = -1;
-		show_skill = -1;
 		}
 		break;
 	default:
