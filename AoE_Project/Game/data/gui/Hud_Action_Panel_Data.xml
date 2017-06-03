@@ -152,28 +152,28 @@ pc => population cost to activate cell
       <cell cp ="3" cl ="0" al ="1" x="0" y="76" w="36" h="36" ci ="Kill Unit"/>
     </Unit>
     <Champion>
-      <cell cp ="0" cl ="1" al ="1" x="651" y="38" w="36" h="36"   ci ="Passive Hability: Heavy Deffence"/>
-      <cell cp ="0" cl ="2" al ="1" x="651" y="0" w="36" h="36"    ci ="Passive Hability: Berserk"/>
-      <cell cp ="1" cl ="1" al ="1" x="651" y="114" w="36" h="36"  ci ="Stun enemy units inside the area for 2s"/>
-      <cell cp ="1" cl ="2" al ="1" x="651" y="76" w="36" h="36"   ci ="Hits enemy units inside the area for 20 dmg"/>
-      <cell cp ="2" cl ="1" al ="1" x="651" y="190" w="36" h="36"  ci ="Agro: Tank all ally units damage for 12s"/>
-      <cell cp ="2" cl ="2" al ="1" x="651" y="152" w="36" h="36"  ci ="For 12s warrior kill with one hit"/>
+      <cell cp ="0" cl ="1" al ="1" x="651" y="38" w="36" h="36"   ci ="Shields up [Passive Hability]: Increase maximum defense for 20%"/>
+      <cell cp ="0" cl ="2" al ="1" x="651" y="0" w="36" h="36"    ci ="Berseker [Passive Hability]: Increase maximum attack for 20%"/>
+      <cell cp ="1" cl ="1" al ="1" x="651" y="114" w="36" h="36"  ci ="Stun [Point and Click]: Stun enemy units inside the area for 2s"/>
+      <cell cp ="1" cl ="2" al ="1" x="651" y="76" w="36" h="36"   ci ="Slash [Point and Click]: Hits enemy units inside the area for 20 dmg"/>
+      <cell cp ="2" cl ="1" al ="1" x="651" y="190" w="36" h="36"  ci ="Agro [Instant cast]: Tank all ally units damage for 12s (60s cd)"/>
+      <cell cp ="2" cl ="2" al ="1" x="651" y="152" w="36" h="36"  ci ="OneHit [Instant cast]: Empowers the warrior during 12s, killing units in one hit increasing her damage to buildings (60s cd)"/>
       <cell cp ="3" cl ="0" al ="1" x="651" y="750" w="36" h="36"  ci ="Open Warrior Skill Tree"/>
       <cell cp ="4" cl ="0" al ="1" x="651" y="227" w="36" h="36"     ci ="Select Warrior"/>
-      <cell cp ="5" cl ="1" al ="1" x="689" y="454" w="36" h="36"  ci ="Passive Hability: Increase x2 allies vision range"/>
-      <cell cp ="5" cl ="2" al ="1" x="689" y="491" w="36" h="36"  ci ="Passive Hability: Increase maximum life for 20%"/>
-      <cell cp ="6" cl ="1" al ="1" x="689" y="565" w="36" h="36"  ci ="Heal ally units inside the area for 20hp"/>
-      <cell cp ="6" cl ="2" al ="1" x="689" y="528" w="36" h="36"  ci ="Teleport ally units inside the area"/>
-      <cell cp ="7" cl ="1" al ="1" x="689" y="639" w="36" h="36"  ci ="Revive ally units when they are dead"/>
-      <cell cp ="7" cl ="2" al ="1" x="689" y="602" w="36" h="36"  ci ="Thunder: Hit for 40 dmg to enemy units inside area"/>
+      <cell cp ="5" cl ="1" al ="1" x="689" y="454" w="36" h="36"  ci ="Far vision [Passive Hability]: Increase x2 allies vision range"/>
+      <cell cp ="5" cl ="2" al ="1" x="689" y="491" w="36" h="36"  ci ="Health bust [Passive Hability]: Increase maximum life for 20%"/>
+      <cell cp ="6" cl ="1" al ="1" x="689" y="565" w="36" h="36"  ci ="Heal [Point and Click]: Heal ally units inside the area for 20hp"/>
+      <cell cp ="6" cl ="2" al ="1" x="689" y="528" w="36" h="36"  ci ="Teleport [Point and Click]: Teleport ally units inside the area"/>
+      <cell cp ="7" cl ="1" al ="1" x="689" y="639" w="36" h="36"  ci ="Revive [Point and Click]: Revive ally units when they are dead"/>
+      <cell cp ="7" cl ="2" al ="1" x="689" y="602" w="36" h="36"  ci ="Thunder [Point and Click]: Hit for 40 dmg to enemy units inside area"/>
       <cell cp ="8" cl ="0" al ="1" x="651" y="713" w="36" h="36"  ci ="Open Mage Skill Tree"/>
       <cell cp ="9" cl ="0" al ="1" x="689" y="676" w="36" h="36"     ci ="Select Mage"/>
-      <cell cp ="10" cl ="1" al ="1" x="651" y="454" w="36" h="36" ci ="Passive Hability: Archer acc++"/>
-      <cell cp ="10" cl ="2" al ="1" x="651" y="491" w="36" h="36" ci ="Passive Hability: Archer los++"/>
-      <cell cp ="11" cl ="1" al ="1" x="651" y="528" w="36" h="36" ci ="Multi-shoot: Hits for 10 dmg enemy units inside area"/>
-      <cell cp ="11" cl ="2" al ="1" x="651" y="565" w="36" h="36" ci ="Smoke-shoot: Hits for 20 dmg enemy units inside area"/>
-      <cell cp ="12" cl ="1" al ="1" x="651" y="602" w="36" h="36" ci ="Dragon: Slow for 50% and Hits for 30 dmg"/>
-      <cell cp ="12" cl ="2" al ="1" x="651" y="639" w="36" h="36" ci ="Laser: Hits 70 dmg in straight line"/>
+      <cell cp ="10" cl ="1" al ="1" x="651" y="454" w="36" h="36" ci ="Tight rope [Passive Hability]: Increase maximum attack range for 20%"/>
+      <cell cp ="10" cl ="2" al ="1" x="651" y="491" w="36" h="36" ci ="Quick quaver [Passive Hability]: Increase maximum attack speed for 20%"/>
+      <cell cp ="11" cl ="1" al ="1" x="651" y="528" w="36" h="36" ci ="Multi-shoot [Point and Click]: Hits for 10 dmg enemy units inside area"/>
+      <cell cp ="11" cl ="2" al ="1" x="651" y="565" w="36" h="36" ci ="Smoke-shoot [Point and Click]: Hits for 20 dmg enemy units inside area"/>
+      <cell cp ="12" cl ="1" al ="1" x="651" y="602" w="36" h="36" ci ="Dragon [Point and Click]: Slow for 50% and Hits for 30 dmg"/>
+      <cell cp ="12" cl ="2" al ="1" x="651" y="639" w="36" h="36" ci ="Laser [Point and Click]: Hits 70 dmg in straight line"/>
       <cell cp ="13" cl ="0" al ="1" x="689" y="713" w="36" h="36" ci ="Open Archer Skill Tree"/>
       <cell cp ="14" cl ="0" al ="1" x="651" y="676" w="36" h="36"    ci ="Select Archer"/>
     </Champion>
