@@ -10,12 +10,12 @@
     <style>
         p.lead {
             color: white;
-            font-size:medium;
+            font-size: medium;
         }
 
         p.important {
             color: lightsteelblue;
-            font-size:x-large;
+            font-size: x-large;
         }
     </style>
 
@@ -142,10 +142,10 @@
 
                     <li>
 
-                    <li> <a href="andreu.html"><i class="fa fa-user" aria-hidden="true"></i> Andreu Rojas</a> </li>
+                    <li class="active"> <a href="andreu.html"><i class="fa fa-user" aria-hidden="true"></i> Andreu Rojas</a> </li>
                     <li> <a href="ferran.html"><i class="fa fa-user" aria-hidden="true"></i> Ferran Martín</a> </li>
                     <li> <a href="pere.html"><i class="fa fa-user" aria-hidden="true"></i> Pere Rifà</a> </li>
-                    <li class="active"> <a href="joan.html"><i class="fa fa-user" aria-hidden="true"></i> Joan Pareja</a> </li>
+                    <li> <a href="joan.html"><i class="fa fa-user" aria-hidden="true"></i> Joan Pareja</a> </li>
                     <li> <a href="gerard.html"><i class="fa fa-user" aria-hidden="true"></i> Gerard Gil</a> </li>
                     <li> <a href="sebastian.html"><i class="fa fa-user" aria-hidden="true"></i> Sebastián Delgado</a> </li>
 
@@ -193,20 +193,27 @@
 
                     <div class="col-lg-12">
 
-                        <p class="important">Action system:</p>
-                        <p class="lead">The action system is an implemantation of the command pattern on the tactical AI, the system manages the behavior of all the entities in the game. To do so it encapsulates diferent function calls that the entities need in a class named action, an then another class named ActionWorker manages those actions using the game loop system.<br />  Each entitty has an action worker that stores and executes those actions with diferent priorities, the workers have 3 diferent threads to manage those actions (more threads can easly be added) those threads are classified as primary, secondary and passive, the 2 last ones are only used by units. <br /><br />The primary one it's mainly used for actions created by the player inputs and since we don't want those actions to be interrupted when it's active (has 1 or more actions to execute) it stops the other 2 threads of updating and executing their actions.  <br />The secondary one is used only for units, mostly for actions called by the AI, usually it manages the same actions as the primary one like move, attack etc... but in this case we want to be able to interrupt these actions depending on the environment. <br /> The passive channel updates at the same time as the secondary one, it's only used for actions like autoattack that have the unit scann their surroundins every x seconds and act accodring to it.</p>
-                        <p class="important">Action creation:</p>
-                        <p class="lead">Create diferent actions to use on the action worker, such as move, attack, teleport, heal... <br/>Only a simple definition, some of them were passed to other team members to complete them, such as the move that was passed to <a href="andreu.html"></i> Andreu Rojas</a> to implement the colision system.</p>
-                        <p class="important"><br/> AI general update:</p>
-                        <p class="lead">Diferent functions that the AI calls during it's update cycle that manage and decide which troop to create, how to expand, resource recollection, raids...</p>
-                        <img class="img-responsive left-block" src="img/AI_village.JPG" width="600" height="600">
-                        <p class="important"><br /> Bug managment:</p>
-                        <p class="lead">Create a simple organization sistem to ease bug mangament, the sistem was created using github issues and waffle.io.</p>
-                        <p class="important"><br /> Prepare xml:</p>
-                        <p class="lead">Revise and add some lines to the xml from the sprites to make them able to work with the animation framework created by <a href="ferran.html"></i> Ferran Martín</a>.</p>
-
-
-
+                        <p class="important">Pathfinding:</p>
+                        <p class="lead">An optimization of A* and for a while was implemented HPA* but was removed because it was not useful for the project.</p>
+                        <img class="img-responsive left-block" src="img/pathfinding.jpg" width="644" height="378">
+                        <p class="important"><br /> Group movement:</p>
+                        <p class="lead">Allows to attack to move and to recollect resources on group, and the units are placed in formation.</p>
+                        <img class="img-responsive left-block" src="img/formation.jpg" width="644" height="378">
+                        <p class="important"><br /> Sound manager:</p>
+                        <p class="lead">This module load all the sounds of the game and allowed to load them at any time and radomize some sounds like sword blows.</p>
+                        <p class="important"><br /> Wizard & Hunter:</p>
+                        <p class="lead">When <a href="ferran.html"></i> Ferran Martín</a> made the base class Champion and Warrior, I used his work as a base and created the classes Wizard and Hunter.</p>
+                        <img class="img-responsive left-block" src="img/wizard&hunter.jpg" width="644" height="378">
+                        <p class="important"><br /> Level up system:</p>
+                        <p class="lead">System level that allows the champions to increase level and to obtain new improvements.</p>
+                        <p class="important"><br /> Collision system:</p>
+                        <p class="lead">When <a href="joan.html"></i> Joan Pareja</a> finished the actions of movement and attack I adapt them to the needs of the project adding a small system of collisions which prevents two units from being at the same point.</p>
+                        <p class="important"><br /> Spawn function:</p>
+                        <p class="lead">Function that looks where to place the unit in spiral.</p>
+                        <p class="important"><br /> Buff and skills implementation:</p>
+                        <p class="lead">After <a href="ferran.html"></i> Ferran Martín</a> made the buff manager and <a href="gerard.html"></i> Gerard Gil</a> made the sprites of the buff and skills I implemented them all inside the game</p>                   
+                        <img class="img-responsive left-block" src="img/skills.jpg" width="644" height="378">
+                        
                     </div>
 
 
