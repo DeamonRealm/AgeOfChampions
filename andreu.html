@@ -7,6 +7,19 @@
 <head>
 
 
+    <style>
+        p.lead {
+            color: white;
+            font-size: medium;
+        }
+
+        p.important {
+            color: lightsteelblue;
+            font-size: x-large;
+        }
+    </style>
+
+
 
     <meta charset="utf-8">
 
@@ -51,8 +64,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
     <![endif]-->
-
-
 
 </head>
 
@@ -130,14 +141,14 @@
                     </li>
 
                     <li>
-                        
-                            <li> <a href="andreu.html"><i class="fa fa-user" aria-hidden="true"></i> Andreu Rojas</a> </li>
-                            <li> <a href="ferran.html"><i class="fa fa-user" aria-hidden="true"></i> Ferran Martín</a> </li>
-                            <li> <a href="pere.html"><i class="fa fa-user" aria-hidden="true"></i> Pere Rifà</a> </li>
-                            <li> <a href="joan.html"><i class="fa fa-user" aria-hidden="true"></i> Joan Pareja</a> </li>
-                            <li> <a href="gerard.html"><i class="fa fa-user" aria-hidden="true"></i> Gerard Gil</a> </li>
-                            <li> <a href="sebastian.html"><i class="fa fa-user" aria-hidden="true"></i> Sebastián Delgado</a> </li>
-                                            
+
+                    <li> <a href="andreu.html"><i class="fa fa-user" aria-hidden="true"></i> Andreu Rojas</a> </li>
+                    <li> <a href="ferran.html"><i class="fa fa-user" aria-hidden="true"></i> Ferran Martín</a> </li>
+                    <li> <a href="pere.html"><i class="fa fa-user" aria-hidden="true"></i> Pere Rifà</a> </li>
+                    <li> <a href="joan.html"><i class="fa fa-user" aria-hidden="true"></i> Joan Pareja</a> </li>
+                    <li> <a href="gerard.html"><i class="fa fa-user" aria-hidden="true"></i> Gerard Gil</a> </li>
+                    <li> <a href="sebastian.html"><i class="fa fa-user" aria-hidden="true"></i> Sebastián Delgado</a> </li>
+
                     </li>
 
                 </ul>
@@ -166,7 +177,7 @@
 
                         <h1 class="page-header">
 
-                            <p align="center">Demon Realm Team</p>
+                            <p align="center">Contribution</p>
 
                         </h1>
 
@@ -182,35 +193,27 @@
 
                     <div class="col-lg-12">
 
-                        <p class="lead">Here you can find more about all the contributors of the game:</p>
-
-                        <p class="lead">
-
-                            <a target="_blank" href="https://github.com/DeamonRealm/AgeOfChampions"><img class="img-responsive center-block" src="img/team_img.jpg"></a>
-
-                        </p>
-
-                        <ul style="list-style-type:circle">
-                            <li class="lead"> Team Leader: <a href="https://github.com/Jergar92">Andreu Rojas</a> </li>
-                            <li class="lead"> Code: <a href="https://github.com/ferranmartinvila">Ferran Martín</a> </li>
-                            <li class="lead"> UI: <a href="https://github.com/PereRifa">Pere Rifà</a> </li>
-                            <li class="lead"> QA: <a href="https://github.com/Yulna">Joan Pareja</a> </li>
-                            <li class="lead"> Art: <a href="https://github.com/Gerard346">Gerard Gil</a> </li>
-                            <li class="lead"> Game Design & Management: <a href="https://github.com/Vinskky">Sebastián Delgado</a> </li>
-                        </ul>
-
-                        <p class="page-header" align="left">
-
-                            Find us on:
-
-                        </p>
-
-                        <a target="_blank" href="https://twitter.com/Demon_Realm"><img class="img-responsive center-block" src="img/twitter.png" align="left" width="80" height="50"></a>
-
-                        <a target="_blank" href="https://www.youtube.com/channel/UCX_cavEmXtBVZUtBrElYLYg"><img class="img-responsive center-block" src="img/youtube.png" align="left" width="140" height="95"></a>
-
-                        <a target="_blank" href="https://github.com/DeamonRealm"><img class="img-responsive center-block" src="img/github.png" align="left" width="200" height="155"></a>
-
+                        <p class="important">Pathfinding:</p>
+                        <p class="lead">An optimization of A* and for a while was implemented HPA* but was removed because it was not useful for the project.</p>
+                        <img class="img-responsive left-block" src="img/pathfinding.jpg" width="644" height="378">
+                        <p class="important"><br /> Group movement:</p>
+                        <p class="lead">Allows to attack to move and to recollect resources on group, and the units are placed in formation.</p>
+                        <img class="img-responsive left-block" src="img/formation.jpg" width="644" height="378">
+                        <p class="important"><br /> Sound manager:</p>
+                        <p class="lead">This module load all the sounds of the game and allowed to load them at any time and radomize some sounds like sword blows.</p>
+                        <p class="important"><br /> Wizard & Hunter:</p>
+                        <p class="lead">When <a href="ferran.html"></i> Ferran Martín</a> made the base class Champion and Warrior, I used his work as a base and created the classes Wizard and Hunter.</p>
+                        <img class="img-responsive left-block" src="img/wizard&hunter.jpg" width="644" height="378">
+                        <p class="important"><br /> Level up system:</p>
+                        <p class="lead">System level that allows the champions to increase level and to obtain new improvements.</p>
+                        <p class="important"><br /> Collision system:</p>
+                        <p class="lead">When <a href="ferran.html"></i> Joan Pareja</a> finished the actions of movement and attack I adapt them to the needs of the project adding a small system of collisions which prevents two units from being at the same point.</p>
+                        <p class="important"><br /> Spawn function:</p>
+                        <p class="lead">Function that looks where to place the unit in spiral.</p>
+                        <p class="important"><br /> Buff and skills implementation:</p>
+                        <p class="lead">After <a href="ferran.html"></i> Ferran Martín</a> made the buff manager and <a href="ferran.html"></i> Gerard Gil</a> made the sprites of the buff and skills I implemented them all inside the game</p>                   
+                        <img class="img-responsive left-block" src="img/skills.jpg" width="644" height="378">
+                        
                     </div>
 
 
