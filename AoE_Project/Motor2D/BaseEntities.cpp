@@ -1245,25 +1245,19 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 	Circle target;
 	target.SetRad(radius);
 	target.SetPosition(center);
-	Circle checker;
-	checker.SetRad(radius);
 	// south
-	cell.create(pos.x, pos.y + doble_radius);
-	checker.SetPosition(cell);
-	goal = checker.NearestPoint(&target);
+	cell.create(pos.x, pos.y + radius);
 	cell_map = App->map->WorldToMap(cell.x, cell.y);
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
 	{
 		//LOG("south");
 		return goal;
 	}
 
 	// north
-	cell.create(pos.x, pos.y - doble_radius);
-	checker.SetPosition(cell);
-	goal = checker.NearestPoint(&target);
+	cell.create(pos.x, pos.y - radius);
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
 	{
 	//	LOG("north");
 		return goal;
@@ -1271,12 +1265,8 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 
 
 	// east
-	cell.create(pos.x + doble_radius, pos.y);
-	checker.SetPosition(cell);
-	goal = checker.NearestPoint(&target);
-
-
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
+	cell.create(pos.x + radius, pos.y);
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
 	{
 		//LOG("east");
 		return goal;
@@ -1284,12 +1274,8 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 
 
 	// west
-	cell.create(pos.x - doble_radius, pos.y);
-	checker.SetPosition(cell);
-	goal = checker.NearestPoint(&target);
-
-
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
+	cell.create(pos.x - radius, pos.y);
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
 	{
 	//	LOG("west");
 		return goal;
@@ -1297,48 +1283,37 @@ iPoint Unit::FindWalkableAdjacent(const iPoint & center)
 
 
 	// south-east
-	cell.create(pos.x + doble_radius, pos.y + doble_radius);
-	checker.SetPosition(cell);
-	goal = checker.NearestPoint(&target);
-
-
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
+	cell.create(pos.x + radius, pos.y + radius);
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
 	{
 	//	LOG("south-east");
 		return goal;
 	}
-
 	// south-west
-	cell.create(pos.x - doble_radius, pos.y + doble_radius);
-	checker.SetPosition(cell);
-	goal = checker.NearestPoint(&target);
+	cell.create(pos.x - radius, pos.y + radius);
 
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
 	{
 	//	LOG("south-west");
 		return goal;
 	}
 
 	// north-east
-	cell.create(pos.x + doble_radius, pos.y - doble_radius);
-	checker.SetPosition(cell);
-	goal = checker.NearestPoint(&target);
+	cell.create(pos.x + radius, pos.y - radius);
 
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
 	{
 	//	LOG("north-east");
 		return goal;
 	}
 
 	// north-west
-	cell.create(pos.x - doble_radius, pos.y - doble_radius);
-	checker.SetPosition(cell);
-	goal = checker.NearestPoint(&target);
+	cell.create(pos.x - radius, pos.y - radius);
 
 
-	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(goal, doble_radius))
+	if (App->pathfinding->IsWalkable(cell_map) && !UnitHere(cell, doble_radius))
 	{
 	//	LOG("north-west");
 		return goal;
