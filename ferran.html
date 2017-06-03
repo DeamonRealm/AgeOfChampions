@@ -233,13 +233,15 @@
                         <img class="img-responsive left-block" src="img/fog.gif" width="650" height="650" align="left">
                         <p class="important"><br /><br /><br /><br /><br /><br /><br /><br /> Load Screen:</p>
                         <p class="lead">Only basic modules like renderer, file system, GUI, … Are loaded at the app start all the other modules related with the game content like animation, entities manager, buff manager, … Are loaded in a load screen when the party starts. To maintain a frame rate in the load screen a load time per frame is specified and when that time is wasted the current module that where loading save the current load point and let the app do an iteration to update the other active modules. To see the frame rate there’s a loading particle in the right bottom corner.</p>
-                        <p class="important"><br /> Modules Management:</p>
+                        <img class="img-responsive left-block" src="img/load.gif" width="650" height="650" align="left">
+                        <p class="important"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> Modules Management:</p>
                         <p class="lead">Apart of the load screen, there’s an unload process when the player leave the party. Where all the content related with the game like animations, entities and buffs is deleted to be loaded again in the load screen. Because not all the parties have the same content so it has to be load and unload every time the player starts or leave the party. So in the initial menu the only data loaded is principally the GUI textures and the audio.</p>
                         <p class="important"><br /> Pause:</p>
                         <p class="lead">To make game more comfortable a pause mechanic was implemented when the player pulse “P” or opens the menu. This pause mechanic pauses the entities logic so during the time that the pause is active entities don’t do any action and animations frames don’t loop.</p>
-                        <p class="important"><br /> Report Bug and Wiki buttons:</p>
-                        <p class="lead">In the initial menu there’s two buttons. One that link the user to the develop team Github’s to report a bug, and other to consult the game wiki for more information. This buttons have been done in collaboration with Pere.</p>
-                        <p class="important"><br /> God Unit:</p>
+                        <p class="important"><br /> Report Bug, Wiki and Tutorial buttons:</p>
+                        <p class="lead">In the initial menu there’s three linked buttons. One that link the user to the develop team Github’s to report a bug, Wiki button to consult the game wiki for more information and Tutorial button to go to the Tutorial page in the wiki. This buttons have been done in collaboration with Pere.</p>
+                        <img class="img-responsive left-block" src="img/menu_links.png" width="650" height="650" align="left">
+                        <p class="important"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> God Unit:</p>
                         <p class="lead">Another debug mechanic is the God Unit that is simply a buffed unit with high stats used to test the game during the develop process.</p>
                         <img class="img-responsive left-block" src="img/god.png" width="400" height="400" align="left">
 
