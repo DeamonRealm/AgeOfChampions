@@ -194,22 +194,16 @@ bool j1App::Update()
 
 	if (ret == true)
 	{
-		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Aqua);
-		BROFILER_FRAME("PreUpdate");
 		ret = PreUpdate();
 	}
 
 	if (ret == true)
 	{
-		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Coral);
-		BROFILER_FRAME("DoUpdate");
 		ret = DoUpdate();
 	}
 
 	if (ret == true)
 	{
-		BROFILER_CATEGORY("PrepareUpdate", Profiler::Color::Green);
-		BROFILER_FRAME("PostUpdate");
 		ret = PostUpdate();
 	}
 

@@ -7,11 +7,6 @@
 #include <list>
 #include <vector>
 
-//Brofiler Tool
-#define BROFILER_FRAME
-#include "Brofiler/Brofiler.h"
-#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
-
 #define TIME_TO_ENABLE 10
 
 struct SDL_Texture;
