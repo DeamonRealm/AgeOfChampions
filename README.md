@@ -3,7 +3,7 @@ Tribute game to Age of Empires II developed by DemonRealm.
 Age of Champions aims to preserve the core gameplay of the Age of Empires franchise while introducing new features such as champions similar to the ones from Warcraft III.
 
 
-## How to play (v0.8.3)
+## How to play (Beta)
 
 To win you have to find the enemy city and destroy the enemy town center, don't forget to defend your town or the enemies will raid towards your city and destroy it. If the enemy manages to destroy your town center you lose the game.
 
