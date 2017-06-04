@@ -1075,10 +1075,11 @@ bool j1EntitiesManager::Save(pugi::xml_node& data) const
 
 		//Save building position
 		fPoint pos = current_building._Ptr->_Myval->GetPosition();
-		if (type == TOWN_CENTER || type == HOUSE_A || type == HOUSE_B || type == HOUSE_C || type == HOUSE_AI || type == HOUSE_BI || type == HOUSE_CI)
+		if (type == TOWN_CENTER || type == TOWN_CENTER_C || type == HOUSE_A || type == HOUSE_B || type == HOUSE_C || type == HOUSE_AI || type == HOUSE_BI || type == HOUSE_CI)
 		{
 			pos.y += App->map->data.tile_height * 0.5f;
 		}
+
 		cur_build_node.append_attribute("pos_x") = pos.x;
 		cur_build_node.append_attribute("pos_y") = pos.y;
 

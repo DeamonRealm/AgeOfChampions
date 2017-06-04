@@ -2836,11 +2836,8 @@ void Building::SetPosition(float x, float y, bool insert)
 	switch (building_type)
 	{
 	case TOWN_CENTER:
-		position.y -= App->map->data.tile_height * 0.5f;
-		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2, 0);
-		break;
 	case TOWN_CENTER_C:
-		position.y += App->map->data.tile_height * 0.5f;
+		position.y -= App->map->data.tile_height * 0.5f;
 		App->map->ChangeLogicMap(upper_tile, width_in_tiles - 2, height_in_tiles - 2, 0);
 		break;
 	case BARRACK:
@@ -2924,6 +2921,7 @@ void Building::OnlySetPosition(float x, float y)
 	{
 
 	case TOWN_CENTER:
+	case TOWN_CENTER_C:
 	case LUMBER_CAMP:
 	case MINING_CAMP:
 		pos.y -= App->map->data.tile_height * 0.5f;
