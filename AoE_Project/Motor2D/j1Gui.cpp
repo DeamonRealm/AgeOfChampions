@@ -315,7 +315,7 @@ void j1Gui::LoadCursorTypes()
 
 	//Load Menu configuration data from loaded folder
 	char* buffer = nullptr;
-	int size = App->fs->Load("gui/ui_icons.xml", &buffer);
+	int size = App->fs->Load("gui/UI_Icons.xml", &buffer);
 	pugi::xml_document icons_data;
 	pugi::xml_parse_result result = icons_data.load_buffer(buffer, size);
 	RELEASE_ARRAY(buffer);
