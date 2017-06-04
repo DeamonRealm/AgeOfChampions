@@ -85,6 +85,7 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 ### v0.9 (Beta)
 * New loading screen
 * Added: Button to the wiki with tutorials on how ot play (tutorials page is in progress)
+* Fixed: #56
 * Fixed: #70
 * Fixed: #71
 * Fixed: #72
