@@ -37,7 +37,7 @@ void Particle::SetBlitColor(const SDL_Color new_color)
 void Particle::Draw(double angle)
 {
 	Sprite* sprite = (Sprite*)animation.GetCurrentSprite();
-	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - z_depth, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), &blit_color, angle);
+	App->render->CallBlit(animation.GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - z_depth, sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), blit_color, angle);
 }
 
 /// -----------------------------------

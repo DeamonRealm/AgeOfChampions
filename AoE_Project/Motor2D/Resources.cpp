@@ -146,7 +146,7 @@ bool Tree::Draw(bool debug)
 		uint size = sprites->size();
 		for (uint k = 0; k < size; k++)
 		{
-			ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity(), 0, 0, &blit_color);
+			ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity(), 0, 0, blit_color);
 			if (!ret)break;
 		}
 
@@ -155,7 +155,7 @@ bool Tree::Draw(bool debug)
 	{
 		const Sprite* sprite = current_animation->GetCurrentSprite();
 
-		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprite->GetXpivot(), position.y - sprite->GetYpivot(), sprite->GetFrame(), false, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), 0, 0, &blit_color);
+		ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprite->GetXpivot(), position.y - sprite->GetYpivot(), sprite->GetFrame(), false, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), 0, 0, blit_color);
 
 		if (current_animation->IsEnd())return false;
 	}

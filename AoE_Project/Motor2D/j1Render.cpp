@@ -15,7 +15,7 @@ Blit_Call::Blit_Call()
 
 }
 
-Blit_Call::Blit_Call(const iPoint & position, const iPoint& pivot, SDL_Texture* texture, SDL_Rect* rect, bool flip, int priority, uint opacity, SDL_Color* color, double angle)
+Blit_Call::Blit_Call(const iPoint & position, const iPoint& pivot, SDL_Texture* texture, SDL_Rect* rect, bool flip, int priority, uint opacity, SDL_Color color, double angle)
 	:position(position), pivot(pivot), texture(texture), rect(rect), flip(flip), priority(priority), opacity(opacity), color(color), angle(angle)
 {
 
@@ -52,7 +52,7 @@ SDL_Texture * Blit_Call::GetTex() const
 	return texture;
 }
 
-SDL_Color * Blit_Call::GetColor() const
+SDL_Color Blit_Call::GetColor() const
 {
 	return color;
 }
@@ -157,10 +157,10 @@ bool j1Render::Update(float dt)
 	{
 		const Blit_Call* blit = &blit_queue.top();
 		SDL_Texture* tex = blit->GetTex();
-		SDL_Color* color = blit->GetColor();
-		bool color_change = (color != nullptr && (color->r != 255 || color->g != 255 || color->b != 255));
+		SDL_Color color = blit->GetColor();
+		bool color_change = (color.r != 255 || color.g != 255 || color.b != 255);
 			
-		if(color_change)SDL_SetTextureColorMod(tex, color->r, color->g, color->b);
+		if(color_change)SDL_SetTextureColorMod(tex, color.r, color.g, color.b);
 		if (blit->GetAngle() == 60.0)
 		{
 			LOG("wo");
@@ -170,7 +170,7 @@ bool j1Render::Update(float dt)
 
 		if (color_change)
 		{
-			color->r = color->g = color->b = 255;
+			color.r = color.g = color.b = 255;
 			SDL_SetTextureColorMod(tex, 255, 255, 255);
 		}
 	}
@@ -231,7 +231,7 @@ void j1Render::ChangeVSYNCstate(bool state)
 	renderer = SDL_CreateRenderer(App->win->window, -1, renderer_flag);
 }
 
-bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect * section, bool horizontal_flip, int priority, uint opacity, int pivot_x, int pivot_y, SDL_Color * color, double angle)
+bool j1Render::CallBlit(SDL_Texture * texture, int x, int y, const SDL_Rect * section, bool horizontal_flip, int priority, uint opacity, int pivot_x, int pivot_y, SDL_Color color, double angle)
 {
 	bool ret = false;
 

@@ -43,7 +43,7 @@ bool Arrow::Update()
 
 void Arrow::Draw()
 {
-	App->render->CallBlit(App->animator->arrow, position.x, position.y, &arrow_rect, flip, 0, 255, pivot_x, pivot_y, nullptr, angle);
+	App->render->CallBlit(App->animator->arrow, position.x, position.y, &arrow_rect, flip, 0, 255, pivot_x, pivot_y, {255,255,255,255}, angle);
 }
 
 void Arrow::PrepareArrow(fPoint start, fPoint goal)
@@ -122,8 +122,8 @@ bool Entity::Draw(bool debug)
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), 255, sprite->GetXpivot(), sprite->GetYpivot(), &blit_color);
-
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), 255, sprite->GetXpivot(), sprite->GetYpivot(), blit_color);
+	blit_color = { 255,255,255,255 };
 	return ret;
 }
 
@@ -481,8 +481,8 @@ bool Unit::Draw(bool debug)
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(((DiplomaticAnimation*)current_animation)->GetTexture(entity_diplomacy), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), &blit_color);
-
+	ret = App->render->CallBlit(((DiplomaticAnimation*)current_animation)->GetTexture(entity_diplomacy), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), blit_color);
+	blit_color = { 255,255,255,255 };
 	return ret;
 }
 
@@ -2357,7 +2357,8 @@ bool Resource::Draw(bool debug)
 
 	const Sprite* sprite = current_animation->GetCurrentSprite();
 
-	ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprite->GetXpivot(), position.y - sprite->GetYpivot(), sprite->GetFrame(), false, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), 0, 0, &blit_color);
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x - sprite->GetXpivot(), position.y - sprite->GetYpivot(), sprite->GetFrame(), false, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), 0, 0, blit_color);
+	blit_color = { 255,255,255,255 };
 
 	if (current_animation->IsEnd())return false;
 
@@ -2796,13 +2797,16 @@ bool Building::Draw(bool debug)
 	//Get all sprites of the current animation
 	const std::vector<Sprite>*	sprites = current_animation->GetAllSprites();
 
-	uint size = sprites->size();
+	const unsigned short size = sprites->size();
+
 	for (uint k = 0; k < size; k++)
 	{
-		ret = App->render->CallBlit(((DiplomaticAnimation*)current_animation)->GetTexture(entity_diplomacy), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity(), 0, 0, &blit_color);
+		ret = App->render->CallBlit(((DiplomaticAnimation*)current_animation)->GetTexture(entity_diplomacy), position.x - sprites->at(k).GetXpivot(), position.y - sprites->at(k).GetYpivot(), sprites->at(k).GetFrame(), false, -position.y - sprites->at(k).GetZ_cord(), sprites->at(k).GetOpacity(), 0, 0, blit_color);
 		if (!ret)break;
 	}
 
+	blit_color = { 255,255,255,255 };
+	
 	return ret;
 }
 

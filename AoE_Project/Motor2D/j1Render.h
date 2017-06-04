@@ -13,7 +13,7 @@ class Blit_Call
 public:
 
 	Blit_Call();
-	Blit_Call(const iPoint& position, const iPoint& pivot, SDL_Texture* texture, SDL_Rect* rect, bool flip, int priority, uint opacity, SDL_Color* color, double angle);
+	Blit_Call(const iPoint& position, const iPoint& pivot, SDL_Texture* texture, SDL_Rect* rect, bool flip, int priority, uint opacity, SDL_Color color, double angle);
 	~Blit_Call();
 
 private:
@@ -21,7 +21,7 @@ private:
 	iPoint			position = { 0,0 };
 	iPoint			pivot = { 0,0 };
 	SDL_Texture*	texture = nullptr;
-	SDL_Color*		color = nullptr;
+	SDL_Color		color = { 255,255,255,255 };
 	SDL_Rect*		rect = nullptr;
 	bool			flip = false;
 	uint			opacity = 255;
@@ -37,7 +37,7 @@ public:
 	int				GetXPivot()const;
 	int				GetYPivot()const;
 	SDL_Texture*	GetTex()const;
-	SDL_Color*		GetColor()const;
+	SDL_Color		GetColor()const;
 	const SDL_Rect*	GetRect()const;
 	bool			GetFlip()const;
 	uint			GetOpacity()const;
@@ -92,7 +92,7 @@ public:
 public:
 
 	//Add blit call ---------
-	bool	CallBlit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, bool horizontal_flip = false, int priority = 0, uint opacity = 255, int pivot_x = 0, int pivot_y = 0, SDL_Color* color = nullptr, double angle = 0.0);
+	bool	CallBlit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, bool horizontal_flip = false, int priority = 0, uint opacity = 255, int pivot_x = 0, int pivot_y = 0, SDL_Color color = {255,255,255,255}, double angle = 0.0);
 
 	//View port Methods ------
 	void	SetViewPort(const SDL_Rect& rect);

@@ -536,8 +536,8 @@ bool Warrior::Draw(bool debug)
 
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), &blit_color);
-
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), blit_color);
+	blit_color = { 255,255,255,255 };
 	return ret;
 }
 
@@ -1104,8 +1104,8 @@ bool Wizard::Draw(bool debug)
 	}
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), &blit_color);
-
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), blit_color);
+	blit_color = { 255,255,255,255 };
 	return ret;
 }
 
@@ -1854,8 +1854,8 @@ bool Hunter::Draw(bool debug)
 	}
 	//Draw Entity Current animation frame
 	const Sprite* sprite = current_animation->GetCurrentSprite();
-	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), &blit_color);
-
+	ret = App->render->CallBlit(current_animation->GetTexture(), position.x, position.y, sprite->GetFrame(), flip_sprite, -position.y - sprite->GetZ_cord(), sprite->GetOpacity(), sprite->GetXpivot(), sprite->GetYpivot(), blit_color);
+	blit_color = { 255,255,255,255 };
 	return ret;
 }
 
