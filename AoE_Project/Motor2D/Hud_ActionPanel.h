@@ -87,7 +87,7 @@ public:
 
 	virtual void ChangePanelIcons(std::vector<UI_Image*> & actual_panel);
 
-	virtual void ChangePanelTarget(Entity* new_target) { entitis_panel = new_target; };
+	virtual void ChangePanelTarget(Entity* new_target) { current_entity = new_target; };
 	Entity*		 GetActualEntity();
 
 	virtual void ChangePlayerGamePanel(Game_Panel* game_panel);
@@ -103,7 +103,7 @@ protected:
 
 	std::vector<Cells_Data>		panel_icons;
 	std::vector<Cells_Data>     cell_data;
-	Entity*						entitis_panel = nullptr;
+	Entity*						current_entity = nullptr;
 	Game_Panel*					player_game_panel_resources = nullptr;
 };
 
