@@ -487,7 +487,7 @@ bool j1ActionManager::LoadTask(pugi::xml_node& node, Entity* actor, TASK_CHANNEL
 		}
 		if (target == nullptr)
 		{
-			LOG("Error loading save resources action target");
+			//LOG("Error loading save resources action target");
 			return false;
 		}
 		//Build the task with the actor and the target found
