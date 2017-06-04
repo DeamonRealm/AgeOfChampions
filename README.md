@@ -56,6 +56,7 @@ These controls are not meant to be used during normal playthroughs, the use of t
 * [E]: Generate Wizard
 * [R]: Generate Hunter
 * [G]: Generate God unit
+* [B]: Add 100 of each resource
 
 
 ## Media 
@@ -80,6 +81,15 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ## Changelog
+
+### v0.9 (Beta)
+* New loading screen
+* Added: Button to the wiki with tutorials on how ot play (tutorials page is in progress)
+* Fixed: #70
+* Fixed: #71
+* Fixed: #72
+* Fixed: #73
+
 
 ### v0.8.3
 * Added: God unit for debug mode (only for testing purposes)
