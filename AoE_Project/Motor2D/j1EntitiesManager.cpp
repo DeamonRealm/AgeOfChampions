@@ -2719,7 +2719,8 @@ Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE typ
 		}
 
 		//Check if is the nearest resource from the point 
-		if (dist < distance)
+
+		if (dist < distance && SurroundedResource(resource._Ptr->_Myval->GetPositionRounded()))
 		{
 			distance = dist;
 			ret = resource._Ptr->_Myval;
@@ -2728,7 +2729,24 @@ Resource * j1EntitiesManager::GetNearestResource(iPoint point, RESOURCE_TYPE typ
 		resource++;
 	}
 
+
 	return ret;
+}
+
+bool j1EntitiesManager::SurroundedResource(iPoint point)
+{
+	iPoint point_map = App->map->WorldToMap(point.x, point.y);
+	iPoint cell(-1, -1);
+	cell.create(point_map.x + 1, point_map.y);
+	if (App->pathfinding->IsWalkable(cell)) return true;
+	cell.create(point_map.x, point_map.y+1);
+	if (App->pathfinding->IsWalkable(cell)) return true;
+	cell.create(point_map.x - 1, point_map.y);
+	if (App->pathfinding->IsWalkable(cell)) return true;
+	cell.create(point_map.x, point_map.y-1);
+	if (App->pathfinding->IsWalkable(cell)) return true;
+
+	return false;
 }
 
 bool j1EntitiesManager::CheckAreaToSpawn(const Circle & area) const

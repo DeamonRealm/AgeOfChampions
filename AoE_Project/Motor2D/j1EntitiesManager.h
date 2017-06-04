@@ -162,7 +162,7 @@ public:
 	Building*	GetNearestBuilding(iPoint point, BUILDING_TYPE type, DIPLOMACY diplomacy, int max_dist = -1, bool use_basic_type = false);
 	Building*	GetNearestSavePoint(iPoint position, PLAYER_RESOURCES resource_to_save, DIPLOMACY diplomacy);
 	Resource*	GetNearestResource(iPoint point, RESOURCE_TYPE type, DIPLOMACY diplomacy, int max_dist = -1);
-	
+	bool		SurroundedResource(iPoint point);
 	//Check if an area is apropiate to spawn an entity
 	bool CheckAreaToSpawn(const Circle& area)const;
 

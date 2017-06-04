@@ -51,7 +51,7 @@ void Arrow::PrepareArrow(fPoint start, fPoint goal)
 	int deltaY = start.y - goal.y;
 	int deltaX = start.x - goal.x;
 	angle = atan2(deltaY, deltaX)*(180 / 3.14) + 180;
-	LOG("ang : %f", angle);
+//	LOG("ang : %f", angle);
 }
 
 bool Arrow::operator==(const Arrow & other) const
@@ -1545,7 +1545,7 @@ bool Unit::HealUnit(Unit* target)
 
 		iPoint goal = attack_area.NearestPoint(&target->GetSoftCollider());
 		App->pathfinding->PushPath(this, goal);
-		LOG("X %i, Y %i", goal.x, goal.y);
+		//LOG("X %i, Y %i", goal.x, goal.y);
 
 		/*
 		std::vector<iPoint>* path = App->pathfinding->SimpleAstar(GetPositionRounded(), goal);
