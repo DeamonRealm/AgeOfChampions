@@ -253,10 +253,10 @@ bool j1AI::Load(pugi::xml_node & data)
 	}
 	UpdateAIUnits();
 
-	curr_node = ai_node.child("Updates").append_child("buildings_level");
+	curr_node = ai_node.child("Updates").child("buildings_level").child("upgraded");
 	while (curr_node != NULL)
 	{
-		units_lvl[curr_node.attribute("base_type").as_int(0)] = curr_node.attribute("level").as_int(0);
+		buildings_lvl[curr_node.attribute("base_type").as_int(0)] = curr_node.attribute("level").as_int(0);
 		curr_node = curr_node.next_sibling();
 	}
 	UpdateAIBuildings();
@@ -324,10 +324,9 @@ bool j1AI::Save(pugi::xml_node & data) const
 	{
 		if (units_lvl[i] != 0)
 		{
-			curr_node = curr_node.append_child("upgraded");
+			curr_node = ai_node.child("Updates").child("units_level").append_child("upgraded");
 			curr_node.append_attribute("base_type") = (int)units_production[i].base_type_unit;
 			curr_node.append_attribute("level") = units_lvl[i];
-			curr_node = ai_node.child("Updates").first_child();
 		}
 	}
 
@@ -336,10 +335,9 @@ bool j1AI::Save(pugi::xml_node & data) const
 	{
 		if (buildings_lvl[i] != 0)
 		{
-			curr_node = curr_node.append_child("upgraded");
+			curr_node = ai_node.child("Updates").child("buildings_level").append_child("upgraded");
 			curr_node.append_attribute("base_type") = (int)buildings_production[i].base_type_building;
-			curr_node.append_attribute("level") = units_lvl[i];
-			curr_node = ai_node.child("Updates").child("building_level");
+			curr_node.append_attribute("level") = buildings_lvl[i];
 		}
 	}
 
@@ -628,8 +626,7 @@ UNIT_TYPE j1AI::GetNextSpawnType()
 	{
 		UNIT_TYPE u_type = unit_it._Ptr->_Myval->GetUnitType();
 
-
-if (u_type == VILLAGER)														villager++;
+		if (u_type == VILLAGER)														villager++;
 		else if (u_type == MILITIA || u_type == MAN_AT_ARMS ||
 				u_type == LONG_SWORDMAN || u_type == TWO_HANDED_SWORDMAN)			militia++;
 		else if (u_type == ARCHER || u_type == CROSSBOWMAN || u_type == ARBALEST)	archer++;

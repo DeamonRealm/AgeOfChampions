@@ -1725,6 +1725,7 @@ bool Unit::Die()
 	if (GetDiplomacy() == DIPLOMACY::ENEMY)
 	{
 		App->AI->enemy_units.remove(this);
+		App->AI->population--;
 
 		//App->player->game_panel->IncreaseDeathEnemies();
 		App->entities_manager->GetExperienceFromUnit(unit_experience, DIPLOMACY::ENEMY);

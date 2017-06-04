@@ -281,7 +281,7 @@ void Game_Panel::Handle_Input(UI_Element * ui_element, GUI_INPUT ui_input)
 			exit_menu_image->Desactivate();
 			exit_menu_image->DesactivateChids();
 		}
-		else if(ui_element == save_game_menu_b)
+		else if(ui_element == save_game_menu_b && !game_ended)
 		{
 			App->SaveGame("party_file.xml");
 		}
