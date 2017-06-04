@@ -474,6 +474,24 @@ void VillagerPanel::SetDefault()
 	buildingthis = nullptr;
 }
 
+void VillagerPanel::UpgradeCurrentAge(uint curr_age)
+{
+	current_age = curr_age;
+	UpdateCells();
+	if (isbuilding)
+	{
+		BUILDING_TYPE b_type = ((Building*)buildingthis)->GetBuildingType();
+		if (b_type != panel_icons[building_type].b_type)
+		{
+			App->entities_manager->DeleteEntity(buildingthis);
+			buildingthis = App->entities_manager->GenerateBuilding(panel_icons[building_type].b_type, ALLY, false);
+			int x = 0, y = 0;
+			App->input->GetMousePosition(x, y);
+			buildingthis->OnlySetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
+		}
+	}
+}
+
 bool VillagerPanel::ActivateCell(int i)
 {
 	if (current_entity == nullptr) return false;

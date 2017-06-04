@@ -369,7 +369,7 @@ void Entity_Profile::UpdateQueue()
 }
 
 
-Selection_Panel::Selection_Panel() : selection_rect({ 0,0,0,0 }), map_viewport({ 0, 32, 1366, 560 }), double_clickon(false), expand(false), inviewport(false), champions_up_position(653, 312)
+Selection_Panel::Selection_Panel() : selection_rect({ 0,0,0,0 }), map_viewport({ 0, 32, 1366, 560 }), double_clickon(false), expand(false), inviewport(false), champions_up_position(605, 312)
 {
 	App->gui->SetDefaultInputTarget((j1Module*)App->player);
 
@@ -1584,9 +1584,15 @@ void Selection_Panel::DrawChampionsUp()
 	{
 		UpdateChampionsLvlUpState();
 		std::list<Particle*>::const_iterator particle = champions_lvlup_order.begin();
+		Sprite* cur_sprite = nullptr;
 		while (particle != champions_lvlup_order.end())
 		{
-			particle._Ptr->_Myval->Draw();
+			//Get champions up current sprite
+			cur_sprite = (Sprite*) particle._Ptr->_Myval->animation.GetCurrentSprite();
+			//Call champions up blit
+			App->render->Blit(particle._Ptr->_Myval->animation.GetTexture(), particle._Ptr->_Myval->position.x,
+				particle._Ptr->_Myval->position.y, cur_sprite->GetFrame(), false, 255, cur_sprite->GetXpivot(), cur_sprite->GetYpivot());
+	
 			particle++;
 		}
 	}

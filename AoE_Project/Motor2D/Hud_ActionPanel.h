@@ -172,6 +172,7 @@ public:
 	void ResetPanel();
 	void SetDefault();
 
+	void UpgradeCurrentAge(uint curr_age);
 	bool ActivateCell(int i);
 	bool CancelAction();
 
