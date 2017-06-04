@@ -84,9 +84,11 @@ INPUT_EVENT j1InputManager::StrToInputEvent(const char * str) const
 	if (strcmp(str, "generate_bush") == 0)		return INPUT_EVENT::GENERATE_BUSH;
 	if (strcmp(str, "generate_stone") == 0)		return INPUT_EVENT::GENERATE_STONE;
 	if (strcmp(str, "generate_gold") == 0)		return INPUT_EVENT::GENERATE_GOLD;
+	if (strcmp(str, "add_resources") == 0)		return INPUT_EVENT::ADD_RESOURCES;
 	if (strcmp(str, "generate_warrior") == 0)	return INPUT_EVENT::GENERATE_WARRIOR;
 	if (strcmp(str, "generate_wizard") == 0)	return INPUT_EVENT::GENERATE_WIZARD;
 	if (strcmp(str, "generate_hunter") == 0)	return INPUT_EVENT::GENERATE_HUNTER;
+	if (strcmp(str, "generate_god") == 0)		return INPUT_EVENT::GENERATE_GOD;
 	if (strcmp(str, "set_hability_a") == 0)		return INPUT_EVENT::SET_HABILITY_A;
 	if (strcmp(str, "set_hability_b") == 0)		return INPUT_EVENT::SET_HABILITY_B;
 	if (strcmp(str, "set_hability_c") == 0)		return INPUT_EVENT::SET_HABILITY_C;

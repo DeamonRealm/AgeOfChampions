@@ -183,11 +183,6 @@ bool j1Player::PreUpdate()
 
 			game_panel->IncressPopulation(15, true);
 		}
-
-		if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		{
-			App->AI->GenerateDebugVillager();
-		}
 		//Generate Villager in the mouse coordinates
 		if (App->input_manager->GetEvent(GENERATE_VILLAGER) == INPUT_DOWN)
 		{
@@ -196,22 +191,12 @@ bool j1Player::PreUpdate()
 
 			game_panel->IncressPopulation(1, false);
 		}
-		/*
-		//Generate a Militia unit in the mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-		{
-			Building* test_building = App->entities_manager->GenerateBuilding(BUILDING_TYPE::BARRACK, ENEMY);
-			test_building->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
-			
-		}*/
-		
-		//Generate a Arbalest unit in the mouse coordinates
-		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && game_panel->CheckPopulation())
+		//Generate a God unit in the mouse coordinates
+		if (App->input_manager->GetEvent(GENERATE_GOD) == INPUT_DOWN)
 		{
 			Unit* new_unit = App->entities_manager->GenerateUnit(GOD_UNIT, ALLY);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
-
 		//Generate Tree resource in mouse coordinates
 		if (App->input_manager->GetEvent(GENERATE_TREE) == INPUT_DOWN)
 		{
@@ -236,7 +221,14 @@ bool j1Player::PreUpdate()
 			Entity* new_unit = App->entities_manager->GenerateResource(GOLD_ORE);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
-
+		//Add Player resources
+		if (App->input_manager->GetEvent(ADD_RESOURCES) == INPUT_DOWN)
+		{
+			game_panel->AddResource(200, PLAYER_RESOURCES::GP_GOLD);
+			game_panel->AddResource(200, PLAYER_RESOURCES::GP_MEAT);
+			game_panel->AddResource(200, PLAYER_RESOURCES::GP_STONE);
+			game_panel->AddResource(200, PLAYER_RESOURCES::GP_WOOD);
+		}
 		//Generate Warrior unit in mouse coordinates
 		if (App->input_manager->GetEvent(GENERATE_WARRIOR) == INPUT_DOWN)
 		{
@@ -253,7 +245,6 @@ bool j1Player::PreUpdate()
 			((Champion*)new_unit)->LevelUp(false);
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
-
 		//Generate Archer unit in mouse coordinates
 		if (App->input_manager->GetEvent(GENERATE_HUNTER) == INPUT_DOWN)
 		{
@@ -263,6 +254,10 @@ bool j1Player::PreUpdate()
 			new_unit->SetPosition((float)x - App->render->camera.x, (float)y - App->render->camera.y);
 		}
 
+		if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		{
+			App->AI->GenerateDebugVillager();
+		}
 	}
 
 	// Skills

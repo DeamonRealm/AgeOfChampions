@@ -49,10 +49,12 @@
     <key id ="X"  event ="generate_bush"/>
     <key id ="C"  event ="generate_stone"/>
     <key id ="V"  event ="generate_gold"/>
+    <key id ="B"  event ="add_resources"/>
     <!--Champion keys-->
     <key id ="W"  event ="generate_warrior"/>
     <key id ="E"  event ="generate_wizard"/>
     <key id ="R"  event ="generate_hunter"/>
+    <key id ="G"  event ="generate_god"/>
     <key id ="A"  event ="set_hability_a"/>
     <key id ="S"  event ="set_hability_b"/>
     <key id ="D"  event ="set_hability_c"/>
