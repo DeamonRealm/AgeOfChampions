@@ -76,28 +76,38 @@ bool j1InputManager::CleanUp()
 //Functionality ==================================
 INPUT_EVENT j1InputManager::StrToInputEvent(const char * str) const
 {
-	if (strcmp(str, "escape") == 0)				return INPUT_EVENT::ESCAPE;
-	if (strcmp(str, "enti_debug") == 0)			return INPUT_EVENT::ENTITY_DEBUG_MODE;
-	if (strcmp(str, "map_debug") == 0)			return INPUT_EVENT::MAP_DEBUG_MODE;
-	if (strcmp(str, "generate_villager") == 0)	return INPUT_EVENT::GENERATE_VILLAGER;
-	if (strcmp(str, "generate_tree") == 0)		return INPUT_EVENT::GENERATE_TREE;
-	if (strcmp(str, "generate_bush") == 0)		return INPUT_EVENT::GENERATE_BUSH;
-	if (strcmp(str, "generate_stone") == 0)		return INPUT_EVENT::GENERATE_STONE;
-	if (strcmp(str, "generate_gold") == 0)		return INPUT_EVENT::GENERATE_GOLD;
-	if (strcmp(str, "add_resources") == 0)		return INPUT_EVENT::ADD_RESOURCES;
-	if (strcmp(str, "generate_warrior") == 0)	return INPUT_EVENT::GENERATE_WARRIOR;
-	if (strcmp(str, "generate_wizard") == 0)	return INPUT_EVENT::GENERATE_WIZARD;
-	if (strcmp(str, "generate_hunter") == 0)	return INPUT_EVENT::GENERATE_HUNTER;
-	if (strcmp(str, "generate_god") == 0)		return INPUT_EVENT::GENERATE_GOD;
-	if (strcmp(str, "set_hability_a") == 0)		return INPUT_EVENT::SET_HABILITY_A;
-	if (strcmp(str, "set_hability_b") == 0)		return INPUT_EVENT::SET_HABILITY_B;
-	if (strcmp(str, "set_hability_c") == 0)		return INPUT_EVENT::SET_HABILITY_C;
-	if (strcmp(str, "save") == 0)				return INPUT_EVENT::SAVE;
-	if (strcmp(str, "load") == 0)				return INPUT_EVENT::LOAD;
-	if (strcmp(str, "pause") == 0)				return INPUT_EVENT::PAUSE;
-	if (strcmp(str, "full_screen") == 0)		return INPUT_EVENT::FULL_SCREEN;
-	if (strcmp(str, "volume_up") == 0)			return INPUT_EVENT::VOLUME_UP;
-	if (strcmp(str, "volume_down") == 0)		return INPUT_EVENT::VOLUME_DOWN;
+	if (strcmp(str, "escape") == 0)					return INPUT_EVENT::ESCAPE;
+	if (strcmp(str, "enti_debug") == 0)				return INPUT_EVENT::ENTITY_DEBUG_MODE;
+	if (strcmp(str, "map_debug") == 0)				return INPUT_EVENT::MAP_DEBUG_MODE;
+	if (strcmp(str, "generate_villager") == 0)		return INPUT_EVENT::GENERATE_VILLAGER;
+	if (strcmp(str, "generate_tree") == 0)			return INPUT_EVENT::GENERATE_TREE;
+	if (strcmp(str, "generate_bush") == 0)			return INPUT_EVENT::GENERATE_BUSH;
+	if (strcmp(str, "generate_stone") == 0)			return INPUT_EVENT::GENERATE_STONE;
+	if (strcmp(str, "generate_gold") == 0)			return INPUT_EVENT::GENERATE_GOLD;
+	if (strcmp(str, "add_resources") == 0)			return INPUT_EVENT::ADD_RESOURCES;
+	if (strcmp(str, "generate_warrior") == 0)		return INPUT_EVENT::GENERATE_WARRIOR;
+	if (strcmp(str, "generate_wizard") == 0)		return INPUT_EVENT::GENERATE_WIZARD;
+	if (strcmp(str, "generate_hunter") == 0)		return INPUT_EVENT::GENERATE_HUNTER;
+	if (strcmp(str, "generate_god") == 0)			return INPUT_EVENT::GENERATE_GOD;
+	if (strcmp(str, "generate_house") == 0)			return INPUT_EVENT::GENERATE_HOUSE;
+	if (strcmp(str, "generate_town_center") == 0)	return INPUT_EVENT::GENERATE_TOWN_CENTER;
+	if (strcmp(str, "generate_stable") == 0)		return INPUT_EVENT::GENERATE_STABLE;
+	if (strcmp(str, "generate_lumber_camp") == 0)	return INPUT_EVENT::GENERATE_LUMBER_CAMP;
+	if (strcmp(str, "generate_mining_camp") == 0)	return INPUT_EVENT::GENERATE_MINING_CAMP;
+	if (strcmp(str, "generate_blacksmith") == 0)	return INPUT_EVENT::GENERATE_BLACKSMITH;
+	if (strcmp(str, "generate_university") == 0)	return INPUT_EVENT::GENERATE_UNIVERSITY;
+	if (strcmp(str, "generate_monastery") == 0)		return INPUT_EVENT::GENERATE_MONASTERY;
+	if (strcmp(str, "generate_archery_range") == 0)	return INPUT_EVENT::GENERATE_ARCHERY_RANGE;
+	if (strcmp(str, "generate_barrack") == 0)		return INPUT_EVENT::GENERATE_BARRACK;
+	if (strcmp(str, "set_hability_a") == 0)			return INPUT_EVENT::SET_HABILITY_A;
+	if (strcmp(str, "set_hability_b") == 0)			return INPUT_EVENT::SET_HABILITY_B;
+	if (strcmp(str, "set_hability_c") == 0)			return INPUT_EVENT::SET_HABILITY_C;
+	if (strcmp(str, "save") == 0)					return INPUT_EVENT::SAVE;
+	if (strcmp(str, "load") == 0)					return INPUT_EVENT::LOAD;
+	if (strcmp(str, "pause") == 0)					return INPUT_EVENT::PAUSE;
+	if (strcmp(str, "full_screen") == 0)			return INPUT_EVENT::FULL_SCREEN;
+	if (strcmp(str, "volume_up") == 0)				return INPUT_EVENT::VOLUME_UP;
+	if (strcmp(str, "volume_down") == 0)			return INPUT_EVENT::VOLUME_DOWN;
 	return UNKNOWN_INPUT;
 }
 
