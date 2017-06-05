@@ -1062,11 +1062,15 @@ bool Wizard::Draw(bool debug)
 					radius_hit_lvl_2_particle_teleport.SetBlitColor({ 255,10,10,50 });
 				radius_hit_lvl_2_particle_teleport.position = this->GetPositionRounded();
 				radius_hit_lvl_2_particle_teleport.Draw();
+				radius_hit_lvl_2_particle_teleport.SetBlitColor({ 255,255,255,255 });
+
 			}
 			if (!check)
 				radius_hit_lvl_2_particle.SetBlitColor({ 255,10,10,50 });
 			radius_hit_lvl_2_particle.position = mouse_position;
 			radius_hit_lvl_2_particle.Draw();
+			radius_hit_lvl_2_particle.SetBlitColor({ 255,255,255,255 });
+
 			//area_attack_spell_2.Draw();
 
 		}
@@ -1077,6 +1081,9 @@ bool Wizard::Draw(bool debug)
 				radius_hit_lvl_3_particle.SetBlitColor({ 255,10,10,255 });
 			radius_hit_lvl_3_particle.position = mouse_position;
 			radius_hit_lvl_3_particle.Draw();
+
+			radius_hit_lvl_3_particle.SetBlitColor({ 255,255,255,255 });
+
 			//area_attack_spell_3.Draw();
 		}
 		mark.Draw();
@@ -1801,6 +1808,8 @@ bool Hunter::Draw(bool debug)
 				radius_hit_lvl_2_particle.position = mouse_position;
 
 				radius_hit_lvl_2_particle.Draw();
+				radius_hit_lvl_2_particle.SetBlitColor({ 255,255,255,255 });
+
 			}
 			else
 			{
@@ -1820,6 +1829,8 @@ bool Hunter::Draw(bool debug)
 					radius_hit_lvl_3_particle.SetBlitColor({ 255,10,10,255 });
 				radius_hit_lvl_3_particle.position = mouse_position;
 				radius_hit_lvl_3_particle.Draw();
+				radius_hit_lvl_3_particle.SetBlitColor({ 255,255,255,255 });
+
 				//	area_attack_skill_A_lvl_3.Draw();
 			}
 		}
