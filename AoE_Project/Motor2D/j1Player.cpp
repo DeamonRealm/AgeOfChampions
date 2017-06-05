@@ -258,6 +258,26 @@ bool j1Player::PreUpdate()
 		{
 			App->AI->GenerateDebugVillager();
 		}
+
+		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+		{
+			Circle del_area;
+			del_area.SetPosition(iPoint(x - App->render->camera.x, y - App->render->camera.y));
+			del_area.SetRad(35);
+			std::vector<Resource*> coll_res;
+			uint size = App->entities_manager->resources_quadtree.CollectCandidates(coll_res, del_area);
+			for (uint k = 0; k < size; k++)
+			{
+				if (coll_res[k]->GetResourceType() == TREE)
+				{
+					App->entities_manager->DeleteEntity(coll_res[k]);
+					App->entities_manager->resources_quadtree.Exteract(&coll_res[k]->GetPosition());
+					App->entities_manager->resources.remove(coll_res[k]);
+					coll_res[k]->CleanMapLogic();
+				}
+			}
+			
+		}
 	}
 
 	// Skills

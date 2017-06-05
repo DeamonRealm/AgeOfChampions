@@ -570,8 +570,6 @@ protected:
 	Circle			interact_area;
 	RESOURCE_TYPE	resource_type = NO_RESOURCE;
 
-	void CleanMapLogic();
-
 public:
 
 	//Functionality -------------------
@@ -583,6 +581,7 @@ public:
 
 	//State -----------------
 	virtual bool ExtractResources(uint* value);
+	void CleanMapLogic();
 
 	//Set Methods -----------
 	void	SetPosition(float x, float y, bool insert = true);

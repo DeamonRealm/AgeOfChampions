@@ -2392,6 +2392,14 @@ void Resource::SetPosition(float x, float y, bool insert)
 {
 	//Set resource position fixing it in the tiles coordinates
 	iPoint world_coords = App->map->WorldToMap(x, y);
+	if (!App->pathfinding->IsWalkable(world_coords))
+	{
+		App->entities_manager->DeleteEntity(this);
+		App->entities_manager->resources_quadtree.Exteract(&this->GetPosition());
+		App->entities_manager->resources.remove(this);
+		return;
+	}
+
 	iPoint coords = App->map->MapToWorld(world_coords.x, world_coords.y);
 	position.x = coords.x;
 	position.y = coords.y;
