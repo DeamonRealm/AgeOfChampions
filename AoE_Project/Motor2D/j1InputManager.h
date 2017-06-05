@@ -46,10 +46,6 @@ enum INPUT_EVENT
 	GENERATE_ARCHERY_RANGE,
 	GENERATE_BARRACK,
 
-	//Save / Load
-	SAVE,
-	LOAD,
-
 	//Pause
 	PAUSE,
 

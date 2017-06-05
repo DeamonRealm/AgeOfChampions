@@ -110,24 +110,8 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	//Call save game method
-	if (App->input_manager->GetEvent(SAVE) == INPUT_STATE::INPUT_DOWN)
-	{
-		App->SaveGame("party_file.xml");
-	}
-
-	//Call load game method 
-	else if (App->input_manager->GetEvent(LOAD) == INPUT_STATE::INPUT_DOWN)
-	{
-		if (App->fs->Exists("save/party_file.xml"))
-		{
-		App->LoadGame("party_file.xml", false);
-		}
-		else LOG("No party Saved");
-	}
-
 	//Activate/Deactivate debug mode
-	else if (App->input_manager->GetEvent(ENTITY_DEBUG_MODE) == INPUT_DOWN)
+	if (App->input_manager->GetEvent(ENTITY_DEBUG_MODE) == INPUT_DOWN)
 	{
 		App->debug_mode = !App->debug_mode;
 	}
