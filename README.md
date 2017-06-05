@@ -2,6 +2,8 @@
 Tribute game to Age of Empires II developed by DemonRealm.   
 Age of Champions aims to preserve the core gameplay of the Age of Empires franchise while introducing new features such as champions similar to the ones from Warcraft III.
 
+##Installation
+Drop the game folder inside the .zip somewhere in your computer and execute the .exe
 
 ## How to play (Beta)
 
@@ -34,11 +36,19 @@ To win you have to find the enemy city and destroy the enemy town center, don't 
 * [P]: Pause the game
 * [+]: Turn up the volume
 * [-]: Turn down the volume
-* 2: Save game
-* 3: Load game
+* 1: Build house
+* 2: Build town center
+* 3: Build stable
+* 4: Build lumber camp
+* 5: Build mining camp
+* 6: Build blacksmith
+* 7: Build university
+* 8: Build monastery
+* 9: Build archery range
+* 0: Build barracks
 
 Note: All spawns require the player to wait some time before the actual unit spawns, this is not shown in the current UI.
-Note2: In case of having multiple champions selected the shortcut keys will affect the latest champion the player has interacted with.
+Note 2: Num shorcuts can only be used when a villager is selected
 
 
 #### Debug controls
@@ -76,7 +86,7 @@ pugixml is Copyright (C) 2006-2015 Arseny Kapoulkine.
 Virtual file system was made using [Physfs](https://icculus.org/physfs/) library. 
 
 #### Tools
-[Dr.Memory](http://www.drmemory.org/) is used to control all memory leaks.
+[Deleaker](http://www.deleaker.com/) is used to control all memory leaks.
 
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
@@ -86,6 +96,7 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 * New loading screen
 * Added: Button to the wiki with tutorials on how ot play (tutorials page is in progress)
 * Fixed: #56
+* Fixed: #62
 * Fixed: #70
 * Fixed: #71
 * Fixed: #72
