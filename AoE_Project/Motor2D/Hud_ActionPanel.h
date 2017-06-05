@@ -282,6 +282,7 @@ public:
 	void Handle_Input(UI_Element* ui_element, GUI_INPUT ui_input);
 	// Activate with Input
 	void ActivateSkill(int i);
+	void BuildShortcut(int i, int panel);
 
 	// Draw Game Panel
 	bool Draw();

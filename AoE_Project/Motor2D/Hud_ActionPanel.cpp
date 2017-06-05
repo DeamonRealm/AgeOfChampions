@@ -1571,6 +1571,16 @@ void Action_Panel::ActivateSkill(int i)
 	}
 }
 
+void Action_Panel::BuildShortcut(int i, int panel)
+{
+	if (actualpanel == villagerpanel) {
+		villagerpanel->ChangePanelLvl(panel);
+		villagerpanel->ChangePanelIcons(panel_cells);
+		SetButtons();
+		on_action = villagerpanel->ActivateCell(i);
+	}
+}
+
 bool Action_Panel::Draw()
 {
 	if (actualpanel == nullptr) return false;

@@ -274,6 +274,49 @@ bool j1Player::PreUpdate()
 		action_panel->ActivateSkill(2);
 	}
 
+	// Villager Buildings Shortcuts
+	/*if (App->input_manager->GetEvent(HOUSE) == INPUT_DOWN)
+	{
+		action_panel->BuildShortcut(0, 1);
+	}
+	if (App->input_manager->GetEvent(MINING_CAMP) == INPUT_DOWN)
+	{
+		action_panel->BuildShortcut(2, 1);
+	}
+	if (App->input_manager->GetEvent(LUMBER_CAMP) == INPUT_DOWN)
+	{
+		action_panel->BuildShortcut(3, 1);
+	}
+	if (App->input_manager->GetEvent(BLACKSMITH) == INPUT_DOWN)
+	{
+	action_panel->BuildShortcut(6, 1);
+	}
+	if (App->input_manager->GetEvent(UNIVERSITY) == INPUT_DOWN)
+	{
+		action_panel->BuildShortcut(8, 1);
+	}
+	if (App->input_manager->GetEvent(MONASTERY) == INPUT_DOWN)
+	{
+		action_panel->BuildShortcut(9, 1);
+	}
+	if (App->input_manager->GetEvent(TOWN_CENTER) == INPUT_DOWN)
+	{
+		action_panel->BuildShortcut(10, 1);
+	}
+	if (App->input_manager->GetEvent(BARRACK) == INPUT_DOWN)
+	{
+		action_panel->BuildShortcut(0, 2);
+	}
+	if (App->input_manager->GetEvent(ARCHERY_RANGE) == INPUT_DOWN)
+	{
+		action_panel->BuildShortcut(1, 2);
+	}
+	if (App->input_manager->GetEvent(STABLE) == INPUT_DOWN)
+	{
+		action_panel->BuildShortcut(2, 2);
+	}
+
+	*/
 	return true;
 }
 
