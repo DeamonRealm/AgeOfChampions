@@ -783,7 +783,7 @@ int THEORAPLAY_freeAudio(const THEORAPLAY_AudioPacket *_item)
 	THEORAPLAY_AudioPacket *item = (THEORAPLAY_AudioPacket *)_item;
 	if (item != NULL)
 	{
-		if (item->next == NULL)
+		if (item->next != NULL)
 		{
 			return 0;
 		}
@@ -823,7 +823,7 @@ int THEORAPLAY_freeVideo(const THEORAPLAY_VideoFrame *_item)
 	THEORAPLAY_VideoFrame *item = (THEORAPLAY_VideoFrame *)_item;
 	if (item != NULL)
 	{
-		if (item->next == NULL)
+		if (item->next != NULL)
 		{
 			return 0;
 		}

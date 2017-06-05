@@ -7,7 +7,6 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Audio.h"
-#include "j1SoundManager.h"
 
 #include <sstream>
 #include <stdio.h>
@@ -143,8 +142,8 @@ void j1Video::queue_audio(const THEORAPLAY_AudioPacket *audio)
 
 void j1Video::LoadVideo(const char *fname)
 {
-	
-	// Start decoding the file. One simple line of code. Use THEORAPLAY_VIDFMT_IYUV.
+	// TODO 1: Start decoding the file. One simple line of code. Use THEORAPLAY_VIDFMT_IYUV.
+
 	decoder = THEORAPLAY_startDecodeFile(fname, 30, THEORAPLAY_VIDFMT_IYUV);
 
 	// Wait until we have video and/or audio data, so we can set up hardware.
@@ -172,6 +171,7 @@ void j1Video::LoadVideo(const char *fname)
 	// Tip! Module Video needs "the control" of the sound. If not SDL_OpenAudio will not initialize.
 	// Right now module Audio has init the audio previously.
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
+	//SDL_Init(SDL_INIT_AUDIO);
 	init_failed = quit = (init_failed || (SDL_OpenAudio(&spec, NULL) != 0));
 
 	SDL_PauseAudio(0);
@@ -181,7 +181,7 @@ void j1Video::PlayVideo(const char *fname, SDL_Rect r)
 {
 	// Loading video ---------------------
 
-	//ResetValues();
+	ResetValues();
 	rendering_rect = r;
 	LoadVideo(fname);
 
@@ -193,7 +193,12 @@ void j1Video::PlayVideo(const char *fname, SDL_Rect r)
 
 bool j1Video::PostUpdate()
 {
-	if (!play_error && THEORAPLAY_isDecoding(decoder))
+	if (!THEORAPLAY_isDecoding(decoder))
+	{
+		want_to_play = false;
+	}
+
+	if (!play_error && !quit && THEORAPLAY_isDecoding(decoder))
 	{
 		Uint32 now = SDL_GetTicks() - baseticks;
 
@@ -252,9 +257,12 @@ bool j1Video::PostUpdate()
 		// Render the texture. Use SDL_RenderCopy and the rendering rect (if you want).
 		SDL_RenderCopy(App->render->renderer, texture, NULL, &rendering_rect);
 	}
-	else want_to_play = false;
 
 	if(App->GetQuit())ResetValues();
+
+	if (quit) {
+		ResetValues();
+	}
 
 	return true;
 }
