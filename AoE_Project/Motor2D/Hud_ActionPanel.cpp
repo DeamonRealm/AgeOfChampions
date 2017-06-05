@@ -1574,6 +1574,7 @@ void Action_Panel::ActivateSkill(int i)
 void Action_Panel::BuildShortcut(int i, int panel)
 {
 	if (actualpanel == villagerpanel) {
+		villagerpanel->CancelAction();
 		villagerpanel->ChangePanelLvl(panel);
 		villagerpanel->ChangePanelIcons(panel_cells);
 		SetButtons();
