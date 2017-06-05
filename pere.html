@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+
+    <style>
+        p.lead {
+            color: white;
+            font-size:medium;
+        }
+
+        p.important {
+            color: lightsteelblue;
+            font-size:x-large;
+        }
+    </style>
+
+
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="Age of Champions" content="Age of Champions">
+
+    <meta name="Demon Realm" content="">
+
+
+
+    <title>Age of Champions</title>
+
+
+
+    <!-- Bootstrap Core CSS -->
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+
+
+    <!-- Custom CSS -->
+
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+
+
+    <!-- Custom Fonts -->
+
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+
+</head>
+
+
+
+<body>
+
+
+
+    <div id="wrapper">
+
+
+
+        <!-- Navigation -->
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
+
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+
+                    <span class="sr-only">Toggle navigation</span>
+
+                    <span class="icon-bar"></span>
+
+                    <span class="icon-bar"></span>
+
+                    <span class="icon-bar"></span>
+
+                </button>
+
+                <a class="navbar-brand" href="index.html">Age of Champions</a>
+
+            </div>
+
+            <!-- Top Menu Items -->
+
+            <ul class="nav navbar-right top-nav">
+
+                <li class="dropdown">
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Demon Realm <b class="caret"></b></a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+
+                            <a target="_blank" href="https://github.com/DeamonRealm"><i class="fa fa-fw fa-github"></i> GitHub </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                <ul class="nav navbar-nav side-nav">
+
+                    <li>
+
+                        <a href="index.html"><i class="fa fa-fw fa-home"></i> Home</a>
+
+                    </li>
+
+                    <li>
+
+                        <a href="team.html"><i class="fa fa-users" aria-hidden="true"></i> Team</a>
+                    </li>
+
+                    <li>
+
+                    <li> <a href="andreu.html"><i class="fa fa-user" aria-hidden="true"></i> Andreu Rojas</a> </li>
+                    <li> <a href="ferran.html"><i class="fa fa-user" aria-hidden="true"></i> Ferran Martín</a> </li>
+                    <li class="active"> <a href="pere.html"><i class="fa fa-user" aria-hidden="true"></i> Pere Rifà</a> </li>
+                    <li> <a href="joan.html"><i class="fa fa-user" aria-hidden="true"></i> Joan Pareja</a> </li>
+                    <li> <a href="gerard.html"><i class="fa fa-user" aria-hidden="true"></i> Gerard Gil</a> </li>
+                    <li> <a href="sebastian.html"><i class="fa fa-user" aria-hidden="true"></i> Sebastián Delgado</a> </li>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- /.navbar-collapse -->
+
+        </nav>
+
+
+
+        <div>
+
+
+
+            <div class="container-fluid">
+
+
+
+                <!-- Page Heading -->
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <h1 class="page-header">
+
+                            <p align="center">Contribution</p>
+
+                        </h1>
+
+                    </div>
+
+                </div>
+
+                <!-- /.row -->
+
+
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <p class="important">Main Menu:</p>
+                        <p class="lead">Initial screen with few buttons that show the options available to the player, options such as a Tutorial, Wiki (link to developers Github), Exit, Report Bug and Single Player. Single Player Button will display 3 more buttons (Standard Game, Load Saved Game and Fast Game). Load Games, Tutorial and Wiki Links have been done in collaboration with <a href="ferran.html"> Ferran Martín</a></p>
+                        <img class="img-responsive left-block" src="img/main_menu.png" width="683" height="384">
+                        <p class="important"><br/> Player:</p>
+                        <p class="lead">In-Game Hud: Base Module for Player information Display and Entities Managment. It coordinates all game options and split their functionality into 4 submodules: Game Panel, Action Panel, Selection Panel and Minimap.</p>
+                        <img class="img-responsive left-block" src="img/player.png" width="683" height="384">
+                        <p class="important"><br /> Game Panel:</p>
+                        <p class="lead">Manage global match information such as resources, population, win/lose conditions and pause menu options. It's shown in the top of the screen as a information bar, in the top left corner it shows own resources and population available, on the top right corner there's the Pause Menu Button with game options (quit game, save, load and cancel).</p>
+                        <img class="img-responsive left-block" src="img/game.png" width="683" height="265">
+                        <p class="important"><br /> Action Panel:</p>
+                        <p class="lead">Manage Units and Buildings actions such as spawn units, research technologies, use skills and skill tree (champions), build buildings (villagers), upgrade civilization or even kill selected unit. Every action available have text information displayed when hovering the button. It interacts with Game Panel to manage resources and Selection Panel to Update Units state.</p>
+                        <img class="img-responsive left-block" src="img/action_panel.png" width="422" height="216">
+                        <p class="important"><br /> Selection Panel:</p>
+                        <p class="lead">This sub-module includes up to five methods to select entities (click, double click, click and drag, ctrl + click, ctrl + click + drag), showing selected entities grop or single profile information, buildings production queue, also allows actions such as move, attack, heal or collect resources. It is the backbone that allows the player to interact with the map and the entities in it. Move, attack, heal and collect resources have been done in collaboration with <a href="joan.html"> Joan Pareja</a> and <a href="andreu.html"> Andreu Rojas</a></p>
+                        <img class="img-responsive left-block" src="img/selection_panel.png" width="769" height="683">
+                        <p class="important"><br /> Minimap:</p>
+                        <p class="lead">Submodule that prints basic map information, blue marks are own units/buildings and red are enemies ones, fog of war updates acording to map state. Player can interact with it and move the camera or even move units to one place or another, it also have shortcuts to champions in the top right of the minimap. When under attack an alert apear and point the battle position, the current camera position is also shown with a rectangle on the minimap.</p>
+                        <img class="img-responsive left-block" src="img/minimap.png" width="345" height="173">
+                        <p class="important"><br /> Player and AI Save & Load:</p>
+                        <p class="lead">Save/Load current game information and update submodules if player chose to load game.</p>
+                        <p class="important"><br /> Entities Information Managment:</p>
+                        <p class="lead">Player and AI storage of information related to units, buildings, tecnologies and skills pluss system to use it. Player and AI Data containers are different but they may contain: unit/building/resource types, base types which is the origin of the entity (militia base type from Longswordman), produced from (needed to porduce unit/building/tecnology), tecnology type that will update it, age and lvl where they are available, resources and population cost and short description of element shown as help for the player.</p>
+                        <p class="important"><br /> Entities Life Bar:</p>
+                        <p class="lead">If you select an entity it shows current life life over it, if a group of units selected all your life bars are displayed .</p>
+                        <p class="important"><br /> Civilization Upgrades:</p>
+                        <p class="lead">Technologies Research system, manage research and every time a research is complete it upgrade everything in need. This might change civilizations age and it's consequent change of buildings stats, sprites and actions available. Some research affect units or buffs applied to them.</p>
+                        <img class="img-responsive left-block" src="img/civilization_upgrade.png" width="634" height="275">
+                        <p class="important"><br /> Units Upgrades:</p>
+                        <p class="lead">Doing Research, units can be upgraded to a higher level, a militia evolve to man-at-arms and so on. This type of update need to iterate all current units and units inside production queue to update them to their next level. If units that evolve are Allies Action Panels must be updated too.</p>
+                        <img class="img-responsive left-block" src="img/upgrades.png" width="299" height="129">
+                        <p class="important"><br /> AI Civilization Upgrade:</p>
+                        <p class="lead">Artificial inteligence improve their tecnology and does research as if it was a player. AI research system evolve current civilization within it's possibilities and manage the resources avaiable to develop them. Also if next technology to research need a production type (Stable) and there's no stable, it'll search for a villager to build it and then start the research.</p>
+                        <img class="img-responsive left-block" src="img/ai_update.png" width="741" height="423">
+                        <p class="important"><br /> AI Buildings Managment:</p>
+                        <p class="lead">Buildings production tools, have been done in collaboration with <a href="joan.html"> Joan Pareja</a>, Joan Pareja did the building managment, which base building type should be build next. I did the tools to build them, find villager or create one, spend resources if there're enough to build, find place for the building, build correct level of building, increase max population with houses... </p>
+                        <p class="important"><br /> AI Units Production Managment:</p>
+                        <p class="lead">Units production tools, have been done in collaboration with <a href="joan.html"> Joan Pareja</a>, Joan pareja did the units managment, which base unit type should be created, militia for example. I did the tools to create them, find building where they spawn, build one if there isn't any of the same type, spend recources, increase population and so on.</p>
+                        <p class="important"><br /> Win & Lose Contitions:</p>
+                        <p class="lead">Whenever the conditions are fulfilled the game ends and Win/Lose screen popup showing the result of the game, the amount of enemy and allies units killed.</p>
+                     
+                    </div>
+
+
+
+                </div>
+
+                <!-- /.row -->
+
+
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <br>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+            <!-- /.container-fluid -->
+
+
+
+        </div>
+
+        <!-- /#page-wrapper -->
+
+
+
+    </div>
+
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+
+    <script src="js/jquery.js"></script>
+
+
+
+    <!-- Bootstrap Core JavaScript -->
+
+    <script src="js/bootstrap.min.js"></script>
+
+
+
+    <!-- Morris Charts JavaScript -->
+
+    <script src="js/plugins/morris/raphael.min.js"></script>
+
+    <script src="js/plugins/morris/morris.min.js"></script>
+
+    <script src="js/plugins/morris/morris-data.js"></script>
+
+
+
+</body>
+
+
+
+</html>

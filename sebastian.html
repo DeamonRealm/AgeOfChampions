@@ -145,7 +145,7 @@
                     <li> <a href="andreu.html"><i class="fa fa-user" aria-hidden="true"></i> Andreu Rojas</a> </li>
                     <li> <a href="ferran.html"><i class="fa fa-user" aria-hidden="true"></i> Ferran Martín</a> </li>
                     <li> <a href="pere.html"><i class="fa fa-user" aria-hidden="true"></i> Pere Rifà</a> </li>
-                    <li class="active"> <a href="joan.html"><i class="fa fa-user" aria-hidden="true"></i> Joan Pareja</a> </li>
+                    <li> <a href="joan.html"><i class="fa fa-user" aria-hidden="true"></i> Joan Pareja</a> </li>
                     <li> <a href="gerard.html"><i class="fa fa-user" aria-hidden="true"></i> Gerard Gil</a> </li>
                     <li> <a href="sebastian.html"><i class="fa fa-user" aria-hidden="true"></i> Sebastián Delgado</a> </li>
 
@@ -193,20 +193,31 @@
 
                     <div class="col-lg-12">
 
-                        <p class="important">Action system:</p>
-                        <p class="lead">The action system is an implemantation of the command pattern on the tactical AI, the system manages the behavior of all the entities in the game. To do so it encapsulates diferent function calls that the entities need in a class named action, an then another class named ActionWorker manages those actions using the game loop system.<br />  Each entitty has an action worker that stores and executes those actions with diferent priorities, the workers have 3 diferent threads to manage those actions (more threads can easly be added) those threads are classified as primary, secondary and passive, the 2 last ones are only used by units. <br /><br />The primary one it's mainly used for actions created by the player inputs and since we don't want those actions to be interrupted when it's active (has 1 or more actions to execute) it stops the other 2 threads of updating and executing their actions.  <br />The secondary one is used only for units, mostly for actions called by the AI, usually it manages the same actions as the primary one like move, attack etc... but in this case we want to be able to interrupt these actions depending on the environment. <br /> The passive channel updates at the same time as the secondary one, it's only used for actions like autoattack that have the unit scann their surroundins every x seconds and act accodring to it.</p>
-                        <p class="important">Action creation:</p>
-                        <p class="lead">Create diferent actions to use on the action worker, such as move, attack, teleport, heal... <br/>Only a simple definition, some of them were passed to other team members to complete them, such as the move that was passed to <a href="andreu.html"></i> Andreu Rojas</a> to implement the colision system.</p>
-                        <p class="important"><br/> AI general update:</p>
-                        <p class="lead">Diferent functions that the AI calls during it's update cycle that manage and decide which troop to create, how to expand, resource recollection, raids...</p>
-                        <img class="img-responsive left-block" src="img/AI_village.jpg" width="600" height="600">
-                        <p class="important"><br /> Bug managment:</p>
-                        <p class="lead">Create a simple organization sistem to ease bug mangament, the sistem was created using github issues and waffle.io.</p>
-                        <p class="important"><br /> Prepare xml:</p>
-                        <p class="lead">Revise and add some lines to the xml from the sprites to make them able to work with the animation framework created by <a href="ferran.html"></i> Ferran Martín</a>.</p>
-
-
-
+                        <p class="important">Design tasks</p>
+                        
+                        <p class="important"><h3>Game Design Document</h3></p>
+                        <p class="lead">Design of every Troop, building, champions, building upgrades and resources in the game.</p>
+                        <img class="img-responsive left-block" src="img/skills.png" width="600" height="600">
+                        <p class="important"><h3>Level design:</h3></p>
+                        <p class="lead">Map of all resources of the map.</p>
+                        <p class="important"><h3>Buff Manager:</h3></p>
+                        <p class="lead">Base code for the buff manager.</p>
+                        <p class="important"><h3>Villager XML & PNG:</h3></p>
+                        <p class="lead">Extract all PNG do the XML for the villager</p>
+                        <p class="important"><h3>Playtest:</h3></p>
+                        <p class="lead">Iterate the game to balance it.</p>
+                        
+                        <p class="important">Management task</p>
+                        
+                        <p class="important"><h3>Time control:</h3></p>
+                        <p class="lead">Keep count time of working of every task the team did.</p>
+                        <p class="important"><h3>Meetings:</h3></p>
+                        <p class="lead"></p>
+                        <p class="important"><h3>Prioritize:</h3></p>
+                        <p class="lead"></p>
+                        <p class="important"><h3>Contingency plan:</h3></p>
+                        <p class="lead"></p>
+                        
                     </div>
 
 
@@ -257,6 +268,48 @@
 
 
     <!-- Morris Charts JavaScript -->
+
+    <script src="js/plugins/morris/raphael.min.js"></script>
+
+    <script src="js/plugins/morris/morris.min.js"></script>
+
+    <script src="js/plugins/morris/morris-data.js"></script>
+
+
+
+</body>
+
+
+
+</html> Morris Charts JavaScript -->
+
+    <script src="js/plugins/morris/raphael.min.js"></script>
+
+    <script src="js/plugins/morris/morris.min.js"></script>
+
+    <script src="js/plugins/morris/morris-data.js"></script>
+
+
+
+</body>
+
+
+
+</html> Morris Charts JavaScript -->
+
+    <script src="js/plugins/morris/raphael.min.js"></script>
+
+    <script src="js/plugins/morris/morris.min.js"></script>
+
+    <script src="js/plugins/morris/morris-data.js"></script>
+
+
+
+</body>
+
+
+
+</html> Morris Charts JavaScript -->
 
     <script src="js/plugins/morris/raphael.min.js"></script>
 
