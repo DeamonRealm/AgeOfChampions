@@ -70,11 +70,11 @@ private:
 	//Single Player Buttons
 	UI_Button*			standardgame = nullptr;
 	UI_Button*			loadgame = nullptr;
-	UI_Button*			alphagame = nullptr;
+	UI_Button*			fastgame = nullptr;
 
 	UI_String*			standardgame_text = nullptr;
 	UI_String*			loadgame_text = nullptr;
-	UI_String*			alphagame_text = nullptr;
+	UI_String*			fastgame_text = nullptr;
 	
 
 	//Menu UI screens

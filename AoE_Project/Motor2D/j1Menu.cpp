@@ -55,8 +55,8 @@ bool j1Menu::Enable()
 	loadgame->Desactivate();
 	loadgame->DesactivateChids();
 
-	alphagame->Desactivate();
-	alphagame_text->DesactivateChids();
+	fastgame->Desactivate();
+	fastgame_text->DesactivateChids();
 
 	load_screen->Desactivate();
 
@@ -181,12 +181,12 @@ bool j1Menu::Start()
 	loadgame->SetTexOVER({ 493,0,193,43 }, STANDARD);
 	singleplayer->AddChild(loadgame);
 
-	alphagame = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	alphagame->SetBox({ 406,700,193,43 });
-	alphagame->SetTexON({ 300,0,193,43 }, STANDARD);
-	alphagame->SetTexOFF({ 493,0,193,43 }, STANDARD);
-	alphagame->SetTexOVER({ 493,0,193,43 }, STANDARD);
-	singleplayer->AddChild(alphagame);
+	fastgame = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
+	fastgame->SetBox({ 406,700,193,43 });
+	fastgame->SetTexON({ 300,0,193,43 }, STANDARD);
+	fastgame->SetTexOFF({ 493,0,193,43 }, STANDARD);
+	fastgame->SetTexOVER({ 493,0,193,43 }, STANDARD);
+	singleplayer->AddChild(fastgame);
 
 	standardgame_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	standardgame_text->SetColor({ 255, 255, 255, 255 });
@@ -202,12 +202,12 @@ bool j1Menu::Start()
 	loadgame_text->SetBox({ 45, 13,0,0 });
 	loadgame->AddChild(loadgame_text);
 
-	alphagame_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
-	alphagame_text->SetColor({ 255, 255, 255, 255 });
-	alphagame_text->SetString("Load Alpha Game");
-	alphagame_text->Activate();
-	alphagame_text->SetBox({ 45, 13,0,0 });
-	alphagame->AddChild(alphagame_text);
+	fastgame_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
+	fastgame_text->SetColor({ 255, 255, 255, 255 });
+	fastgame_text->SetString("Fast Game");
+	fastgame_text->Activate();
+	fastgame_text->SetBox({ 65, 13,0,0 });
+	fastgame->AddChild(fastgame_text);
 
 
 	singleplayer->DesactivateChids();
@@ -406,7 +406,7 @@ void j1Menu::GUI_Input(UI_Element * target, GUI_INPUT input)
 			}
 			else LOG("No party Saved");
 		}
-		if (target == alphagame)
+		if (target == fastgame)
 		{
 			option_selected->button_state = UP;
 			menu_screen->DesactivateChids();
