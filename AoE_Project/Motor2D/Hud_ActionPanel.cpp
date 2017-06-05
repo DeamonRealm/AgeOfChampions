@@ -1261,7 +1261,8 @@ const char * HeroPanel::GetSkillOvering() const
 
 bool HeroPanel::SkillIsInCoolDown(int i)
 {
-	if (champion_row[i / 5] != nullptr && !((Champion*)champion_row[i / 5])->GetSkillInCoolDown(i % 5)) return true;
+	if (i < 3 && champion_row[i / 5] != nullptr && !((Champion*)champion_row[i / 5])->GetSkillInCoolDown(i % 5)) return true;
+	else if (i % 5 == 4 && champion_row[i / 5] != current_entity) return true;
 	return false;
 }
 
@@ -1590,7 +1591,7 @@ bool Action_Panel::Draw()
 		if (panel_cells[count]->GetTextureBox().w > 1)
 		{
 			panel_cells[count]->Draw(false);
-			if (actualpanel == heropanel && count%5 < 3 && heropanel->SkillIsInCoolDown(count))
+			if (actualpanel == heropanel && count%5 < 5 && heropanel->SkillIsInCoolDown(count))
 			{
 				App->render->DrawQuad(*panel_buttons[count]->GetBox(), 0, 0, 0, 200,true,false);
 			}

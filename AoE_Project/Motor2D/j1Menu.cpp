@@ -182,7 +182,7 @@ bool j1Menu::Start()
 	singleplayer->AddChild(loadgame);
 
 	fastgame = (UI_Button*)App->gui->GenerateUI_Element(UI_TYPE::BUTTON);
-	fastgame->SetBox({ 406,700,193,43 });
+	fastgame->SetBox({ 163,700,193,43 });
 	fastgame->SetTexON({ 300,0,193,43 }, STANDARD);
 	fastgame->SetTexOFF({ 493,0,193,43 }, STANDARD);
 	fastgame->SetTexOVER({ 493,0,193,43 }, STANDARD);
@@ -190,9 +190,9 @@ bool j1Menu::Start()
 
 	standardgame_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
 	standardgame_text->SetColor({ 255, 255, 255, 255 });
-	standardgame_text->SetString("Standard Game: Default");
+	standardgame_text->SetString("Standard Game");
 	standardgame_text->Activate();
-	standardgame_text->SetBox({ 30, 13,0,0 });
+	standardgame_text->SetBox({ 52, 13,0,0 });
 	standardgame->AddChild(standardgame_text);
 
 	loadgame_text = (UI_String*)App->gui->GenerateUI_Element(STRING);
@@ -206,7 +206,7 @@ bool j1Menu::Start()
 	fastgame_text->SetColor({ 255, 255, 255, 255 });
 	fastgame_text->SetString("Fast Game");
 	fastgame_text->Activate();
-	fastgame_text->SetBox({ 65, 13,0,0 });
+	fastgame_text->SetBox({ 67, 13,0,0 });
 	fastgame->AddChild(fastgame_text);
 
 
