@@ -1261,7 +1261,7 @@ const char * HeroPanel::GetSkillOvering() const
 
 bool HeroPanel::SkillIsInCoolDown(int i)
 {
-	if (i < 3 && champion_row[i / 5] != nullptr && !((Champion*)champion_row[i / 5])->GetSkillInCoolDown(i % 5)) return true;
+	if (i % 5 < 3 && champion_row[i / 5] != nullptr && !((Champion*)champion_row[i / 5])->GetSkillInCoolDown(i % 5)) return true;
 	else if (i % 5 == 4 && champion_row[i / 5] != current_entity) return true;
 	return false;
 }

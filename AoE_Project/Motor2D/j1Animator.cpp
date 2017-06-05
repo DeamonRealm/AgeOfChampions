@@ -406,7 +406,7 @@ bool j1Animator::Awake(pugi::xml_node& config)
 
 bool j1Animator::Start()
 {
-	arrow = App->tex->Load("buff_manager/arrow.png");
+	arrow = App->tex->Load("buff_manager/arrow.PNG");
 
 	return true;
 }
