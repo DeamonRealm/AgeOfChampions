@@ -77,6 +77,7 @@ private:
 public:
 
 	bool want_to_play = false;
+	bool play_error = false;
 
 };
 

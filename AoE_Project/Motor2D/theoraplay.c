@@ -1,3 +1,4 @@
+
 /**
 * TheoraPlay; multithreaded Ogg Theora/Ogg Vorbis decoding.
 *
@@ -777,15 +778,21 @@ const THEORAPLAY_AudioPacket *THEORAPLAY_getAudio(THEORAPLAY_Decoder *decoder)
 } // THEORAPLAY_getAudio
 
 
-void THEORAPLAY_freeAudio(const THEORAPLAY_AudioPacket *_item)
+int THEORAPLAY_freeAudio(const THEORAPLAY_AudioPacket *_item)
 {
 	THEORAPLAY_AudioPacket *item = (THEORAPLAY_AudioPacket *)_item;
 	if (item != NULL)
 	{
-		//assert(item->next == NULL);
+		if (item->next == NULL)
+		{
+			return 0;
+		}
+
 		free(item->samples);
 		free(item);
-	} // if
+	} 
+
+	return 1;
 } // THEORAPLAY_freeAudio
 
 
@@ -811,15 +818,19 @@ const THEORAPLAY_VideoFrame *THEORAPLAY_getVideo(THEORAPLAY_Decoder *decoder)
 } // THEORAPLAY_getVideo
 
 
-void THEORAPLAY_freeVideo(const THEORAPLAY_VideoFrame *_item)
+int THEORAPLAY_freeVideo(const THEORAPLAY_VideoFrame *_item)
 {
 	THEORAPLAY_VideoFrame *item = (THEORAPLAY_VideoFrame *)_item;
 	if (item != NULL)
 	{
-		//assert(item->next == NULL);
+		if (item->next == NULL)
+		{
+			return 0;
+		}
 		free(item->pixels);
 		free(item);
-	} // if
+	}
+	return 1;
 } // THEORAPLAY_freeVideo
 
   // end of theoraplay.cpp ...

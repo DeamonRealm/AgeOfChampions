@@ -58,10 +58,10 @@ extern "C" {
 	unsigned int THEORAPLAY_availableAudio(THEORAPLAY_Decoder *decoder);
 
 	const THEORAPLAY_AudioPacket *THEORAPLAY_getAudio(THEORAPLAY_Decoder *decoder);
-	void THEORAPLAY_freeAudio(const THEORAPLAY_AudioPacket *item);
+	int THEORAPLAY_freeAudio(const THEORAPLAY_AudioPacket *item);
 
 	const THEORAPLAY_VideoFrame *THEORAPLAY_getVideo(THEORAPLAY_Decoder *decoder);
-	void THEORAPLAY_freeVideo(const THEORAPLAY_VideoFrame *item);
+	int THEORAPLAY_freeVideo(const THEORAPLAY_VideoFrame *item);
 
 #ifdef __cplusplus
 }
