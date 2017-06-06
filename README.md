@@ -2,7 +2,7 @@
 Tribute game to Age of Empires II developed by DemonRealm.   
 Age of Champions aims to preserve the core gameplay of the Age of Empires franchise while introducing new features such as champions similar to the ones from Warcraft III.
 
-##Installation
+## Installation
 Drop the game folder inside the .zip somewhere in your computer and execute the .exe
 
 ## How to play (Beta)
@@ -91,6 +91,14 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 [Broflier](https://github.com/bombomby/brofiler/wiki) is used to manage app timming.
 
 ## Changelog
+
+### v1.0 (Gold)
+* New intro screen
+* Added: Shortcut keys to build buildings
+* Improved: Champion multiselection gives more feedback on which champion is selected
+* Improved: Champions skills stats
+* Fixed: #44
+* Fixed: #58
 
 ### v0.9 (Beta)
 * New loading screen
