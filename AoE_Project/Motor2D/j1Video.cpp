@@ -59,7 +59,7 @@ bool j1Video::CleanUp()
 {
 	if (texture) SDL_DestroyTexture(texture);
 	if (video) THEORAPLAY_freeVideo(video);
-	if (audio) THEORAPLAY_freeAudio(audio);
+	if (audio && !play_error) THEORAPLAY_freeAudio(audio);
 	if (decoder) THEORAPLAY_stopDecode(decoder);
 	SDL_CloseAudio();
 	SDL_Quit();
@@ -171,8 +171,8 @@ void j1Video::LoadVideo(const char *fname)
 	// Tip! Module Video needs "the control" of the sound. If not SDL_OpenAudio will not initialize.
 	// Right now module Audio has init the audio previously.
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
-	//SDL_Init(SDL_INIT_AUDIO);
-	init_failed = quit = (init_failed || (SDL_OpenAudio(&spec, NULL) != 0));
+	play_error = (SDL_OpenAudio(&spec, NULL) != 0);
+	quit = init_failed;
 
 	SDL_PauseAudio(0);
 }
@@ -198,7 +198,7 @@ bool j1Video::PostUpdate()
 		want_to_play = false;
 	}
 
-	if (!play_error && !quit && THEORAPLAY_isDecoding(decoder))
+	if (THEORAPLAY_isDecoding(decoder))
 	{
 		Uint32 now = SDL_GetTicks() - baseticks;
 
@@ -260,32 +260,15 @@ bool j1Video::PostUpdate()
 
 	if(App->GetQuit())ResetValues();
 
-	if (quit) {
-		ResetValues();
-	}
-
 	return true;
 }
 
 void j1Video::ResetValues()
 {
 	if (texture != nullptr) SDL_DestroyTexture(texture);
-	if (video != nullptr)
-	{
-		if (THEORAPLAY_freeVideo(video) == 0)
-		{
-			play_error = true;
-		}
-
-	}
-	if (audio != nullptr && !play_error)
-	{
-		if (THEORAPLAY_freeAudio(audio) == 0)
-		{
-			play_error = true;
-		}
-	}
-	if (decoder != nullptr && play_error) THEORAPLAY_stopDecode(decoder);
+	if (video != nullptr)THEORAPLAY_freeVideo(video);
+	if (audio != nullptr && !play_error)THEORAPLAY_freeAudio(audio);
+	if (decoder != nullptr) THEORAPLAY_stopDecode(decoder);
 
 	decoder = NULL;
 	video = NULL;
