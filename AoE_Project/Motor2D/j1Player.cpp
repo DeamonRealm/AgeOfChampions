@@ -259,7 +259,7 @@ bool j1Player::PreUpdate()
 			App->AI->GenerateDebugVillager();
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+		/*if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
 		{
 			Circle del_area;
 			del_area.SetPosition(iPoint(x - App->render->camera.x, y - App->render->camera.y));
@@ -277,7 +277,7 @@ bool j1Player::PreUpdate()
 				}
 			}
 			
-		}
+		}*/
 	}
 
 	// Skills
