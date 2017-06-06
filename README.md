@@ -5,7 +5,7 @@ Age of Champions aims to preserve the core gameplay of the Age of Empires franch
 ## Installation
 Drop the game folder inside the .zip somewhere in your computer and execute the .exe
 
-## How to play (Beta)
+## How to play (Gold)
 
 To win you have to find the enemy city and destroy the enemy town center, don't forget to defend your town or the enemies will raid towards your city and destroy it. If the enemy manages to destroy your town center you lose the game.
 
@@ -100,6 +100,7 @@ Virtual file system was made using [Physfs](https://icculus.org/physfs/) library
 * Improved: Champions skills stats
 * Fixed: #44
 * Fixed: #58
+* Fixed: #62
 
 ### v0.9 (Beta)
 * New loading screen
