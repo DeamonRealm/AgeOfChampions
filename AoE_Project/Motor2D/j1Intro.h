@@ -29,7 +29,7 @@ public:
 	bool Start()
 	{
 		enabled = active = true;
-		App->video->PlayVideo("intro_video.ogv", { 100,100,1166,568 });
+		App->video->PlayVideo("intro_video.ogv", { 0,0,1366,768 });
 		return true;
 	}
 

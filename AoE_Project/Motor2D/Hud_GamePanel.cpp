@@ -654,6 +654,7 @@ void Game_Panel::DoWin()
 {
 	if (!game_ended)
 	{
+		game_ended = true;
 		win = true;
 	}
 	final_str->SetString("YOU WIN!!!");
